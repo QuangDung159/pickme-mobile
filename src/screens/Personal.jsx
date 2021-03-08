@@ -402,7 +402,7 @@ export default function Personal(props) {
                     />
                 </Block>
             ) : (
-                <Block>
+                <Block flex>
                     <ScrollView
                         showsVerticalScrollIndicator={false}
                     >
