@@ -29,7 +29,7 @@ export default function BookingList({ navigation }) {
         const pagingStr = '?pageIndex=1&pageSize=100';
 
         rxUtil(
-            `${Rx.BOOKING.GET_MY_BOOKING_AS_PARTNER}${pagingStr}`,
+            `${Rx.BOOKING.GET_MY_BOOKING_AS_CUSTOMER}${pagingStr}`,
             'GET',
             null,
             {

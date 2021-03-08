@@ -15,7 +15,6 @@ export default function BookingDetail({
             booking: {
                 id,
                 status,
-                isConfirm
             },
             booking
         }
@@ -89,83 +88,6 @@ export default function BookingDetail({
             }
         );
     };
-
-    const onPartnerConfirmBooking = (bookingId) => {
-        setIsShowSpinner(true);
-
-        rxUtil(
-            `${Rx.BOOKING.PARTNER_CONFIRM_BOOKING}/${bookingId}`,
-            'POST',
-            null,
-            {
-                Authorization: token
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message || 'Success.', 'success');
-                navigation.navigate(ScreenName.BOOKING_LIST);
-            },
-            () => {
-                setIsShowSpinner(false);
-                ToastHelpers.renderToast();
-            },
-            (errMessage) => {
-                setIsShowSpinner(false);
-                ToastHelpers.renderToast(errMessage || 'Lỗi hệ thống, vui lòng thử lại.', 'error');
-            }
-        );
-    };
-
-    // render \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
-    const renderButton = (bookingId) => (
-        <Block
-            row
-            center
-            space="between"
-        >
-            <Button
-                onPress={() => {
-                    onPartnerConfirmBooking(bookingId);
-                }}
-                shadowless
-            >
-                Xác nhận
-            </Button>
-
-            <Button
-                onPress={() => {
-                    renderAlert();
-                }}
-                shadowless
-                color={NowTheme.COLORS.DEFAULT}
-            >
-                Huỷ bỏ
-            </Button>
-        </Block>
-    );
-
-    const renderAlert = () => (
-        Alert.alert(
-            'Huỷ bỏ?',
-            'Bạn có chắc là không muốn nhận đơn hẹn này?',
-            [
-                {
-                    text: 'Cân nhắc lại',
-                    onPress: () => {},
-                    style: 'cancel'
-                },
-                {
-                    text: 'Tôi không muốn nhận',
-                    onPress: () => {
-                        // send notification to customer to update booking
-                        // TODO
-
-                        navigation.navigate(ScreenName.BOOKING_LIST);
-                    }
-                }
-            ],
-            { cancelable: false }
-        )
-    );
 
     const renderCompleteBookingButton = () => (
         <Block
@@ -265,10 +187,6 @@ export default function BookingDetail({
                                     adipisicing elit. Culpa, voluptates
                                 </Text>
                             </Block>
-
-                            {status === 'Scheduling' && !isConfirm && (
-                                renderButton(id)
-                            )}
 
                             {status === 'FinishPayment' && (
                                 renderCompleteBookingButton()
