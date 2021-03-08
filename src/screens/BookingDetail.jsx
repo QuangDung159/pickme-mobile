@@ -7,6 +7,7 @@ import { CenterLoader, Line } from '../components/uiComponents';
 import { NowTheme, Rx, ScreenName } from '../constants';
 import { ToastHelpers } from '../helpers';
 import { rxUtil } from '../utils';
+import BookingProgressFlow from '../containers/BookingProgressFlow';
 
 export default function BookingDetail({
     route: {
@@ -155,7 +156,11 @@ export default function BookingDetail({
                             marginTop: 10
                         }}
                         >
-                            <CardBooking booking={booking} showEditButton />
+                            <CardBooking
+                                booking={booking}
+                                showEditButton
+                                fromScreen={ScreenName.BOOKING_LIST}
+                            />
                             <Block style={{
                                 marginHorizontal: 10
                             }}
@@ -187,6 +192,8 @@ export default function BookingDetail({
                                     adipisicing elit. Culpa, voluptates
                                 </Text>
                             </Block>
+
+                            <BookingProgressFlow />
 
                             {status === 'FinishPayment' && (
                                 renderCompleteBookingButton()

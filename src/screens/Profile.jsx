@@ -332,7 +332,7 @@ export default function Profile({ route, navigation }) {
                                     iconColor={NowTheme.COLORS.BASE}
                                     iconSize={NowTheme.SIZES.BASE * 1.375}
                                     color={NowTheme.COLORS.DEFAULT}
-                                    style={[styles.social, styles.shadow]}
+                                    style={styles.social}
                                 />
                                 <GaButton
                                     round
@@ -343,7 +343,7 @@ export default function Profile({ route, navigation }) {
                                     iconColor={NowTheme.COLORS.BASE}
                                     iconSize={NowTheme.SIZES.BASE * 1.375}
                                     color={NowTheme.COLORS.DEFAULT}
-                                    style={[styles.social, styles.shadow]}
+                                    style={styles.social}
                                     onPress={() => {
                                         navigation.navigate(ScreenName.MESSAGE, {
                                             name: partnerInfo.fullName,

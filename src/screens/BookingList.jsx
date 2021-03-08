@@ -71,7 +71,7 @@ export default function BookingList({ navigation }) {
                             <CardBooking
                                 booking={item}
                                 key={item.id}
-                                fromScreen={ScreenName.BOOKING_LIST}
+                                fromScreen={ScreenName.PERSONAL}
                             />
                         </TouchableWithoutFeedback>
                     )}
