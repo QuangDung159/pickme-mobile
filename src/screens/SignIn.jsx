@@ -61,7 +61,7 @@ export default function SignIn(props) {
 
             toggleSpinner(true);
             rxUtil(
-                Rx.AUTHENTICATION.CUSTOMER_LOGIN,
+                Rx.AUTHENTICATION.LOGIN,
                 'POST',
                 data,
                 {},

@@ -3,7 +3,9 @@ import React from 'react';
 import { IndicatorVerticalLine, Line, StepIndicator } from '../components/uiComponents';
 import { NowTheme } from '../constants';
 
-export default function BookingProgressFlow() {
+export default function BookingProgressFlow({
+    status, partner
+}) {
     return (
         <Block style={{
             marginHorizontal: 10,
