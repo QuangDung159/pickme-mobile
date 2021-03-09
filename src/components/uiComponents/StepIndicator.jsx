@@ -27,6 +27,7 @@ export default function StepIndicator({
     return (
         <Block row>
             <Block
+                middle
                 style={styles.stepIndicatorContainer}
             >
                 <Button
@@ -34,7 +35,7 @@ export default function StepIndicator({
                     shadowless
                     style={indicatorStyle}
                     fontFamily={NowTheme.FONT.MONTSERRAT_BOLD}
-                    fontSize={20}
+                    fontSize={16}
                     fontColor={buttonFontColor}
                 >
                     {buttonText}
@@ -72,26 +73,26 @@ StepIndicator.defaultProps = {
 
 const styles = StyleSheet.create({
     stepIndicatorCurrent: {
-        width: NowTheme.SIZES.BASE * 3,
-        height: NowTheme.SIZES.BASE * 3,
+        width: NowTheme.SIZES.BASE * 2,
+        height: NowTheme.SIZES.BASE * 2,
         borderRadius: NowTheme.SIZES.BASE * 1.5,
         justifyContent: 'center',
         marginHorizontal: 5,
         backgroundColor: NowTheme.COLORS.BASE,
         borderColor: NowTheme.COLORS.ACTIVE,
-        borderWidth: 5,
+        borderWidth: 3,
     },
     stepIndicatorNext: {
-        width: NowTheme.SIZES.BASE * 3,
-        height: NowTheme.SIZES.BASE * 3,
+        width: NowTheme.SIZES.BASE * 2,
+        height: NowTheme.SIZES.BASE * 2,
         borderRadius: NowTheme.SIZES.BASE * 1.5,
         justifyContent: 'center',
         marginHorizontal: 5,
         backgroundColor: NowTheme.COLORS.BLOCK,
     },
     stepIndicatorPrev: {
-        width: NowTheme.SIZES.BASE * 3,
-        height: NowTheme.SIZES.BASE * 3,
+        width: NowTheme.SIZES.BASE * 2,
+        height: NowTheme.SIZES.BASE * 2,
         borderRadius: NowTheme.SIZES.BASE * 1.5,
         justifyContent: 'center',
         marginHorizontal: 5,
@@ -99,6 +100,7 @@ const styles = StyleSheet.create({
     },
     stepIndicatorContainer: {
         width: 60,
+        height: 33,
     },
     contentContainer: {
         marginLeft: 10

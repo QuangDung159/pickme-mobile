@@ -16,6 +16,7 @@ export default function BookingDetail({
             booking: {
                 id,
                 status,
+                partner
             },
             booking
         }
@@ -25,8 +26,6 @@ export default function BookingDetail({
     const [isShowSpinner, setIsShowSpinner] = useState(false);
 
     const token = useSelector((state) => state.userReducer.token);
-
-    const { partner } = booking;
 
     useEffect(
         () => {
@@ -143,8 +142,6 @@ export default function BookingDetail({
         )
     );
 
-    console.log('partner', partner);
-
     try {
         return (
             <>
@@ -160,11 +157,32 @@ export default function BookingDetail({
                             marginTop: 10
                         }}
                         >
+                            <BookingProgressFlow
+                                status={status}
+                                partner={partner}
+                                booking={booking}
+                            />
+
+                            <Text style={{
+                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                            }}
+                            >
+                                CHI TIẾT ĐƠN HẸN
+                            </Text>
+                            <Line
+                                borderWidth={0.5}
+                                borderColor={NowTheme.COLORS.ACTIVE}
+                                style={{
+                                    marginTop: 10,
+                                }}
+                            />
+
                             <CardBooking
                                 booking={booking}
                                 showEditButton
                                 fromScreen={ScreenName.BOOKING_LIST}
                             />
+
                             <Block style={{
                                 marginHorizontal: 10
                             }}
@@ -179,7 +197,8 @@ export default function BookingDetail({
                                     borderWidth={0.5}
                                     borderColor={NowTheme.COLORS.ACTIVE}
                                     style={{
-                                        marginVertical: 10
+                                        marginTop: 10,
+                                        marginBottom: 20
                                     }}
                                 />
                                 <Text
@@ -196,11 +215,6 @@ export default function BookingDetail({
                                     adipisicing elit. Culpa, voluptates
                                 </Text>
                             </Block>
-
-                            <BookingProgressFlow
-                                status={status}
-                                partner={partner}
-                            />
 
                             {status === 'FinishPayment' && (
                                 renderCompleteBookingButton()

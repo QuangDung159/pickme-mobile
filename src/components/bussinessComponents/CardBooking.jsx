@@ -39,7 +39,6 @@ export default function CardBooking({ booking, fromScreen, navigation }) {
             <Block
                 style={{
                     backgroundColor: NowTheme.COLORS.BASE,
-                    marginBottom: 10
                 }}
             >
                 <Block

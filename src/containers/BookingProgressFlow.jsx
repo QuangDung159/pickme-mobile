@@ -1,13 +1,18 @@
 import { Block, Text } from 'galio-framework';
-import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import React, { useEffect } from 'react';
 import { IndicatorVerticalLine, Line, StepIndicator } from '../components/uiComponents';
-import { NowTheme, BookingStatus } from '../constants';
+import { BookingStatus, NowTheme } from '../constants';
 
 export default function BookingProgressFlow({
-    status, partner
+    booking
 }) {
-    const { fullName } = partner;
+    const {
+        partner: {
+            fullName
+        },
+        status
+    } = booking;
 
     useEffect(
         () => {
@@ -22,7 +27,7 @@ export default function BookingProgressFlow({
     return (
         <Block style={{
             marginHorizontal: 10,
-            marginTop: 20
+            marginBottom: 20
         }}
         >
             <Text style={{
@@ -35,66 +40,75 @@ export default function BookingProgressFlow({
                 borderWidth={0.5}
                 borderColor={NowTheme.COLORS.ACTIVE}
                 style={{
-                    marginVertical: 10
+                    marginTop: 10,
+                    marginBottom: 20
                 }}
             />
-            <Block>
-                {/* progress item */}
-                <StepIndicator
-                    type="prev"
-                    buttonText="1"
-                    content="Đơn hẹn được tạo"
-                />
 
-                <IndicatorVerticalLine />
+            {status !== BookingStatus.CANCEL ? (
+                <Block>
+                    {/* progress item */}
+                    <StepIndicator
+                        type="prev"
+                        buttonText="1"
+                        content="Đơn hẹn được tạo"
+                    />
 
-                <StepIndicator
-                    type="current"
-                    buttonText="2"
-                    content={`Chờ xác nhận từ ${fullName}`}
-                />
+                    <IndicatorVerticalLine />
 
-                <IndicatorVerticalLine active={false} />
+                    <StepIndicator
+                        type="current"
+                        buttonText="2"
+                        content={`Chờ xác nhận từ ${fullName}`}
+                    />
 
-                <StepIndicator
-                    type="next"
-                    buttonText="3"
-                    content="Chờ thanh toán"
-                />
+                    <IndicatorVerticalLine active={false} />
 
-                <IndicatorVerticalLine active={false} />
+                    <StepIndicator
+                        type="next"
+                        buttonText="3"
+                        content="Thanh toán"
+                    />
 
-                <StepIndicator
-                    type="next"
-                    buttonText="4"
-                    content="Thanh toán thành công"
-                />
+                    <IndicatorVerticalLine active={false} />
 
-                <IndicatorVerticalLine active={false} />
+                    <StepIndicator
+                        type="next"
+                        buttonText="4"
+                        content="Cuộc hẹn sắp diễn ra"
+                    />
 
-                <StepIndicator
-                    type="next"
-                    buttonText="5"
-                    content="Hoàn tất cuộc hẹn"
-                />
+                    <IndicatorVerticalLine active={false} />
 
-                <IndicatorVerticalLine active={false} />
+                    <StepIndicator
+                        type="next"
+                        buttonText="5"
+                        content="Hoàn tất cuộc hẹn"
+                    />
 
-                <StepIndicator
-                    type="next"
-                    buttonText="6"
-                    content="Đơn hẹn bị huỷ"
-                />
-
-            </Block>
+                </Block>
+            ) : (
+                <Block
+                    style={{
+                        alignItems: 'center',
+                        marginVertical: 15
+                    }}
+                >
+                    <Text
+                        color={NowTheme.COLORS.SWITCH_OFF}
+                        style={{
+                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                        }}
+                        size={NowTheme.SIZES.FONT_INFO}
+                    >
+                        Xin lỗi! Đơn hẹn đã bị huỷ
+                    </Text>
+                </Block>
+            )}
         </Block>
     );
 }
 
 BookingProgressFlow.propTypes = {
-    status: PropTypes.oneOf([
-        BookingStatus.SCHEDULING,
-        BookingStatus.FINISH_PAYMENT
-    ]).isRequired,
-    partner: PropTypes.object.isRequired
+    booking: PropTypes.object.isRequired
 };
