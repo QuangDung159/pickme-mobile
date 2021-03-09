@@ -6,11 +6,14 @@ import Switch from './Switch';
 import Line from './Line';
 import NoteText from './NoteText';
 import Button from './Button';
+import StepIndicator from './StepIndicator';
+import IndicatorVerticalLine from './IndicatorVerticalLine';
 
 export {
     IconCustom, Input, Tabs,
     CenterLoader,
     Switch,
     Line, NoteText,
-    Button
+    Button, StepIndicator,
+    IndicatorVerticalLine
 };
