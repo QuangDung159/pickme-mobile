@@ -26,6 +26,8 @@ export default function BookingDetail({
 
     const token = useSelector((state) => state.userReducer.token);
 
+    const { partner } = booking;
+
     useEffect(
         () => {
             const eventTriggerGetBookingDetail = navigation.addListener('focus', () => {
@@ -141,6 +143,8 @@ export default function BookingDetail({
         )
     );
 
+    console.log('partner', partner);
+
     try {
         return (
             <>
@@ -193,7 +197,10 @@ export default function BookingDetail({
                                 </Text>
                             </Block>
 
-                            <BookingProgressFlow />
+                            <BookingProgressFlow
+                                status={status}
+                                partner={partner}
+                            />
 
                             {status === 'FinishPayment' && (
                                 renderCompleteBookingButton()

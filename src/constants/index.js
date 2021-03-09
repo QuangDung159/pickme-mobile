@@ -10,6 +10,7 @@ import Utils from './Utils';
 import IconFamily from './IconFamily';
 import ArrDayOfWeek from './ArrDayOfWeek';
 import GraphQueryString from './GraphQueryString';
+import BookingStatus from './BookingStatus';
 
 export {
     Images,
@@ -19,5 +20,6 @@ export {
     IconFamily,
     Utils,
     Rx, ArrDayOfWeek,
-    GraphQueryString
+    GraphQueryString,
+    BookingStatus
 };

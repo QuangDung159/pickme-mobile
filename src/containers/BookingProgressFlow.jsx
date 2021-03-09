@@ -1,11 +1,24 @@
 import { Block, Text } from 'galio-framework';
-import React from 'react';
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { IndicatorVerticalLine, Line, StepIndicator } from '../components/uiComponents';
-import { NowTheme } from '../constants';
+import { NowTheme, BookingStatus } from '../constants';
 
 export default function BookingProgressFlow({
     status, partner
 }) {
+    const { fullName } = partner;
+
+    useEffect(
+        () => {
+            handleAcctiveStepByStatus();
+        }, []
+    );
+
+    const handleAcctiveStepByStatus = () => {
+        console.log('status', status);
+    };
+
     return (
         <Block style={{
             marginHorizontal: 10,
@@ -38,7 +51,7 @@ export default function BookingProgressFlow({
                 <StepIndicator
                     type="current"
                     buttonText="2"
-                    content="Chờ xác nhận từ Khả Ngân"
+                    content={`Chờ xác nhận từ ${fullName}`}
                 />
 
                 <IndicatorVerticalLine active={false} />
@@ -77,3 +90,11 @@ export default function BookingProgressFlow({
         </Block>
     );
 }
+
+BookingProgressFlow.propTypes = {
+    status: PropTypes.oneOf([
+        BookingStatus.SCHEDULING,
+        BookingStatus.FINISH_PAYMENT
+    ]).isRequired,
+    partner: PropTypes.object.isRequired
+};
