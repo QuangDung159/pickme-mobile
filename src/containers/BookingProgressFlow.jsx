@@ -1,6 +1,5 @@
 import { Block, Text } from 'galio-framework';
 import React from 'react';
-import { StyleSheet } from 'react-native';
 import { IndicatorVerticalLine, Line, StepIndicator } from '../components/uiComponents';
 import { NowTheme } from '../constants';
 
@@ -29,33 +28,50 @@ export default function BookingProgressFlow() {
                 <StepIndicator
                     type="prev"
                     buttonText="1"
-                    content="Khả Ngân từ chối cuộc hẹn"
+                    content="Đơn hẹn được tạo"
                 />
 
                 <IndicatorVerticalLine />
 
                 <StepIndicator
                     type="current"
-                    buttonText="1"
-                    content="Khả Ngân từ chối cuộc hẹn"
+                    buttonText="2"
+                    content="Chờ xác nhận từ Khả Ngân"
                 />
 
                 <IndicatorVerticalLine active={false} />
 
                 <StepIndicator
                     type="next"
-                    buttonText="1"
-                    content="Khả Ngân từ chối cuộc hẹn"
+                    buttonText="3"
+                    content="Chờ thanh toán"
                 />
 
                 <IndicatorVerticalLine active={false} />
+
+                <StepIndicator
+                    type="next"
+                    buttonText="4"
+                    content="Thanh toán thành công"
+                />
+
+                <IndicatorVerticalLine active={false} />
+
+                <StepIndicator
+                    type="next"
+                    buttonText="5"
+                    content="Hoàn tất cuộc hẹn"
+                />
+
+                <IndicatorVerticalLine active={false} />
+
+                <StepIndicator
+                    type="next"
+                    buttonText="6"
+                    content="Đơn hẹn bị huỷ"
+                />
+
             </Block>
         </Block>
     );
 }
-
-const styles = StyleSheet.create({
-    stepIndicatorContainer: {
-        width: 60,
-    }
-});
