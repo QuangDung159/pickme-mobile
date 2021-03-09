@@ -7,7 +7,8 @@ import { NowTheme } from '../constants';
 export default function BookingProgressFlow() {
     return (
         <Block style={{
-            marginHorizontal: 10
+            marginHorizontal: 10,
+            marginTop: 20
         }}
         >
             <Text style={{
@@ -26,17 +27,114 @@ export default function BookingProgressFlow() {
             <Block>
                 {/* progress item */}
                 <Block row>
-                    <Button
-                        round
-                        shadowless
-                        style={styles.stepIndicator}
-                        fontFamily={NowTheme.FONT.MONTSERRAT_BOLD}
-                        fontColor={NowTheme.COLORS.BASE}
-                        color={NowTheme.COLORS.ACTIVE}
-                        fontSize={16}
+                    <Block
+                        style={styles.stepIndicatorContainer}
                     >
-                        1
-                    </Button>
+                        <Button
+                            round
+                            shadowless
+                            style={styles.stepIndicatorPrev}
+                            fontFamily={NowTheme.FONT.MONTSERRAT_BOLD}
+                            fontSize={20}
+                            fontColor={NowTheme.COLORS.BASE}
+                        >
+                            1
+                        </Button>
+                    </Block>
+
+                    <Block
+                        middle
+                        style={{
+                            marginLeft: 10
+                        }}
+                    >
+                        <Text
+                            color={NowTheme.COLORS.DEFAULT}
+                            size={16}
+                            fontFamily={NowTheme.FONT.MONTSERRAT_REGULAR}
+                            numberOfLines={2}
+                        >
+                            Đơn hẹn được xác nhận bởi Khả Ngân
+                        </Text>
+                    </Block>
+                </Block>
+
+                <Block
+                    middle
+                    style={styles.stepIndicatorContainer}
+                >
+                    <Block
+                        style={{
+                            height: 30,
+                            borderLeftWidth: 5,
+                            borderColor: NowTheme.COLORS.ACTIVE,
+                            justifyContent: 'center'
+                        }}
+                    />
+                </Block>
+
+                <Block row>
+                    <Block
+                        style={styles.stepIndicatorContainer}
+                    >
+                        <Button
+                            round
+                            shadowless
+                            style={styles.stepIndicatorCurrent}
+                            fontFamily={NowTheme.FONT.MONTSERRAT_BOLD}
+                            fontSize={20}
+                            fontColor={NowTheme.COLORS.ACTIVE}
+                        >
+                            1
+                        </Button>
+                    </Block>
+
+                    <Block
+                        middle
+                        style={{
+                            marginLeft: 10
+                        }}
+                    >
+                        <Text
+                            color={NowTheme.COLORS.DEFAULT}
+                            size={16}
+                            fontFamily={NowTheme.FONT.MONTSERRAT_REGULAR}
+                            numberOfLines={2}
+                        >
+                            Đơn hẹn được xác nhận bởi Khả Ngân
+                        </Text>
+                    </Block>
+                </Block>
+
+                <Block
+                    middle
+                    style={styles.stepIndicatorContainer}
+                >
+                    <Block
+                        style={{
+                            height: 30,
+                            borderLeftWidth: 5,
+                            borderColor: NowTheme.COLORS.ACTIVE,
+                            justifyContent: 'center'
+                        }}
+                    />
+                </Block>
+
+                <Block row>
+                    <Block
+                        style={styles.stepIndicatorContainer}
+                    >
+                        <Button
+                            round
+                            shadowless
+                            style={styles.stepIndicatorNext}
+                            fontFamily={NowTheme.FONT.MONTSERRAT_BOLD}
+                            fontSize={20}
+                            fontColor={NowTheme.COLORS.BASE}
+                        >
+                            1
+                        </Button>
+                    </Block>
 
                     <Block
                         middle
@@ -65,6 +163,35 @@ const styles = StyleSheet.create({
         height: NowTheme.SIZES.BASE * 3,
         borderRadius: NowTheme.SIZES.BASE * 1.5,
         justifyContent: 'center',
-        marginHorizontal: 5
+        marginHorizontal: 5,
     },
+    stepIndicatorCurrent: {
+        width: NowTheme.SIZES.BASE * 3,
+        height: NowTheme.SIZES.BASE * 3,
+        borderRadius: NowTheme.SIZES.BASE * 1.5,
+        justifyContent: 'center',
+        marginHorizontal: 5,
+        backgroundColor: NowTheme.COLORS.BASE,
+        borderColor: NowTheme.COLORS.ACTIVE,
+        borderWidth: 5,
+    },
+    stepIndicatorNext: {
+        width: NowTheme.SIZES.BASE * 3,
+        height: NowTheme.SIZES.BASE * 3,
+        borderRadius: NowTheme.SIZES.BASE * 1.5,
+        justifyContent: 'center',
+        marginHorizontal: 5,
+        backgroundColor: NowTheme.COLORS.BLOCK,
+    },
+    stepIndicatorPrev: {
+        width: NowTheme.SIZES.BASE * 3,
+        height: NowTheme.SIZES.BASE * 3,
+        borderRadius: NowTheme.SIZES.BASE * 1.5,
+        justifyContent: 'center',
+        marginHorizontal: 5,
+        backgroundColor: NowTheme.COLORS.ACTIVE,
+    },
+    stepIndicatorContainer: {
+        width: 60,
+    }
 });
