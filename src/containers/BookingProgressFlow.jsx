@@ -74,14 +74,14 @@ export default function BookingProgressFlow({
 
             {status !== BookingStatus.CANCEL ? (
                 <Block>
-                    {stepArr.map((item) => (
+                    {stepArr.map((item, index) => (
                         <Block key={item.buttonText}>
                             <StepIndicator
                                 type={item.type}
                                 buttonText={item.buttonText}
                                 content={item.content}
                             />
-                            {item.buttonText !== '5'
+                            {index !== stepArr.length - 1
                             && (
                                 <IndicatorVerticalLine
                                     active={item.type === 'prev'}
