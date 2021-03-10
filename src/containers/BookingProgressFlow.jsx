@@ -26,7 +26,6 @@ export default function BookingProgressFlow({
 
     return (
         <Block style={{
-            marginHorizontal: 10,
             marginBottom: 20
         }}
         >

@@ -154,7 +154,8 @@ export default function BookingDetail({
                         <Block style={{
                             width: NowTheme.SIZES.WIDTH_BASE * 0.95,
                             alignSelf: 'center',
-                            marginTop: 10
+                            marginTop: 10,
+                            marginHorizontal: 10
                         }}
                         >
                             <BookingProgressFlow
@@ -183,38 +184,33 @@ export default function BookingDetail({
                                 fromScreen={ScreenName.BOOKING_LIST}
                             />
 
-                            <Block style={{
-                                marginHorizontal: 10
+                            <Text style={{
+                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
                             }}
                             >
-                                <Text style={{
-                                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                                GHI CHÚ CUỘC HẸN
+                            </Text>
+                            <Line
+                                borderWidth={0.5}
+                                borderColor={NowTheme.COLORS.ACTIVE}
+                                style={{
+                                    marginTop: 10,
+                                    marginBottom: 20
                                 }}
-                                >
-                                    GHI CHÚ CUỘC HẸN
-                                </Text>
-                                <Line
-                                    borderWidth={0.5}
-                                    borderColor={NowTheme.COLORS.ACTIVE}
-                                    style={{
-                                        marginTop: 10,
-                                        marginBottom: 20
-                                    }}
-                                />
-                                <Text
-                                    color={NowTheme.COLORS.DEFAULT}
-                                    size={16}
-                                    style={styles.subTitle}
-                                >
-                                    Lorem ipsum dolor, sit amet consectetur
-                                    adipisicing elit. Culpa, voluptates in
-                                    voluptate vel mollitia unde repellendus f
-                                    acere asperiores maxime velit esse sint eos ut minus,
-                                    possimus exercitationem. Reiciendis, sapiente quibusdam!
-                                    Lorem ipsum dolor, sit amet consectetur
-                                    adipisicing elit. Culpa, voluptates
-                                </Text>
-                            </Block>
+                            />
+                            <Text
+                                color={NowTheme.COLORS.DEFAULT}
+                                size={16}
+                                style={styles.subTitle}
+                            >
+                                Lorem ipsum dolor, sit amet consectetur
+                                adipisicing elit. Culpa, voluptates in
+                                voluptate vel mollitia unde repellendus f
+                                acere asperiores maxime velit esse sint eos ut minus,
+                                possimus exercitationem. Reiciendis, sapiente quibusdam!
+                                Lorem ipsum dolor, sit amet consectetur
+                                adipisicing elit. Culpa, voluptates
+                            </Text>
 
                             {status === 'FinishPayment' && (
                                 renderCompleteBookingButton()

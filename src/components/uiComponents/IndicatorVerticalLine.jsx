@@ -14,7 +14,7 @@ export default function IndicatorVerticalLine({
         >
             <Block
                 style={{
-                    height: 15,
+                    height: 10,
                     borderLeftWidth: 3,
                     borderColor: active ? NowTheme.COLORS.ACTIVE : NowTheme.COLORS.BLOCK,
                     justifyContent: 'center'
