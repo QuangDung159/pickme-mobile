@@ -1,6 +1,6 @@
 import { Block, Text } from 'galio-framework';
 import PropTypes from 'prop-types';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IndicatorVerticalLine, Line, StepIndicator } from '../components/uiComponents';
 import { BookingStatus, NowTheme } from '../constants';
 
@@ -14,13 +14,41 @@ export default function BookingProgressFlow({
         status
     } = booking;
 
+    const [stepArr, setStepArr] = useState([
+        {
+            type: 'prev',
+            content: 'Đơn hẹn được tạo',
+            buttonText: '1'
+        },
+        {
+            type: 'prev',
+            content: `Chờ xác nhận từ ${fullName}`,
+            buttonText: '2'
+        },
+        {
+            type: 'current',
+            content: 'Thanh toán',
+            buttonText: '3'
+        },
+        {
+            type: 'next',
+            content: 'Cuộc hẹn sắp diễn ra',
+            buttonText: '4'
+        },
+        {
+            type: 'next',
+            content: 'Hoàn tất',
+            buttonText: '5'
+        },
+    ]);
+
     useEffect(
         () => {
-            handleAcctiveStepByStatus();
+            handleActiveStepByStatus();
         }, []
     );
 
-    const handleAcctiveStepByStatus = () => {
+    const handleActiveStepByStatus = () => {
         console.log('status', status);
     };
 
@@ -46,45 +74,21 @@ export default function BookingProgressFlow({
 
             {status !== BookingStatus.CANCEL ? (
                 <Block>
-                    {/* progress item */}
-                    <StepIndicator
-                        type="prev"
-                        buttonText="1"
-                        content="Đơn hẹn được tạo"
-                    />
-
-                    <IndicatorVerticalLine />
-
-                    <StepIndicator
-                        type="current"
-                        buttonText="2"
-                        content={`Chờ xác nhận từ ${fullName}`}
-                    />
-
-                    <IndicatorVerticalLine active={false} />
-
-                    <StepIndicator
-                        type="next"
-                        buttonText="3"
-                        content="Thanh toán"
-                    />
-
-                    <IndicatorVerticalLine active={false} />
-
-                    <StepIndicator
-                        type="next"
-                        buttonText="4"
-                        content="Cuộc hẹn sắp diễn ra"
-                    />
-
-                    <IndicatorVerticalLine active={false} />
-
-                    <StepIndicator
-                        type="next"
-                        buttonText="5"
-                        content="Hoàn tất"
-                    />
-
+                    {stepArr.map((item) => (
+                        <Block key={item.buttonText}>
+                            <StepIndicator
+                                type={item.type}
+                                buttonText={item.buttonText}
+                                content={item.content}
+                            />
+                            {item.buttonText !== '5'
+                            && (
+                                <IndicatorVerticalLine
+                                    active={item.type === 'prev'}
+                                />
+                            )}
+                        </Block>
+                    ))}
                 </Block>
             ) : (
                 <Block
