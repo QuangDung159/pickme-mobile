@@ -21,12 +21,12 @@ export default function BookingProgressFlow({
             buttonText: '1'
         },
         {
-            type: 'prev',
+            type: 'current',
             content: `Chờ xác nhận từ ${fullName}`,
             buttonText: '2'
         },
         {
-            type: 'current',
+            type: 'next',
             content: 'Thanh toán',
             buttonText: '3'
         },
@@ -50,6 +50,75 @@ export default function BookingProgressFlow({
 
     const handleActiveStepByStatus = () => {
         console.log('status', status);
+        switch (status) {
+            case BookingStatus.FINISH_PAYMENT: {
+                setStepArr(
+                    [
+                        {
+                            type: 'prev',
+                            content: 'Đơn hẹn được tạo',
+                            buttonText: '1'
+                        },
+                        {
+                            type: 'prev',
+                            content: `Chờ xác nhận từ ${fullName}`,
+                            buttonText: '2'
+                        },
+                        {
+                            type: 'prev',
+                            content: 'Thanh toán',
+                            buttonText: '3'
+                        },
+                        {
+                            type: 'current',
+                            content: 'Cuộc hẹn sắp diễn ra',
+                            buttonText: '4'
+                        },
+                        {
+                            type: 'next',
+                            content: 'Hoàn tất',
+                            buttonText: '5'
+                        }
+                    ]
+                );
+                break;
+            }
+            case BookingStatus.COMPLETED: {
+                setStepArr(
+                    [
+                        {
+                            type: 'prev',
+                            content: 'Đơn hẹn được tạo',
+                            buttonText: '1'
+                        },
+                        {
+                            type: 'prev',
+                            content: `Chờ xác nhận từ ${fullName}`,
+                            buttonText: '2'
+                        },
+                        {
+                            type: 'prev',
+                            content: 'Thanh toán',
+                            buttonText: '3'
+                        },
+                        {
+                            type: 'prev',
+                            content: 'Cuộc hẹn sắp diễn ra',
+                            buttonText: '4'
+                        },
+                        {
+                            type: 'prev',
+                            content: 'Hoàn tất',
+                            buttonText: '5'
+                        }
+                    ]
+                );
+                break;
+            }
+            default: {
+                break;
+            }
+        }
     };
 
     return (

@@ -1,5 +1,6 @@
 export default {
     SCHEDULING: 'Scheduling',
     FINISH_PAYMENT: 'FinishPayment',
-    CANCEL: 'Cancel'
+    CANCEL: 'Cancel',
+    COMPLETED: 'Completed'
 };
