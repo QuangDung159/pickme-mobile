@@ -37,6 +37,7 @@ export default function CardBooking({ booking, fromScreen, navigation }) {
 
         return (
             <Block
+                middle
                 style={{
                     backgroundColor: NowTheme.COLORS.BASE,
                     marginBottom: 10
@@ -45,7 +46,7 @@ export default function CardBooking({ booking, fromScreen, navigation }) {
                 <Block
                     space="between"
                     style={{
-                        marginHorizontal: 10,
+                        width: NowTheme.SIZES.WIDTH_BASE * 0.95
                     }}
                 >
                     <Block

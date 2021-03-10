@@ -155,7 +155,6 @@ export default function BookingDetail({
                             width: NowTheme.SIZES.WIDTH_BASE * 0.95,
                             alignSelf: 'center',
                             marginTop: 10,
-                            marginHorizontal: 10
                         }}
                         >
                             <BookingProgressFlow

@@ -82,7 +82,7 @@ export default function BookingProgressFlow({
                     <StepIndicator
                         type="next"
                         buttonText="5"
-                        content="Hoàn tất cuộc hẹn"
+                        content="Hoàn tất"
                     />
 
                 </Block>
