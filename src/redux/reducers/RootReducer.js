@@ -5,6 +5,7 @@ import messageReducer from './MessageReducer';
 import notificationReducer from './NotificationReducer';
 import bankReducer from './BankReducer';
 import locationReducer from './LocationReducer';
+import { RESET_STORE_SIGN_OUT } from '../ActionTypes';
 
 const appReducer = combineReducers({
     appConfigReducer,
@@ -15,6 +16,12 @@ const appReducer = combineReducers({
     locationReducer
 });
 
-const rootReducer = (state, action) => appReducer(state, action);
+const rootReducer = (state, action) => {
+    // reset store when sign out
+    if (action.type === RESET_STORE_SIGN_OUT) {
+        return appReducer(undefined, action);
+    }
+    return appReducer(state, action);
+};
 
 export default rootReducer;

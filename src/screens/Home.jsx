@@ -1,3 +1,4 @@
+/* eslint no-underscore-dangle: ["error", { "allow": ["_isMounted", "_id"] }] */
 import { Block } from 'galio-framework';
 import React, { useEffect, useState } from 'react';
 import {
@@ -78,7 +79,7 @@ export default function Home({ navigation }) {
                 listConversationTemp[indexInSource].isRead = false;
                 setListConversationGetAtHome(listConversationTemp);
             }
-        }, [messageListened]
+        }, [messageListened._id]
     );
 
     const getConversationByMessage = (message, listConversationSource) => {

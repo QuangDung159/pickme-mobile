@@ -24,48 +24,45 @@ export default function Main() {
     // Instantiate required constructor fields
     const cache = new InMemoryCache();
 
-    const createHttpLink = (token) => {
-        const httpLink = new HttpLink({
-            uri: `https:${SOCKET_URL}`,
-            headers: {
+    const httpLink = new HttpLink({
+        uri: `http:${SOCKET_URL}`,
+        headers: {
+            authorization: token,
+        }
+    });
+
+    const wsLink = new WebSocketLink({
+        uri: `ws:${SOCKET_URL}/subscriptions`,
+        options: {
+            reconnect: true,
+            connectionParams: {
                 authorization: token,
-            }
-        });
-        return httpLink;
-    };
-
-    const createWsLink = (token) => {
-        const wsLink = new WebSocketLink({
-            uri: `ws:${SOCKET_URL}/subscriptions`,
-            options: {
-                reconnect: true,
-                connectionParams: {
-                    authorization: token,
-                },
-            }
-        });
-        return wsLink;
-    };
-
-    const doSplitLink = (token) => {
-        split(
-            ({ query }) => {
-                const definition = getMainDefinition(query);
-                return (
-                    definition.kind === 'OperationDefinition'
-          && definition.operation === 'subscription'
-                );
             },
-            createWsLink(token),
-            createHttpLink(token),
-        );
-    };
+        }
+    });
+
+    const splitLink = split(
+        ({ query }) => {
+            const definition = getMainDefinition(query);
+            return (
+                definition.kind === 'OperationDefinition'
+            && definition.operation === 'subscription'
+            );
+        },
+        wsLink,
+        httpLink,
+    );
+
+    const client = new ApolloClient({
+        cache,
+        link: splitLink,
+    });
 
     useEffect(
         () => {
             dispatch(setDeviceId(Constants.deviceId));
             dispatch(setDeviceTimezone());
-        }, [dispatch]
+        }, []
     );
 
     const handleNotification = () => {};
@@ -85,13 +82,7 @@ export default function Main() {
 
     try {
         return (
-            <ApolloProvider client={
-                new ApolloClient({
-                    cache,
-                    link: doSplitLink(token),
-                })
-            }
-            >
+            <ApolloProvider client={client}>
                 <NavigationContainer>
                     <Listener
                         onListenedData={(data) => { handleData(data.listen); }}

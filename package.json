@@ -38,8 +38,8 @@
     "react-native-toast-message": "1.3.7",
     "react-native-vector-icons": "7.1.0",
     "react-native-web": "~0.13.12",
-    "react-redux": "7.2.2",
-    "redux": "4.0.5",
+    "react-redux": "^7.2.2",
+    "redux": "^4.0.5",
     "subscriptions-transport-ws": "0.9.18"
   },
   "devDependencies": {
