@@ -49,7 +49,6 @@ export default function BookingProgressFlow({
     );
 
     const handleActiveStepByStatus = () => {
-        console.log('status', status);
         switch (status) {
             case BookingStatus.FINISH_PAYMENT: {
                 setStepArr(
