@@ -73,8 +73,8 @@ StepIndicator.defaultProps = {
 
 const styles = StyleSheet.create({
     stepIndicatorCurrent: {
-        width: NowTheme.SIZES.BASE * 2,
-        height: NowTheme.SIZES.BASE * 2,
+        width: 30,
+        height: 30,
         borderRadius: NowTheme.SIZES.BASE * 1.5,
         justifyContent: 'center',
         marginHorizontal: 5,
@@ -83,24 +83,24 @@ const styles = StyleSheet.create({
         borderWidth: 3,
     },
     stepIndicatorNext: {
-        width: NowTheme.SIZES.BASE * 2,
-        height: NowTheme.SIZES.BASE * 2,
+        width: 30,
+        height: 30,
         borderRadius: NowTheme.SIZES.BASE * 1.5,
         justifyContent: 'center',
         marginHorizontal: 5,
         backgroundColor: NowTheme.COLORS.BLOCK,
     },
     stepIndicatorPrev: {
-        width: NowTheme.SIZES.BASE * 2,
-        height: NowTheme.SIZES.BASE * 2,
+        width: 30,
+        height: 30,
         borderRadius: NowTheme.SIZES.BASE * 1.5,
         justifyContent: 'center',
         marginHorizontal: 5,
         backgroundColor: NowTheme.COLORS.ACTIVE,
     },
     stepIndicatorContainer: {
-        width: 60,
-        height: 33,
+        width: 30,
+        height: 30,
     },
     contentContainer: {
         marginLeft: 10

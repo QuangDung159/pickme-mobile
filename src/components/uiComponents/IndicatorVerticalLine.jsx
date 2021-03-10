@@ -34,6 +34,6 @@ IndicatorVerticalLine.defaultProps = {
 
 const styles = StyleSheet.create({
     stepIndicatorContainer: {
-        width: 60,
+        width: 30,
     }
 });
