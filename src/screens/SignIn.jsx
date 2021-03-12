@@ -1,14 +1,14 @@
 import {
     Block, Button, Text
 } from 'galio-framework';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
     ActivityIndicator, ImageBackground,
     StyleSheet
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Toast from 'react-native-toast-message';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Input } from '../components/uiComponents';
 import {
     Images, NowTheme, Rx, ScreenName
@@ -16,8 +16,7 @@ import {
 import { ToastHelpers } from '../helpers';
 import {
     setCurrentUser,
-    setListBank, setListBookingLocation,
-    setListNotification, setToken
+    setToken
 } from '../redux/Actions';
 import { rxUtil } from '../utils';
 
@@ -27,21 +26,6 @@ export default function SignIn(props) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
 
     const dispatch = useDispatch();
-
-    const token = useSelector((state) => state.userReducer.token);
-    const listBank = useSelector((state) => state.bankReducer.listBank);
-    const listBookingLocation = useSelector(
-        (state) => state.locationReducer.listBookingLocation
-    );
-    const listNotification = useSelector(
-        (state) => state.notificationReducer.listNotification
-    );
-
-    useEffect(
-        () => {
-            getMetaData();
-        }, [token]
-    );
 
     // handler \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
     const onChangeUsername = (usernameInput) => {
@@ -101,74 +85,6 @@ export default function SignIn(props) {
         return true;
     };
 
-    const getMetaData = () => {
-        getListNotificationAPI();
-        getListBookingLocationFromAPI();
-        getListBankFromAPI();
-    };
-
-    const getListBankFromAPI = () => {
-        const headers = {
-            Authorization: token
-        };
-
-        if (listBank && listBank.length === 0) {
-            // get list bank from api, set store
-            rxUtil(
-                Rx.BANK.SET_LIST_BANK,
-                'GET',
-                null,
-                headers,
-                (res) => {
-                    dispatch(setListBank(res.data.data));
-                },
-                () => {},
-                () => {}
-            );
-        }
-    };
-
-    const getListBookingLocationFromAPI = () => {
-        const headers = {
-            Authorization: token
-        };
-
-        if (listBookingLocation && listBookingLocation.length === 0) {
-            // get list booking location and update store
-            rxUtil(
-                Rx.BOOKING.GET_LIST_BOOKING_LOCATION,
-                'GET',
-                null,
-                headers,
-                (res) => {
-                    dispatch(setListBookingLocation(res.data.data));
-                    getListBankFromAPI();
-                },
-                (err) => { console.log('err', err); },
-                () => {}
-            );
-        }
-    };
-
-    const getListNotificationAPI = () => {
-        if (listNotification && listNotification.length === 0) {
-            rxUtil(
-                Rx.NOTIFICATION.GET_MY_NOTIFICATION,
-                'GET',
-                null,
-                {
-                    Authorization: token
-                },
-                (res) => {
-                    // set store
-                    dispatch(setListNotification(res.data.data));
-                },
-                () => {},
-                () => {}
-            );
-        }
-    };
-
     const onGetCurrentUserData = (url, tokenFromAPI) => {
         const {
             navigation
@@ -180,7 +96,6 @@ export default function SignIn(props) {
         rxUtil(url, 'GET', '', headers,
             (res) => {
                 dispatch(setCurrentUser(res.data.data));
-                getMetaData();
                 toggleSpinner(false);
                 navigation.reset({
                     index: 0,

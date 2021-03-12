@@ -2,11 +2,12 @@
 import { API_URL } from '@env';
 import axios from 'axios';
 
-const generateLogData = (endpoint, method, data, headers, res) => {
-    console.log(`---- ${method} ${endpoint}`);
-    console.log('headers', headers);
-    console.log('data', data);
-    console.log('res', res);
+const generateLogData = (endpoint, data, headers, res) => {
+    console.log(`${res.status} ${endpoint}`, {
+        headers,
+        data,
+        res
+    });
 };
 
 export default (
@@ -19,7 +20,6 @@ export default (
     catchCallBack = null
 ) => {
     const url = `${API_URL}${endpoint}`;
-    generateLogData(endpoint, method, data, headers);
     axios({
         url,
         data,
@@ -28,11 +28,11 @@ export default (
     })
         .then((res) => {
             if (res.status === 200) {
-                generateLogData(endpoint, method, data, headers, res);
+                generateLogData(endpoint, data, headers, res);
                 successCallBack(res);
             } else {
+                generateLogData(endpoint, data, headers, res);
                 failCallBack(res);
-                generateLogData(endpoint, method, data, headers, res);
             }
         })
         .catch((err) => {
@@ -44,7 +44,7 @@ export default (
                     }
                 }
             } = err;
-            console.log('catch error :>> ', response);
+            console.log('response', response);
             generateLogData(endpoint, method, data, headers, response);
             catchCallBack(message);
         });

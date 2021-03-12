@@ -1,3 +1,5 @@
+/* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
+import { NO_AVATAR_URL } from '@env';
 import {
     Block, Button, Text
 } from 'galio-framework';
@@ -29,6 +31,7 @@ export default function Personal(props) {
     const [visible, setVisible] = useState(false);
     const [imageIndex, setImageIndex] = useState(0);
     const [listImageReview, setListImageReview] = useState([]);
+    const [image, setImage] = useState('');
 
     const token = useSelector((state) => state.userReducer.token);
     const currentUser = useSelector((state) => state.userReducer.currentUser);
@@ -72,6 +75,7 @@ export default function Personal(props) {
                     res?.data?.message || 'Tải ảnh lên thành công!', 'success'
                 );
                 setIsShowSpinner(false);
+                setImage(uri);
 
                 if (res?.data?.data) {
                     dispatch(
@@ -128,15 +132,20 @@ export default function Personal(props) {
     };
 
     const renderAvatar = () => {
-        if (currentUser.url) {
+        if (image) {
             return (
                 <Image
                     style={styles.avatar}
-                    source={{ uri: currentUser.url }}
+                    source={{ uri: image }}
                 />
             );
         }
-        return <></>;
+        return (
+            <Image
+                style={styles.avatar}
+                source={{ uri: currentUser.url || NO_AVATAR_URL }}
+            />
+        );
     };
 
     const renderAvatarPanel = () => {
