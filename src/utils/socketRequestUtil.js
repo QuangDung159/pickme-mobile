@@ -33,7 +33,7 @@ export default (
                 failCallBack(response);
                 console.log('fail error :>> ', response);
             }
-            console.log(`${method} ${response.status} socket ${infoString}`);
+            console.log(`${response.status} socket ${infoString}`, config);
         })
         .catch((error) => {
             const { response } = error;
