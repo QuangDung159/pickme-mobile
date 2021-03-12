@@ -9,7 +9,6 @@ import {
     BankAccountScreen, BookingConfirmScreen,
     BookingDetailScreen,
     BookingListScreen,
-    BusyCalendarScreen,
     CashInScreen,
     CashOutScreen,
     ConversationListScreen,
@@ -59,7 +58,6 @@ const PersonalStack = () => (
         {PaymentScreen()}
         {UpdateInfoAccountScreen()}
         {BankAccountScreen()}
-        {BusyCalendarScreen()}
     </Stack.Navigator>
 );
 

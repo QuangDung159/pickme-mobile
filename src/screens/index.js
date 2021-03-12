@@ -9,7 +9,6 @@ import BankAccount from './BankAccount';
 import BookingConfirm from './BookingConfirm';
 import BookingDetail from './BookingDetail';
 import BookingList from './BookingList';
-import BusyCalendar from './BusyCalendar';
 import CashIn from './CashIn';
 import CashOut from './CashOut';
 import ConversationList from './ConversationList';
@@ -27,7 +26,6 @@ export {
     BankAccount, BookingConfirm,
     BookingDetail,
     BookingList,
-    BusyCalendar,
     CashIn,
     CashOut,
     ConversationList,

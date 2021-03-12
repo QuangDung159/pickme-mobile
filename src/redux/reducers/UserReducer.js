@@ -1,7 +1,6 @@
 import {
     SET_CURRENT_USER,
     SET_TOKEN,
-    SET_CALENDAR,
 } from '../ActionTypes';
 
 const initState = {
@@ -22,9 +21,6 @@ const userReducer = (state = initState, action) => {
         }
         case SET_TOKEN: {
             return { ...state, token: `Bearer ${payload.token}` };
-        }
-        case SET_CALENDAR: {
-            return { ...state, calendar: payload.calendar };
         }
         default: {
             return state;

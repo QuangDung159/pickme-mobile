@@ -8,7 +8,7 @@ import {
     BankAccount, BookingConfirm,
     BookingDetail,
     BookingList,
-    BusyCalendar, CashIn, CashOut,
+    CashIn, CashOut,
     ConversationList, CreateAccount, Home,
     LeaderBoard,
     Message, Notification,
@@ -350,24 +350,6 @@ export const WalletScreen = () => (
     />
 );
 
-export const BusyCalendarScreen = () => (
-    <Stack.Screen
-        name={ScreenName.BUSY_CALENDAR}
-        component={BusyCalendar}
-        options={{
-            header: ({ navigation, scene }) => (
-                <Header
-                    title={ScreenTitle.BUSY_CALENDAR}
-                    options
-                    navigation={navigation}
-                    scene={scene}
-                />
-            ),
-            cardStyle: { backgroundColor: NowTheme.COLORS.BASE }
-        }}
-    />
-);
-
 export const SignUpScreen = () => (
     <Stack.Screen
         name={ScreenName.SIGN_UP}
@@ -397,12 +379,3 @@ export const SignInScreen = () => (
         }}
     />
 );
-
-export default {
-    HomeScreen,
-    NotificationScreen,
-    SettingsScreen,
-    SignInScreen,
-    SignUpScreen,
-    CreateAccountScreen
-};

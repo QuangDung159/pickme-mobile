@@ -22,8 +22,8 @@ import {
 import { rxUtil } from '../utils';
 
 export default function SignIn(props) {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [username, setUsername] = useState('huyvd');
+    const [password, setPassword] = useState('0000');
     const [isShowSpinner, setIsShowSpinner] = useState(false);
 
     const dispatch = useDispatch();

@@ -8,7 +8,6 @@ import ScreenName from './ScreenName';
 import ScreenTitle from './ScreenTitle';
 import Utils from './Utils';
 import IconFamily from './IconFamily';
-import ArrDayOfWeek from './ArrDayOfWeek';
 import GraphQueryString from './GraphQueryString';
 import BookingStatus from './BookingStatus';
 
@@ -19,7 +18,7 @@ export {
     ScreenTitle,
     IconFamily,
     Utils,
-    Rx, ArrDayOfWeek,
+    Rx,
     GraphQueryString,
     BookingStatus
 };
