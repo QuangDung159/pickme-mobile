@@ -89,7 +89,7 @@ export default function Message({ navigation, route }) {
                     }
                 );
             }
-        }, [messageListened._id]
+        }, [messageListened]
     );
 
     const calculateNumberOfNumberMessageUnread = (listMessage) => {
@@ -180,7 +180,7 @@ export default function Message({ navigation, route }) {
                             size={16}
                             style={{
                                 margin: 10,
-                                fontfamily: NowTheme.FONT.MONTSERRAT_REGULAR
+                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
                             }}
                         >
                             {message.content}
@@ -191,7 +191,7 @@ export default function Message({ navigation, route }) {
                             style={{
                                 marginHorizontal: 10,
                                 marginBottom: 10,
-                                fontfamily: NowTheme.FONT.MONTSERRAT_REGULAR
+                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
                             }}
                         >
                             {moment.unix(message.createdAt / 1000).format('DD-MM HH:mm')}
@@ -281,7 +281,7 @@ export default function Message({ navigation, route }) {
                             <Input
                                 style={{
                                     borderWidth: 0,
-                                    fontfamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
                                     width: NowTheme.SIZES.WIDTH_BASE * 0.85
                                 }}
                                 placeholder="Nhập tin nhắn..."

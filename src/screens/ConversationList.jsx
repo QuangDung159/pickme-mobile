@@ -29,7 +29,6 @@ export default function ConversationList({ navigation }) {
                         1, 20,
                         (data) => {
                             dispatch(setListConversation(data.data.data.getRecently));
-                            countNumberOfUnreadConversation(data.data.data.getRecently);
                         }
                     );
                 }
@@ -43,20 +42,20 @@ export default function ConversationList({ navigation }) {
             getListConversationFromSocket(
                 1, 20,
                 (data) => {
-                    setListConversation(data.data.data.getRecently);
+                    dispatch(setListConversation(data.data.data.getRecently));
                     countNumberOfUnreadConversation(data.data.data.getRecently);
                 }
             );
-        }, [messageListened._id]
+        }, [messageListened]
     );
 
-    const countNumberOfUnreadConversation = () => {
+    const countNumberOfUnreadConversation = (listMessage) => {
         if (messageListened.from === chattingWith) {
             return;
         }
 
         let count = 0;
-        listConversation.forEach((conversation) => {
+        listMessage.forEach((conversation) => {
             if (conversation.to === currentUser.id && !conversation.isRead) {
                 count += 1;
             }

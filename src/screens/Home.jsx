@@ -79,7 +79,7 @@ export default function Home({ navigation }) {
                 listConversationTemp[indexInSource].isRead = false;
                 setListConversationGetAtHome(listConversationTemp);
             }
-        }, [messageListened._id]
+        }, [messageListened]
     );
 
     const getConversationByMessage = (message, listConversationSource) => {
