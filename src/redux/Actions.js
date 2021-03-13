@@ -12,7 +12,8 @@ import {
     SET_NUMBER_MESSAGE_UNREAD,
     SET_CHATING_WITH,
     RESET_STORE_SIGN_OUT,
-    SET_DATA_LISTENED
+    SET_DATA_LISTENED,
+    SET_EXPO_TOKEN
 } from './ActionTypes';
 
 export const setDeviceTimezone = () => ({
@@ -101,5 +102,12 @@ export const setDataListened = (dataListened) => ({
     type: SET_DATA_LISTENED,
     payload: {
         dataListened
+    }
+});
+
+export const setExpoToken = (expoToken) => ({
+    type: SET_EXPO_TOKEN,
+    payload: {
+        expoToken
     }
 });

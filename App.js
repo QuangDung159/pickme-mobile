@@ -14,6 +14,7 @@ import { IconFamily, Images, NowTheme } from './src/constants';
 import store from './src/redux/Store';
 import Main from './src/containers/Main';
 import { IconCustom } from './src/components/uiComponents';
+import { ExpoNotification } from './src/components/bussinessComponents';
 
 // images caching
 function cacheImages(images) {
@@ -141,6 +142,7 @@ export default function App() {
     return (
         <MenuProvider>
             <Provider store={store}>
+                <ExpoNotification />
                 <Main />
                 <Toast config={toastConfig} ref={(ref) => Toast.setRef(ref)} />
             </Provider>

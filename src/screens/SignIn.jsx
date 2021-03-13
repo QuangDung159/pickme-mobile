@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Toast from 'react-native-toast-message';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Input } from '../components/uiComponents';
 import {
     Images, NowTheme, Rx, ScreenName
@@ -25,6 +25,8 @@ export default function SignIn(props) {
     const [password, setPassword] = useState('0000');
     const [isShowSpinner, setIsShowSpinner] = useState(false);
 
+    const expoToken = useSelector((state) => state.appConfigReducer.expoToken);
+
     const dispatch = useDispatch();
 
     // handler \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
@@ -40,7 +42,8 @@ export default function SignIn(props) {
         if (validation()) {
             const data = {
                 username,
-                password
+                password,
+                expoNotificationToken: expoToken
             };
 
             toggleSpinner(true);

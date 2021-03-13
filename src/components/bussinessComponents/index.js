@@ -7,6 +7,7 @@ import ChatMessageTrigger from './ChatMessageTrigger';
 import SubInfoProfile from './SubInfoProfile';
 import ProfileInfoItem from './ProfileInfoItem';
 import CardImage from './CardImage';
+import ExpoNotification from './ExpoNotification';
 
 export {
     Listener,
@@ -16,5 +17,6 @@ export {
     ChatMessageTrigger,
     SubInfoProfile,
     ProfileInfoItem,
-    CardImage
+    CardImage,
+    ExpoNotification
 };

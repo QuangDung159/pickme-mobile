@@ -4,6 +4,7 @@ import {
     SET_DEVICE_TIMEZONE,
     SET_DEVICE_LOCALE,
     SET_DEVICE_ID,
+    SET_EXPO_TOKEN,
 } from '../ActionTypes';
 
 const initState = {
@@ -23,6 +24,9 @@ const appConfigReducer = (state = initState, action) => {
         }
         case SET_DEVICE_ID: {
             return { ...state, deviceId: payload.deviceId };
+        }
+        case SET_EXPO_TOKEN: {
+            return { ...state, expoToken: payload.expoToken };
         }
         default: {
             return state;
