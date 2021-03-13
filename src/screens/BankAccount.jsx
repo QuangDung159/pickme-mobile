@@ -6,11 +6,12 @@ import { ScrollView } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import ImageScalable from 'react-native-scalable-image';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { CenterLoader } from '../components/uiComponents';
 import { NowTheme, Rx } from '../constants';
 import { ToastHelpers } from '../helpers';
 import { rxUtil } from '../utils';
+import { setListBank } from '../redux/Actions';
 
 export default function BankAccount(props) {
     const { route } = props;
@@ -27,11 +28,31 @@ export default function BankAccount(props) {
     const token = useSelector((state) => state.userReducer.token);
     const listBank = useSelector((state) => state.bankReducer.listBank);
 
+    const dispatch = useDispatch();
+
     useEffect(
         () => {
             setListBankAccount(route.params?.listBankAccount || []);
+            fetchListBank();
         }, []
     );
+
+    const fetchListBank = () => {
+        if (!listBank || listBank.length === 0) {
+            rxUtil(
+                Rx.BANK.GET_LIST_BANK,
+                'GET',
+                null,
+                {
+                    Authorization: token
+                },
+                (res) => {
+                    const listBankFetched = res.data.data;
+                    dispatch(setListBank(listBankFetched));
+                }
+            );
+        }
+    };
 
     // handler \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
     const onSubmitCreateBankAccount = () => {

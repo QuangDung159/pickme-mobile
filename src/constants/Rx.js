@@ -19,7 +19,7 @@ export default {
     BANK: {
         BANK_ACCOUNTS: '/users/BankAccounts',
         ADD_BANK_ACCOUNT: '/Users/AddBankAccount',
-        SET_LIST_BANK: '/Settings/Banks',
+        GET_LIST_BANK: '/Settings/Banks',
     },
     BOOKING: {
         SCHEDULE_BOOKING: '/bookings/ScheduleBooking',
