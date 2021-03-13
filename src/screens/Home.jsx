@@ -33,7 +33,7 @@ export default function Home({ navigation }) {
         () => {
             getListPartner();
             getListNotificationAPI();
-            setIntervalToUpdateLastActiveOfUserStatus();
+            const intervalUpdateLatest = setIntervalToUpdateLastActiveOfUserStatus();
 
             getListConversationFromSocket(
                 1, 20,
@@ -43,6 +43,10 @@ export default function Home({ navigation }) {
                     countNumberOfUnreadConversation(data.data.data.getRecently);
                 }
             );
+
+            return () => {
+                clearInterval(intervalUpdateLatest);
+            };
         }, []
     );
 
@@ -191,6 +195,7 @@ export default function Home({ navigation }) {
                 () => {}
             );
         }, 300000);
+        return intervalUpdateLastActive;
     };
 
     const onRefresh = () => {
