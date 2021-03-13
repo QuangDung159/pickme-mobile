@@ -10,7 +10,7 @@ import {
 import DropDownPicker from 'react-native-dropdown-picker';
 import { ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { CustomCalendar } from '../components/bussinessComponents';
 import { CenterLoader, IconCustom, Line } from '../components/uiComponents';
 import {
@@ -18,6 +18,7 @@ import {
 } from '../constants';
 import { ToastHelpers } from '../helpers';
 import { rxUtil } from '../utils';
+import { setListBookingLocation } from '../redux/Actions';
 
 export default function BookingConfirm({ route, navigation }) {
     const [booking, setBooking] = useState({
@@ -39,6 +40,8 @@ export default function BookingConfirm({ route, navigation }) {
     const token = useSelector((state) => state.userReducer.token);
     const listBookingLocation = useSelector((state) => state.locationReducer.listBookingLocation);
 
+    const dispatch = useDispatch();
+
     useEffect(
         () => {
             const {
@@ -54,16 +57,44 @@ export default function BookingConfirm({ route, navigation }) {
                 setEarningExpected(partner.earningExpected);
             }
 
+            getCalendarPartner();
+            fillBookingDataFromDetail();
+            fetchListBookingLocation();
+        }, []
+    );
+
+    const fetchListBookingLocation = () => {
+        if (listBookingLocation && listBookingLocation.length > 0) {
             setListLocationForDropdown(createListLocationForDropdown(listBookingLocation));
             setBooking({
                 ...booking,
                 locationId: listBookingLocation[0].id,
                 locationAdress: listBookingLocation[0].address
             });
-            getCalendarPartner();
-            fillBookingDataFromDetail();
-        }, []
-    );
+        } else {
+            rxUtil(
+                Rx.BOOKING.GET_LIST_BOOKING_LOCATION,
+                'GET',
+                null,
+                {
+                    Authorization: token
+                },
+                (res) => {
+                    const listLocation = res.data.data;
+                    console.log('listLocation.length', res);
+                    if (listLocation.length > 0) {
+                        dispatch(setListBookingLocation(listLocation));
+                        setListLocationForDropdown(createListLocationForDropdown(listLocation));
+                        setBooking({
+                            ...booking,
+                            locationId: listLocation[0].id,
+                            locationAdress: listLocation[0].address
+                        });
+                    }
+                }
+            );
+        }
+    };
 
     // handler \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
     const onChangeStart = (startInput) => {
