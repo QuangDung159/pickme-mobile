@@ -31,7 +31,7 @@ export default function BookingDetail({
         () => {
             const eventTriggerGetBookingDetail = navigation.addListener('focus', () => {
                 if (from === ScreenName.BOOKING_CONFIRM) {
-                // TODO: trigger call api get booking detail
+                // TODO: trigger call api get booking detail after update booking
                 }
             });
 
@@ -157,12 +157,6 @@ export default function BookingDetail({
                             marginTop: 10,
                         }}
                         >
-                            <BookingProgressFlow
-                                status={status}
-                                partner={partner}
-                                booking={booking}
-                            />
-
                             <Text style={{
                                 fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
                             }}
@@ -173,14 +167,21 @@ export default function BookingDetail({
                                 borderWidth={0.5}
                                 borderColor={NowTheme.COLORS.ACTIVE}
                                 style={{
-                                    marginTop: 10,
+                                    marginVertical: 10
                                 }}
                             />
 
                             <CardBooking
                                 booking={booking}
                                 showEditButton
-                                fromScreen={ScreenName.BOOKING_LIST}
+                                renderAtScreen={ScreenName.BOOKING_DETAIL}
+                                navigation={navigation}
+                            />
+
+                            <BookingProgressFlow
+                                status={status}
+                                partner={partner}
+                                booking={booking}
                             />
 
                             <Text style={{
@@ -193,8 +194,7 @@ export default function BookingDetail({
                                 borderWidth={0.5}
                                 borderColor={NowTheme.COLORS.ACTIVE}
                                 style={{
-                                    marginTop: 10,
-                                    marginBottom: 20
+                                    marginVertical: 10
                                 }}
                             />
                             <Text

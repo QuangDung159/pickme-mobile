@@ -6,14 +6,11 @@ import {
     StyleSheet,
     TouchableOpacity
 } from 'react-native';
-import { useSelector } from 'react-redux';
 import { IconFamily, NowTheme, ScreenName } from '../../constants';
 import { ToastHelpers } from '../../helpers';
 import { IconCustom } from '../uiComponents';
 
-export default function CardBooking({ booking, fromScreen, navigation }) {
-    const currentUser = useSelector((state) => state.userReducer.currentUser);
-
+export default function CardBooking({ booking, renderAtScreen, navigation }) {
     const convertMinutesToStringHours = (minutes) => moment.utc()
         .startOf('day')
         .add(minutes, 'minutes')
@@ -24,16 +21,16 @@ export default function CardBooking({ booking, fromScreen, navigation }) {
             startAt,
             endAt,
             location,
-            customer,
             partner,
             totalAmount,
             status,
-            date
+            date,
+            idReadAble
         } = booking;
 
         const startStr = convertMinutesToStringHours(startAt);
         const endStr = convertMinutesToStringHours(endAt);
-        const fullName = currentUser.userType === 'Partner' ? customer.fullName : partner.fullName;
+        const { fullName } = partner;
 
         return (
             <Block
@@ -53,42 +50,50 @@ export default function CardBooking({ booking, fromScreen, navigation }) {
                         row
                         space="between"
                     >
-                        <Text
-                            size={NowTheme.SIZES.FONT_INFO}
-                            style={styles.cardTitle}
-                            color={NowTheme.COLORS.ACTIVE}
-                        >
-                            {/* check role */}
-                            <>{fullName}</>
-                        </Text>
-                        {currentUser.userType === 'Customer'
-                            && fromScreen !== ScreenName.BOOKING_LIST
-                            && status === 'Scheduling' && (
-                            <Block
-                                middle
+                        <Block>
+                            <Text
+                                size={NowTheme.SIZES.FONT_INFO}
+                                style={styles.cardTitle}
+                                color={NowTheme.COLORS.ACTIVE}
                             >
-                                <TouchableOpacity
-                                    onPress={() => navigation.navigate(
-                                        ScreenName.BOOKING_CONFIRM,
-                                        {
-                                            bookingToEdit: booking,
-                                            partner,
-                                            fullName,
-                                            from: ScreenName.BOOKING_DETAIL
-                                        }
-                                    )}
+                                <>{`${fullName}`}</>
+                            </Text>
+                            <Text
+                                size={NowTheme.SIZES.FONT_INFO}
+                                style={styles.cardSubTitle}
+                                color={NowTheme.COLORS.ACTIVE}
+                            >
+                                <>{`Mã đơn hẹn: #${idReadAble}`}</>
+                            </Text>
+                        </Block>
+                        {renderAtScreen === ScreenName.BOOKING_DETAIL
+                            && status === 'Scheduling'
+                            && (
+                                <Block
+                                    middle
                                 >
-                                    <IconCustom
-                                        name="pencil"
-                                        family={IconFamily.FONT_AWESOME}
-                                        size={NowTheme.SIZES.ICON_20}
-                                        color={NowTheme.COLORS.DEFAULT}
-                                    />
-                                </TouchableOpacity>
-                            </Block>
-                        )}
+                                    <TouchableOpacity
+                                        onPress={() => navigation.navigate(
+                                            ScreenName.BOOKING_CONFIRM,
+                                            {
+                                                bookingToEdit: booking,
+                                                partner,
+                                                fullName,
+                                                from: ScreenName.BOOKING_DETAIL
+                                            }
+                                        )}
+                                    >
+                                        <IconCustom
+                                            name="pencil"
+                                            family={IconFamily.FONT_AWESOME}
+                                            size={NowTheme.SIZES.ICON_20}
+                                            color={NowTheme.COLORS.DEFAULT}
+                                        />
+                                    </TouchableOpacity>
+                                </Block>
+                            )}
                     </Block>
-                    <Block style={styles.subInfoItemContainer}>
+                    <Block>
                         <Block
                             space="between"
                         >
@@ -162,20 +167,22 @@ export default function CardBooking({ booking, fromScreen, navigation }) {
 
 CardBooking.propTypes = {
     booking: PropTypes.object.isRequired,
-    fromScreen: PropTypes.string.isRequired,
+    renderAtScreen: PropTypes.string.isRequired,
 };
 
 const styles = StyleSheet.create({
     cardTitle: {
         paddingTop: 7,
-        paddingBottom: 15,
         fontFamily: NowTheme.FONT.MONTSERRAT_BOLD
     },
     subInfoCard: {
         fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
         marginBottom: 15
     },
-    subInfoItemContainer: {
-        marginBottom: 10,
+    cardSubTitle: {
+        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+        fontSize: 14,
+        paddingBottom: 15,
+        color: NowTheme.COLORS.ICON_INPUT
     }
 });

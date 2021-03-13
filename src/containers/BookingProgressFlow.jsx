@@ -135,8 +135,7 @@ export default function BookingProgressFlow({
                 borderWidth={0.5}
                 borderColor={NowTheme.COLORS.ACTIVE}
                 style={{
-                    marginTop: 10,
-                    marginBottom: 20
+                    marginVertical: 10
                 }}
             />
 
