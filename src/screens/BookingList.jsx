@@ -78,7 +78,7 @@ export default function BookingList({ navigation }) {
                         <TouchableWithoutFeedback
                             onPress={() => {
                                 navigation.navigate(ScreenName.BOOKING_DETAIL, {
-                                    booking: item,
+                                    bookingId: item.id,
                                     from: ScreenName.BOOKING_LIST
                                 });
                             }}

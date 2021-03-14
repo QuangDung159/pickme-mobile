@@ -5,33 +5,31 @@ import { useSelector } from 'react-redux';
 import { CardBooking } from '../components/bussinessComponents';
 import { CenterLoader, Line } from '../components/uiComponents';
 import { NowTheme, Rx, ScreenName } from '../constants';
+import BookingProgressFlow from '../containers/BookingProgressFlow';
 import { ToastHelpers } from '../helpers';
 import { rxUtil } from '../utils';
-import BookingProgressFlow from '../containers/BookingProgressFlow';
 
 export default function BookingDetail({
     route: {
         params: {
             from,
-            booking: {
-                id,
-                status,
-                partner
-            },
-            booking
+            bookingId
         }
     },
     navigation
 }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
+    const [booking, setBooking] = useState({});
 
     const token = useSelector((state) => state.userReducer.token);
 
     useEffect(
         () => {
+            fetchBookingDetailInfo();
             const eventTriggerGetBookingDetail = navigation.addListener('focus', () => {
                 if (from === ScreenName.BOOKING_CONFIRM) {
                 // TODO: trigger call api get booking detail after update booking
+                    fetchBookingDetailInfo();
                 }
             });
 
@@ -39,12 +37,28 @@ export default function BookingDetail({
         }, []
     );
 
+    const fetchBookingDetailInfo = () => {
+        rxUtil(
+            `${Rx.BOOKING.DETAIL_BOOKING}/${bookingId}`,
+            'GET',
+            null,
+            {
+                Authorization: token
+            },
+            (res) => {
+                setBooking(res.data.data);
+            },
+            () => {},
+            () => {}
+        );
+    };
+
     // handler \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
     const onCancelBooking = () => {
         setIsShowSpinner(true);
 
         rxUtil(
-            `${Rx.BOOKING.CANCEL_BOOKING}/${id}`,
+            `${Rx.BOOKING.CANCEL_BOOKING}/${bookingId}`,
             'POST',
             null,
             {
@@ -69,7 +83,7 @@ export default function BookingDetail({
         setIsShowSpinner(true);
 
         rxUtil(
-            `${Rx.BOOKING.COMPLETE_BOOKING}/${id}`,
+            `${Rx.BOOKING.COMPLETE_BOOKING}/${bookingId}`,
             'POST',
             null,
             {
@@ -171,18 +185,22 @@ export default function BookingDetail({
                                 }}
                             />
 
-                            <CardBooking
-                                booking={booking}
-                                showEditButton
-                                renderAtScreen={ScreenName.BOOKING_DETAIL}
-                                navigation={navigation}
-                            />
+                            {booking !== {} && (
+                                <>
+                                    <CardBooking
+                                        booking={booking}
+                                        showEditButton
+                                        renderAtScreen={ScreenName.BOOKING_DETAIL}
+                                        navigation={navigation}
+                                    />
 
-                            <BookingProgressFlow
-                                status={status}
-                                partner={partner}
-                                booking={booking}
-                            />
+                                    <BookingProgressFlow
+                                        status={booking.status}
+                                        partner={booking.partner}
+                                        booking={booking}
+                                    />
+                                </>
+                            )}
 
                             <Text style={{
                                 fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
@@ -211,7 +229,7 @@ export default function BookingDetail({
                                 adipisicing elit. Culpa, voluptates
                             </Text>
 
-                            {status === 'FinishPayment' && (
+                            {booking.status === 'FinishPayment' && (
                                 renderCompleteBookingButton()
                             )}
                         </Block>

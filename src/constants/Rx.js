@@ -29,7 +29,8 @@ export default {
         GET_MY_BOOKING_AS_CUSTOMER: '/bookings/GetMyBookingAsCustomer',
         PARTNER_CONFIRM_BOOKING: '/bookings/PartnerConfirmBooking',
         CANCEL_BOOKING: '/bookings/CancelBooking',
-        COMPLETE_BOOKING: '/bookings/CompleteBooking'
+        COMPLETE_BOOKING: '/bookings/CompleteBooking',
+        DETAIL_BOOKING: '/bookings/DetailBooking'
     },
     PARTNER: {
         LEADER_BOARD_DIAMOND: '/Users/LeaderBoadDiamon',
