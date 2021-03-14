@@ -2,7 +2,7 @@ import {
     Block, Button, Input, Text
 } from 'galio-framework';
 import React, { useEffect, useState } from 'react';
-import { ScrollView } from 'react-native';
+import { RefreshControl, ScrollView } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import ImageScalable from 'react-native-scalable-image';
@@ -24,6 +24,7 @@ export default function BankAccount(props) {
     const [isShowForm, setIsShowForm] = useState(false);
     const [isShowSpinner, setIsShowSpinner] = useState(false);
     const [listBankAccount, setListBankAccount] = useState([]);
+    const [refreshing, setRefreshing] = useState(false);
 
     const token = useSelector((state) => state.userReducer.token);
     const listBank = useSelector((state) => state.bankReducer.listBank);
@@ -33,25 +34,36 @@ export default function BankAccount(props) {
     useEffect(
         () => {
             setListBankAccount(route.params?.listBankAccount || []);
-            fetchListBank();
+            fetchListBankByStore();
         }, []
     );
 
-    const fetchListBank = () => {
+    const fetchListBankByStore = () => {
         if (!listBank || listBank.length === 0) {
-            rxUtil(
-                Rx.BANK.GET_LIST_BANK,
-                'GET',
-                null,
-                {
-                    Authorization: token
-                },
-                (res) => {
-                    const listBankFetched = res.data.data;
-                    dispatch(setListBank(listBankFetched));
-                }
-            );
+            fetchListBank();
         }
+    };
+
+    const fetchListBank = () => {
+        rxUtil(
+            Rx.BANK.GET_LIST_BANK,
+            'GET',
+            null,
+            {
+                Authorization: token
+            },
+            (res) => {
+                const listBankFetched = res.data.data;
+                dispatch(setListBank(listBankFetched));
+                setRefreshing(false);
+            },
+            () => {
+                setRefreshing(false);
+            },
+            () => {
+                setRefreshing(false);
+            }
+        );
     };
 
     // handler \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
@@ -92,6 +104,11 @@ export default function BankAccount(props) {
         );
     };
 
+    const onRefresh = () => {
+        setRefreshing(true);
+        fetchListBank();
+    };
+
     const getListBankAccountByUserAPI = () => {
         rxUtil(
             Rx.BANK.BANK_ACCOUNTS,
@@ -130,6 +147,12 @@ export default function BankAccount(props) {
         >
             <ScrollView
                 showsVerticalScrollIndicator={false}
+                refreshControl={(
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={() => onRefresh()}
+                    />
+                )}
             >
                 <Block
                     style={{
