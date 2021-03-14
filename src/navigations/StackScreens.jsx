@@ -5,7 +5,8 @@ import { NowTheme, ScreenName, ScreenTitle } from '../constants';
 import Header from '../containers/Header';
 // screens
 import {
-    BankAccount, BookingConfirm,
+    BankAccount,
+    CreateBooking,
     BookingDetail,
     BookingList,
     CashIn, CashOut,
@@ -148,14 +149,14 @@ export const BankAccountScreen = () => (
     />
 );
 
-export const BookingConfirmScreen = () => (
+export const CreateBookingScreen = () => (
     <Stack.Screen
-        name={ScreenName.BOOKING_CONFIRM}
-        component={BookingConfirm}
+        name={ScreenName.CREATE_BOOKING}
+        component={CreateBooking}
         options={{
             header: ({ navigation, scene }) => (
                 <Header
-                    title={ScreenTitle.BOOKING_CONFIRM}
+                    title={ScreenTitle.CREATE_BOOKING}
                     options
                     navigation={navigation}
                     scene={scene}

@@ -261,6 +261,7 @@ export default function Home({ navigation }) {
                         center
                         style={{
                             backgroundColor: NowTheme.COLORS.BLOCK,
+                            paddingBottom: 10
                         }}
                     >
                         {renderArticles()}

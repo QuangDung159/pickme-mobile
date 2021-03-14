@@ -315,7 +315,7 @@ export default function Profile({ route, navigation }) {
                                     round
                                     color={NowTheme.COLORS.ACTIVE}
                                     onPress={() => {
-                                        navigation.navigate(ScreenName.BOOKING_CONFIRM, {
+                                        navigation.navigate(ScreenName.CREATE_BOOKING, {
                                             partner: partnerInfo,
                                             from: ScreenName.PROFILE
                                         });

@@ -30,7 +30,7 @@ export default function BookingDetail({
         () => {
             fetchBookingDetailInfo();
             const eventTriggerGetBookingDetail = navigation.addListener('focus', () => {
-                if (from === ScreenName.BOOKING_CONFIRM) {
+                if (from === ScreenName.CREATE_BOOKING) {
                 // TODO: trigger call api get booking detail after update booking
                     fetchBookingDetailInfo();
                 }

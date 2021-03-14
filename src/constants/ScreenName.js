@@ -13,7 +13,7 @@ export default {
     APP: 'App',
     NOTIFICATION: 'Notification',
     MENU: 'Menu',
-    BOOKING_CONFIRM: 'BookingConfirm',
+    CREATE_BOOKING: 'CreateBooking',
     PAYMENT: 'Payment',
     MESSAGE: 'Message',
     PERSONAL: 'Personal',

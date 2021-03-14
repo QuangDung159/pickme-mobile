@@ -20,7 +20,7 @@ import { ToastHelpers } from '../helpers';
 import { rxUtil } from '../utils';
 import { setListBookingLocation } from '../redux/Actions';
 
-export default function BookingConfirm({ route, navigation }) {
+export default function CreateBooking({ route, navigation }) {
     const [booking, setBooking] = useState({
         start: '',
         end: '',

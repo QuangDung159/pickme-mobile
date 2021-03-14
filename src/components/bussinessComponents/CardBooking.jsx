@@ -79,7 +79,7 @@ export default function CardBooking({ booking, renderAtScreen, navigation }) {
                                 >
                                     <TouchableOpacity
                                         onPress={() => navigation.navigate(
-                                            ScreenName.BOOKING_CONFIRM,
+                                            ScreenName.CREATE_BOOKING,
                                             {
                                                 bookingToEdit: booking,
                                                 partner,

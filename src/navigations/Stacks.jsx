@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { NowTheme, ScreenName } from '../constants';
 import Onboarding from '../screens/Onboarding';
 import {
-    BankAccountScreen, BookingConfirmScreen,
+    BankAccountScreen, CreateBookingScreen,
     BookingDetailScreen,
     BookingListScreen,
     CashInScreen,
@@ -54,7 +54,7 @@ const PersonalStack = () => (
         {BookingDetailScreen()}
         {ProfileScreen()}
         {MessageScreen()}
-        {BookingConfirmScreen()}
+        {CreateBookingScreen()}
         {PaymentScreen()}
         {UpdateInfoAccountScreen()}
         {BankAccountScreen()}
@@ -72,7 +72,7 @@ const LeaderBoardStack = () => (
         {LeaderBoardScreen()}
         {ProfileScreen()}
         {MessageScreen()}
-        {BookingConfirmScreen()}
+        {CreateBookingScreen()}
         {PaymentScreen()}
         {WalletScreen()}
         {CashInScreen()}
@@ -92,7 +92,7 @@ const HomeStack = () => (
     <Stack.Navigator mode="card" headerMode="screen">
         {HomeScreen()}
         {ProfileScreen()}
-        {BookingConfirmScreen()}
+        {CreateBookingScreen()}
         {PaymentScreen()}
         {WalletScreen()}
         {CashOutScreen()}
