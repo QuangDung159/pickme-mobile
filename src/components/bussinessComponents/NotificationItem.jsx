@@ -1,36 +1,28 @@
-import { withNavigation } from '@react-navigation/compat';
 import { Block, Text } from 'galio-framework';
-import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { TouchableWithoutFeedback } from 'react-native';
 import {
     Menu,
     MenuOption, MenuOptions,
     MenuTrigger
 } from 'react-native-popup-menu';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { IconFamily, NowTheme, Rx } from '../../constants';
 import { rxUtil } from '../../utils';
 import { IconCustom } from '../uiComponents';
 
-const mapStateToProps = (state) => {
-    const {
-        userReducer: {
-            token
-        },
-    } = state;
+export default function NotificationItem({
+    onTriggerRead,
+    notiItem,
+    iconName,
+    iconFamily,
+    screen,
+    navigation,
+}) {
+    const token = useSelector((state) => state.userReducer.token);
 
-    return ({
-        token
-    });
-};
-
-class NotificationItem extends PureComponent {
-    onClickRead = (isReadAll, notiId = null) => {
-        const {
-            token,
-            onTriggerRead
-        } = this.props;
-
+    const onClickRead = (isReadAll, notiId = null) => {
         const endpoint = isReadAll
             ? Rx.NOTIFICATION.TRIGGER_READ_ALL
             : `${Rx.NOTIFICATION.TRIGGER_READ}/${notiId}`;
@@ -48,15 +40,14 @@ class NotificationItem extends PureComponent {
             () => {},
             () => {}
         );
-    }
+    };
 
-    renderMenuIcon = () => {
+    const renderMenuIcon = () => {
         const {
-            notiItem: {
-                id,
-                isRead
-            }
-        } = this.props;
+            id,
+            isRead
+        } = notiItem;
+
         return (
             <>
                 {!isRead && (
@@ -70,25 +61,19 @@ class NotificationItem extends PureComponent {
                             />
                         </MenuTrigger>
                         <MenuOptions>
-                            <MenuOption onSelect={() => this.onClickRead(false, id)} text="Đánh dấu là đã đọc" />
-                            <MenuOption onSelect={() => this.onClickRead(true)} text="Đánh dấu tất cả là đã đọc" />
+                            <MenuOption onSelect={() => onClickRead(false, id)} text="Đánh dấu là đã đọc" />
+                            <MenuOption onSelect={() => onClickRead(true)} text="Đánh dấu tất cả là đã đọc" />
                         </MenuOptions>
                     </Menu>
                 )}
             </>
         );
-    }
+    };
 
-    renderNotiContent = () => {
+    const renderNotiContent = () => {
         const {
-            iconName,
-            iconFamily,
-            screen,
-            navigation,
-            notiItem: {
-                content,
-            },
-        } = this.props;
+            content,
+        } = notiItem;
 
         return (
             <>
@@ -135,46 +120,54 @@ class NotificationItem extends PureComponent {
                 </Block>
             </>
         );
-    }
+    };
 
-    render() {
-        const {
-            notiItem: {
-                isRead,
-            },
-        } = this.props;
+    const {
+        isRead,
+    } = notiItem;
 
-        return (
-            <Block style={[
-                !isRead
-                    ? { backgroundColor: NowTheme.COLORS.NOTIFICATION_BACKGROUND }
-                    : { }, {
-                    height: NowTheme.SIZES.HEIGHT_BASE * 0.1
-                }]}
+    return (
+        <Block style={[
+            !isRead
+                ? { backgroundColor: NowTheme.COLORS.NOTIFICATION_BACKGROUND }
+                : { }, {
+                height: NowTheme.SIZES.HEIGHT_BASE * 0.1
+            }]}
+        >
+            <Block
+                row
+                flex
+                style={{
+                    height: NowTheme.SIZES.HEIGHT_BASE * 0.1,
+                    marginHorizontal: 10,
+                }}
             >
+                {renderNotiContent()}
+
                 <Block
-                    row
-                    flex
+                    flex={1}
                     style={{
-                        height: NowTheme.SIZES.HEIGHT_BASE * 0.1,
-                        marginHorizontal: 10,
+                        justifyContent: 'center',
+                        alignContent: 'flex-end'
                     }}
                 >
-                    {this.renderNotiContent()}
-
-                    <Block
-                        flex={1}
-                        style={{
-                            justifyContent: 'center',
-                            alignContent: 'flex-end'
-                        }}
-                    >
-                        {this.renderMenuIcon()}
-                    </Block>
+                    {renderMenuIcon()}
                 </Block>
             </Block>
-        );
-    }
+        </Block>
+    );
 }
 
-export default connect(mapStateToProps, {})(withNavigation(NotificationItem));
+NotificationItem.propTypes = {
+    onTriggerRead: PropTypes.func.isRequired,
+    notiItem: PropTypes.object.isRequired,
+    iconName: PropTypes.string,
+    iconFamily: PropTypes.string,
+    screen: PropTypes.string.isRequired,
+    navigation: PropTypes.object.isRequired
+};
+
+NotificationItem.defaultProps = {
+    iconName: 'home',
+    iconFamily: IconFamily.FONT_AWESOME
+};

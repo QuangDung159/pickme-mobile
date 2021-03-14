@@ -1,41 +1,28 @@
 import moment from 'moment';
-import React, { PureComponent } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { IconFamily, NowTheme } from '../../constants';
 import ProfileInfoItem from './ProfileInfoItem';
 
-class SubInfoProfile extends PureComponent {
-    render() {
-        const { user } = this.props;
-
-        return (
-            <>
-                {/* <ProfileInfoItem
-                    fontSize={NowTheme.SIZES.FONT_18}
-                    iconName="location"
-                    IconFamily={IconFamily.ENTYPO}
-                    content={`Sống tại ${user.address}`}
-                /> */}
-                <ProfileInfoItem
-                    fontSize={NowTheme.SIZES.FONT_18}
-                    iconName="human-male-height"
-                    IconFamily={IconFamily.MATERIAL_COMMUNITY_ICONS}
-                    content={`${user.height} cm`}
-                />
-                <ProfileInfoItem
-                    fontSize={NowTheme.SIZES.FONT_18}
-                    iconName="birthday-cake"
-                    IconFamily={IconFamily.FONT_AWESOME}
-                    content={moment(user.dob).format('DD-MM-YYYY').toString()}
-                />
-                {/* <ProfileInfoItem
-                    fontSize={NowTheme.SIZES.FONT_18}
-                    iconName="home"
-                    IconFamily={IconFamily.FONT_AWESOME}
-                    content={user.hometown}
-                /> */}
-            </>
-        );
-    }
+export default function SubInfoProfile({ user }) {
+    return (
+        <>
+            <ProfileInfoItem
+                fontSize={NowTheme.SIZES.FONT_18}
+                iconName="human-male-height"
+                iconFamily={IconFamily.MATERIAL_COMMUNITY_ICONS}
+                content={`${user.height} cm`}
+            />
+            <ProfileInfoItem
+                fontSize={NowTheme.SIZES.FONT_18}
+                iconName="birthday-cake"
+                iconFamily={IconFamily.FONT_AWESOME}
+                content={moment(user.dob).format('DD-MM-YYYY').toString()}
+            />
+        </>
+    );
 }
 
-export default SubInfoProfile;
+SubInfoProfile.propTypes = {
+    user: PropTypes.object.isRequired
+};

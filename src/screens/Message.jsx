@@ -6,7 +6,6 @@ import { StyleSheet } from 'react-native';
 import { FlatList, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useDispatch, useSelector } from 'react-redux';
-import { ChatMessageTrigger } from '../components/bussinessComponents';
 import { CenterLoader, IconCustom, Input } from '../components/uiComponents';
 import { GraphQueryString, IconFamily, NowTheme } from '../constants';
 import { ToastHelpers } from '../helpers';
@@ -14,12 +13,10 @@ import { setChattingWith, setNumberMessageUnread } from '../redux/Actions';
 import { socketRequestUtil } from '../utils';
 
 export default function Message({ navigation, route }) {
-    const [onClickPush, setOnClickPush] = useState(false);
     const [listMessageFromAPI, setListMessageFromAPI] = useState([]);
     const [messageFromInput, setMessageFromInput] = useState('');
     const [nextPageIndex, setNextPageIndex] = useState(2);
     const [isShowLoader, setIsShowLoader] = useState(false);
-    const [messageToSend, setMessageToSend] = useState('');
 
     const token = useSelector((state) => state.userReducer.token);
     const currentUser = useSelector((state) => state.userReducer.currentUser);
@@ -89,7 +86,7 @@ export default function Message({ navigation, route }) {
                     }
                 );
             }
-        }, [messageListened]
+        }, [messageListened._id]
     );
 
     const calculateNumberOfNumberMessageUnread = (listMessage) => {
@@ -208,6 +205,7 @@ export default function Message({ navigation, route }) {
             onEndReached={() => addListMessagePaging()}
             showsVerticalScrollIndicator={false}
             data={listMessageFromAPI}
+            keyExtractor={(item) => item.id}
             renderItem={({ item }) => renderMessageItem(item)}
         />
     );
@@ -242,12 +240,41 @@ export default function Message({ navigation, route }) {
         messagePayload.from = id;
         const newArray = [...listMessageFromAPI];
         newArray.unshift(messagePayload);
-
         setListMessageFromAPI(newArray);
     };
 
     const onChangeMessageInput = (messageInput) => {
         setMessageFromInput(messageInput);
+    };
+
+    const triggerSendMessage = () => {
+        const data = {
+            query: GraphQueryString.SEND_MESSAGE,
+            variables: {
+                data: {
+                    to: toUserId,
+                    content: messageFromInput
+                }
+            }
+        };
+
+        socketRequestUtil(
+            'POST',
+            data,
+            token,
+            () => {},
+            () => {},
+            () => {}
+        );
+
+        const messagePayoad = {
+            from: '',
+            content: messageFromInput,
+            createdAt: moment().unix() * 1000
+        };
+
+        addLastestMessage(messagePayoad);
+        setMessageFromInput('');
     };
 
     const {
@@ -267,7 +294,6 @@ export default function Message({ navigation, route }) {
                             flex: 1
                         }}
                     >
-
                         {renderListMessage()}
 
                         <Block
@@ -296,9 +322,7 @@ export default function Message({ navigation, route }) {
                             <TouchableWithoutFeedback
                                 onPress={() => {
                                     if (messageFromInput !== '') {
-                                        setOnClickPush(true);
-                                        setMessageToSend(messageFromInput);
-                                        setMessageFromInput('');
+                                        triggerSendMessage();
                                     }
                                 }}
                             >
@@ -309,18 +333,6 @@ export default function Message({ navigation, route }) {
                                     color={NowTheme.COLORS.ACTIVE}
                                 />
                             </TouchableWithoutFeedback>
-
-                            {onClickPush && (
-                                <ChatMessageTrigger
-                                    content={messageToSend}
-                                    toUserId={toUserId}
-                                    isClickPush={onClickPush}
-                                    onSend={(wasSend, res) => {
-                                        setOnClickPush(!wasSend);
-                                        addLastestMessage(res.data.message);
-                                    }}
-                                />
-                            )}
                         </Block>
                     </KeyboardAwareScrollView>
                 )}
