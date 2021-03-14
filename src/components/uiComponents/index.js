@@ -8,6 +8,7 @@ import NoteText from './NoteText';
 import Button from './Button';
 import StepIndicator from './StepIndicator';
 import IndicatorVerticalLine from './IndicatorVerticalLine';
+import TimePickerBottomSheet from './TimePickerBottomSheet';
 
 export {
     IconCustom, Input, Tabs,
@@ -15,5 +16,6 @@ export {
     Switch,
     Line, NoteText,
     Button, StepIndicator,
-    IndicatorVerticalLine
+    IndicatorVerticalLine,
+    TimePickerBottomSheet
 };
