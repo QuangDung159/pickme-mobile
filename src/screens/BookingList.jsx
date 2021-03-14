@@ -1,6 +1,6 @@
 import { Block, Text } from 'galio-framework';
 import React, { useEffect, useState } from 'react';
-import { FlatList, SafeAreaView } from 'react-native';
+import { FlatList, RefreshControl, SafeAreaView } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useSelector } from 'react-redux';
 import { CardBooking } from '../components/bussinessComponents';
@@ -12,6 +12,7 @@ import { rxUtil } from '../utils';
 export default function BookingList({ navigation }) {
     const [listBooking, setListBooking] = useState([]);
     const [isShowSpinner, setIsShowSpinner] = useState(true);
+    const [refreshing, setRefreshing] = useState(false);
 
     const token = useSelector((state) => state.userReducer.token);
 
@@ -38,14 +39,22 @@ export default function BookingList({ navigation }) {
             (res) => {
                 setListBooking(res.data.data);
                 setIsShowSpinner(false);
+                setRefreshing(false);
             },
             () => {
                 setIsShowSpinner(false);
+                setRefreshing(false);
             },
             () => {
                 setIsShowSpinner(false);
+                setRefreshing(false);
             }
         );
+    };
+
+    const onRefresh = () => {
+        setRefreshing(true);
+        getListBooking();
     };
 
     const renderListBooking = () => (
@@ -57,6 +66,12 @@ export default function BookingList({ navigation }) {
                         marginTop: 10,
                         paddingBottom: 10
                     }}
+                    refreshControl={(
+                        <RefreshControl
+                            refreshing={refreshing}
+                            onRefresh={() => onRefresh()}
+                        />
+                    )}
                     data={listBooking}
                     keyExtractor={(item) => item.id}
                     renderItem={({ item }) => (
