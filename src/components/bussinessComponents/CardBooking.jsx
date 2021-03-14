@@ -28,6 +28,11 @@ export default function CardBooking({ booking, renderAtScreen, navigation }) {
             idReadAble
         } = booking;
 
+        if (!booking) {
+            console.log('booking', booking);
+            return null;
+        }
+
         const startStr = convertMinutesToStringHours(startAt);
         const endStr = convertMinutesToStringHours(endAt);
         const { fullName } = partner;

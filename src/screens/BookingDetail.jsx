@@ -1,6 +1,8 @@
 import { Block, Button, Text } from 'galio-framework';
 import React, { useEffect, useState } from 'react';
-import { Alert, ScrollView, StyleSheet } from 'react-native';
+import {
+    Alert, RefreshControl, ScrollView, StyleSheet
+} from 'react-native';
 import { useSelector } from 'react-redux';
 import { CardBooking } from '../components/bussinessComponents';
 import { CenterLoader, Line } from '../components/uiComponents';
@@ -19,7 +21,8 @@ export default function BookingDetail({
     navigation
 }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
-    const [booking, setBooking] = useState({});
+    const [booking, setBooking] = useState();
+    const [refreshing, setRefreshing] = useState(false);
 
     const token = useSelector((state) => state.userReducer.token);
 
@@ -37,6 +40,11 @@ export default function BookingDetail({
         }, []
     );
 
+    const onRefresh = () => {
+        setRefreshing(true);
+        fetchBookingDetailInfo();
+    };
+
     const fetchBookingDetailInfo = () => {
         rxUtil(
             `${Rx.BOOKING.DETAIL_BOOKING}/${bookingId}`,
@@ -47,9 +55,14 @@ export default function BookingDetail({
             },
             (res) => {
                 setBooking(res.data.data);
+                setRefreshing(false);
             },
-            () => {},
-            () => {}
+            () => {
+                setRefreshing(false);
+            },
+            () => {
+                setRefreshing(false);
+            }
         );
     };
 
@@ -156,96 +169,101 @@ export default function BookingDetail({
         )
     );
 
-    try {
-        return (
-            <>
-                {isShowSpinner ? (
-                    <CenterLoader size="large" />
-                ) : (
-                    <ScrollView
-                        showsVerticalScrollIndicator={false}
-                    >
-                        <Block style={{
-                            width: NowTheme.SIZES.WIDTH_BASE * 0.95,
-                            alignSelf: 'center',
-                            marginTop: 10,
-                        }}
+    if (booking) {
+        try {
+            return (
+                <>
+                    {isShowSpinner ? (
+                        <CenterLoader size="large" />
+                    ) : (
+                        <ScrollView
+                            showsVerticalScrollIndicator={false}
+                            refreshControl={(
+                                <RefreshControl
+                                    refreshing={refreshing}
+                                    onRefresh={() => onRefresh()}
+                                />
+                            )}
                         >
-                            <Text style={{
-                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                            <Block style={{
+                                width: NowTheme.SIZES.WIDTH_BASE * 0.95,
+                                alignSelf: 'center',
+                                marginTop: 10,
                             }}
                             >
-                                CHI TIẾT ĐƠN HẸN
-                            </Text>
-                            <Line
-                                borderWidth={0.5}
-                                borderColor={NowTheme.COLORS.ACTIVE}
-                                style={{
-                                    marginVertical: 10
+                                <Text style={{
+                                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
                                 }}
-                            />
+                                >
+                                    CHI TIẾT ĐƠN HẸN
+                                </Text>
+                                <Line
+                                    borderWidth={0.5}
+                                    borderColor={NowTheme.COLORS.ACTIVE}
+                                    style={{
+                                        marginVertical: 10
+                                    }}
+                                />
 
-                            {booking !== {} && (
-                                <>
-                                    <CardBooking
-                                        booking={booking}
-                                        showEditButton
-                                        renderAtScreen={ScreenName.BOOKING_DETAIL}
-                                        navigation={navigation}
-                                    />
+                                <CardBooking
+                                    booking={booking}
+                                    showEditButton
+                                    renderAtScreen={ScreenName.BOOKING_DETAIL}
+                                    navigation={navigation}
+                                />
 
-                                    <BookingProgressFlow
-                                        status={booking.status}
-                                        partner={booking.partner}
-                                        booking={booking}
-                                    />
-                                </>
-                            )}
+                                <BookingProgressFlow
+                                    status={booking.status}
+                                    partner={booking.partner}
+                                    booking={booking}
+                                />
 
-                            <Text style={{
-                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                            }}
-                            >
-                                GHI CHÚ CUỘC HẸN
-                            </Text>
-                            <Line
-                                borderWidth={0.5}
-                                borderColor={NowTheme.COLORS.ACTIVE}
-                                style={{
-                                    marginVertical: 10
+                                <Text style={{
+                                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
                                 }}
-                            />
-                            <Text
-                                color={NowTheme.COLORS.DEFAULT}
-                                size={16}
-                                style={styles.subTitle}
-                            >
-                                Lorem ipsum dolor, sit amet consectetur
-                                adipisicing elit. Culpa, voluptates in
-                                voluptate vel mollitia unde repellendus f
-                                acere asperiores maxime velit esse sint eos ut minus,
-                                possimus exercitationem. Reiciendis, sapiente quibusdam!
-                                Lorem ipsum dolor, sit amet consectetur
-                                adipisicing elit. Culpa, voluptates
-                            </Text>
+                                >
+                                    GHI CHÚ CUỘC HẸN
+                                </Text>
+                                <Line
+                                    borderWidth={0.5}
+                                    borderColor={NowTheme.COLORS.ACTIVE}
+                                    style={{
+                                        marginVertical: 10
+                                    }}
+                                />
+                                <Text
+                                    color={NowTheme.COLORS.DEFAULT}
+                                    size={16}
+                                    style={styles.subTitle}
+                                >
+                                    Lorem ipsum dolor, sit amet consectetur
+                                    adipisicing elit. Culpa, voluptates in
+                                    voluptate vel mollitia unde repellendus f
+                                    acere asperiores maxime velit esse sint eos ut minus,
+                                    possimus exercitationem. Reiciendis, sapiente quibusdam!
+                                    Lorem ipsum dolor, sit amet consectetur
+                                    adipisicing elit. Culpa, voluptates
+                                </Text>
 
-                            {booking.status === 'FinishPayment' && (
-                                renderCompleteBookingButton()
-                            )}
-                        </Block>
-                    </ScrollView>
-                )}
-            </>
+                                {booking.status === 'FinishPayment' && (
+                                    renderCompleteBookingButton()
+                                )}
+                            </Block>
+                        </ScrollView>
+                    )}
+                </>
 
-        );
-    } catch (exception) {
-        console.log('exception :>> ', exception);
-        return (
-            <>
-                {ToastHelpers.renderToast()}
-            </>
-        );
+            );
+        } catch (exception) {
+            console.log('exception :>> ', exception);
+            return (
+                <>
+                    {ToastHelpers.renderToast()}
+                </>
+            );
+        }
     }
+    return null;
 }
 
 const styles = StyleSheet.create({
