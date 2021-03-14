@@ -2,7 +2,7 @@ import {
     Block, Button, Input, Text
 } from 'galio-framework';
 import moment from 'moment';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
     Alert,
     Modal, StyleSheet
@@ -10,6 +10,8 @@ import {
 import DropDownPicker from 'react-native-dropdown-picker';
 import { ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import RBSheet from 'react-native-raw-bottom-sheet';
+import ScrollPicker from 'react-native-wheel-scroll-picker';
 import { useDispatch, useSelector } from 'react-redux';
 import { CustomCalendar } from '../components/bussinessComponents';
 import { CenterLoader, IconCustom, Line } from '../components/uiComponents';
@@ -17,8 +19,20 @@ import {
     IconFamily, NowTheme, Rx, ScreenName
 } from '../constants';
 import { ToastHelpers } from '../helpers';
-import { rxUtil } from '../utils';
 import { setListBookingLocation } from '../redux/Actions';
+import { rxUtil } from '../utils';
+
+const timeArr = [
+    '6', '7', '8', '9', '10', '11', '12', '13', '14', '15',
+    '16', '17', '18', '19', '20', '21', '22'
+];
+
+const minuteArr = [
+    '00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14',
+    '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29',
+    '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44',
+    '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59',
+];
 
 export default function CreateBooking({ route, navigation }) {
     const [booking, setBooking] = useState({
@@ -36,6 +50,8 @@ export default function CreateBooking({ route, navigation }) {
     const [listLocationForDropdown, setListLocationForDropdown] = useState([]);
     const [currentTask, setCurrentTask] = useState('create');
     const [earningExpected, setEarningExpected] = useState(0);
+
+    const refRBSheet = useRef();
 
     const token = useSelector((state) => state.userReducer.token);
     const listBookingLocation = useSelector((state) => state.locationReducer.listBookingLocation);
@@ -81,7 +97,6 @@ export default function CreateBooking({ route, navigation }) {
                 },
                 (res) => {
                     const listLocation = res.data.data;
-                    console.log('listLocation.length', res);
                     if (listLocation.length > 0) {
                         dispatch(setListBookingLocation(listLocation));
                         setListLocationForDropdown(createListLocationForDropdown(listLocation));
@@ -296,6 +311,123 @@ export default function CreateBooking({ route, navigation }) {
     };
 
     // render \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
+    const renderTimePicker = () => (
+        <Block
+            row
+            space="between"
+            style={{
+                alignSelf: 'center',
+                width: NowTheme.SIZES.WIDTH_BASE * 0.6
+            }}
+        >
+            <ScrollPicker
+                dataSource={timeArr}
+                selectedIndex={1}
+                renderItem={(data) => (
+                    <Text
+                        style={{
+                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
+                        }}
+                    >
+                        {`${data}`}
+                    </Text>
+                )}
+                onValueChange={(data, selectedIndex) => {
+                    console.log('selectedIndex', selectedIndex);
+                //
+                }}
+                wrapperHeight={120}
+                wrapperWidth={150}
+                wrapperBackground="#FFFFFF"
+                itemHeight={40}
+                highlightColor="#d8d8d8"
+                highlightBorderWidth={2}
+                activeItemColor="#222121"
+                itemColor="#B4B4B4"
+            />
+
+            <ScrollPicker
+                dataSource={minuteArr}
+                selectedIndex={1}
+                renderItem={(data) => (
+                    <Text
+                        style={{
+                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
+                        }}
+                    >
+                        {`${data}`}
+                    </Text>
+                )}
+                onValueChange={(data, selectedIndex) => {
+                    console.log('selectedIndex', selectedIndex);
+                //
+                }}
+                wrapperHeight={120}
+                wrapperWidth={150}
+                wrapperBackground="#FFFFFF"
+                itemHeight={40}
+                highlightColor="#d8d8d8"
+                highlightBorderWidth={2}
+                activeItemColor="#222121"
+                itemColor="#B4B4B4"
+            />
+        </Block>
+    );
+
+    const renderBottomSheet = () => (
+        <Block
+            style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: '#000'
+            }}
+        >
+            {/* <Button title="OPEN BOTTOM SHEET" onPress={() => refRBSheet.current.open()} /> */}
+            <RBSheet
+                ref={refRBSheet}
+                closeOnDragDown
+                closeOnPressMask={false}
+                customStyles={{
+                    wrapper: {
+                        backgroundColor: NowTheme.COLORS.TRANSPARENT,
+                    },
+                    draggableIcon: {
+                        backgroundColor: '#000'
+                    }
+                }}
+            >
+                {renderTimePicker()}
+                <Block
+                    row
+                    space="between"
+                    style={{
+                        paddingBottom: 30,
+                        width: NowTheme.SIZES.WIDTH_BASE * 0.95,
+                        alignSelf: 'center'
+                    }}
+                >
+                    <Button
+                        onPress={() => {
+                            () => refRBSheet.current.close();
+                        }}
+                        shadowless
+                    >
+                        Xác nhận
+                    </Button>
+                    <Button
+                        onPress={() => {
+                            () => refRBSheet.current.close();
+                        }}
+                        shadowless
+                        color={NowTheme.COLORS.DEFAULT}
+                    >
+                        Huỷ bỏ
+                    </Button>
+                </Block>
+            </RBSheet>
+        </Block>
+    );
+
     const renderListBusySection = () => {
         if (listBusyBySelectedDate[0] !== '') {
             return listBusyBySelectedDate.map((item, sectionIndex) => {
@@ -432,6 +564,9 @@ export default function CreateBooking({ route, navigation }) {
                     fontSize: 18,
                     fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
                 }}
+                onFocus={() => {
+                    refRBSheet.current.open();
+                }}
                 onChangeText={(startInput) => onChangeStart(startInput)}
             />
             <Input
@@ -481,7 +616,7 @@ export default function CreateBooking({ route, navigation }) {
     const renderDropDownLocation = () => (
         <Block
             style={{
-                width: NowTheme.SIZES.WIDTH_95,
+                width: NowTheme.SIZES.WIDTH_BASE * 0.95,
                 alignSelf: 'center',
                 marginBottom: 10,
             }}
@@ -749,19 +884,22 @@ export default function CreateBooking({ route, navigation }) {
                 {isShowSpinner ? (
                     <CenterLoader size="large" />
                 ) : (
-                    <KeyboardAwareScrollView
-                        style={{
-                            width: NowTheme.SIZES.WIDTH_95,
-                            alignSelf: 'center'
-                        }}
-                        showsVerticalScrollIndicator={false}
-                    >
-                        {renderModal()}
+                    <>
+                        <KeyboardAwareScrollView
+                            style={{
+                                width: NowTheme.SIZES.WIDTH_95,
+                                alignSelf: 'center'
+                            }}
+                            showsVerticalScrollIndicator={false}
+                        >
+                            {renderModal()}
 
-                        {renderFormBlock(partner)}
+                            {renderFormBlock(partner)}
 
-                        {renderTotal()}
-                    </KeyboardAwareScrollView>
+                            {renderTotal()}
+                        </KeyboardAwareScrollView>
+                        {renderBottomSheet()}
+                    </>
                 )}
 
             </>

@@ -6,7 +6,13 @@ import { NowTheme } from '../../constants';
 import { Line } from '../uiComponents';
 
 const arrDOW = [
-    'C.Nhật', 'T.Hai', 'T.Ba', 'T.Tư', 'T.Năm', 'T.Sáu', 'T.Bảy'
+    'C.Nhật',
+    'T.Hai',
+    'T.Ba',
+    'T.Tư',
+    'T.Năm',
+    'T.Sáu',
+    'T.Bảy'
 ];
 const currentDate = moment().format('DD-MM-YYYY');
 
@@ -50,7 +56,9 @@ export default function CustomCalendar({ selectedDate, onChangeDate }) {
         color: NowTheme.COLORS.ACTIVE
     };
 
-    const arrDowByCurrentDate = createDynamicArrDOW(moment(currentDate, 'DD-MM-YYYY').isoWeekday());
+    const arrDowByCurrentDate = createDynamicArrDOW(
+        moment(currentDate, 'DD-MM-YYYY').isoWeekday()
+    );
 
     return (
         <Block>
