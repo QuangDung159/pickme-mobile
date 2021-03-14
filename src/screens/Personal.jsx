@@ -7,6 +7,7 @@ import React, { useEffect, useState } from 'react';
 import {
     ActivityIndicator,
     Image,
+    RefreshControl,
     ScrollView,
     StyleSheet
 } from 'react-native';
@@ -32,6 +33,7 @@ export default function Personal(props) {
     const [imageIndex, setImageIndex] = useState(0);
     const [listImageReview, setListImageReview] = useState([]);
     const [image, setImage] = useState('');
+    const [refreshing, setRefreshing] = useState(false);
 
     const token = useSelector((state) => state.userReducer.token);
     const currentUser = useSelector((state) => state.userReducer.currentUser);
@@ -57,10 +59,30 @@ export default function Personal(props) {
             headers,
             (res) => {
                 setListImageReview(res.data.data);
+                setRefreshing(false);
             },
             () => {},
             () => {}
         );
+    };
+
+    const fetchCurrentUserInfo = () => {
+        rxUtil(
+            Rx.USER.CURRENT_USER_INFO,
+            'GET',
+            null,
+            {
+                Authorization: token
+            },
+            () => {
+                getListImagesByUser();
+            }
+        );
+    };
+
+    const onRefresh = () => {
+        setRefreshing(true);
+        fetchCurrentUserInfo();
     };
 
     const handleOnPickAvatar = (uri) => {
@@ -414,6 +436,12 @@ export default function Personal(props) {
                 <Block flex>
                     <ScrollView
                         showsVerticalScrollIndicator={false}
+                        refreshControl={(
+                            <RefreshControl
+                                refreshing={refreshing}
+                                onRefresh={() => onRefresh()}
+                            />
+                        )}
                     >
                         {renderImageView()}
 
