@@ -1,7 +1,7 @@
 import { Block, Button, Text } from 'galio-framework';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet } from 'react-native';
+import { RefreshControl, StyleSheet } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import { CenterLoader, IconCustom } from '../components/uiComponents';
@@ -18,6 +18,7 @@ export default function Wallet(props) {
     const [listCashIn, setListCashIn] = useState([]);
     const [listCashOut, setListCashOut] = useState([]);
     const [isShowSpinner, setIsShowSpinner] = useState(false);
+    const [refreshing, setRefreshing] = useState(false);
 
     const currentUser = useSelector((state) => state.userReducer.currentUser);
     const token = useSelector((state) => state.userReducer.token);
@@ -27,13 +28,11 @@ export default function Wallet(props) {
     useEffect(
         () => {
             setIsShowSpinner(true);
-            getListCashIn();
-            getListCashOut();
+            getListHistory();
             getCurrentUser();
 
             const eventTriggerGetListHistory = navigation.addListener('focus', () => {
-                getListCashIn();
-                getListCashOut();
+                getListHistory();
                 getCurrentUser();
             });
 
@@ -42,6 +41,10 @@ export default function Wallet(props) {
             return eventTriggerGetListHistory;
         }, []
     );
+
+    const getListHistory = () => {
+        getListCashIn();
+    };
 
     const getCurrentUser = () => {
         rxUtil(
@@ -59,6 +62,11 @@ export default function Wallet(props) {
         );
     };
 
+    const onRefresh = () => {
+        setRefreshing(true);
+        getListHistory();
+    };
+
     const getListCashIn = () => {
         rxUtil(
             Rx.CASH_REQUEST.GET_LIST_CASH_IN,
@@ -70,12 +78,15 @@ export default function Wallet(props) {
             (res) => {
                 setListCashIn(res.data.data);
                 setIsShowSpinner(false);
+                getListCashOut();
             },
             () => {
                 setIsShowSpinner(false);
+                setRefreshing(false);
             },
             () => {
                 setIsShowSpinner(false);
+                setRefreshing(false);
             }
         );
     };
@@ -91,12 +102,15 @@ export default function Wallet(props) {
             (res) => {
                 setIsShowSpinner(false);
                 setListCashOut(res.data.data);
+                setRefreshing(false);
             },
             () => {
                 setIsShowSpinner(false);
+                setRefreshing(false);
             },
             () => {
                 setIsShowSpinner(false);
+                setRefreshing(false);
             }
         );
     };
@@ -321,6 +335,13 @@ export default function Wallet(props) {
                 data={listHistory}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => renderHistoryItem(item)}
+                showsVerticalScrollIndicator={false}
+                refreshControl={(
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={() => onRefresh()}
+                    />
+                )}
             />
         );
     };
