@@ -49,5 +49,17 @@ export default {
 
     READ_ALL_MESSAGE: `mutation readAllMessage($from: String){ #url is the update for the image
         readAllMessage(from: $from)
+      }`,
+
+    SEND_MESSAGE: `mutation ($data: InputMessage) {
+        message(message: $data )
+          {
+              id
+              from
+              to
+              content
+              createdAt
+              updatedAt
+          }
       }`
 };

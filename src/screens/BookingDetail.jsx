@@ -75,7 +75,7 @@ export default function BookingDetail({
             'POST',
             null,
             {
-                Authorization: token,
+                Authorization: token
             },
             (res) => {
                 navigation.navigate(ScreenName.BOOKING_LIST);
