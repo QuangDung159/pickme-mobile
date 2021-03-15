@@ -66,7 +66,7 @@ export default function BookingDetail({
         );
     };
 
-    // handler \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
+    // handler \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
     const onCancelBooking = () => {
         setIsShowSpinner(true);
 

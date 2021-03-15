@@ -51,6 +51,9 @@ export default function CreateBooking({ route, navigation }) {
     const [listLocationForDropdown, setListLocationForDropdown] = useState([]);
     const [currentTask, setCurrentTask] = useState('create');
     const [earningExpected, setEarningExpected] = useState(0);
+    const [startTimeStr, setStartTimeStr] = useState('Bắt đầu');
+    const [endTimeStr, setEndTimeStr] = useState('Kết thúc');
+    const [modalActiveType, setModalActiveType] = useState('start');
 
     const refRBSheet = useRef();
 
@@ -112,7 +115,7 @@ export default function CreateBooking({ route, navigation }) {
         }
     };
 
-    // handler \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
+    // handler \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
     const getCalendarPartner = () => {
         const {
             params: {
@@ -293,7 +296,7 @@ export default function CreateBooking({ route, navigation }) {
         return listLocationFinal;
     };
 
-    // render \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
+    // render \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
     const renderTimePicker = () => (
         <Block
             row
@@ -315,9 +318,8 @@ export default function CreateBooking({ route, navigation }) {
                         {`${data}`}
                     </Text>
                 )}
-                onValueChange={(data, selectedIndex) => {
-                    console.log('selectedIndex', selectedIndex);
-                //
+                onValueChange={(data) => {
+                    setStartTimeStr
                 }}
                 wrapperHeight={120}
                 wrapperWidth={150}
@@ -553,6 +555,8 @@ export default function CreateBooking({ route, navigation }) {
         </Modal>
     );
 
+    const generateTimeString = (h, m) => `${h}:${m}`;
+
     const renderButtonTimePicker = () => (
         <Block
             space="between"
@@ -577,9 +581,10 @@ export default function CreateBooking({ route, navigation }) {
                 }}
                 onPress={() => {
                     setModalTimePickerVisible(true);
+                    setModalActiveType('start');
                 }}
             >
-                Bắt đầu
+                {startTimeStr}
             </Button>
             <Button
                 shadowless
@@ -593,8 +598,12 @@ export default function CreateBooking({ route, navigation }) {
                 textStyle={{
                     color: NowTheme.COLORS.ACTIVE
                 }}
+                onPress={() => {
+                    setModalActiveType('end');
+                    setModalTimePickerVisible(true);
+                }}
             >
-                Kết thúc
+                {endTimeStr}
             </Button>
             {renderIconShowModal()}
         </Block>

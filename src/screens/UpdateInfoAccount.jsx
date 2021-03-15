@@ -30,7 +30,7 @@ export default function UpdateInfoAccount(props) {
         }, []
     );
 
-    // handler \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
+    // handler \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
     const onGetCurrentUserData = () => {
         const headers = {
             Authorization: token
@@ -176,7 +176,7 @@ export default function UpdateInfoAccount(props) {
         );
     };
 
-    // render \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
+    // render \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
     const renderInputEarningExpected = (user) => (
         <Block
             middle
