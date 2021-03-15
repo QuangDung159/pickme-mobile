@@ -1,5 +1,5 @@
 import {
-    Block, Button, Input, Text
+    Block, Button, Text
 } from 'galio-framework';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
@@ -47,6 +47,7 @@ export default function CreateBooking({ route, navigation }) {
     const [listBusyBySelectedDate, setListBusyBySelectedDate] = useState([]);
     const [busyCalendar, setBusyCalendar] = useState([]);
     const [modalVisible, setModalVisible] = useState(false);
+    const [modalTimePickerVisible, setModalTimePickerVisible] = useState(false);
     const [listLocationForDropdown, setListLocationForDropdown] = useState([]);
     const [currentTask, setCurrentTask] = useState('create');
     const [earningExpected, setEarningExpected] = useState(0);
@@ -112,24 +113,6 @@ export default function CreateBooking({ route, navigation }) {
     };
 
     // handler \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
-    const onChangeStart = (startInput) => {
-        if (startInput.length === 2
-            && startInput.length >= booking.start.length) {
-            setBooking({ ...booking, start: `${startInput}:` });
-        } else {
-            setBooking({ ...booking, start: startInput });
-        }
-    };
-
-    const onChangeEnd = (endInput) => {
-        if (endInput.length === 2
-            && endInput.length >= booking.end.length) {
-            setBooking({ ...booking, end: `${endInput}:` });
-        } else {
-            setBooking({ ...booking, end: endInput });
-        }
-    };
-
     const getCalendarPartner = () => {
         const {
             params: {
@@ -540,52 +523,79 @@ export default function CreateBooking({ route, navigation }) {
         </Modal>
     );
 
-    const renderInput = () => (
+    const renderTimePickerModal = () => (
+        <Modal
+            animationType="slide"
+            transparent
+            visible={modalTimePickerVisible}
+        >
+            <ScrollView
+                showsVerticalScrollIndicator={false}
+            >
+                <Block style={styles.centeredView}>
+                    <Block style={styles.modalView}>
+                        {renderTimePicker()}
+
+                        <Block center>
+                            <Button
+                                onPress={() => setModalTimePickerVisible(false)}
+                                style={[styles.buttonModal, {
+                                    marginVertical: 10
+                                }]}
+                                shadowless
+                            >
+                                Đóng
+                            </Button>
+                        </Block>
+                    </Block>
+                </Block>
+            </ScrollView>
+        </Modal>
+    );
+
+    const renderButtonTimePicker = () => (
         <Block
             space="between"
             row
             style={{
-                marginBottom: 10
+                marginBottom: 10,
+                width: NowTheme.SIZES.WIDTH_BASE * 0.95,
             }}
         >
-            <Input
-                maxLength={5}
+            <Button
+                shadowless
+                color={NowTheme.COLORS.TRANSPARENT}
                 style={{
+                    borderWidth: 1,
+                    borderColor: NowTheme.COLORS.ACTIVE,
                     borderRadius: 5,
-                    width: NowTheme.SIZES.WIDTH_BASE * 0.39,
-                    height: 45,
-                    marginRight: 10
+                    width: NowTheme.SIZES.WIDTH_BASE * 0.4,
+                    marginLeft: 0
                 }}
-                color={NowTheme.COLORS.HEADER}
-                placeholder="Bắt đầu..."
-                value={booking.start}
-                keyboardType="number-pad"
-                textInputStyle={{
-                    fontSize: 18,
-                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
+                textStyle={{
+                    color: NowTheme.COLORS.ACTIVE
                 }}
-                onFocus={() => {
-                    refRBSheet.current.open();
+                onPress={() => {
+                    setModalTimePickerVisible(true);
                 }}
-                onChangeText={(startInput) => onChangeStart(startInput)}
-            />
-            <Input
-                maxLength={5}
+            >
+                Bắt đầu
+            </Button>
+            <Button
+                shadowless
+                color={NowTheme.COLORS.TRANSPARENT}
                 style={{
+                    borderWidth: 1,
+                    borderColor: NowTheme.COLORS.ACTIVE,
                     borderRadius: 5,
-                    width: NowTheme.SIZES.WIDTH_BASE * 0.39,
-                    height: 45
+                    width: NowTheme.SIZES.WIDTH_BASE * 0.4
                 }}
-                color={NowTheme.COLORS.HEADER}
-                placeholder="Kết thúc..."
-                value={booking.end}
-                keyboardType="number-pad"
-                textInputStyle={{
-                    fontSize: 18,
-                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
+                textStyle={{
+                    color: NowTheme.COLORS.ACTIVE
                 }}
-                onChangeText={(endInput) => onChangeEnd(endInput)}
-            />
+            >
+                Kết thúc
+            </Button>
             {renderIconShowModal()}
         </Block>
     );
@@ -715,7 +725,7 @@ export default function CreateBooking({ route, navigation }) {
                         selectedDate={activeDate}
                     />
 
-                    {renderInput()}
+                    {renderButtonTimePicker()}
 
                     {renderDropDownLocation()}
 
@@ -894,6 +904,8 @@ export default function CreateBooking({ route, navigation }) {
                         >
                             {renderModal()}
 
+                            {renderTimePickerModal()}
+
                             {renderFormBlock(partner)}
 
                             {renderTotal()}
@@ -922,7 +934,7 @@ const styles = StyleSheet.create({
     centeredView: {
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 100
+        marginTop: NowTheme.SIZES.HEIGHT_BASE * 0.3
     },
     modalView: {
         margin: 10,
