@@ -2,7 +2,7 @@ import {
     Block, Button, Text
 } from 'galio-framework';
 import moment from 'moment';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Alert,
     Modal, StyleSheet
@@ -10,7 +10,6 @@ import {
 import DropDownPicker from 'react-native-dropdown-picker';
 import { ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import RBSheet from 'react-native-raw-bottom-sheet';
 import ScrollPicker from 'react-native-wheel-scroll-picker';
 import { useDispatch, useSelector } from 'react-redux';
 import { CustomCalendar } from '../components/bussinessComponents';
@@ -23,7 +22,7 @@ import { setListBookingLocation } from '../redux/Actions';
 import { rxUtil } from '../utils';
 
 const timeArr = [
-    '6', '7', '8', '9', '10', '11', '12', '13', '14', '15',
+    '06', '07', '08', '09', '10', '11', '12', '13', '14', '15',
     '16', '17', '18', '19', '20', '21', '22'
 ];
 
@@ -51,11 +50,9 @@ export default function CreateBooking({ route, navigation }) {
     const [listLocationForDropdown, setListLocationForDropdown] = useState([]);
     const [currentTask, setCurrentTask] = useState('create');
     const [earningExpected, setEarningExpected] = useState(0);
-    const [startTimeStr, setStartTimeStr] = useState('Bắt đầu');
-    const [endTimeStr, setEndTimeStr] = useState('Kết thúc');
+    const [startTimeStr, setStartTimeStr] = useState('00:00');
+    const [endTimeStr, setEndTimeStr] = useState('00:00');
     const [modalActiveType, setModalActiveType] = useState('start');
-
-    const refRBSheet = useRef();
 
     const token = useSelector((state) => state.userReducer.token);
     const listBookingLocation = useSelector((state) => state.locationReducer.listBookingLocation);
@@ -296,6 +293,30 @@ export default function CreateBooking({ route, navigation }) {
         return listLocationFinal;
     };
 
+    const onChangeHourTimePicker = (data) => {
+        if (modalActiveType === 'start') {
+            const startTimeArr = startTimeStr.split(':');
+            startTimeArr[0] = data;
+            setStartTimeStr(startTimeArr.join(':'));
+        } else {
+            const endTimeArr = endTimeStr.split(':');
+            endTimeArr[0] = data;
+            setEndTimeStr(endTimeArr.join(':'));
+        }
+    };
+
+    const onChangeMinuteTimePicker = (data) => {
+        if (modalActiveType === 'start') {
+            const startTimeArr = startTimeStr.split(':');
+            startTimeArr[1] = data;
+            setStartTimeStr(startTimeArr.join(':'));
+        } else {
+            const endTimeArr = endTimeStr.split(':');
+            endTimeArr[1] = data;
+            setEndTimeStr(endTimeArr.join(':'));
+        }
+    };
+
     // render \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
     const renderTimePicker = () => (
         <Block
@@ -319,7 +340,7 @@ export default function CreateBooking({ route, navigation }) {
                     </Text>
                 )}
                 onValueChange={(data) => {
-                    setStartTimeStr
+                    onChangeHourTimePicker(data);
                 }}
                 wrapperHeight={120}
                 wrapperWidth={150}
@@ -343,9 +364,8 @@ export default function CreateBooking({ route, navigation }) {
                         {`${data}`}
                     </Text>
                 )}
-                onValueChange={(data, selectedIndex) => {
-                    console.log('selectedIndex', selectedIndex);
-                //
+                onValueChange={(data) => {
+                    onChangeMinuteTimePicker(data);
                 }}
                 wrapperHeight={120}
                 wrapperWidth={150}
@@ -356,60 +376,6 @@ export default function CreateBooking({ route, navigation }) {
                 activeItemColor="#222121"
                 itemColor="#B4B4B4"
             />
-        </Block>
-    );
-
-    const renderBottomSheet = () => (
-        <Block
-            style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                backgroundColor: '#000'
-            }}
-        >
-            {/* <Button title="OPEN BOTTOM SHEET" onPress={() => refRBSheet.current.open()} /> */}
-            <RBSheet
-                ref={refRBSheet}
-                closeOnDragDown
-                closeOnPressMask={false}
-                customStyles={{
-                    wrapper: {
-                        backgroundColor: NowTheme.COLORS.TRANSPARENT,
-                    },
-                    draggableIcon: {
-                        backgroundColor: '#000'
-                    }
-                }}
-            >
-                {renderTimePicker()}
-                <Block
-                    row
-                    space="between"
-                    style={{
-                        paddingBottom: 30,
-                        width: NowTheme.SIZES.WIDTH_BASE * 0.95,
-                        alignSelf: 'center'
-                    }}
-                >
-                    <Button
-                        onPress={() => {
-                            () => refRBSheet.current.close();
-                        }}
-                        shadowless
-                    >
-                        Xác nhận
-                    </Button>
-                    <Button
-                        onPress={() => {
-                            () => refRBSheet.current.close();
-                        }}
-                        shadowless
-                        color={NowTheme.COLORS.DEFAULT}
-                    >
-                        Huỷ bỏ
-                    </Button>
-                </Block>
-            </RBSheet>
         </Block>
     );
 
@@ -555,8 +521,6 @@ export default function CreateBooking({ route, navigation }) {
         </Modal>
     );
 
-    const generateTimeString = (h, m) => `${h}:${m}`;
-
     const renderButtonTimePicker = () => (
         <Block
             space="between"
@@ -577,15 +541,19 @@ export default function CreateBooking({ route, navigation }) {
                     marginLeft: 0
                 }}
                 textStyle={{
-                    color: NowTheme.COLORS.ACTIVE
+                    color: NowTheme.COLORS.ACTIVE,
+                    fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
+                    fontSize: NowTheme.SIZES.FONT_INFO
                 }}
                 onPress={() => {
                     setModalTimePickerVisible(true);
                     setModalActiveType('start');
+                    setStartTimeStr('07:01');
                 }}
             >
                 {startTimeStr}
             </Button>
+
             <Button
                 shadowless
                 color={NowTheme.COLORS.TRANSPARENT}
@@ -596,11 +564,14 @@ export default function CreateBooking({ route, navigation }) {
                     width: NowTheme.SIZES.WIDTH_BASE * 0.4
                 }}
                 textStyle={{
-                    color: NowTheme.COLORS.ACTIVE
+                    color: NowTheme.COLORS.ACTIVE,
+                    fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
+                    fontSize: NowTheme.SIZES.FONT_INFO
                 }}
                 onPress={() => {
                     setModalActiveType('end');
                     setModalTimePickerVisible(true);
+                    setEndTimeStr('07:01');
                 }}
             >
                 {endTimeStr}
@@ -919,7 +890,6 @@ export default function CreateBooking({ route, navigation }) {
 
                             {renderTotal()}
                         </KeyboardAwareScrollView>
-                        {renderBottomSheet()}
                     </>
                 )}
 
