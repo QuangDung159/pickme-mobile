@@ -44,8 +44,8 @@ export default (
                     }
                 }
             } = err;
-            console.log('response', response);
-            generateLogData(endpoint, method, data, headers, response);
+            console.log('catch', response);
+            generateLogData(endpoint, data, headers, response);
             catchCallBack(message);
         });
 };

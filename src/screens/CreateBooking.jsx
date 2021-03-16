@@ -76,12 +76,12 @@ export default function CreateBooking({ route, navigation }) {
 
             if (bookingToEdit) {
                 getPartnerInfo(partner.id);
+                fillBookingDataFromDetail();
             } else {
                 setEarningExpected(partner.earningExpected);
             }
 
             getCalendarPartner();
-            fillBookingDataFromDetail();
             fetchListBookingLocation();
         }, []
     );
@@ -175,6 +175,9 @@ export default function CreateBooking({ route, navigation }) {
                 locationAdress: address
             });
 
+            setStartTimeStr(convertMinutesToStringHours(startAt));
+            setEndTimeStr(convertMinutesToStringHours(endAt));
+
             onChangeDateCalendar(moment(date.substring(0, 10), 'YYYY-MM-DD').format('DD-MM-YYYY'));
         }
     };
@@ -194,8 +197,8 @@ export default function CreateBooking({ route, navigation }) {
         } = route;
 
         const dateString = `${moment(selectedDate, 'DD-MM-YYYY').format('YYYY-MM-DD')}T00:00:00`;
-        const startString = convertStringHoursToMinutes(booking.start);
-        const endString = convertStringHoursToMinutes(booking.end);
+        const startString = convertStringHoursToMinutes(startTimeStr);
+        const endString = convertStringHoursToMinutes(endTimeStr);
 
         const bookingToSubmit = {
             StartAt: startString,
@@ -412,60 +415,60 @@ export default function CreateBooking({ route, navigation }) {
                 const endStr = convertMinutesToStringHours(item.endAt);
 
                 return (
-                    <>
+                    <Block
+                        // eslint-disable-next-line react/no-array-index-key
+                        key={sectionIndex}
+                        style={{
+                            backgroundColor: sectionIndex % 2 === 0
+                                ? NowTheme.COLORS.LIST_ITEM_BACKGROUND_1
+                                : NowTheme.COLORS.LIST_ITEM_BACKGROUND_2,
+                            height: NowTheme.SIZES.HEIGHT_BASE * 0.07,
+                            justifyContent: 'center',
+                        }}
+                    >
                         <Block
+                            row
+                            space="between"
                             style={{
-                                backgroundColor: sectionIndex % 2 === 0
-                                    ? NowTheme.COLORS.LIST_ITEM_BACKGROUND_1
-                                    : NowTheme.COLORS.LIST_ITEM_BACKGROUND_2,
-                                height: NowTheme.SIZES.HEIGHT_BASE * 0.07,
-                                justifyContent: 'center',
+                                marginHorizontal: 10,
+                                alignItems: 'center'
                             }}
                         >
                             <Block
                                 row
-                                space="between"
-                                style={{
-                                    marginHorizontal: 10,
-                                    alignItems: 'center'
-                                }}
+                                flex
+                                space="around"
                             >
-                                <Block
-                                    row
-                                    flex
-                                    space="around"
+                                <Text
+                                    style={{
+                                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
+                                    }}
+                                    size={27}
+                                    color={NowTheme.COLORS.ACTIVE}
                                 >
-                                    <Text
-                                        style={{
-                                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
-                                        }}
-                                        size={27}
-                                        color={NowTheme.COLORS.ACTIVE}
-                                    >
-                                        {startStr}
-                                    </Text>
-                                    <Text
-                                        style={{
-                                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
-                                        }}
-                                        size={27}
-                                        color={NowTheme.COLORS.ACTIVE}
-                                    >
-                                        -
-                                    </Text>
-                                    <Text
-                                        style={{
-                                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
-                                        }}
-                                        size={27}
-                                        color={NowTheme.COLORS.ACTIVE}
-                                    >
-                                        {endStr}
-                                    </Text>
-                                </Block>
+                                    {startStr}
+                                </Text>
+                                <Text
+                                    style={{
+                                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
+                                    }}
+                                    size={27}
+                                    color={NowTheme.COLORS.ACTIVE}
+                                >
+                                    -
+                                </Text>
+                                <Text
+                                    style={{
+                                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
+                                    }}
+                                    size={27}
+                                    color={NowTheme.COLORS.ACTIVE}
+                                >
+                                    {endStr}
+                                </Text>
                             </Block>
                         </Block>
-                    </>
+                    </Block>
                 );
             });
         }
@@ -534,11 +537,6 @@ export default function CreateBooking({ route, navigation }) {
                             <Button
                                 onPress={() => {
                                     setModalTimePickerVisible(false);
-                                    if (modalActiveType === 'start') {
-                                        setBooking({ ...booking, start: startTimeStr });
-                                    } else {
-                                        setBooking({ ...booking, end: endTimeStr });
-                                    }
                                 }}
                                 style={[styles.buttonModal, {
                                     marginVertical: 10
