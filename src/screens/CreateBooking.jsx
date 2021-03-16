@@ -52,8 +52,8 @@ export default function CreateBooking({ route, navigation }) {
     const [earningExpected, setEarningExpected] = useState(0);
 
     const [modalActiveType, setModalActiveType] = useState('start');
-    const [startTimeStr, setStartTimeStr] = useState('06:00');
-    const [endTimeStr, setEndTimeStr] = useState('08:00');
+    const [startTimeStr, setStartTimeStr] = useState('07:00');
+    const [endTimeStr, setEndTimeStr] = useState('09:00');
 
     const [startHourActive, setStartHourActive] = useState(0);
     const [startMinuteActive, setStartMinuteActive] = useState(0);
