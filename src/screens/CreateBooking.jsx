@@ -224,7 +224,7 @@ export default function CreateBooking({ route, navigation }) {
             },
             (res) => {
                 ToastHelpers.renderToast(res.data.message, 'success');
-                navigation.navigate(ScreenName.HOME);
+                navigation.navigate(ScreenName.BOOKING_LIST);
             },
             () => {
                 setIsShowSpinner(false);
@@ -770,54 +770,48 @@ export default function CreateBooking({ route, navigation }) {
         );
     };
 
-    const renderTotal = () => {
-        const {
-            start, end
-        } = booking;
-
-        return (
+    const renderTotal = () => (
+        <Block>
             <Block>
-                <Block>
-                    <Text style={{
-                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                <Text style={{
+                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                    marginTop: 10
+                }}
+                >
+                    XÁC NHẬN ĐẶT
+                </Text>
+                <Line
+                    borderWidth={0.5}
+                    borderColor={NowTheme.COLORS.ACTIVE}
+                    style={{
                         marginTop: 10
                     }}
-                    >
-                        XÁC NHẬN ĐẶT
-                    </Text>
-                    <Line
-                        borderWidth={0.5}
-                        borderColor={NowTheme.COLORS.ACTIVE}
-                        style={{
-                            marginTop: 10
-                        }}
-                    />
-                </Block>
-                <Block
-                    middle
-                >
-                    <Text
-                        style={{
-                            fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
-                            fontSize: 30,
-                            paddingVertical: 10
-                        }}
-                        color={NowTheme.COLORS.ACTIVE}
-                    >
-                        {calculateTotalAmount(start, end)}
-                        {' '}
-                        <IconCustom
-                            name="diamond"
-                            family={IconFamily.SIMPLE_LINE_ICONS}
-                            size={20}
-                            color={NowTheme.COLORS.ACTIVE}
-                        />
-                    </Text>
-                </Block>
-                {renderButton()}
+                />
             </Block>
-        );
-    };
+            <Block
+                middle
+            >
+                <Text
+                    style={{
+                        fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
+                        fontSize: 30,
+                        paddingVertical: 10
+                    }}
+                    color={NowTheme.COLORS.ACTIVE}
+                >
+                    {calculateTotalAmount(startTimeStr, endTimeStr)}
+                    {' '}
+                    <IconCustom
+                        name="diamond"
+                        family={IconFamily.SIMPLE_LINE_ICONS}
+                        size={20}
+                        color={NowTheme.COLORS.ACTIVE}
+                    />
+                </Text>
+            </Block>
+            {renderButton()}
+        </Block>
+    );
 
     const renderButton = () => (
         <Block
