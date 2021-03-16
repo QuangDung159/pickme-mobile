@@ -21,7 +21,7 @@ import { ToastHelpers } from '../helpers';
 import { setListBookingLocation } from '../redux/Actions';
 import { rxUtil } from '../utils';
 
-const timeArr = [
+const hourArr = [
     '06', '07', '08', '09', '10', '11', '12', '13', '14', '15',
     '16', '17', '18', '19', '20', '21', '22'
 ];
@@ -50,9 +50,15 @@ export default function CreateBooking({ route, navigation }) {
     const [listLocationForDropdown, setListLocationForDropdown] = useState([]);
     const [currentTask, setCurrentTask] = useState('create');
     const [earningExpected, setEarningExpected] = useState(0);
-    const [startTimeStr, setStartTimeStr] = useState('00:00');
-    const [endTimeStr, setEndTimeStr] = useState('00:00');
+
     const [modalActiveType, setModalActiveType] = useState('start');
+    const [startTimeStr, setStartTimeStr] = useState('06:00');
+    const [endTimeStr, setEndTimeStr] = useState('08:00');
+
+    const [startHourActive, setStartHourActive] = useState(0);
+    const [startMinuteActive, setStartMinuteActive] = useState(0);
+    const [endHourActive, setEndHourActive] = useState(0);
+    const [endMinuteActive, setEndMinuteActive] = useState(0);
 
     const token = useSelector((state) => state.userReducer.token);
     const listBookingLocation = useSelector((state) => state.locationReducer.listBookingLocation);
@@ -317,6 +323,22 @@ export default function CreateBooking({ route, navigation }) {
         }
     };
 
+    const onClickTriggerTimePicker = (modalType) => {
+        if (modalType === 'start') {
+            const hourIndex = hourArr.findIndex((item) => item === startTimeStr.split(':')[0]);
+            setStartHourActive(hourIndex);
+
+            const minuteIndex = minuteArr.findIndex((item) => item === startTimeStr.split(':')[1]);
+            setStartMinuteActive(minuteIndex);
+        } else {
+            const hourIndex = hourArr.findIndex((item) => item === endTimeStr.split(':')[0]);
+            setEndHourActive(hourIndex);
+
+            const minuteIndex = minuteArr.findIndex((item) => item === endTimeStr.split(':')[1]);
+            setEndMinuteActive(minuteIndex);
+        }
+    };
+
     // render \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
     const renderTimePicker = () => (
         <Block
@@ -328,8 +350,10 @@ export default function CreateBooking({ route, navigation }) {
             }}
         >
             <ScrollPicker
-                dataSource={timeArr}
-                selectedIndex={1}
+                dataSource={hourArr}
+                selectedIndex={
+                    modalActiveType === 'start' ? startHourActive : endHourActive
+                }
                 renderItem={(data) => (
                     <Text
                         style={{
@@ -354,7 +378,9 @@ export default function CreateBooking({ route, navigation }) {
 
             <ScrollPicker
                 dataSource={minuteArr}
-                selectedIndex={1}
+                selectedIndex={
+                    modalActiveType === 'start' ? startMinuteActive : endMinuteActive
+                }
                 renderItem={(data) => (
                     <Text
                         style={{
@@ -548,7 +574,7 @@ export default function CreateBooking({ route, navigation }) {
                 onPress={() => {
                     setModalTimePickerVisible(true);
                     setModalActiveType('start');
-                    setStartTimeStr('07:01');
+                    onClickTriggerTimePicker('start');
                 }}
             >
                 {startTimeStr}
@@ -571,7 +597,7 @@ export default function CreateBooking({ route, navigation }) {
                 onPress={() => {
                     setModalActiveType('end');
                     setModalTimePickerVisible(true);
-                    setEndTimeStr('07:01');
+                    onClickTriggerTimePicker('end');
                 }}
             >
                 {endTimeStr}
