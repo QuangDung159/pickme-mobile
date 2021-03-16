@@ -571,11 +571,7 @@ export default function CreateBooking({ route, navigation }) {
                     width: NowTheme.SIZES.WIDTH_BASE * 0.4,
                     marginLeft: 0
                 }}
-                textStyle={{
-                    color: NowTheme.COLORS.ACTIVE,
-                    fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
-                    fontSize: NowTheme.SIZES.FONT_INFO
-                }}
+                textStyle={styles.timePickerText}
                 onPress={() => {
                     setModalTimePickerVisible(true);
                     setModalActiveType('start');
@@ -594,11 +590,7 @@ export default function CreateBooking({ route, navigation }) {
                     borderRadius: 5,
                     width: NowTheme.SIZES.WIDTH_BASE * 0.4
                 }}
-                textStyle={{
-                    color: NowTheme.COLORS.ACTIVE,
-                    fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
-                    fontSize: NowTheme.SIZES.FONT_INFO
-                }}
+                textStyle={styles.timePickerText}
                 onPress={() => {
                     setModalActiveType('end');
                     setModalTimePickerVisible(true);
@@ -955,4 +947,9 @@ const styles = StyleSheet.create({
         shadowRadius: 3.84,
         elevation: 5
     },
+    timePickerText: {
+        color: NowTheme.COLORS.ACTIVE,
+        fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
+        fontSize: NowTheme.SIZES.FONT_INFO
+    }
 });
