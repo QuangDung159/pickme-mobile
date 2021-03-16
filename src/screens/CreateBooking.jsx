@@ -532,7 +532,14 @@ export default function CreateBooking({ route, navigation }) {
 
                         <Block center>
                             <Button
-                                onPress={() => setModalTimePickerVisible(false)}
+                                onPress={() => {
+                                    setModalTimePickerVisible(false);
+                                    if (modalActiveType === 'start') {
+                                        setBooking({ ...booking, start: startTimeStr });
+                                    } else {
+                                        setBooking({ ...booking, end: endTimeStr });
+                                    }
+                                }}
                                 style={[styles.buttonModal, {
                                     marginVertical: 10
                                 }]}
