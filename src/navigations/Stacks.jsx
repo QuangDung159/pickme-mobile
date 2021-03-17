@@ -109,6 +109,10 @@ const BottomTabMenuStack = () => {
         (state) => state.messageReducer.numberMessageUnread
     );
 
+    const numberNotificationUnread = useSelector(
+        (state) => state.notificationReducer.numberNotificationUnread
+    );
+
     return (
         <Tab.Navigator
             initialRouteName={ScreenName.HOME}
@@ -147,7 +151,11 @@ const BottomTabMenuStack = () => {
             <Tab.Screen
                 name={ScreenName.NOTIFICATION}
                 component={NotificationStack}
-                options={{ tabBarBadge: 2 }}
+                options={
+                    numberNotificationUnread !== 0
+                        ? { tabBarBadge: numberNotificationUnread }
+                        : {}
+                }
             />
         </Tab.Navigator>
     );

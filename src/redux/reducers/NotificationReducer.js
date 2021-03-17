@@ -1,7 +1,8 @@
-import { SET_LIST_NOTIFICATION } from '../ActionTypes';
+import { SET_LIST_NOTIFICATION, SET_NUMBER_NOTIFICATION_UNREAD } from '../ActionTypes';
 
 const initState = {
-    listNotification: []
+    listNotification: [],
+    numberNotificationUnread: 0
 };
 
 const notificationReducer = (state = initState, action) => {
@@ -9,6 +10,9 @@ const notificationReducer = (state = initState, action) => {
     switch (type) {
         case SET_LIST_NOTIFICATION: {
             return { ...state, listNotification: payload.listNotification };
+        }
+        case SET_NUMBER_NOTIFICATION_UNREAD: {
+            return { ...state, numberNotificationUnread: payload.numberNotificationUnread };
         }
         default: {
             return state;

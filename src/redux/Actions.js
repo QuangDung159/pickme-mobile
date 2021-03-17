@@ -13,7 +13,8 @@ import {
     SET_CHATING_WITH,
     RESET_STORE_SIGN_OUT,
     SET_DATA_LISTENED,
-    SET_EXPO_TOKEN
+    SET_EXPO_TOKEN,
+    SET_NUMBER_NOTIFICATION_UNREAD
 } from './ActionTypes';
 
 export const setDeviceTimezone = () => ({
@@ -109,5 +110,12 @@ export const setExpoToken = (expoToken) => ({
     type: SET_EXPO_TOKEN,
     payload: {
         expoToken
+    }
+});
+
+export const setNumberNotificationUnread = (numberNotificationUnread) => ({
+    type: SET_NUMBER_NOTIFICATION_UNREAD,
+    payload: {
+        numberNotificationUnread
     }
 });
