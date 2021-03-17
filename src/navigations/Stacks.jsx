@@ -113,6 +113,19 @@ const BottomTabMenuStack = () => {
         (state) => state.notificationReducer.numberNotificationUnread
     );
 
+    const tabOptions = {};
+    let numberNotiDisplay = 0;
+
+    if (numberNotificationUnread !== 0) {
+        if (numberNotificationUnread > 99) {
+            numberNotiDisplay = '99+';
+        } else {
+            numberNotiDisplay = numberNotificationUnread;
+        }
+
+        tabOptions.tabBarBadge = numberNotiDisplay;
+    }
+
     return (
         <Tab.Navigator
             initialRouteName={ScreenName.HOME}
@@ -151,11 +164,7 @@ const BottomTabMenuStack = () => {
             <Tab.Screen
                 name={ScreenName.NOTIFICATION}
                 component={NotificationStack}
-                options={
-                    numberNotificationUnread !== 0
-                        ? { tabBarBadge: numberNotificationUnread }
-                        : {}
-                }
+                options={tabOptions}
             />
         </Tab.Navigator>
     );

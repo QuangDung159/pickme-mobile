@@ -11,7 +11,9 @@ import {
     GraphQueryString, NowTheme, Rx
 } from '../constants';
 import { ToastHelpers } from '../helpers';
-import { setListConversation, setListNotification, setNumberMessageUnread } from '../redux/Actions';
+import {
+    setListConversation, setListNotification, setNumberMessageUnread, setNumberNotificationUnread
+} from '../redux/Actions';
 import { rxUtil, socketRequestUtil } from '../utils';
 
 export default function Home({ navigation }) {
@@ -86,6 +88,19 @@ export default function Home({ navigation }) {
         }, [messageListened]
     );
 
+    const countNumberNotificationUnread = (listNotiFromAPI) => {
+        let count = 0;
+        listNotiFromAPI.forEach((item) => {
+            if (!item.isRead) {
+                count += 1;
+            }
+        });
+
+        console.log('count', count);
+
+        dispatch(setNumberNotificationUnread(count));
+    };
+
     const getConversationByMessage = (message, listConversationSource) => {
         const index = listConversationSource.findIndex(
             (conversation) => conversation.from === message.from || conversation.from === message.to
@@ -142,6 +157,7 @@ export default function Home({ navigation }) {
                 // set store
                 if (listNotification.length === 0) {
                     dispatch(setListNotification(res.data.data));
+                    countNumberNotificationUnread(res.data.data);
                 }
             },
             () => {},
