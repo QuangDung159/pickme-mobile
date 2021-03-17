@@ -12,7 +12,7 @@ import { ToastHelpers } from '../helpers';
 import { setListNotification } from '../redux/Actions';
 import { rxUtil } from '../utils';
 
-export default function Notification() {
+export default function Notification({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
     const [listNoti, setListNoti] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
@@ -70,6 +70,7 @@ export default function Notification() {
             screen={ScreenName.HOME}
             notiItem={notiItem}
             onTriggerRead={() => getListNotiFromAPI()}
+            navigation={navigation}
         />
     );
 

@@ -73,6 +73,7 @@ export default function NotificationItem({
     const renderNotiContent = () => {
         const {
             content,
+            id
         } = notiItem;
 
         return (
@@ -100,6 +101,7 @@ export default function NotificationItem({
                     <TouchableWithoutFeedback
                         onPress={() => {
                             navigation.navigate(screen);
+                            onClickRead(false, id);
                         }}
                     >
                         <Block style={{
