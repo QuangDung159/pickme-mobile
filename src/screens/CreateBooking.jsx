@@ -15,23 +15,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CustomCalendar } from '../components/bussinessComponents';
 import { CenterLoader, IconCustom, Line } from '../components/uiComponents';
 import {
-    IconFamily, NowTheme, Rx, ScreenName
+    IconFamily, NowTheme, Rx, ScreenName,
+    DateTimeConst
 } from '../constants';
 import { ToastHelpers } from '../helpers';
 import { setListBookingLocation } from '../redux/Actions';
 import { rxUtil } from '../utils';
 
-const hourArr = [
-    '06', '07', '08', '09', '10', '11', '12', '13', '14', '15',
-    '16', '17', '18', '19', '20', '21', '22'
-];
-
-const minuteArr = [
-    '00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14',
-    '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29',
-    '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44',
-    '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59',
-];
+const hourArr = DateTimeConst.HOUR_ARR;
+const minuteArr = DateTimeConst.MINUTE_ARR;
 
 export default function CreateBooking({ route, navigation }) {
     const [booking, setBooking] = useState({
