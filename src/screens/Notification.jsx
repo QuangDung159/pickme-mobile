@@ -9,7 +9,7 @@ import {
     IconFamily, NowTheme, Rx, ScreenName
 } from '../constants';
 import { ToastHelpers } from '../helpers';
-import { setListNotification } from '../redux/Actions';
+import { setListNotification, setNumberNotificationUnread } from '../redux/Actions';
 import { rxUtil } from '../utils';
 
 export default function Notification({ navigation }) {
@@ -35,6 +35,17 @@ export default function Notification({ navigation }) {
         getListNotiFromAPI();
     };
 
+    const countNumberNotificationUnread = (listNotiFromAPI) => {
+        let count = 0;
+        listNotiFromAPI.forEach((item) => {
+            if (!item.isRead) {
+                count += 1;
+            }
+        });
+
+        dispatch(setNumberNotificationUnread(count));
+    };
+
     const getListNotiFromAPI = () => {
         rxUtil(
             Rx.NOTIFICATION.GET_MY_NOTIFICATION,
@@ -50,6 +61,7 @@ export default function Notification({ navigation }) {
 
                 // set store
                 dispatch(setListNotification(res.data.data));
+                countNumberNotificationUnread(res.data.data);
             },
             () => {
                 setIsShowSpinner(false);

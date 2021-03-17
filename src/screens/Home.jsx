@@ -96,8 +96,6 @@ export default function Home({ navigation }) {
             }
         });
 
-        console.log('count', count);
-
         dispatch(setNumberNotificationUnread(count));
     };
 
