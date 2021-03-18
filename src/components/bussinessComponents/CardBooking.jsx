@@ -104,7 +104,7 @@ export default function CardBooking({ booking, renderAtScreen, navigation }) {
                         >
                             <Text
                                 style={styles.subInfoCard}
-                                size={NowTheme.SIZES.FONT_H3}
+                                size={NowTheme.SIZES.FONT_H2}
                                 color={NowTheme.COLORS.ACTIVE}
                             >
                                 {`Ngày: ${moment(date).format('DD-MM-YYYY')}`}
@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
     },
     subInfoCard: {
         fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-        marginBottom: 15
+        marginBottom: 10
     },
     cardSubTitle: {
         fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
