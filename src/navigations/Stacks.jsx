@@ -100,6 +100,7 @@ const HomeStack = () => (
         {CashInScreen()}
         {BankAccountScreen()}
         {MessageScreen()}
+        {BookingListScreen()}
     </Stack.Navigator>
 );
 
