@@ -265,7 +265,7 @@ export default function Wallet(props) {
                         style={{
                             fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
                         }}
-                        size={NowTheme.SIZES.ICON_14}
+                        size={14}
                     >
                         Số dư trong rương
                     </Text>
@@ -279,7 +279,7 @@ export default function Wallet(props) {
                             style={{
                                 fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
                             }}
-                            size={NowTheme.SIZES.ICON_60}
+                            size={60}
                             color={NowTheme.COLORS.ACTIVE}
                         >
                             {walletAmountFormCashOut}

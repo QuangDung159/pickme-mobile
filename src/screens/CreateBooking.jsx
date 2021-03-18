@@ -479,7 +479,7 @@ export default function CreateBooking({ route, navigation }) {
                 <Block style={styles.centeredView}>
                     <Block style={styles.modalView}>
                         <Text
-                            size={NowTheme.SIZES.FONT_INFO}
+                            size={NowTheme.SIZES.FONT_H2}
                             style={{
                                 fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
                                 marginVertical: 10
@@ -632,7 +632,7 @@ export default function CreateBooking({ route, navigation }) {
                     defaultValue={booking.locationId}
                     containerStyle={{
                         borderRadius: 5,
-                        width: NowTheme.SIZES.WIDTH_95,
+                        width: NowTheme.SIZES.WIDTH_BASE * 0.95,
                         alignSelf: 'center',
                         marginBottom: 10
                     }}
@@ -663,7 +663,7 @@ export default function CreateBooking({ route, navigation }) {
                     <Text
                         style={{
                             fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                            fontSize: NowTheme.SIZES.FONT_SUB_TITLE,
+                            fontSize: NowTheme.SIZES.FONT_H4,
                             marginBottom: 10
                         }}
                         color={NowTheme.COLORS.ACTIVE}
@@ -745,7 +745,7 @@ export default function CreateBooking({ route, navigation }) {
             >
                 <Text
                     color={NowTheme.COLORS.ACTIVE}
-                    size={NowTheme.SIZES.FONT_MAIN_TITLE}
+                    size={NowTheme.SIZES.FONT_H1}
                     style={styles.title}
                 >
                     {fullName || partner.fullName}
@@ -886,7 +886,7 @@ export default function CreateBooking({ route, navigation }) {
                     <>
                         <KeyboardAwareScrollView
                             style={{
-                                width: NowTheme.SIZES.WIDTH_95,
+                                width: NowTheme.SIZES.WIDTH_BASE * 0.95,
                                 alignSelf: 'center'
                             }}
                             showsVerticalScrollIndicator={false}
@@ -942,6 +942,6 @@ const styles = StyleSheet.create({
     timePickerText: {
         color: NowTheme.COLORS.ACTIVE,
         fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
-        fontSize: NowTheme.SIZES.FONT_INFO
+        fontSize: NowTheme.SIZES.FONT_H2
     }
 });

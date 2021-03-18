@@ -201,7 +201,7 @@ export default function Payment({ navigation }) {
                                         <IconCustom
                                             name="diamond"
                                             family={IconFamily.SIMPLE_LINE_ICONS}
-                                            size={NowTheme.SIZES.FONT_SUB_TITLE}
+                                            size={NowTheme.SIZES.FONT_H4}
                                             color={NowTheme.COLORS.ACTIVE}
                                         />
                                     </Text>
@@ -297,6 +297,6 @@ const styles = StyleSheet.create({
         marginTop: 10
     },
     button: {
-        width: NowTheme.SIZES.WIDTH_90,
+        width: NowTheme.SIZES.WIDTH_BASE * 0.9,
     }
 });

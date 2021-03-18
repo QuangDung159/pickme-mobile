@@ -177,7 +177,7 @@ export default function CashOut(props) {
                     items={listBankAccountDropdown}
                     containerStyle={{
                         borderRadius: 5,
-                        width: NowTheme.SIZES.WIDTH_90,
+                        width: NowTheme.SIZES.WIDTH_BASE * 0.9,
                         alignSelf: 'center',
                         height: 60,
                         marginVertical: 5,
@@ -207,7 +207,7 @@ export default function CashOut(props) {
                 />
                 <Block
                     style={{
-                        width: NowTheme.SIZES.WIDTH_90,
+                        width: NowTheme.SIZES.WIDTH_BASE * 0.9,
                         alignSelf: 'center',
                         paddingBottom: 10
                     }}
@@ -233,7 +233,7 @@ export default function CashOut(props) {
                 <Input
                     style={{
                         borderRadius: 5,
-                        width: NowTheme.SIZES.WIDTH_90,
+                        width: NowTheme.SIZES.WIDTH_BASE * 0.9,
                         alignSelf: 'center',
                         height: 60,
                     }}
@@ -260,7 +260,7 @@ export default function CashOut(props) {
         >
             <Button
                 style={{
-                    width: NowTheme.SIZES.WIDTH_90,
+                    width: NowTheme.SIZES.WIDTH_BASE * 0.9,
                     marginVertical: 5
                 }}
                 shadowless
@@ -270,7 +270,7 @@ export default function CashOut(props) {
             </Button>
             <Button
                 style={{
-                    width: NowTheme.SIZES.WIDTH_90,
+                    width: NowTheme.SIZES.WIDTH_BASE * 0.9,
                     marginBottom: 10
                 }}
                 shadowless
@@ -346,7 +346,7 @@ export default function CashOut(props) {
                                 </Block>
 
                                 <NoteText
-                                    width={NowTheme.SIZES.WIDTH_90}
+                                    width={NowTheme.SIZES.WIDTH_BASE * 0.9}
                                     title="Giá trị quy đổi:"
                                     content="1.000 vnd = 1 kim cương"
                                     contentStyle={{

@@ -104,7 +104,7 @@ export default function BookingList({ navigation }) {
                         style={{
                             fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
                         }}
-                        size={NowTheme.SIZES.FONT_INFO}
+                        size={NowTheme.SIZES.FONT_H2}
                     >
                         Bạn không có cuộc hẹn nào sắp tới
                     </Text>

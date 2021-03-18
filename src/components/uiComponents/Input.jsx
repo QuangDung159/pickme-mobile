@@ -28,7 +28,7 @@ class ArInput extends PureComponent {
                 color={NowTheme.COLORS.HEADER}
                 iconContent={icon ? (
                     <IconCustom
-                        size={NowTheme.SIZES.FONT_SUB_TITLE}
+                        size={NowTheme.SIZES.FONT_H4}
                         color={NowTheme.COLORS.ICON}
                         name="link"
                         family={IconFamily.ANT_DESIGN}

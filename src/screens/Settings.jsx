@@ -61,7 +61,7 @@ export default function Settings({ navigation }) {
                             style={{
                                 fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
                             }}
-                            size={NowTheme.SIZES.FONT_SUB_TITLE}
+                            size={NowTheme.SIZES.FONT_H4}
                             color="#525F7F"
                         >
                             {item.title}
@@ -79,7 +79,7 @@ export default function Settings({ navigation }) {
                             <Block row middle space="between" style={{ paddingTop: 7 }}>
                                 <Text
                                     style={{ fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR }}
-                                    size={NowTheme.SIZES.FONT_SUB_TITLE}
+                                    size={NowTheme.SIZES.FONT_H4}
                                     color="#525F7F"
                                 >
                                     {item.title}

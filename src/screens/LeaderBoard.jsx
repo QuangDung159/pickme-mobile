@@ -40,7 +40,7 @@ export default function LeaderBoard(props) {
                 <IconCustom
                     name="clipboard-list"
                     family={IconFamily.FONT_AWESOME_5}
-                    size={NowTheme.SIZES.FONT_SUB_TITLE}
+                    size={NowTheme.SIZES.FONT_H4}
                     color={NowTheme.COLORS.ACTIVE}
                 />
             ),
@@ -52,7 +52,7 @@ export default function LeaderBoard(props) {
                 <IconCustom
                     name="heart"
                     family={IconFamily.FONT_AWESOME}
-                    size={NowTheme.SIZES.FONT_SUB_TITLE}
+                    size={NowTheme.SIZES.FONT_H4}
                     color={NowTheme.COLORS.ACTIVE}
                 />
             ),
@@ -225,7 +225,7 @@ export default function LeaderBoard(props) {
         <Block middle row>
             <Text
                 color={NowTheme.COLORS.ACTIVE}
-                size={NowTheme.SIZES.FONT_INFO}
+                size={NowTheme.SIZES.FONT_H2}
                 style={[
                     styles.titleBold,
                     { marginRight: 5 }
@@ -235,7 +235,7 @@ export default function LeaderBoard(props) {
             </Text>
             <Text
                 style={{ fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR }}
-                size={NowTheme.SIZES.FONT_INFO}
+                size={NowTheme.SIZES.FONT_H2}
                 color={NowTheme.COLORS.DEFAULT}
             >
                 {tabs[tabActiveIndex].tabLabel}

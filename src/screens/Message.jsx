@@ -301,7 +301,7 @@ export default function Message({ navigation, route }) {
                             space="between"
                             center
                             style={{
-                                width: NowTheme.SIZES.WIDTH_95,
+                                width: NowTheme.SIZES.WIDTH_BASE * 0.95,
                             }}
                         >
                             <Input

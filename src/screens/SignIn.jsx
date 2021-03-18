@@ -246,7 +246,7 @@ const styles = StyleSheet.create({
     },
     registerContainer: {
         marginTop: 55,
-        width: NowTheme.SIZES.WIDTH_90,
+        width: NowTheme.SIZES.WIDTH_BASE * 0.9,
         height: NowTheme.SIZES.HEIGHT_BASE < 812 ? NowTheme.SIZES.HEIGHT_BASE * 0.8 : NowTheme.SIZES.HEIGHT_BASE * 0.8,
         backgroundColor: NowTheme.COLORS.BASE,
         borderRadius: 4,

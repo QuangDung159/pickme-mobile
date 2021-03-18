@@ -157,7 +157,7 @@ export default function Profile({ route, navigation }) {
                                                 <Block row space="around">
                                                     <Block middle>
                                                         <Text
-                                                            size={NowTheme.SIZES.FONT_INFO}
+                                                            size={NowTheme.SIZES.FONT_H2}
                                                             color={NowTheme.COLORS.DEFAULT}
                                                             style={{
                                                                 marginBottom: 4,
@@ -168,7 +168,7 @@ export default function Profile({ route, navigation }) {
                                                         </Text>
                                                         <Text
                                                             style={{ fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR }}
-                                                            size={NowTheme.SIZES.FONT_SUB_TITLE}
+                                                            size={NowTheme.SIZES.FONT_H4}
                                                             color={NowTheme.COLORS.DEFAULT}
                                                         >
                                                             Kim cương
@@ -178,7 +178,7 @@ export default function Profile({ route, navigation }) {
                                                     <Block middle>
                                                         <Text
                                                             color={NowTheme.COLORS.DEFAULT}
-                                                            size={NowTheme.SIZES.FONT_INFO}
+                                                            size={NowTheme.SIZES.FONT_H2}
                                                             style={{
                                                                 marginBottom: 4,
                                                                 fontFamily: NowTheme.FONT.MONTSERRAT_BOLD
@@ -188,7 +188,7 @@ export default function Profile({ route, navigation }) {
                                                         </Text>
                                                         <Text
                                                             style={{ fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR }}
-                                                            size={NowTheme.SIZES.FONT_SUB_TITLE}
+                                                            size={NowTheme.SIZES.FONT_H4}
                                                             color={NowTheme.COLORS.DEFAULT}
                                                         >
                                                             Đơn hẹn
@@ -198,7 +198,7 @@ export default function Profile({ route, navigation }) {
                                                     <Block middle>
                                                         <Text
                                                             color={NowTheme.COLORS.DEFAULT}
-                                                            size={NowTheme.SIZES.FONT_INFO}
+                                                            size={NowTheme.SIZES.FONT_H2}
                                                             style={{
                                                                 marginBottom: 4,
                                                                 fontFamily: NowTheme.FONT.MONTSERRAT_BOLD
@@ -208,7 +208,7 @@ export default function Profile({ route, navigation }) {
                                                         </Text>
                                                         <Text
                                                             style={{ fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR }}
-                                                            size={NowTheme.SIZES.FONT_SUB_TITLE}
+                                                            size={NowTheme.SIZES.FONT_H4}
                                                             color={NowTheme.COLORS.DEFAULT}
                                                         >
                                                             Lượt thích
@@ -218,7 +218,7 @@ export default function Profile({ route, navigation }) {
                                                     <Block middle>
                                                         <Text
                                                             color={NowTheme.COLORS.DEFAULT}
-                                                            size={NowTheme.SIZES.FONT_INFO}
+                                                            size={NowTheme.SIZES.FONT_H2}
                                                             style={{
                                                                 marginBottom: 4,
                                                                 fontFamily: NowTheme.FONT.MONTSERRAT_BOLD
@@ -228,7 +228,7 @@ export default function Profile({ route, navigation }) {
                                                         </Text>
                                                         <Text
                                                             style={{ fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR }}
-                                                            size={NowTheme.SIZES.FONT_SUB_TITLE}
+                                                            size={NowTheme.SIZES.FONT_H4}
                                                             color={NowTheme.COLORS.DEFAULT}
                                                         >
                                                             Đánh giá
@@ -250,7 +250,7 @@ export default function Profile({ route, navigation }) {
                                                         fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
                                                         textAlign: 'center',
                                                     }}
-                                                    size={NowTheme.SIZES.FONT_INFO}
+                                                    size={NowTheme.SIZES.FONT_H2}
                                                     color={NowTheme.COLORS.DEFAULT}
                                                 >
                                                     {'"'}

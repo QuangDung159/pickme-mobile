@@ -204,7 +204,7 @@ export default function BookingProgressFlow({
                         style={{
                             fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
                         }}
-                        size={NowTheme.SIZES.FONT_INFO}
+                        size={NowTheme.SIZES.FONT_H2}
                     >
                         Xin lỗi! Đơn hẹn đã bị huỷ
                     </Text>

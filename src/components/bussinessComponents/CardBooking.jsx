@@ -57,14 +57,14 @@ export default function CardBooking({ booking, renderAtScreen, navigation }) {
                     >
                         <Block>
                             <Text
-                                size={NowTheme.SIZES.FONT_INFO}
+                                size={NowTheme.SIZES.FONT_H2}
                                 style={styles.cardTitle}
                                 color={NowTheme.COLORS.ACTIVE}
                             >
                                 <>{`${fullName}`}</>
                             </Text>
                             <Text
-                                size={NowTheme.SIZES.FONT_INFO}
+                                size={NowTheme.SIZES.FONT_H2}
                                 style={styles.cardSubTitle}
                                 color={NowTheme.COLORS.ACTIVE}
                             >
@@ -91,7 +91,7 @@ export default function CardBooking({ booking, renderAtScreen, navigation }) {
                                         <IconCustom
                                             name="pencil"
                                             family={IconFamily.FONT_AWESOME}
-                                            size={NowTheme.SIZES.ICON_20}
+                                            size={20}
                                             color={NowTheme.COLORS.DEFAULT}
                                         />
                                     </TouchableOpacity>
@@ -104,14 +104,14 @@ export default function CardBooking({ booking, renderAtScreen, navigation }) {
                         >
                             <Text
                                 style={styles.subInfoCard}
-                                size={NowTheme.SIZES.FONT_INFO}
+                                size={NowTheme.SIZES.FONT_H3}
                                 color={NowTheme.COLORS.ACTIVE}
                             >
                                 {`Ngày: ${moment(date).format('DD-MM-YYYY')}`}
                             </Text>
                             <Text
                                 style={styles.subInfoCard}
-                                size={NowTheme.SIZES.FONT_INFO}
+                                size={NowTheme.SIZES.FONT_H2}
                                 color={NowTheme.COLORS.ACTIVE}
                             >
                                 {`Từ ${startStr} đến ${endStr}`}
@@ -119,7 +119,7 @@ export default function CardBooking({ booking, renderAtScreen, navigation }) {
                         </Block>
                         <Text
                             style={styles.subInfoCard}
-                            size={NowTheme.SIZES.FONT_INFO}
+                            size={NowTheme.SIZES.FONT_H2}
                             color={NowTheme.COLORS.DEFAULT}
                         >
                             {location?.address || 'N/A'}
@@ -130,7 +130,7 @@ export default function CardBooking({ booking, renderAtScreen, navigation }) {
                         >
                             <Text
                                 style={styles.subInfoCard}
-                                size={NowTheme.SIZES.FONT_INFO}
+                                size={NowTheme.SIZES.FONT_H2}
                                 color={NowTheme.COLORS.DEFAULT}
                             >
                                 {`Trạng thái: ${status}`}
@@ -143,7 +143,7 @@ export default function CardBooking({ booking, renderAtScreen, navigation }) {
                                         fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
                                         marginRight: 5
                                     }}
-                                    size={NowTheme.SIZES.FONT_INFO}
+                                    size={NowTheme.SIZES.FONT_H2}
                                     color={NowTheme.COLORS.ACTIVE}
                                 >
                                     {totalAmount}

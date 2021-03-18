@@ -178,7 +178,7 @@ export default function Personal(props) {
                         row
                         center
                         style={{
-                            width: NowTheme.SIZES.WIDTH_90,
+                            width: NowTheme.SIZES.WIDTH_BASE * 0.9,
                             marginTop: 10
                         }}
                     >
@@ -226,7 +226,7 @@ export default function Personal(props) {
                             <Line
                                 borderColor={NowTheme.COLORS.ACTIVE}
                                 borderWidth={0.5}
-                                width={NowTheme.SIZES.WIDTH_90}
+                                width={NowTheme.SIZES.WIDTH_BASE * 0.9}
                             />
                         </Block>
                     </Block>
@@ -319,7 +319,7 @@ export default function Personal(props) {
                             style={{
                                 fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
                             }}
-                            size={NowTheme.SIZES.FONT_INFO}
+                            size={NowTheme.SIZES.FONT_H2}
                             color={NowTheme.COLORS.DEFAULT}
                         >
                             {'"'}
@@ -334,7 +334,7 @@ export default function Personal(props) {
                     >
                         <Block
                             style={{
-                                width: NowTheme.SIZES.WIDTH_90
+                                width: NowTheme.SIZES.WIDTH_BASE * 0.9
                             }}
                         >
                             <SubInfoProfile user={currentUser} />
@@ -346,9 +346,9 @@ export default function Personal(props) {
                         >
                             <Button
                                 color={NowTheme.COLORS.BLOCK}
-                                fontSize={NowTheme.SIZES.FONT_BUTTON_TITLE}
+                                fontSize={NowTheme.SIZES.FONT_H3}
                                 style={{
-                                    width: NowTheme.SIZES.WIDTH_90,
+                                    width: NowTheme.SIZES.WIDTH_BASE * 0.9,
                                     marginVertical: 10
                                 }}
                                 onPress={
@@ -374,7 +374,7 @@ export default function Personal(props) {
                 <Line
                     borderColor={NowTheme.COLORS.ACTIVE}
                     borderWidth={0.5}
-                    width={NowTheme.SIZES.WIDTH_90}
+                    width={NowTheme.SIZES.WIDTH_BASE * 0.9}
                 />
             </Block>
         </Block>
@@ -384,7 +384,7 @@ export default function Personal(props) {
         <Block
             style={{
                 paddingTop: 20,
-                width: NowTheme.SIZES.WIDTH_90,
+                width: NowTheme.SIZES.WIDTH_BASE * 0.9,
                 alignSelf: 'center'
             }}
         >
@@ -399,7 +399,7 @@ export default function Personal(props) {
                 >
                     <IconCustom
                         name="sign-out"
-                        size={NowTheme.SIZES.FONT_BUTTON_TITLE}
+                        size={NowTheme.SIZES.FONT_H3}
                         color={NowTheme.COLORS.SWITCH_OFF}
                         family={IconFamily.FONT_AWESOME}
                     />
@@ -409,7 +409,7 @@ export default function Personal(props) {
                             fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
                             marginLeft: 10
                         }}
-                        size={NowTheme.SIZES.FONT_BUTTON_TITLE}
+                        size={NowTheme.SIZES.FONT_H3}
                     >
                         Đăng xuất
                     </Text>

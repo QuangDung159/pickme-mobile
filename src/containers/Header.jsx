@@ -82,7 +82,7 @@ class Header extends PureComponent {
                         <IconCustom
                             name="bulb"
                             family={IconFamily.NOW_EXTRA}
-                            size={NowTheme.SIZES.FONT_INFO}
+                            size={NowTheme.SIZES.FONT_H2}
                             style={{ paddingRight: 8 }}
                             color={NowTheme.COLORS.HEADER}
                         />
@@ -99,7 +99,7 @@ class Header extends PureComponent {
                             }}
                         >
                             <IconCustom
-                                size={NowTheme.SIZES.FONT_INFO}
+                                size={NowTheme.SIZES.FONT_H2}
                                 name="bag-162x"
                                 family={IconFamily.NOW_EXTRA}
                                 color={NowTheme.COLORS.HEADER}

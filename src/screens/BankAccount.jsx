@@ -185,7 +185,7 @@ export default function BankAccount(props) {
         >
             <Button
                 color={NowTheme.COLORS.BLOCK}
-                fontSize={NowTheme.SIZES.FONT_BUTTON_TITLE}
+                fontSize={NowTheme.SIZES.FONT_H3}
                 style={{
                     width: NowTheme.SIZES.WIDTH_BASE * 0.9,
                     alignSelf: 'center'
@@ -249,7 +249,7 @@ export default function BankAccount(props) {
                                 style={{
                                     fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
                                 }}
-                                size={NowTheme.SIZES.FONT_INFO}
+                                size={NowTheme.SIZES.FONT_H2}
                                 color={NowTheme.COLORS.ACTIVE}
                             >
                                 {label}
@@ -300,7 +300,7 @@ export default function BankAccount(props) {
                             items={listBankFinal}
                             containerStyle={{
                                 borderRadius: 5,
-                                width: NowTheme.SIZES.WIDTH_90,
+                                width: NowTheme.SIZES.WIDTH_BASE * 0.9,
                                 alignSelf: 'center',
                                 marginVertical: 5,
                                 marginTop: 15,
@@ -331,7 +331,7 @@ export default function BankAccount(props) {
                         <Input
                             style={{
                                 borderRadius: 5,
-                                width: NowTheme.SIZES.WIDTH_90,
+                                width: NowTheme.SIZES.WIDTH_BASE * 0.9,
                                 alignSelf: 'center',
                                 height: 60,
                             }}
@@ -351,7 +351,7 @@ export default function BankAccount(props) {
                             color={NowTheme.COLORS.HEADER}
                             style={{
                                 borderRadius: 5,
-                                width: NowTheme.SIZES.WIDTH_90,
+                                width: NowTheme.SIZES.WIDTH_BASE * 0.9,
                                 alignSelf: 'center',
                                 height: 60,
                             }}
@@ -370,7 +370,7 @@ export default function BankAccount(props) {
                     >
                         <Button
                             style={{
-                                width: NowTheme.SIZES.WIDTH_90,
+                                width: NowTheme.SIZES.WIDTH_BASE * 0.9,
                                 marginVertical: 5
                             }}
                             onPress={() => onSubmitCreateBankAccount()}
@@ -380,7 +380,7 @@ export default function BankAccount(props) {
                         </Button>
                         <Button
                             style={{
-                                width: NowTheme.SIZES.WIDTH_90,
+                                width: NowTheme.SIZES.WIDTH_BASE * 0.9,
                                 marginBottom: 10
                             }}
                             shadowless

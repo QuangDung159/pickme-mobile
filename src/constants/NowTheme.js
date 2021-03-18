@@ -22,7 +22,6 @@ const COLORS = {
     BUTTON_COLOR: '#9C26B0',
     PLACEHOLDER: '#9FA5AA',
     THUMB_SWITCH_ON: '#f96332',
-    // THUMB_SWITCH_ON: '#fff',
     SWITCH_ON: '#f96332',
     SWITCH_OFF: '#898989',
     GRADIENT_START: '#6B24AA',
@@ -57,24 +56,16 @@ const COLORS = {
 };
 
 const SIZES = {
-    ICON_16: 16,
-    ICON_14: 14,
-    ICON_20: 20,
-    ICON_60: 60,
-    FONT: 16,
-    FONT_18: 18,
     BASE: 16,
     OPACITY: 0.8,
-    FONT_INFO: 18,
-    FONT_SUB_TITLE: 14,
-    FONT_BUTTON_TITLE: 16,
     FONT_MAIN_TITLE: 30,
 
-    WIDTH_BASE: width,
-    WIDTH_90: width * 0.9,
-    WIDTH_85: width * 0.85,
-    WIDTH_95: width * 0.95,
+    FONT_H1: 30,
+    FONT_H2: 18,
+    FONT_H3: 16,
+    FONT_H4: 14,
 
+    WIDTH_BASE: width,
     HEIGHT_BASE: height,
 };
 

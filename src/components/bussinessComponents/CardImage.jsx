@@ -85,7 +85,7 @@ export default function CardImage({
                                 onPress={() => handleOnClickCard(user, currentUser, navigation)}
                             >
                                 <Text
-                                    size={NowTheme.SIZES.FONT_INFO}
+                                    size={NowTheme.SIZES.FONT_H2}
                                     bold
                                     style={styles.cardTitle}
                                     color={NowTheme.COLORS.ACTIVE}
@@ -97,7 +97,7 @@ export default function CardImage({
                         <Block>
                             <Text
                                 style={styles.subInfoCard}
-                                size={NowTheme.SIZES.FONT_SUB_TITLE}
+                                size={NowTheme.SIZES.FONT_H4}
                                 color={NowTheme.COLORS.DEFAULT}
                             >
                                 TP.Hồ Chí Minh

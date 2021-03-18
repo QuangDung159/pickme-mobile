@@ -71,7 +71,7 @@ export default function CashIn(props) {
                             }}
                         >
                             <NoteText
-                                width={NowTheme.SIZES.WIDTH_95}
+                                width={NowTheme.SIZES.WIDTH_BASE * 0.95}
                                 title="Số tài khoản: "
                                 // content="0186xxxxxxxxx"
                                 contentStyle={{
@@ -88,7 +88,7 @@ export default function CashIn(props) {
                             }}
                         >
                             <NoteText
-                                width={NowTheme.SIZES.WIDTH_95}
+                                width={NowTheme.SIZES.WIDTH_BASE * 0.95}
                                 title="Ngân hàng: "
                                 content="Tienphong Bank - TPBank"
                                 contentStyle={{
@@ -108,7 +108,7 @@ export default function CashIn(props) {
                                 onPress={() => copyToClipboard(moneyTransferContent)}
                             >
                                 <NoteText
-                                    width={NowTheme.SIZES.WIDTH_95}
+                                    width={NowTheme.SIZES.WIDTH_BASE * 0.95}
                                     title="Nội dung chuyển khoản:"
                                     content={moneyTransferContent}
                                     contentStyle={{
@@ -127,7 +127,7 @@ export default function CashIn(props) {
                             }}
                         >
                             <NoteText
-                                width={NowTheme.SIZES.WIDTH_95}
+                                width={NowTheme.SIZES.WIDTH_BASE * 0.95}
                                 title="Giá trị quy đổi:"
                                 content="1.000 vnd = 1 kim cương"
                                 contentStyle={{

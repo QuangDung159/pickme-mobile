@@ -79,7 +79,9 @@ export default function BookingDetail({
         rxUtil(
             `${Rx.BOOKING.CANCEL_BOOKING}/${bookingId}`,
             'POST',
-            null,
+            {
+                rejectReason: 'Ban dot xuat'
+            },
             {
                 Authorization: token
             },
