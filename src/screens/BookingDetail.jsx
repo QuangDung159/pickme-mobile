@@ -6,7 +6,9 @@ import {
 import { useSelector } from 'react-redux';
 import { CardBooking } from '../components/bussinessComponents';
 import { CenterLoader, Line } from '../components/uiComponents';
-import { NowTheme, Rx, ScreenName } from '../constants';
+import {
+    BookingStatus, NowTheme, Rx, ScreenName
+} from '../constants';
 import BookingProgressFlow from '../containers/BookingProgressFlow';
 import { ToastHelpers } from '../helpers';
 import { rxUtil } from '../utils';
@@ -150,6 +152,100 @@ export default function BookingDetail({
         </Block>
     );
 
+    const onCustomerConfirmPayment = () => {
+        setIsShowSpinner(true);
+
+        rxUtil(
+            `${Rx.PAYMENT.CREATE_PAYMENT}/${bookingId}`,
+            'POST',
+            null,
+            {
+                Authorization: token
+            },
+            (res) => {
+                navigation.navigate(ScreenName.BOOKING_LIST);
+                ToastHelpers.renderToast(res.message || 'Thao tác thành công.', 'success');
+            },
+            () => {
+                ToastHelpers.renderToast();
+                setIsShowSpinner(false);
+            },
+            (errMessage) => {
+                ToastHelpers.renderToast(errMessage || 'Lỗi hệ thống, vui lòng thử lại.', 'error');
+                setIsShowSpinner(false);
+            }
+        );
+    };
+
+    const renderConfirmPaymentButton = () => (
+        <Block
+            row
+            center
+            space="between"
+        >
+            <Button
+                onPress={() => {
+                    onCustomerConfirmPayment(bookingId);
+                }}
+                shadowless
+            >
+                Thanh toán
+            </Button>
+
+            <Button
+                onPress={() => {
+                    renderAlertForCustomer();
+                }}
+                shadowless
+                color={NowTheme.COLORS.DEFAULT}
+            >
+                Huỷ bỏ
+            </Button>
+        </Block>
+    );
+
+    const renderAlertForCustomer = () => {
+        // getPartnerInfo();
+
+        const { partnerInfo } = {};
+
+        return (
+            Alert.alert(
+                'Huỷ bỏ?',
+                'Bạn có chắc là muốn huỷ hẹn?',
+                [
+                    {
+                        text: 'Cân nhắc lại',
+                        onPress: () => {},
+                        style: 'cancel'
+                    },
+                    {
+                        text: 'Thay đổi thông tin đặt hẹn',
+                        onPress: () => {
+                            // TODO: send notification to customer to update booking
+
+                            navigation.navigate(ScreenName.BOOKING_DETAIL, {
+                                bookingToEdit: booking,
+                                partner: partnerInfo,
+                                fullName: partnerInfo.fullName,
+                                from: ScreenName.BOOKING_DETAIL
+                            });
+                        }
+                    },
+                    {
+                        text: 'Tôi muốn huỷ hẹn',
+                        onPress: () => {
+                            // send notification to customer to update booking
+                            // TODO
+                            onCancelBooking();
+                        }
+                    }
+                ],
+                { cancelable: false }
+            )
+        );
+    };
+
     const renderAlertRejectBooking = () => (
         Alert.alert(
             'Huỷ bỏ?',
@@ -249,7 +345,13 @@ export default function BookingDetail({
                                     adipisicing elit. Culpa, voluptates
                                 </Text>
 
-                                {booking.status === 'FinishPayment' && (
+                                {booking.status === BookingStatus.SCHEDULING
+                                && booking.isConfirm
+                                && (
+                                    renderConfirmPaymentButton(bookingId)
+                                )}
+
+                                {booking.status === BookingStatus.FINISH_PAYMENT && booking.isConfirm && (
                                     renderCompleteBookingButton()
                                 )}
                             </Block>
