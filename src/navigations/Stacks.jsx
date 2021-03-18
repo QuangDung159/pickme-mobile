@@ -64,6 +64,7 @@ const PersonalStack = () => (
 const NotificationStack = () => (
     <Stack.Navigator mode="card" headerMode="screen">
         {NotificationScreen()}
+        {BookingDetailScreen()}
     </Stack.Navigator>
 );
 

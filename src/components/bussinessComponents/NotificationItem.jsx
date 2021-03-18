@@ -8,7 +8,9 @@ import {
     MenuTrigger
 } from 'react-native-popup-menu';
 import { useSelector } from 'react-redux';
-import { IconFamily, NowTheme, Rx } from '../../constants';
+import {
+    IconFamily, NowTheme, Rx, ScreenName
+} from '../../constants';
 import { rxUtil } from '../../utils';
 import { IconCustom } from '../uiComponents';
 
@@ -17,7 +19,6 @@ export default function NotificationItem({
     notiItem,
     iconName,
     iconFamily,
-    screen,
     navigation,
 }) {
     const token = useSelector((state) => state.userReducer.token);
@@ -70,10 +71,23 @@ export default function NotificationItem({
         );
     };
 
+    const handleNavigation = (navigationId, navigationType) => {
+        switch (navigationType) {
+            case 1: {
+                navigation.navigate(ScreenName.BOOKING_DETAIL, { bookingId: navigationId });
+                break;
+            }
+            default: {
+                break;
+            }
+        }
+    };
+
     const renderNotiContent = () => {
         const {
             content,
-            id
+            id,
+            navigationId, type
         } = notiItem;
 
         return (
@@ -100,7 +114,7 @@ export default function NotificationItem({
                 >
                     <TouchableWithoutFeedback
                         onPress={() => {
-                            navigation.navigate(screen);
+                            handleNavigation(navigationId, type);
                             onClickRead(false, id);
                         }}
                     >
@@ -165,7 +179,6 @@ NotificationItem.propTypes = {
     notiItem: PropTypes.object.isRequired,
     iconName: PropTypes.string,
     iconFamily: PropTypes.string,
-    screen: PropTypes.string.isRequired,
     navigation: PropTypes.object.isRequired
 };
 

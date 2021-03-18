@@ -28,6 +28,7 @@ export default function BookingDetail({
 
     useEffect(
         () => {
+            setIsShowSpinner(true);
             fetchBookingDetailInfo();
             const eventTriggerGetBookingDetail = navigation.addListener('focus', () => {
                 if (from === ScreenName.CREATE_BOOKING) {
@@ -56,12 +57,15 @@ export default function BookingDetail({
             (res) => {
                 setBooking(res.data.data);
                 setRefreshing(false);
+                setIsShowSpinner(false);
             },
             () => {
                 setRefreshing(false);
+                setIsShowSpinner(false);
             },
             () => {
                 setRefreshing(false);
+                setIsShowSpinner(false);
             }
         );
     };
