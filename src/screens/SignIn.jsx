@@ -9,6 +9,7 @@ import {
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Toast from 'react-native-toast-message';
 import { useDispatch, useSelector } from 'react-redux';
+import { ExpoNotification } from '../components/bussinessComponents';
 import { Input } from '../components/uiComponents';
 import {
     Images, NowTheme, Rx, ScreenName
@@ -24,6 +25,7 @@ export default function SignIn(props) {
     const [username, setUsername] = useState('huyvd');
     const [password, setPassword] = useState('0000');
     const [isShowSpinner, setIsShowSpinner] = useState(false);
+    const [isTriggerExpoNotification, setIsTriggerExpoNotification] = useState(false);
 
     const expoToken = useSelector((state) => state.appConfigReducer.expoToken);
 
@@ -53,8 +55,7 @@ export default function SignIn(props) {
                 data,
                 {},
                 (res) => {
-                    const tokenFromAPI = res.data.data;
-                    onLoginSucess(tokenFromAPI);
+                    onLoginSucess(res.data.data);
                 },
                 () => {
                     toggleSpinner(false);
@@ -128,6 +129,8 @@ export default function SignIn(props) {
     const onLoginSucess = (tokenFromAPI) => {
         dispatch(setToken(tokenFromAPI));
 
+        setIsTriggerExpoNotification(true);
+
         onGetCurrentUserData(
             Rx.USER.CURRENT_USER_INFO,
             tokenFromAPI
@@ -140,6 +143,10 @@ export default function SignIn(props) {
 
     return (
         <Block flex middle>
+            {isTriggerExpoNotification && (
+                <ExpoNotification />
+            )}
+
             <ImageBackground
                 source={Images.RegisterBackground}
                 style={styles.imageBackgroundContainer}
@@ -166,6 +173,10 @@ export default function SignIn(props) {
                                     Đăng nhập
                                 </Text>
                             </Block>
+
+                            {isTriggerExpoNotification && (
+                                <ExpoNotification />
+                            )}
 
                             {isShowSpinner ? (
                                 <ActivityIndicator
