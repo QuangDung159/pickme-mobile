@@ -137,7 +137,7 @@ export default function BookingDetail({
                 }}
                 shadowless
             >
-                Chốt đặt hẹn
+                Hoàn tất buổi hẹn
             </Button>
 
             <Button
@@ -147,7 +147,7 @@ export default function BookingDetail({
                 shadowless
                 color={NowTheme.COLORS.DEFAULT}
             >
-                Huỷ đặt hẹn
+                Huỷ buổi hẹn
             </Button>
         </Block>
     );
