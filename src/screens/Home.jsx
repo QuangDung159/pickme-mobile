@@ -232,7 +232,8 @@ export default function Home({ navigation }) {
                 )}
                 keyExtractor={(item) => item.id}
                 contentContainerStyle={{
-                    marginVertical: 10
+                    marginVertical: 10,
+                    paddingBottom: 10
                 }}
                 renderItem={({ item }) => (
                     <>
@@ -275,7 +276,6 @@ export default function Home({ navigation }) {
                         center
                         style={{
                             backgroundColor: NowTheme.COLORS.BLOCK,
-                            paddingBottom: 10
                         }}
                     >
                         {renderArticles()}
