@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { NotificationItem } from '../components/bussinessComponents';
 import { CenterLoader } from '../components/uiComponents';
 import {
-    IconFamily, NowTheme, Rx, ScreenName
+    IconFamily, NowTheme, Rx
 } from '../constants';
 import { ToastHelpers } from '../helpers';
 import { setListNotification, setNumberNotificationUnread } from '../redux/Actions';
@@ -74,17 +74,30 @@ export default function Notification({ navigation }) {
         );
     };
 
-    const renderNotiItem = (notiItem) => (
-        <NotificationItem
-            iconName="home"
-            iconFamily={IconFamily.FONT_AWESOME}
-            title="Notification"
-            screen={ScreenName.HOME}
-            notiItem={notiItem}
-            onTriggerRead={() => getListNotiFromAPI()}
-            navigation={navigation}
-        />
-    );
+    const renderNotiItem = (notiItem) => {
+        let iconName = 'home';
+        let iconFamily = IconFamily.FONT_AWESOME;
+        switch (notiItem.type) {
+            case 1: {
+                iconName = 'clipboard-list';
+                iconFamily = IconFamily.FONT_AWESOME_5;
+                break;
+            }
+            default: {
+                break;
+            }
+        }
+        return (
+            <NotificationItem
+                iconName={iconName}
+                iconFamily={iconFamily}
+                title="Notification"
+                notiItem={notiItem}
+                onTriggerRead={() => getListNotiFromAPI()}
+                navigation={navigation}
+            />
+        );
+    };
 
     const renderListNoti = () => (
         <FlatList
