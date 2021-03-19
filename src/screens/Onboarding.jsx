@@ -1,7 +1,7 @@
 import {
     Block, Button, Text, theme
 } from 'galio-framework';
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
     Image, ImageBackground, Platform, StatusBar, StyleSheet,
     View
@@ -10,17 +10,22 @@ import { useDispatch } from 'react-redux';
 import {
     Images, NowTheme, ScreenName, Utils
 } from '../constants';
-import { resetStoreSignOut, setToken } from '../redux/Actions';
+import { resetStoreSignOut, setToken, setNavigation } from '../redux/Actions';
 
-export default function Onboarding(props) {
-    const { navigation } = props;
+export default function Onboarding({ navigation }) {
     const dispatch = useDispatch();
 
-    React.useEffect(
+    useEffect(
         () => {
             dispatch(setToken(''));
             dispatch(resetStoreSignOut());
         }, [dispatch]
+    );
+
+    useEffect(
+        () => {
+            dispatch(setNavigation(navigation));
+        }, []
     );
 
     return (

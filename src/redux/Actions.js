@@ -5,6 +5,7 @@ import {
     SET_LIST_BOOKING_LOCATION,
     SET_LIST_CONVERSATION, SET_LIST_NOTIFICATION,
     SET_LOGIN_INFO, SET_MESSAGE_LISTENED,
+    SET_NAVIGATION,
     SET_NUMBER_MESSAGE_UNREAD,
     SET_NUMBER_NOTIFICATION_UNREAD, SET_TOKEN
 } from './ActionTypes';
@@ -116,5 +117,12 @@ export const setLoginInfo = (loginInfo) => ({
     type: SET_LOGIN_INFO,
     payload: {
         loginInfo
+    }
+});
+
+export const setNavigation = (navigationObj) => ({
+    type: SET_NAVIGATION,
+    payload: {
+        navigationObj
     }
 });

@@ -5,13 +5,15 @@ import {
     SET_DEVICE_LOCALE,
     SET_DEVICE_ID,
     SET_EXPO_TOKEN,
+    SET_NAVIGATION,
 } from '../ActionTypes';
 
 const initState = {
     timezone: Localization.timezone,
     localeName: Localization.locale,
     deviceId: '',
-    expoToken: ''
+    expoToken: '',
+    navigationObj: {}
 };
 
 const appConfigReducer = (state = initState, action) => {
@@ -28,6 +30,9 @@ const appConfigReducer = (state = initState, action) => {
         }
         case SET_EXPO_TOKEN: {
             return { ...state, expoToken: payload.expoToken };
+        }
+        case SET_NAVIGATION: {
+            return { ...state, navigationObj: payload.navigationObj };
         }
         default: {
             return state;

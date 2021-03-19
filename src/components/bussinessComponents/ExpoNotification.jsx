@@ -18,11 +18,12 @@ Notifications.setNotificationHandler({
     }),
 });
 
-export default function ExpoNotification({ navigation }) {
+export default function ExpoNotification() {
     const notificationListener = useRef();
     const responseListener = useRef();
 
     const token = useSelector((state) => state.userReducer.token);
+    const navigationObj = useSelector((state) => state.appConfigReducer.navigationObj);
 
     const dispatch = useDispatch();
 
@@ -42,8 +43,7 @@ export default function ExpoNotification({ navigation }) {
         responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
             // on click noti popup outside
             const navigationData = response.notification.request.content.data;
-            console.log('navigationData :>> ', navigationData);
-            // handleNavigation(navigationData.NavigationId, navigationData.Type);
+            handleNavigation(navigationData.NavigationId, navigationData.Type);
         });
 
         return () => {
@@ -84,11 +84,11 @@ export default function ExpoNotification({ navigation }) {
     const handleNavigation = (navigationId, navigationType) => {
         switch (navigationType) {
             case 1: {
-                navigation.navigate(ScreenName.BOOKING_DETAIL, { bookingId: navigationId });
+                navigationObj.navigate(ScreenName.BOOKING_DETAIL, { bookingId: navigationId });
                 break;
             }
             case 3: {
-                navigation.navigate(ScreenName.WALLET);
+                navigationObj.navigate(ScreenName.WALLET);
                 break;
             }
             default: {
