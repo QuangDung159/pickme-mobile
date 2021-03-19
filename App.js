@@ -10,6 +10,7 @@ import {
 import { MenuProvider } from 'react-native-popup-menu';
 import Toast from 'react-native-toast-message';
 import { Provider } from 'react-redux';
+import { ExpoNotification } from './src/components/bussinessComponents';
 import { IconCustom } from './src/components/uiComponents';
 import { IconFamily, Images, NowTheme } from './src/constants';
 import Main from './src/containers/Main';
@@ -100,10 +101,6 @@ export default function App() {
             setFontLoaded(true);
         }
         loadFont();
-
-        return () => {
-            // componentWillUnmount
-        };
     }, []);
 
     const loadResourcesAsync = async () => {
@@ -142,6 +139,7 @@ export default function App() {
         <MenuProvider>
             <Provider store={store}>
                 <Main />
+                <ExpoNotification />
                 <Toast config={toastConfig} ref={(ref) => Toast.setRef(ref)} />
             </Provider>
         </MenuProvider>

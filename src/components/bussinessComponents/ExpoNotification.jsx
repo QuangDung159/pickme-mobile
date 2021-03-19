@@ -28,6 +28,7 @@ export default function ExpoNotification() {
 
         // This listener is fired whenever a notification is received while the app is foregrounded
         notificationListener.current = Notifications.addNotificationReceivedListener((notificationPayload) => {
+            // in app trigger
             setNotification(notificationPayload);
             console.log('notification', notification);
         });
@@ -36,6 +37,7 @@ export default function ExpoNotification() {
         // whenever a user taps on or interacts
         // with a notification (works when app is foregrounded, backgrounded, or killed)
         responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
+            // on click noti popup outside
             console.log(response);
         });
 
