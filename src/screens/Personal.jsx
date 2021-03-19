@@ -20,7 +20,7 @@ import {
     IconFamily, NowTheme, Rx, ScreenName
 } from '../constants';
 import { MediaHelpers, ToastHelpers } from '../helpers';
-import { resetStoreSignOut, setCurrentUser } from '../redux/Actions';
+import { setCurrentUser } from '../redux/Actions';
 import { rxUtil } from '../utils';
 
 const thumbMeasure = (NowTheme.SIZES.WIDTH_BASE * 0.85) / 3;
@@ -149,7 +149,6 @@ export default function Personal(props) {
             routes: [{ name: ScreenName.ONBOARDING }],
         });
         refreshExpoTokenAPI();
-        dispatch(resetStoreSignOut());
     };
 
     // Render \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\

@@ -1,5 +1,5 @@
 import { Block } from 'galio-framework';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { RefreshControl } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,7 +14,6 @@ import { rxUtil } from '../utils';
 
 export default function Notification({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
-    const [listNoti, setListNoti] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
 
     const listNotification = useSelector(
@@ -23,12 +22,6 @@ export default function Notification({ navigation }) {
     const token = useSelector((state) => state.userReducer.token);
 
     const dispatch = useDispatch();
-
-    useEffect(
-        () => {
-            setListNoti(listNotification);
-        }, []
-    );
 
     const onRefresh = () => {
         setRefreshing(true);
@@ -55,7 +48,6 @@ export default function Notification({ navigation }) {
                 Authorization: token
             },
             (res) => {
-                setListNoti(res.data.data);
                 setIsShowSpinner(false);
                 setRefreshing(false);
 
@@ -112,7 +104,7 @@ export default function Notification({ navigation }) {
                 paddingVertical: 10
             }}
             showsVerticalScrollIndicator={false}
-            data={listNoti}
+            data={listNotification}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
                 <>

@@ -1,12 +1,14 @@
 import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import {
     Alert,
     Platform
 } from 'react-native';
-import { useDispatch } from 'react-redux';
-import { setExpoToken } from '../../redux/Actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { Rx } from '../../constants';
+import { setExpoToken, setListNotification, setNumberNotificationUnread } from '../../redux/Actions';
+import { rxUtil } from '../../utils';
 
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
@@ -17,9 +19,10 @@ Notifications.setNotificationHandler({
 });
 
 export default function ExpoNotification() {
-    const [notification, setNotification] = useState(false);
     const notificationListener = useRef();
     const responseListener = useRef();
+
+    const token = useSelector((state) => state.userReducer.token);
 
     const dispatch = useDispatch();
 
@@ -29,8 +32,8 @@ export default function ExpoNotification() {
         // This listener is fired whenever a notification is received while the app is foregrounded
         notificationListener.current = Notifications.addNotificationReceivedListener((notificationPayload) => {
             // in app trigger
-            setNotification(notificationPayload);
-            console.log('notification', notification);
+            console.log('notificationPayload', notificationPayload);
+            getListNotiFromAPI();
         });
 
         // This listener is fired
@@ -47,8 +50,37 @@ export default function ExpoNotification() {
         };
     }, []);
 
+    const countNumberNotificationUnread = (listNotiFromAPI) => {
+        let count = 0;
+        listNotiFromAPI.forEach((item) => {
+            if (!item.isRead) {
+                count += 1;
+            }
+        });
+
+        dispatch(setNumberNotificationUnread(count));
+    };
+
+    const getListNotiFromAPI = () => {
+        rxUtil(
+            Rx.NOTIFICATION.GET_MY_NOTIFICATION,
+            'GET',
+            null,
+            {
+                Authorization: token
+            },
+            (res) => {
+                // set store
+                dispatch(setListNotification(res.data.data));
+                countNumberNotificationUnread(res.data.data);
+            },
+            () => {},
+            () => {}
+        );
+    };
+
     async function registerForPushNotificationsAsync() {
-        let token;
+        let expoToken;
         if (Constants.isDevice) {
             const { status: existingStatus } = await Notifications.getPermissionsAsync();
             let finalStatus = existingStatus;
@@ -60,8 +92,8 @@ export default function ExpoNotification() {
                 Alert('Failed to get push token for push notification!');
                 return;
             }
-            token = (await Notifications.getExpoPushTokenAsync()).data;
-            dispatch(setExpoToken(token));
+            expoToken = (await Notifications.getExpoPushTokenAsync()).data;
+            dispatch(setExpoToken(expoToken));
         } else {
             Alert('Must use physical device for Push Notifications');
         }

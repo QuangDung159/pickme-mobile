@@ -10,7 +10,7 @@ import { useDispatch } from 'react-redux';
 import {
     Images, NowTheme, ScreenName, Utils
 } from '../constants';
-import { setToken } from '../redux/Actions';
+import { resetStoreSignOut, setToken } from '../redux/Actions';
 
 export default function Onboarding(props) {
     const { navigation } = props;
@@ -19,6 +19,7 @@ export default function Onboarding(props) {
     React.useEffect(
         () => {
             dispatch(setToken(''));
+            dispatch(resetStoreSignOut());
         }, [dispatch]
     );
 
