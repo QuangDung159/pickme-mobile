@@ -6,7 +6,7 @@ import {
     Platform
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { Rx } from '../../constants';
+import { Rx, ScreenName } from '../../constants';
 import { setExpoToken, setListNotification, setNumberNotificationUnread } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
 
@@ -18,7 +18,7 @@ Notifications.setNotificationHandler({
     }),
 });
 
-export default function ExpoNotification() {
+export default function ExpoNotification({ navigation }) {
     const notificationListener = useRef();
     const responseListener = useRef();
 
@@ -32,7 +32,7 @@ export default function ExpoNotification() {
         // This listener is fired whenever a notification is received while the app is foregrounded
         notificationListener.current = Notifications.addNotificationReceivedListener((notificationPayload) => {
             // in app trigger
-            console.log('notificationPayload', notificationPayload);
+            console.log('notificationPayload :>> ', notificationPayload);
             getListNotiFromAPI();
         });
 
@@ -41,7 +41,9 @@ export default function ExpoNotification() {
         // with a notification (works when app is foregrounded, backgrounded, or killed)
         responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
             // on click noti popup outside
-            console.log(response);
+            const navigationData = response.notification.request.content.data;
+            console.log('navigationData :>> ', navigationData);
+            // handleNavigation(navigationData.NavigationId, navigationData.Type);
         });
 
         return () => {
@@ -77,6 +79,22 @@ export default function ExpoNotification() {
             () => {},
             () => {}
         );
+    };
+
+    const handleNavigation = (navigationId, navigationType) => {
+        switch (navigationType) {
+            case 1: {
+                navigation.navigate(ScreenName.BOOKING_DETAIL, { bookingId: navigationId });
+                break;
+            }
+            case 3: {
+                navigation.navigate(ScreenName.WALLET);
+                break;
+            }
+            default: {
+                break;
+            }
+        }
     };
 
     async function registerForPushNotificationsAsync() {

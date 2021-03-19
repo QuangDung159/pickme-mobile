@@ -77,6 +77,10 @@ export default function NotificationItem({
                 navigation.navigate(ScreenName.BOOKING_DETAIL, { bookingId: navigationId });
                 break;
             }
+            case 3: {
+                navigation.navigate(ScreenName.WALLET);
+                break;
+            }
             default: {
                 break;
             }

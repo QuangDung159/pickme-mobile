@@ -22,7 +22,7 @@ import {
 } from '../redux/Actions';
 import { rxUtil } from '../utils';
 
-export default function SignIn(props) {
+export default function SignIn({ navigation }) {
     const [username, setUsername] = useState('huyvd');
     const [password, setPassword] = useState('0000');
     const [isShowSpinner, setIsShowSpinner] = useState(false);
@@ -90,9 +90,6 @@ export default function SignIn(props) {
     };
 
     const onGetCurrentUserData = (url, tokenFromAPI) => {
-        const {
-            navigation
-        } = props;
         const headers = {
             Authorization: `Bearer ${tokenFromAPI}`
         };
@@ -141,7 +138,7 @@ export default function SignIn(props) {
 
     return (
         <Block flex middle>
-            <ExpoNotification />
+            <ExpoNotification navigation={navigation} />
             <ImageBackground
                 source={Images.RegisterBackground}
                 style={styles.imageBackgroundContainer}
