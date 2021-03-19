@@ -37,6 +37,11 @@ export default function Personal(props) {
 
     const token = useSelector((state) => state.userReducer.token);
     const currentUser = useSelector((state) => state.userReducer.currentUser);
+    const loginInfo = useSelector((state) => state.userReducer.loginInfo);
+    const {
+        password,
+        username
+    } = loginInfo;
 
     const dispatch = useDispatch();
 
@@ -122,11 +127,28 @@ export default function Personal(props) {
         MediaHelpers.pickImage(true, [1, 1], (result) => handleOnPickAvatar(result.uri));
     };
 
+    const refreshExpoTokenAPI = () => {
+        rxUtil(
+            Rx.AUTHENTICATION.LOGIN,
+            'POST',
+            {
+                username,
+                password,
+                expoNotificationToken: 'invalid'
+            },
+            {},
+            (res) => {
+                console.log('res :>> ', res);
+            }
+        );
+    };
+
     const onSignOut = () => {
         navigation.reset({
             index: 0,
             routes: [{ name: ScreenName.ONBOARDING }],
         });
+        refreshExpoTokenAPI();
         dispatch(resetStoreSignOut());
     };
 

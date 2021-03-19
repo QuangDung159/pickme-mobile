@@ -11,6 +11,7 @@ const initState = {
     timezone: Localization.timezone,
     localeName: Localization.locale,
     deviceId: '',
+    expoToken: ''
 };
 
 const appConfigReducer = (state = initState, action) => {

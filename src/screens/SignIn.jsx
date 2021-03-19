@@ -1,7 +1,7 @@
 import {
     Block, Button, Text
 } from 'galio-framework';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     ActivityIndicator, ImageBackground,
     StyleSheet
@@ -17,6 +17,7 @@ import {
 import { ToastHelpers } from '../helpers';
 import {
     setCurrentUser,
+    setLoginInfo,
     setToken
 } from '../redux/Actions';
 import { rxUtil } from '../utils';
@@ -30,6 +31,38 @@ export default function SignIn(props) {
     const expoToken = useSelector((state) => state.appConfigReducer.expoToken);
 
     const dispatch = useDispatch();
+
+    useEffect(
+        () => {
+            rxUtil(
+                Rx.AUTHENTICATION.LOGIN,
+                'POST',
+                {
+                    username,
+                    password,
+                    expoNotificationToken: expoToken
+                },
+                {},
+                (res) => {
+                    dispatch(setToken(res.data.data));
+                },
+                () => {
+                    toggleSpinner(false);
+                    Toast.show({
+                        type: 'error',
+                        text1: 'Lỗi hệ thống! Vui lòng thử lại.'
+                    });
+                },
+                () => {
+                    toggleSpinner(false);
+                    Toast.show({
+                        type: 'error',
+                        text1: 'Lỗi hệ thống! Vui lòng thử lại.'
+                    });
+                }
+            );
+        }, [expoToken]
+    );
 
     // handler \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
     const onChangeUsername = (usernameInput) => {
@@ -128,9 +161,8 @@ export default function SignIn(props) {
 
     const onLoginSucess = (tokenFromAPI) => {
         dispatch(setToken(tokenFromAPI));
-
         setIsTriggerExpoNotification(true);
-
+        dispatch(setLoginInfo({ username, password }));
         onGetCurrentUserData(
             Rx.USER.CURRENT_USER_INFO,
             tokenFromAPI

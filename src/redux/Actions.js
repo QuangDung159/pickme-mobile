@@ -1,20 +1,12 @@
 import {
-    SET_DEVICE_TIMEZONE,
-    SET_DEVICE_LOCALE,
-    SET_DEVICE_ID,
-    SET_TOKEN,
-    SET_CURRENT_USER,
-    SET_LIST_BANK,
+    RESET_STORE_SIGN_OUT, SET_CHATING_WITH, SET_CURRENT_USER,
+    SET_DATA_LISTENED, SET_DEVICE_ID, SET_DEVICE_LOCALE, SET_DEVICE_TIMEZONE,
+    SET_EXPO_TOKEN, SET_LIST_BANK,
     SET_LIST_BOOKING_LOCATION,
-    SET_LIST_NOTIFICATION,
-    SET_MESSAGE_LISTENED,
-    SET_LIST_CONVERSATION,
+    SET_LIST_CONVERSATION, SET_LIST_NOTIFICATION,
+    SET_LOGIN_INFO, SET_MESSAGE_LISTENED,
     SET_NUMBER_MESSAGE_UNREAD,
-    SET_CHATING_WITH,
-    RESET_STORE_SIGN_OUT,
-    SET_DATA_LISTENED,
-    SET_EXPO_TOKEN,
-    SET_NUMBER_NOTIFICATION_UNREAD
+    SET_NUMBER_NOTIFICATION_UNREAD, SET_TOKEN
 } from './ActionTypes';
 
 export const setDeviceTimezone = () => ({
@@ -117,5 +109,12 @@ export const setNumberNotificationUnread = (numberNotificationUnread) => ({
     type: SET_NUMBER_NOTIFICATION_UNREAD,
     payload: {
         numberNotificationUnread
+    }
+});
+
+export const setLoginInfo = (loginInfo) => ({
+    type: SET_LOGIN_INFO,
+    payload: {
+        loginInfo
     }
 });
