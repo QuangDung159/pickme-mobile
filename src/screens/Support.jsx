@@ -92,30 +92,46 @@ export default function Support() {
     };
 
     const handleOnPickImageReport = (uri) => {
-        console.log('uri :>> ', uri);
-        setBugReportForm({ ...bugReportForm, url: uri });
-        setImage(uri);
+        setIsShowSpinner(true);
+        MediaHelpers.uploadImage(
+            uri,
+            Rx.USER.UPLOAD_PROFILE_IMAGE,
+            token,
+            (res) => {
+                ToastHelpers.renderToast(
+                    res?.data?.message || 'Tải ảnh lên thành công!', 'success'
+                );
+                setIsShowSpinner(false);
+                setImage(uri);
+                setBugReportForm({ ...bugReportForm, url: res.data.data.url });
+            },
+            (err) => {
+                ToastHelpers.renderToast(
+                    err?.data?.message || 'Tải ảnh lên thất bại! Vui lòng thử lại.', 'error'
+                );
+                setIsShowSpinner(false);
+            },
+            () => {
+                ToastHelpers.renderToast('Tải ảnh lên thất bại! Vui lòng thử lại.', 'error');
+                setIsShowSpinner(false);
+            }
+        );
     };
 
     const onClickUploadImageReport = () => {
         MediaHelpers.pickImage(true, [1, 1], (result) => handleOnPickImageReport(result.uri));
     };
 
-    const renderImageReport = () => (
-        <TouchableWithoutFeedback
-            onPress={() => {
-                setVisible(true);
-                setListImageReview([{ url: bugReportForm.url }]);
-            }}
-        >
-            {/* <Image
-                source={{
-                    uri: `file://${RNFS.DocumentDirectoryPath}Users/quangdunglu/Library/Developer/CoreSimulator/Devices/9BD6C292-C9FA-439E-89B5-13C34FA0DEFD/data/Containers/Data/Application/082491AC-4FFD-4CD0-8E7D-3E49D677326A/Library/Caches/ExponentExperienceData/%2540quangdunglu159%252Fcustomer-pick-me-mobile-v1/ImagePicker/36C68008-8020-4627-AF16-432E28D3D3C7.jpg`
-                }}
-            /> */}
-            <Text>{image}</Text>
-        </TouchableWithoutFeedback>
-    );
+    const renderImageReport = () => {
+        if (image) {
+            return (
+                <Image
+                    style={styles.imageReport}
+                    source={{ uri: image }}
+                />
+            );
+        } return null;
+    };
 
     const renderImageView = () => {
         const listImageObj = [];
@@ -255,7 +271,14 @@ export default function Support() {
             {renderInputBugTitle()}
             {renderInputBugDescription()}
             {renderUploadImageReportButton()}
-            {renderImageReport()}
+            <TouchableWithoutFeedback
+                onPress={() => {
+                    setVisible(true);
+                    setListImageReview([{ url: bugReportForm.url }]);
+                }}
+            >
+                {renderImageReport()}
+            </TouchableWithoutFeedback>
             {renderButtonPanel()}
         </>
     );
@@ -411,5 +434,10 @@ const styles = StyleSheet.create({
     input: {
         borderRadius: 5,
         width: NowTheme.SIZES.WIDTH_BASE * 0.95,
-    }
+    },
+    imageReport: {
+        width: NowTheme.SIZES.WIDTH_BASE * 0.25,
+        height: NowTheme.SIZES.WIDTH_BASE * 0.25,
+        marginBottom: 10
+    },
 });
