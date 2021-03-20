@@ -86,7 +86,7 @@ const toastConfig = {
     any_custom_type: () => {}
 };
 
-export default function App({ navigation }) {
+export default function App() {
     const [isLoadingComplete, setIsLoadingComplete] = React.useState(false);
     const [fontLoaded, setFontLoaded] = React.useState(false);
 
@@ -139,7 +139,7 @@ export default function App({ navigation }) {
         <MenuProvider>
             <Provider store={store}>
                 <Main />
-                <ExpoNotification navigation={navigation} />
+                <ExpoNotification />
                 <Toast config={toastConfig} ref={(ref) => Toast.setRef(ref)} />
             </Provider>
         </MenuProvider>

@@ -30,27 +30,34 @@ export default function ExpoNotification() {
     useEffect(() => {
         registerForPushNotificationsAsync().then(() => {});
 
-        // This listener is fired whenever a notification is received while the app is foregrounded
-        notificationListener.current = Notifications.addNotificationReceivedListener((notificationPayload) => {
-            // in app trigger
-            console.log('notificationPayload :>> ', notificationPayload);
-            getListNotiFromAPI();
-        });
-
-        // This listener is fired
-        // whenever a user taps on or interacts
-        // with a notification (works when app is foregrounded, backgrounded, or killed)
-        responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
-            // on click noti popup outside
-            const navigationData = response.notification.request.content.data;
-            handleNavigation(navigationData.NavigationId, navigationData.Type);
-        });
-
         return () => {
             Notifications.removeNotificationSubscription(notificationListener.current);
             Notifications.removeNotificationSubscription(responseListener.current);
         };
     }, []);
+
+    useEffect(
+        () => {
+        // This listener is fired whenever a notification is received while the app is foregrounded
+            notificationListener.current = Notifications.addNotificationReceivedListener(() => {
+            // in app trigger
+                getListNotiFromAPI();
+            });
+        }, [token]
+    );
+
+    useEffect(
+        () => {
+            // This listener is fired
+        // whenever a user taps on or interacts
+        // with a notification (works when app is foregrounded, backgrounded, or killed)
+            responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
+            // on click noti popup outside
+                const navigationData = response.notification.request.content.data;
+                handleNavigation(navigationData.NavigationId, navigationData.Type);
+            });
+        }, [navigationObj]
+    );
 
     const countNumberNotificationUnread = (listNotiFromAPI) => {
         let count = 0;
@@ -82,17 +89,19 @@ export default function ExpoNotification() {
     };
 
     const handleNavigation = (navigationId, navigationType) => {
-        switch (navigationType) {
-            case 1: {
-                navigationObj.navigate(ScreenName.BOOKING_DETAIL, { bookingId: navigationId });
-                break;
-            }
-            case 3: {
-                navigationObj.navigate(ScreenName.WALLET);
-                break;
-            }
-            default: {
-                break;
+        if (navigationObj) {
+            switch (navigationType) {
+                case 1: {
+                    navigationObj.navigate(ScreenName.BOOKING_DETAIL, { bookingId: navigationId });
+                    break;
+                }
+                case 3: {
+                    navigationObj.navigate(ScreenName.WALLET);
+                    break;
+                }
+                default: {
+                    break;
+                }
             }
         }
     };

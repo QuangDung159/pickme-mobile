@@ -13,7 +13,7 @@ const initState = {
     localeName: Localization.locale,
     deviceId: '',
     expoToken: '',
-    navigationObj: {}
+    navigationObj: null
 };
 
 const appConfigReducer = (state = initState, action) => {
