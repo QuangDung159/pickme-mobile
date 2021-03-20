@@ -70,8 +70,8 @@ export default function UpdateInfoAccount(props) {
         setNewUser({ ...newUser, earningExpected: earningExpectedInput.toString() });
     };
 
-    const onChangeDesctiption = (desctionInput) => {
-        setNewUser({ ...newUser, description: desctionInput });
+    const onChangeDescription = (descriptionInput) => {
+        setNewUser({ ...newUser, description: descriptionInput });
     };
 
     const onChangeInputDOB = (event, selectedDate) => {
@@ -397,7 +397,7 @@ export default function UpdateInfoAccount(props) {
                     color={NowTheme.COLORS.HEADER}
                     placeholder="Nhập mô tả..."
                     value={newUser.description}
-                    onChangeText={(input) => onChangeDesctiption(input)}
+                    onChangeText={(input) => onChangeDescription(input)}
                 />
             </Block>
         </Block>
