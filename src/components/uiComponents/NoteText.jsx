@@ -38,16 +38,18 @@ export default class NoteText extends PureComponent {
                                     fontFamily: NowTheme.FONT.MONTSERRAT_BOLD
                                 }}
                             >
-                                {' '}
+                                {iconComponent && ' '}
                                 {title}
                             </Text>
                         )}
                     </Block>
                     <Text
-                        style={[contentStyle, {
-                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                            alignSelf: 'center'
-                        }]}
+                        style={[
+                            {
+                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                                alignSelf: 'center'
+                            },
+                            contentStyle]}
                     >
                         {content}
                     </Text>

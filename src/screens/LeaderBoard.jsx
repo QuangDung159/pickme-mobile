@@ -12,9 +12,7 @@ import {
 import { ToastHelpers } from '../helpers';
 import { rxUtil } from '../utils';
 
-export default function LeaderBoard(props) {
-    const { navigation } = props;
-
+export default function LeaderBoard({ navigation }) {
     const [tabActiveIndex, setTabActiveIndex] = useState(0);
     const [isShowSpinner, setIsShowSpinner] = useState(true);
     const [listGeneral, setlistGeneral] = useState({});
@@ -125,7 +123,6 @@ export default function LeaderBoard(props) {
                                         : NowTheme.COLORS.DEFAULT
                                 }
                                 style={styles.titleBold}
-                                size={20}
                             >
                                 {index + 1}
                             </Text>
@@ -194,30 +191,25 @@ export default function LeaderBoard(props) {
     const renderTopButton = (tab, index) => {
         const { tabLabel } = tab;
         return (
-            <>
-                <Block
-                    key={index}
-                    flex={3}
-                    middle
-                    style={[{
-                        backgroundColor: !(index === tabActiveIndex)
-                            ? NowTheme.COLORS.LIST_ITEM_BACKGROUND_1
-                            : NowTheme.COLORS.BASE
-                    }]}
+            <TouchableWithoutFeedback
+                onPress={() => changeTabIndexActive(index)}
+                containerStyle={{
+                    backgroundColor: !(index === tabActiveIndex)
+                        ? NowTheme.COLORS.LIST_ITEM_BACKGROUND_1
+                        : NowTheme.COLORS.BASE,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flex: 3
+                }}
+            >
+                <Text
+                    size={12}
+                    color={(index === tabActiveIndex) ? NowTheme.COLORS.ACTIVE : NowTheme.COLORS.DEFAULT}
+                    style={styles.titleBold}
                 >
-                    <TouchableWithoutFeedback
-                        onPress={() => changeTabIndexActive(index)}
-                    >
-                        <Text
-                            size={12}
-                            color={(index === tabActiveIndex) ? NowTheme.COLORS.ACTIVE : NowTheme.COLORS.DEFAULT}
-                            style={styles.titleBold}
-                        >
-                            {tabLabel}
-                        </Text>
-                    </TouchableWithoutFeedback>
-                </Block>
-            </>
+                    {tabLabel}
+                </Text>
+            </TouchableWithoutFeedback>
         );
     };
 
@@ -386,7 +378,8 @@ const styles = StyleSheet.create({
         height: NowTheme.SIZES.HEIGHT_BASE * 0.1,
     },
     titleBold: {
-        fontFamily: NowTheme.FONT.MONTSERRAT_BOLD
+        fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
+        fontSize: NowTheme.SIZES.FONT_H4
     },
     centerLoaderContainer: {
         marginTop: NowTheme.SIZES.HEIGHT_BASE * 0.2
