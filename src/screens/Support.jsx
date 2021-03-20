@@ -23,11 +23,13 @@ export default function Support() {
     const [listImageReview, setListImageReview] = useState([]);
     const [image, setImage] = useState();
     const [visible, setVisible] = useState(false);
+    const [imageId, setImageId] = useState('');
 
     const token = useSelector((state) => state.userReducer.token);
 
     const tabs = ['Câu hỏi thường gặp', 'Báo lỗi/hỗ trợ'];
 
+    // handler \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
     useEffect(
         () => {
             getListQNA();
@@ -80,6 +82,8 @@ export default function Support() {
                     description: '',
                     url: ''
                 });
+                setImageId('');
+                setImage();
                 setIsShowSpinner(false);
             },
             () => {
@@ -103,6 +107,7 @@ export default function Support() {
                 );
                 setIsShowSpinner(false);
                 setImage(uri);
+                setImageId(res.data.data.id);
                 setBugReportForm({ ...bugReportForm, url: res.data.data.url });
             },
             (err) => {
@@ -122,16 +127,43 @@ export default function Support() {
         MediaHelpers.pickImage(true, [1, 1], (result) => handleOnPickImageReport(result.uri));
     };
 
-    const renderImageReport = () => {
-        if (image) {
-            return (
+    const removeImage = () => {
+        rxUtil(
+            `${Rx.USER.REMOVE_PROFILE_IMAGE}/${imageId}`,
+            'DELETE',
+            null,
+            {
+                Authorization: token
+            },
+            () => {
+                setImageId('');
+                setImage();
+            },
+            () => {},
+            () => {}
+        );
+    };
+
+    const changeTabIndexActive = (tabIndex) => {
+        setTabActiveIndex(tabIndex);
+    };
+
+    // render \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+    const renderImageReport = () => (
+        <TouchableWithoutFeedback
+            onPress={() => {
+                setVisible(true);
+                setListImageReview([{ url: bugReportForm.url }]);
+            }}
+        >
+            {image && (
                 <Image
                     style={styles.imageReport}
                     source={{ uri: image }}
                 />
-            );
-        } return null;
-    };
+            )}
+        </TouchableWithoutFeedback>
+    );
 
     const renderImageView = () => {
         const listImageObj = [];
@@ -172,11 +204,14 @@ export default function Support() {
             </Button>
 
             <Button
-                onPress={() => setBugReportForm({
-                    title: '',
-                    description: '',
-                    url: ''
-                })}
+                onPress={() => {
+                    setBugReportForm({
+                        title: '',
+                        description: '',
+                        url: ''
+                    });
+                    removeImage();
+                }}
                 shadowless
                 style={styles.button}
                 color={NowTheme.COLORS.DEFAULT}
@@ -271,14 +306,7 @@ export default function Support() {
             {renderInputBugTitle()}
             {renderInputBugDescription()}
             {renderUploadImageReportButton()}
-            <TouchableWithoutFeedback
-                onPress={() => {
-                    setVisible(true);
-                    setListImageReview([{ url: bugReportForm.url }]);
-                }}
-            >
-                {renderImageReport()}
-            </TouchableWithoutFeedback>
+            {renderImageReport()}
             {renderButtonPanel()}
         </>
     );
@@ -353,10 +381,6 @@ export default function Support() {
             </Block>
         </Block>
     );
-
-    const changeTabIndexActive = (tabIndex) => {
-        setTabActiveIndex(tabIndex);
-    };
 
     const renderTopButton = (title, index) => (
         <TouchableWithoutFeedback
