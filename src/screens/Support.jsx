@@ -5,8 +5,9 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useSelector } from 'react-redux';
-import { IconCustom, NoteText } from '../components/uiComponents';
-import { IconFamily, NowTheme, Rx } from '../constants';
+import { CenterLoader, NoteText } from '../components/uiComponents';
+import { NowTheme, Rx } from '../constants';
+import { ToastHelpers } from '../helpers';
 import { rxUtil } from '../utils';
 
 export default function Support() {
@@ -17,35 +18,11 @@ export default function Support() {
         description: '',
         url: ''
     });
+    const [isShowSpinner, setIsShowSpinner] = useState(false);
 
     const token = useSelector((state) => state.userReducer.token);
 
-    const tabs = [
-        {
-            tabLabel: 'Câu hỏi thường gặp',
-            tabIcon: (
-                <IconCustom
-                    name="diamond"
-                    family={IconFamily.SIMPLE_LINE_ICONS}
-                    size={12}
-                    color={NowTheme.COLORS.ACTIVE}
-                />
-            ),
-            endpoint: Rx.PARTNER.LEADER_BOARD_DIAMOND
-        },
-        {
-            tabLabel: 'Báo lỗi/hỗ trợ',
-            tabIcon: (
-                <IconCustom
-                    name="clipboard-list"
-                    family={IconFamily.FONT_AWESOME_5}
-                    size={NowTheme.SIZES.FONT_H4}
-                    color={NowTheme.COLORS.ACTIVE}
-                />
-            ),
-            endpoint: Rx.PARTNER.LEADER_BOARD_BOOKING
-        }
-    ];
+    const tabs = ['Câu hỏi thường gặp', 'Báo lỗi/hỗ trợ'];
 
     useEffect(
         () => {
@@ -54,6 +31,7 @@ export default function Support() {
     );
 
     const getListQNA = () => {
+        setIsShowSpinner(true);
         rxUtil(
             Rx.SYSTEM.GET_QNA,
             'GET',
@@ -63,9 +41,14 @@ export default function Support() {
             },
             (res) => {
                 setListQAN(res.data.data);
+                setIsShowSpinner(false);
             },
-            () => {},
-            () => {}
+            () => {
+                setIsShowSpinner(false);
+            },
+            () => {
+                setIsShowSpinner(false);
+            }
         );
     };
 
@@ -77,6 +60,33 @@ export default function Support() {
         setBugReportForm({ ...bugReportForm, title: titleInput });
     };
 
+    const onSubmitBugReport = () => {
+        setIsShowSpinner(true);
+        rxUtil(
+            Rx.SYSTEM.CREATE_BUG,
+            'POST',
+            bugReportForm,
+            {
+                Authorization: token
+            },
+            (res) => {
+                ToastHelpers.renderToast(res.data.message, 'success');
+                setBugReportForm({
+                    title: '',
+                    description: '',
+                    url: ''
+                });
+                setIsShowSpinner(false);
+            },
+            () => {
+                setIsShowSpinner(false);
+            },
+            () => {
+                setIsShowSpinner(false);
+            }
+        );
+    };
+
     const renderButtonPanel = () => (
         <Block
             row
@@ -86,9 +96,7 @@ export default function Support() {
             }}
         >
             <Button
-                onPress={() => {
-                    // onSubmitBooking();
-                }}
+                onPress={() => onSubmitBugReport()}
                 shadowless
                 style={styles.button}
             >
@@ -96,9 +104,11 @@ export default function Support() {
             </Button>
 
             <Button
-                onPress={() => {
-                    // renderAlert();
-                }}
+                onPress={() => setBugReportForm({
+                    title: '',
+                    description: '',
+                    url: ''
+                })}
                 shadowless
                 style={styles.button}
                 color={NowTheme.COLORS.DEFAULT}
@@ -238,30 +248,27 @@ export default function Support() {
         setTabActiveIndex(tabIndex);
     };
 
-    const renderTopButton = (tab, index) => {
-        const { tabLabel } = tab;
-        return (
-            <TouchableWithoutFeedback
-                onPress={() => changeTabIndexActive(index)}
-                containerStyle={{
-                    backgroundColor: !(index === tabActiveIndex)
-                        ? NowTheme.COLORS.LIST_ITEM_BACKGROUND_1
-                        : NowTheme.COLORS.BASE,
-                    flex: 3,
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                }}
+    const renderTopButton = (title, index) => (
+        <TouchableWithoutFeedback
+            onPress={() => changeTabIndexActive(index)}
+            containerStyle={{
+                backgroundColor: !(index === tabActiveIndex)
+                    ? NowTheme.COLORS.LIST_ITEM_BACKGROUND_1
+                    : NowTheme.COLORS.BASE,
+                flex: 3,
+                alignItems: 'center',
+                justifyContent: 'center'
+            }}
+        >
+            <Text
+                color={(index === tabActiveIndex) ? NowTheme.COLORS.ACTIVE : NowTheme.COLORS.DEFAULT}
+                style={styles.titleBold}
             >
-                <Text
-                    color={(index === tabActiveIndex) ? NowTheme.COLORS.ACTIVE : NowTheme.COLORS.DEFAULT}
-                    style={styles.titleBold}
-                >
-                    {tabLabel}
-                </Text>
-            </TouchableWithoutFeedback>
+                {title}
+            </Text>
+        </TouchableWithoutFeedback>
 
-        );
-    };
+    );
 
     return (
         <Block
@@ -270,22 +277,28 @@ export default function Support() {
                 alignItems: 'center',
             }}
         >
-            <Block
-                row
-                style={[{
-                    height: NowTheme.SIZES.HEIGHT_BASE * 0.06
-                }]}
-            >
-                {tabs.map((tab, index) => renderTopButton(tab, index))}
-            </Block>
-            <ScrollView
-                contentContainerStyle={{
-                    width: NowTheme.SIZES.WIDTH_BASE * 0.95,
-                    paddingVertical: 10
-                }}
-            >
-                {renderTabByIndex()}
-            </ScrollView>
+            {isShowSpinner ? (
+                <CenterLoader size="large" />
+            ) : (
+                <>
+                    <Block
+                        row
+                        style={[{
+                            height: NowTheme.SIZES.HEIGHT_BASE * 0.06
+                        }]}
+                    >
+                        {tabs.map((title, index) => renderTopButton(title, index))}
+                    </Block>
+                    <ScrollView
+                        contentContainerStyle={{
+                            width: NowTheme.SIZES.WIDTH_BASE * 0.95,
+                            paddingVertical: 10
+                        }}
+                    >
+                        {renderTabByIndex()}
+                    </ScrollView>
+                </>
+            )}
         </Block>
     );
 }

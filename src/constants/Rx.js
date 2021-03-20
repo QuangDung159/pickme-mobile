@@ -53,6 +53,7 @@ export default {
         CREATE_PAYMENT: '/Payments/CreatePayment'
     },
     SYSTEM: {
-        GET_QNA: '/Systems/GetQnAs'
+        GET_QNA: '/Systems/GetQnAs',
+        CREATE_BUG: '/Systems/CreateBug'
     }
 };
