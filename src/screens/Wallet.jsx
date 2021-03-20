@@ -154,7 +154,7 @@ export default function Wallet(props) {
                     row
                     center
                     style={{
-                        height: NowTheme.SIZES.HEIGHT_BASE * 0.1,
+                        height: NowTheme.SIZES.HEIGHT_BASE * 0.13,
                         width: NowTheme.SIZES.WIDTH_BASE * 0.9,
                         alignSelf: 'center'
                     }}
