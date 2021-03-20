@@ -163,14 +163,8 @@ export default function Wallet(props) {
                         marginRight: 10
                     }}
                     >
-                        {/* <IconCustom
-                            name={type === 1 ? 'chevron-circle-right' : 'chevron-circle-left'}
-                            size={30}
-                            color={NowTheme.COLORS.DEFAULT}
-                            family={IconFamily.FONT_AWESOME}
-                        /> */}
                         <IconCustom
-                            name="chevron-circle-right"
+                            name={type === 1 ? 'chevron-circle-right' : 'chevron-circle-left'}
                             size={30}
                             color={NowTheme.COLORS.DEFAULT}
                             family={IconFamily.FONT_AWESOME}
@@ -188,11 +182,6 @@ export default function Wallet(props) {
             createdDate,
             amount,
         } = historyItem;
-
-        // let status = '';
-        // if (type === 1) {
-        //     status = historyItem.isComplete ? 'Hoàn thành' : 'Chưa hoàn thành';
-        // }
 
         return (
             <Block
@@ -239,13 +228,6 @@ export default function Wallet(props) {
                 >
                     {type === 0 ? owner : description}
                 </Text>
-                {/* <Text
-                    color={NowTheme.COLORS.DEFAULT}
-                    size={16}
-                    fontFamily={NowTheme.FONT.MONTSERRAT_REGULAR}
-                >
-                    {status}
-                </Text> */}
             </Block>
         );
     };
