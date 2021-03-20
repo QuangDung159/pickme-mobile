@@ -16,7 +16,8 @@ import {
     Payment, Personal,
     Profile, Settings, SignIn, SignUp,
     UpdateInfoAccount,
-    Wallet
+    Wallet,
+    Support
 } from '../screens';
 
 const Stack = createStackNavigator();
@@ -377,6 +378,24 @@ export const SignInScreen = () => (
                 />
             ),
             headerTransparent: true
+        }}
+    />
+);
+
+export const SupportScreen = () => (
+    <Stack.Screen
+        name={ScreenName.SUPPORT}
+        component={Support}
+        options={{
+            header: ({ navigation, scene }) => (
+                <Header
+                    title={ScreenTitle.SUPPORT}
+                    options
+                    navigation={navigation}
+                    scene={scene}
+                />
+            ),
+            cardStyle: { backgroundColor: NowTheme.COLORS.BASE }
         }}
     />
 );

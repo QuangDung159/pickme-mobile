@@ -12,7 +12,6 @@ export default {
     SIGN_IN: 'Đăng nhập',
     NOTIFICATION: 'Thông báo',
     MENU: 'Menu',
-    CREATE_BOOKING: 'Xác nhận cuộc hẹn',
     CREATE_BOOKING: 'Tạo đơn hẹn',
     PAYMENT: 'Thanh toán',
     MESSAGE: 'Trò chuyện',
@@ -25,5 +24,6 @@ export default {
     CONVERSATION_LIST: 'Trò chuyện',
     UPDATE_INFO_ACCOUNT: 'Chỉnh sửa trang cá nhân',
     BANK_ACCOUNT: 'Tài khoản ngân hàng',
-    BUSY_CALENDAR: 'Lịch bận'
+    BUSY_CALENDAR: 'Lịch bận',
+    SUPPORT: 'Hỗ trợ'
 };

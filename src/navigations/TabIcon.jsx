@@ -7,7 +7,8 @@ export default class TabIcon extends PureComponent {
         super(props);
         this.state = {
             name: 'home',
-            family: IconFamily.FONT_AWESOME
+            family: IconFamily.FONT_AWESOME,
+            size: 24
         };
     }
 
@@ -18,54 +19,67 @@ export default class TabIcon extends PureComponent {
     configIcon = () => {
         const { route } = this.props;
 
-        let name = 'home';
-        let family = IconFamily.FONT_AWESOME;
-
         switch (route.name) {
             case ScreenName.HOME: {
-                name = 'home';
-                family = IconFamily.FONT_AWESOME_5;
+                this.setState({
+                    name: 'home',
+                    family: IconFamily.FONT_AWESOME_5
+                });
                 break;
             }
             case ScreenName.PERSONAL: {
-                name = 'user-circle-o';
-                family = IconFamily.FONT_AWESOME;
+                this.setState({
+                    name: 'user-circle-o',
+                    family: IconFamily.FONT_AWESOME
+                });
                 break;
             }
             case ScreenName.NOTIFICATION: {
-                name = 'notifications-active';
-                family = IconFamily.MATERIAL_ICONS;
+                this.setState({
+                    name: 'notifications-active',
+                    family: IconFamily.MATERIAL_ICONS,
+                    size: 28
+                });
                 break;
             }
             case ScreenName.CONVERSATION_LIST: {
-                name = 'comment';
-                family = IconFamily.FONT_AWESOME;
+                this.setState({
+                    name: 'comment',
+                    family: IconFamily.FONT_AWESOME
+                });
                 break;
             }
             case ScreenName.LEADER_BOARD: {
-                name = 'award';
-                family = IconFamily.FONT_AWESOME_5;
+                this.setState({
+                    name: 'award',
+                    family: IconFamily.FONT_AWESOME_5
+                });
+                break;
+            }
+            case ScreenName.SUPPORT: {
+                this.setState({
+                    name: 'contact-support',
+                    family: IconFamily.MATERIAL_ICONS,
+                    size: 28
+                });
                 break;
             }
             default: {
-                name = 'home';
-                family = IconFamily.FONT_AWESOME;
+                this.setState({
+                    name: 'home',
+                    family: IconFamily.FONT_AWESOME
+                });
                 break;
             }
         }
-
-        this.setState({
-            name,
-            family
-        });
     }
 
     render() {
         const {
-            name, family
+            name, family, size
         } = this.state;
 
-        const { color, size } = this.props;
+        const { color } = this.props;
         return (
             <IconCustom name={name} size={size} color={color} family={family} />
         );

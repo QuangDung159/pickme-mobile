@@ -24,5 +24,6 @@ export default {
     CONVERSATION_LIST: 'ConversationList',
     UPDATE_INFO_ACCOUNT: 'UpdateInfoAccount',
     BANK_ACCOUNT: 'BankAccount',
-    BUSY_CALENDAR: 'BusyCalendar'
+    BUSY_CALENDAR: 'BusyCalendar',
+    SUPPORT: 'Support'
 };

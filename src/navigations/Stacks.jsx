@@ -24,7 +24,8 @@ import {
     SignInScreen,
     SignUpScreen,
     UpdateInfoAccountScreen,
-    WalletScreen
+    WalletScreen,
+    SupportScreen
 } from './StackScreens';
 import TabIcon from './TabIcon';
 
@@ -79,6 +80,12 @@ const LeaderBoardStack = () => (
         {CashInScreen()}
         {CashOutScreen()}
         {BankAccountScreen()}
+    </Stack.Navigator>
+);
+
+const SupportStack = () => (
+    <Stack.Navigator mode="card" headerMode="screen">
+        {SupportScreen()}
     </Stack.Navigator>
 );
 
@@ -142,6 +149,10 @@ const BottomTabMenuStack = () => {
                 showLabel: false,
             }}
         >
+            <Tab.Screen
+                name={ScreenName.SUPPORT}
+                component={SupportStack}
+            />
             <Tab.Screen
                 name={ScreenName.LEADER_BOARD}
                 component={LeaderBoardStack}

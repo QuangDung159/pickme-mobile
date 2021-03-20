@@ -19,6 +19,7 @@ import SignIn from './SignIn';
 import SignUp from './SignUp';
 import UpdateInfoAccount from './UpdateInfoAccount';
 import Wallet from './Wallet';
+import Support from './Support';
 
 export {
     Home, Notification, Settings, Onboarding,
@@ -36,5 +37,6 @@ export {
     Personal,
     Profile,
     UpdateInfoAccount,
-    Wallet
+    Wallet,
+    Support
 };
