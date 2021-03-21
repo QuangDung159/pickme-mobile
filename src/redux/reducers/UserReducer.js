@@ -1,7 +1,7 @@
 import {
     SET_CURRENT_USER,
     SET_LOGIN_INFO,
-    SET_TOKEN,
+    SET_TOKEN
 } from '../ActionTypes';
 
 const initState = {

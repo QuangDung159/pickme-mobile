@@ -1,11 +1,8 @@
 import * as Localization from 'expo-localization';
-
 import {
-    SET_DEVICE_TIMEZONE,
-    SET_DEVICE_LOCALE,
-    SET_DEVICE_ID,
+    SET_DEVICE_ID, SET_DEVICE_LOCALE, SET_DEVICE_TIMEZONE,
     SET_EXPO_TOKEN,
-    SET_NAVIGATION,
+    SET_NAVIGATION
 } from '../ActionTypes';
 
 const initState = {
