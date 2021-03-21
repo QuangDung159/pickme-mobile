@@ -12,7 +12,7 @@ import {
     IconFamily, NowTheme, Rx
 } from '../constants';
 
-export default function Personal() {
+export default function Personal({ navigation }) {
     const [tabActiveIndex, setTabActiveIndex] = useState(0);
 
     const tabs = [
@@ -29,7 +29,7 @@ export default function Personal() {
             endpoint: Rx.PARTNER.LEADER_BOARD_DIAMOND
         },
         {
-            tabLabel: 'Rương kim cương cương',
+            tabLabel: 'Rương kim cương',
             tabIcon: (
                 <IconCustom
                     name="treasure-chest"
@@ -85,9 +85,7 @@ export default function Personal() {
         switch (tabActiveIndex) {
             case 0: {
                 return (
-                    <>
-                        <UserInformation />
-                    </>
+                    <UserInformation navigation={navigation} />
                 );
             }
             default: {
