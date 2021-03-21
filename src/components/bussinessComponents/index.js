@@ -7,6 +7,7 @@ import SubInfoProfile from './SubInfoProfile';
 import ProfileInfoItem from './ProfileInfoItem';
 import CardImage from './CardImage';
 import ExpoNotification from './ExpoNotification';
+import UserInformation from './UserInformation';
 
 export {
     Listener,
@@ -16,5 +17,6 @@ export {
     SubInfoProfile,
     ProfileInfoItem,
     CardImage,
-    ExpoNotification
+    ExpoNotification,
+    UserInformation
 };
