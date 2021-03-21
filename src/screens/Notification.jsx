@@ -75,6 +75,11 @@ export default function Notification({ navigation }) {
                 iconFamily = IconFamily.FONT_AWESOME_5;
                 break;
             }
+            case 3: {
+                iconName = 'treasure-chest';
+                iconFamily = IconFamily.MATERIAL_COMMUNITY_ICONS;
+                break;
+            }
             default: {
                 break;
             }
@@ -101,7 +106,6 @@ export default function Notification({ navigation }) {
             )}
             contentContainerStyle={{
                 backgroundColot: NowTheme.COLORS.BASE,
-                paddingVertical: 10
             }}
             showsVerticalScrollIndicator={false}
             data={listNotification}
@@ -120,11 +124,7 @@ export default function Notification({ navigation }) {
                 {isShowSpinner ? (
                     <CenterLoader size="large" />
                 ) : (
-                    <Block
-                        style={{
-                            backgroundColor: NowTheme.COLORS.BLOCK,
-                        }}
-                    >
+                    <Block>
                         {renderListNoti()}
                     </Block>
                 )}

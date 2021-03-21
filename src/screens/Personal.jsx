@@ -240,7 +240,7 @@ export default function Personal(props) {
                         </Block>
                     </Block>
                     <Block>
-                        {renderButtonPanel(navigation)}
+                        {renderButtonPanel()}
                         <Block
                             middle
                         >

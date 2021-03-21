@@ -1,7 +1,9 @@
+/* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
+import { NO_AVATAR_URL } from '@env';
 import { Block, Text } from 'galio-framework';
 import PropTypes from 'prop-types';
-import React from 'react';
-import { TouchableWithoutFeedback } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Image, TouchableWithoutFeedback, StyleSheet } from 'react-native';
 import {
     Menu,
     MenuOption, MenuOptions,
@@ -22,6 +24,24 @@ export default function NotificationItem({
     navigation,
 }) {
     const token = useSelector((state) => state.userReducer.token);
+    const currentUser = useSelector((state) => state.userReducer.currentUser);
+
+    const [image, setImage] = useState(currentUser.url);
+    const [booking, setBooking] = useState();
+
+    useEffect(
+        () => {
+            if (notiItem.type === 1) {
+                fetchBookingDetailInfo();
+            }
+        }, []
+    );
+
+    useEffect(
+        () => {
+            getImageUrlByNotificationType();
+        }, [booking]
+    );
 
     const onClickRead = (isReadAll, notiId = null) => {
         const endpoint = isReadAll
@@ -40,6 +60,45 @@ export default function NotificationItem({
             },
             () => {},
             () => {}
+        );
+    };
+
+    const getImageUrlByNotificationType = () => {
+        if (booking) {
+            if (notiItem.type === 1) {
+            // set url by partner's url
+                getPartnerInfo(booking.partner.id);
+            }
+        }
+    };
+
+    const getPartnerInfo = (partnerId) => {
+        rxUtil(
+            `${Rx.PARTNER.PARTNER_DETAIL}/${partnerId}`,
+            'GET',
+            null,
+            {
+                Authorization: token
+            },
+            (res) => {
+                setImage(res.data.data.url);
+            },
+            () => {},
+            () => {}
+        );
+    };
+
+    const fetchBookingDetailInfo = () => {
+        rxUtil(
+            `${Rx.BOOKING.DETAIL_BOOKING}/${notiItem.navigationId}`,
+            'GET',
+            null,
+            {
+                Authorization: token
+            },
+            (res) => {
+                setBooking(res.data.data);
+            }
         );
     };
 
@@ -87,6 +146,26 @@ export default function NotificationItem({
         }
     };
 
+    const renderAvatar = () => (
+        <Block>
+            <Image
+                style={styles.avatar}
+                source={{ uri: image || NO_AVATAR_URL }}
+            />
+            <Block
+                style={styles.notificationIcon}
+            >
+                <IconCustom
+                    name={iconName}
+                    size={15}
+                    color={NowTheme.COLORS.ACTIVE}
+                    family={iconFamily}
+                />
+            </Block>
+
+        </Block>
+    );
+
     const renderNotiContent = () => {
         const {
             content,
@@ -98,17 +177,12 @@ export default function NotificationItem({
             <>
                 <Block
                     flex={1}
+                    middle
                     style={{
                         marginRight: 15,
-                        justifyContent: 'center',
                     }}
                 >
-                    <IconCustom
-                        name={iconName}
-                        size={30}
-                        color={NowTheme.COLORS.DEFAULT}
-                        family={iconFamily}
-                    />
+                    {renderAvatar()}
                 </Block>
                 <Block
                     flex={8}
@@ -124,7 +198,6 @@ export default function NotificationItem({
                     >
                         <Block style={{
                             paddingVertical: 5,
-                            width: NowTheme.SIZES.WIDTH_BASE * 0.7
                         }}
                         >
                             <Text
@@ -151,7 +224,7 @@ export default function NotificationItem({
             !isRead
                 ? { backgroundColor: NowTheme.COLORS.NOTIFICATION_BACKGROUND }
                 : { }, {
-                height: NowTheme.SIZES.HEIGHT_BASE * 0.1
+                height: NowTheme.SIZES.HEIGHT_BASE * 0.08
             }]}
         >
             <Block
@@ -164,7 +237,7 @@ export default function NotificationItem({
             >
                 {renderNotiContent()}
 
-                <Block
+                {/* <Block
                     flex={1}
                     style={{
                         justifyContent: 'center',
@@ -172,7 +245,7 @@ export default function NotificationItem({
                     }}
                 >
                     {renderMenuIcon()}
-                </Block>
+                </Block> */}
             </Block>
         </Block>
     );
@@ -190,3 +263,17 @@ NotificationItem.defaultProps = {
     iconName: 'home',
     iconFamily: IconFamily.FONT_AWESOME
 };
+
+const styles = StyleSheet.create({
+    avatar: {
+        borderRadius: 100,
+        width: NowTheme.SIZES.WIDTH_BASE * 0.1,
+        height: NowTheme.SIZES.WIDTH_BASE * 0.1,
+    },
+    notificationIcon: {
+        position: 'absolute',
+        bottom: 0,
+        right: 0,
+        zIndex: 99,
+    }
+});
