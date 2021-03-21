@@ -5,9 +5,7 @@ import { FlatList } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import { NotificationItem } from '../components/bussinessComponents';
 import { CenterLoader } from '../components/uiComponents';
-import {
-    IconFamily, NowTheme, Rx
-} from '../constants';
+import { NowTheme, Rx } from '../constants';
 import { ToastHelpers } from '../helpers';
 import { setListNotification, setNumberNotificationUnread } from '../redux/Actions';
 import { rxUtil } from '../utils';

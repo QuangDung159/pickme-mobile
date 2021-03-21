@@ -1,13 +1,12 @@
-import { withNavigation } from '@react-navigation/compat';
 import {
     Block, Button, NavBar, Text, theme
 } from 'galio-framework';
-import React, { PureComponent } from 'react';
+import React, { useEffect } from 'react';
 import { Platform, StyleSheet, TouchableOpacity } from 'react-native';
+import { IconCustom, Input, Tabs } from '../components/uiComponents';
 import {
     IconFamily, NowTheme, ScreenName, ScreenTitle
 } from '../constants';
-import { IconCustom, Input, Tabs } from '../components/uiComponents';
 
 const iPhoneX = Platform.OS === 'ios';
 
@@ -26,15 +25,36 @@ const BellButton = ({ isWhite, style, navigation }) => (
     </TouchableOpacity>
 );
 
-class Header extends PureComponent {
-    handleLeftPress = () => {
-        const { back, navigation } = this.props;
-        return back ? navigation.goBack() : navigation.openDrawer();
-    };
+export default function Header({
+    back,
+    title,
+    white,
+    transparent,
+    bgColor,
+    iconColor,
+    titleColor,
+    navigation,
+    screenNameProp,
+    optionLeft, optionRight,
+    tabs, tabIndex,
+    search, options,
+    ...props
+}) {
+    const noShadow = ['Search', 'Categories', 'Deals', 'Pro', 'Profile'].includes(title);
+    const headerStyles = [
+        !noShadow ? styles.shadow : null,
+        transparent ? { backgroundColor: 'rgba(0,0,0,0)' } : null
+    ];
 
-    renderRight = () => {
-        const { white, title, navigation } = this.props;
+    const navbarStyles = [
+        styles.navbar, bgColor && {
+            backgroundColor: bgColor, zIndex: 1
+        },
+        iPhoneX ? styles.navbarHeight : {}];
 
+    const handleLeftPress = () => (back ? navigation.goBack() : navigation.openDrawer());
+
+    const renderRight = () => {
         if (title === 'Title') {
             return [
                 <BellButton key="chat-title" navigation={navigation} isWhite={white} />,
@@ -51,7 +71,7 @@ class Header extends PureComponent {
         }
     };
 
-    renderSearch = () => (
+    const renderSearch = () => (
         <Input
             right
             color="black"
@@ -69,54 +89,49 @@ class Header extends PureComponent {
         />
     );
 
-    renderOptions = () => {
-        const { navigation, optionLeft, optionRight } = this.props;
-
-        return (
-            <Block row style={styles.options}>
-                <Button
-                    shadowless
-                    style={[styles.tab, styles.divider]}
-                >
-                    <Block row middle>
+    const renderOptions = () => (
+        <Block row style={styles.options}>
+            <Button
+                shadowless
+                style={[styles.tab, styles.divider]}
+            >
+                <Block row middle>
+                    <IconCustom
+                        name="bulb"
+                        family={IconFamily.NOW_EXTRA}
+                        size={NowTheme.SIZES.FONT_H2}
+                        style={{ paddingRight: 8 }}
+                        color={NowTheme.COLORS.HEADER}
+                    />
+                    <Text size={16} style={styles.tabTitle}>
+                        {optionLeft || 'Beauty'}
+                    </Text>
+                </Block>
+            </Button>
+            <Button shadowless style={styles.tab} onPress={() => navigation.navigate(ScreenName.HOME)}>
+                <Block row middle>
+                    <Block
+                        style={{
+                            paddingRight: 8
+                        }}
+                    >
                         <IconCustom
-                            name="bulb"
-                            family={IconFamily.NOW_EXTRA}
                             size={NowTheme.SIZES.FONT_H2}
-                            style={{ paddingRight: 8 }}
+                            name="bag-162x"
+                            family={IconFamily.NOW_EXTRA}
                             color={NowTheme.COLORS.HEADER}
                         />
-                        <Text size={16} style={styles.tabTitle}>
-                            {optionLeft || 'Beauty'}
-                        </Text>
                     </Block>
-                </Button>
-                <Button shadowless style={styles.tab} onPress={() => navigation.navigate(ScreenName.HOME)}>
-                    <Block row middle>
-                        <Block
-                            style={{
-                                paddingRight: 8
-                            }}
-                        >
-                            <IconCustom
-                                size={NowTheme.SIZES.FONT_H2}
-                                name="bag-162x"
-                                family={IconFamily.NOW_EXTRA}
-                                color={NowTheme.COLORS.HEADER}
-                            />
-                        </Block>
 
-                        <Text size={16} style={styles.tabTitle}>
-                            {optionRight || 'Fashion'}
-                        </Text>
-                    </Block>
-                </Button>
-            </Block>
-        );
-    };
+                    <Text size={16} style={styles.tabTitle}>
+                        {optionRight || 'Fashion'}
+                    </Text>
+                </Block>
+            </Button>
+        </Block>
+    );
 
-    renderTabs = () => {
-        const { tabs, tabIndex, navigation } = this.props;
+    const renderTabs = () => {
         const defaultTab = tabs && tabs[0] && tabs[0].id;
 
         if (!tabs) return null;
@@ -130,13 +145,12 @@ class Header extends PureComponent {
         );
     };
 
-    renderHeader = () => {
-        const { search, options, tabs } = this.props;
+    const renderHeader = () => {
         if (search || tabs || options) {
             return (
                 <Block center>
-                    {search ? this.renderSearch() : null}
-                    {tabs ? this.renderTabs() : null}
+                    {search ? renderSearch() : null}
+                    {tabs ? renderTabs() : null}
                 </Block>
             );
         }
@@ -144,73 +158,46 @@ class Header extends PureComponent {
         return null;
     };
 
-    render() {
-        const {
-            back,
-            title,
-            white,
-            transparent,
-            bgColor,
-            iconColor,
-            titleColor,
-            navigation,
-            screenNameProp,
-            ...props
-        } = this.props;
-
-        const noShadow = ['Search', 'Categories', 'Deals', 'Pro', 'Profile'].includes(title);
-        const headerStyles = [
-            !noShadow ? styles.shadow : null,
-            transparent ? { backgroundColor: 'rgba(0,0,0,0)' } : null
-        ];
-
-        const navbarStyles = [
-            styles.navbar, bgColor && {
-                backgroundColor: bgColor, zIndex: 1
-            },
-            iPhoneX ? styles.navbarHeight : {}];
-
-        return (
-            <Block style={headerStyles}>
-                <NavBar
-                    back={false}
-                    title={title}
-                    style={navbarStyles}
-                    transparent={transparent}
-                    rightStyle={{ alignItems: 'center' }}
-                    leftStyle={{ paddingVertical: 12, flex: 0.2 }}
-                    titleStyle={[
-                        styles.title,
-                        { color: NowTheme.COLORS[white ? 'WHITE' : 'HEADER'] },
-                        titleColor && { color: titleColor }
-                    ]}
-                    {...props}
-                />
-                {screenNameProp && screenNameProp === ScreenName.MESSAGE && (
-                    <Block
+    return (
+        <Block style={headerStyles}>
+            <NavBar
+                back={false}
+                title={title}
+                style={navbarStyles}
+                transparent={transparent}
+                rightStyle={{ alignItems: 'center' }}
+                leftStyle={{ paddingVertical: 12, flex: 0.2 }}
+                titleStyle={[
+                    styles.title,
+                    { color: NowTheme.COLORS[white ? 'WHITE' : 'HEADER'] },
+                    titleColor && { color: titleColor }
+                ]}
+                {...props}
+            />
+            {screenNameProp && screenNameProp === ScreenName.MESSAGE && (
+                <Block
+                    style={{
+                        marginLeft: 7,
+                        marginTop: 0,
+                        zIndex: 99
+                    }}
+                >
+                    <Text
                         style={{
-                            marginLeft: 7,
-                            marginTop: 0,
-                            zIndex: 99
+                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                            marginTop: iPhoneX ? -10 : -20,
                         }}
+                        size={10}
+                        color={NowTheme.COLORS.ACTIVE}
                     >
-                        <Text
-                            style={{
-                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                                marginTop: iPhoneX ? -10 : -20,
-                            }}
-                            size={10}
-                            color={NowTheme.COLORS.ACTIVE}
-                        >
-                            Vừa mới truy cập
-                        </Text>
-                    </Block>
-                )}
+                        Vừa mới truy cập
+                    </Text>
+                </Block>
+            )}
 
-                {this.renderHeader()}
-            </Block>
-        );
-    }
+            {renderHeader()}
+        </Block>
+    );
 }
 
 const styles = StyleSheet.create({
@@ -283,5 +270,3 @@ const styles = StyleSheet.create({
         fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
     },
 });
-
-export default withNavigation(Header);
