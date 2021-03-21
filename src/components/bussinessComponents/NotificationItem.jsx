@@ -3,7 +3,7 @@ import { NO_AVATAR_URL } from '@env';
 import { Block, Text } from 'galio-framework';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
-import { Image, TouchableWithoutFeedback, StyleSheet } from 'react-native';
+import { Image, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import {
     Menu,
     MenuOption, MenuOptions,
@@ -19,8 +19,6 @@ import { IconCustom } from '../uiComponents';
 export default function NotificationItem({
     onTriggerRead,
     notiItem,
-    iconName,
-    iconFamily,
     navigation,
 }) {
     const token = useSelector((state) => state.userReducer.token);
@@ -243,14 +241,7 @@ export default function NotificationItem({
 NotificationItem.propTypes = {
     onTriggerRead: PropTypes.func.isRequired,
     notiItem: PropTypes.object.isRequired,
-    iconName: PropTypes.string,
-    iconFamily: PropTypes.string,
     navigation: PropTypes.object.isRequired
-};
-
-NotificationItem.defaultProps = {
-    iconName: 'home',
-    iconFamily: IconFamily.FONT_AWESOME
 };
 
 const styles = StyleSheet.create({
