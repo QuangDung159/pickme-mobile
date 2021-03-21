@@ -8,6 +8,7 @@ import ProfileInfoItem from './ProfileInfoItem';
 import CardImage from './CardImage';
 import ExpoNotification from './ExpoNotification';
 import UserInformation from './UserInformation';
+import Wallet from './Wallet';
 
 export {
     Listener,
@@ -18,5 +19,6 @@ export {
     ProfileInfoItem,
     CardImage,
     ExpoNotification,
-    UserInformation
+    UserInformation,
+    Wallet
 };

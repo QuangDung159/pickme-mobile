@@ -99,7 +99,9 @@ export default function NotificationItem({
                 break;
             }
             case 3: {
-                navigation.navigate(ScreenName.WALLET);
+                navigation.navigate(ScreenName.PERSONAL, {
+                    tabActiveIndex: 1
+                });
                 break;
             }
             default: {

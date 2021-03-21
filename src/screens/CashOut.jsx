@@ -322,7 +322,9 @@ export default function CashOut(props) {
                                         </Text>
                                         <Block>
                                             <TouchableWithoutFeedback onPress={() => {
-                                                navigation.navigate(ScreenName.WALLET);
+                                                navigation.navigate(ScreenName.PERSONAL, {
+                                                    tabActiveIndex: 1
+                                                });
                                             }}
                                             >
                                                 <Text color={NowTheme.COLORS.FACEBOOK}>

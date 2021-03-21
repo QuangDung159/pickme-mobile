@@ -24,7 +24,6 @@ import {
     SignInScreen,
     SignUpScreen,
     UpdateInfoAccountScreen,
-    WalletScreen,
     SupportScreen
 } from './StackScreens';
 import TabIcon from './TabIcon';
@@ -48,7 +47,6 @@ const PersonalStack = () => (
     <Stack.Navigator initialRouteName={ScreenName.PERSONAL} mode="card" headerMode="screen">
         {PersonalScreen()}
         {BookingListScreen()}
-        {WalletScreen()}
         {CashInScreen()}
         {CashOutScreen()}
         {BookingDetailScreen()}
@@ -75,7 +73,6 @@ const LeaderBoardStack = () => (
         {MessageScreen()}
         {CreateBookingScreen()}
         {PaymentScreen()}
-        {WalletScreen()}
         {CashInScreen()}
         {CashOutScreen()}
         {BankAccountScreen()}
@@ -101,7 +98,6 @@ const HomeStack = () => (
         {ProfileScreen()}
         {CreateBookingScreen()}
         {PaymentScreen()}
-        {WalletScreen()}
         {CashOutScreen()}
         {CashInScreen()}
         {BankAccountScreen()}

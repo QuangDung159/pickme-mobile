@@ -6,7 +6,7 @@ import {
     StyleSheet
 } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
-import { UserInformation } from '../components/bussinessComponents';
+import { UserInformation, Wallet } from '../components/bussinessComponents';
 import { IconCustom } from '../components/uiComponents';
 import {
     IconFamily, NowTheme, Rx
@@ -94,6 +94,11 @@ export default function Personal({ navigation, route }) {
             case 0: {
                 return (
                     <UserInformation navigation={navigation} />
+                );
+            }
+            case 1: {
+                return (
+                    <Wallet navigation={navigation} route={route} />
                 );
             }
             default: {

@@ -335,24 +335,6 @@ export const SettingsScreen = () => (
     />
 );
 
-export const WalletScreen = () => (
-    <Stack.Screen
-        name={ScreenName.WALLET}
-        component={Wallet}
-        options={{
-            header: ({ navigation, scene }) => (
-                <Header
-                    title={ScreenTitle.WALLET}
-                    options
-                    navigation={navigation}
-                    scene={scene}
-                />
-            ),
-            cardStyle: { backgroundColor: NowTheme.COLORS.BASE }
-        }}
-    />
-);
-
 export const SignUpScreen = () => (
     <Stack.Screen
         name={ScreenName.SIGN_UP}

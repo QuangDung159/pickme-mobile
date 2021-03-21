@@ -96,7 +96,9 @@ export default function ExpoNotification() {
                     break;
                 }
                 case 3: {
-                    navigationObj.navigate(ScreenName.WALLET);
+                    navigationObj.navigate(ScreenName.PERSONAL, {
+                        tabActiveIndex: 1
+                    });
                     break;
                 }
                 default: {
