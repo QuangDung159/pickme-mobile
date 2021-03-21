@@ -19,7 +19,7 @@ import {
     DateTimeConst
 } from '../constants';
 import { ToastHelpers } from '../helpers';
-import { setListBookingLocation } from '../redux/Actions';
+import { setListBookingLocation, setPersonTabActiveIndex } from '../redux/Actions';
 import { rxUtil } from '../utils';
 
 const hourArr = DateTimeConst.HOUR_ARR;
@@ -216,9 +216,8 @@ export default function CreateBooking({ route, navigation }) {
             },
             (res) => {
                 ToastHelpers.renderToast(res.data.message, 'success');
-                navigation.navigate(ScreenName.PERSONAL, {
-                    tabActiveIndex: 2
-                });
+                navigation.navigate(ScreenName.PERSONAL);
+                dispatch(setPersonTabActiveIndex(2));
             },
             () => {
                 setIsShowSpinner(false);

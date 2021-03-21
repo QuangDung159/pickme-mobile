@@ -1,19 +1,23 @@
 import {
     Block, Text
 } from 'galio-framework';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
     StyleSheet
 } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { useDispatch, useSelector } from 'react-redux';
 import { BookingList, UserInformation, Wallet } from '../components/bussinessComponents';
 import { IconCustom } from '../components/uiComponents';
 import {
     IconFamily, NowTheme, Rx
 } from '../constants';
+import { setPersonTabActiveIndex } from '../redux/Actions';
 
 export default function Personal({ navigation, route }) {
-    const [tabActiveIndex, setTabActiveIndex] = useState(0);
+    const personTabActiveIndex = useSelector((state) => state.appConfigReducer.personTabActiveIndex);
+
+    const dispatch = useDispatch();
 
     const tabs = [
         {
@@ -55,22 +59,22 @@ export default function Personal({ navigation, route }) {
     ];
 
     // Render \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
-    useEffect(
-        () => {
-            if (route?.params?.tabActiveIndex) {
-                setTabActiveIndex(route.params.tabActiveIndex);
-            }
-        }, [route]
-    );
+    // useEffect(
+    //     () => {
+    //         if (route?.params?.tabActiveIndex) {
+    //             setTabActiveIndex(route.params.tabActiveIndex);
+    //         }
+    //     }, [route]
+    // );
 
     const renderTabButton = (tab, index) => {
         const { tabLabel } = tab;
         return (
             <TouchableWithoutFeedback
                 key={tabLabel}
-                onPress={() => setTabActiveIndex(index)}
+                onPress={() => dispatch(setPersonTabActiveIndex(index))}
                 containerStyle={{
-                    backgroundColor: !(index === tabActiveIndex)
+                    backgroundColor: !(index === personTabActiveIndex)
                         ? NowTheme.COLORS.LIST_ITEM_BACKGROUND_1
                         : NowTheme.COLORS.BASE,
                     alignItems: 'center',
@@ -80,7 +84,7 @@ export default function Personal({ navigation, route }) {
             >
                 <Text
                     size={12}
-                    color={(index === tabActiveIndex) ? NowTheme.COLORS.ACTIVE : NowTheme.COLORS.DEFAULT}
+                    color={(index === personTabActiveIndex) ? NowTheme.COLORS.ACTIVE : NowTheme.COLORS.DEFAULT}
                     style={styles.titleBold}
                 >
                     {tabLabel}
@@ -90,7 +94,7 @@ export default function Personal({ navigation, route }) {
     };
 
     const renderTabByIndex = () => {
-        switch (tabActiveIndex) {
+        switch (personTabActiveIndex) {
             case 0: {
                 return (
                     <UserInformation navigation={navigation} />

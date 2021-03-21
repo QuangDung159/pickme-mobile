@@ -7,7 +7,7 @@ import {
     SET_LOGIN_INFO, SET_MESSAGE_LISTENED,
     SET_NAVIGATION,
     SET_NUMBER_MESSAGE_UNREAD,
-    SET_NUMBER_NOTIFICATION_UNREAD, SET_TOKEN
+    SET_NUMBER_NOTIFICATION_UNREAD, SET_PERSON_TAB_ACTIVE_INDEX, SET_TOKEN
 } from './ActionTypes';
 
 export const setDeviceTimezone = () => ({
@@ -124,5 +124,12 @@ export const setNavigation = (navigationObj) => ({
     type: SET_NAVIGATION,
     payload: {
         navigationObj
+    }
+});
+
+export const setPersonTabActiveIndex = (personTabActiveIndex) => ({
+    type: SET_PERSON_TAB_ACTIVE_INDEX,
+    payload: {
+        personTabActiveIndex
     }
 });

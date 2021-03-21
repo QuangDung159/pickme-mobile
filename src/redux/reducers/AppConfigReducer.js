@@ -2,7 +2,8 @@ import * as Localization from 'expo-localization';
 import {
     SET_DEVICE_ID, SET_DEVICE_LOCALE, SET_DEVICE_TIMEZONE,
     SET_EXPO_TOKEN,
-    SET_NAVIGATION
+    SET_NAVIGATION,
+    SET_PERSON_TAB_ACTIVE_INDEX
 } from '../ActionTypes';
 
 const initState = {
@@ -10,7 +11,8 @@ const initState = {
     localeName: Localization.locale,
     deviceId: '',
     expoToken: '',
-    navigationObj: null
+    navigationObj: null,
+    personTabActiveIndex: 0
 };
 
 const appConfigReducer = (state = initState, action) => {
@@ -30,6 +32,9 @@ const appConfigReducer = (state = initState, action) => {
         }
         case SET_NAVIGATION: {
             return { ...state, navigationObj: payload.navigationObj };
+        }
+        case SET_PERSON_TAB_ACTIVE_INDEX: {
+            return { ...state, personTabActiveIndex: payload.personTabActiveIndex };
         }
         default: {
             return state;

@@ -4,8 +4,9 @@ import { Block, Text } from 'galio-framework';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet, TouchableWithoutFeedback } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { NowTheme, Rx, ScreenName } from '../../constants';
+import { setPersonTabActiveIndex } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
 
 export default function NotificationItem({
@@ -18,6 +19,8 @@ export default function NotificationItem({
 
     const [image, setImage] = useState(currentUser.url);
     const [booking, setBooking] = useState();
+
+    const dispatch = useDispatch();
 
     useEffect(
         () => {
@@ -99,9 +102,8 @@ export default function NotificationItem({
                 break;
             }
             case 3: {
-                navigation.navigate(ScreenName.PERSONAL, {
-                    tabActiveIndex: 1
-                });
+                navigation.navigate(ScreenName.PERSONAL);
+                dispatch(setPersonTabActiveIndex(1));
                 break;
             }
             default: {

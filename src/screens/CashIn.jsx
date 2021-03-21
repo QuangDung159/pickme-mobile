@@ -3,12 +3,16 @@ import { Block, Text } from 'galio-framework';
 import React from 'react';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useDispatch } from 'react-redux';
 import { IconCustom, Line, NoteText } from '../components/uiComponents';
 import { IconFamily, NowTheme, ScreenName } from '../constants';
 import { ToastHelpers } from '../helpers';
+import { setPersonTabActiveIndex } from '../redux/Actions';
 
 export default function CashIn(props) {
     const { navigation } = props;
+
+    const dispatch = useDispatch();
 
     const copyToClipboard = (content) => {
         Clipboard.setString(content);
@@ -50,9 +54,8 @@ export default function CashIn(props) {
                                 </Text>
                                 <Block>
                                     <TouchableWithoutFeedback onPress={() => {
-                                        navigation.navigate(ScreenName.PERSONAL, {
-                                            tabActiveIndex: 1
-                                        });
+                                        navigation.navigate(ScreenName.PERSONAL);
+                                        dispatch(setPersonTabActiveIndex(1));
                                     }}
                                     >
                                         <Text color={NowTheme.COLORS.FACEBOOK}>

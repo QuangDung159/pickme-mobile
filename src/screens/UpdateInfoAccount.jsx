@@ -11,7 +11,7 @@ import {
     NowTheme, Rx, ScreenName, Utils
 } from '../constants';
 import { ToastHelpers } from '../helpers';
-import { setCurrentUser } from '../redux/Actions';
+import { setCurrentUser, setPersonTabActiveIndex } from '../redux/Actions';
 import { rxUtil } from '../utils';
 
 export default function UpdateInfoAccount(props) {
@@ -44,9 +44,8 @@ export default function UpdateInfoAccount(props) {
                     'Cập nhật thông tin thành công!',
                     'success'
                 );
-                navigation.navigate(ScreenName.PERSONAL, {
-                    tabActiveIndex: 0
-                });
+                navigation.navigate(ScreenName.PERSONAL);
+                dispatch(setPersonTabActiveIndex(0));
             },
             () => {
                 setIsShowSpinner(false);

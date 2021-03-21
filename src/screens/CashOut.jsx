@@ -11,7 +11,7 @@ import {
     IconFamily, NowTheme, Rx, ScreenName
 } from '../constants';
 import { ToastHelpers } from '../helpers';
-import { setCurrentUser } from '../redux/Actions';
+import { setCurrentUser, setPersonTabActiveIndex } from '../redux/Actions';
 import { rxUtil } from '../utils';
 
 export default function CashOut(props) {
@@ -322,9 +322,8 @@ export default function CashOut(props) {
                                         </Text>
                                         <Block>
                                             <TouchableWithoutFeedback onPress={() => {
-                                                navigation.navigate(ScreenName.PERSONAL, {
-                                                    tabActiveIndex: 1
-                                                });
+                                                navigation.navigate(ScreenName.PERSONAL);
+                                                dispatch(setPersonTabActiveIndex(1));
                                             }}
                                             >
                                                 <Text color={NowTheme.COLORS.FACEBOOK}>

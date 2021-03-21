@@ -7,7 +7,9 @@ import {
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Rx, ScreenName } from '../../constants';
-import { setExpoToken, setListNotification, setNumberNotificationUnread } from '../../redux/Actions';
+import {
+    setExpoToken, setListNotification, setNumberNotificationUnread, setPersonTabActiveIndex
+} from '../../redux/Actions';
 import { rxUtil } from '../../utils';
 
 Notifications.setNotificationHandler({
@@ -96,9 +98,8 @@ export default function ExpoNotification() {
                     break;
                 }
                 case 3: {
-                    navigationObj.navigate(ScreenName.PERSONAL, {
-                        tabActiveIndex: 1
-                    });
+                    navigationObj.navigate(ScreenName.PERSONAL);
+                    dispatch(setPersonTabActiveIndex(1));
                     break;
                 }
                 default: {

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import {
     Alert, RefreshControl, ScrollView, StyleSheet
 } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { CardBooking } from '../components/bussinessComponents';
 import { CenterLoader, Line } from '../components/uiComponents';
 import {
@@ -11,6 +11,7 @@ import {
 } from '../constants';
 import BookingProgressFlow from '../containers/BookingProgressFlow';
 import { ToastHelpers } from '../helpers';
+import { setPersonTabActiveIndex } from '../redux/Actions';
 import { rxUtil } from '../utils';
 
 export default function BookingDetail({
@@ -27,6 +28,8 @@ export default function BookingDetail({
     const [refreshing, setRefreshing] = useState(false);
 
     const token = useSelector((state) => state.userReducer.token);
+
+    const dispatch = useDispatch();
 
     useEffect(
         () => {
@@ -86,9 +89,8 @@ export default function BookingDetail({
                 Authorization: token
             },
             (res) => {
-                navigation.navigate(ScreenName.PERSONAL, {
-                    tabActiveIndex: 2
-                });
+                navigation.navigate(ScreenName.PERSONAL);
+                dispatch(setPersonTabActiveIndex(2));
                 ToastHelpers.renderToast(res.data.message, 'success');
             },
             () => {
@@ -114,9 +116,8 @@ export default function BookingDetail({
             },
             (res) => {
                 ToastHelpers.renderToast(res.data.message, 'success');
-                navigation.navigate(ScreenName.PERSONAL, {
-                    tabActiveIndex: 2
-                });
+                navigation.navigate(ScreenName.PERSONAL);
+                dispatch(setPersonTabActiveIndex(2));
                 setIsShowSpinner(false);
             },
             () => {
@@ -169,9 +170,8 @@ export default function BookingDetail({
                 Authorization: token
             },
             (res) => {
-                navigation.navigate(ScreenName.PERSONAL, {
-                    tabActiveIndex: 2
-                });
+                navigation.navigate(ScreenName.PERSONAL);
+                dispatch(setPersonTabActiveIndex(2));
                 ToastHelpers.renderToast(res.message || 'Thao tác thành công.', 'success');
             },
             () => {
