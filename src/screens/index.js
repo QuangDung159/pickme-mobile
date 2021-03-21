@@ -1,6 +1,5 @@
 import BankAccount from './BankAccount';
 import BookingDetail from './BookingDetail';
-import BookingList from './BookingList';
 import CashIn from './CashIn';
 import CashOut from './CashOut';
 import ConversationList from './ConversationList';
@@ -17,9 +16,8 @@ import Profile from './Profile';
 import Settings from './Settings';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
-import UpdateInfoAccount from './UpdateInfoAccount';
-import Wallet from './Wallet';
 import Support from './Support';
+import UpdateInfoAccount from './UpdateInfoAccount';
 
 export {
     Home, Notification, Settings, Onboarding,
@@ -27,7 +25,6 @@ export {
     BankAccount,
     CreateBooking,
     BookingDetail,
-    BookingList,
     CashIn,
     CashOut,
     ConversationList,
@@ -37,6 +34,5 @@ export {
     Personal,
     Profile,
     UpdateInfoAccount,
-    Wallet,
     Support
 };

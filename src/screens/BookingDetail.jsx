@@ -86,7 +86,9 @@ export default function BookingDetail({
                 Authorization: token
             },
             (res) => {
-                navigation.navigate(ScreenName.BOOKING_LIST);
+                navigation.navigate(ScreenName.PERSONAL, {
+                    tabActiveIndex: 2
+                });
                 ToastHelpers.renderToast(res.data.message, 'success');
             },
             () => {
@@ -112,7 +114,9 @@ export default function BookingDetail({
             },
             (res) => {
                 ToastHelpers.renderToast(res.data.message, 'success');
-                navigation.navigate(ScreenName.BOOKING_LIST);
+                navigation.navigate(ScreenName.PERSONAL, {
+                    tabActiveIndex: 2
+                });
                 setIsShowSpinner(false);
             },
             () => {
@@ -165,7 +169,9 @@ export default function BookingDetail({
                 Authorization: token
             },
             (res) => {
-                navigation.navigate(ScreenName.BOOKING_LIST);
+                navigation.navigate(ScreenName.PERSONAL, {
+                    tabActiveIndex: 2
+                });
                 ToastHelpers.renderToast(res.message || 'Thao tác thành công.', 'success');
             },
             () => {

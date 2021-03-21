@@ -6,18 +6,15 @@ import Header from '../containers/Header';
 // screens
 import {
     BankAccount,
-    CreateBooking,
     BookingDetail,
-    BookingList,
     CashIn, CashOut,
-    ConversationList, CreateAccount, Home,
+    ConversationList, CreateAccount, CreateBooking,
+    Home,
     LeaderBoard,
     Message, Notification,
     Payment, Personal,
     Profile, Settings, SignIn, SignUp,
-    UpdateInfoAccount,
-    Wallet,
-    Support
+    Support, UpdateInfoAccount
 } from '../screens';
 
 const Stack = createStackNavigator();
@@ -186,24 +183,6 @@ export const BookingDetailScreen = () => (
     />
 );
 
-export const BookingListScreen = () => (
-    <Stack.Screen
-        name={ScreenName.BOOKING_LIST}
-        component={BookingList}
-        options={{
-            header: ({ navigation, scene }) => (
-                <Header
-                    title={ScreenTitle.BOOKING_LIST}
-                    options
-                    navigation={navigation}
-                    scene={scene}
-                />
-            ),
-            cardStyle: { backgroundColor: NowTheme.COLORS.BASE }
-        }}
-    />
-);
-
 export const CashInScreen = () => (
     <Stack.Screen
         name={ScreenName.CASH_IN}
@@ -251,6 +230,7 @@ export const CreateAccountScreen = () => (
                     options
                     navigation={navigation}
                     scene={scene}
+                    screenNameProp={ScreenName.CREATE_ACCOUNT}
                 />
             ),
             cardStyle: { backgroundColor: NowTheme.COLORS.BASE }
@@ -340,6 +320,17 @@ export const SignUpScreen = () => (
         name={ScreenName.SIGN_UP}
         component={SignUp}
         options={{
+            header: ({ navigation, scene }) => (
+                <Header
+                    title=""
+                    back
+                    white
+                    transparent
+                    navigation={navigation}
+                    scene={scene}
+                    screenNameProp={ScreenName.SIGN_UP}
+                />
+            ),
             headerTransparent: true
         }}
     />
@@ -358,6 +349,7 @@ export const SignInScreen = () => (
                     transparent
                     navigation={navigation}
                     scene={scene}
+                    screenNameProp={ScreenName.SIGN_IN}
                 />
             ),
             headerTransparent: true

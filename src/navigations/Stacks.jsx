@@ -8,7 +8,6 @@ import Onboarding from '../screens/Onboarding';
 import {
     BankAccountScreen, CreateBookingScreen,
     BookingDetailScreen,
-    BookingListScreen,
     CashInScreen,
     CashOutScreen,
     ConversationListScreen,
@@ -38,7 +37,7 @@ const SignUpStack = () => (
 );
 
 const SignInStack = () => (
-    <Stack.Navigator initialRouteName={ScreenName.SIGN_IN} mode="card" headerMode="screen">
+    <Stack.Navigator initialRouteName={ScreenName.SIGN_IN} mode="card" headerMode="none">
         {SignInScreen()}
     </Stack.Navigator>
 );
@@ -46,7 +45,6 @@ const SignInStack = () => (
 const PersonalStack = () => (
     <Stack.Navigator initialRouteName={ScreenName.PERSONAL} mode="card" headerMode="screen">
         {PersonalScreen()}
-        {BookingListScreen()}
         {CashInScreen()}
         {CashOutScreen()}
         {BookingDetailScreen()}
@@ -102,7 +100,6 @@ const HomeStack = () => (
         {CashInScreen()}
         {BankAccountScreen()}
         {MessageScreen()}
-        {BookingListScreen()}
         {SupportScreen()}
         {SettingsScreen()}
     </Stack.Navigator>

@@ -216,7 +216,9 @@ export default function CreateBooking({ route, navigation }) {
             },
             (res) => {
                 ToastHelpers.renderToast(res.data.message, 'success');
-                navigation.navigate(ScreenName.BOOKING_LIST);
+                navigation.navigate(ScreenName.PERSONAL, {
+                    tabActiveIndex: 2
+                });
             },
             () => {
                 setIsShowSpinner(false);
