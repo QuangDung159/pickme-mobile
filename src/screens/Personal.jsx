@@ -293,19 +293,6 @@ export default function Personal(props) {
                     color={NowTheme.COLORS.ACTIVE}
                 />
             </TouchableWithoutFeedback>
-
-            <TouchableWithoutFeedback
-                onPress={() => navigation.navigate(ScreenName.SETTINGS)}
-            >
-                <Block>
-                    <IconCustom
-                        name="gear"
-                        family={IconFamily.FONT_AWESOME}
-                        size={20}
-                        color={NowTheme.COLORS.ACTIVE}
-                    />
-                </Block>
-            </TouchableWithoutFeedback>
         </Block>
     );
 

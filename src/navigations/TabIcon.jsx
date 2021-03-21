@@ -56,14 +56,6 @@ export default class TabIcon extends PureComponent {
                 });
                 break;
             }
-            case ScreenName.SUPPORT: {
-                this.setState({
-                    name: 'contact-support',
-                    family: IconFamily.MATERIAL_ICONS,
-                    size: 28
-                });
-                break;
-            }
             default: {
                 this.setState({
                     name: 'home',

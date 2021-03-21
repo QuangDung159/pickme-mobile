@@ -51,7 +51,6 @@ const PersonalStack = () => (
         {WalletScreen()}
         {CashInScreen()}
         {CashOutScreen()}
-        {SettingsScreen()}
         {BookingDetailScreen()}
         {ProfileScreen()}
         {MessageScreen()}
@@ -108,6 +107,8 @@ const HomeStack = () => (
         {BankAccountScreen()}
         {MessageScreen()}
         {BookingListScreen()}
+        {SupportScreen()}
+        {SettingsScreen()}
     </Stack.Navigator>
 );
 
@@ -149,10 +150,6 @@ const BottomTabMenuStack = () => {
                 showLabel: false,
             }}
         >
-            <Tab.Screen
-                name={ScreenName.SUPPORT}
-                component={SupportStack}
-            />
             <Tab.Screen
                 name={ScreenName.LEADER_BOARD}
                 component={LeaderBoardStack}

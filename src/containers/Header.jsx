@@ -1,29 +1,14 @@
 import {
-    Block, Button, NavBar, Text, theme
+    Block, NavBar, Text, theme
 } from 'galio-framework';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Platform, StyleSheet, TouchableOpacity } from 'react-native';
 import { IconCustom, Input, Tabs } from '../components/uiComponents';
 import {
-    IconFamily, NowTheme, ScreenName, ScreenTitle
+    IconFamily, NowTheme, ScreenName
 } from '../constants';
 
 const iPhoneX = Platform.OS === 'ios';
-
-const BellButton = ({ isWhite, style, navigation }) => (
-    <TouchableOpacity
-        style={[styles.button, style]}
-        onPress={() => navigation.navigate(ScreenName.HOME)}
-    >
-        <IconCustom
-            family={IconFamily.IONICONS}
-            size={24}
-            name="ios-notifications-outline"
-            color={NowTheme.COLORS[isWhite ? 'WHITE' : 'ICON']}
-        />
-        <Block middle style={[styles.notify, { backgroundColor: NowTheme.COLORS[isWhite ? 'WHITE' : 'PRIMARY'] }]} />
-    </TouchableOpacity>
-);
 
 export default function Header({
     back,
@@ -46,30 +31,62 @@ export default function Header({
         transparent ? { backgroundColor: 'rgba(0,0,0,0)' } : null
     ];
 
+    const renderQnAButton = () => (
+        <Block
+            style={{
+                position: 'absolute',
+                bottom: 20,
+                right: 0,
+                zIndex: 99,
+            }}
+        >
+            <TouchableOpacity
+                onPress={() => navigation.navigate(ScreenName.SUPPORT)}
+            >
+                <IconCustom
+                    family={IconFamily.MATERIAL_ICONS}
+                    size={24}
+                    name="contact-support"
+                    color={NowTheme.COLORS.ACTIVE}
+                />
+            </TouchableOpacity>
+        </Block>
+    );
+
+    const renderSettingButton = () => (
+        <Block
+            style={{
+                position: 'absolute',
+                bottom: 20,
+                right: 30,
+                zIndex: 99,
+            }}
+        >
+            <TouchableOpacity
+                onPress={() => navigation.navigate(ScreenName.SETTINGS)}
+            >
+                <IconCustom
+                    name="gear"
+                    family={IconFamily.FONT_AWESOME}
+                    size={24}
+                    color={NowTheme.COLORS.ACTIVE}
+                />
+            </TouchableOpacity>
+        </Block>
+    );
+
     const navbarStyles = [
         styles.navbar, bgColor && {
             backgroundColor: bgColor, zIndex: 1
         },
         iPhoneX ? styles.navbarHeight : {}];
 
-    const handleLeftPress = () => (back ? navigation.goBack() : navigation.openDrawer());
-
-    const renderRight = () => {
-        if (title === 'Title') {
-            return [
-                <BellButton key="chat-title" navigation={navigation} isWhite={white} />,
-            ];
-        }
-
-        switch (title) {
-            case ScreenTitle.HOME:
-                return [
-                    <BellButton key="chat-home" navigation={navigation} isWhite={white} />,
-                ];
-            default:
-                return null;
-        }
-    };
+    const renderRight = () => (
+        <>
+            {renderQnAButton()}
+            {renderSettingButton()}
+        </>
+    );
 
     const renderSearch = () => (
         <Input
@@ -87,48 +104,6 @@ export default function Header({
                 />
             )}
         />
-    );
-
-    const renderOptions = () => (
-        <Block row style={styles.options}>
-            <Button
-                shadowless
-                style={[styles.tab, styles.divider]}
-            >
-                <Block row middle>
-                    <IconCustom
-                        name="bulb"
-                        family={IconFamily.NOW_EXTRA}
-                        size={NowTheme.SIZES.FONT_H2}
-                        style={{ paddingRight: 8 }}
-                        color={NowTheme.COLORS.HEADER}
-                    />
-                    <Text size={16} style={styles.tabTitle}>
-                        {optionLeft || 'Beauty'}
-                    </Text>
-                </Block>
-            </Button>
-            <Button shadowless style={styles.tab} onPress={() => navigation.navigate(ScreenName.HOME)}>
-                <Block row middle>
-                    <Block
-                        style={{
-                            paddingRight: 8
-                        }}
-                    >
-                        <IconCustom
-                            size={NowTheme.SIZES.FONT_H2}
-                            name="bag-162x"
-                            family={IconFamily.NOW_EXTRA}
-                            color={NowTheme.COLORS.HEADER}
-                        />
-                    </Block>
-
-                    <Text size={16} style={styles.tabTitle}>
-                        {optionRight || 'Fashion'}
-                    </Text>
-                </Block>
-            </Button>
-        </Block>
     );
 
     const renderTabs = () => {
@@ -196,6 +171,7 @@ export default function Header({
             )}
 
             {renderHeader()}
+            {renderRight()}
         </Block>
     );
 }
