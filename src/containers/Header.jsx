@@ -3,10 +3,13 @@ import {
 } from 'galio-framework';
 import React from 'react';
 import { Platform, StyleSheet, TouchableOpacity } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import { IconCustom, Input, Tabs } from '../components/uiComponents';
 import {
-    IconFamily, NowTheme, ScreenName
+    IconFamily, NowTheme, Rx, ScreenName
 } from '../constants';
+import { setListNotification, setNumberNotificationUnread } from '../redux/Actions';
+import { rxUtil } from '../utils';
 
 const iPhoneX = Platform.OS === 'ios';
 
@@ -31,12 +34,61 @@ export default function Header({
         transparent ? { backgroundColor: 'rgba(0,0,0,0)' } : null
     ];
 
+    const token = useSelector((state) => state.userReducer.token);
+
+    const dispatch = useDispatch();
+
+    const countNumberNotificationUnread = (listNotiFromAPI) => {
+        let count = 0;
+        listNotiFromAPI.forEach((item) => {
+            if (!item.isRead) {
+                count += 1;
+            }
+        });
+
+        dispatch(setNumberNotificationUnread(count));
+    };
+
+    const getListNotiFromAPI = () => {
+        rxUtil(
+            Rx.NOTIFICATION.GET_MY_NOTIFICATION,
+            'GET',
+            null,
+            {
+                Authorization: token
+            },
+            (res) => {
+                // set store
+                dispatch(setListNotification(res.data.data));
+                countNumberNotificationUnread(res.data.data);
+            },
+            () => {},
+            () => {}
+        );
+    };
+
+    const triggerReadAllNotification = () => {
+        rxUtil(
+            Rx.NOTIFICATION.TRIGGER_READ_ALL,
+            'POST',
+            null,
+            {
+                Authorization: token
+            },
+            () => {
+                getListNotiFromAPI();
+            },
+            () => {},
+            () => {}
+        );
+    };
+
     const renderQnAButton = () => (
         <Block
             style={{
                 position: 'absolute',
                 bottom: 20,
-                right: 0,
+                right: 5,
                 zIndex: 99,
             }}
         >
@@ -45,7 +97,7 @@ export default function Header({
             >
                 <IconCustom
                     family={IconFamily.MATERIAL_ICONS}
-                    size={24}
+                    size={22}
                     name="contact-support"
                     color={NowTheme.COLORS.ACTIVE}
                 />
@@ -58,7 +110,7 @@ export default function Header({
             style={{
                 position: 'absolute',
                 bottom: 20,
-                right: 30,
+                right: 35,
                 zIndex: 99,
             }}
         >
@@ -68,7 +120,29 @@ export default function Header({
                 <IconCustom
                     name="gear"
                     family={IconFamily.FONT_AWESOME}
-                    size={24}
+                    size={22}
+                    color={NowTheme.COLORS.ACTIVE}
+                />
+            </TouchableOpacity>
+        </Block>
+    );
+
+    const renderReadAllButton = () => (
+        <Block
+            style={{
+                position: 'absolute',
+                bottom: 20,
+                right: 65,
+                zIndex: 99,
+            }}
+        >
+            <TouchableOpacity
+                onPress={() => triggerReadAllNotification()}
+            >
+                <IconCustom
+                    name="mark-email-read"
+                    family={IconFamily.MATERIAL_ICONS}
+                    size={22}
                     color={NowTheme.COLORS.ACTIVE}
                 />
             </TouchableOpacity>
@@ -85,6 +159,12 @@ export default function Header({
         <>
             {renderQnAButton()}
             {renderSettingButton()}
+            {screenNameProp && screenNameProp === ScreenName.NOTIFICATION && (
+                <>
+                    {renderReadAllButton()}
+                </>
+            )}
+
         </>
     );
 

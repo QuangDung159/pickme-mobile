@@ -270,7 +270,7 @@ export const MessageScreen = () => (
                         options
                         navigation={navigation}
                         scene={scene}
-                        ScreenNameProp={ScreenName.MESSAGE}
+                        screenNameProp={ScreenName.MESSAGE}
                         userStatus={route.params.userStatus}
                     />
                 ),
@@ -309,6 +309,7 @@ export const NotificationScreen = () => (
                     options
                     navigation={navigation}
                     scene={scene}
+                    screenNameProp={ScreenName.NOTIFICATION}
                 />
             ),
             cardStyle: { backgroundColor: NowTheme.COLORS.BASE }
