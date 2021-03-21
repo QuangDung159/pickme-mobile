@@ -27,7 +27,7 @@ export default function BookingList({ navigation }) {
     );
 
     const getListBooking = () => {
-        const pagingStr = '?pageIndex=1&pageSize=100';
+        const pagingStr = '?pageIndex=1&pageSize=30';
 
         rxUtil(
             `${Rx.BOOKING.GET_MY_BOOKING_AS_CUSTOMER}${pagingStr}`,
