@@ -152,17 +152,6 @@ export default function NotificationItem({
                 style={styles.avatar}
                 source={{ uri: image || NO_AVATAR_URL }}
             />
-            <Block
-                style={styles.notificationIcon}
-            >
-                <IconCustom
-                    name={iconName}
-                    size={15}
-                    color={NowTheme.COLORS.ACTIVE}
-                    family={iconFamily}
-                />
-            </Block>
-
         </Block>
     );
 
@@ -269,11 +258,5 @@ const styles = StyleSheet.create({
         borderRadius: 100,
         width: NowTheme.SIZES.WIDTH_BASE * 0.1,
         height: NowTheme.SIZES.WIDTH_BASE * 0.1,
-    },
-    notificationIcon: {
-        position: 'absolute',
-        bottom: 0,
-        right: 0,
-        zIndex: 99,
     }
 });
