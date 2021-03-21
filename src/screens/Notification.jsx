@@ -66,35 +66,14 @@ export default function Notification({ navigation }) {
         );
     };
 
-    const renderNotiItem = (notiItem) => {
-        let iconName = 'home';
-        let iconFamily = IconFamily.FONT_AWESOME;
-        switch (notiItem.type) {
-            case 1: {
-                iconName = 'clipboard-list';
-                iconFamily = IconFamily.FONT_AWESOME_5;
-                break;
-            }
-            case 3: {
-                iconName = 'treasure-chest';
-                iconFamily = IconFamily.MATERIAL_COMMUNITY_ICONS;
-                break;
-            }
-            default: {
-                break;
-            }
-        }
-        return (
-            <NotificationItem
-                iconName={iconName}
-                iconFamily={iconFamily}
-                title="Notification"
-                notiItem={notiItem}
-                onTriggerRead={() => getListNotiFromAPI()}
-                navigation={navigation}
-            />
-        );
-    };
+    const renderNotiItem = (notiItem) => (
+        <NotificationItem
+            title="Notification"
+            notiItem={notiItem}
+            onTriggerRead={() => getListNotiFromAPI()}
+            navigation={navigation}
+        />
+    );
 
     const renderListNoti = () => (
         <FlatList
