@@ -18,6 +18,7 @@ export default function BookingList({ navigation }) {
 
     useEffect(
         () => {
+            getListBooking();
             const eventTriggerGetListBooking = navigation.addListener('focus', () => {
                 getListBooking();
             });
@@ -27,7 +28,7 @@ export default function BookingList({ navigation }) {
     );
 
     const getListBooking = () => {
-        const pagingStr = '?pageIndex=1&pageSize=30';
+        const pagingStr = '?pageIndex=1&pageSize=50';
 
         rxUtil(
             `${Rx.BOOKING.GET_MY_BOOKING_AS_CUSTOMER}${pagingStr}`,
