@@ -4,17 +4,9 @@ import { Block, Text } from 'galio-framework';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet, TouchableWithoutFeedback } from 'react-native';
-import {
-    Menu,
-    MenuOption, MenuOptions,
-    MenuTrigger
-} from 'react-native-popup-menu';
 import { useSelector } from 'react-redux';
-import {
-    IconFamily, NowTheme, Rx, ScreenName
-} from '../../constants';
+import { NowTheme, Rx, ScreenName } from '../../constants';
 import { rxUtil } from '../../utils';
-import { IconCustom } from '../uiComponents';
 
 export default function NotificationItem({
     onTriggerRead,
@@ -97,34 +89,6 @@ export default function NotificationItem({
             (res) => {
                 setBooking(res.data.data);
             }
-        );
-    };
-
-    const renderMenuIcon = () => {
-        const {
-            id,
-            isRead
-        } = notiItem;
-
-        return (
-            <>
-                {!isRead && (
-                    <Menu>
-                        <MenuTrigger>
-                            <IconCustom
-                                name="dots-three-horizontal"
-                                color={NowTheme.COLORS.DEFAULT}
-                                size={24}
-                                family={IconFamily.ENTYPO}
-                            />
-                        </MenuTrigger>
-                        <MenuOptions>
-                            <MenuOption onSelect={() => onClickRead(false, id)} text="Đánh dấu là đã đọc" />
-                            <MenuOption onSelect={() => onClickRead(true)} text="Đánh dấu tất cả là đã đọc" />
-                        </MenuOptions>
-                    </Menu>
-                )}
-            </>
         );
     };
 
@@ -223,16 +187,6 @@ export default function NotificationItem({
                 }}
             >
                 {renderNotiContent()}
-
-                {/* <Block
-                    flex={1}
-                    style={{
-                        justifyContent: 'center',
-                        alignContent: 'flex-end'
-                    }}
-                >
-                    {renderMenuIcon()}
-                </Block> */}
             </Block>
         </Block>
     );
