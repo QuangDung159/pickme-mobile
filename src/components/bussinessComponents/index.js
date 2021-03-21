@@ -9,6 +9,7 @@ import CardImage from './CardImage';
 import ExpoNotification from './ExpoNotification';
 import UserInformation from './UserInformation';
 import Wallet from './Wallet';
+import BookingList from './BookingList';
 
 export {
     Listener,
@@ -20,5 +21,6 @@ export {
     CardImage,
     ExpoNotification,
     UserInformation,
-    Wallet
+    Wallet,
+    BookingList
 };
