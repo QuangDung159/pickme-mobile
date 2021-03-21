@@ -44,7 +44,9 @@ export default function UpdateInfoAccount(props) {
                     'Cập nhật thông tin thành công!',
                     'success'
                 );
-                navigation.navigate(ScreenName.PERSONAL);
+                navigation.navigate(ScreenName.PERSONAL, {
+                    tabActiveIndex: 0
+                });
             },
             () => {
                 setIsShowSpinner(false);
@@ -66,10 +68,6 @@ export default function UpdateInfoAccount(props) {
         setNewUser({ ...newUser, weight: weightInput.toString() });
     };
 
-    const onChangeEarningExpected = (earningExpectedInput) => {
-        setNewUser({ ...newUser, earningExpected: earningExpectedInput.toString() });
-    };
-
     const onChangeDescription = (descriptionInput) => {
         setNewUser({ ...newUser, description: descriptionInput });
     };
@@ -86,7 +84,6 @@ export default function UpdateInfoAccount(props) {
     const validate = () => {
         const {
             fullName,
-            earningExpected,
             height,
             weight,
             description,
@@ -94,11 +91,6 @@ export default function UpdateInfoAccount(props) {
 
         if (!fullName) {
             ToastHelpers.renderToast('Tên của bạn không hợp lệ!', 'error');
-            return false;
-        }
-
-        if (!earningExpected || earningExpected < 10) {
-            ToastHelpers.renderToast('Số kim cương không hợp lệ!', 'error');
             return false;
         }
 
@@ -177,42 +169,6 @@ export default function UpdateInfoAccount(props) {
     };
 
     // render \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
-    const renderInputEarningExpected = (user) => (
-        <Block
-            middle
-        >
-
-            <Block>
-                <Text
-                    color={NowTheme.COLORS.ACTIVE}
-                    size={16}
-                    style={{
-                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
-                    }}
-                >
-                    Kim cương mong muốn (kim cương/h):
-                </Text>
-
-                <Input
-                    numberOfLines={2}
-                    style={{
-                        borderRadius: 5,
-                        width: NowTheme.SIZES.WIDTH_BASE * 0.85,
-                        height: 44
-                    }}
-                    color={NowTheme.COLORS.HEADER}
-                    placeholder="Nhập kim cương mong muốn..."
-                    value={
-                        newUser.earningExpected !== undefined
-                            ? newUser.earningExpected.toString()
-                            : user.earningExpected.toString()
-                    }
-                    onChangeText={(input) => onChangeEarningExpected(input)}
-                />
-            </Block>
-        </Block>
-    );
-
     const renderInputName = () => (
         <Block
             middle
@@ -448,9 +404,6 @@ export default function UpdateInfoAccount(props) {
                                 marginVertical: 10
                             }}
                         >
-                            {/* partner */}
-                            {renderInputEarningExpected(currentUser)}
-
                             {renderInputName()}
                             {renderInputHeight(currentUser)}
                             {renderInputWeight(currentUser)}

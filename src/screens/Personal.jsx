@@ -1,7 +1,7 @@
 import {
     Block, Text
 } from 'galio-framework';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     StyleSheet
 } from 'react-native';
@@ -12,7 +12,7 @@ import {
     IconFamily, NowTheme, Rx
 } from '../constants';
 
-export default function Personal({ navigation }) {
+export default function Personal({ navigation, route }) {
     const [tabActiveIndex, setTabActiveIndex] = useState(0);
 
     const tabs = [
@@ -55,6 +55,14 @@ export default function Personal({ navigation }) {
     ];
 
     // Render \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+    useEffect(
+        () => {
+            if (route?.params?.tabActiveIndex) {
+                setTabActiveIndex(route.params.tabActiveIndex);
+            }
+        }, [route]
+    );
+
     const renderTabButton = (tab, index) => {
         const { tabLabel } = tab;
         return (
