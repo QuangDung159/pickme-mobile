@@ -63,6 +63,7 @@ const SIZES = {
     FONT_H2: 18,
     FONT_H3: 16,
     FONT_H4: 14,
+    FONT_H5: 12,
 
     WIDTH_BASE: width,
     HEIGHT_BASE: height,

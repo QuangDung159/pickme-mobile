@@ -14,7 +14,7 @@ export default function IndicatorVerticalLine({
         >
             <Block
                 style={{
-                    height: 10,
+                    height: 6,
                     borderLeftWidth: 3,
                     borderColor: active ? NowTheme.COLORS.ACTIVE : NowTheme.COLORS.BLOCK,
                     justifyContent: 'center'
@@ -34,6 +34,6 @@ IndicatorVerticalLine.defaultProps = {
 
 const styles = StyleSheet.create({
     stepIndicatorContainer: {
-        width: 30,
+        width: 25,
     }
 });

@@ -64,7 +64,7 @@ export default function CardBooking({ booking, renderAtScreen, navigation }) {
                                 <>{`${fullName}`}</>
                             </Text>
                             <Text
-                                size={NowTheme.SIZES.FONT_H2}
+                                size={NowTheme.SIZES.FONT_H5}
                                 style={styles.cardSubTitle}
                                 color={NowTheme.COLORS.ACTIVE}
                             >
@@ -104,14 +104,14 @@ export default function CardBooking({ booking, renderAtScreen, navigation }) {
                         >
                             <Text
                                 style={styles.subInfoCard}
-                                size={NowTheme.SIZES.FONT_H2}
+                                size={NowTheme.SIZES.FONT_H3}
                                 color={NowTheme.COLORS.ACTIVE}
                             >
                                 {`Ngày: ${moment(date).format('DD-MM-YYYY')}`}
                             </Text>
                             <Text
                                 style={styles.subInfoCard}
-                                size={NowTheme.SIZES.FONT_H2}
+                                size={NowTheme.SIZES.FONT_H3}
                                 color={NowTheme.COLORS.ACTIVE}
                             >
                                 {`Từ ${startStr} đến ${endStr}`}
@@ -119,7 +119,7 @@ export default function CardBooking({ booking, renderAtScreen, navigation }) {
                         </Block>
                         <Text
                             style={styles.subInfoCard}
-                            size={NowTheme.SIZES.FONT_H2}
+                            size={NowTheme.SIZES.FONT_H3}
                             color={NowTheme.COLORS.DEFAULT}
                         >
                             {location?.address || 'N/A'}
@@ -130,7 +130,7 @@ export default function CardBooking({ booking, renderAtScreen, navigation }) {
                         >
                             <Text
                                 style={styles.subInfoCard}
-                                size={NowTheme.SIZES.FONT_H2}
+                                size={NowTheme.SIZES.FONT_H3}
                                 color={NowTheme.COLORS.DEFAULT}
                             >
                                 {`Trạng thái: ${status}`}
@@ -186,7 +186,6 @@ const styles = StyleSheet.create({
     },
     cardSubTitle: {
         fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-        fontSize: 14,
         paddingBottom: 15,
         color: NowTheme.COLORS.ICON_INPUT
     }
