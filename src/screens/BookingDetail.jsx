@@ -23,7 +23,7 @@ export default function BookingDetail({
     },
     navigation
 }) {
-    const [isShowSpinner, setIsShowSpinner] = useState(false);
+    const [isShowSpinner, setIsShowSpinner] = useState(true);
     const [booking, setBooking] = useState();
     const [refreshing, setRefreshing] = useState(false);
 
@@ -33,7 +33,6 @@ export default function BookingDetail({
 
     useEffect(
         () => {
-            setIsShowSpinner(true);
             fetchBookingDetailInfo();
             const eventTriggerGetBookingDetail = navigation.addListener('focus', () => {
                 if (from === ScreenName.CREATE_BOOKING) {
@@ -277,110 +276,106 @@ export default function BookingDetail({
         )
     );
 
-    if (booking) {
-        try {
-            return (
-                <>
-                    {isShowSpinner ? (
-                        <CenterLoader size="large" />
-                    ) : (
-                        <ScrollView
-                            showsVerticalScrollIndicator={false}
-                            refreshControl={(
-                                <RefreshControl
-                                    refreshing={refreshing}
-                                    onRefresh={() => onRefresh()}
-                                />
-                            )}
-                            contentContainerStyle={{
-                                paddingBottom: 10
-                            }}
+    try {
+        return (
+            <>
+                {isShowSpinner ? (
+                    <CenterLoader size="large" />
+                ) : (
+                    <ScrollView
+                        showsVerticalScrollIndicator={false}
+                        refreshControl={(
+                            <RefreshControl
+                                refreshing={refreshing}
+                                onRefresh={() => onRefresh()}
+                            />
+                        )}
+                        contentContainerStyle={{
+                            paddingBottom: 10
+                        }}
+                    >
+                        <Block style={{
+                            width: NowTheme.SIZES.WIDTH_BASE * 0.9,
+                            alignSelf: 'center',
+                            marginTop: 10,
+                        }}
                         >
-                            <Block style={{
-                                width: NowTheme.SIZES.WIDTH_BASE * 0.9,
-                                alignSelf: 'center',
-                                marginTop: 10,
+                            <Text style={{
+                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
                             }}
                             >
-                                <Text style={{
-                                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                                CHI TIẾT ĐƠN HẸN
+                            </Text>
+                            <Line
+                                borderWidth={0.5}
+                                borderColor={NowTheme.COLORS.ACTIVE}
+                                style={{
+                                    marginVertical: 10
                                 }}
-                                >
-                                    CHI TIẾT ĐƠN HẸN
-                                </Text>
-                                <Line
-                                    borderWidth={0.5}
-                                    borderColor={NowTheme.COLORS.ACTIVE}
-                                    style={{
-                                        marginVertical: 10
-                                    }}
-                                />
+                            />
 
-                                <CardBooking
-                                    booking={booking}
-                                    showEditButton
-                                    renderAtScreen={ScreenName.BOOKING_DETAIL}
-                                    navigation={navigation}
-                                />
+                            <CardBooking
+                                booking={booking}
+                                showEditButton
+                                renderAtScreen={ScreenName.BOOKING_DETAIL}
+                                navigation={navigation}
+                            />
 
-                                <BookingProgressFlow
-                                    status={booking.status}
-                                    partner={booking.partner}
-                                    booking={booking}
-                                />
+                            <BookingProgressFlow
+                                status={booking.status}
+                                partner={booking.partner}
+                                booking={booking}
+                            />
 
-                                <Text style={{
-                                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                            <Text style={{
+                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                            }}
+                            >
+                                GHI CHÚ CUỘC HẸN
+                            </Text>
+                            <Line
+                                borderWidth={0.5}
+                                borderColor={NowTheme.COLORS.ACTIVE}
+                                style={{
+                                    marginVertical: 10
                                 }}
-                                >
-                                    GHI CHÚ CUỘC HẸN
-                                </Text>
-                                <Line
-                                    borderWidth={0.5}
-                                    borderColor={NowTheme.COLORS.ACTIVE}
-                                    style={{
-                                        marginVertical: 10
-                                    }}
-                                />
-                                <Text
-                                    color={NowTheme.COLORS.DEFAULT}
-                                    size={NowTheme.SIZES.FONT_H3}
-                                    style={styles.subTitle}
-                                >
-                                    Lorem ipsum dolor, sit amet consectetur
-                                    adipisicing elit. Culpa, voluptates in
-                                    voluptate vel mollitia unde repellendus f
-                                    acere asperiores maxime velit esse sint eos ut minus,
-                                    possimus exercitationem. Reiciendis, sapiente quibusdam!
-                                    Lorem ipsum dolor, sit amet consectetur
-                                    adipisicing elit. Culpa, voluptates
-                                </Text>
+                            />
+                            <Text
+                                color={NowTheme.COLORS.DEFAULT}
+                                size={NowTheme.SIZES.FONT_H3}
+                                style={styles.subTitle}
+                            >
+                                Lorem ipsum dolor, sit amet consectetur
+                                adipisicing elit. Culpa, voluptates in
+                                voluptate vel mollitia unde repellendus f
+                                acere asperiores maxime velit esse sint eos ut minus,
+                                possimus exercitationem. Reiciendis, sapiente quibusdam!
+                                Lorem ipsum dolor, sit amet consectetur
+                                adipisicing elit. Culpa, voluptates
+                            </Text>
 
-                                {booking.status === BookingStatus.SCHEDULING
-                                && booking.isConfirm
-                                && (
-                                    renderConfirmPaymentButton(bookingId)
-                                )}
+                            {booking.status === BookingStatus.SCHEDULING
+                            && booking.isConfirm
+                            && (
+                                renderConfirmPaymentButton(bookingId)
+                            )}
 
-                                {booking.status === BookingStatus.FINISH_PAYMENT && booking.isConfirm && (
-                                    renderCompleteBookingButton()
-                                )}
-                            </Block>
-                        </ScrollView>
-                    )}
-                </>
-
-            );
-        } catch (exception) {
-            console.log('exception :>> ', exception);
-            return (
-                <>
-                    {ToastHelpers.renderToast()}
-                </>
-            );
-        }
+                            {booking.status === BookingStatus.FINISH_PAYMENT && booking.isConfirm && (
+                                renderCompleteBookingButton()
+                            )}
+                        </Block>
+                    </ScrollView>
+                )}
+            </>
+        );
+    } catch (exception) {
+        console.log('exception :>> ', exception);
+        return (
+            <>
+                {ToastHelpers.renderToast()}
+            </>
+        );
     }
-    return null;
 }
 
 const styles = StyleSheet.create({
