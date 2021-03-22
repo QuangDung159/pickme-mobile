@@ -172,8 +172,7 @@ export default function UpdateInfoAccount(props) {
         <Block
             middle
             style={{
-                backgroundColor: NowTheme.COLORS.BASE,
-                paddingTop: 10
+                paddingTop: 10,
             }}
         >
 
@@ -192,7 +191,7 @@ export default function UpdateInfoAccount(props) {
                     numberOfLines={2}
                     style={{
                         borderRadius: 5,
-                        width: NowTheme.SIZES.WIDTH_BASE * 0.85,
+                        width: NowTheme.SIZES.WIDTH_BASE * 0.9,
                         height: 44
                     }}
                     color={NowTheme.COLORS.HEADER}
@@ -208,7 +207,6 @@ export default function UpdateInfoAccount(props) {
         <Block
             middle
             style={{
-                backgroundColor: NowTheme.COLORS.BASE,
                 paddingTop: 10
             }}
         >
@@ -228,7 +226,7 @@ export default function UpdateInfoAccount(props) {
                     numberOfLines={2}
                     style={{
                         borderRadius: 5,
-                        width: NowTheme.SIZES.WIDTH_BASE * 0.85,
+                        width: NowTheme.SIZES.WIDTH_BASE * 0.9,
                         height: 44
                     }}
                     keyboardType="number-pad"
@@ -245,7 +243,6 @@ export default function UpdateInfoAccount(props) {
         <Block
             middle
             style={{
-                backgroundColor: NowTheme.COLORS.BASE,
                 paddingTop: 10
             }}
         >
@@ -264,7 +261,7 @@ export default function UpdateInfoAccount(props) {
                     numberOfLines={2}
                     style={{
                         borderRadius: 5,
-                        width: NowTheme.SIZES.WIDTH_BASE * 0.85,
+                        width: NowTheme.SIZES.WIDTH_BASE * 0.9,
                         height: 44
                     }}
                     keyboardType="number-pad"
@@ -288,7 +285,6 @@ export default function UpdateInfoAccount(props) {
             <Block
                 middle
                 style={{
-                    backgroundColor: NowTheme.COLORS.BASE,
                     paddingTop: 10
                 }}
             >
@@ -306,7 +302,7 @@ export default function UpdateInfoAccount(props) {
                     <DateTimePicker
                         style={{
                             borderRadius: 5,
-                            width: NowTheme.SIZES.WIDTH_BASE * 0.85,
+                            width: NowTheme.SIZES.WIDTH_BASE * 0.9,
                             height: 44,
                             marginTop: 20
                         }}
@@ -325,7 +321,6 @@ export default function UpdateInfoAccount(props) {
         <Block
             middle
             style={{
-                backgroundColor: NowTheme.COLORS.BASE,
                 paddingTop: 10
             }}
         >
@@ -346,7 +341,7 @@ export default function UpdateInfoAccount(props) {
                     numberOfLines={2}
                     style={{
                         borderRadius: 5,
-                        width: NowTheme.SIZES.WIDTH_BASE * 0.85,
+                        width: NowTheme.SIZES.WIDTH_BASE * 0.9,
                         height: 60
                     }}
                     color={NowTheme.COLORS.HEADER}
@@ -360,25 +355,27 @@ export default function UpdateInfoAccount(props) {
 
     const renderButtonPanel = () => (
         <Block
-            center
+            row
+            space="between"
+            style={{
+                paddingTop: 10
+            }}
         >
             <Button
-                style={{
-                    width: NowTheme.SIZES.WIDTH_BASE * 0.85,
-                    marginVertical: 5
-                }}
                 shadowless
                 onPress={() => onSubmitUpdateInfo()}
+                style={{
+                    margin: 0
+                }}
             >
                 Xác nhận
             </Button>
             <Button
-                style={{
-                    width: NowTheme.SIZES.WIDTH_BASE * 0.85,
-                    marginBottom: 10
-                }}
                 shadowless
                 color={NowTheme.COLORS.DEFAULT}
+                style={{
+                    margin: 0
+                }}
                 onPress={() => {
                     navigation.goBack();
                 }}
@@ -396,6 +393,10 @@ export default function UpdateInfoAccount(props) {
                 ) : (
                     <ScrollView
                         showsVerticalScrollIndicator={false}
+                        contentContainerStyle={{
+                            width: NowTheme.SIZES.WIDTH_BASE * 0.9,
+                            alignSelf: 'center'
+                        }}
                     >
                         <Block
                             style={{

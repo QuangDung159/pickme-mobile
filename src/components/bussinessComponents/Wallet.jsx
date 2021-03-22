@@ -238,8 +238,7 @@ export default function Wallet({ navigation, route }) {
                 <Block
                     middle
                     style={{
-                        height: NowTheme.SIZES.HEIGHT_BASE * 0.3,
-
+                        height: NowTheme.SIZES.HEIGHT_BASE * 0.2,
                     }}
                 >
                     <Text
@@ -332,7 +331,7 @@ export default function Wallet({ navigation, route }) {
             <>
                 <Block
                     style={{
-                        height: NowTheme.SIZES.HEIGHT_BASE * 0.4,
+                        height: NowTheme.SIZES.HEIGHT_BASE * 0.3,
                         backgroundColor: NowTheme.COLORS.BASE,
                         alignItems: 'center',
                     }}
