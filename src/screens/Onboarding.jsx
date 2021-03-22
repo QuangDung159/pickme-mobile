@@ -3,14 +3,13 @@ import {
 } from 'galio-framework';
 import React, { useEffect } from 'react';
 import {
-    Image, ImageBackground, Platform, StatusBar, StyleSheet,
-    View
+    ImageBackground, Platform, StatusBar, StyleSheet
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 import {
     Images, NowTheme, ScreenName, Utils
 } from '../constants';
-import { resetStoreSignOut, setToken, setNavigation } from '../redux/Actions';
+import { resetStoreSignOut, setNavigation, setToken } from '../redux/Actions';
 
 export default function Onboarding({ navigation }) {
     const dispatch = useDispatch();
@@ -42,46 +41,60 @@ export default function Onboarding({ navigation }) {
                 />
                 <Block space="between" style={styles.padded}>
                     <Block>
-                        <Block middle>
+                        {/* <Block middle>
                             <Image
                                 source={Images.NowLogo}
                                 style={{
                                     width: 115, height: 124, bottom: 200, position: 'absolute'
                                 }}
                             />
-                        </Block>
+                        </Block> */}
 
-                        <Block row>
-                            <View>
-                                <Button
-                                    shadowless
-                                    style={styles.button}
-                                    color={NowTheme.COLORS.PRIMARY}
-                                    onPress={() => {
-                                        navigation.navigate(ScreenName.SIGN_IN);
+                        <Block>
+                            <Block
+                                middle
+                                style={{
+                                    paddingBottom: NowTheme.SIZES.HEIGHT_BASE * 0.3
+                                }}
+                            >
+                                <Text
+                                    style={{
+                                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                                        fontSize: NowTheme.SIZES.WIDTH_BASE * 0.075
                                     }}
+                                    color={NowTheme.COLORS.BASE}
                                 >
-                                    <Text
-                                        style={{ fontFamily: NowTheme.FONT.MONTSERRAT_BOLD, fontSize: 14 }}
-                                        color={NowTheme.COLORS.BASE}
-                                    >
-                                        Đăng nhập
-                                    </Text>
-                                </Button>
-                                <Button
-                                    shadowless
-                                    style={styles.button}
-                                    color={NowTheme.COLORS.PRIMARY}
-                                    onPress={() => navigation.navigate(ScreenName.SIGN_UP)}
+                                    PickMe - Khách hàng
+                                </Text>
+                            </Block>
+                            <Button
+                                shadowless
+                                style={styles.button}
+                                color={NowTheme.COLORS.PRIMARY}
+                                onPress={() => {
+                                    navigation.navigate(ScreenName.SIGN_IN);
+                                }}
+                            >
+                                <Text
+                                    style={{ fontFamily: NowTheme.FONT.MONTSERRAT_BOLD, fontSize: 14 }}
+                                    color={NowTheme.COLORS.BASE}
                                 >
-                                    <Text
-                                        style={{ fontFamily: NowTheme.FONT.MONTSERRAT_BOLD, fontSize: 14 }}
-                                        color={NowTheme.COLORS.BASE}
-                                    >
-                                        Đăng kí
-                                    </Text>
-                                </Button>
-                            </View>
+                                    Đăng nhập
+                                </Text>
+                            </Button>
+                            <Button
+                                shadowless
+                                style={styles.button}
+                                color={NowTheme.COLORS.PRIMARY}
+                                onPress={() => navigation.navigate(ScreenName.SIGN_UP)}
+                            >
+                                <Text
+                                    style={{ fontFamily: NowTheme.FONT.MONTSERRAT_BOLD, fontSize: 14 }}
+                                    color={NowTheme.COLORS.BASE}
+                                >
+                                    Đăng kí
+                                </Text>
+                            </Button>
                         </Block>
 
                         <Block middle row>

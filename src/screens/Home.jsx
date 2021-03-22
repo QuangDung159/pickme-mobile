@@ -54,10 +54,6 @@ export default function Home({ navigation }) {
 
     useEffect(
         () => {
-            if (token !== 'Bearer ') {
-                ToastHelpers.renderToast('Bạn có tin nhắn mới.', 'success');
-            }
-
             const conversationPayLoad = getConversationByMessage(
                 messageListened,
                 listConversationGetAtHome

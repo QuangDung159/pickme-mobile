@@ -102,10 +102,6 @@ export default function SignIn({ navigation }) {
                     index: 0,
                     routes: [{ name: ScreenName.APP }],
                 });
-                Toast.show({
-                    type: 'success',
-                    text1: 'Đăng nhập thành công!'
-                });
             },
             () => {
                 toggleSpinner(false);

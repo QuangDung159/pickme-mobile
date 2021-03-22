@@ -156,11 +156,10 @@ export default function Header({
         iPhoneX ? styles.navbarHeight : {}];
 
     const renderRight = () => {
-        if (screenNameProp && (
-            screenNameProp !== ScreenName.ONBOARDING
-            || screenNameProp !== ScreenName.SIGN_IN
-            || screenNameProp !== ScreenName.SIGN_UP
-            || screenNameProp !== ScreenName.CREATE_ACCOUNT)) {
+        if (screenNameProp === ScreenName.ONBOARDING
+            || screenNameProp === ScreenName.SIGN_IN
+            || screenNameProp === ScreenName.SIGN_UP
+            || screenNameProp === ScreenName.CREATE_ACCOUNT) {
             return null;
         }
 
