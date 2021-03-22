@@ -77,12 +77,6 @@ const LeaderBoardStack = () => (
     </Stack.Navigator>
 );
 
-const SupportStack = () => (
-    <Stack.Navigator mode="card" headerMode="screen">
-        {SupportScreen()}
-    </Stack.Navigator>
-);
-
 const ConversationListStack = () => (
     <Stack.Navigator mode="card" headerMode="screen">
         {ConversationListScreen()}

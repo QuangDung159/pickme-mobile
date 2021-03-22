@@ -59,14 +59,6 @@ export default function Personal({ navigation, route }) {
     ];
 
     // Render \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
-    // useEffect(
-    //     () => {
-    //         if (route?.params?.tabActiveIndex) {
-    //             setTabActiveIndex(route.params.tabActiveIndex);
-    //         }
-    //     }, [route]
-    // );
-
     const renderTabButton = (tab, index) => {
         const { tabLabel } = tab;
         return (
@@ -79,7 +71,7 @@ export default function Personal({ navigation, route }) {
                         : NowTheme.COLORS.BASE,
                     alignItems: 'center',
                     justifyContent: 'center',
-                    flex: 3
+                    flex: 1,
                 }}
             >
                 <Text
@@ -121,7 +113,7 @@ export default function Personal({ navigation, route }) {
             <Block
                 row
                 style={[{
-                    height: NowTheme.SIZES.HEIGHT_BASE * 0.06
+                    height: NowTheme.SIZES.HEIGHT_BASE * 0.08
                 }]}
             >
                 {tabs.map((title, index) => renderTabButton(title, index))}

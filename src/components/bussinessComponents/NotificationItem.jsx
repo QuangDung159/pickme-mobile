@@ -179,7 +179,7 @@ export default function NotificationItem({
             !isRead
                 ? { backgroundColor: NowTheme.COLORS.NOTIFICATION_BACKGROUND }
                 : { }, {
-                height: NowTheme.SIZES.HEIGHT_BASE * 0.08
+                height: NowTheme.SIZES.HEIGHT_BASE * 0.1
             }]}
         >
             <Block
