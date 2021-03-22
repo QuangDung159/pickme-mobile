@@ -551,19 +551,18 @@ export default function CreateBooking({ route, navigation }) {
             row
             style={{
                 marginBottom: 10,
-                width: NowTheme.SIZES.WIDTH_BASE * 0.95,
+                width: NowTheme.SIZES.WIDTH_BASE * 0.9,
             }}
         >
             <Button
                 shadowless
                 color={NowTheme.COLORS.TRANSPARENT}
-                style={{
-                    borderWidth: 1,
-                    borderColor: NowTheme.COLORS.ACTIVE,
-                    borderRadius: 5,
-                    width: NowTheme.SIZES.WIDTH_BASE * 0.4,
-                    marginLeft: 0
-                }}
+                style={[
+                    styles.timePickerButton,
+                    {
+
+                        marginLeft: 0
+                    }]}
                 textStyle={styles.timePickerText}
                 onPress={() => {
                     setModalTimePickerVisible(true);
@@ -577,12 +576,7 @@ export default function CreateBooking({ route, navigation }) {
             <Button
                 shadowless
                 color={NowTheme.COLORS.TRANSPARENT}
-                style={{
-                    borderWidth: 1,
-                    borderColor: NowTheme.COLORS.ACTIVE,
-                    borderRadius: 5,
-                    width: NowTheme.SIZES.WIDTH_BASE * 0.4
-                }}
+                style={styles.timePickerButton}
                 textStyle={styles.timePickerText}
                 onPress={() => {
                     setModalActiveType('end');
@@ -622,7 +616,7 @@ export default function CreateBooking({ route, navigation }) {
     const renderDropDownLocation = () => (
         <Block
             style={{
-                width: NowTheme.SIZES.WIDTH_BASE * 0.95,
+                width: NowTheme.SIZES.WIDTH_BASE * 0.9,
                 alignSelf: 'center',
                 marginBottom: 10,
             }}
@@ -633,7 +627,7 @@ export default function CreateBooking({ route, navigation }) {
                     defaultValue={booking.locationId}
                     containerStyle={{
                         borderRadius: 5,
-                        width: NowTheme.SIZES.WIDTH_BASE * 0.95,
+                        width: NowTheme.SIZES.WIDTH_BASE * 0.9,
                         alignSelf: 'center',
                         marginBottom: 10
                     }}
@@ -715,14 +709,11 @@ export default function CreateBooking({ route, navigation }) {
                         }}
                     />
                     {renderInfoBlock(partner)}
-
                     <CustomCalendar
                         onChangeDate={(date) => { onChangeDateCalendar(date); }}
                         selectedDate={activeDate}
                     />
-
                     {renderButtonTimePicker()}
-
                     {renderDropDownLocation()}
 
                 </Block>
@@ -887,17 +878,14 @@ export default function CreateBooking({ route, navigation }) {
                     <>
                         <KeyboardAwareScrollView
                             style={{
-                                width: NowTheme.SIZES.WIDTH_BASE * 0.95,
+                                width: NowTheme.SIZES.WIDTH_BASE * 0.9,
                                 alignSelf: 'center'
                             }}
                             showsVerticalScrollIndicator={false}
                         >
                             {renderModal()}
-
                             {renderTimePickerModal()}
-
                             {renderFormBlock(partner)}
-
                             {renderTotal()}
                         </KeyboardAwareScrollView>
                     </>
@@ -944,5 +932,11 @@ const styles = StyleSheet.create({
         color: NowTheme.COLORS.ACTIVE,
         fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
         fontSize: NowTheme.SIZES.FONT_H2
+    },
+    timePickerButton: {
+        borderWidth: 1,
+        borderColor: NowTheme.COLORS.ACTIVE,
+        borderRadius: 5,
+        width: NowTheme.SIZES.WIDTH_BASE * 0.37
     }
 });

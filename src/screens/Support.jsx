@@ -192,7 +192,7 @@ export default function Support() {
             row
             space="between"
             style={{
-                width: NowTheme.SIZES.WIDTH_BASE * 0.95,
+                width: NowTheme.SIZES.WIDTH_BASE * 0.9,
             }}
         >
             <Button
@@ -233,7 +233,7 @@ export default function Support() {
                             }}
                         >
                             <NoteText
-                                width={NowTheme.SIZES.WIDTH_BASE * 0.95}
+                                width={NowTheme.SIZES.WIDTH_BASE * 0.9}
                                 title={`${item.question}?`}
                                 content={item.answer || 'N/A'}
                                 contentStyle={{
@@ -426,7 +426,7 @@ export default function Support() {
                     </Block>
                     <ScrollView
                         contentContainerStyle={{
-                            width: NowTheme.SIZES.WIDTH_BASE * 0.95,
+                            width: NowTheme.SIZES.WIDTH_BASE * 0.9,
                             paddingVertical: 10
                         }}
                     >
@@ -457,7 +457,7 @@ const styles = StyleSheet.create({
     },
     input: {
         borderRadius: 5,
-        width: NowTheme.SIZES.WIDTH_BASE * 0.95,
+        width: NowTheme.SIZES.WIDTH_BASE * 0.9,
     },
     imageReport: {
         width: NowTheme.SIZES.WIDTH_BASE * 0.25,

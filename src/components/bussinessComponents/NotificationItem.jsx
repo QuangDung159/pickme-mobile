@@ -157,7 +157,7 @@ export default function NotificationItem({
                         >
                             <Text
                                 color={NowTheme.COLORS.DEFAULT}
-                                size={16}
+                                size={NowTheme.SIZES.FONT_H4}
                                 fontFamily={NowTheme.FONT.MONTSERRAT_REGULAR}
                                 numberOfLines={2}
                             >

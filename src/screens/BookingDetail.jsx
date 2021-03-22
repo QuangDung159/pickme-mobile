@@ -294,7 +294,7 @@ export default function BookingDetail({
                             )}
                         >
                             <Block style={{
-                                width: NowTheme.SIZES.WIDTH_BASE * 0.95,
+                                width: NowTheme.SIZES.WIDTH_BASE * 0.9,
                                 alignSelf: 'center',
                                 marginTop: 10,
                             }}

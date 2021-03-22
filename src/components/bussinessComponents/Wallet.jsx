@@ -152,7 +152,7 @@ export default function Wallet({ navigation, route }) {
                     row
                     center
                     style={{
-                        height: NowTheme.SIZES.HEIGHT_BASE * 0.13,
+                        height: NowTheme.SIZES.HEIGHT_BASE * 0.1,
                         width: NowTheme.SIZES.WIDTH_BASE * 0.9,
                         alignSelf: 'center'
                     }}
@@ -163,7 +163,7 @@ export default function Wallet({ navigation, route }) {
                     >
                         <IconCustom
                             name={type === 1 ? 'chevron-circle-right' : 'chevron-circle-left'}
-                            size={30}
+                            size={NowTheme.SIZES.FONT_H1}
                             color={NowTheme.COLORS.DEFAULT}
                             family={IconFamily.FONT_AWESOME}
                         />
@@ -221,8 +221,9 @@ export default function Wallet({ navigation, route }) {
                 </Block>
                 <Text
                     color={NowTheme.COLORS.DEFAULT}
-                    size={16}
+                    size={NowTheme.SIZES.FONT_H4}
                     fontFamily={NowTheme.FONT.MONTSERRAT_REGULAR}
+                    numberOfLines={2}
                 >
                     {type === 0 ? owner : description}
                 </Text>

@@ -48,7 +48,7 @@ export default function CardBooking({ booking, renderAtScreen, navigation }) {
                 <Block
                     space="between"
                     style={{
-                        width: NowTheme.SIZES.WIDTH_BASE * 0.95
+                        width: NowTheme.SIZES.WIDTH_BASE * 0.9
                     }}
                 >
                     <Block
