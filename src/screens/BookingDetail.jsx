@@ -341,7 +341,7 @@ export default function BookingDetail({
                                 />
                                 <Text
                                     color={NowTheme.COLORS.DEFAULT}
-                                    size={16}
+                                    size={NowTheme.SIZES.FONT_H3}
                                     style={styles.subTitle}
                                 >
                                     Lorem ipsum dolor, sit amet consectetur
