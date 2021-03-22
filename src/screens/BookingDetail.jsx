@@ -292,6 +292,9 @@ export default function BookingDetail({
                                     onRefresh={() => onRefresh()}
                                 />
                             )}
+                            contentContainerStyle={{
+                                paddingBottom: 10
+                            }}
                         >
                             <Block style={{
                                 width: NowTheme.SIZES.WIDTH_BASE * 0.9,
