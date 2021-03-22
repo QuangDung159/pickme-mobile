@@ -4,7 +4,7 @@ import {
 } from 'galio-framework';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { CenterLoader } from '../components/uiComponents';
 import {
@@ -364,18 +364,14 @@ export default function UpdateInfoAccount(props) {
             <Button
                 shadowless
                 onPress={() => onSubmitUpdateInfo()}
-                style={{
-                    margin: 0
-                }}
+                style={styles.button}
             >
                 Xác nhận
             </Button>
             <Button
                 shadowless
                 color={NowTheme.COLORS.DEFAULT}
-                style={{
-                    margin: 0
-                }}
+                style={styles.button}
                 onPress={() => {
                     navigation.goBack();
                 }}
@@ -424,3 +420,10 @@ export default function UpdateInfoAccount(props) {
         );
     }
 }
+
+const styles = StyleSheet.create({
+    button: {
+        margin: 0,
+        width: NowTheme.SIZES.WIDTH_BASE * 0.44
+    }
+});

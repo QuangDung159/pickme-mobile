@@ -452,7 +452,7 @@ const styles = StyleSheet.create({
         fontSize: NowTheme.SIZES.FONT_H4
     },
     button: {
-        width: NowTheme.SIZES.WIDTH_BASE * 0.45,
+        width: NowTheme.SIZES.WIDTH_BASE * 0.44,
         margin: 0
     },
     input: {
