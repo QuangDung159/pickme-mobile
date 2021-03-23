@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "225259189265",
+    "project_id": "customerpickmemobilev1testv1",
+    "storage_bucket": "customerpickmemobilev1testv1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:225259189265:android:8285ffa244652f05ccadb0",
+        "android_client_info": {
+          "package_name": "com.dragonteam.customerpickmemobilev1testv1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "225259189265-madgmn6mjpqbgbeg2pti5dqj8c48gn4f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFSORblCx3L7Ro-0GdMzUP23tJ1ROfY4c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "225259189265-madgmn6mjpqbgbeg2pti5dqj8c48gn4f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
