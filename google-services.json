@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "647323645231",
-    "project_id": "pickmecustomer01",
-    "storage_bucket": "pickmecustomer01.appspot.com"
+    "project_number": "196728524255",
+    "project_id": "pickme-mobile",
+    "storage_bucket": "pickme-mobile.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:647323645231:android:9833db008c732b3bdcddda",
+        "mobilesdk_app_id": "1:196728524255:android:09bd0264027bc1688a486a",
         "android_client_info": {
           "package_name": "com.dragongroup.pickmecustomer01"
         }
       },
       "oauth_client": [
         {
-          "client_id": "647323645231-e9akboungsa8vs430h71ptcgigc0mlkv.apps.googleusercontent.com",
+          "client_id": "196728524255-pk9o3471qj19cgs0nn95nut3jleknlsq.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAtM_KHG2oujrIpjh8TNtlyUvSiEG1n-l8"
+          "current_key": "AIzaSyD7QZ_6p-KtcciVh-NP0yWgI5Tuf1HRrbc"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "647323645231-e9akboungsa8vs430h71ptcgigc0mlkv.apps.googleusercontent.com",
+              "client_id": "196728524255-pk9o3471qj19cgs0nn95nut3jleknlsq.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
