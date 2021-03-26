@@ -216,7 +216,10 @@ export default function CreateBooking({ route, navigation }) {
             },
             (res) => {
                 ToastHelpers.renderToast(res.data.message, 'success');
-                navigation.navigate(ScreenName.PERSONAL);
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: ScreenName.PERSONAL }],
+                });
                 dispatch(setPersonTabActiveIndex(2));
             },
             () => {

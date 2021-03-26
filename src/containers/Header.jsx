@@ -157,7 +157,6 @@ export default function Header({
         iPhoneX ? styles.navbarHeight : {}];
 
     const renderRight = () => {
-        console.log('screenNameProp :>> ', screenNameProp);
         if (showRight) {
             return (
                 <>

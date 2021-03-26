@@ -81,6 +81,7 @@ const NotificationStack = () => (
     <Stack.Navigator mode="card" headerMode="screen">
         {NotificationScreen()}
         {BookingDetailScreen()}
+        {CreateBookingScreen()}
         {PersonalScreen()}
         {CashInScreen()}
         {CashOutScreen()}
