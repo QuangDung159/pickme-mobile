@@ -24,8 +24,9 @@
         "foregroundImage": "./assets/images/icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.dragonteam.customerpickmemobilev1testv1",
-      "googleServicesFile": "./google-services.json"
+      "package": "com.dragongroup.pickmecustomer01",
+      "googleServicesFile": "./google-services.json",
+      "useNextNotificationsApi":true
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
