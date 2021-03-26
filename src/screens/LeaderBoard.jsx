@@ -332,7 +332,7 @@ export default function LeaderBoard({ navigation }) {
                         row
                         style={[{
                             marginBottom: 20,
-                            height: NowTheme.SIZES.HEIGHT_BASE * 0.06
+                            height: NowTheme.SIZES.HEIGHT_BASE * 0.07
                         }]}
                     >
                         {tabs.map((tab, index) => renderTopButton(tab, index))}

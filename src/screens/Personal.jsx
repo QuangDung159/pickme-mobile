@@ -72,6 +72,7 @@ export default function Personal({ navigation, route }) {
                     alignItems: 'center',
                     justifyContent: 'center',
                     flex: 1,
+                    height: NowTheme.SIZES.HEIGHT_BASE * 0.07
                 }}
             >
                 <Text

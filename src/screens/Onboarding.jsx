@@ -60,11 +60,13 @@ export default function Onboarding({ navigation }) {
                                 <Text
                                     style={{
                                         fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                                        fontSize: NowTheme.SIZES.WIDTH_BASE * 0.075
+                                        fontSize: NowTheme.SIZES.WIDTH_BASE * 0.1
                                     }}
                                     color={NowTheme.COLORS.BASE}
                                 >
-                                    PickMe - Khách hàng
+                                    PickMe -
+                                    {'\n'}
+                                    Khách hàng
                                 </Text>
                             </Block>
                             <Button
