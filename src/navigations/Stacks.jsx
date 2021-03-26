@@ -61,6 +61,7 @@ const NotificationStack = () => (
     <Stack.Navigator mode="card" headerMode="screen">
         {NotificationScreen()}
         {BookingDetailScreen()}
+        {PersonalScreen()}
     </Stack.Navigator>
 );
 
@@ -70,10 +71,8 @@ const LeaderBoardStack = () => (
         {ProfileScreen()}
         {MessageScreen()}
         {CreateBookingScreen()}
-        {PaymentScreen()}
-        {CashInScreen()}
-        {CashOutScreen()}
         {BankAccountScreen()}
+        {PersonalScreen()}
     </Stack.Navigator>
 );
 

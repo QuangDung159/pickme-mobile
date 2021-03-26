@@ -266,11 +266,14 @@ export default function LeaderBoard({ navigation }) {
                     >
                         <CenterLoader />
                         <Image
-                            source={url}
+                            source={{
+                                uri: url || NO_AVATAR_URL
+                            }}
                             style={{
                                 width: NowTheme.SIZES.WIDTH_BASE * 0.25,
                                 height: NowTheme.SIZES.WIDTH_BASE * 0.25,
                                 borderRadius: 75,
+                                zIndex: 99
                             }}
                         />
                         <Block
