@@ -26,6 +26,7 @@ export default function Header({
     optionLeft, optionRight,
     tabs, tabIndex,
     search, options,
+    showRight,
     ...props
 }) {
     const noShadow = ['Search', 'Categories', 'Deals', 'Pro', 'Profile'].includes(title);
@@ -156,24 +157,21 @@ export default function Header({
         iPhoneX ? styles.navbarHeight : {}];
 
     const renderRight = () => {
-        if (screenNameProp === ScreenName.ONBOARDING
-            || screenNameProp === ScreenName.SIGN_IN
-            || screenNameProp === ScreenName.SIGN_UP
-            || screenNameProp === ScreenName.CREATE_ACCOUNT) {
-            return null;
+        console.log('screenNameProp :>> ', screenNameProp);
+        if (showRight) {
+            return (
+                <>
+                    {renderQnAButton()}
+                    {renderSettingButton()}
+                    {screenNameProp === ScreenName.NOTIFICATION && (
+                        <>
+                            {renderReadAllButton()}
+                        </>
+                    )}
+                </>
+            );
         }
-
-        return (
-            <>
-                {renderQnAButton()}
-                {renderSettingButton()}
-                {screenNameProp === ScreenName.NOTIFICATION && (
-                    <>
-                        {renderReadAllButton()}
-                    </>
-                )}
-            </>
-        );
+        return null;
     };
 
     const renderSearch = () => (
@@ -263,6 +261,10 @@ export default function Header({
         </Block>
     );
 }
+
+Header.defaultProps = {
+    showRight: true
+};
 
 const styles = StyleSheet.create({
     button: {

@@ -80,10 +80,8 @@ export const ProfileScreen = () => (
         options={{
             header: ({ navigation, scene }) => (
                 <Header
-                    title=""
-                    back
-                    white
-                    transparent
+                    options
+                    showRight={false}
                     navigation={navigation}
                     scene={scene}
                 />
@@ -230,7 +228,7 @@ export const CreateAccountScreen = () => (
                     options
                     navigation={navigation}
                     scene={scene}
-                    screenNameProp={ScreenName.CREATE_ACCOUNT}
+                    showRight={false}
                 />
             ),
             cardStyle: { backgroundColor: NowTheme.COLORS.BASE }
@@ -328,7 +326,7 @@ export const SignUpScreen = () => (
                     transparent
                     navigation={navigation}
                     scene={scene}
-                    screenNameProp={ScreenName.SIGN_UP}
+                    showRight={false}
                 />
             ),
             headerTransparent: true
@@ -349,7 +347,7 @@ export const SignInScreen = () => (
                     transparent
                     navigation={navigation}
                     scene={scene}
-                    screenNameProp={ScreenName.SIGN_IN}
+                    showRight={false}
                 />
             ),
             headerTransparent: true

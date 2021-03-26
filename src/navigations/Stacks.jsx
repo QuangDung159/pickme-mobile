@@ -42,44 +42,27 @@ const SignInStack = () => (
     </Stack.Navigator>
 );
 
-const PersonalStack = () => (
-    <Stack.Navigator initialRouteName={ScreenName.PERSONAL} mode="card" headerMode="screen">
-        {PersonalScreen()}
-        {CashInScreen()}
-        {CashOutScreen()}
-        {BookingDetailScreen()}
-        {ProfileScreen()}
-        {MessageScreen()}
-        {CreateBookingScreen()}
-        {PaymentScreen()}
-        {UpdateInfoAccountScreen()}
-        {BankAccountScreen()}
-    </Stack.Navigator>
-);
-
-const NotificationStack = () => (
-    <Stack.Navigator mode="card" headerMode="screen">
-        {NotificationScreen()}
-        {BookingDetailScreen()}
-        {PersonalScreen()}
-    </Stack.Navigator>
-);
-
 const LeaderBoardStack = () => (
     <Stack.Navigator mode="card" headerMode="screen">
         {LeaderBoardScreen()}
         {ProfileScreen()}
         {MessageScreen()}
         {CreateBookingScreen()}
-        {BankAccountScreen()}
-        {PersonalScreen()}
     </Stack.Navigator>
 );
 
-const ConversationListStack = () => (
-    <Stack.Navigator mode="card" headerMode="screen">
-        {ConversationListScreen()}
+const PersonalStack = () => (
+    <Stack.Navigator initialRouteName={ScreenName.PERSONAL} mode="card" headerMode="screen">
+        {PersonalScreen()}
+        {UpdateInfoAccountScreen()}
+        {CashInScreen()}
+        {CashOutScreen()}
+        {BankAccountScreen()}
+        {BookingDetailScreen()}
+        {CreateBookingScreen()}
         {MessageScreen()}
+        {SupportScreen()}
+        {SettingsScreen()}
     </Stack.Navigator>
 );
 
@@ -88,13 +71,29 @@ const HomeStack = () => (
         {HomeScreen()}
         {ProfileScreen()}
         {CreateBookingScreen()}
-        {PaymentScreen()}
-        {CashOutScreen()}
-        {CashInScreen()}
-        {BankAccountScreen()}
         {MessageScreen()}
         {SupportScreen()}
         {SettingsScreen()}
+    </Stack.Navigator>
+);
+
+const NotificationStack = () => (
+    <Stack.Navigator mode="card" headerMode="screen">
+        {NotificationScreen()}
+        {BookingDetailScreen()}
+        {PersonalScreen()}
+        {CashInScreen()}
+        {CashOutScreen()}
+        {BankAccountScreen()}
+        {SupportScreen()}
+        {SettingsScreen()}
+    </Stack.Navigator>
+);
+
+const ConversationListStack = () => (
+    <Stack.Navigator mode="card" headerMode="screen">
+        {ConversationListScreen()}
+        {MessageScreen()}
     </Stack.Navigator>
 );
 

@@ -70,10 +70,7 @@ export default function UserInformation({ navigation }) {
                 password,
                 expoNotificationToken: 'invalid'
             },
-            {},
-            (res) => {
-                console.log('res :>> ', res);
-            }
+            {}
         );
     };
 
