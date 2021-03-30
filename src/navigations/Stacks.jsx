@@ -95,6 +95,7 @@ const ConversationListStack = () => (
     <Stack.Navigator mode="card" headerMode="screen">
         {ConversationListScreen()}
         {MessageScreen()}
+        {ProfileScreen()}
     </Stack.Navigator>
 );
 

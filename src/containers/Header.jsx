@@ -3,6 +3,7 @@ import {
 } from 'galio-framework';
 import React from 'react';
 import { Platform, StyleSheet, TouchableOpacity } from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import { IconCustom, Input, Tabs } from '../components/uiComponents';
 import {
@@ -36,6 +37,7 @@ export default function Header({
     ];
 
     const token = useSelector((state) => state.userReducer.token);
+    const chattingWith = useSelector((state) => state.messageReducer.chattingWith);
 
     const dispatch = useDispatch();
 
@@ -218,22 +220,34 @@ export default function Header({
         return null;
     };
 
+    const handleOnPressNavBar = () => {
+        if (screenNameProp && screenNameProp === ScreenName.MESSAGE) {
+            navigation.navigate(ScreenName.PROFILE, {
+                userId: chattingWith
+            });
+        }
+    };
+
     return (
         <Block style={headerStyles}>
-            <NavBar
-                back={false}
-                title={title}
-                style={navbarStyles}
-                transparent={transparent}
-                rightStyle={{ alignItems: 'center' }}
-                leftStyle={{ paddingVertical: 12, flex: 0.2 }}
-                titleStyle={[
-                    styles.title,
-                    { color: NowTheme.COLORS[white ? 'WHITE' : 'HEADER'] },
-                    titleColor && { color: titleColor }
-                ]}
-                {...props}
-            />
+            <TouchableWithoutFeedback
+                onPress={() => handleOnPressNavBar()}
+            >
+                <NavBar
+                    back={false}
+                    title={title}
+                    style={navbarStyles}
+                    transparent={transparent}
+                    rightStyle={{ alignItems: 'center' }}
+                    leftStyle={{ paddingVertical: 12, flex: 0.2 }}
+                    titleStyle={[
+                        styles.title,
+                        { color: NowTheme.COLORS[white ? 'WHITE' : 'HEADER'] },
+                        titleColor && { color: titleColor }
+                    ]}
+                    {...props}
+                />
+            </TouchableWithoutFeedback>
             {screenNameProp && screenNameProp === ScreenName.MESSAGE && (
                 <Block
                     style={{
