@@ -10,7 +10,7 @@ import { IconFamily, NowTheme, ScreenName } from '../../constants';
 import { ToastHelpers } from '../../helpers';
 import { IconCustom } from '../uiComponents';
 
-export default function CardBooking({ booking, renderAtScreen, navigation }) {
+export default function CardBooking({ booking, navigation }) {
     const convertMinutesToStringHours = (minutes) => moment.utc()
         .startOf('day')
         .add(minutes, 'minutes')
@@ -29,7 +29,6 @@ export default function CardBooking({ booking, renderAtScreen, navigation }) {
         } = booking;
 
         if (!booking) {
-            console.log('booking', booking);
             return null;
         }
 
@@ -71,8 +70,7 @@ export default function CardBooking({ booking, renderAtScreen, navigation }) {
                                 <>{`Mã đơn hẹn: #${idReadAble}`}</>
                             </Text>
                         </Block>
-                        {renderAtScreen === ScreenName.BOOKING_DETAIL
-                            && status === 'Scheduling'
+                        {status === 'Scheduling'
                             && (
                                 <Block
                                     middle
@@ -171,8 +169,7 @@ export default function CardBooking({ booking, renderAtScreen, navigation }) {
 }
 
 CardBooking.propTypes = {
-    booking: PropTypes.object.isRequired,
-    renderAtScreen: PropTypes.string.isRequired,
+    booking: PropTypes.object.isRequired
 };
 
 const styles = StyleSheet.create({

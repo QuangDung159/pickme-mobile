@@ -87,7 +87,6 @@ export default function BookingList({ navigation }) {
                             <CardBooking
                                 booking={item}
                                 key={item.id}
-                                renderAtScreen={ScreenName.BOOKING_LIST}
                                 navigation={navigation}
                             />
                             <Block

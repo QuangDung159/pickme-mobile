@@ -327,17 +327,6 @@ export default function Profile({ route, navigation }) {
                                     round
                                     onlyIcon
                                     shadowless
-                                    icon="heart"
-                                    iconFamily="Font-Awesome"
-                                    iconColor={NowTheme.COLORS.BASE}
-                                    iconSize={NowTheme.SIZES.BASE * 1.375}
-                                    color={NowTheme.COLORS.DEFAULT}
-                                    style={styles.social}
-                                />
-                                <GaButton
-                                    round
-                                    onlyIcon
-                                    shadowless
                                     icon="comment"
                                     iconFamily="Font-Awesome"
                                     iconColor={NowTheme.COLORS.BASE}

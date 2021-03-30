@@ -80,10 +80,13 @@ export const ProfileScreen = () => (
         options={{
             header: ({ navigation, scene }) => (
                 <Header
-                    options
-                    showRight={false}
+                    title=""
+                    back
+                    white
+                    transparent
                     navigation={navigation}
                     scene={scene}
+                    showRight={false}
                 />
             ),
             headerTransparent: true

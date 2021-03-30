@@ -235,7 +235,6 @@ export default function BookingDetail({
                                 bookingToEdit: booking,
                                 partner: partnerInfo,
                                 fullName: partnerInfo.fullName,
-                                from: ScreenName.BOOKING_DETAIL
                             });
                         }
                     },
@@ -317,7 +316,6 @@ export default function BookingDetail({
                             <CardBooking
                                 booking={booking}
                                 showEditButton
-                                renderAtScreen={ScreenName.BOOKING_DETAIL}
                                 navigation={navigation}
                             />
 
