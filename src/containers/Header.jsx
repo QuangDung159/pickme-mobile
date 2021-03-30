@@ -88,7 +88,7 @@ export default function Header({
         <Block
             style={{
                 position: 'absolute',
-                bottom: 20,
+                bottom: 14,
                 right: 5,
                 zIndex: 99,
             }}
@@ -98,7 +98,7 @@ export default function Header({
             >
                 <IconCustom
                     family={IconFamily.MATERIAL_ICONS}
-                    size={22}
+                    size={26}
                     name="contact-support"
                     color={NowTheme.COLORS.ACTIVE}
                 />
@@ -110,7 +110,7 @@ export default function Header({
         <Block
             style={{
                 position: 'absolute',
-                bottom: 20,
+                bottom: 14,
                 right: 35,
                 zIndex: 99,
             }}
@@ -121,7 +121,7 @@ export default function Header({
                 <IconCustom
                     name="gear"
                     family={IconFamily.FONT_AWESOME}
-                    size={22}
+                    size={26}
                     color={NowTheme.COLORS.ACTIVE}
                 />
             </TouchableOpacity>
@@ -132,7 +132,7 @@ export default function Header({
         <Block
             style={{
                 position: 'absolute',
-                bottom: 20,
+                bottom: 14,
                 right: 65,
                 zIndex: 99,
             }}
@@ -143,7 +143,7 @@ export default function Header({
                 <IconCustom
                     name="mark-email-read"
                     family={IconFamily.MATERIAL_ICONS}
-                    size={22}
+                    size={26}
                     color={NowTheme.COLORS.ACTIVE}
                 />
             </TouchableOpacity>
@@ -245,7 +245,7 @@ export default function Header({
                     <Text
                         style={{
                             fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                            marginTop: iPhoneX ? -10 : -20,
+                            marginTop: iPhoneX ? -16 : -20,
                         }}
                         size={10}
                         color={NowTheme.COLORS.ACTIVE}

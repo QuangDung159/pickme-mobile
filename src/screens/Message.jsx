@@ -301,7 +301,7 @@ export default function Message({ navigation, route }) {
                             space="between"
                             center
                             style={{
-                                width: NowTheme.SIZES.WIDTH_BASE * 0.9,
+                                width: NowTheme.SIZES.WIDTH_BASE
                             }}
                         >
                             <Input
@@ -325,11 +325,14 @@ export default function Message({ navigation, route }) {
                                         triggerSendMessage();
                                     }
                                 }}
+                                style={{
+                                    marginRight: 10
+                                }}
                             >
                                 <IconCustom
                                     name="send"
                                     family={IconFamily.FEATHER}
-                                    size={24}
+                                    size={30}
                                     color={NowTheme.COLORS.ACTIVE}
                                 />
                             </TouchableWithoutFeedback>
