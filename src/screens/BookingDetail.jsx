@@ -1,4 +1,5 @@
 import { Block, Button, Text } from 'galio-framework';
+import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import {
     Alert, RefreshControl, ScrollView, StyleSheet
@@ -130,32 +131,51 @@ export default function BookingDetail({
         );
     };
 
-    const renderCompleteBookingButton = () => (
-        <Block
-            row
-            center
-            space="between"
+    const renderCompleteBookingButton = (width) => (
+        <Button
+            onPress={() => {
+                // TODO: call api complete
+                onClickCompleteBooking();
+            }}
+            shadowless
+            style={{
+                margin: 0,
+                width: NowTheme.SIZES.WIDTH_BASE * width
+            }}
         >
-            <Button
-                onPress={() => {
-                    // TODO: call api complete
-                    onClickCompleteBooking();
-                }}
-                shadowless
-            >
-                Hoàn tất buổi hẹn
-            </Button>
+            Hoàn tất buổi hẹn
+        </Button>
+    );
 
-            <Button
-                onPress={() => {
-                    renderAlertRejectBooking();
-                }}
-                shadowless
-                color={NowTheme.COLORS.DEFAULT}
-            >
-                Huỷ buổi hẹn
-            </Button>
-        </Block>
+    const renderCancelBooking = (width) => (
+        <Button
+            onPress={() => {
+                renderAlertForCustomer();
+            }}
+            shadowless
+            color={NowTheme.COLORS.DEFAULT}
+            style={{
+                margin: 0,
+                width: NowTheme.SIZES.WIDTH_BASE * width
+            }}
+        >
+            Huỷ buổi hẹn
+        </Button>
+    );
+
+    const renderConfirmPaymentButton = (width) => (
+        <Button
+            onPress={() => {
+                onCustomerConfirmPayment(bookingId);
+            }}
+            shadowless
+            style={{
+                margin: 0,
+                width: NowTheme.SIZES.WIDTH_BASE * (+width)
+            }}
+        >
+            Thanh toán
+        </Button>
     );
 
     const onCustomerConfirmPayment = () => {
@@ -183,33 +203,6 @@ export default function BookingDetail({
             }
         );
     };
-
-    const renderConfirmPaymentButton = () => (
-        <Block
-            row
-            center
-            space="between"
-        >
-            <Button
-                onPress={() => {
-                    onCustomerConfirmPayment(bookingId);
-                }}
-                shadowless
-            >
-                Thanh toán
-            </Button>
-
-            <Button
-                onPress={() => {
-                    renderAlertForCustomer();
-                }}
-                shadowless
-                color={NowTheme.COLORS.DEFAULT}
-            >
-                Huỷ bỏ
-            </Button>
-        </Block>
-    );
 
     const renderAlertForCustomer = () => {
         // getPartnerInfo();
@@ -252,28 +245,54 @@ export default function BookingDetail({
         );
     };
 
-    const renderAlertRejectBooking = () => (
-        Alert.alert(
-            'Huỷ bỏ?',
-            'Bạn có chắc là muốn huỷ hẹn?',
-            [
-                {
-                    text: 'Cân nhắc lại',
-                    onPress: () => {},
-                    style: 'cancel'
-                },
-                {
-                    text: 'Tôi muốn huỷ hẹn',
-                    onPress: () => {
-                        // send notification to customer to update booking
-                        // TODO
-                        onCancelBooking();
-                    }
-                }
-            ],
-            { cancelable: false }
-        )
-    );
+    const convertMinutesToUnix = (minutes) => moment(booking.date)
+        .startOf('day')
+        .add(minutes, 'minutes')
+        .unix();
+
+    const isBookingGoingOn = () => {
+        const currentUnix = moment().unix();
+        const startTimestamp = convertMinutesToUnix(booking.startAt);
+        const endTimestamp = convertMinutesToUnix(booking.endAt);
+
+        return startTimestamp <= currentUnix && currentUnix <= endTimestamp;
+    };
+
+    const isBookingDone = () => {
+        const currentUnix = moment().unix();
+        const endTimestamp = convertMinutesToUnix(booking.endAt);
+
+        return endTimestamp < currentUnix;
+    };
+
+    const handleShowButtonByStatus = () => {
+        if (isBookingGoingOn()) return null;
+
+        if (isBookingDone()) {
+            return (
+                renderCompleteBookingButton(0.9)
+            );
+        }
+
+        if (booking.isConfirm) {
+            if (booking.status === BookingStatus.SCHEDULING) {
+                return (
+                    <>
+                        {renderConfirmPaymentButton(0.44)}
+                        {renderCancelBooking(0.44)}
+                    </>
+                );
+            }
+
+            if (booking.status === BookingStatus.FINISH_PAYMENT) {
+                return (
+                    renderCancelBooking(0.9)
+                );
+            }
+        }
+
+        return null;
+    };
 
     try {
         return (
@@ -352,15 +371,20 @@ export default function BookingDetail({
                                 adipisicing elit. Culpa, voluptates
                             </Text>
 
-                            {booking.status === BookingStatus.SCHEDULING
-                            && booking.isConfirm
-                            && (
-                                renderConfirmPaymentButton(bookingId)
-                            )}
-
-                            {booking.status === BookingStatus.FINISH_PAYMENT && booking.isConfirm && (
-                                renderCompleteBookingButton()
-                            )}
+                            {/* partner confirmed: payment, cancel
+                            customer payemnt: cancel
+                            booking is going on: N/A
+                            booking done: complete => report/rating */}
+                            <Block
+                                center
+                                row
+                                style={{
+                                    width: NowTheme.SIZES.WIDTH_BASE * 0.9
+                                }}
+                                space="between"
+                            >
+                                {handleShowButtonByStatus()}
+                            </Block>
                         </Block>
                     </ScrollView>
                 )}
