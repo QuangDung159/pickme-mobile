@@ -7,7 +7,7 @@ import {
 import { AirbnbRating } from 'react-native-ratings';
 import { useDispatch, useSelector } from 'react-redux';
 import { CardBooking } from '../components/bussinessComponents';
-import { CenterLoader, Line } from '../components/uiComponents';
+import { CenterLoader, Input, Line } from '../components/uiComponents';
 import {
     BookingStatus, NowTheme, Rx, ScreenName
 } from '../constants';
@@ -28,7 +28,12 @@ export default function BookingDetail({
     const [isShowSpinner, setIsShowSpinner] = useState(true);
     const [booking, setBooking] = useState();
     const [refreshing, setRefreshing] = useState(false);
-    const [modalVisible, setModalVisible] = useState(false);
+    const [modalRatingVisible, setModalRatingVisible] = useState(false);
+    const [modalReportVisible, setModalReportVisible] = useState(false);
+    const [modalReasonVisible, setModalReasonVisible] = useState(false);
+    const [ratingValue, setRatingValue] = useState(4);
+    const [reportDesc, setReportDesc] = useState();
+    const [reasonDesc, setReasonDesc] = useState();
 
     const token = useSelector((state) => state.userReducer.token);
 
@@ -36,7 +41,6 @@ export default function BookingDetail({
 
     useEffect(
         () => {
-            renderAlertRatingReport();
             fetchBookingDetailInfo();
             const eventTriggerGetBookingDetail = navigation.addListener('focus', () => {
                 if (from === ScreenName.CREATE_BOOKING) {
@@ -79,14 +83,12 @@ export default function BookingDetail({
     };
 
     // handler \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
-    const onCancelBooking = () => {
-        setIsShowSpinner(true);
-
+    const sendRequestToCancelBooking = () => {
         rxUtil(
             `${Rx.BOOKING.CANCEL_BOOKING}/${bookingId}`,
             'POST',
             {
-                rejectReason: 'Ban dot xuat'
+                rejectReason: reasonDesc
             },
             {
                 Authorization: token
@@ -107,10 +109,15 @@ export default function BookingDetail({
         );
     };
 
+    const onCancelBooking = () => {
+        setIsShowSpinner(true);
+        setModalReasonVisible(true);
+    };
+
     const onClickCompleteBooking = () => {
         setIsShowSpinner(true);
 
-        // renderAlertRatingReport();
+        renderAlertRatingReport();
 
         rxUtil(
             `${Rx.BOOKING.COMPLETE_BOOKING}/${bookingId}`,
@@ -144,14 +151,14 @@ export default function BookingDetail({
                 {
                     text: 'Đánh giá',
                     onPress: () => {
-                        setModalVisible(true);
+                        setModalRatingVisible(true);
                     },
                     style: 'cancel'
                 },
                 {
                     text: 'Báo cáo',
                     onPress: () => {
-                        renderAlertReport();
+                        setModalReportVisible(true);
                     },
                 }
             ],
@@ -159,26 +166,32 @@ export default function BookingDetail({
         )
     );
 
-    const renderAlertReport = () => (
-        Alert.prompt(
-            'Điều gì khiến bạn khó chịu',
-            'Bạn vui lòng cho biết chúng tôi cần gì để phục vụ bạn tốt hơn, cảm ơn.',
-            [
-                {
-                    text: 'Gửi báo cáo',
-                    onPress: () => console.log('Cancel Pressed'),
-                    style: 'cancel'
-                }
-            ],
-            'plain-text'
-        )
-    );
+    const sendRating = () => {
+        rxUtil(
+            `${Rx.BOOKING.BOOKING_RATE}/${bookingId}`,
+            'POST',
+            {
+                score: reportDesc ? 2 : ratingValue,
+                description: reportDesc || 'Rating'
+            },
+            {
+                Authorization: token
+            },
+            (res) => {
+                ToastHelpers.renderToast(res.data.message, 'success');
+            },
+            () => {},
+            (catchRes) => {
+                ToastHelpers.renderToast(catchRes);
+            }
+        );
+    };
 
     const renderRatingModal = () => (
         <Modal
             animationType="slide"
             transparent
-            visible={modalVisible}
+            visible={modalRatingVisible}
         >
             <ScrollView
                 showsVerticalScrollIndicator={false}
@@ -192,7 +205,7 @@ export default function BookingDetail({
                                 marginVertical: 10
                             }}
                         >
-                            Vui lòng đánh giá cuộc hẹn
+                            Bạn vui lòng góp ý để chúng tôi phục vụ bạn tốt hơn, cảm ơn.
                         </Text>
                         <Block
                             style={{
@@ -203,20 +216,124 @@ export default function BookingDetail({
                                 count={5}
                                 reviewSize={25}
                                 reviews={['Tệ', 'Không ổn', 'Bình thường', 'Tốt', 'Tuyệt vời <3']}
-                                defaultRating={5}
+                                defaultRating={ratingValue}
                                 size={25}
+                                onFinishRating={(ratingNumber) => {
+                                    setRatingValue(ratingNumber);
+                                }}
                             />
                         </Block>
 
                         <Block center>
                             <Button
                                 onPress={() => {
-                                    setModalVisible(false);
+                                    sendRating();
+                                    setModalRatingVisible(false);
                                 }}
                                 style={{ marginVertical: 10 }}
                                 shadowless
                             >
                                 Gửi đánh giá
+                            </Button>
+                        </Block>
+                    </Block>
+                </Block>
+            </ScrollView>
+        </Modal>
+    );
+
+    const renderReasonCancelBookingModal = () => (
+        <Modal
+            animationType="slide"
+            transparent
+            visible={modalReasonVisible}
+        >
+            <ScrollView
+                showsVerticalScrollIndicator={false}
+            >
+                <Block style={styles.centeredView}>
+                    <Block style={styles.modalView}>
+                        <Text
+                            size={NowTheme.SIZES.FONT_H2}
+                            style={{
+                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                                marginVertical: 10
+                            }}
+                        >
+                            Vui lòng nhập lý do bạn muốn huỷ hẹn
+                        </Text>
+                        <Input
+                            style={[styles.inputWith, {
+                                borderRadius: 5,
+                            }]}
+                            onChangeText={(reasonDescInput) => onChangeReason(reasonDescInput)}
+                            value={reasonDesc}
+                            placeholder="Nhập lý do..."
+                        />
+                        <Block center>
+                            <Button
+                                onPress={() => {
+                                    sendRequestToCancelBooking();
+                                    setModalReasonVisible(false);
+                                }}
+                                style={{ marginVertical: 10 }}
+                                shadowless
+                            >
+                                Xác nhận huỷ
+                            </Button>
+                        </Block>
+                    </Block>
+                </Block>
+            </ScrollView>
+        </Modal>
+    );
+
+    const onChangeReport = (reportInput) => {
+        setReportDesc(reportInput);
+    };
+
+    const onChangeReason = (reasonDescInput) => {
+        setReasonDesc(reasonDescInput);
+    };
+
+    const renderReportModal = () => (
+        <Modal
+            animationType="slide"
+            transparent
+            visible={modalReportVisible}
+        >
+            <ScrollView
+                showsVerticalScrollIndicator={false}
+            >
+                <Block style={styles.centeredView}>
+                    <Block style={styles.modalView}>
+                        <Text
+                            size={NowTheme.SIZES.FONT_H2}
+                            style={{
+                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                                marginVertical: 10
+                            }}
+                        >
+                            Vui lòng nhập ý kiến
+                        </Text>
+                        <Input
+                            style={[styles.inputWith, {
+                                borderRadius: 5,
+                            }]}
+                            onChangeText={(reportInput) => onChangeReport(reportInput)}
+                            value={reportDesc}
+                            placeholder="Nhập mô tả..."
+                        />
+                        <Block center>
+                            <Button
+                                onPress={() => {
+                                    sendRating();
+                                    setModalReportVisible(false);
+                                }}
+                                style={{ marginVertical: 10 }}
+                                shadowless
+                            >
+                                Gửi báo cáo
                             </Button>
                         </Block>
                     </Block>
@@ -407,6 +524,8 @@ export default function BookingDetail({
                         }}
                     >
                         {renderRatingModal()}
+                        {renderReportModal()}
+                        {renderReasonCancelBookingModal()}
 
                         <Block style={{
                             width: NowTheme.SIZES.WIDTH_BASE * 0.9,
