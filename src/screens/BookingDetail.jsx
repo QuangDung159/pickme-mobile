@@ -2,8 +2,9 @@ import { Block, Button, Text } from 'galio-framework';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import {
-    Alert, RefreshControl, ScrollView, StyleSheet
+    Alert, Modal, RefreshControl, ScrollView, StyleSheet
 } from 'react-native';
+import { AirbnbRating } from 'react-native-ratings';
 import { useDispatch, useSelector } from 'react-redux';
 import { CardBooking } from '../components/bussinessComponents';
 import { CenterLoader, Line } from '../components/uiComponents';
@@ -27,6 +28,7 @@ export default function BookingDetail({
     const [isShowSpinner, setIsShowSpinner] = useState(true);
     const [booking, setBooking] = useState();
     const [refreshing, setRefreshing] = useState(false);
+    const [modalVisible, setModalVisible] = useState(false);
 
     const token = useSelector((state) => state.userReducer.token);
 
@@ -34,6 +36,7 @@ export default function BookingDetail({
 
     useEffect(
         () => {
+            renderAlertRatingReport();
             fetchBookingDetailInfo();
             const eventTriggerGetBookingDetail = navigation.addListener('focus', () => {
                 if (from === ScreenName.CREATE_BOOKING) {
@@ -107,6 +110,8 @@ export default function BookingDetail({
     const onClickCompleteBooking = () => {
         setIsShowSpinner(true);
 
+        // renderAlertRatingReport();
+
         rxUtil(
             `${Rx.BOOKING.COMPLETE_BOOKING}/${bookingId}`,
             'POST',
@@ -130,6 +135,95 @@ export default function BookingDetail({
             }
         );
     };
+
+    const renderAlertRatingReport = () => (
+        Alert.alert(
+            'Cảm ơn <3',
+            'Bạn vui lòng đánh giá hoặc báo cáo về đối tác của chúng tôi.',
+            [
+                {
+                    text: 'Đánh giá',
+                    onPress: () => {
+                        setModalVisible(true);
+                    },
+                    style: 'cancel'
+                },
+                {
+                    text: 'Báo cáo',
+                    onPress: () => {
+                        renderAlertReport();
+                    },
+                }
+            ],
+            { cancelable: false }
+        )
+    );
+
+    const renderAlertReport = () => (
+        Alert.prompt(
+            'Điều gì khiến bạn khó chịu',
+            'Bạn vui lòng cho biết chúng tôi cần gì để phục vụ bạn tốt hơn, cảm ơn.',
+            [
+                {
+                    text: 'Gửi báo cáo',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel'
+                }
+            ],
+            'plain-text'
+        )
+    );
+
+    const renderRatingModal = () => (
+        <Modal
+            animationType="slide"
+            transparent
+            visible={modalVisible}
+        >
+            <ScrollView
+                showsVerticalScrollIndicator={false}
+            >
+                <Block style={styles.centeredView}>
+                    <Block style={styles.modalView}>
+                        <Text
+                            size={NowTheme.SIZES.FONT_H2}
+                            style={{
+                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                                marginVertical: 10
+                            }}
+                        >
+                            Vui lòng đánh giá cuộc hẹn
+                        </Text>
+                        <Block
+                            style={{
+                                width: NowTheme.SIZES.WIDTH_BASE * 0.75
+                            }}
+                        >
+                            <AirbnbRating
+                                count={5}
+                                reviewSize={25}
+                                reviews={['Tệ', 'Không ổn', 'Bình thường', 'Tốt', 'Tuyệt vời <3']}
+                                defaultRating={5}
+                                size={25}
+                            />
+                        </Block>
+
+                        <Block center>
+                            <Button
+                                onPress={() => {
+                                    setModalVisible(false);
+                                }}
+                                style={{ marginVertical: 10 }}
+                                shadowless
+                            >
+                                Gửi đánh giá
+                            </Button>
+                        </Block>
+                    </Block>
+                </Block>
+            </ScrollView>
+        </Modal>
+    );
 
     const renderCompleteBookingButton = (width) => (
         <Button
@@ -312,6 +406,8 @@ export default function BookingDetail({
                             paddingBottom: 10
                         }}
                     >
+                        {renderRatingModal()}
+
                         <Block style={{
                             width: NowTheme.SIZES.WIDTH_BASE * 0.9,
                             alignSelf: 'center',
@@ -408,5 +504,25 @@ const styles = StyleSheet.create({
     subTitle: {
         fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
         marginBottom: 10
-    }
+    },
+    centeredView: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: NowTheme.SIZES.HEIGHT_BASE * 0.3
+    },
+    modalView: {
+        margin: 10,
+        backgroundColor: 'white',
+        borderRadius: 20,
+        padding: 20,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5
+    },
 });

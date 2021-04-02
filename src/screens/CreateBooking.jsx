@@ -502,9 +502,7 @@ export default function CreateBooking({ route, navigation }) {
                         <Block center>
                             <Button
                                 onPress={() => setModalVisible(false)}
-                                style={[styles.buttonModal, {
-                                    marginVertical: 10
-                                }]}
+                                style={{ marginVertical: 10 }}
                                 shadowless
                             >
                                 Đóng
@@ -534,9 +532,7 @@ export default function CreateBooking({ route, navigation }) {
                                 onPress={() => {
                                     setModalTimePickerVisible(false);
                                 }}
-                                style={[styles.buttonModal, {
-                                    marginVertical: 10
-                                }]}
+                                style={{ marginVertical: 10 }}
                                 shadowless
                             >
                                 Đóng
