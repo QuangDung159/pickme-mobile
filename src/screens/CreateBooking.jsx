@@ -15,8 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CustomCalendar } from '../components/bussinessComponents';
 import { CenterLoader, IconCustom, Line } from '../components/uiComponents';
 import {
-    IconFamily, NowTheme, Rx, ScreenName,
-    DateTimeConst
+    DateTimeConst, IconFamily, NowTheme, Rx, ScreenName
 } from '../constants';
 import { ToastHelpers } from '../helpers';
 import { setListBookingLocation, setPersonTabActiveIndex } from '../redux/Actions';
@@ -29,9 +28,11 @@ export default function CreateBooking({ route, navigation }) {
     const [booking, setBooking] = useState({
         start: '',
         end: '',
-        isDraft: true,
-        locationId: '',
-        locationAddress: ''
+        description: '',
+        address: '',
+        noted: '',
+        longtitude: '',
+        latitude: ''
     });
     const [selectedDate, setSelectedDate] = useState(moment().format('DD-MM-YYYY'));
     const [isShowSpinner, setIsShowSpinner] = useState(false);
@@ -83,8 +84,10 @@ export default function CreateBooking({ route, navigation }) {
             setListLocationForDropdown(createListLocationForDropdown(listBookingLocation));
             setBooking({
                 ...booking,
-                locationId: listBookingLocation[0].id,
-                locationAdress: listBookingLocation[0].address
+                address: listBookingLocation[0].address,
+                description: listBookingLocation[0].description,
+                longtitude: listBookingLocation[0].longtitude,
+                latitude: listBookingLocation[0].latitude
             });
         } else {
             rxUtil(
@@ -101,8 +104,10 @@ export default function CreateBooking({ route, navigation }) {
                         setListLocationForDropdown(createListLocationForDropdown(listLocation));
                         setBooking({
                             ...booking,
-                            locationId: listLocation[0].id,
-                            locationAdress: listLocation[0].address
+                            address: listLocation[0].address,
+                            description: listLocation[0].description,
+                            longtitude: listLocation[0].longtitude,
+                            latitude: listLocation[0].latitude
                         });
                     }
                 }
@@ -153,7 +158,9 @@ export default function CreateBooking({ route, navigation }) {
                 date,
                 startAt,
                 location: {
-                    id,
+                    description,
+                    longtitude,
+                    latitude,
                     address
                 }
             } = bookingToEdit;
@@ -163,8 +170,10 @@ export default function CreateBooking({ route, navigation }) {
                 ...booking,
                 start: convertMinutesToStringHours(startAt),
                 end: convertMinutesToStringHours(endAt),
-                locationId: id,
-                locationAdress: address
+                address,
+                description,
+                longtitude,
+                latitude
             });
 
             setStartTimeStr(convertMinutesToStringHours(startAt));
@@ -174,9 +183,13 @@ export default function CreateBooking({ route, navigation }) {
         }
     };
 
-    const onChangeLocation = (locationId, locationAdress) => {
+    const onChangeLocation = (locationItem) => {
+        const {
+            address, description, longtitude, latitude
+        } = locationItem;
+
         setBooking({
-            ...booking, locationId, locationAdress
+            ...booking, address, description, longtitude, latitude
         });
     };
 
@@ -195,10 +208,12 @@ export default function CreateBooking({ route, navigation }) {
         const bookingToSubmit = {
             StartAt: startString,
             EndAt: endString,
-            LocationId: booking.locationId,
-            IsDraft: booking.isDraft,
             Date: dateString,
-            isConfirm: false
+            Address: booking.address,
+            Longtitude: booking.longtitude,
+            Latitude: booking.latitude,
+            Description: booking.description,
+            Noted: 'N/A'
         };
 
         setIsShowSpinner(true);
@@ -623,7 +638,7 @@ export default function CreateBooking({ route, navigation }) {
             {listLocationForDropdown && listLocationForDropdown.length !== 0 && (
                 <DropDownPicker
                     items={listLocationForDropdown}
-                    defaultValue={booking.locationId}
+                    defaultValue="fe308f2c-d7ae-4420-8b70-0d030ace5d43"
                     containerStyle={{
                         borderRadius: 5,
                         width: NowTheme.SIZES.WIDTH_BASE * 0.9,
@@ -641,7 +656,7 @@ export default function CreateBooking({ route, navigation }) {
                     }}
                     dropDownStyle={{ backgroundColor: '#fafafa' }}
                     activeLabelStyle={{ color: NowTheme.COLORS.ACTIVE }}
-                    onChangeItem={(item) => onChangeLocation(item.value, item.address)}
+                    onChangeItem={(item) => onChangeLocation(item)}
                     labelStyle={{
                         fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
                     }}
@@ -653,7 +668,7 @@ export default function CreateBooking({ route, navigation }) {
                 />
             )}
             <Block>
-                {booking.locationAdress ? (
+                {booking.address ? (
                     <Text
                         style={{
                             fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
@@ -662,7 +677,7 @@ export default function CreateBooking({ route, navigation }) {
                         }}
                         color={NowTheme.COLORS.ACTIVE}
                     >
-                        {booking.locationAdress}
+                        {booking.address}
                     </Text>
                 ) : (
                     <Block style={{
