@@ -110,7 +110,6 @@ export default function BookingDetail({
     };
 
     const onCancelBooking = () => {
-        setIsShowSpinner(true);
         setModalReasonVisible(true);
     };
 
