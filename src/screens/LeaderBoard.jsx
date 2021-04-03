@@ -43,18 +43,6 @@ export default function LeaderBoard({ navigation }) {
                 />
             ),
             endpoint: Rx.PARTNER.LEADER_BOARD_BOOKING
-        },
-        {
-            tabLabel: 'Lượt thích',
-            tabIcon: (
-                <IconCustom
-                    name="heart"
-                    family={IconFamily.FONT_AWESOME}
-                    size={NowTheme.SIZES.FONT_H4}
-                    color={NowTheme.COLORS.ACTIVE}
-                />
-            ),
-            endpoint: Rx.PARTNER.LEADER_BOARD_LIKE
         }
     ];
 
@@ -257,7 +245,7 @@ export default function LeaderBoard({ navigation }) {
                 }}
             >
                 <TouchableWithoutFeedback
-                    onPress={() => navigation.navigate(ScreenName.PROFILE, { userId: topOnePartner.id })}
+                    onPress={() => navigation.navigate(ScreenName.PROFILE, { userId: topOnePartner.userId })}
                 >
                     <Block
                         style={{

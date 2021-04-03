@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BookingList, UserInformation, Wallet } from '../components/bussinessComponents';
 import { IconCustom } from '../components/uiComponents';
 import {
-    IconFamily, NowTheme, Rx
+    IconFamily, NowTheme
 } from '../constants';
 import { setPersonTabActiveIndex } from '../redux/Actions';
 
@@ -29,8 +29,7 @@ export default function Personal({ navigation, route }) {
                     size={12}
                     color={NowTheme.COLORS.ACTIVE}
                 />
-            ),
-            endpoint: Rx.PARTNER.LEADER_BOARD_DIAMOND
+            )
         },
         {
             tabLabel: 'Rương kim cương',
@@ -41,8 +40,7 @@ export default function Personal({ navigation, route }) {
                     size={NowTheme.SIZES.FONT_H4}
                     color={NowTheme.COLORS.ACTIVE}
                 />
-            ),
-            endpoint: Rx.PARTNER.LEADER_BOARD_BOOKING
+            )
         },
         {
             tabLabel: 'Đơn hẹn',
@@ -53,8 +51,7 @@ export default function Personal({ navigation, route }) {
                     size={NowTheme.SIZES.FONT_H4}
                     color={NowTheme.COLORS.ACTIVE}
                 />
-            ),
-            endpoint: Rx.PARTNER.LEADER_BOARD_LIKE
+            )
         }
     ];
 

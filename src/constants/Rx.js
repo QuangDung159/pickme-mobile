@@ -35,7 +35,6 @@ export default {
     },
     PARTNER: {
         LEADER_BOARD_DIAMOND: '/Users/LeaderBoadDiamon',
-        LEADER_BOARD_LIKE: '/Users/LeaderBoadLike',
         LEADER_BOARD_BOOKING: '/Users/LeaderBoadBooking',
         PARTNER_DETAIL: '/users/PartnerDetail',
         GET_LIST_PARTNER: '/users/Partners',
