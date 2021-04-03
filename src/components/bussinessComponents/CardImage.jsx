@@ -58,7 +58,7 @@ export default function CardImage({
                             }}
                         >
                             <Image
-                                source={{ uri: user.avatarUrl }}
+                                source={{ uri: user.url }}
                                 style={{
                                     width: 45,
                                     height: 45,

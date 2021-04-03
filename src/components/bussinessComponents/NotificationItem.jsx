@@ -2,7 +2,7 @@
 import { NO_AVATAR_URL } from '@env';
 import { Block, Text } from 'galio-framework';
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Image, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { NowTheme, Rx, ScreenName } from '../../constants';
@@ -15,26 +15,8 @@ export default function NotificationItem({
     navigation,
 }) {
     const token = useSelector((state) => state.userReducer.token);
-    const currentUser = useSelector((state) => state.userReducer.currentUser);
-
-    const [image, setImage] = useState(currentUser.url);
-    const [booking, setBooking] = useState();
 
     const dispatch = useDispatch();
-
-    useEffect(
-        () => {
-            if (notiItem.type === 1) {
-                fetchBookingDetailInfo();
-            }
-        }, []
-    );
-
-    useEffect(
-        () => {
-            getImageUrlByNotificationType();
-        }, [booking]
-    );
 
     const onClickRead = (isReadAll, notiId = null) => {
         const endpoint = isReadAll
@@ -53,45 +35,6 @@ export default function NotificationItem({
             },
             () => {},
             () => {}
-        );
-    };
-
-    const getImageUrlByNotificationType = () => {
-        if (booking) {
-            if (notiItem.type === 1) {
-            // set url by partner's url
-                getPartnerInfo(booking.partner.id);
-            }
-        }
-    };
-
-    const getPartnerInfo = (partnerId) => {
-        rxUtil(
-            `${Rx.PARTNER.PARTNER_DETAIL}/${partnerId}`,
-            'GET',
-            null,
-            {
-                Authorization: token
-            },
-            (res) => {
-                setImage(res.data.data.url);
-            },
-            () => {},
-            () => {}
-        );
-    };
-
-    const fetchBookingDetailInfo = () => {
-        rxUtil(
-            `${Rx.BOOKING.DETAIL_BOOKING}/${notiItem.navigationId}`,
-            'GET',
-            null,
-            {
-                Authorization: token
-            },
-            (res) => {
-                setBooking(res.data.data);
-            }
         );
     };
 
@@ -116,7 +59,7 @@ export default function NotificationItem({
         <Block>
             <Image
                 style={styles.avatar}
-                source={{ uri: image || NO_AVATAR_URL }}
+                source={{ uri: notiItem.url || NO_AVATAR_URL }}
             />
         </Block>
     );
