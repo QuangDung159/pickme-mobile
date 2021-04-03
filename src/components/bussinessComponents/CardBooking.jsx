@@ -10,7 +10,7 @@ import { IconFamily, NowTheme, ScreenName } from '../../constants';
 import { ToastHelpers } from '../../helpers';
 import { IconCustom } from '../uiComponents';
 
-export default function CardBooking({ booking, navigation }) {
+export default function CardBooking({ booking, navigation, isShowEditButton }) {
     const convertMinutesToStringHours = (minutes) => moment.utc()
         .startOf('day')
         .add(minutes, 'minutes')
@@ -20,12 +20,12 @@ export default function CardBooking({ booking, navigation }) {
         const {
             startAt,
             endAt,
-            location,
             partner,
             totalAmount,
             status,
             date,
-            idReadAble
+            idReadAble,
+            address
         } = booking;
 
         if (!booking) {
@@ -70,31 +70,30 @@ export default function CardBooking({ booking, navigation }) {
                                 <>{`Mã đơn hẹn: #${idReadAble}`}</>
                             </Text>
                         </Block>
-                        {status === 'Scheduling'
-                            && (
-                                <Block
-                                    middle
+                        {isShowEditButton && status === 'Scheduling' && (
+                            <Block
+                                middle
+                            >
+                                <TouchableOpacity
+                                    onPress={() => navigation.navigate(
+                                        ScreenName.CREATE_BOOKING,
+                                        {
+                                            bookingToEdit: booking,
+                                            partner,
+                                            fullName,
+                                            from: ScreenName.BOOKING_DETAIL
+                                        }
+                                    )}
                                 >
-                                    <TouchableOpacity
-                                        onPress={() => navigation.navigate(
-                                            ScreenName.CREATE_BOOKING,
-                                            {
-                                                bookingToEdit: booking,
-                                                partner,
-                                                fullName,
-                                                from: ScreenName.BOOKING_DETAIL
-                                            }
-                                        )}
-                                    >
-                                        <IconCustom
-                                            name="pencil"
-                                            family={IconFamily.FONT_AWESOME}
-                                            size={20}
-                                            color={NowTheme.COLORS.DEFAULT}
-                                        />
-                                    </TouchableOpacity>
-                                </Block>
-                            )}
+                                    <IconCustom
+                                        name="pencil"
+                                        family={IconFamily.FONT_AWESOME}
+                                        size={20}
+                                        color={NowTheme.COLORS.DEFAULT}
+                                    />
+                                </TouchableOpacity>
+                            </Block>
+                        )}
                     </Block>
                     <Block>
                         <Block
@@ -120,7 +119,7 @@ export default function CardBooking({ booking, navigation }) {
                             size={NowTheme.SIZES.FONT_H3}
                             color={NowTheme.COLORS.DEFAULT}
                         >
-                            {location?.address || 'N/A'}
+                            {address || 'N/A'}
                         </Text>
                         <Block
                             row
@@ -169,7 +168,12 @@ export default function CardBooking({ booking, navigation }) {
 }
 
 CardBooking.propTypes = {
-    booking: PropTypes.object.isRequired
+    booking: PropTypes.object.isRequired,
+    isShowEditButton: PropTypes.bool
+};
+
+CardBooking.defaultProps = {
+    isShowEditButton: true
 };
 
 const styles = StyleSheet.create({

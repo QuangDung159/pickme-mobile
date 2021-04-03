@@ -157,12 +157,10 @@ export default function CreateBooking({ route, navigation }) {
                 endAt,
                 date,
                 startAt,
-                location: {
-                    description,
-                    longtitude,
-                    latitude,
-                    address
-                }
+                description,
+                longtitude,
+                latitude,
+                address
             } = bookingToEdit;
 
             setCurrentTask('update');

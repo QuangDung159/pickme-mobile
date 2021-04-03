@@ -550,6 +550,7 @@ export default function BookingDetail({
                                 booking={booking}
                                 showEditButton
                                 navigation={navigation}
+                                isShowEditButton
                             />
 
                             <BookingProgressFlow
