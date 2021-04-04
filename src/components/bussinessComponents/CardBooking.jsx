@@ -3,14 +3,13 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {
-    StyleSheet,
-    TouchableOpacity
+    StyleSheet
 } from 'react-native';
-import { IconFamily, NowTheme, ScreenName } from '../../constants';
+import { IconFamily, NowTheme } from '../../constants';
 import { ToastHelpers } from '../../helpers';
 import { IconCustom } from '../uiComponents';
 
-export default function CardBooking({ booking, navigation, isShowEditButton }) {
+export default function CardBooking({ booking }) {
     const convertMinutesToStringHours = (minutes) => moment.utc()
         .startOf('day')
         .add(minutes, 'minutes')
@@ -70,30 +69,6 @@ export default function CardBooking({ booking, navigation, isShowEditButton }) {
                                 <>{`Mã đơn hẹn: #${idReadAble}`}</>
                             </Text>
                         </Block>
-                        {isShowEditButton && status === 'Scheduling' && (
-                            <Block
-                                middle
-                            >
-                                <TouchableOpacity
-                                    onPress={() => navigation.navigate(
-                                        ScreenName.CREATE_BOOKING,
-                                        {
-                                            bookingToEdit: booking,
-                                            partner,
-                                            fullName,
-                                            from: ScreenName.BOOKING_DETAIL
-                                        }
-                                    )}
-                                >
-                                    <IconCustom
-                                        name="pencil"
-                                        family={IconFamily.FONT_AWESOME}
-                                        size={20}
-                                        color={NowTheme.COLORS.DEFAULT}
-                                    />
-                                </TouchableOpacity>
-                            </Block>
-                        )}
                     </Block>
                     <Block>
                         <Block
@@ -168,12 +143,7 @@ export default function CardBooking({ booking, navigation, isShowEditButton }) {
 }
 
 CardBooking.propTypes = {
-    booking: PropTypes.object.isRequired,
-    isShowEditButton: PropTypes.bool
-};
-
-CardBooking.defaultProps = {
-    isShowEditButton: true
+    booking: PropTypes.object.isRequired
 };
 
 const styles = StyleSheet.create({

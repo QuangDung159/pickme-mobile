@@ -41,8 +41,6 @@ export default function CreateBooking({ route, navigation }) {
     const [modalVisible, setModalVisible] = useState(false);
     const [modalTimePickerVisible, setModalTimePickerVisible] = useState(false);
     const [listLocationForDropdown, setListLocationForDropdown] = useState([]);
-    const [currentTask, setCurrentTask] = useState('create');
-    const [earningExpected, setEarningExpected] = useState(0);
 
     const [modalActiveType, setModalActiveType] = useState('start');
     const [startTimeStr, setStartTimeStr] = useState('07:00');
@@ -60,20 +58,6 @@ export default function CreateBooking({ route, navigation }) {
 
     useEffect(
         () => {
-            const {
-                params: {
-                    bookingToEdit,
-                    partner
-                }
-            } = route;
-
-            if (bookingToEdit) {
-                getPartnerInfo(partner.id);
-                fillBookingDataFromDetail();
-            } else {
-                setEarningExpected(partner.earningExpected);
-            }
-
             getCalendarPartner();
             fetchListBookingLocation();
         }, []
@@ -145,42 +129,6 @@ export default function CreateBooking({ route, navigation }) {
         );
     };
 
-    const fillBookingDataFromDetail = () => {
-        const {
-            params: {
-                bookingToEdit
-            }
-        } = route;
-
-        if (bookingToEdit) {
-            const {
-                endAt,
-                date,
-                startAt,
-                description,
-                longtitude,
-                latitude,
-                address
-            } = bookingToEdit;
-
-            setCurrentTask('update');
-            setBooking({
-                ...booking,
-                start: convertMinutesToStringHours(startAt),
-                end: convertMinutesToStringHours(endAt),
-                address,
-                description,
-                longtitude,
-                latitude
-            });
-
-            setStartTimeStr(convertMinutesToStringHours(startAt));
-            setEndTimeStr(convertMinutesToStringHours(endAt));
-
-            onChangeDateCalendar(moment(date.substring(0, 10), 'YYYY-MM-DD').format('DD-MM-YYYY'));
-        }
-    };
-
     const onChangeLocation = (locationItem) => {
         const {
             address, description, longtitude, latitude
@@ -194,8 +142,7 @@ export default function CreateBooking({ route, navigation }) {
     const onSubmitBooking = () => {
         const {
             params: {
-                partner,
-                bookingToEdit
+                partner
             }
         } = route;
 
@@ -216,12 +163,8 @@ export default function CreateBooking({ route, navigation }) {
 
         setIsShowSpinner(true);
 
-        const endpoint = currentTask === 'create'
-            ? `${Rx.BOOKING.SCHEDULE_BOOKING}/${partner.id}`
-            : `${Rx.BOOKING.UDPATE_BOOKING}/${bookingToEdit.id}`;
-
         rxUtil(
-            endpoint,
+            `${Rx.BOOKING.SCHEDULE_BOOKING}/${partner.id}`,
             'POST',
             bookingToSubmit,
             {
@@ -258,28 +201,8 @@ export default function CreateBooking({ route, navigation }) {
         .add(minutes, 'minutes')
         .format('HH:mm');
 
-    const getPartnerInfo = (partnerId) => {
-        rxUtil(
-            `${Rx.PARTNER.PARTNER_DETAIL}/${partnerId}`,
-            'GET',
-            null,
-            {
-                Authorization: token
-            },
-            (res) => {
-                setIsShowSpinner(false);
-                setEarningExpected(res.data.data.earningExpected);
-            },
-            () => {
-                setIsShowSpinner(false);
-            },
-            () => {
-                setIsShowSpinner(false);
-            }
-        );
-    };
-
     const calculateTotalAmount = (start, end) => {
+        const { earningExpected } = route.params.partner;
         const startMinutesNumber = convertStringHoursToMinutes(start) || 0;
         const endMinutesNumber = convertStringHoursToMinutes(end) || 0;
         if (startMinutesNumber < endMinutesNumber) {
@@ -636,7 +559,7 @@ export default function CreateBooking({ route, navigation }) {
             {listLocationForDropdown && listLocationForDropdown.length !== 0 && (
                 <DropDownPicker
                     items={listLocationForDropdown}
-                    defaultValue="fe308f2c-d7ae-4420-8b70-0d030ace5d43"
+                    defaultValue={listLocationForDropdown[0].id}
                     containerStyle={{
                         borderRadius: 5,
                         width: NowTheme.SIZES.WIDTH_BASE * 0.9,
@@ -687,51 +610,39 @@ export default function CreateBooking({ route, navigation }) {
         </Block>
     );
 
-    const renderFormBlock = (partner) => {
-        const {
-            params: {
-                bookingToEdit
-            }
-        } = route;
-
-        const activeDate = bookingToEdit
-            ? moment(bookingToEdit.date.substring(0, 10), 'YYYY-MM-DD').format('DD-MM-YYYY')
-            : selectedDate;
-
-        return (
-            <Block
-                style={{
-                    zIndex: 99,
+    const renderFormBlock = (partner) => (
+        <Block
+            style={{
+                zIndex: 99,
+            }}
+            flex
+        >
+            <Block>
+                <Text style={{
+                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                    marginTop: 10
                 }}
-                flex
-            >
-                <Block>
-                    <Text style={{
-                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                        marginTop: 10
+                >
+                    THÔNG TIN CUỘC HẸN
+                </Text>
+                <Line
+                    borderWidth={0.5}
+                    borderColor={NowTheme.COLORS.ACTIVE}
+                    style={{
+                        marginVertical: 10
                     }}
-                    >
-                        THÔNG TIN CUỘC HẸN
-                    </Text>
-                    <Line
-                        borderWidth={0.5}
-                        borderColor={NowTheme.COLORS.ACTIVE}
-                        style={{
-                            marginVertical: 10
-                        }}
-                    />
-                    {renderInfoBlock(partner)}
-                    <CustomCalendar
-                        onChangeDate={(date) => { onChangeDateCalendar(date); }}
-                        selectedDate={activeDate}
-                    />
-                    {renderButtonTimePicker()}
-                    {renderDropDownLocation()}
+                />
+                {renderInfoBlock(partner)}
+                <CustomCalendar
+                    onChangeDate={(date) => { onChangeDateCalendar(date); }}
+                    selectedDate={selectedDate}
+                />
+                {renderButtonTimePicker()}
+                {renderDropDownLocation()}
 
-                </Block>
             </Block>
-        );
-    };
+        </Block>
+    );
 
     const renderInfoBlock = (partner) => {
         const {

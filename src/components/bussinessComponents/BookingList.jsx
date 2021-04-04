@@ -88,7 +88,6 @@ export default function BookingList({ navigation }) {
                                 booking={item}
                                 key={item.id}
                                 navigation={navigation}
-                                isShowEditButton={false}
                             />
                             <Block
                                 middle

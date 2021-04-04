@@ -39,12 +39,12 @@ export default function BookingDetail({
 
     const dispatch = useDispatch();
 
+    // handler \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
     useEffect(
         () => {
             fetchBookingDetailInfo();
             const eventTriggerGetBookingDetail = navigation.addListener('focus', () => {
                 if (from === ScreenName.CREATE_BOOKING) {
-                // TODO: trigger call api get booking detail after update booking
                     fetchBookingDetailInfo();
                 }
             });
@@ -82,7 +82,6 @@ export default function BookingDetail({
         );
     };
 
-    // handler \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
     const sendRequestToCancelBooking = () => {
         rxUtil(
             `${Rx.BOOKING.CANCEL_BOOKING}/${bookingId}`,
@@ -142,6 +141,115 @@ export default function BookingDetail({
         );
     };
 
+    const sendRating = () => {
+        rxUtil(
+            `${Rx.BOOKING.BOOKING_RATE}/${bookingId}`,
+            'POST',
+            {
+                score: reportDesc ? 2 : ratingValue,
+                description: reportDesc || 'Rating'
+            },
+            {
+                Authorization: token
+            },
+            (res) => {
+                ToastHelpers.renderToast(res.data.message, 'success');
+            },
+            () => {},
+            (catchRes) => {
+                ToastHelpers.renderToast(catchRes);
+            }
+        );
+    };
+
+    const onChangeReport = (reportInput) => {
+        setReportDesc(reportInput);
+    };
+
+    const onChangeReason = (reasonDescInput) => {
+        setReasonDesc(reasonDescInput);
+    };
+
+    const convertMinutesToUnix = (minutes) => moment(booking.date)
+        .startOf('day')
+        .add(minutes, 'minutes')
+        .unix();
+
+    const isBookingGoingOn = () => {
+        const currentUnix = moment().unix();
+        const startTimestamp = convertMinutesToUnix(booking.startAt);
+        const endTimestamp = convertMinutesToUnix(booking.endAt);
+
+        return startTimestamp <= currentUnix && currentUnix <= endTimestamp;
+    };
+
+    const isBookingDone = () => {
+        const currentUnix = moment().unix();
+        const endTimestamp = convertMinutesToUnix(booking.endAt);
+
+        return endTimestamp < currentUnix;
+    };
+
+    const handleShowButtonByStatus = () => {
+        // partner confirmed: payment, cancel
+        // customer payemnt: cancel
+        // booking is going on: N/A
+        // booking done: complete => report/rating
+        if (isBookingGoingOn()) return null;
+
+        if (isBookingDone()) {
+            return (
+                renderCompleteBookingButton(0.9)
+            );
+        }
+
+        if (booking.isConfirm) {
+            if (booking.status === BookingStatus.SCHEDULING) {
+                return (
+                    <>
+                        {renderConfirmPaymentButton(0.44)}
+                        {renderCancelBooking(0.44)}
+                    </>
+                );
+            }
+
+            if (booking.status === BookingStatus.FINISH_PAYMENT) {
+                return (
+                    renderCancelBooking(0.9)
+                );
+            }
+        }
+
+        return null;
+    };
+
+    const onCustomerConfirmPayment = () => {
+        setIsShowSpinner(true);
+
+        rxUtil(
+            `${Rx.PAYMENT.CREATE_PAYMENT}/${bookingId}`,
+            'POST',
+            null,
+            {
+                Authorization: token
+            },
+            (res) => {
+                navigation.navigate(ScreenName.PERSONAL);
+                dispatch(setPersonTabActiveIndex(2));
+                ToastHelpers.renderToast(res.message || 'Thao tác thành công.', 'success');
+            },
+            () => {
+                ToastHelpers.renderToast();
+                setIsShowSpinner(false);
+            },
+            (errMessage) => {
+                ToastHelpers.renderToast(errMessage || 'Lỗi hệ thống, vui lòng thử lại.', 'error');
+                setIsShowSpinner(false);
+            }
+        );
+    };
+
+    // render \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
     const renderAlertRatingReport = () => (
         Alert.alert(
             'Cảm ơn <3',
@@ -164,27 +272,6 @@ export default function BookingDetail({
             { cancelable: false }
         )
     );
-
-    const sendRating = () => {
-        rxUtil(
-            `${Rx.BOOKING.BOOKING_RATE}/${bookingId}`,
-            'POST',
-            {
-                score: reportDesc ? 2 : ratingValue,
-                description: reportDesc || 'Rating'
-            },
-            {
-                Authorization: token
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'success');
-            },
-            () => {},
-            (catchRes) => {
-                ToastHelpers.renderToast(catchRes);
-            }
-        );
-    };
 
     const renderRatingModal = () => (
         <Modal
@@ -287,14 +374,6 @@ export default function BookingDetail({
         </Modal>
     );
 
-    const onChangeReport = (reportInput) => {
-        setReportDesc(reportInput);
-    };
-
-    const onChangeReason = (reasonDescInput) => {
-        setReasonDesc(reasonDescInput);
-    };
-
     const renderReportModal = () => (
         <Modal
             animationType="slide"
@@ -388,121 +467,26 @@ export default function BookingDetail({
         </Button>
     );
 
-    const onCustomerConfirmPayment = () => {
-        setIsShowSpinner(true);
-
-        rxUtil(
-            `${Rx.PAYMENT.CREATE_PAYMENT}/${bookingId}`,
-            'POST',
-            null,
-            {
-                Authorization: token
-            },
-            (res) => {
-                navigation.navigate(ScreenName.PERSONAL);
-                dispatch(setPersonTabActiveIndex(2));
-                ToastHelpers.renderToast(res.message || 'Thao tác thành công.', 'success');
-            },
-            () => {
-                ToastHelpers.renderToast();
-                setIsShowSpinner(false);
-            },
-            (errMessage) => {
-                ToastHelpers.renderToast(errMessage || 'Lỗi hệ thống, vui lòng thử lại.', 'error');
-                setIsShowSpinner(false);
-            }
-        );
-    };
-
-    const renderAlertForCustomer = () => {
-        // getPartnerInfo();
-
-        const { partnerInfo } = {};
-
-        return (
-            Alert.alert(
-                'Huỷ bỏ?',
-                'Bạn có chắc là muốn huỷ hẹn?',
-                [
-                    {
-                        text: 'Cân nhắc lại',
-                        onPress: () => {},
-                        style: 'cancel'
-                    },
-                    {
-                        text: 'Thay đổi thông tin đặt hẹn',
-                        onPress: () => {
-                            // TODO: send notification to customer to update booking
-
-                            navigation.navigate(ScreenName.BOOKING_DETAIL, {
-                                bookingToEdit: booking,
-                                partner: partnerInfo,
-                                fullName: partnerInfo.fullName,
-                            });
-                        }
-                    },
-                    {
-                        text: 'Tôi muốn huỷ hẹn',
-                        onPress: () => {
-                            // send notification to customer to update booking
-                            // TODO
-                            onCancelBooking();
-                        }
+    const renderAlertForCustomer = () => (
+        Alert.alert(
+            'Huỷ bỏ?',
+            'Bạn có chắc là muốn huỷ hẹn?',
+            [
+                {
+                    text: 'Cân nhắc lại',
+                    onPress: () => {},
+                    style: 'cancel'
+                },
+                {
+                    text: 'Tôi muốn huỷ hẹn',
+                    onPress: () => {
+                        onCancelBooking();
                     }
-                ],
-                { cancelable: false }
-            )
-        );
-    };
-
-    const convertMinutesToUnix = (minutes) => moment(booking.date)
-        .startOf('day')
-        .add(minutes, 'minutes')
-        .unix();
-
-    const isBookingGoingOn = () => {
-        const currentUnix = moment().unix();
-        const startTimestamp = convertMinutesToUnix(booking.startAt);
-        const endTimestamp = convertMinutesToUnix(booking.endAt);
-
-        return startTimestamp <= currentUnix && currentUnix <= endTimestamp;
-    };
-
-    const isBookingDone = () => {
-        const currentUnix = moment().unix();
-        const endTimestamp = convertMinutesToUnix(booking.endAt);
-
-        return endTimestamp < currentUnix;
-    };
-
-    const handleShowButtonByStatus = () => {
-        if (isBookingGoingOn()) return null;
-
-        if (isBookingDone()) {
-            return (
-                renderCompleteBookingButton(0.9)
-            );
-        }
-
-        if (booking.isConfirm) {
-            if (booking.status === BookingStatus.SCHEDULING) {
-                return (
-                    <>
-                        {renderConfirmPaymentButton(0.44)}
-                        {renderCancelBooking(0.44)}
-                    </>
-                );
-            }
-
-            if (booking.status === BookingStatus.FINISH_PAYMENT) {
-                return (
-                    renderCancelBooking(0.9)
-                );
-            }
-        }
-
-        return null;
-    };
+                }
+            ],
+            { cancelable: false }
+        )
+    );
 
     try {
         return (
@@ -548,9 +532,7 @@ export default function BookingDetail({
 
                             <CardBooking
                                 booking={booking}
-                                showEditButton
                                 navigation={navigation}
-                                isShowEditButton
                             />
 
                             <BookingProgressFlow
@@ -586,10 +568,6 @@ export default function BookingDetail({
                                 adipisicing elit. Culpa, voluptates
                             </Text>
 
-                            {/* partner confirmed: payment, cancel
-                            customer payemnt: cancel
-                            booking is going on: N/A
-                            booking done: complete => report/rating */}
                             <Block
                                 center
                                 row
