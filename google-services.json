@@ -21,6 +21,41 @@
       "api_key": [
         {
           "current_key": "AIzaSyD7QZ_6p-KtcciVh-NP0yWgI5Tuf1HRrbc"
+        },
+        {
+          "current_key": "AIzaSyBOFYuasvrG4L6QNDM7ulhv21DU61C5wpA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "196728524255-pk9o3471qj19cgs0nn95nut3jleknlsq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:196728524255:android:f83776cb28ea79c78a486a",
+        "android_client_info": {
+          "package_name": "com.dragongroup.pickmepartner01"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "196728524255-pk9o3471qj19cgs0nn95nut3jleknlsq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7QZ_6p-KtcciVh-NP0yWgI5Tuf1HRrbc"
+        },
+        {
+          "current_key": "AIzaSyBOFYuasvrG4L6QNDM7ulhv21DU61C5wpA"
         }
       ],
       "services": {
