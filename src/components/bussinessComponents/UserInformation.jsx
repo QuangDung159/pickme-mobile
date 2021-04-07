@@ -27,11 +27,6 @@ export default function UserInformation({ navigation }) {
 
     const token = useSelector((state) => state.userReducer.token);
     const currentUser = useSelector((state) => state.userReducer.currentUser);
-    const loginInfo = useSelector((state) => state.userReducer.loginInfo);
-    const {
-        password,
-        username
-    } = loginInfo;
 
     const dispatch = useDispatch();
 
@@ -63,14 +58,14 @@ export default function UserInformation({ navigation }) {
 
     const refreshExpoTokenAPI = () => {
         rxUtil(
-            Rx.AUTHENTICATION.LOGIN,
+            Rx.USER.UPDATE_EXPO_TOKEN,
             'POST',
             {
-                username,
-                password,
-                expoNotificationToken: 'invalid'
+                token: 'invalid'
             },
-            {}
+            {
+                Authorization: token,
+            }
         );
     };
 

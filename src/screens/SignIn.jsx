@@ -17,7 +17,6 @@ import {
 import { ToastHelpers } from '../helpers';
 import {
     setCurrentUser,
-    setLoginInfo,
     setToken
 } from '../redux/Actions';
 import { rxUtil } from '../utils';
@@ -40,12 +39,27 @@ export default function SignIn({ navigation }) {
         setPassword(passwordInput);
     };
 
+    const updateExpoTokenToServer = (bearerToken) => {
+        rxUtil(
+            Rx.USER.UPDATE_EXPO_TOKEN,
+            'POST',
+            {
+                token: expoToken
+            },
+            {
+                Authorization: bearerToken,
+            },
+            (res) => {
+                console.log('res :>> ', res);
+            }
+        );
+    };
+
     const onSubmitLogin = () => {
         if (validation()) {
             const data = {
                 username,
-                password,
-                expoNotificationToken: expoToken
+                password
             };
 
             toggleSpinner(true);
@@ -89,9 +103,9 @@ export default function SignIn({ navigation }) {
         return true;
     };
 
-    const onGetCurrentUserData = (url, tokenFromAPI) => {
+    const onGetCurrentUserData = (url, bearerToken) => {
         const headers = {
-            Authorization: `Bearer ${tokenFromAPI}`
+            Authorization: bearerToken
         };
 
         rxUtil(url, 'GET', '', headers,
@@ -120,12 +134,13 @@ export default function SignIn({ navigation }) {
     };
 
     const onLoginSucess = (tokenFromAPI) => {
+        const bearerToken = `Bearer ${tokenFromAPI}`;
         dispatch(setToken(tokenFromAPI));
-        dispatch(setLoginInfo({ username, password }));
         onGetCurrentUserData(
             Rx.USER.CURRENT_USER_INFO,
-            tokenFromAPI
+            bearerToken
         );
+        updateExpoTokenToServer(bearerToken);
     };
 
     const toggleSpinner = (isShowSpinnerToggled) => {

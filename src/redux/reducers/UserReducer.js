@@ -1,6 +1,5 @@
 import {
     SET_CURRENT_USER,
-    SET_LOGIN_INFO,
     SET_TOKEN
 } from '../ActionTypes';
 
@@ -21,9 +20,6 @@ const userReducer = (state = initState, action) => {
         }
         case SET_TOKEN: {
             return { ...state, token: `Bearer ${payload.token}` };
-        }
-        case SET_LOGIN_INFO: {
-            return { ...state, loginInfo: payload.loginInfo };
         }
         default: {
             return state;

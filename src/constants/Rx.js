@@ -15,6 +15,7 @@ export default {
         GET_LIST_IMAGE_BY_USER: '/Users/MyPosts',
         UPLOAD_PROFILE_IMAGE: '/Users/UploadImage',
         REMOVE_PROFILE_IMAGE: '/Users/RemovePost',
+        UPDATE_EXPO_TOKEN: '/Users/UpdateExpoToken'
     },
     BANK: {
         BANK_ACCOUNTS: '/users/BankAccounts',
