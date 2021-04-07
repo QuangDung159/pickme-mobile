@@ -48,9 +48,6 @@ export default function SignIn({ navigation }) {
             },
             {
                 Authorization: bearerToken,
-            },
-            (res) => {
-                console.log('res :>> ', res);
             }
         );
     };
