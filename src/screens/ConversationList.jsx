@@ -85,9 +85,7 @@ export default function ConversationList({ navigation }) {
             token,
             (res) => {
                 onFetchData(res);
-            },
-            () => {},
-            () => {}
+            }
         );
     };
 

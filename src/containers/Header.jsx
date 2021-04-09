@@ -64,9 +64,7 @@ export default function Header({
                 // set store
                 dispatch(setListNotification(res.data.data));
                 countNumberNotificationUnread(res.data.data);
-            },
-            () => {},
-            () => {}
+            }
         );
     };
 

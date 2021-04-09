@@ -119,10 +119,7 @@ export default function Message({ navigation, route }) {
         socketRequestUtil(
             'POST',
             data,
-            token,
-            () => {},
-            () => {},
-            () => {}
+            token
         );
     };
 
@@ -142,9 +139,7 @@ export default function Message({ navigation, route }) {
             token,
             (res) => {
                 onSuccess(res);
-            },
-            () => {},
-            () => {}
+            }
         );
     };
 
@@ -261,10 +256,7 @@ export default function Message({ navigation, route }) {
         socketRequestUtil(
             'POST',
             data,
-            token,
-            () => {},
-            () => {},
-            () => {}
+            token
         );
 
         const messagePayoad = {

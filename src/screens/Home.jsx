@@ -12,7 +12,7 @@ import {
 } from '../constants';
 import { ToastHelpers } from '../helpers';
 import {
-    setListConversation, setListNotification, setNumberMessageUnread, setNumberNotificationUnread
+    setListConversation, setNumberMessageUnread
 } from '../redux/Actions';
 import { rxUtil, socketRequestUtil } from '../utils';
 
@@ -24,7 +24,6 @@ export default function Home({ navigation }) {
 
     const token = useSelector((state) => state.userReducer.token);
     const currentUser = useSelector((state) => state.userReducer.currentUser);
-    const listNotification = useSelector((state) => state.notificationReducer.listNotification);
     const messageListened = useSelector((state) => state.messageReducer.messageListened);
     const numberMessageUnread = useSelector((state) => state.messageReducer.numberMessageUnread);
     const chattingWith = useSelector((state) => state.messageReducer.chattingWith);
@@ -34,7 +33,6 @@ export default function Home({ navigation }) {
     useEffect(
         () => {
             getListPartner();
-            getListNotificationAPI();
             const intervalUpdateLatest = setIntervalToUpdateLastActiveOfUserStatus();
 
             getListConversationFromSocket(
@@ -84,17 +82,6 @@ export default function Home({ navigation }) {
         }, [messageListened]
     );
 
-    const countNumberNotificationUnread = (listNotiFromAPI) => {
-        let count = 0;
-        listNotiFromAPI.forEach((item) => {
-            if (!item.isRead) {
-                count += 1;
-            }
-        });
-
-        dispatch(setNumberNotificationUnread(count));
-    };
-
     const getConversationByMessage = (message, listConversationSource) => {
         const index = listConversationSource.findIndex(
             (conversation) => conversation.from === message.from || conversation.from === message.to
@@ -122,9 +109,7 @@ export default function Home({ navigation }) {
             token,
             (res) => {
                 onFetchData(res);
-            },
-            () => {},
-            () => {}
+            }
         );
     };
 
@@ -137,26 +122,6 @@ export default function Home({ navigation }) {
         });
 
         dispatch(setNumberMessageUnread(count));
-    };
-
-    const getListNotificationAPI = () => {
-        rxUtil(
-            Rx.NOTIFICATION.GET_MY_NOTIFICATION,
-            'GET',
-            null,
-            {
-                Authorization: token
-            },
-            (res) => {
-                // set store
-                if (listNotification.length === 0) {
-                    dispatch(setListNotification(res.data.data));
-                    countNumberNotificationUnread(res.data.data);
-                }
-            },
-            () => {},
-            () => {}
-        );
     };
 
     const getListPartner = () => {
@@ -199,10 +164,7 @@ export default function Home({ navigation }) {
             socketRequestUtil(
                 'POST',
                 data,
-                token,
-                () => {},
-                () => {},
-                () => {}
+                token
             );
         }, 300000);
         return intervalUpdateLastActive;

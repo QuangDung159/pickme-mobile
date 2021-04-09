@@ -12,13 +12,47 @@ import { Block, GalioProvider } from 'galio-framework';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Listener } from '../components/bussinessComponents';
-import { NowTheme } from '../constants';
+import { NowTheme, Rx } from '../constants';
 import Stacks from '../navigations/Stacks';
-import { setDeviceId, setDeviceTimezone, setMessageListened } from '../redux/Actions';
+import {
+    setDeviceId, setDeviceTimezone, setListNotification, setMessageListened, setNumberNotificationUnread
+} from '../redux/Actions';
+import { rxUtil } from '../utils';
 
 export default function Main() {
+    const listNotification = useSelector((state) => state.notificationReducer.listNotification);
+
     const dispatch = useDispatch();
     const token = useSelector((state) => state.userReducer.token);
+
+    const getListNotificationAPI = () => {
+        rxUtil(
+            Rx.NOTIFICATION.GET_MY_NOTIFICATION,
+            'GET',
+            null,
+            {
+                Authorization: token
+            },
+            (res) => {
+                // set store
+                if (listNotification.length === 0) {
+                    dispatch(setListNotification(res.data.data));
+                    countNumberNotificationUnread(res.data.data);
+                }
+            }
+        );
+    };
+
+    const countNumberNotificationUnread = (listNotiFromAPI) => {
+        let count = 0;
+        listNotiFromAPI.forEach((item) => {
+            if (!item.isRead) {
+                count += 1;
+            }
+        });
+
+        dispatch(setNumberNotificationUnread(count));
+    };
 
     // apollo
     // Instantiate required constructor fields
@@ -63,6 +97,14 @@ export default function Main() {
             dispatch(setDeviceId(Constants.deviceId));
             dispatch(setDeviceTimezone());
         }, []
+    );
+
+    useEffect(
+        () => {
+            if (token && token !== 'Bearer ') {
+                getListNotificationAPI();
+            }
+        }, [token]
     );
 
     const handleNotification = () => {};

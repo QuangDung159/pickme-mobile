@@ -43,7 +43,9 @@ export default function ExpoNotification() {
         // This listener is fired whenever a notification is received while the app is foregrounded
             notificationListener.current = Notifications.addNotificationReceivedListener(() => {
             // in app trigger
-                getListNotiFromAPI();
+                if (token && token !== 'Bearer ') {
+                    getListNotiFromAPI();
+                }
             });
         }, [token]
     );
@@ -56,10 +58,27 @@ export default function ExpoNotification() {
             responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
             // on click noti popup outside
                 const navigationData = response.notification.request.content.data;
-                handleNavigation(navigationData.NavigationId, navigationData.Type);
+                onClickRead(navigationData.Id, navigationData.NavigationId, navigationData.Type);
             });
         }, [navigationObj]
     );
+
+    const onClickRead = (notiId = null, navigationId, navigationType) => {
+        const endpoint = `${Rx.NOTIFICATION.TRIGGER_READ}/${notiId}`;
+
+        rxUtil(
+            endpoint,
+            'POST',
+            null,
+            {
+                Authorization: token
+            },
+            () => {
+                handleNavigation(navigationId, navigationType);
+                getListNotiFromAPI();
+            }
+        );
+    };
 
     const countNumberNotificationUnread = (listNotiFromAPI) => {
         let count = 0;
@@ -84,9 +103,7 @@ export default function ExpoNotification() {
                 // set store
                 dispatch(setListNotification(res.data.data));
                 countNumberNotificationUnread(res.data.data);
-            },
-            () => {},
-            () => {}
+            }
         );
     };
 
