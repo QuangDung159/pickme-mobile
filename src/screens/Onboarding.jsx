@@ -74,11 +74,16 @@ export default function Onboarding({ navigation }) {
                                         fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
                                         fontSize: NowTheme.SIZES.WIDTH_BASE * 0.1
                                     }}
-                                    color={NowTheme.COLORS.BASE}
+                                    color={NowTheme.COLORS.ACTIVE}
                                 >
-                                    PickMe -
-                                    {'\n'}
-                                    Khách hàng
+                                    PickMe
+                                </Text>
+                                <Text
+                                    color={NowTheme.COLORS.DEFAULT}
+                                    size={NowTheme.SIZES.FONT_H4}
+                                    style={{ fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR }}
+                                >
+                                    Dành cho khách hàng
                                 </Text>
                             </Block>
                             <Button
@@ -111,10 +116,10 @@ export default function Onboarding({ navigation }) {
                             </Button>
                         </Block>
 
-                        <Block middle row>
+                        <Block middle>
                             <Text
                                 color={NowTheme.COLORS.DEFAULT}
-                                size={8}
+                                size={NowTheme.SIZES.FONT_H4}
                                 style={{ fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR }}
                             >
                                 Version 1.0
