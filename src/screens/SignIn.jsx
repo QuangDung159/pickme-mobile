@@ -13,11 +13,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ExpoNotification } from '../components/bussinessComponents';
 import { Input } from '../components/uiComponents';
 import {
-    Images, NowTheme, Rx, ScreenName
+    Images, NowTheme, Rx
 } from '../constants';
 import { ToastHelpers } from '../helpers';
 import {
-    setCurrentUser,
     setToken
 } from '../redux/Actions';
 import { rxUtil } from '../utils';
@@ -101,43 +100,9 @@ export default function SignIn({ navigation }) {
         return true;
     };
 
-    const onGetCurrentUserData = (url, bearerToken) => {
-        const headers = {
-            Authorization: bearerToken
-        };
-
-        rxUtil(url, 'GET', '', headers,
-            (res) => {
-                dispatch(setCurrentUser(res.data.data));
-                toggleSpinner(false);
-                navigation.reset({
-                    index: 0,
-                    routes: [{ name: ScreenName.APP }],
-                });
-            },
-            () => {
-                toggleSpinner(false);
-                Toast.show({
-                    type: 'error',
-                    text1: 'Đăng nhập thất bại! Vui lòng thử lại.'
-                });
-            },
-            () => {
-                toggleSpinner(false);
-                Toast.show({
-                    type: 'error',
-                    text1: 'Đăng nhập thất bại! Vui lòng thử lại.'
-                });
-            });
-    };
-
     const onLoginSucess = (tokenFromAPI) => {
         const bearerToken = `Bearer ${tokenFromAPI}`;
         dispatch(setToken(tokenFromAPI));
-        onGetCurrentUserData(
-            Rx.USER.CURRENT_USER_INFO,
-            bearerToken
-        );
         updateExpoTokenToServer(bearerToken);
         SecureStore.setItemAsync('api_token', `${tokenFromAPI}`)
             .then(console.log('tokenFromAPI :>> ', tokenFromAPI));

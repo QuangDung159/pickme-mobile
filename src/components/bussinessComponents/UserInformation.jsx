@@ -35,6 +35,7 @@ export default function UserInformation({ navigation }) {
     useEffect(
         () => {
             getListImagesByUser();
+            fetchCurrentUserInfo();
         }, []
     );
 
@@ -126,7 +127,8 @@ export default function UserInformation({ navigation }) {
             {
                 Authorization: token
             },
-            () => {
+            (res) => {
+                dispatch(setCurrentUser(res.data.data));
                 getListImagesByUser();
             }
         );
