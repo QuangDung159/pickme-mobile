@@ -195,7 +195,7 @@ export default function BookingDetail({
         // customer payemnt: cancel
         // booking is going on: N/A
         // booking done: complete => report/rating
-        if (isBookingGoingOn()) return null;
+        if (isBookingGoingOn() || booking.status === BookingStatus.CANCEL) return null;
 
         if (isBookingDone()) {
             return (
