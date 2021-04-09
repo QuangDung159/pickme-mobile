@@ -34,7 +34,7 @@ export default function UserInformation({ navigation }) {
     // Render \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
     useEffect(
         () => {
-            getListImagesByUser();
+            setIsShowSpinner(true);
             fetchCurrentUserInfo();
         }, []
     );
@@ -52,6 +52,7 @@ export default function UserInformation({ navigation }) {
             (res) => {
                 setListImageReview(res.data.data);
                 setRefreshing(false);
+                setIsShowSpinner(false);
             },
             () => {},
             () => {}
@@ -130,6 +131,12 @@ export default function UserInformation({ navigation }) {
             (res) => {
                 dispatch(setCurrentUser(res.data.data));
                 getListImagesByUser();
+            },
+            () => {
+                setIsShowSpinner(false);
+            },
+            () => {
+                setIsShowSpinner(false);
             }
         );
     };

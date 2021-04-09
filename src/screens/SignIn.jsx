@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ExpoNotification } from '../components/bussinessComponents';
 import { Input } from '../components/uiComponents';
 import {
-    Images, NowTheme, Rx
+    Images, NowTheme, Rx, ScreenName
 } from '../constants';
 import { ToastHelpers } from '../helpers';
 import {
@@ -103,6 +103,12 @@ export default function SignIn({ navigation }) {
     const onLoginSucess = (tokenFromAPI) => {
         const bearerToken = `Bearer ${tokenFromAPI}`;
         dispatch(setToken(tokenFromAPI));
+
+        navigation.reset({
+            index: 0,
+            routes: [{ name: ScreenName.APP }],
+        });
+
         updateExpoTokenToServer(bearerToken);
         SecureStore.setItemAsync('api_token', `${tokenFromAPI}`)
             .then(console.log('tokenFromAPI :>> ', tokenFromAPI));
