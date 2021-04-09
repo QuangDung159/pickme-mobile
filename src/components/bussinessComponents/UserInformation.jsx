@@ -1,5 +1,6 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
 import { NO_AVATAR_URL } from '@env';
+import * as SecureStore from 'expo-secure-store';
 import {
     Block, Button, Text
 } from 'galio-framework';
@@ -12,7 +13,7 @@ import {
     IconFamily, NowTheme, Rx, ScreenName
 } from '../../constants';
 import { MediaHelpers, ToastHelpers } from '../../helpers';
-import { setCurrentUser } from '../../redux/Actions';
+import { resetStoreSignOut, setCurrentUser } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
 import { CenterLoader, IconCustom, Line } from '../uiComponents';
 import SubInfoProfile from './SubInfoProfile';
@@ -112,6 +113,9 @@ export default function UserInformation({ navigation }) {
             routes: [{ name: ScreenName.ONBOARDING }],
         });
         refreshExpoTokenAPI();
+        dispatch(resetStoreSignOut());
+        SecureStore.setItemAsync('api_token', '')
+            .then(console.log('api_token was cleaned!'));
     };
 
     const fetchCurrentUserInfo = () => {
@@ -375,7 +379,13 @@ export default function UserInformation({ navigation }) {
                 )}
             >
                 {isShowSpinner ? (
-                    <CenterLoader />
+                    <Block
+                        style={{
+                            marginTop: NowTheme.SIZES.HEIGHT_BASE * 0.3
+                        }}
+                    >
+                        <CenterLoader />
+                    </Block>
                 ) : (
                     <>
                         {renderImageView()}

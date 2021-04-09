@@ -1,3 +1,4 @@
+import * as SecureStore from 'expo-secure-store';
 import {
     Block, Button, Text, theme
 } from 'galio-framework';
@@ -9,7 +10,7 @@ import { useDispatch } from 'react-redux';
 import {
     Images, NowTheme, ScreenName, Utils
 } from '../constants';
-import { resetStoreSignOut, setNavigation, setToken } from '../redux/Actions';
+import { setNavigation, setToken } from '../redux/Actions';
 
 export default function Onboarding({ navigation }) {
     const dispatch = useDispatch();
@@ -17,15 +18,26 @@ export default function Onboarding({ navigation }) {
     useEffect(
         () => {
             dispatch(setToken(''));
-            dispatch(resetStoreSignOut());
         }, [dispatch]
     );
 
     useEffect(
         () => {
             dispatch(setNavigation(navigation));
+            getTokenFromLocal();
         }, []
     );
+
+    const getTokenFromLocal = async () => {
+        const apiTokenLocal = await SecureStore.getItemAsync('api_token');
+        dispatch(setToken(apiTokenLocal));
+        if (apiTokenLocal) {
+            navigation.reset({
+                index: 0,
+                routes: [{ name: ScreenName.APP }],
+            });
+        }
+    };
 
     return (
         <Block flex style={styles.container}>

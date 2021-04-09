@@ -1,3 +1,4 @@
+import * as SecureStore from 'expo-secure-store';
 import {
     Block, Button, Text
 } from 'galio-framework';
@@ -138,6 +139,8 @@ export default function SignIn({ navigation }) {
             bearerToken
         );
         updateExpoTokenToServer(bearerToken);
+        SecureStore.setItemAsync('api_token', `${tokenFromAPI}`)
+            .then(console.log('tokenFromAPI :>> ', tokenFromAPI));
     };
 
     const toggleSpinner = (isShowSpinnerToggled) => {
