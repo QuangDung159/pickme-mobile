@@ -3,14 +3,14 @@ import {
 } from 'galio-framework';
 import React, { useState } from 'react';
 import {
-    ActivityIndicator, Alert,
+    Alert,
     ImageBackground, Modal, ScrollView,
     StyleSheet, TouchableWithoutFeedback, View
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Toast from 'react-native-toast-message';
 import { useDispatch } from 'react-redux';
-import { Input } from '../components/uiComponents';
+import { CenterLoader, Input } from '../components/uiComponents';
 import {
     Images, NowTheme, Rx, ScreenName
 } from '../constants';
@@ -125,10 +125,7 @@ export default function SignUp(props) {
                 return (
                     <>
                         {isShowSpinner ? (
-                            <ActivityIndicator
-                                size="large"
-                                color={NowTheme.COLORS.ACTIVE}
-                            />
+                            <CenterLoader />
                         ) : (
                             <>
                                 <Block style={styles.stepSessionContainer}>
@@ -239,10 +236,7 @@ export default function SignUp(props) {
                 return (
                     <>
                         {isShowSpinner ? (
-                            <ActivityIndicator
-                                size="large"
-                                color={NowTheme.COLORS.ACTIVE}
-                            />
+                            <CenterLoader />
                         ) : (
                             <>
                                 <Block style={styles.stepSessionContainer}>

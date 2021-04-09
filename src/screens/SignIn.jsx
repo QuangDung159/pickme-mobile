@@ -4,14 +4,14 @@ import {
 } from 'galio-framework';
 import React, { useState } from 'react';
 import {
-    ActivityIndicator, ImageBackground,
+    ImageBackground,
     StyleSheet
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Toast from 'react-native-toast-message';
 import { useDispatch, useSelector } from 'react-redux';
 import { ExpoNotification } from '../components/bussinessComponents';
-import { Input } from '../components/uiComponents';
+import { CenterLoader, Input } from '../components/uiComponents';
 import {
     Images, NowTheme, Rx, ScreenName
 } from '../constants';
@@ -149,10 +149,7 @@ export default function SignIn({ navigation }) {
                             </Block>
 
                             {isShowSpinner ? (
-                                <ActivityIndicator
-                                    size="large"
-                                    color={NowTheme.COLORS.ACTIVE}
-                                />
+                                <CenterLoader />
                             ) : (
                                 <>
                                     <Block style={{

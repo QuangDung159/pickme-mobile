@@ -6,7 +6,6 @@ import {
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import {
-    ActivityIndicator,
     Alert,
     Image, ImageBackground,
     Platform,
@@ -18,7 +17,7 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useDispatch, useSelector } from 'react-redux';
 import noAvatar from '../../assets/images/no-avatar.png';
-import { Input } from '../components/uiComponents';
+import { CenterLoader, Input } from '../components/uiComponents';
 import {
     Images, NowTheme, Rx, ScreenName, Utils
 } from '../constants';
@@ -555,10 +554,7 @@ export default function CreateAccount(props) {
                         </Block>
 
                         {isShowSpinner ? (
-                            <ActivityIndicator
-                                size="large"
-                                color={NowTheme.COLORS.ACTIVE}
-                            />
+                            <CenterLoader />
                         ) : (
                             <>
                                 <Block
@@ -566,10 +562,7 @@ export default function CreateAccount(props) {
                                 >
                                     {isShowSpinner
                                         ? (
-                                            <ActivityIndicator
-                                                size="large"
-                                                color={NowTheme.COLORS.ACTIVE}
-                                            />
+                                            <CenterLoader />
                                         )
                                         : (
                                             <TouchableWithoutFeedback

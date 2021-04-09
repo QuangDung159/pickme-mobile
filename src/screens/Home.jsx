@@ -2,11 +2,11 @@
 import { Block } from 'galio-framework';
 import React, { useEffect, useState } from 'react';
 import {
-    ActivityIndicator,
     FlatList, RefreshControl
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { CardImage } from '../components/bussinessComponents';
+import { CenterLoader } from '../components/uiComponents';
 import {
     GraphQueryString, NowTheme, Rx
 } from '../constants';
@@ -262,10 +262,7 @@ export default function Home({ navigation }) {
                             height: NowTheme.SIZES.HEIGHT_BASE * 0.8
                         }}
                     >
-                        <ActivityIndicator
-                            size="large"
-                            color={NowTheme.COLORS.ACTIVE}
-                        />
+                        <CenterLoader />
                     </Block>
                 ) : (
                     <Block
