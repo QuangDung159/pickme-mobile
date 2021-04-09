@@ -1,4 +1,5 @@
 /* eslint-disable max-len */
+import DateTimePicker from '@react-native-community/datetimepicker';
 import * as ImagePicker from 'expo-image-picker';
 import {
     Block, Button, Text
@@ -11,7 +12,6 @@ import {
     Platform,
     StyleSheet
 } from 'react-native';
-import DatePicker from 'react-native-datepicker';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -56,6 +56,11 @@ export default function CreateAccount(props) {
     const [image, setImage] = useState(null);
     const [isShowSpinner, setIsShowSpinner] = useState(false);
     const [isShowDoneMessage, setIsShowDoneMessage] = useState(false);
+
+    let myDate = moment(newUser.dob).format(Utils.TIME_FORMAT.TIME_FROMAT_DDMMYYYY);
+    myDate = myDate.split('-');
+    const newDate = new Date(myDate[2], myDate[1] - 1, myDate[0]);
+    const dobDisplay = new Date(newDate.getTime());
 
     useEffect(() => {
         (async () => {
@@ -428,9 +433,7 @@ export default function CreateAccount(props) {
                         </Block>
 
                         <Block
-                            style={[styles.stepFormContainer, {
-                                zIndex: 2
-                            }]}
+                            style={styles.stepFormContainer}
                         >
                             <Input
                                 placeholderStyle={{
@@ -446,37 +449,17 @@ export default function CreateAccount(props) {
                                 keyboardType="number-pad"
                             />
 
-                            <DatePicker
+                            <DateTimePicker
                                 style={[styles.inputWith, {
-                                    marginTop: 5
+                                    borderRadius: 5,
+                                    height: 44,
+                                    marginBottom: 10
                                 }]}
-                                date={moment(newUser.dob).format('DD-MM-YYYY')}
+                                value={dobDisplay}
                                 mode="date"
-                                format="DD-MM-YYYY"
-                                confirmBtnText="Xác nhận"
-                                cancelBtnText="Huỷ"
-                                customStyles={{
-                                    dateIcon: {
-                                        position: 'absolute',
-                                        left: 0,
-                                        top: -4,
-                                        marginLeft: 0,
-                                        // marginTop: -5
-                                    },
-                                    dateInput: {
-                                        borderRadius: 5,
-                                        borderColor: NowTheme.COLORS.BORDER,
-                                        height: 44,
-                                        marginTop: -14
-                                    },
-                                    dateText: {
-                                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                                        alignSelf: 'flex-start',
-                                        marginLeft: 40
-                                    }
-                                    // ... You can check the source to find the other keys.
-                                }}
-                                onDateChange={(dateInput) => { onChangeInputDOB(dateInput); }}
+                                is24Hour
+                                display="default"
+                                onChange={(event, selectedDate) => { onChangeInputDOB(event, selectedDate); }}
                             />
 
                             <DropDownPicker

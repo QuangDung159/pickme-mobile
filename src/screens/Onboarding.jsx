@@ -119,7 +119,7 @@ export default function Onboarding({ navigation }) {
                         <Block middle>
                             <Text
                                 color={NowTheme.COLORS.DEFAULT}
-                                size={NowTheme.SIZES.FONT_H4}
+                                size={NowTheme.SIZES.FONT_H4 - 2}
                                 style={{ fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR }}
                             >
                                 Version 1.0
