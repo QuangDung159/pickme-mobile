@@ -64,7 +64,7 @@ export default function UserInformation({ navigation }) {
             Rx.USER.UPDATE_EXPO_TOKEN,
             'POST',
             {
-                token: 'invalid'
+                token: ''
             },
             {
                 Authorization: token,
