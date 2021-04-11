@@ -1,14 +1,15 @@
 /* eslint no-underscore-dangle: ["error", { "allow": ["_isMounted", "_id"] }] */
-import { Block } from 'galio-framework';
+import { Block, Text } from 'galio-framework';
 import React, { useEffect, useState } from 'react';
 import {
-    FlatList, RefreshControl
+    FlatList, Image, RefreshControl, StyleSheet
 } from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import ImageScalable from 'react-native-scalable-image';
 import { useDispatch, useSelector } from 'react-redux';
-import { CardImage } from '../components/bussinessComponents';
 import { CenterLoader } from '../components/uiComponents';
 import {
-    GraphQueryString, NowTheme, Rx
+    GraphQueryString, NowTheme, Rx, ScreenName
 } from '../constants';
 import { ToastHelpers } from '../helpers';
 import {
@@ -200,18 +201,88 @@ export default function Home({ navigation }) {
                                 marginBottom: 10
                             }}
                         >
-                            <CardImage
-                                user={item}
-                                imageUrl={item.imageUrl}
-                                isShowTitle
-                                isShowAvatar
-                                navigation={navigation}
-                            />
+                            {renderImage(item)}
                         </Block>
                     </>
                 )}
             />
         </Block>
+    );
+
+    const renderImage = (item) => (
+        <TouchableWithoutFeedback
+            onPress={() => navigation.navigate(ScreenName.PROFILE, { userId: item.id })}
+        >
+            <Block style={{
+                backgroundColor: NowTheme.COLORS.BASE,
+                borderWidth: 0,
+            }}
+            >
+                <Block
+                    row
+                    style={{
+                        alignItems: 'center',
+                        marginHorizontal: 10
+                    }}
+                >
+                    <Block
+                        style={{
+                            marginRight: 10
+                        }}
+                    >
+                        <Image
+                            source={{ uri: item.avatarUrl }}
+                            style={{
+                                width: 45,
+                                height: 45,
+                                borderRadius: 25
+                            }}
+                        />
+                    </Block>
+                    <Block style={{
+                        justifyContent: 'center',
+                        paddingVertical: 10
+                    }}
+                    >
+                        <Block
+                            row
+                            style={{
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
+                                width: NowTheme.SIZES.WIDTH_BASE * 0.8
+                            }}
+                        >
+                            <Text
+                                size={NowTheme.SIZES.FONT_H2}
+                                bold
+                                color={NowTheme.COLORS.ACTIVE}
+                            >
+                                {item.fullName}
+                            </Text>
+                        </Block>
+                        <Block>
+                            <Text
+                                style={styles.subInfoCard}
+                                size={NowTheme.SIZES.FONT_H4}
+                                color={NowTheme.COLORS.DEFAULT}
+                            >
+                                TP.Hồ Chí Minh
+                            </Text>
+                        </Block>
+                    </Block>
+                </Block>
+
+                <Block flex style={styles.imageContainer}>
+                    <ImageScalable
+                        style={{
+                            zIndex: 99
+                        }}
+                        width={NowTheme.SIZES.WIDTH_BASE}
+                        source={{ uri: item.imageUrl }}
+                    />
+                </Block>
+            </Block>
+        </TouchableWithoutFeedback>
     );
 
     try {
@@ -247,3 +318,13 @@ export default function Home({ navigation }) {
         );
     }
 }
+
+const styles = StyleSheet.create({
+    imageContainer: {
+        elevation: 1,
+        overflow: 'hidden',
+    },
+    subInfoCard: {
+        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+    },
+});

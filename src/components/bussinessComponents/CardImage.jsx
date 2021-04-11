@@ -19,11 +19,7 @@ export default function CardImage({
     const currentUser = useSelector((state) => state.userReducer.currentUser);
 
     const handleOnClickCard = () => {
-        if (user.id === currentUser.id) {
-            navigation.navigate(ScreenName.PERSONAL);
-        } else {
-            navigation.navigate(ScreenName.PROFILE, { userId: user.id });
-        }
+        navigation.navigate(ScreenName.PROFILE, { userId: user.id });
     };
 
     const images = [{ uri: imageUrl }];
@@ -39,15 +35,14 @@ export default function CardImage({
                 imageIndex={0}
                 visible={visible}
                 onRequestClose={() => setVisible(false)}
-
             />
             {isShowTitle && user !== {} ? (
                 <Block
                     row
-                    style={[styles.cardDescription, {
+                    style={{
                         alignItems: 'center',
                         marginHorizontal: 10
-                    }]}
+                    }}
                 >
                     <TouchableWithoutFeedback
                         onPress={() => handleOnClickCard(user, currentUser, navigation)}
@@ -87,7 +82,6 @@ export default function CardImage({
                                 <Text
                                     size={NowTheme.SIZES.FONT_H2}
                                     bold
-                                    style={styles.cardTitle}
                                     color={NowTheme.COLORS.ACTIVE}
                                 >
                                     {user.fullName}

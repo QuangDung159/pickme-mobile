@@ -1,6 +1,7 @@
 import {
-    Block, Button as GaButton, Text, theme
+    Block, Button as GaButton, Text
 } from 'galio-framework';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import {
@@ -9,7 +10,7 @@ import {
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import ImageView from 'react-native-image-viewing';
 import { useSelector } from 'react-redux';
-import { CardImage, SubInfoProfile } from '../components/bussinessComponents';
+import { CardImage } from '../components/bussinessComponents';
 import { Button, CenterLoader } from '../components/uiComponents';
 import { NowTheme, Rx, ScreenName } from '../constants';
 import { ToastHelpers } from '../helpers';
@@ -139,7 +140,7 @@ export default function Profile({ route, navigation }) {
                                             marginTop: 30
                                         }}
                                         >
-                                            <Block row center style={{ marginBottom: 30 }}>
+                                            <Block row center style={{ marginBottom: 20 }}>
                                                 <Text
                                                     style={{
                                                         color: NowTheme.COLORS.ACTIVE,
@@ -153,96 +154,11 @@ export default function Profile({ route, navigation }) {
                                                 </Text>
                                             </Block>
 
-                                            <Block style={styles.info}>
-                                                <Block row space="around">
-                                                    <Block middle>
-                                                        <Text
-                                                            size={NowTheme.SIZES.FONT_H2}
-                                                            color={NowTheme.COLORS.DEFAULT}
-                                                            style={{
-                                                                marginBottom: 4,
-                                                                fontFamily: NowTheme.FONT.MONTSERRAT_BOLD
-                                                            }}
-                                                        >
-                                                            {partnerInfo.earningExpected}
-                                                        </Text>
-                                                        <Text
-                                                            style={{ fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR }}
-                                                            size={NowTheme.SIZES.FONT_H4}
-                                                            color={NowTheme.COLORS.DEFAULT}
-                                                        >
-                                                            Kim cương
-                                                        </Text>
-                                                    </Block>
-
-                                                    <Block middle>
-                                                        <Text
-                                                            color={NowTheme.COLORS.DEFAULT}
-                                                            size={NowTheme.SIZES.FONT_H2}
-                                                            style={{
-                                                                marginBottom: 4,
-                                                                fontFamily: NowTheme.FONT.MONTSERRAT_BOLD
-                                                            }}
-                                                        >
-                                                            26
-                                                        </Text>
-                                                        <Text
-                                                            style={{ fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR }}
-                                                            size={NowTheme.SIZES.FONT_H4}
-                                                            color={NowTheme.COLORS.DEFAULT}
-                                                        >
-                                                            Đơn hẹn
-                                                        </Text>
-                                                    </Block>
-
-                                                    <Block middle>
-                                                        <Text
-                                                            color={NowTheme.COLORS.DEFAULT}
-                                                            size={NowTheme.SIZES.FONT_H2}
-                                                            style={{
-                                                                marginBottom: 4,
-                                                                fontFamily: NowTheme.FONT.MONTSERRAT_BOLD
-                                                            }}
-                                                        >
-                                                            3k
-                                                        </Text>
-                                                        <Text
-                                                            style={{ fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR }}
-                                                            size={NowTheme.SIZES.FONT_H4}
-                                                            color={NowTheme.COLORS.DEFAULT}
-                                                        >
-                                                            Lượt thích
-                                                        </Text>
-                                                    </Block>
-
-                                                    <Block middle>
-                                                        <Text
-                                                            color={NowTheme.COLORS.DEFAULT}
-                                                            size={NowTheme.SIZES.FONT_H2}
-                                                            style={{
-                                                                marginBottom: 4,
-                                                                fontFamily: NowTheme.FONT.MONTSERRAT_BOLD
-                                                            }}
-                                                        >
-                                                            4.8/5
-                                                        </Text>
-                                                        <Text
-                                                            style={{ fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR }}
-                                                            size={NowTheme.SIZES.FONT_H4}
-                                                            color={NowTheme.COLORS.DEFAULT}
-                                                        >
-                                                            Đánh giá
-                                                        </Text>
-                                                    </Block>
-                                                </Block>
-                                            </Block>
                                             <Block
                                                 center
-                                                flex
                                                 style={{
                                                     width: NowTheme.SIZES.WIDTH_BASE - 40,
-                                                    paddingBottom: 10,
-                                                    marginVertical: 10
+                                                    paddingBottom: 40,
                                                 }}
                                             >
                                                 <Text
@@ -258,11 +174,139 @@ export default function Profile({ route, navigation }) {
                                                     {'"'}
                                                 </Text>
                                             </Block>
-                                            <Block style={{
-                                                paddingHorizontal: theme.SIZES.BASE,
-                                            }}
+
+                                            <Block style={styles.info}>
+                                                <Block row space="around">
+                                                    <Block
+                                                        middle
+                                                        style={styles.subInfoItemContainer}
+                                                    >
+                                                        <Text
+                                                            size={NowTheme.SIZES.FONT_H2}
+                                                            color={NowTheme.COLORS.DEFAULT}
+                                                            style={styles.subInfoText}
+                                                        >
+                                                            {partnerInfo.earningExpected}
+                                                        </Text>
+                                                        <Text
+                                                            style={{ fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR }}
+                                                            size={NowTheme.SIZES.FONT_H4}
+                                                            color={NowTheme.COLORS.DEFAULT}
+                                                        >
+                                                            Kim cương/p
+                                                        </Text>
+                                                    </Block>
+
+                                                    <Block
+                                                        middle
+                                                        style={styles.subInfoItemContainer}
+                                                    >
+                                                        <Text
+                                                            color={NowTheme.COLORS.DEFAULT}
+                                                            size={NowTheme.SIZES.FONT_H2}
+                                                            style={styles.subInfoText}
+                                                        >
+                                                            26
+                                                        </Text>
+                                                        <Text
+                                                            style={{ fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR }}
+                                                            size={NowTheme.SIZES.FONT_H4}
+                                                            color={NowTheme.COLORS.DEFAULT}
+                                                        >
+                                                            Đơn hẹn
+                                                        </Text>
+                                                    </Block>
+
+                                                    <Block
+                                                        middle
+                                                        style={styles.subInfoItemContainer}
+                                                    >
+                                                        <Text
+                                                            color={NowTheme.COLORS.DEFAULT}
+                                                            size={NowTheme.SIZES.FONT_H2}
+                                                            style={styles.subInfoText}
+                                                        >
+                                                            4.8/5
+                                                        </Text>
+                                                        <Text
+                                                            style={{ fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR }}
+                                                            size={NowTheme.SIZES.FONT_H4}
+                                                            color={NowTheme.COLORS.DEFAULT}
+                                                        >
+                                                            Đánh giá
+                                                        </Text>
+                                                    </Block>
+                                                </Block>
+                                            </Block>
+
+                                            <Block style={[
+                                                styles.info,
+                                                {
+                                                    marginTop: 10
+                                                }
+                                            ]}
                                             >
-                                                <SubInfoProfile user={partnerInfo} />
+                                                <Block row space="around">
+                                                    <Block
+                                                        middle
+                                                        style={styles.subInfoItemContainer}
+                                                    >
+                                                        <Text
+                                                            size={NowTheme.SIZES.FONT_H2}
+                                                            color={NowTheme.COLORS.DEFAULT}
+                                                            style={styles.subInfoText}
+                                                        >
+                                                            {`${partnerInfo.height} cm`}
+                                                        </Text>
+                                                        <Text
+                                                            style={{ fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR }}
+                                                            size={NowTheme.SIZES.FONT_H4}
+                                                            color={NowTheme.COLORS.DEFAULT}
+                                                        >
+                                                            Chiều cao
+                                                        </Text>
+                                                    </Block>
+
+                                                    <Block
+                                                        middle
+                                                        style={styles.subInfoItemContainer}
+                                                    >
+                                                        <Text
+                                                            color={NowTheme.COLORS.DEFAULT}
+                                                            size={NowTheme.SIZES.FONT_H2}
+                                                            style={styles.subInfoText}
+                                                        >
+                                                            {`${partnerInfo.weight} kg`}
+                                                        </Text>
+                                                        <Text
+                                                            style={{ fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR }}
+                                                            size={NowTheme.SIZES.FONT_H4}
+                                                            color={NowTheme.COLORS.DEFAULT}
+                                                        >
+                                                            Cân nặng
+                                                        </Text>
+                                                    </Block>
+
+                                                    <Block
+                                                        middle
+                                                        style={styles.subInfoItemContainer}
+                                                    >
+                                                        <Text
+                                                            color={NowTheme.COLORS.DEFAULT}
+                                                            size={NowTheme.SIZES.FONT_H2}
+                                                            style={styles.subInfoText}
+                                                        >
+                                                            {moment(partnerInfo.dob).format('YYYY').toString()}
+                                                        </Text>
+                                                        <Text
+                                                            style={{ fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR }}
+                                                            size={NowTheme.SIZES.FONT_H4}
+                                                            color={NowTheme.COLORS.DEFAULT}
+                                                        >
+                                                            Năm sinh
+                                                        </Text>
+                                                    </Block>
+                                                </Block>
                                             </Block>
                                         </Block>
                                         {listImage && (
@@ -394,12 +438,6 @@ const styles = StyleSheet.create({
         zIndex: 99,
         marginHorizontal: 5
     },
-    title: {
-        fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
-        paddingBottom: theme.SIZES.BASE,
-        marginTop: 44,
-        color: NowTheme.COLORS.HEADER
-    },
     buttonPanelContainer: {
         backgroundColor: 'transparent',
         position: 'absolute',
@@ -409,5 +447,13 @@ const styles = StyleSheet.create({
         height: 80,
         zIndex: 2,
         width: NowTheme.SIZES.WIDTH_BASE,
+    },
+    subInfoText: {
+        marginBottom: 4,
+        fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
+        color: NowTheme.COLORS.ACTIVE
+    },
+    subInfoItemContainer: {
+        width: NowTheme.SIZES.WIDTH_BASE * 0.3
     }
 });

@@ -52,7 +52,6 @@ export default function UserInformation({ navigation }) {
             (res) => {
                 setListImageReview(res.data.data);
                 setRefreshing(false);
-                setIsShowSpinner(false);
             },
             () => {},
             () => {}
@@ -130,6 +129,7 @@ export default function UserInformation({ navigation }) {
             },
             (res) => {
                 dispatch(setCurrentUser(res.data.data));
+                setIsShowSpinner(false);
                 getListImagesByUser();
             },
             () => {
@@ -169,66 +169,6 @@ export default function UserInformation({ navigation }) {
         return <></>;
     };
 
-    const renderAvatarPanel = () => {
-        try {
-            return (
-                <Block>
-                    <Block
-                        row
-                        center
-                        style={{
-                            width: NowTheme.SIZES.WIDTH_BASE * 0.9,
-                            marginTop: 10
-                        }}
-                    >
-                        <Block
-                            flex={3}
-                            middle
-                        >
-                            <TouchableWithoutFeedback
-                                onPress={() => {
-                                    setVisible(true);
-                                    setImageIndex(0);
-                                    setListImageReview([{ url: currentUser.url }]);
-                                }}
-                            >
-                                <CenterLoader size="small" />
-                                <Block
-                                    style={{
-                                        zIndex: 99,
-                                    }}
-                                >
-                                    <Block
-                                        style={styles.updateAvatarButton}
-                                    >
-                                        <TouchableWithoutFeedback
-                                            onPress={() => onClickUpdateAvatar()}
-                                        >
-                                            <IconCustom
-                                                name="photo-camera"
-                                                family={IconFamily.MATERIAL_ICONS}
-                                                color={NowTheme.COLORS.DEFAULT}
-                                                size={15}
-                                            />
-                                        </TouchableWithoutFeedback>
-                                    </Block>
-                                    {renderAvatar()}
-                                </Block>
-                            </TouchableWithoutFeedback>
-                        </Block>
-                    </Block>
-                </Block>
-            );
-        } catch (exception) {
-            console.log('exception :>> ', exception);
-            return (
-                <>
-                    {ToastHelpers.renderToast()}
-                </>
-            );
-        }
-    };
-
     const renderAvatar = () => {
         if (image) {
             return (
@@ -245,6 +185,76 @@ export default function UserInformation({ navigation }) {
             />
         );
     };
+
+    const renderAvatarPanel = () => (
+        <Block>
+            <Block
+                row
+                center
+                style={{
+                    width: NowTheme.SIZES.WIDTH_BASE * 0.9,
+                    marginVertical: 10,
+                }}
+            >
+                <Block
+                    style={{
+                        width: NowTheme.SIZES.WIDTH_BASE * 0.3
+                    }}
+                >
+                    <TouchableWithoutFeedback
+                        onPress={() => {
+                            setVisible(true);
+                            setImageIndex(0);
+                            setListImageReview([{ url: currentUser.url }]);
+                        }}
+                    >
+                        <CenterLoader size="small" />
+                        <Block
+                            style={{
+                                zIndex: 99
+                            }}
+                        >
+                            <Block
+                                style={styles.updateAvatarButton}
+                            >
+                                <TouchableWithoutFeedback
+                                    onPress={() => onClickUpdateAvatar()}
+                                >
+                                    <IconCustom
+                                        name="photo-camera"
+                                        family={IconFamily.MATERIAL_ICONS}
+                                        color={NowTheme.COLORS.DEFAULT}
+                                        size={15}
+                                    />
+                                </TouchableWithoutFeedback>
+                            </Block>
+                            {renderAvatar()}
+                        </Block>
+                    </TouchableWithoutFeedback>
+                </Block>
+
+                <Block
+                    center
+                    style={{
+                        width: NowTheme.SIZES.WIDTH_BASE * 0.6,
+                    }}
+                >
+                    <SubInfoProfile user={currentUser} />
+                </Block>
+            </Block>
+            <Block>
+                <Block
+                    middle
+                >
+                    <Line
+                        borderColor={NowTheme.COLORS.ACTIVE}
+                        borderWidth={0.5}
+                        width={NowTheme.SIZES.WIDTH_BASE * 0.9}
+                    />
+                </Block>
+            </Block>
+        </Block>
+    );
 
     const renderInfoPanel = () => (
         <Block>
@@ -290,13 +300,6 @@ export default function UserInformation({ navigation }) {
                         alignItems: 'center'
                     }}
                     >
-                        <Block
-                            style={{
-                                width: NowTheme.SIZES.WIDTH_BASE * 0.9
-                            }}
-                        >
-                            <SubInfoProfile user={currentUser} />
-                        </Block>
                         <Block
                             style={{
                                 marginTop: 10
@@ -436,7 +439,7 @@ const styles = StyleSheet.create({
     updateAvatarButton: {
         position: 'absolute',
         bottom: 0,
-        right: 0,
+        right: NowTheme.SIZES.WIDTH_BASE * 0.05,
         zIndex: 99,
-    },
+    }
 });

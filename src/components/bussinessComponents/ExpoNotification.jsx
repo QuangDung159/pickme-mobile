@@ -8,6 +8,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { Rx, ScreenName } from '../../constants';
 import {
+    setCurrentUser,
     setExpoToken, setListNotification, setNumberNotificationUnread, setPersonTabActiveIndex
 } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
@@ -41,10 +42,14 @@ export default function ExpoNotification() {
     useEffect(
         () => {
         // This listener is fired whenever a notification is received while the app is foregrounded
-            notificationListener.current = Notifications.addNotificationReceivedListener(() => {
+            notificationListener.current = Notifications.addNotificationReceivedListener((notificationReceived) => {
             // in app trigger
-                if (token && token !== 'Bearer ') {
+                if (token && token !== 'Bearer ' && token !== 'Bearer null') {
                     getListNotiFromAPI();
+
+                    if (notificationReceived.request?.content?.data?.Type === 2) {
+                        fetchCurrentUserInfo();
+                    }
                 }
             });
         }, [token]
@@ -52,7 +57,7 @@ export default function ExpoNotification() {
 
     useEffect(
         () => {
-            // This listener is fired
+        // This listener is fired
         // whenever a user taps on or interacts
         // with a notification (works when app is foregrounded, backgrounded, or killed)
             responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
@@ -62,6 +67,20 @@ export default function ExpoNotification() {
             });
         }, [navigationObj]
     );
+
+    const fetchCurrentUserInfo = () => {
+        rxUtil(
+            Rx.USER.CURRENT_USER_INFO,
+            'GET',
+            null,
+            {
+                Authorization: token
+            },
+            (res) => {
+                dispatch(setCurrentUser(res.data.data));
+            }
+        );
+    };
 
     const onClickRead = (notiId = null, navigationId, navigationType) => {
         const endpoint = `${Rx.NOTIFICATION.TRIGGER_READ}/${notiId}`;

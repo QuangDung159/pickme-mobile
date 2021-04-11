@@ -1,14 +1,13 @@
-import DateTimePicker from '@react-native-community/datetimepicker';
 import {
     Block, Button, Input, Text
 } from 'galio-framework';
-import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
+import DropDownPicker from 'react-native-dropdown-picker';
 import { useDispatch, useSelector } from 'react-redux';
 import { CenterLoader } from '../components/uiComponents';
 import {
-    NowTheme, Rx, ScreenName, Utils
+    NowTheme, Rx, ScreenName
 } from '../constants';
 import { ToastHelpers } from '../helpers';
 import { setCurrentUser, setPersonTabActiveIndex } from '../redux/Actions';
@@ -31,6 +30,49 @@ export default function UpdateInfoAccount(props) {
     );
 
     // handler \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+    const renderDropdownDOBYear = () => {
+        const currentYear = new Date().getFullYear();
+        const DOBStartYear = currentYear - 58;
+        const listDOBYear = [];
+        for (let i = 0; i < 40; i += 1) {
+            listDOBYear.unshift({
+                label: (DOBStartYear + i).toString(),
+                value: (DOBStartYear + i).toString()
+            });
+        }
+
+        return (
+            <DropDownPicker
+                items={listDOBYear}
+                defaultValue={currentUser.dob.substr(0, 4)}
+                containerStyle={{
+                    borderRadius: 5,
+                    width: NowTheme.SIZES.WIDTH_BASE * 0.9,
+                    height: 44,
+                    marginBottom: 10
+                }}
+                selectedtLabelStyle={{
+                    color: 'red'
+                }}
+                placeholderStyle={{
+                    color: NowTheme.COLORS.MUTED
+                }}
+                itemStyle={{
+                    justifyContent: 'flex-start'
+                }}
+                activeLabelStyle={{ color: NowTheme.COLORS.ACTIVE }}
+                onChangeItem={(item) => onChangeDOBYear(item.value)}
+                labelStyle={{
+                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
+                }}
+            />
+        );
+    };
+
+    const onChangeDOBYear = (yearInput) => {
+        setNewUser({ ...newUser, dob: `${yearInput}-01-01T14:00:00` });
+    };
+
     const onGetCurrentUserData = () => {
         const headers = {
             Authorization: token
@@ -69,15 +111,6 @@ export default function UpdateInfoAccount(props) {
 
     const onChangeDescription = (descriptionInput) => {
         setNewUser({ ...newUser, description: descriptionInput });
-    };
-
-    const onChangeInputDOB = (event, selectedDate) => {
-        const dateToProcess = moment(selectedDate).format(Utils.TIME_FORMAT.TIME_FROMAT_DDMMYYYY);
-
-        // format time to use
-        const stringTimeFormated = moment(dateToProcess.split('-').reverse().join('-'));
-
-        setNewUser({ ...newUser, dob: stringTimeFormated });
     };
 
     const validate = () => {
@@ -175,7 +208,6 @@ export default function UpdateInfoAccount(props) {
                 paddingTop: 10,
             }}
         >
-
             <Block>
                 <Text
                     color={NowTheme.COLORS.ACTIVE}
@@ -210,7 +242,6 @@ export default function UpdateInfoAccount(props) {
                 paddingTop: 10
             }}
         >
-
             <Block>
                 <Text
                     color={NowTheme.COLORS.ACTIVE}
@@ -274,48 +305,31 @@ export default function UpdateInfoAccount(props) {
         </Block>
     );
 
-    const renderInputDOB = (user) => {
-        // convert date for input
-        let myDate = moment(newUser.dob || user.dob).format(Utils.TIME_FORMAT.TIME_FROMAT_DDMMYYYY);
-        myDate = myDate.split('-');
-        const newDate = new Date(myDate[2], myDate[1] - 1, myDate[0]);
-        const dobDisplay = new Date(newDate.getTime());
+    const renderInputDOB = () => (
+        <Block
+            middle
+            style={{
+                paddingTop: 10,
+                zIndex: 99
+            }}
+        >
+            <Block>
+                <Text
+                    color={NowTheme.COLORS.ACTIVE}
+                    size={16}
+                    style={{
+                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                        width: NowTheme.SIZES.WIDTH_BASE * 0.9,
+                        marginBottom: 10
+                    }}
+                >
+                    Năm sinh:
+                </Text>
 
-        return (
-            <Block
-                middle
-                style={{
-                    paddingTop: 10
-                }}
-            >
-                <Block>
-                    <Text
-                        color={NowTheme.COLORS.ACTIVE}
-                        size={16}
-                        style={{
-                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
-                        }}
-                    >
-                        Ngày sinh:
-                    </Text>
-
-                    <DateTimePicker
-                        style={{
-                            borderRadius: 5,
-                            width: NowTheme.SIZES.WIDTH_BASE * 0.9,
-                            height: 44,
-                            marginTop: 20
-                        }}
-                        value={dobDisplay}
-                        mode="date"
-                        is24Hour
-                        display="default"
-                        onChange={(event, selectedDate) => { onChangeInputDOB(event, selectedDate); }}
-                    />
-                </Block>
+                {renderDropdownDOBYear()}
             </Block>
-        );
-    };
+        </Block>
+    );
 
     const renderInputDescription = () => (
         <Block
@@ -324,7 +338,6 @@ export default function UpdateInfoAccount(props) {
                 paddingTop: 10
             }}
         >
-
             <Block>
                 <Text
                     color={NowTheme.COLORS.ACTIVE}
