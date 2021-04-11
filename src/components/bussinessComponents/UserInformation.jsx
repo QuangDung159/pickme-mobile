@@ -52,7 +52,6 @@ export default function UserInformation({ navigation }) {
             (res) => {
                 setListImageReview(res.data.data);
                 setRefreshing(false);
-                setIsShowSpinner(false);
             },
             () => {},
             () => {}
@@ -130,6 +129,7 @@ export default function UserInformation({ navigation }) {
             },
             (res) => {
                 dispatch(setCurrentUser(res.data.data));
+                setIsShowSpinner(false);
                 getListImagesByUser();
             },
             () => {
