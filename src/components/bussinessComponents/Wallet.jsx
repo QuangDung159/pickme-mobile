@@ -3,12 +3,11 @@ import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { RefreshControl } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
     IconFamily, NowTheme, Rx, ScreenName
 } from '../../constants';
 import { ToastHelpers } from '../../helpers';
-import { setCurrentUser } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
 import { CenterLoader, IconCustom } from '../uiComponents';
 
@@ -21,17 +20,13 @@ export default function Wallet({ navigation, route }) {
     const currentUser = useSelector((state) => state.userReducer.currentUser);
     const token = useSelector((state) => state.userReducer.token);
 
-    const dispatch = useDispatch();
-
     useEffect(
         () => {
             setIsShowSpinner(true);
             getListHistory();
-            getCurrentUser();
 
             const eventTriggerGetListHistory = navigation.addListener('focus', () => {
                 getListHistory();
-                getCurrentUser();
             });
 
             // componentWillUnmount
@@ -42,22 +37,6 @@ export default function Wallet({ navigation, route }) {
 
     const getListHistory = () => {
         getListCashIn();
-    };
-
-    const getCurrentUser = () => {
-        rxUtil(
-            Rx.USER.CURRENT_USER_INFO,
-            'GET',
-            null,
-            {
-                Authorization: token
-            },
-            (res) => {
-                dispatch(setCurrentUser(res.data.data));
-            },
-            () => {},
-            () => {}
-        );
     };
 
     const onRefresh = () => {
@@ -234,18 +213,20 @@ export default function Wallet({ navigation, route }) {
     const renderWalletAmountPanel = () => {
         const walletAmountFormCashOut = route?.params?.walletAmountFromCashOut || currentUser.walletAmount;
         return (
-            <Block>
-                <Block
-                    middle
-                    style={{
-                        height: NowTheme.SIZES.HEIGHT_BASE * 0.2,
-                    }}
-                >
+            <Block
+                flex
+                style={{
+                    alignItems: 'center'
+                }}
+                row
+                space="between"
+            >
+                <Block>
                     <Text
                         style={{
                             fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
                         }}
-                        size={14}
+                        size={NowTheme.SIZES.FONT_H4}
                     >
                         Số dư trong rương
                     </Text>
@@ -259,7 +240,7 @@ export default function Wallet({ navigation, route }) {
                             style={{
                                 fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
                             }}
-                            size={60}
+                            size={NowTheme.SIZES.FONT_H1 + 10}
                             color={NowTheme.COLORS.ACTIVE}
                         >
                             {walletAmountFormCashOut}
@@ -267,41 +248,21 @@ export default function Wallet({ navigation, route }) {
                         <IconCustom
                             name="diamond"
                             family={IconFamily.SIMPLE_LINE_ICONS}
-                            size={38}
+                            size={NowTheme.SIZES.FONT_H1}
                             color={NowTheme.COLORS.ACTIVE}
                         />
                     </Block>
                 </Block>
-
-                <Block
-                    row
-                    style={{
-                        justifyContent: 'space-around',
-                        paddingBottom: 20
-                    }}
-                >
-                    <Block>
-                        <Button
-                            onPress={() => navigation.navigate(ScreenName.CASH_IN)}
-                            style={{
-                                width: NowTheme.SIZES.WIDTH_BASE * 0.4
-                            }}
-                        >
-                            Nạp kim cương
-                        </Button>
-                    </Block>
-                    <Block>
-                        <Button
-                            onPress={() => {
-                                navigation.navigate(ScreenName.CASH_OUT);
-                            }}
-                            style={{
-                                width: NowTheme.SIZES.WIDTH_BASE * 0.4
-                            }}
-                        >
-                            Rút kim cương
-                        </Button>
-                    </Block>
+                <Block>
+                    <Button
+                        onPress={() => navigation.navigate(ScreenName.CASH_IN)}
+                        style={{
+                            width: NowTheme.SIZES.WIDTH_BASE * 0.4,
+                            margin: 0
+                        }}
+                    >
+                        Nạp kim cương
+                    </Button>
                 </Block>
             </Block>
         );
@@ -310,19 +271,44 @@ export default function Wallet({ navigation, route }) {
     const renderHistory = () => {
         const listHistory = combineListCashTraffic();
 
-        return (
-            <FlatList
-                data={listHistory}
-                keyExtractor={(item) => item.id}
-                renderItem={({ item }) => renderHistoryItem(item)}
-                showsVerticalScrollIndicator={false}
-                refreshControl={(
-                    <RefreshControl
-                        refreshing={refreshing}
-                        onRefresh={() => onRefresh()}
+        if (listHistory && listHistory.length !== 0) {
+            return (
+                <Block
+                    flex
+                >
+                    <FlatList
+                        data={listHistory}
+                        keyExtractor={(item) => item.id}
+                        renderItem={({ item }) => renderHistoryItem(item)}
+                        showsVerticalScrollIndicator={false}
+                        refreshControl={(
+                            <RefreshControl
+                                refreshing={refreshing}
+                                onRefresh={() => onRefresh()}
+                            />
+                        )}
                     />
-                )}
-            />
+                </Block>
+            );
+        }
+
+        return (
+            <Block
+                style={{
+                    alignItems: 'center',
+                    marginVertical: 15
+                }}
+            >
+                <Text
+                    color={NowTheme.COLORS.SWITCH_OFF}
+                    style={{
+                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                    }}
+                    size={NowTheme.SIZES.FONT_H2}
+                >
+                    Danh sách trống
+                </Text>
+            </Block>
         );
     };
 
@@ -331,9 +317,10 @@ export default function Wallet({ navigation, route }) {
             <>
                 <Block
                     style={{
-                        height: NowTheme.SIZES.HEIGHT_BASE * 0.3,
-                        backgroundColor: NowTheme.COLORS.BASE,
-                        alignItems: 'center',
+                        height: NowTheme.SIZES.HEIGHT_BASE * 0.1,
+                        width: NowTheme.SIZES.WIDTH_BASE * 0.9,
+                        alignSelf: 'center',
+                        marginTop: 10
                     }}
                 >
                     {renderWalletAmountPanel()}
@@ -342,7 +329,7 @@ export default function Wallet({ navigation, route }) {
                     {isShowSpinner ? (
                         <Block
                             style={{
-                                marginTop: NowTheme.SIZES.HEIGHT_BASE * 0.2
+                                marginTop: NowTheme.SIZES.HEIGHT_BASE * 0.1
                             }}
                         >
                             <CenterLoader />

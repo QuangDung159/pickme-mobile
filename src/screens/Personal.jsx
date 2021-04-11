@@ -111,7 +111,7 @@ export default function Personal({ navigation, route }) {
             <Block
                 row
                 style={[{
-                    height: NowTheme.SIZES.HEIGHT_BASE * 0.08
+                    height: NowTheme.SIZES.HEIGHT_BASE * 0.07
                 }]}
             >
                 {tabs.map((title, index) => renderTabButton(title, index))}

@@ -204,26 +204,6 @@ export default function Profile({ route, navigation }) {
                                                                 fontFamily: NowTheme.FONT.MONTSERRAT_BOLD
                                                             }}
                                                         >
-                                                            3k
-                                                        </Text>
-                                                        <Text
-                                                            style={{ fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR }}
-                                                            size={NowTheme.SIZES.FONT_H4}
-                                                            color={NowTheme.COLORS.DEFAULT}
-                                                        >
-                                                            Lượt thích
-                                                        </Text>
-                                                    </Block>
-
-                                                    <Block middle>
-                                                        <Text
-                                                            color={NowTheme.COLORS.DEFAULT}
-                                                            size={NowTheme.SIZES.FONT_H2}
-                                                            style={{
-                                                                marginBottom: 4,
-                                                                fontFamily: NowTheme.FONT.MONTSERRAT_BOLD
-                                                            }}
-                                                        >
                                                             4.8/5
                                                         </Text>
                                                         <Text
