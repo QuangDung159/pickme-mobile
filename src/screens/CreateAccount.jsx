@@ -29,8 +29,6 @@ const defaultDate = '2002-01-01T14:00:00';
 export default function CreateAccount(props) {
     const token = useSelector((state) => state.userReducer.token);
 
-    const [listDOBYear, setListDOBYear] = useState([]);
-
     const dispatch = useDispatch();
 
     const { navigation } = props;
@@ -70,53 +68,46 @@ export default function CreateAccount(props) {
         })();
     }, []);
 
-    useEffect(
-        () => {
-            createListDOBYear();
-        }, []
-    );
-
     const onClickUploadProfileImage = () => {
         MediaHelpers.pickImage(true, [1, 1], (result) => handleUploadImageProfile(result.uri));
     };
 
-    const createListDOBYear = () => {
+    const renderDropdownDOBYear = () => {
         const currentYear = new Date().getFullYear();
         const DOBStartYear = currentYear - 58;
-        const listDOBYearTemp = [];
+        const listDOBYear = [];
         for (let i = 0; i < 40; i += 1) {
-            listDOBYearTemp.unshift({
+            listDOBYear.unshift({
                 label: (DOBStartYear + i).toString(),
                 value: (DOBStartYear + i).toString()
             });
         }
-        setListDOBYear(listDOBYearTemp);
-    };
 
-    const renderDropdownDOBYear = () => (
-        <DropDownPicker
-            items={listDOBYear}
-            defaultValue={listDOBYear[0].value}
-            containerStyle={[styles.inputWith, {
-                height: 43,
-                marginBottom: 10,
-            }]}
-            selectedtLabelStyle={{
-                color: 'red'
-            }}
-            placeholderStyle={{
-                color: NowTheme.COLORS.MUTED
-            }}
-            itemStyle={{
-                justifyContent: 'flex-start'
-            }}
-            activeLabelStyle={{ color: NowTheme.COLORS.ACTIVE }}
-            onChangeItem={(item) => onChangeDOBYear(item.value)}
-            labelStyle={{
-                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
-            }}
-        />
-    );
+        return (
+            <DropDownPicker
+                items={listDOBYear}
+                defaultValue={listDOBYear[0].value}
+                containerStyle={[styles.inputWith, {
+                    height: 43,
+                    marginBottom: 10,
+                }]}
+                selectedtLabelStyle={{
+                    color: 'red'
+                }}
+                placeholderStyle={{
+                    color: NowTheme.COLORS.MUTED
+                }}
+                itemStyle={{
+                    justifyContent: 'flex-start'
+                }}
+                activeLabelStyle={{ color: NowTheme.COLORS.ACTIVE }}
+                onChangeItem={(item) => onChangeDOBYear(item.value)}
+                labelStyle={{
+                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
+                }}
+            />
+        );
+    };
 
     const handleUploadImageProfile = (uri) => {
         setIsShowSpinner(true);
