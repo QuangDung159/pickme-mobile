@@ -439,7 +439,7 @@ const styles = StyleSheet.create({
     updateAvatarButton: {
         position: 'absolute',
         bottom: 0,
-        right: NowTheme.SIZES.WIDTH_BASE * 0.15,
+        right: NowTheme.SIZES.WIDTH_BASE * 0.05,
         zIndex: 99,
     }
 });
