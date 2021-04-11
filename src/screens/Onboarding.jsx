@@ -115,7 +115,6 @@ export default function Onboarding({ navigation }) {
                                 </Text>
                             </Button>
                         </Block>
-
                         <Block middle>
                             <Text
                                 color={NowTheme.COLORS.DEFAULT}

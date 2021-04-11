@@ -1,5 +1,4 @@
 /* eslint-disable max-len */
-import DateTimePicker from '@react-native-community/datetimepicker';
 import * as ImagePicker from 'expo-image-picker';
 import {
     Block, Button, Text
@@ -19,16 +18,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import noAvatar from '../../assets/images/no-avatar.png';
 import { CenterLoader, Input } from '../components/uiComponents';
 import {
-    Images, NowTheme, Rx, ScreenName, Utils
+    Images, NowTheme, Rx, ScreenName
 } from '../constants';
 import { MediaHelpers, ToastHelpers } from '../helpers';
 import { setToken } from '../redux/Actions';
 import { rxUtil } from '../utils';
 
-const defaultDate = moment('1996-10-25').format(Utils.TIME_FORMAT_ZULU);
+const defaultDate = '2002-01-01T14:00:00';
 
 export default function CreateAccount(props) {
     const token = useSelector((state) => state.userReducer.token);
+
+    const [listDOBYear, setListDOBYear] = useState([]);
+
     const dispatch = useDispatch();
 
     const { navigation } = props;
@@ -57,11 +59,6 @@ export default function CreateAccount(props) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
     const [isShowDoneMessage, setIsShowDoneMessage] = useState(false);
 
-    let myDate = moment(newUser.dob).format(Utils.TIME_FORMAT.TIME_FROMAT_DDMMYYYY);
-    myDate = myDate.split('-');
-    const newDate = new Date(myDate[2], myDate[1] - 1, myDate[0]);
-    const dobDisplay = new Date(newDate.getTime());
-
     useEffect(() => {
         (async () => {
             if (Platform.OS !== 'web') {
@@ -73,9 +70,53 @@ export default function CreateAccount(props) {
         })();
     }, []);
 
+    useEffect(
+        () => {
+            createListDOBYear();
+        }, []
+    );
+
     const onClickUploadProfileImage = () => {
         MediaHelpers.pickImage(true, [1, 1], (result) => handleUploadImageProfile(result.uri));
     };
+
+    const createListDOBYear = () => {
+        const currentYear = new Date().getFullYear();
+        const DOBStartYear = currentYear - 58;
+        const listDOBYearTemp = [];
+        for (let i = 0; i < 40; i += 1) {
+            listDOBYearTemp.unshift({
+                label: (DOBStartYear + i).toString(),
+                value: (DOBStartYear + i).toString()
+            });
+        }
+        setListDOBYear(listDOBYearTemp);
+    };
+
+    const renderDropdownDOBYear = () => (
+        <DropDownPicker
+            items={listDOBYear}
+            defaultValue={listDOBYear[0].value}
+            containerStyle={[styles.inputWith, {
+                height: 43,
+                marginBottom: 10,
+            }]}
+            selectedtLabelStyle={{
+                color: 'red'
+            }}
+            placeholderStyle={{
+                color: NowTheme.COLORS.MUTED
+            }}
+            itemStyle={{
+                justifyContent: 'flex-start'
+            }}
+            activeLabelStyle={{ color: NowTheme.COLORS.ACTIVE }}
+            onChangeItem={(item) => onChangeDOBYear(item.value)}
+            labelStyle={{
+                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
+            }}
+        />
+    );
 
     const handleUploadImageProfile = (uri) => {
         setIsShowSpinner(true);
@@ -105,6 +146,11 @@ export default function CreateAccount(props) {
         );
     };
 
+    const onChangeDOBYear = (yearInput) => {
+        const user = { ...newUser, dob: `${yearInput}-01-01T14:00:00` };
+        setNewUser(user);
+    };
+
     const validate = () => {
         switch (step) {
             case 1: {
@@ -131,11 +177,6 @@ export default function CreateAccount(props) {
             case 4: {
                 if (newUser.height <= 0) {
                     ToastHelpers.renderToast('Chiều cao không hợp lệ!', 'error');
-                    return false;
-                }
-
-                if (!newUser.hometown) {
-                    ToastHelpers.renderToast('Quê quán không hợp lệ!', 'error');
                     return false;
                 }
 
@@ -182,19 +223,6 @@ export default function CreateAccount(props) {
 
     const onChangeInputHeight = (userHeightInput) => {
         const user = { ...newUser, height: userHeightInput };
-        setNewUser(user);
-    };
-
-    const onChangeInputDOB = (dobInput) => {
-        // format time to use
-        const stringTimeFormated = moment(dobInput.split('-').reverse().join('-')).format(Utils.TIME_FORMAT_ZULU);
-        const user = { ...newUser, dob: stringTimeFormated };
-
-        setNewUser(user);
-    };
-
-    const onChangeInputHometown = (hometownInput) => {
-        const user = { ...newUser, hometown: hometownInput };
         setNewUser(user);
     };
 
@@ -433,7 +461,12 @@ export default function CreateAccount(props) {
                         </Block>
 
                         <Block
-                            style={styles.stepFormContainer}
+                            style={[
+                                styles.stepFormContainer,
+                                {
+                                    zIndex: 99
+                                }
+                            ]}
                         >
                             <Input
                                 placeholderStyle={{
@@ -449,64 +482,11 @@ export default function CreateAccount(props) {
                                 keyboardType="number-pad"
                             />
 
-                            <DateTimePicker
-                                style={[styles.inputWith, {
-                                    borderRadius: 5,
-                                    height: 44,
-                                    marginBottom: 10
-                                }]}
-                                value={dobDisplay}
-                                mode="date"
-                                is24Hour
-                                display="default"
-                                onChange={(event, selectedDate) => { onChangeInputDOB(event, selectedDate); }}
-                            />
+                            {renderDropdownDOBYear()}
 
-                            <DropDownPicker
-                                items={[
-                                    {
-                                        label: 'TP.Hồ Chí Minh', value: '1', hidden: true
-                                    },
-                                    {
-                                        label: 'TP.Đà Nẵng', value: '2'
-                                    },
-                                    {
-                                        label: 'TP.Cần Thơ', value: '3'
-                                    },
-                                    {
-                                        label: 'Đồng Nai', value: '4'
-                                    },
-                                ]}
-                                // defaultValue="1"
-                                containerStyle={[styles.inputWith, {
-                                    height: 44
-                                }]}
-                                selectedtLabelStyle={{
-                                    color: 'red'
-                                }}
-                                placeholderStyle={{
-                                    color: NowTheme.COLORS.MUTED
-                                }}
-                                itemStyle={styles.dropdownItem}
-                                dropDownStyle={{ backgroundColor: '#fafafa' }}
-                                activeLabelStyle={{ color: NowTheme.COLORS.ACTIVE }}
-                                onChangeItem={(item) => onChangeInputHometown(item.label)}
-                                labelStyle={{
-                                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
-                                }}
-                                placeholder="Quê quán"
-                                searchable
-                                searchablePlaceholder="Nhập quê quán..."
-                                searchablePlaceholderTextColor={NowTheme.COLORS.MUTED}
-                                searchableError={() => <Text>Not Found</Text>}
-                            />
                         </Block>
-
                         <Block
                             center
-                            style={{
-                                zIndex: 1
-                            }}
                         >
                             <Button
                                 onPress={() => goToStep(5)}
@@ -707,7 +687,6 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     stepFormContainer: {
-        marginTop: 50,
         height: NowTheme.SIZES.HEIGHT_BASE * 0.35,
         alignItems: 'center'
     },
