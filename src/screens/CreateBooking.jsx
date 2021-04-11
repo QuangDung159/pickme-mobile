@@ -239,6 +239,10 @@ export default function CreateBooking({ route, navigation }) {
             const startTimeArr = startTimeStr.split(':');
             startTimeArr[0] = data;
             setStartTimeStr(startTimeArr.join(':'));
+
+            const endTimeArr = endTimeStr.split(':');
+            endTimeArr[0] = +data + 2;
+            setEndTimeStr(endTimeArr.join(':'));
         } else {
             const endTimeArr = endTimeStr.split(':');
             endTimeArr[0] = data;
@@ -251,6 +255,10 @@ export default function CreateBooking({ route, navigation }) {
             const startTimeArr = startTimeStr.split(':');
             startTimeArr[1] = data;
             setStartTimeStr(startTimeArr.join(':'));
+
+            const endTimeArr = endTimeStr.split(':');
+            endTimeArr[1] = data;
+            setEndTimeStr(endTimeArr.join(':'));
         } else {
             const endTimeArr = endTimeStr.split(':');
             endTimeArr[1] = data;

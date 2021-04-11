@@ -19,6 +19,13 @@ export default function SubInfoProfile({ user }) {
                 iconFamily={IconFamily.FONT_AWESOME}
                 content={moment(user.dob).format('DD-MM-YYYY').toString()}
             />
+            <ProfileInfoItem
+                fontSize={NowTheme.SIZES.FONT_H2}
+                iconName="diamond"
+                iconFamily={IconFamily.SIMPLE_LINE_ICONS}
+                content={user.walletAmount}
+            />
+
         </>
     );
 }
