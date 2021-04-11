@@ -101,7 +101,9 @@ export default function Notification({ navigation }) {
                 {isShowSpinner ? (
                     <CenterLoader size="large" />
                 ) : (
-                    <Block>
+                    <Block
+                        flex
+                    >
                         {renderListNoti()}
                     </Block>
                 )}

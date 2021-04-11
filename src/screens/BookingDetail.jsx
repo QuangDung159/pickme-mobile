@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import {
     Alert, Modal, RefreshControl, ScrollView, StyleSheet
 } from 'react-native';
+import DropDownPicker from 'react-native-dropdown-picker';
 import { AirbnbRating } from 'react-native-ratings';
 import { useDispatch, useSelector } from 'react-redux';
 import { CardBooking } from '../components/bussinessComponents';
@@ -15,6 +16,12 @@ import BookingProgressFlow from '../containers/BookingProgressFlow';
 import { ToastHelpers } from '../helpers';
 import { setPersonTabActiveIndex } from '../redux/Actions';
 import { rxUtil } from '../utils';
+
+const reasonDropdownArr = [
+    { label: 'Bận đột xuất', value: 0 },
+    { label: 'Sai thông tin', value: 1 },
+    { label: 'Lý do khác', value: 2 }
+];
 
 export default function BookingDetail({
     route: {
@@ -33,7 +40,7 @@ export default function BookingDetail({
     const [modalReasonVisible, setModalReasonVisible] = useState(false);
     const [ratingValue, setRatingValue] = useState(4);
     const [reportDesc, setReportDesc] = useState();
-    const [reasonDesc, setReasonDesc] = useState();
+    const [reasonDesc, setReasonDesc] = useState(reasonDropdownArr[0].label);
 
     const token = useSelector((state) => state.userReducer.token);
 
@@ -83,6 +90,7 @@ export default function BookingDetail({
     };
 
     const sendRequestToCancelBooking = () => {
+        setIsShowSpinner(true);
         rxUtil(
             `${Rx.BOOKING.CANCEL_BOOKING}/${bookingId}`,
             'POST',
@@ -106,10 +114,6 @@ export default function BookingDetail({
                 ToastHelpers.renderToast(errMessage, 'error');
             }
         );
-    };
-
-    const onCancelBooking = () => {
-        setModalReasonVisible(true);
     };
 
     const onClickCompleteBooking = () => {
@@ -166,10 +170,6 @@ export default function BookingDetail({
         setReportDesc(reportInput);
     };
 
-    const onChangeReason = (reasonDescInput) => {
-        setReasonDesc(reasonDescInput);
-    };
-
     const convertMinutesToUnix = (minutes) => moment(booking.date)
         .startOf('day')
         .add(minutes, 'minutes')
@@ -207,8 +207,8 @@ export default function BookingDetail({
             if (booking.status === BookingStatus.SCHEDULING) {
                 return (
                     <>
-                        {renderConfirmPaymentButton(0.44)}
                         {renderCancelBooking(0.44)}
+                        {renderConfirmPaymentButton(0.44)}
                     </>
                 );
             }
@@ -328,11 +328,39 @@ export default function BookingDetail({
         </Modal>
     );
 
+    const renderReasonDropdown = () => (
+        <DropDownPicker
+            items={reasonDropdownArr}
+            defaultValue={reasonDropdownArr[0].value}
+            containerStyle={[styles.inputWith, {
+                height: 43,
+                marginBottom: 10
+            }]}
+            selectedtLabelStyle={{
+                color: 'red'
+            }}
+            placeholderStyle={{
+                color: NowTheme.COLORS.MUTED
+            }}
+            itemStyle={{
+                justifyContent: 'flex-start'
+            }}
+            activeLabelStyle={{ color: NowTheme.COLORS.ACTIVE }}
+            onChangeItem={(item) => setReasonDesc(item.label)}
+            labelStyle={{
+                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
+            }}
+        />
+    );
+
     const renderReasonCancelBookingModal = () => (
         <Modal
             animationType="slide"
             transparent
             visible={modalReasonVisible}
+            style={{
+                width: NowTheme.SIZES.WIDTH_BASE * 0.9
+            }}
         >
             <ScrollView
                 showsVerticalScrollIndicator={false}
@@ -346,26 +374,44 @@ export default function BookingDetail({
                                 marginVertical: 10
                             }}
                         >
-                            Vui lòng nhập lý do bạn muốn huỷ hẹn
+                            Vui lòng chọn lý do
                         </Text>
-                        <Input
-                            style={[styles.inputWith, {
-                                borderRadius: 5,
-                            }]}
-                            onChangeText={(reasonDescInput) => onChangeReason(reasonDescInput)}
-                            value={reasonDesc}
-                            placeholder="Nhập lý do..."
-                        />
-                        <Block center>
+                        {renderReasonDropdown()}
+                        <Block
+                            middle
+                            row
+                            style={{
+                                width: NowTheme.SIZES.WIDTH_BASE * 0.9
+                            }}
+                            space="between"
+                        >
                             <Button
                                 onPress={() => {
                                     sendRequestToCancelBooking();
                                     setModalReasonVisible(false);
                                 }}
-                                style={{ marginVertical: 10 }}
+                                style={{
+                                    margin: 0,
+                                    width: NowTheme.SIZES.WIDTH_BASE * 0.44
+                                }}
                                 shadowless
+                                color={
+                                    NowTheme.COLORS.DEFAULT
+                                }
                             >
                                 Xác nhận huỷ
+                            </Button>
+                            <Button
+                                onPress={() => {
+                                    setModalReasonVisible(false);
+                                }}
+                                style={{
+                                    margin: 0,
+                                    width: NowTheme.SIZES.WIDTH_BASE * 0.44
+                                }}
+                                shadowless
+                            >
+                                Cân nhắc lại
                             </Button>
                         </Block>
                     </Block>
@@ -439,7 +485,7 @@ export default function BookingDetail({
     const renderCancelBooking = (width) => (
         <Button
             onPress={() => {
-                renderAlertForCustomer();
+                setModalReasonVisible(true);
             }}
             shadowless
             color={NowTheme.COLORS.DEFAULT}
@@ -465,27 +511,6 @@ export default function BookingDetail({
         >
             Thanh toán
         </Button>
-    );
-
-    const renderAlertForCustomer = () => (
-        Alert.alert(
-            'Huỷ bỏ?',
-            'Bạn có chắc là muốn huỷ hẹn?',
-            [
-                {
-                    text: 'Cân nhắc lại',
-                    onPress: () => {},
-                    style: 'cancel'
-                },
-                {
-                    text: 'Tôi muốn huỷ hẹn',
-                    onPress: () => {
-                        onCancelBooking();
-                    }
-                }
-            ],
-            { cancelable: false }
-        )
     );
 
     try {
@@ -621,5 +646,8 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 5
+    },
+    inputWith: {
+        width: NowTheme.SIZES.WIDTH_BASE * 0.9,
     },
 });
