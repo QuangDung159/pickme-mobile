@@ -58,19 +58,6 @@ export default function UserInformation({ navigation }) {
         );
     };
 
-    const refreshExpoTokenAPI = () => {
-        rxUtil(
-            Rx.USER.UPDATE_EXPO_TOKEN,
-            'POST',
-            {
-                token: ''
-            },
-            {
-                Authorization: token,
-            }
-        );
-    };
-
     const handleOnPickAvatar = (uri) => {
         setIsShowSpinner(true);
 
@@ -113,7 +100,6 @@ export default function UserInformation({ navigation }) {
             index: 0,
             routes: [{ name: ScreenName.ONBOARDING }],
         });
-        refreshExpoTokenAPI();
         dispatch(resetStoreSignOut());
         SecureStore.setItemAsync('api_token', '')
             .then(console.log('api_token was cleaned!'));
