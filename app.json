@@ -24,7 +24,7 @@
         "foregroundImage": "./assets/images/icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.dragongroup.pickmecustomer01",
+      "package": "com.dragongroup.pickmecustomer",
       "googleServicesFile": "./google-services.json",
       "useNextNotificationsApi":true
     },
