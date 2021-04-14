@@ -71,3 +71,6 @@ npm-debug.*
 *.orig.*
 .env
 node_modules
+
+# Google Service
+google-services.json
