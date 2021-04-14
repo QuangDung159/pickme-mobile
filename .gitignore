@@ -72,5 +72,5 @@ npm-debug.*
 .env
 node_modules
 
-# Google Service Account
-pc-api-7392449514421331050-14-f3fa346ff308.json
+# Google Service
+google-services.json
