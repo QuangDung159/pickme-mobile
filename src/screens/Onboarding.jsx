@@ -78,13 +78,6 @@ export default function Onboarding({ navigation }) {
                                 >
                                     PickMe
                                 </Text>
-                                <Text
-                                    color={NowTheme.COLORS.DEFAULT}
-                                    size={NowTheme.SIZES.FONT_H4}
-                                    style={{ fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR }}
-                                >
-                                    Dành cho khách hàng
-                                </Text>
                             </Block>
                             <Button
                                 shadowless
