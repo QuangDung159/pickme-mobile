@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CenterLoader, IconCustom, Input } from '../components/uiComponents';
 import { GraphQueryString, IconFamily, NowTheme } from '../constants';
 import { ToastHelpers } from '../helpers';
-import { setChattingWith, setNumberMessageUnread } from '../redux/Actions';
+import { setChattingWith, setMessageListened, setNumberMessageUnread } from '../redux/Actions';
 import { socketRequestUtil } from '../utils';
 
 export default function Message({ navigation, route }) {
@@ -80,9 +80,7 @@ export default function Message({ navigation, route }) {
                     12,
                     (data) => {
                         setChattingWith(toUserId);
-                        this.setState({
-                            listMessageFromAPI: data.data.data.messages
-                        });
+                        setListMessageFromAPI(data.data.data.messages);
                     }
                 );
             }
