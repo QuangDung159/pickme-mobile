@@ -21,12 +21,9 @@ import { rxUtil } from '../utils';
 export default function SignUp(props) {
     const [modalVisible, setModalVisible] = useState(false);
     const [step, setStep] = useState(1);
-    // eslint-disable-next-line no-unused-vars
     const [phoneNumber, setPhoneNumber] = useState('');
-    const [username, setUsername] = useState('');
     const [otp, setOtp] = useState('');
     const [password, setPassword] = useState('');
-    const [rePassword, setRePassword] = useState('');
     const [onCheckedDisclaimer, setOnCheckedDisclaimer] = useState(false);
     const [isShowSpinner, setIsShowSpinner] = useState(false);
 
@@ -35,7 +32,7 @@ export default function SignUp(props) {
 
     const loginWithSignUpInfo = () => {
         const data = {
-            username,
+            username: phoneNumber,
             password
         };
 
@@ -45,78 +42,90 @@ export default function SignUp(props) {
             data,
             {},
             (res) => {
-                onLoginSucess(res);
+                onLoginSucess(res.data.data);
             },
-            () => {}
+            () => {
+                setIsShowSpinner(false);
+                ToastHelpers.renderToast('Lỗi hệ thống!', 'error');
+            },
+            () => {
+                setIsShowSpinner(false);
+                ToastHelpers.renderToast('Lỗi hệ thống!', 'error');
+            }
         );
     };
 
-    const onLoginSucess = (res) => {
-        dispatch(setToken(res.data.data));
+    const onLoginSucess = (tokenFromAPI) => {
+        dispatch(setToken(tokenFromAPI));
         navigation.navigate(ScreenName.CREATE_ACCOUNT);
-        setIsShowSpinner(false);
         Toast.show({
             type: 'success',
             text1: 'Tạo tài khoản thành công!'
         });
     };
 
-    const onSucessSubmitSignUp = () => {
-        // do login and get token
-        loginWithSignUpInfo();
-    };
-
-    const onClickSubmit = () => {
-        if (validate()) {
-            const data = { password, PhoneNumber: phoneNumber, username };
-
-            if (username && password) {
-                setIsShowSpinner(true);
-                rxUtil(Rx.AUTHENTICATION.SIGN_UP, 'POST', data, {
-                    'Content-Type': 'application/json'
-                },
-                () => onSucessSubmitSignUp(),
-                () => {
-                    Toast.show({
-                        type: 'error',
-                        text1: 'Lỗi hệ thống, vui lòng thử lại!'
-                    });
-                    setIsShowSpinner(false);
-                },
-                () => {
-                    Toast.show({
-                        type: 'error',
-                        text1: 'Lỗi hệ thống, vui lòng thử lại!'
-                    });
-                    setIsShowSpinner(false);
-                });
-            } else {
-                Toast.show({
-                    type: 'error',
-                    text1: 'Bạn chưa điền đủ thông tin!'
-                });
-                setIsShowSpinner(false);
-            }
-        }
-    };
-
-    const validate = () => {
-        if (!username) {
-            ToastHelpers.renderToast('Tên đăng nhập không hợp lệ!', 'error');
-            return false;
-        }
-
-        if (!password) {
-            ToastHelpers.renderToast('Mật khẩu không hợp lệ!', 'error');
-            return false;
+    const onClickGetOTP = () => {
+        if (!phoneNumber) {
+            ToastHelpers.renderToast('Số điện thoại không hợp lệ!', 'error');
+            return;
         }
 
         if (!onCheckedDisclaimer) {
             ToastHelpers.renderToast('Bạn vui lòng đồng ý với các Điều khoản và Điều kiện.', 'error');
-            return false;
+            return;
         }
 
-        return true;
+        setIsShowSpinner(true);
+        rxUtil(
+            Rx.USER.GET_OTP_REGISTER,
+            'POST',
+            {
+                phoneNum: phoneNumber
+            },
+            null,
+            (res) => {
+                ToastHelpers.renderToast(res.data.message, 'success');
+                setStep(2);
+
+                // in testing, will remove when prod
+                setOtp(res.data.data.code);
+                setIsShowSpinner(false);
+            },
+            () => {
+                setIsShowSpinner(false);
+            },
+            () => {
+                setIsShowSpinner(false);
+            }
+        );
+    };
+
+    const onClickSubmitRegister = () => {
+        if (!otp) {
+            ToastHelpers.renderToast('Mã OTP không hợp lệ!', 'error');
+            return;
+        }
+
+        if (!password) {
+            ToastHelpers.renderToast('Mật khẩu không hợp lệ!', 'error');
+            return;
+        }
+
+        const data = { password, phoneNum: phoneNumber, code: otp };
+
+        setIsShowSpinner(true);
+        rxUtil(Rx.AUTHENTICATION.SIGN_UP, 'POST', data, {
+            'Content-Type': 'application/json'
+        },
+        () => loginWithSignUpInfo(),
+        () => {
+            ToastHelpers.renderToast('Lỗi hệ thống', 'error');
+            setIsShowSpinner(false);
+        },
+        (res) => {
+            ToastHelpers.renderToast(res, 'error');
+            setIsShowSpinner(false);
+        });
     };
 
     const renderSignUpViewByStep = () => {
@@ -124,105 +133,59 @@ export default function SignUp(props) {
             case 1: {
                 return (
                     <>
-                        {isShowSpinner ? (
-                            <CenterLoader />
-                        ) : (
-                            <>
-                                <Block style={styles.stepSessionContainer}>
-                                    <Block
-                                        style={styles.formInputContainer}
-                                    >
-                                        <Input
-                                            style={styles.input}
-                                            placeholder="Nhập tên đăng nhập..."
-                                            value={username}
-                                            onChangeText={(usernameInput) => setUsername(usernameInput)}
-                                        />
-
-                                        <Input
-                                            placeholder="Nhập mật khẩu..."
-                                            style={styles.input}
-                                            password
-                                            viewPass
-                                            value={password}
-                                            onChangeText={(passwordInput) => setPassword(passwordInput)}
-                                        />
-                                    </Block>
-
-                                    <Block
-                                        style={styles.disclaimerContainer}
-                                        row
-                                        width={NowTheme.SIZES.WIDTH_BASE * 0.77}
-                                        height={NowTheme.SIZES.HEIGHT_BASE * 0.2}
-                                    >
-                                        <>
-                                            <Checkbox
-                                                checkboxStyle={styles.checkbox}
-                                                color={NowTheme.COLORS.PRIMARY}
-                                                style={styles.checkboxContainer}
-                                                initialValue={onCheckedDisclaimer}
-                                                label=""
-                                                onChange={(checked) => {
-                                                    setOnCheckedDisclaimer(checked);
-                                                }}
-                                            />
-                                            <Block
-                                                flex
-                                                style={styles.disclaimerAgreeContainer}
-                                            >
-                                                <TouchableWithoutFeedback
-                                                    onPress={() => {
-                                                        setModalVisible(true);
-                                                    }}
-                                                >
-                                                    <Text
-                                                        fontFamily={NowTheme.FONT.MONTSERRAT_REGULAR}
-                                                        color={NowTheme.COLORS.DEFAULT}
-                                                    >
-                                                        Tôi đồng ý với các Điều khoản và Điều kiện
-                                                    </Text>
-                                                </TouchableWithoutFeedback>
-                                            </Block>
-                                        </>
-                                    </Block>
-                                </Block>
-
-                                <Block center>
-                                    <Button
-                                        onPress={() => onClickSubmit(navigation)}
-                                        style={styles.button}
-                                        shadowless
-                                    >
-                                        Xác nhận
-                                    </Button>
-                                </Block>
-                            </>
-                        )}
-
-                    </>
-                );
-            }
-            case 2: {
-                return (
-                    <>
                         <Block style={styles.stepSessionContainer}>
                             <Block
-                                row
                                 style={styles.formInputContainer}
                             >
                                 <Input
                                     style={styles.input}
-                                    keyboardType="number-pad"
-                                    value={otp}
-                                    placeholder="Nhập mã xác thực..."
-                                    onChangeText={(otpInput) => setOtp(otpInput)}
+                                    placeholder="Nhập số diện thoại..."
+                                    value={phoneNumber}
+                                    onChangeText={(phoneNumberInput) => setPhoneNumber(phoneNumberInput)}
                                 />
+                            </Block>
+
+                            <Block
+                                style={styles.disclaimerContainer}
+                                row
+                                width={NowTheme.SIZES.WIDTH_BASE * 0.77}
+                                height={NowTheme.SIZES.HEIGHT_BASE * 0.2}
+                            >
+                                <>
+                                    <Checkbox
+                                        checkboxStyle={styles.checkbox}
+                                        color={NowTheme.COLORS.PRIMARY}
+                                        style={styles.checkboxContainer}
+                                        initialValue={onCheckedDisclaimer}
+                                        label=""
+                                        onChange={(checked) => {
+                                            setOnCheckedDisclaimer(checked);
+                                        }}
+                                    />
+                                    <Block
+                                        flex
+                                        style={styles.disclaimerAgreeContainer}
+                                    >
+                                        <TouchableWithoutFeedback
+                                            onPress={() => {
+                                                setModalVisible(true);
+                                            }}
+                                        >
+                                            <Text
+                                                fontFamily={NowTheme.FONT.MONTSERRAT_REGULAR}
+                                                color={NowTheme.COLORS.DEFAULT}
+                                            >
+                                                Tôi đồng ý với các Điều khoản và Điều kiện
+                                            </Text>
+                                        </TouchableWithoutFeedback>
+                                    </Block>
+                                </>
                             </Block>
                         </Block>
 
                         <Block center>
                             <Button
-                                onPress={() => { setStep(3); }}
+                                onPress={() => onClickGetOTP()}
                                 style={styles.button}
                                 shadowless
                             >
@@ -232,52 +195,41 @@ export default function SignUp(props) {
                     </>
                 );
             }
-            case 3: {
+            case 2: {
                 return (
                     <>
-                        {isShowSpinner ? (
-                            <CenterLoader />
-                        ) : (
-                            <>
-                                <Block style={styles.stepSessionContainer}>
-                                    <Block
-                                        style={styles.formInputContainer}
-                                    >
+                        <Block style={styles.stepSessionContainer}>
+                            <Block
+                                style={styles.formInputContainer}
+                            >
+                                <Input
+                                    style={styles.input}
+                                    keyboardType="number-pad"
+                                    value={otp}
+                                    placeholder="Nhập mã xác thực..."
+                                    onChangeText={(otpInput) => setOtp(otpInput)}
+                                />
 
-                                        {/* Why this shit is here, try to remove and you will see the magic, LOL */}
-                                        <></>
-                                        {/* Why this shit is here, try to remove and you will see the magic, LOL */}
+                                <Input
+                                    placeholder="Nhập mật khẩu..."
+                                    style={styles.input}
+                                    password
+                                    viewPass
+                                    value={password}
+                                    onChangeText={(passwordInput) => setPassword(passwordInput)}
+                                />
+                            </Block>
+                        </Block>
 
-                                        <Input
-                                            placeholder="Nhập mật khẩu..."
-                                            style={styles.input}
-                                            password
-                                            viewPass
-                                            value={password}
-                                            onChangeText={(passwordInput) => setPassword(passwordInput)}
-                                        />
-                                        <Input
-                                            placeholder="Nhập lại mật khẩu..."
-                                            style={styles.input}
-                                            password
-                                            viewPass
-                                            value={rePassword}
-                                            onChangeText={(rePasswordInput) => setRePassword(rePasswordInput)}
-                                        />
-                                    </Block>
-                                </Block>
-
-                                <Block center>
-                                    <Button
-                                        onPress={() => onClickSubmit(navigation)}
-                                        style={styles.button}
-                                        shadowless
-                                    >
-                                        Xác nhận
-                                    </Button>
-                                </Block>
-                            </>
-                        )}
+                        <Block center>
+                            <Button
+                                onPress={() => onClickSubmitRegister()}
+                                style={styles.button}
+                                shadowless
+                            >
+                                Xác nhận
+                            </Button>
+                        </Block>
                     </>
                 );
             }
@@ -369,7 +321,14 @@ export default function SignUp(props) {
                                 </Block>
 
                                 {/* render from this shit */}
-                                {renderSignUpViewByStep()}
+                                {isShowSpinner ? (
+                                    <CenterLoader size="large" />
+                                ) : (
+                                    <>
+                                        {renderSignUpViewByStep()}
+                                    </>
+                                )}
+
                             </Block>
                         </Block>
                     </KeyboardAwareScrollView>

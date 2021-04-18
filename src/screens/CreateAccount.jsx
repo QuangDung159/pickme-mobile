@@ -37,11 +37,7 @@ export default function CreateAccount(props) {
         hometown: '',
         fullName: '',
         dob: defaultDate,
-        location: '',
-        height: 0,
-        weight: 0,
         description: '',
-        phone: '',
         address: 'Việt Nam',
         interests: ''
     });
@@ -159,11 +155,6 @@ export default function CreateAccount(props) {
                 return true;
             }
             case 4: {
-                if (newUser.height <= 0) {
-                    ToastHelpers.renderToast('Chiều cao không hợp lệ!', 'error');
-                    return false;
-                }
-
                 if (!validateYearsOld(newUser.dob)) {
                     ToastHelpers.renderToast('Bạn phải đủ 16 tuổi!', 'error');
                     return false;
@@ -222,18 +213,20 @@ export default function CreateAccount(props) {
             ToastHelpers.renderToast('Ảnh không hợp lệ!', 'error');
         } else {
             const {
-                fullName, description, dob, height, earningExpected, weight, address, interests
+                fullName, description, dob, address, interests,
+                hometown
             } = newUser;
 
             const data = {
                 fullName,
                 description,
                 dob,
-                height: +height,
-                earningExpected,
-                weight: +weight,
+                height: 0,
+                earningExpected: 0,
+                weight: 0,
                 address,
-                interests
+                interests,
+                homeTown: hometown
             };
 
             const headers = {
