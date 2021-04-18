@@ -101,12 +101,12 @@ export default function UpdateInfoAccount(props) {
         setNewUser({ ...newUser, fullName: nameInput });
     };
 
-    const onChangeHeight = (heightInput) => {
-        setNewUser({ ...newUser, height: heightInput.toString() });
+    const onChangeHometown = (hometownInput) => {
+        setNewUser({ ...newUser, homeTown: hometownInput });
     };
 
-    const onChangeWeight = (weightInput) => {
-        setNewUser({ ...newUser, weight: weightInput.toString() });
+    const onChangeInterests = (interestsInput) => {
+        setNewUser({ ...newUser, interests: interestsInput });
     };
 
     const onChangeDescription = (descriptionInput) => {
@@ -116,23 +116,11 @@ export default function UpdateInfoAccount(props) {
     const validate = () => {
         const {
             fullName,
-            height,
-            weight,
             description,
         } = newUser;
 
         if (!fullName) {
             ToastHelpers.renderToast('Tên của bạn không hợp lệ!', 'error');
-            return false;
-        }
-
-        if (!height || height <= 0) {
-            ToastHelpers.renderToast('Chiều cao không hợp lệ!', 'error');
-            return false;
-        }
-
-        if (!weight || weight <= 10) {
-            ToastHelpers.renderToast('Cân nặng không hợp lệ!', 'error');
             return false;
         }
 
@@ -152,6 +140,8 @@ export default function UpdateInfoAccount(props) {
             height,
             weight,
             earningExpected,
+            homeTown,
+            interests
         } = newUser;
 
         if (!validate()) {
@@ -164,7 +154,9 @@ export default function UpdateInfoAccount(props) {
             dob,
             height,
             earningExpected,
-            weight
+            weight,
+            homeTown,
+            interests
         };
 
         const headers = {
@@ -235,7 +227,7 @@ export default function UpdateInfoAccount(props) {
         </Block>
     );
 
-    const renderInputHeight = (user) => (
+    const renderInputHometown = () => (
         <Block
             middle
             style={{
@@ -250,7 +242,7 @@ export default function UpdateInfoAccount(props) {
                         fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
                     }}
                 >
-                    Chiều cao (cm):
+                    Quê quán:
                 </Text>
 
                 <Input
@@ -260,17 +252,16 @@ export default function UpdateInfoAccount(props) {
                         width: NowTheme.SIZES.WIDTH_BASE * 0.9,
                         height: 44
                     }}
-                    keyboardType="number-pad"
                     color={NowTheme.COLORS.HEADER}
-                    placeholder="Nhập chiều cao..."
-                    value={newUser.height !== undefined ? newUser.height.toString() : user.height.toString()}
-                    onChangeText={(input) => onChangeHeight(input)}
+                    placeholder="Nhập quê quán..."
+                    value={newUser.homeTown}
+                    onChangeText={(input) => onChangeHometown(input)}
                 />
             </Block>
         </Block>
     );
 
-    const renderInputWeight = (user) => (
+    const renderInputInterests = () => (
         <Block
             middle
             style={{
@@ -285,7 +276,7 @@ export default function UpdateInfoAccount(props) {
                         fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
                     }}
                 >
-                    Cân nặng (kg):
+                    Sở thích:
                 </Text>
 
                 <Input
@@ -297,9 +288,9 @@ export default function UpdateInfoAccount(props) {
                     }}
                     keyboardType="number-pad"
                     color={NowTheme.COLORS.HEADER}
-                    placeholder="Nhập cân nặng..."
-                    value={newUser.weight !== undefined ? newUser.weight.toString() : user.weight.toString()}
-                    onChangeText={(input) => onChangeWeight(input)}
+                    placeholder="Nhập sở thích..."
+                    value={newUser.interests}
+                    onChangeText={(input) => onChangeInterests(input)}
                 />
             </Block>
         </Block>
@@ -414,9 +405,9 @@ export default function UpdateInfoAccount(props) {
                             }}
                         >
                             {renderInputName()}
-                            {renderInputHeight(currentUser)}
-                            {renderInputWeight(currentUser)}
-                            {renderInputDOB(currentUser)}
+                            {renderInputHometown()}
+                            {renderInputDOB()}
+                            {renderInputInterests()}
                             {renderInputDescription()}
                             {renderButtonPanel()}
                         </Block>
