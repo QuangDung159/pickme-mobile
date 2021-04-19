@@ -43,17 +43,13 @@ export default function Wallet({ navigation, route }) {
 
     const renderHistoryItem = (item) => {
         const { type } = item;
-        const backgroundColor = type === 'CashIn'
-            ? NowTheme.COLORS.LIST_ITEM_BACKGROUND_2 : NowTheme.COLORS.LIST_ITEM_BACKGROUND_1;
+        // const backgroundColor = type === 'CashIn'
+        //     ? NowTheme.COLORS.LIST_ITEM_BACKGROUND_2 : NowTheme.COLORS.LIST_ITEM_BACKGROUND_1;
 
         return (
         // 1: cash in
         // 0: cash out
-            <Block
-                style={{
-                    backgroundColor
-                }}
-            >
+            <Block>
                 <Block
                     row
                     center
