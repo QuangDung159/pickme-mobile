@@ -2,25 +2,34 @@ import { Block, Text } from 'galio-framework';
 import React, { useEffect, useState } from 'react';
 import { FlatList, RefreshControl } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { NowTheme, Rx, ScreenName } from '../../constants';
 import { ToastHelpers } from '../../helpers';
+import { setListBookingStore } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
 import { CenterLoader, Line } from '../uiComponents';
 import CardBooking from './CardBooking';
 
 export default function BookingList({ navigation }) {
-    const [listBooking, setListBooking] = useState([]);
-    const [isShowSpinner, setIsShowSpinner] = useState(true);
+    const [isShowSpinner, setIsShowSpinner] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
 
     const token = useSelector((state) => state.userReducer.token);
+    const listBookingStore = useSelector((state) => state.userReducer.listBookingStore);
+
+    const dispatch = useDispatch();
 
     useEffect(
         () => {
-            getListBooking();
-            const eventTriggerGetListBooking = navigation.addListener('focus', () => {
+            if (!listBookingStore || listBookingStore.length === 0) {
+                setIsShowSpinner(true);
                 getListBooking();
+            }
+
+            const eventTriggerGetListBooking = navigation.addListener('focus', () => {
+                if (!listBookingStore || listBookingStore.length === 0) {
+                    getListBooking();
+                }
             });
 
             return eventTriggerGetListBooking;
@@ -38,7 +47,7 @@ export default function BookingList({ navigation }) {
                 Authorization: token
             },
             (res) => {
-                setListBooking(res.data.data);
+                dispatch(setListBookingStore(res.data.data));
                 setIsShowSpinner(false);
                 setRefreshing(false);
             },
@@ -60,7 +69,7 @@ export default function BookingList({ navigation }) {
 
     const renderListBooking = () => (
         <>
-            {listBooking && listBooking.length !== 0 ? (
+            {listBookingStore && listBookingStore.length !== 0 ? (
                 <FlatList
                     showsVerticalScrollIndicator={false}
                     contentContainerStyle={{
@@ -73,7 +82,7 @@ export default function BookingList({ navigation }) {
                             onRefresh={() => onRefresh()}
                         />
                     )}
-                    data={listBooking}
+                    data={listBookingStore}
                     keyExtractor={(item) => item.id}
                     renderItem={({ item }) => (
                         <TouchableWithoutFeedback

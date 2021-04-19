@@ -9,7 +9,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Rx, ScreenName } from '../../constants';
 import {
     setCurrentUser,
-    setExpoToken, setListCashHistoryStore, setListNotification, setNumberNotificationUnread, setPersonTabActiveIndex
+    setExpoToken,
+    setListBookingStore,
+    setListCashHistoryStore,
+    setListNotification,
+    setNumberNotificationUnread,
+    setPersonTabActiveIndex
 } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
 
@@ -50,12 +55,15 @@ export default function ExpoNotification() {
                     const notiType = notificationReceived.request?.content?.data?.Type;
 
                     switch (notiType) {
+                        case 1: {
+                            getListBooking();
+                            break;
+                        }
                         case 2: {
                             fetchCurrentUserInfo();
                             fetchHistory();
                             break;
                         }
-
                         default: {
                             break;
                         }
@@ -146,6 +154,22 @@ export default function ExpoNotification() {
                 // set store
                 dispatch(setListNotification(res.data.data));
                 countNumberNotificationUnread(res.data.data);
+            }
+        );
+    };
+
+    const getListBooking = () => {
+        const pagingStr = '?pageIndex=1&pageSize=100';
+
+        rxUtil(
+            `${Rx.BOOKING.GET_MY_BOOKING_AS_CUSTOMER}${pagingStr}`,
+            'GET',
+            null,
+            {
+                Authorization: token
+            },
+            (res) => {
+                dispatch(setListBookingStore(res.data.data));
             }
         );
     };
