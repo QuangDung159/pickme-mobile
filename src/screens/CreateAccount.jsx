@@ -34,23 +34,12 @@ export default function CreateAccount(props) {
     const { navigation } = props;
 
     const [newUser, setNewUser] = useState({
-        userId: 5,
         hometown: '',
         fullName: '',
-        username: '',
-        email: '',
         dob: defaultDate,
-        gender: '',
-        location: '',
-        charge: 600,
-        rating: 4.7,
-        isVerify: false,
-        walletAmount: '',
-        height: '',
-        weight: '',
         description: '',
-        phone: '',
-        image: []
+        address: 'Việt Nam',
+        interests: ''
     });
     const [step, setStep] = useState(1);
     const [image, setImage] = useState(null);
@@ -152,7 +141,7 @@ export default function CreateAccount(props) {
                 return true;
             }
             case 2: {
-                if (!newUser.location) {
+                if (!newUser.hometown) {
                     ToastHelpers.renderToast('Nơi sinh sống/làm việc không hợp lệ!', 'error');
                     return false;
                 }
@@ -166,11 +155,6 @@ export default function CreateAccount(props) {
                 return true;
             }
             case 4: {
-                if (newUser.height <= 0) {
-                    ToastHelpers.renderToast('Chiều cao không hợp lệ!', 'error');
-                    return false;
-                }
-
                 if (!validateYearsOld(newUser.dob)) {
                     ToastHelpers.renderToast('Bạn phải đủ 16 tuổi!', 'error');
                     return false;
@@ -202,8 +186,8 @@ export default function CreateAccount(props) {
         setNewUser(user);
     };
 
-    const onChangeInputLocation = (locationInput) => {
-        const user = { ...newUser, location: locationInput };
+    const onChangeInputHometown = (hometownInput) => {
+        const user = { ...newUser, hometown: hometownInput };
         setNewUser(user);
     };
 
@@ -212,8 +196,8 @@ export default function CreateAccount(props) {
         setNewUser(user);
     };
 
-    const onChangeInputHeight = (userHeightInput) => {
-        const user = { ...newUser, height: userHeightInput };
+    const onChangeInputInterests = (userInterestsInput) => {
+        const user = { ...newUser, interests: userInterestsInput };
         setNewUser(user);
     };
 
@@ -228,13 +212,21 @@ export default function CreateAccount(props) {
         if (!image) {
             ToastHelpers.renderToast('Ảnh không hợp lệ!', 'error');
         } else {
+            const {
+                fullName, description, dob, address, interests,
+                hometown
+            } = newUser;
+
             const data = {
-                fullName: newUser.fullName,
-                description: newUser.description,
-                dob: newUser.dob,
-                height: +newUser.height,
+                fullName,
+                description,
+                dob,
+                height: 0,
                 earningExpected: 0,
-                weight: 0
+                weight: 0,
+                address,
+                interests,
+                homeTown: hometown
             };
 
             const headers = {
@@ -327,51 +319,22 @@ export default function CreateAccount(props) {
                                 size={24}
                             >
 
-                                {!newUser.location
-                                    ? 'Nơi bạn sinh sống, làm việc?'
-                                    : `${newUser.location} là một nơi tuyệt vời nhỉ!`}
+                                {!newUser.hometown
+                                    ? 'Quê quán?'
+                                    : `${newUser.hometown} là một nơi tuyệt vời nhỉ!`}
                             </Text>
                         </Block>
 
                         <Block
                             style={styles.stepFormContainer}
                         >
-                            <DropDownPicker
-                                items={[
-                                    {
-                                        label: 'TP.Hồ Chí Minh', value: '1', hidden: true
-                                    },
-                                    {
-                                        label: 'TP.Đà Nẵng', value: '2'
-                                    },
-                                    {
-                                        label: 'TP.Cần Thơ', value: '3'
-                                    },
-                                    {
-                                        label: 'Đồng Nai', value: '4'
-                                    },
-                                ]}
-                                // defaultValue="1"
-                                containerStyle={[styles.inputWith, {
-                                    height: 43,
+                            <Input
+                                style={[styles.inputWith, {
+                                    borderRadius: 5,
                                 }]}
-                                selectedtLabelStyle={{
-                                    color: 'red'
-                                }}
-                                placeholderStyle={{
-                                    color: NowTheme.COLORS.MUTED
-                                }}
-                                itemStyle={styles.dropdownItem}
-                                activeLabelStyle={{ color: NowTheme.COLORS.ACTIVE }}
-                                onChangeItem={(item) => onChangeInputLocation(item.label)}
-                                labelStyle={{
-                                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
-                                }}
-                                placeholder="Nơi sinh sống, làm việc"
-                                searchable
-                                searchablePlaceholder="Nhập nơi sinh sống, làm việc..."
-                                searchablePlaceholderTextColor="gray"
-                                searchableError={() => <Text>Not Found</Text>}
+                                onChangeText={(name) => onChangeInputHometown(name)}
+                                value={newUser.hometown}
+                                placeholder="Nhập quê quán..."
                             />
                         </Block>
 
@@ -466,11 +429,11 @@ export default function CreateAccount(props) {
                                 }}
                                 style={[styles.inputWith, {
                                     borderRadius: 5,
+                                    marginBottom: 10,
                                 }]}
-                                onChangeText={(userHeight) => onChangeInputHeight(userHeight)}
-                                value={newUser.height}
-                                placeholder="Nhập chiều cao (cm)..."
-                                keyboardType="number-pad"
+                                onChangeText={(userInterests) => onChangeInputInterests(userInterests)}
+                                value={newUser.interests}
+                                placeholder="Nhập sở thích của bạn..."
                             />
 
                             {renderDropdownDOBYear()}

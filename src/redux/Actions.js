@@ -3,6 +3,8 @@ import {
     SET_DATA_LISTENED, SET_DEVICE_ID, SET_DEVICE_LOCALE, SET_DEVICE_TIMEZONE,
     SET_EXPO_TOKEN, SET_LIST_BANK,
     SET_LIST_BOOKING_LOCATION,
+    SET_LIST_BOOKING_STORE,
+    SET_LIST_CASH_HISTORY_STORE,
     SET_LIST_CONVERSATION, SET_LIST_NOTIFICATION,
     SET_MESSAGE_LISTENED,
     SET_NAVIGATION,
@@ -124,5 +126,19 @@ export const setPersonTabActiveIndex = (personTabActiveIndex) => ({
     type: SET_PERSON_TAB_ACTIVE_INDEX,
     payload: {
         personTabActiveIndex
+    }
+});
+
+export const setListCashHistoryStore = (listCashHistoryStore) => ({
+    type: SET_LIST_CASH_HISTORY_STORE,
+    payload: {
+        listCashHistoryStore
+    }
+});
+
+export const setListBookingStore = (listBookingStore) => ({
+    type: SET_LIST_BOOKING_STORE,
+    payload: {
+        listBookingStore
     }
 });
