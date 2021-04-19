@@ -1,5 +1,4 @@
 import { Block, Button, Text } from 'galio-framework';
-import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { RefreshControl } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
@@ -12,10 +11,9 @@ import { rxUtil } from '../../utils';
 import { CenterLoader, IconCustom } from '../uiComponents';
 
 export default function Wallet({ navigation, route }) {
-    const [listCashIn, setListCashIn] = useState([]);
-    const [listCashOut, setListCashOut] = useState([]);
     const [isShowSpinner, setIsShowSpinner] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
+    const [listHistory, setListHistory] = useState([]);
 
     const currentUser = useSelector((state) => state.userReducer.currentUser);
     const token = useSelector((state) => state.userReducer.token);
@@ -23,101 +21,25 @@ export default function Wallet({ navigation, route }) {
     useEffect(
         () => {
             setIsShowSpinner(true);
-            getListHistory();
+            fetchHistory();
 
             const eventTriggerGetListHistory = navigation.addListener('focus', () => {
-                getListHistory();
+                fetchHistory();
             });
 
-            // componentWillUnmount
-            // cleanup
             return eventTriggerGetListHistory;
         }, []
     );
 
-    const getListHistory = () => {
-        getListCashIn();
-    };
-
     const onRefresh = () => {
         setRefreshing(true);
-        getListHistory();
-    };
-
-    const getListCashIn = () => {
-        rxUtil(
-            Rx.CASH_REQUEST.GET_LIST_CASH_IN,
-            'GET',
-            null,
-            {
-                Authorization: token
-            },
-            (res) => {
-                setListCashIn(res.data.data);
-                setIsShowSpinner(false);
-                getListCashOut();
-            },
-            () => {
-                setIsShowSpinner(false);
-                setRefreshing(false);
-            },
-            () => {
-                setIsShowSpinner(false);
-                setRefreshing(false);
-            }
-        );
-    };
-
-    const getListCashOut = () => {
-        rxUtil(
-            Rx.CASH_REQUEST.GET_LIST_CASH_OUT,
-            'GET',
-            null,
-            {
-                Authorization: token
-            },
-            (res) => {
-                setIsShowSpinner(false);
-                setListCashOut(res.data.data);
-                setRefreshing(false);
-            },
-            () => {
-                setIsShowSpinner(false);
-                setRefreshing(false);
-            },
-            () => {
-                setIsShowSpinner(false);
-                setRefreshing(false);
-            }
-        );
-    };
-
-    const listCashRequestMapper = (listCash, type) => {
-        listCash.forEach((item) => {
-            // eslint-disable-next-line no-param-reassign
-            item.type = type;
-        });
-    };
-
-    const combineListCashTraffic = () => {
-        listCashRequestMapper(listCashIn, 1);
-        listCashRequestMapper(listCashOut, 0);
-
-        // merge 2 array and re-asign listCashIn
-        const listHistory = listCashIn.concat(listCashOut);
-        shortListHistoryByDate(listHistory);
-
-        return listHistory;
-    };
-
-    const shortListHistoryByDate = (listHistory) => {
-        listHistory.sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate));
+        fetchHistory();
     };
 
     const renderHistoryItem = (item) => {
         const { type } = item;
-        const backgroundColor = type === 1
-            ? NowTheme.COLORS.LIST_ITEM_BACKGROUND_1 : NowTheme.COLORS.LIST_ITEM_BACKGROUND_2;
+        const backgroundColor = type === 'CashIn'
+            ? NowTheme.COLORS.LIST_ITEM_BACKGROUND_2 : NowTheme.COLORS.LIST_ITEM_BACKGROUND_1;
 
         return (
         // 1: cash in
@@ -131,7 +53,7 @@ export default function Wallet({ navigation, route }) {
                     row
                     center
                     style={{
-                        height: NowTheme.SIZES.HEIGHT_BASE * 0.1,
+                        height: NowTheme.SIZES.HEIGHT_BASE * 0.07,
                         width: NowTheme.SIZES.WIDTH_BASE * 0.9,
                         alignSelf: 'center'
                     }}
@@ -141,7 +63,7 @@ export default function Wallet({ navigation, route }) {
                     }}
                     >
                         <IconCustom
-                            name={type === 1 ? 'chevron-circle-right' : 'chevron-circle-left'}
+                            name={type === 'CashIn' ? 'chevron-circle-right' : 'chevron-circle-left'}
                             size={NowTheme.SIZES.FONT_H1}
                             color={NowTheme.COLORS.DEFAULT}
                             family={IconFamily.FONT_AWESOME}
@@ -155,9 +77,8 @@ export default function Wallet({ navigation, route }) {
 
     const renderHistoryItemContent = (historyItem) => {
         const {
-            type, description, owner,
-            createdDate,
-            amount,
+            content, type,
+            amountChanged,
         } = historyItem;
 
         return (
@@ -168,7 +89,7 @@ export default function Wallet({ navigation, route }) {
                     row
                     space="between"
                 >
-                    <Text
+                    {/* <Text
                         color={NowTheme.COLORS.DEFAULT}
                         size={16}
                         style={{
@@ -176,10 +97,24 @@ export default function Wallet({ navigation, route }) {
                         }}
                     >
                         {moment(createdDate).format('DD/MM/YYYY HH:mm:ss')}
-                    </Text>
+                    </Text> */}
+                    <Block
+                        style={{
+                            width: NowTheme.SIZES.WIDTH_BASE * 0.6
+                        }}
+                    >
+                        <Text
+                            color={NowTheme.COLORS.DEFAULT}
+                            size={NowTheme.SIZES.FONT_H2}
+                            fontFamily={NowTheme.FONT.MONTSERRAT_REGULAR}
+                        >
+                            {content}
+                        </Text>
+                    </Block>
                     <Block
                         row
                         space="between"
+                        center
                     >
                         <Text
                             color={NowTheme.COLORS.ACTIVE}
@@ -188,7 +123,7 @@ export default function Wallet({ navigation, route }) {
                                 fontFamily: NowTheme.FONT.MONTSERRAT_BOLD
                             }}
                         >
-                            {`${type === 1 ? '+' : '-'} ${amount}`}
+                            {type === 'CashIn' ? `+ ${amountChanged}` : `- ${amountChanged}`}
                         </Text>
                         <IconCustom
                             name="diamond"
@@ -198,14 +133,6 @@ export default function Wallet({ navigation, route }) {
                         />
                     </Block>
                 </Block>
-                <Text
-                    color={NowTheme.COLORS.DEFAULT}
-                    size={NowTheme.SIZES.FONT_H4}
-                    fontFamily={NowTheme.FONT.MONTSERRAT_REGULAR}
-                    numberOfLines={2}
-                >
-                    {type === 0 ? owner : description}
-                </Text>
             </Block>
         );
     };
@@ -268,10 +195,32 @@ export default function Wallet({ navigation, route }) {
         );
     };
 
-    const renderHistory = () => {
-        const listHistory = combineListCashTraffic();
+    const fetchHistory = () => {
+        rxUtil(
+            Rx.CASH.GET_CASH_HISTORY,
+            'GET',
+            null,
+            {
+                Authorization: token
+            },
+            (res) => {
+                setListHistory(res.data.data);
+                setIsShowSpinner(false);
+                setRefreshing(false);
+            },
+            () => {
+                setIsShowSpinner(false);
+                setRefreshing(false);
+            },
+            () => {
+                setIsShowSpinner(false);
+                setRefreshing(false);
+            }
+        );
+    };
 
-        if (listHistory && listHistory.length !== 0) {
+    const renderHistory = () => {
+        if (listHistory.length !== 0) {
             return (
                 <Block
                     flex

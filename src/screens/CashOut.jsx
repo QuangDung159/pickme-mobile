@@ -101,7 +101,7 @@ export default function CashOut(props) {
         setIsShowSpinner(true);
 
         rxUtil(
-            `${Rx.CASH_REQUEST.CREATE_CASH_OUT_REQUEST}/${bankId}`,
+            `${Rx.CASH.CREATE_CASH_OUT_REQUEST}/${bankId}`,
             'POST',
             cashOutForm,
             {
