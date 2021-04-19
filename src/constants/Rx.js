@@ -5,7 +5,7 @@ export default {
         PARTNER_CALENDAR: '/Calendars/PartnerCalendar'
     },
     AUTHENTICATION: {
-        SIGN_UP: '/users/register',
+        SIGN_UP: '/users/CustomerRegisterConfirm',
         LOGIN: '/users/CustomerLogin',
     },
     USER: {
@@ -15,7 +15,8 @@ export default {
         GET_LIST_IMAGE_BY_USER: '/Users/MyPosts',
         UPLOAD_PROFILE_IMAGE: '/Users/UploadImage',
         REMOVE_PROFILE_IMAGE: '/Users/RemovePost',
-        UPDATE_EXPO_TOKEN: '/Users/UpdateExpoToken'
+        UPDATE_EXPO_TOKEN: '/Users/UpdateExpoToken',
+        GET_OTP_REGISTER: '/users/CustomerRegister'
     },
     BANK: {
         BANK_ACCOUNTS: '/users/BankAccounts',
@@ -40,10 +41,11 @@ export default {
         PARTNER_DETAIL: '/users/PartnerDetail',
         GET_LIST_PARTNER: '/users/Partners',
     },
-    CASH_REQUEST: {
+    CASH: {
         GET_LIST_CASH_IN: '/Cashs/MyCashInRequests',
         GET_LIST_CASH_OUT: '/Cashs/MyCashOutRequests',
-        CREATE_CASH_OUT_REQUEST: '/cashs/CreateCashOutRequest'
+        CREATE_CASH_OUT_REQUEST: '/cashs/CreateCashOutRequest',
+        GET_CASH_HISTORY: '/users/UserHistories'
     },
     NOTIFICATION: {
         GET_MY_NOTIFICATION: '/Notifications/Notifications',

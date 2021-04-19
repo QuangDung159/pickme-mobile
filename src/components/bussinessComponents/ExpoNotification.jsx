@@ -9,7 +9,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Rx, ScreenName } from '../../constants';
 import {
     setCurrentUser,
-    setExpoToken, setListNotification, setNumberNotificationUnread, setPersonTabActiveIndex
+    setExpoToken,
+    setListBookingStore,
+    setListCashHistoryStore,
+    setListNotification,
+    setNumberNotificationUnread,
+    setPersonTabActiveIndex
 } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
 
@@ -47,8 +52,21 @@ export default function ExpoNotification() {
                 if (token && token !== 'Bearer ' && token !== 'Bearer null') {
                     getListNotiFromAPI();
 
-                    if (notificationReceived.request?.content?.data?.Type === 2) {
-                        fetchCurrentUserInfo();
+                    const notiType = notificationReceived.request?.content?.data?.Type;
+
+                    switch (notiType) {
+                        case 1: {
+                            getListBooking();
+                            break;
+                        }
+                        case 2: {
+                            fetchCurrentUserInfo();
+                            fetchHistory();
+                            break;
+                        }
+                        default: {
+                            break;
+                        }
                     }
                 }
             });
@@ -78,6 +96,20 @@ export default function ExpoNotification() {
             },
             (res) => {
                 dispatch(setCurrentUser(res.data.data));
+            }
+        );
+    };
+
+    const fetchHistory = () => {
+        rxUtil(
+            Rx.CASH.GET_CASH_HISTORY,
+            'GET',
+            null,
+            {
+                Authorization: token
+            },
+            (res) => {
+                dispatch(setListCashHistoryStore(res.data.data));
             }
         );
     };
@@ -122,6 +154,22 @@ export default function ExpoNotification() {
                 // set store
                 dispatch(setListNotification(res.data.data));
                 countNumberNotificationUnread(res.data.data);
+            }
+        );
+    };
+
+    const getListBooking = () => {
+        const pagingStr = '?pageIndex=1&pageSize=100';
+
+        rxUtil(
+            `${Rx.BOOKING.GET_MY_BOOKING_AS_CUSTOMER}${pagingStr}`,
+            'GET',
+            null,
+            {
+                Authorization: token
+            },
+            (res) => {
+                dispatch(setListBookingStore(res.data.data));
             }
         );
     };

@@ -15,15 +15,15 @@ export default function SubInfoProfile({ user }) {
             >
                 <ProfileInfoItem
                     fontSize={NowTheme.SIZES.FONT_H2}
-                    iconName="human-male-height"
-                    iconFamily={IconFamily.MATERIAL_COMMUNITY_ICONS}
-                    content={`${user.height} cm`}
-                />
-                <ProfileInfoItem
-                    fontSize={NowTheme.SIZES.FONT_H2}
                     iconName="birthday-cake"
                     iconFamily={IconFamily.FONT_AWESOME}
                     content={moment(user.dob).format('YYYY').toString()}
+                />
+                <ProfileInfoItem
+                    fontSize={NowTheme.SIZES.FONT_H2}
+                    iconName="home"
+                    iconFamily={IconFamily.FONT_AWESOME_5}
+                    content={user.homeTown}
                 />
 
             </Block>
@@ -35,13 +35,13 @@ export default function SubInfoProfile({ user }) {
                     fontSize={NowTheme.SIZES.FONT_H2}
                     iconName="diamond"
                     iconFamily={IconFamily.SIMPLE_LINE_ICONS}
-                    content={user.walletAmount + 1000}
+                    content={user.walletAmount}
                 />
                 <ProfileInfoItem
                     fontSize={NowTheme.SIZES.FONT_H2}
-                    iconName="weight"
-                    iconFamily={IconFamily.FONT_AWESOME_5}
-                    content="45 kg"
+                    iconName="badminton"
+                    iconFamily={IconFamily.MATERIAL_COMMUNITY_ICONS}
+                    content={user.interests}
                 />
 
             </Block>

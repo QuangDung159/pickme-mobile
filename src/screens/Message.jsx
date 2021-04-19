@@ -74,15 +74,13 @@ export default function Message({ navigation, route }) {
     useEffect(
         () => {
             if (chattingWith === messageListened.from) {
-                this.fetchListMessage(
+                fetchListMessage(
                     toUserId,
                     1,
                     12,
                     (data) => {
                         setChattingWith(toUserId);
-                        this.setState({
-                            listMessageFromAPI: data.data.data.messages
-                        });
+                        setListMessageFromAPI(data.data.data.messages);
                     }
                 );
             }
@@ -176,17 +174,6 @@ export default function Message({ navigation, route }) {
                             }}
                         >
                             {message.content}
-                        </Text>
-                        <Text
-                            color={NowTheme.COLORS.DEFAULT}
-                            size={10}
-                            style={{
-                                marginHorizontal: 10,
-                                marginBottom: 10,
-                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
-                            }}
-                        >
-                            {moment.unix(message.createdAt / 1000).format('DD-MM HH:mm')}
                         </Text>
                     </Block>
                 </Block>

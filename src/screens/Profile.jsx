@@ -308,6 +308,56 @@ export default function Profile({ route, navigation }) {
                                                     </Block>
                                                 </Block>
                                             </Block>
+
+                                            <Block style={[
+                                                styles.info,
+                                                {
+                                                    marginTop: 10
+                                                }
+                                            ]}
+                                            >
+                                                <Block row space="around">
+                                                    <Block
+                                                        middle
+                                                        style={styles.subInfoItemContainer}
+                                                    >
+                                                        <Text
+                                                            size={NowTheme.SIZES.FONT_H2}
+                                                            color={NowTheme.COLORS.DEFAULT}
+                                                            style={styles.subInfoText}
+                                                        >
+                                                            {partnerInfo.interests || 'N/A'}
+                                                        </Text>
+                                                        <Text
+                                                            style={{ fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR }}
+                                                            size={NowTheme.SIZES.FONT_H4}
+                                                            color={NowTheme.COLORS.DEFAULT}
+                                                        >
+                                                            Sở thích
+                                                        </Text>
+                                                    </Block>
+
+                                                    <Block
+                                                        middle
+                                                        style={styles.subInfoItemContainer}
+                                                    >
+                                                        <Text
+                                                            color={NowTheme.COLORS.DEFAULT}
+                                                            size={NowTheme.SIZES.FONT_H2}
+                                                            style={styles.subInfoText}
+                                                        >
+                                                            {partnerInfo.homeTown || 'N/A'}
+                                                        </Text>
+                                                        <Text
+                                                            style={{ fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR }}
+                                                            size={NowTheme.SIZES.FONT_H4}
+                                                            color={NowTheme.COLORS.DEFAULT}
+                                                        >
+                                                            Quê quán
+                                                        </Text>
+                                                    </Block>
+                                                </Block>
+                                            </Block>
                                         </Block>
                                         {listImage && (
                                             <Block>

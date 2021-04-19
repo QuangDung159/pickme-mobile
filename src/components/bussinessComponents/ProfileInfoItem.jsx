@@ -18,9 +18,7 @@ export default function ProfileInfoItem({
     return (
         <Block
             row
-            style={[styles.container, {
-                alignItems: 'center'
-            }]}
+            style={[styles.container]}
         >
             <IconCustom
                 name={iconName}
@@ -64,6 +62,6 @@ ProfileInfoItem.defaultProps = {
 
 const styles = StyleSheet.create({
     container: {
-        marginVertical: 5
+        margin: 5
     },
 });
