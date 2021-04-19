@@ -27,9 +27,7 @@ export default function BookingList({ navigation }) {
             }
 
             const eventTriggerGetListBooking = navigation.addListener('focus', () => {
-                if (!listBookingStore || listBookingStore.length === 0) {
-                    getListBooking();
-                }
+                getListBooking();
             });
 
             return eventTriggerGetListBooking;

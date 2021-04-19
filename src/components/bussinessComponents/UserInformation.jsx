@@ -34,8 +34,16 @@ export default function UserInformation({ navigation }) {
     // Render \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
     useEffect(
         () => {
-            setIsShowSpinner(true);
-            fetchCurrentUserInfo();
+            if (JSON.stringify(currentUser) === JSON.stringify({})) {
+                setIsShowSpinner(true);
+                fetchCurrentUserInfo();
+            }
+
+            const eventTriggerGetCurrentUserInfo = navigation.addListener('focus', () => {
+                fetchCurrentUserInfo();
+            });
+
+            return eventTriggerGetCurrentUserInfo;
         }, []
     );
 
