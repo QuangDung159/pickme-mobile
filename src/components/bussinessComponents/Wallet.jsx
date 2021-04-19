@@ -2,26 +2,31 @@ import { Block, Button, Text } from 'galio-framework';
 import React, { useEffect, useState } from 'react';
 import { RefreshControl } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
     IconFamily, NowTheme, Rx, ScreenName
 } from '../../constants';
 import { ToastHelpers } from '../../helpers';
 import { rxUtil } from '../../utils';
 import { CenterLoader, IconCustom } from '../uiComponents';
+import { setListCashHistoryStore } from '../../redux/Actions';
 
 export default function Wallet({ navigation, route }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
-    const [listHistory, setListHistory] = useState([]);
 
     const currentUser = useSelector((state) => state.userReducer.currentUser);
+    const listCashHistoryStore = useSelector((state) => state.userReducer.listCashHistoryStore);
     const token = useSelector((state) => state.userReducer.token);
+
+    const dispatch = useDispatch();
 
     useEffect(
         () => {
-            setIsShowSpinner(true);
-            fetchHistory();
+            if (!listCashHistoryStore || listCashHistoryStore.length === 0) {
+                setIsShowSpinner(true);
+                fetchHistory();
+            }
 
             const eventTriggerGetListHistory = navigation.addListener('focus', () => {
                 fetchHistory();
@@ -53,7 +58,7 @@ export default function Wallet({ navigation, route }) {
                     row
                     center
                     style={{
-                        height: NowTheme.SIZES.HEIGHT_BASE * 0.07,
+                        height: NowTheme.SIZES.HEIGHT_BASE * 0.1,
                         width: NowTheme.SIZES.WIDTH_BASE * 0.9,
                         alignSelf: 'center'
                     }}
@@ -105,7 +110,7 @@ export default function Wallet({ navigation, route }) {
                     >
                         <Text
                             color={NowTheme.COLORS.DEFAULT}
-                            size={NowTheme.SIZES.FONT_H2}
+                            size={NowTheme.SIZES.FONT_H3}
                             fontFamily={NowTheme.FONT.MONTSERRAT_REGULAR}
                         >
                             {content}
@@ -204,7 +209,7 @@ export default function Wallet({ navigation, route }) {
                 Authorization: token
             },
             (res) => {
-                setListHistory(res.data.data);
+                dispatch(setListCashHistoryStore(res.data.data));
                 setIsShowSpinner(false);
                 setRefreshing(false);
             },
@@ -220,13 +225,13 @@ export default function Wallet({ navigation, route }) {
     };
 
     const renderHistory = () => {
-        if (listHistory.length !== 0) {
+        if (listCashHistoryStore && listCashHistoryStore.length !== 0) {
             return (
                 <Block
                     flex
                 >
                     <FlatList
-                        data={listHistory}
+                        data={listCashHistoryStore}
                         keyExtractor={(item) => item.id}
                         renderItem={({ item }) => renderHistoryItem(item)}
                         showsVerticalScrollIndicator={false}
@@ -266,7 +271,7 @@ export default function Wallet({ navigation, route }) {
             <>
                 <Block
                     style={{
-                        height: NowTheme.SIZES.HEIGHT_BASE * 0.1,
+                        height: NowTheme.SIZES.HEIGHT_BASE * 0.15,
                         width: NowTheme.SIZES.WIDTH_BASE * 0.9,
                         alignSelf: 'center',
                         marginTop: 10
