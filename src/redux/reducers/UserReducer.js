@@ -1,12 +1,14 @@
 import {
     SET_CURRENT_USER,
+    SET_LIST_CASH_HISTORY_STORE,
     SET_TOKEN
 } from '../ActionTypes';
 
 const initState = {
     currentUser: {},
     token: '',
-    loginInfo: {}
+    loginInfo: {},
+    listCashHistoryStore: []
 };
 
 const userReducer = (state = initState, action) => {
@@ -20,6 +22,9 @@ const userReducer = (state = initState, action) => {
         }
         case SET_TOKEN: {
             return { ...state, token: `Bearer ${payload.token}` };
+        }
+        case SET_LIST_CASH_HISTORY_STORE: {
+            return { ...state, listCashHistoryStore: payload.listCashHistoryStore };
         }
         default: {
             return state;
