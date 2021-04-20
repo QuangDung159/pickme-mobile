@@ -1,3 +1,4 @@
+import Constants from 'expo-constants';
 import * as SecureStore from 'expo-secure-store';
 import {
     Block, Button, Text, theme
@@ -114,7 +115,7 @@ export default function Onboarding({ navigation }) {
                                 size={NowTheme.SIZES.FONT_H4 - 2}
                                 style={{ fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR }}
                             >
-                                Version 1.0
+                                {`Version ${Constants.manifest.version}`}
                             </Text>
                         </Block>
                     </Block>
