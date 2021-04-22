@@ -15,7 +15,9 @@ import {
 import { MediaHelpers, ToastHelpers } from '../../helpers';
 import { resetStoreSignOut, setCurrentUser } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
-import { CenterLoader, IconCustom, Line } from '../uiComponents';
+import {
+    CenterLoader, IconCustom, Line, NoteText
+} from '../uiComponents';
 import SubInfoProfile from './SubInfoProfile';
 
 export default function UserInformation({ navigation }) {
@@ -34,6 +36,7 @@ export default function UserInformation({ navigation }) {
     // Render \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
     useEffect(
         () => {
+            // onSignOut(navigation);
             if (JSON.stringify(currentUser) === JSON.stringify({})) {
                 setIsShowSpinner(true);
                 fetchCurrentUserInfo();
@@ -175,7 +178,7 @@ export default function UserInformation({ navigation }) {
         return (
             <Image
                 style={styles.avatar}
-                source={{ uri: currentUser.url || NO_AVATAR_URL }}
+                source={{ uri: currentUser?.url || NO_AVATAR_URL }}
             />
         );
     };
@@ -250,6 +253,66 @@ export default function UserInformation({ navigation }) {
         </Block>
     );
 
+    const renderAccountStatusInfo = () => (
+        <>
+            {currentUser.isVerified ? (
+                <Block
+                    style={{
+                        marginVertical: 10
+                    }}
+                >
+                    <NoteText
+                        width={NowTheme.SIZES.WIDTH_BASE * 0.9}
+                        title="Tài khoản của bạn đã hoàn chỉnh:"
+                        content="Bạn có thể sử dụng ứng PickMe với đầy đủ chức năng."
+                        contentStyle={{
+                            fontSize: NowTheme.SIZES.FONT_H4,
+                            color: NowTheme.COLORS.ACTIVE,
+                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                            marginTop: 5
+                        }}
+                        iconComponent={(
+                            <IconCustom
+                                name="check-circle"
+                                family={IconFamily.FONT_AWESOME}
+                                size={16}
+                                color={NowTheme.COLORS.INPUT_SUCCESS}
+                            />
+                        )}
+                        backgroundColor={NowTheme.COLORS.LIST_ITEM_BACKGROUND_2}
+                    />
+                </Block>
+            ) : (
+                <Block
+                    style={{
+                        marginVertical: 10
+                    }}
+                >
+                    <NoteText
+                        width={NowTheme.SIZES.WIDTH_BASE * 0.9}
+                        title="Tài khoản của bạn chưa được xác thực:"
+                        content="Vui lòng nhấp vào đây để hoàn tất quá trình xác thực tài khoản."
+                        contentStyle={{
+                            fontSize: NowTheme.SIZES.FONT_H4,
+                            color: NowTheme.COLORS.ACTIVE,
+                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                            marginTop: 5
+                        }}
+                        iconComponent={(
+                            <IconCustom
+                                name="info-circle"
+                                family={IconFamily.FONT_AWESOME}
+                                size={16}
+                                color={NowTheme.COLORS.ACTIVE}
+                            />
+                        )}
+                        backgroundColor={NowTheme.COLORS.LIST_ITEM_BACKGROUND_1}
+                    />
+                </Block>
+            )}
+        </>
+    );
+
     const renderInfoPanel = () => (
         <Block>
             <Block
@@ -289,6 +352,15 @@ export default function UserInformation({ navigation }) {
                             {'"'}
                         </Text>
                     </Block>
+
+                    <TouchableWithoutFeedback
+                        onPress={() => {
+                            navigation.navigate(ScreenName.VERIFICATION);
+                        }}
+                    >
+                        {renderAccountStatusInfo()}
+                    </TouchableWithoutFeedback>
+
                     <Block style={{
                         marginBottom: 10,
                         alignItems: 'center'

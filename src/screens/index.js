@@ -18,6 +18,7 @@ import SignIn from './SignIn';
 import SignUp from './SignUp';
 import Support from './Support';
 import UpdateInfoAccount from './UpdateInfoAccount';
+import Verification from './Verification';
 
 export {
     Home, Notification, Settings, Onboarding,
@@ -34,5 +35,6 @@ export {
     Personal,
     Profile,
     UpdateInfoAccount,
-    Support
+    Support,
+    Verification
 };

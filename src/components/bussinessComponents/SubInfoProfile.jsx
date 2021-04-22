@@ -25,7 +25,6 @@ export default function SubInfoProfile({ user }) {
                     iconFamily={IconFamily.FONT_AWESOME_5}
                     content={user.homeTown}
                 />
-
             </Block>
 
             <Block
@@ -43,7 +42,6 @@ export default function SubInfoProfile({ user }) {
                     iconFamily={IconFamily.MATERIAL_COMMUNITY_ICONS}
                     content={user.interests}
                 />
-
             </Block>
         </Block>
     );

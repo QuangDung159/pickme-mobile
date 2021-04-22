@@ -1,6 +1,5 @@
 import * as ImagePicker from 'expo-image-picker';
 import FormData from 'form-data';
-import { Alert, Platform } from 'react-native';
 import { rxUtil } from '../utils';
 
 const uploadImage = (uri, uploadUrl, token, successCallBack, errorCallBack, catchCallBack) => {
@@ -43,12 +42,12 @@ const removeImage = (removeUrl, headers, successCallBack, failCallBack, catchCal
     );
 };
 
-const pickImage = async (allowCrop, uploadAspect, callBack) => {
+const pickImage = async (allowCrop, uploadAspect, callBack, quality = 0.2) => {
     const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
         allowsEditing: allowCrop,
         aspect: uploadAspect,
-        quality: 0.2,
+        quality,
     });
 
     if (!result.cancelled) {
