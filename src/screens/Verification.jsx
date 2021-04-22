@@ -25,6 +25,7 @@ export default function Verification({ navigation }) {
     const [backUrl, setBackUrl] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
     const [verification, setVerification] = useState();
+    const [disableTemp, setDisableTemp] = useState(false);
 
     const token = useSelector((state) => state.userReducer.token);
     const verificationIdStore = useSelector((state) => state.userReducer.verificationIdStore);
@@ -37,20 +38,24 @@ export default function Verification({ navigation }) {
 
     useEffect(
         () => {
-            if (verificationIdStore !== '') {
-                rxUtil(
-                    `${Rx.USER.GET_VERIFICATION_DETAIL}/${verificationIdStore}`,
-                    'GET',
-                    null,
-                    headers,
-                    (res) => {
-                        setVerification(res.data.data);
-                        fillImageFromAPI(res.data.data.documents);
-                    }
-                );
-            }
+            fetchVerification();
         }, []
     );
+
+    const fetchVerification = () => {
+        if (verificationIdStore !== '') {
+            rxUtil(
+                `${Rx.USER.GET_VERIFICATION_DETAIL}/${verificationIdStore}`,
+                'GET',
+                null,
+                headers,
+                (res) => {
+                    setVerification(res.data.data);
+                    fillImageFromAPI(res.data.data.documents);
+                }
+            );
+        }
+    };
 
     const renderUploadDocForm = (docType, buttonText) => (
         <Block style={{
@@ -71,7 +76,7 @@ export default function Verification({ navigation }) {
                         color: NowTheme.COLORS.ACTIVE
                     }}
                     shadowless
-                    disabled={verification.status === 'InProcess'}
+                    disabled={disableTemp || (verification && verification.status === 'InProcess')}
                 >
                     {buttonText}
                 </Button>
@@ -223,7 +228,7 @@ export default function Verification({ navigation }) {
 
     const renderButtonPanel = () => (
         <>
-            {verification.status !== 'InProcess' && (
+            {!verification || (verification && verification.status !== 'InProcess') ? (
                 <Block
                     row
                     space="between"
@@ -249,6 +254,8 @@ export default function Verification({ navigation }) {
                         Huỷ bỏ
                     </Button>
                 </Block>
+            ) : (
+                <></>
             )}
         </>
 
@@ -339,6 +346,7 @@ export default function Verification({ navigation }) {
                             <Button
                                 onPress={() => {
                                     setModalVisible(false);
+                                    setDisableTemp(true);
                                 }}
                                 style={{ marginVertical: 10 }}
                                 shadowless
@@ -399,7 +407,7 @@ export default function Verification({ navigation }) {
                                         marginVertical: 10
                                     }}
                                 >
-                                    {verification.status === 'InProcess' ? (
+                                    {disableTemp || (verification && verification.status === 'InProcess') ? (
                                         <NoteText
                                             width={NowTheme.SIZES.WIDTH_BASE * 0.9}
                                             title="Quá trình xác thực đang được tiến hành"
@@ -450,7 +458,12 @@ export default function Verification({ navigation }) {
                             </Block>
                         </Block>
 
-                        {renderButtonPanel()}
+                        {!disableTemp && (
+                            <>
+                                {renderButtonPanel()}
+                            </>
+                        )}
+
                     </KeyboardAwareScrollView>
                 )}
             </>
