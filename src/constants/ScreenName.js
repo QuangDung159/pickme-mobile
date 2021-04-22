@@ -25,5 +25,6 @@ export default {
     UPDATE_INFO_ACCOUNT: 'UpdateInfoAccount',
     BANK_ACCOUNT: 'BankAccount',
     BUSY_CALENDAR: 'BusyCalendar',
-    SUPPORT: 'Support'
+    SUPPORT: 'Support',
+    VERIFICATION: 'Verification',
 };

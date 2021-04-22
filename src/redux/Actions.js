@@ -9,7 +9,7 @@ import {
     SET_MESSAGE_LISTENED,
     SET_NAVIGATION,
     SET_NUMBER_MESSAGE_UNREAD,
-    SET_NUMBER_NOTIFICATION_UNREAD, SET_PERSON_TAB_ACTIVE_INDEX, SET_TOKEN
+    SET_NUMBER_NOTIFICATION_UNREAD, SET_PERSON_TAB_ACTIVE_INDEX, SET_TOKEN, SET_VERIFICATION_ID_STORE
 } from './ActionTypes';
 
 export const setDeviceTimezone = () => ({
@@ -140,5 +140,12 @@ export const setListBookingStore = (listBookingStore) => ({
     type: SET_LIST_BOOKING_STORE,
     payload: {
         listBookingStore
+    }
+});
+
+export const setVerificationIdStore = (verificationIdStore) => ({
+    type: SET_VERIFICATION_ID_STORE,
+    payload: {
+        verificationIdStore
     }
 });

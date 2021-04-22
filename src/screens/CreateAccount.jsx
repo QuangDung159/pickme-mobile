@@ -320,7 +320,7 @@ export default function CreateAccount(props) {
                             >
 
                                 {!newUser.hometown
-                                    ? 'Quê quán?'
+                                    ? 'Quê quán của bạn'
                                     : `${newUser.hometown} là một nơi tuyệt vời nhỉ!`}
                             </Text>
                         </Block>

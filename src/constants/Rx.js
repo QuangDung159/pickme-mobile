@@ -16,7 +16,10 @@ export default {
         UPLOAD_PROFILE_IMAGE: '/Users/UploadImage',
         REMOVE_PROFILE_IMAGE: '/Users/RemovePost',
         UPDATE_EXPO_TOKEN: '/Users/UpdateExpoToken',
-        GET_OTP_REGISTER: '/users/CustomerRegister'
+        GET_OTP_REGISTER: '/users/CustomerRegister',
+        UPLOAD_VERIFICATION_DOC: '/Users/UploadDocument',
+        CREATE_VERIFICATION_REQUEST: '/Users/Verification',
+        GET_VERIFICATION_DETAIL: '/Users/VerificationRequestDetail'
     },
     BANK: {
         BANK_ACCOUNTS: '/users/BankAccounts',

@@ -29,10 +29,10 @@ export default (
         .then((res) => {
             if (res.status === 200) {
                 generateLogData(endpoint, data, headers, res);
-                successCallBack(res);
+                if (successCallBack) successCallBack(res);
             } else {
                 generateLogData(endpoint, data, headers, res);
-                failCallBack(res);
+                if (failCallBack) failCallBack(res);
             }
         })
         .catch((err) => {
@@ -46,6 +46,6 @@ export default (
             } = err;
             console.log('catch', response);
             generateLogData(endpoint, data, headers, response);
-            catchCallBack(message);
+            if (catchCallBack) catchCallBack(message);
         });
 };
