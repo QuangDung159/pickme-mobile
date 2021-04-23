@@ -1,10 +1,10 @@
 import { Block, Button, Text } from 'galio-framework';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Modal } from 'react-native';
+import { Modal, StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import ImageScalable from 'react-native-scalable-image';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
     CenterLoader, IconCustom, Line, NoteText
 } from '../components/uiComponents';
@@ -12,11 +12,9 @@ import {
     IconFamily, NowTheme, Rx
 } from '../constants';
 import { MediaHelpers, ToastHelpers } from '../helpers';
-import { setVerificationIdStore } from '../redux/Actions';
 import { rxUtil } from '../utils';
 
 let count = 0;
-const listDocsToUpload = [];
 
 export default function Verification({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
@@ -25,12 +23,9 @@ export default function Verification({ navigation }) {
     const [backUrl, setBackUrl] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
     const [verification, setVerification] = useState();
-    const [disableTemp, setDisableTemp] = useState(false);
 
     const token = useSelector((state) => state.userReducer.token);
     const verificationIdStore = useSelector((state) => state.userReducer.verificationIdStore);
-
-    const dispatch = useDispatch();
 
     const headers = {
         Authorization: token
@@ -76,7 +71,7 @@ export default function Verification({ navigation }) {
                         color: NowTheme.COLORS.ACTIVE
                     }}
                     shadowless
-                    disabled={disableTemp || (verification && verification.status === 'InProcess')}
+                    disabled={(verification && verification.status === 'InProcess')}
                 >
                     {buttonText}
                 </Button>
@@ -133,7 +128,9 @@ export default function Verification({ navigation }) {
         MediaHelpers.pickImage(
             false,
             [4, 3],
-            (result) => handleOnPickVerificationDoc(result.uri, docType),
+            (result) => {
+                handleOnPickVerificationDoc(result.uri, docType);
+            },
             0.1
         );
     };
@@ -158,72 +155,39 @@ export default function Verification({ navigation }) {
         }
     };
 
-    const uploadDoc = (imageLocalUrl, docType) => {
-        setIsShowSpinner(true);
-        // uploading is a background work, we want to active spinner 8s,
-        // and the app can be use normally during background work is run
-        setTimeout(() => {
-            ToastHelpers.renderToast('Tải ảnh lên thành công', 'success');
-            setModalVisible(true);
-            setIsShowSpinner(false);
-        }, 5000);
-
-        MediaHelpers.uploadImage(
-            imageLocalUrl,
-            Rx.USER.UPLOAD_VERIFICATION_DOC,
-            token,
-            (res) => {
-                listDocsToUpload.push({
-                    url: res.data.data.url,
-                    type: docType
-                });
-
-                count += 1;
-                if (count === 3) {
-                    createVerificationRequest();
-                }
-            },
-            (err) => {
-                ToastHelpers.renderToast(
-                    err?.data?.message || 'Tải ảnh lên thất bại! Vui lòng thử lại.', 'error'
-                );
-                setIsShowSpinner(false);
-            },
-            () => {
-                ToastHelpers.renderToast('Tải ảnh lên thất bại! Vui lòng thử lại.', 'error');
-                setIsShowSpinner(false);
-            }
+    const submitVerificationRequest = () => {
+        rxUtil(
+            Rx.USER.SUBMIT_VERIFICATION,
+            'POST',
+            null,
+            headers
         );
     };
 
-    const createVerificationRequest = () => {
-        const data = {
-            description: 'Xác thực tài khoản khách hàng',
-            isAcceptCondition: true,
-            documents: listDocsToUpload
-        };
-
-        rxUtil(
-            Rx.USER.CREATE_VERIFICATION_REQUEST,
-            'POST',
-            data,
-            headers,
-            (res) => {
-                dispatch(setVerificationIdStore(res.data.data.id));
-            },
+    const uploadDoc = (docType, imageLocalUrl) => {
+        MediaHelpers.uploadImageDocument(
+            imageLocalUrl,
+            Rx.USER.UPLOAD_VERIFICATION_DOC,
+            docType,
+            token,
             () => {
-                setIsShowSpinner(false);
-            },
-            () => {
-                setIsShowSpinner(false);
+                count += 1;
+                if (count === 3) {
+                    submitVerificationRequest();
+                }
             }
         );
     };
 
     const onSubmitUploadList = () => {
-        uploadDoc(faceUrl, 0);
-        uploadDoc(frontUrl, 1);
-        uploadDoc(backUrl, 2);
+        setIsShowSpinner(true);
+        setTimeout(() => {
+            setIsShowSpinner(false);
+            ToastHelpers.renderToast('Tải lên thành công.', 'success');
+        }, 5000);
+        uploadDoc(0, faceUrl);
+        uploadDoc(1, frontUrl);
+        uploadDoc(2, backUrl);
     };
 
     const renderButtonPanel = () => (
@@ -346,7 +310,6 @@ export default function Verification({ navigation }) {
                             <Button
                                 onPress={() => {
                                     setModalVisible(false);
-                                    setDisableTemp(true);
                                 }}
                                 style={{ marginVertical: 10 }}
                                 shadowless
@@ -407,7 +370,7 @@ export default function Verification({ navigation }) {
                                         marginVertical: 10
                                     }}
                                 >
-                                    {disableTemp || (verification && verification.status === 'InProcess') ? (
+                                    {(verification && verification.status === 'InProcess') ? (
                                         <NoteText
                                             width={NowTheme.SIZES.WIDTH_BASE * 0.9}
                                             title="Quá trình xác thực đang được tiến hành"
@@ -458,11 +421,7 @@ export default function Verification({ navigation }) {
                             </Block>
                         </Block>
 
-                        {!disableTemp && (
-                            <>
-                                {renderButtonPanel()}
-                            </>
-                        )}
+                        {renderButtonPanel()}
 
                     </KeyboardAwareScrollView>
                 )}
