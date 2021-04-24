@@ -4,14 +4,13 @@ import { Modal, StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import ImageScalable from 'react-native-scalable-image';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
-    CenterLoader, IconCustom, Line, NoteText
+    CenterLoader, Line
 } from '../components/uiComponents';
-import {
-    IconFamily, NowTheme, Rx
-} from '../constants';
+import { NowTheme, Rx } from '../constants';
 import { MediaHelpers, ToastHelpers } from '../helpers';
+import { setVerificationStore } from '../redux/Actions';
 import { rxUtil } from '../utils';
 
 let count = 0;
@@ -22,10 +21,11 @@ export default function Verification({ navigation }) {
     const [frontUrl, setFrontUrl] = useState('');
     const [backUrl, setBackUrl] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
-    const [verification, setVerification] = useState();
 
     const token = useSelector((state) => state.userReducer.token);
-    const verificationIdStore = useSelector((state) => state.userReducer.verificationIdStore);
+    const verificationStore = useSelector((state) => state.userReducer.verificationStore);
+
+    const dispatch = useDispatch();
 
     const headers = {
         Authorization: token
@@ -33,23 +33,25 @@ export default function Verification({ navigation }) {
 
     useEffect(
         () => {
-            fetchVerification();
+            if (!verificationStore) {
+                fetchVerification();
+            } else {
+                fillImageFromAPI(verificationStore.verificationDocuments);
+            }
         }, []
     );
 
     const fetchVerification = () => {
-        if (verificationIdStore !== '') {
-            rxUtil(
-                `${Rx.USER.GET_VERIFICATION_DETAIL}/${verificationIdStore}`,
-                'GET',
-                null,
-                headers,
-                (res) => {
-                    setVerification(res.data.data);
-                    fillImageFromAPI(res.data.data.documents);
-                }
-            );
-        }
+        rxUtil(
+            Rx.USER.GET_VERIFICATION_DETAIL,
+            'GET',
+            null,
+            headers,
+            (res) => {
+                dispatch(setVerificationStore(res.data.data));
+                fillImageFromAPI(res.data.data.verificationDocuments);
+            }
+        );
     };
 
     const renderUploadDocForm = (docType, buttonText) => (
@@ -71,7 +73,7 @@ export default function Verification({ navigation }) {
                         color: NowTheme.COLORS.ACTIVE
                     }}
                     shadowless
-                    disabled={(verification && verification.status === 'InProcess')}
+                    disabled={(verificationStore && verificationStore.verifyStatus === 'InProcess')}
                 >
                     {buttonText}
                 </Button>
@@ -182,7 +184,7 @@ export default function Verification({ navigation }) {
     const onSubmitUploadList = () => {
         setIsShowSpinner(true);
         setTimeout(() => {
-            setIsShowSpinner(false);
+            navigation.goBack();
             ToastHelpers.renderToast('Tải lên thành công.', 'success');
         }, 5000);
         uploadDoc(0, faceUrl);
@@ -190,40 +192,44 @@ export default function Verification({ navigation }) {
         uploadDoc(2, backUrl);
     };
 
-    const renderButtonPanel = () => (
-        <>
-            {!verification || (verification && verification.status !== 'InProcess') ? (
-                <Block
-                    row
-                    space="between"
-                    style={{
-                        paddingVertical: 10,
-                    }}
-                >
-                    <Button
-                        shadowless
-                        onPress={() => onSubmitUploadList()}
-                        style={styles.button}
-                    >
-                        Xác nhận
-                    </Button>
-                    <Button
-                        shadowless
-                        color={NowTheme.COLORS.DEFAULT}
-                        style={styles.button}
-                        onPress={() => {
-                            navigation.goBack();
-                        }}
-                    >
-                        Huỷ bỏ
-                    </Button>
-                </Block>
-            ) : (
-                <></>
-            )}
-        </>
-
-    );
+    const renderButtonPanel = () => {
+        if (verificationStore) {
+            const { verifyStatus } = verificationStore;
+            return (
+                <>
+                    {(verifyStatus === 'None' || verifyStatus === 'Reject') && (
+                        <Block
+                            row
+                            space="between"
+                            style={{
+                                paddingVertical: 10,
+                                marginTop: 10
+                            }}
+                        >
+                            <Button
+                                shadowless
+                                onPress={() => onSubmitUploadList()}
+                                style={styles.button}
+                            >
+                                Xác nhận
+                            </Button>
+                            <Button
+                                shadowless
+                                color={NowTheme.COLORS.DEFAULT}
+                                style={styles.button}
+                                onPress={() => {
+                                    navigation.goBack();
+                                }}
+                            >
+                                Huỷ bỏ
+                            </Button>
+                        </Block>
+                    )}
+                </>
+            );
+        }
+        return null;
+    };
 
     const renderDocImageByType = (docType, imageUrl) => {
         if (imageUrl === '') {
@@ -310,6 +316,7 @@ export default function Verification({ navigation }) {
                             <Button
                                 onPress={() => {
                                     setModalVisible(false);
+                                    navigation.goBack();
                                 }}
                                 style={{ marginVertical: 10 }}
                                 shadowless
@@ -364,59 +371,6 @@ export default function Verification({ navigation }) {
                                     borderWidth={0.5}
                                     borderColor={NowTheme.COLORS.ACTIVE}
                                 />
-
-                                <Block
-                                    style={{
-                                        marginVertical: 10
-                                    }}
-                                >
-                                    {(verification && verification.status === 'InProcess') ? (
-                                        <NoteText
-                                            width={NowTheme.SIZES.WIDTH_BASE * 0.9}
-                                            title="Quá trình xác thực đang được tiến hành"
-                                            // eslint-disable-next-line max-len
-                                            content="Quá trình này sẽ mất một khoảng thời gian, chúng tôi sẽ sớm có thông báo về tình trạng tài khoản của bạn."
-                                            contentStyle={{
-                                                fontSize: NowTheme.SIZES.FONT_H4,
-                                                color: NowTheme.COLORS.ACTIVE,
-                                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                                                marginTop: 5
-                                            }}
-                                            iconComponent={(
-                                                <IconCustom
-                                                    name="info-circle"
-                                                    family={IconFamily.FONT_AWESOME}
-                                                    size={16}
-                                                    color={NowTheme.COLORS.ACTIVE}
-                                                />
-                                            )}
-                                            backgroundColor={NowTheme.COLORS.LIST_ITEM_BACKGROUND_1}
-                                        />
-                                    ) : (
-                                        <NoteText
-                                            width={NowTheme.SIZES.WIDTH_BASE * 0.9}
-                                            title="Tài khoản bạn chưa được xác thực"
-                                            // eslint-disable-next-line max-len
-                                            content={'Tài khoản chưa xác thực sẽ bị giới hạn một số chức năng.\nBạn vui lòng tải lên những chứng từ bên dưới để chúng tôi có thể xác thực tài khoản cho bạn một cách nhanh chóng. Xin cảm ơn.'}
-                                            contentStyle={{
-                                                fontSize: NowTheme.SIZES.FONT_H4,
-                                                color: NowTheme.COLORS.ACTIVE,
-                                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                                                marginTop: 5
-                                            }}
-                                            iconComponent={(
-                                                <IconCustom
-                                                    name="info-circle"
-                                                    family={IconFamily.FONT_AWESOME}
-                                                    size={16}
-                                                    color={NowTheme.COLORS.ACTIVE}
-                                                />
-                                            )}
-                                            backgroundColor={NowTheme.COLORS.LIST_ITEM_BACKGROUND_1}
-                                        />
-                                    )}
-                                </Block>
-
                                 {renderDocSecion()}
                             </Block>
                         </Block>
