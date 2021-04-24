@@ -28,16 +28,16 @@ export default (
     axios(config)
         .then((response) => {
             if (response.status === 200) {
-                successCallBack(response);
+                if (successCallBack) successCallBack(response);
             } else {
-                failCallBack(response);
+                if (failCallBack) failCallBack(response);
                 console.log('fail error :>> ', response);
             }
             console.log(`${response.status} socket ${infoString}`, config);
         })
         .catch((error) => {
             const { response } = error;
-            catchCallBack(response);
+            if (catchCallBack) catchCallBack(response);
             console.log('catch error :>> ', response);
         });
 };

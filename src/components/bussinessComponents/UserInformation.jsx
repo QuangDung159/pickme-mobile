@@ -15,8 +15,11 @@ import {
 import { MediaHelpers, ToastHelpers } from '../../helpers';
 import { resetStoreSignOut, setCurrentUser } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
-import { CenterLoader, IconCustom, Line } from '../uiComponents';
+import {
+    CenterLoader, IconCustom, Line
+} from '../uiComponents';
 import SubInfoProfile from './SubInfoProfile';
+import VerificationStatusPanel from './VerificationStatusPanel';
 
 export default function UserInformation({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
@@ -34,6 +37,7 @@ export default function UserInformation({ navigation }) {
     // Render \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
     useEffect(
         () => {
+            // onSignOut(navigation);
             if (JSON.stringify(currentUser) === JSON.stringify({})) {
                 setIsShowSpinner(true);
                 fetchCurrentUserInfo();
@@ -175,7 +179,7 @@ export default function UserInformation({ navigation }) {
         return (
             <Image
                 style={styles.avatar}
-                source={{ uri: currentUser.url || NO_AVATAR_URL }}
+                source={{ uri: currentUser?.url || NO_AVATAR_URL }}
             />
         );
     };
@@ -289,6 +293,22 @@ export default function UserInformation({ navigation }) {
                             {'"'}
                         </Text>
                     </Block>
+
+                    <TouchableWithoutFeedback
+                        onPress={() => {
+                            navigation.navigate(ScreenName.VERIFICATION);
+                        }}
+                    >
+
+                        <Block
+                            style={{
+                                marginVertical: 10
+                            }}
+                        >
+                            <VerificationStatusPanel />
+                        </Block>
+                    </TouchableWithoutFeedback>
+
                     <Block style={{
                         marginBottom: 10,
                         alignItems: 'center'
