@@ -25,5 +25,6 @@ export default {
     UPDATE_INFO_ACCOUNT: 'Chỉnh sửa trang cá nhân',
     BANK_ACCOUNT: 'Tài khoản ngân hàng',
     BUSY_CALENDAR: 'Lịch bận',
-    SUPPORT: 'Hỗ trợ'
+    SUPPORT: 'Hỗ trợ',
+    VERIFICATION: 'Xác thực tài khoản',
 };

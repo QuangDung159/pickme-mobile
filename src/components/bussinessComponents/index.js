@@ -1,15 +1,16 @@
 /* eslint-disable import/prefer-default-export */
-import Listener from './Listener';
-import CustomCalendar from './CustomCalendar';
-import NotificationItem from './NotificationItem';
-import CardBooking from './CardBooking';
-import SubInfoProfile from './SubInfoProfile';
-import ProfileInfoItem from './ProfileInfoItem';
-import CardImage from './CardImage';
-import ExpoNotification from './ExpoNotification';
-import UserInformation from './UserInformation';
-import Wallet from './Wallet';
 import BookingList from './BookingList';
+import CardBooking from './CardBooking';
+import CardImage from './CardImage';
+import CustomCalendar from './CustomCalendar';
+import ExpoNotification from './ExpoNotification';
+import Listener from './Listener';
+import NotificationItem from './NotificationItem';
+import ProfileInfoItem from './ProfileInfoItem';
+import SubInfoProfile from './SubInfoProfile';
+import UserInformation from './UserInformation';
+import VerificationStatusPanel from './VerificationStatusPanel';
+import Wallet from './Wallet';
 
 export {
     Listener,
@@ -22,5 +23,6 @@ export {
     ExpoNotification,
     UserInformation,
     Wallet,
-    BookingList
+    BookingList,
+    VerificationStatusPanel
 };

@@ -14,7 +14,8 @@ import {
     Message, Notification,
     Payment, Personal,
     Profile, Settings, SignIn, SignUp,
-    Support, UpdateInfoAccount
+    Support, UpdateInfoAccount,
+    Verification
 } from '../screens';
 
 const Stack = createStackNavigator();
@@ -366,6 +367,24 @@ export const SupportScreen = () => (
             header: ({ navigation, scene }) => (
                 <Header
                     title={ScreenTitle.SUPPORT}
+                    options
+                    navigation={navigation}
+                    scene={scene}
+                />
+            ),
+            cardStyle: { backgroundColor: NowTheme.COLORS.BASE }
+        }}
+    />
+);
+
+export const VerificationScreen = () => (
+    <Stack.Screen
+        name={ScreenName.VERIFICATION}
+        component={Verification}
+        options={{
+            header: ({ navigation, scene }) => (
+                <Header
+                    title={ScreenTitle.VERIFICATION}
                     options
                     navigation={navigation}
                     scene={scene}

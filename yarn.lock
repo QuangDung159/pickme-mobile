@@ -6339,7 +6339,7 @@ react-native-dotenv@2.4.3:
   dependencies:
     dotenv "^8.0.0"
 
-react-native-dropdown-picker@^4.0.5:
+react-native-dropdown-picker@4.0.5:
   version "4.0.5"
   resolved "https://registry.yarnpkg.com/react-native-dropdown-picker/-/react-native-dropdown-picker-4.0.5.tgz#44cfcb2b98043c6312fed6db43d52410551b9512"
   integrity sha512-HOKyiXk+SmhQ4otmEY11lWrWjA6hgJShBuDfXztZ94PLYJafWJTDwmXRsOt09xDd6YbCjW+989H9myp/hJrmNg==
