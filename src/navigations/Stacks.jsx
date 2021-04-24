@@ -6,24 +6,23 @@ import { useSelector } from 'react-redux';
 import { NowTheme, ScreenName } from '../constants';
 import Onboarding from '../screens/Onboarding';
 import {
-    BankAccountScreen, CreateBookingScreen,
+    BankAccountScreen,
     BookingDetailScreen,
     CashInScreen,
     CashOutScreen,
     ConversationListScreen,
-    CreateAccountScreen,
+    CreateAccountScreen, CreateBookingScreen,
     HomeScreen,
     LeaderBoardScreen,
     MessageScreen,
     NotificationScreen,
-    PaymentScreen,
     PersonalScreen,
     ProfileScreen,
     SettingsScreen,
     SignInScreen,
     SignUpScreen,
-    UpdateInfoAccountScreen,
-    SupportScreen
+    SupportScreen, UpdateInfoAccountScreen,
+    VerificationScreen
 } from './StackScreens';
 import TabIcon from './TabIcon';
 
@@ -63,6 +62,7 @@ const PersonalStack = () => (
         {MessageScreen()}
         {SupportScreen()}
         {SettingsScreen()}
+        {VerificationScreen()}
     </Stack.Navigator>
 );
 
