@@ -1,7 +1,5 @@
-import BankAccount from './BankAccount';
 import BookingDetail from './BookingDetail';
 import CashIn from './CashIn';
-import CashOut from './CashOut';
 import ConversationList from './ConversationList';
 import CreateAccount from './CreateAccount';
 import CreateBooking from './CreateBooking';
@@ -23,11 +21,9 @@ import Verification from './Verification';
 export {
     Home, Notification, Settings, Onboarding,
     SignIn, SignUp, CreateAccount,
-    BankAccount,
     CreateBooking,
     BookingDetail,
     CashIn,
-    CashOut,
     ConversationList,
     LeaderBoard,
     Message,

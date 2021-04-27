@@ -1,4 +1,5 @@
 /* eslint-disable max-len */
+import { Picker } from '@react-native-picker/picker';
 import * as ImagePicker from 'expo-image-picker';
 import {
     Block, Button, Text
@@ -11,7 +12,6 @@ import {
     Platform,
     StyleSheet
 } from 'react-native';
-import DropDownPicker from 'react-native-dropdown-picker';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useDispatch, useSelector } from 'react-redux';
@@ -61,6 +61,10 @@ export default function CreateAccount(props) {
         MediaHelpers.pickImage(true, [1, 1], (result) => handleUploadImageProfile(result.uri));
     };
 
+    const renderListPickerItem = (list) => list.map((item) => (
+        <Picker.Item label={item.label} value={item.value} key={item.value} />
+    ));
+
     const renderDropdownDOBYear = () => {
         const currentYear = new Date().getFullYear();
         const DOBStartYear = currentYear - 58;
@@ -73,28 +77,22 @@ export default function CreateAccount(props) {
         }
 
         return (
-            <DropDownPicker
-                items={listDOBYear}
-                defaultValue={listDOBYear[0].value}
-                containerStyle={[styles.inputWith, {
-                    height: 43,
-                    marginBottom: 10,
-                }]}
-                selectedtLabelStyle={{
-                    color: 'red'
-                }}
-                placeholderStyle={{
-                    color: NowTheme.COLORS.MUTED
-                }}
-                itemStyle={{
-                    justifyContent: 'flex-start'
-                }}
-                activeLabelStyle={{ color: NowTheme.COLORS.ACTIVE }}
-                onChangeItem={(item) => onChangeDOBYear(item.value)}
-                labelStyle={{
-                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
-                }}
-            />
+            <Block
+                middle
+            >
+                <Picker
+                    selectedValue={newUser.dob.substr(0, 4)}
+                    onValueChange={(itemValue) => onChangeDOBYear(itemValue)}
+                    fontFamily={NowTheme.FONT.MONTSERRAT_REGULAR}
+                    style={[
+                        styles.inputWith, {
+                            marginTop: -10
+                        }
+                    ]}
+                >
+                    {renderListPickerItem(listDOBYear)}
+                </Picker>
+            </Block>
         );
     };
 

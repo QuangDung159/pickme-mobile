@@ -1,3 +1,4 @@
+import { Picker } from '@react-native-picker/picker';
 import {
     Block, Button, Text
 } from 'galio-framework';
@@ -7,7 +8,6 @@ import {
     Alert,
     Modal, StyleSheet
 } from 'react-native';
-import DropDownPicker from 'react-native-dropdown-picker';
 import { ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import ScrollPicker from 'react-native-wheel-scroll-picker';
@@ -40,7 +40,6 @@ export default function CreateBooking({ route, navigation }) {
     const [busyCalendar, setBusyCalendar] = useState([]);
     const [modalVisible, setModalVisible] = useState(false);
     const [modalTimePickerVisible, setModalTimePickerVisible] = useState(false);
-    const [listLocationForDropdown, setListLocationForDropdown] = useState([]);
 
     const [modalActiveType, setModalActiveType] = useState('start');
     const [startTimeStr, setStartTimeStr] = useState('07:00');
@@ -50,6 +49,8 @@ export default function CreateBooking({ route, navigation }) {
     const [startMinuteActive, setStartMinuteActive] = useState(0);
     const [endHourActive, setEndHourActive] = useState(0);
     const [endMinuteActive, setEndMinuteActive] = useState(0);
+
+    const [locationActive, setLocationActive] = useState();
 
     const token = useSelector((state) => state.userReducer.token);
     const listBookingLocation = useSelector((state) => state.locationReducer.listBookingLocation);
@@ -65,7 +66,6 @@ export default function CreateBooking({ route, navigation }) {
 
     const fetchListBookingLocation = () => {
         if (listBookingLocation && listBookingLocation.length > 0) {
-            setListLocationForDropdown(createListLocationForDropdown(listBookingLocation));
             setBooking({
                 ...booking,
                 address: listBookingLocation[0].address,
@@ -73,6 +73,7 @@ export default function CreateBooking({ route, navigation }) {
                 longtitude: listBookingLocation[0].longtitude,
                 latitude: listBookingLocation[0].latitude
             });
+            setLocationActive(listBookingLocation[0]);
         } else {
             rxUtil(
                 Rx.BOOKING.GET_LIST_BOOKING_LOCATION,
@@ -82,17 +83,10 @@ export default function CreateBooking({ route, navigation }) {
                     Authorization: token
                 },
                 (res) => {
-                    const listLocation = res.data.data;
-                    if (listLocation.length > 0) {
-                        dispatch(setListBookingLocation(listLocation));
-                        setListLocationForDropdown(createListLocationForDropdown(listLocation));
-                        setBooking({
-                            ...booking,
-                            address: listLocation[0].address,
-                            description: listLocation[0].description,
-                            longtitude: listLocation[0].longtitude,
-                            latitude: listLocation[0].latitude
-                        });
+                    const listLocationFromAPI = res.data.data;
+                    if (listLocationFromAPI.length > 0) {
+                        dispatch(setListBookingLocation(listLocationFromAPI));
+                        setLocationActive(listLocationFromAPI[0]);
                     }
                 }
             );
@@ -129,16 +123,6 @@ export default function CreateBooking({ route, navigation }) {
         );
     };
 
-    const onChangeLocation = (locationItem) => {
-        const {
-            address, description, longtitude, latitude
-        } = locationItem;
-
-        setBooking({
-            ...booking, address, description, longtitude, latitude
-        });
-    };
-
     const onSubmitBooking = () => {
         const {
             params: {
@@ -154,10 +138,10 @@ export default function CreateBooking({ route, navigation }) {
             StartAt: startString,
             EndAt: endString,
             Date: dateString,
-            Address: booking.address,
-            Longtitude: booking.longtitude,
-            Latitude: booking.latitude,
-            Description: booking.description,
+            Address: locationActive.address,
+            Longtitude: locationActive.longtitude,
+            Latitude: locationActive.latitude,
+            Description: locationActive.description,
             Noted: 'N/A'
         };
 
@@ -218,20 +202,6 @@ export default function CreateBooking({ route, navigation }) {
 
         setSelectedDate(date);
         setListBusyBySelectedDate(result ? result.details : []);
-    };
-
-    const createListLocationForDropdown = (listLocation) => {
-        const listLocationFinal = [];
-
-        if (listLocation) {
-            listLocation.forEach((item) => {
-                const location = { ...item };
-                location.label = item.name;
-                location.value = item.id;
-                listLocationFinal.push(location);
-            });
-        }
-        return listLocationFinal;
     };
 
     const onChangeHourTimePicker = (data) => {
@@ -556,66 +526,46 @@ export default function CreateBooking({ route, navigation }) {
         )
     );
 
-    const renderDropDownLocation = () => (
-        <Block
-            style={{
-                width: NowTheme.SIZES.WIDTH_BASE * 0.9,
-                alignSelf: 'center',
-                marginBottom: 10,
-            }}
-        >
-            {listLocationForDropdown && listLocationForDropdown.length !== 0 && (
-                <DropDownPicker
-                    items={listLocationForDropdown}
-                    defaultValue={listLocationForDropdown[0].id}
-                    containerStyle={{
-                        borderRadius: 5,
-                        width: NowTheme.SIZES.WIDTH_BASE * 0.9,
-                        alignSelf: 'center',
+    const onChangeLocation = (locationIdInput) => {
+        const locationChoose = listBookingLocation.find((item) => item.id === locationIdInput);
+
+        if (locationChoose) {
+            setLocationActive(locationChoose);
+        }
+    };
+
+    const renderLocationPicker = () => (
+        <>
+            {locationActive && (
+                <Block
+                    style={{
                         marginBottom: 10
                     }}
-                    selectedtLabelStyle={{
-                        color: 'red'
-                    }}
-                    placeholderStyle={{
-                        color: NowTheme.COLORS.MUTED
-                    }}
-                    itemStyle={{
-                        justifyContent: 'flex-start',
-                    }}
-                    dropDownStyle={{ backgroundColor: '#fafafa' }}
-                    activeLabelStyle={{ color: NowTheme.COLORS.ACTIVE }}
-                    onChangeItem={(item) => onChangeLocation(item)}
-                    labelStyle={{
-                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
-                    }}
-                    placeholder="Chọn địa điểm..."
-                    searchable
-                    searchablePlaceholder="Tìm kiếm..."
-                    searchablePlaceholderTextColor={NowTheme.COLORS.MUTED}
-                    searchableError={() => <Text>Not Found</Text>}
-                />
-            )}
-            <Block>
-                {booking.address ? (
-                    <Text
-                        style={{
-                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                            fontSize: NowTheme.SIZES.FONT_H4,
-                            marginBottom: 10
-                        }}
-                        color={NowTheme.COLORS.ACTIVE}
+                >
+                    <Picker
+                        selectedValue={locationActive.id}
+                        onValueChange={(itemValue) => onChangeLocation(itemValue)}
+                        fontFamily={NowTheme.FONT.MONTSERRAT_REGULAR}
+                        style={[
+                            styles.inputWith, {
+                                marginTop: -30
+                            }
+                        ]}
                     >
-                        {booking.address}
+                        {listBookingLocation.map((item) => (
+                            <Picker.Item value={item.id} label={item.name} key={item.id} />
+                        ))}
+                    </Picker>
+                    <Text
+                        fontFamily={NowTheme.FONT.MONTSERRAT_REGULAR}
+                        color={NowTheme.COLORS.ACTIVE}
+                        size={NowTheme.SIZES.FONT_H2}
+                    >
+                        {locationActive.address}
                     </Text>
-                ) : (
-                    <Block style={{
-                        marginBottom: 10
-                    }}
-                    />
-                )}
-            </Block>
-        </Block>
+                </Block>
+            )}
+        </>
     );
 
     const renderFormBlock = (partner) => (
@@ -646,8 +596,7 @@ export default function CreateBooking({ route, navigation }) {
                     selectedDate={selectedDate}
                 />
                 {renderButtonTimePicker()}
-                {renderDropDownLocation()}
-
+                {renderLocationPicker()}
             </Block>
         </Block>
     );
