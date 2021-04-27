@@ -84,11 +84,7 @@ export default function CreateAccount(props) {
                     selectedValue={newUser.dob.substr(0, 4)}
                     onValueChange={(itemValue) => onChangeDOBYear(itemValue)}
                     fontFamily={NowTheme.FONT.MONTSERRAT_REGULAR}
-                    style={[
-                        styles.inputWith, {
-                            marginTop: -10
-                        }
-                    ]}
+                    style={styles.inputWith}
                 >
                     {renderListPickerItem(listDOBYear)}
                 </Picker>
