@@ -141,6 +141,7 @@ export default function SignUp(props) {
                                     style={styles.input}
                                     placeholder="Nhập số diện thoại..."
                                     value={phoneNumber}
+                                    keyboardType="number-pad"
                                     onChangeText={(phoneNumberInput) => setPhoneNumber(phoneNumberInput)}
                                 />
                             </Block>

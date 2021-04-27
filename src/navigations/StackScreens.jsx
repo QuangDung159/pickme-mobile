@@ -5,9 +5,8 @@ import { NowTheme, ScreenName, ScreenTitle } from '../constants';
 import Header from '../containers/Header';
 // screens
 import {
-    BankAccount,
     BookingDetail,
-    CashIn, CashOut,
+    CashIn,
     ConversationList, CreateAccount, CreateBooking,
     Home,
     LeaderBoard,
@@ -131,24 +130,6 @@ export const LeaderBoardScreen = () => (
     />
 );
 
-export const BankAccountScreen = () => (
-    <Stack.Screen
-        name={ScreenName.BANK_ACCOUNT}
-        component={BankAccount}
-        options={{
-            header: ({ navigation, scene }) => (
-                <Header
-                    title={ScreenTitle.BANK_ACCOUNT}
-                    options
-                    navigation={navigation}
-                    scene={scene}
-                />
-            ),
-            cardStyle: { backgroundColor: NowTheme.COLORS.BASE }
-        }}
-    />
-);
-
 export const CreateBookingScreen = () => (
     <Stack.Screen
         name={ScreenName.CREATE_BOOKING}
@@ -193,24 +174,6 @@ export const CashInScreen = () => (
             header: ({ navigation, scene }) => (
                 <Header
                     title={ScreenTitle.CASH_IN}
-                    options
-                    navigation={navigation}
-                    scene={scene}
-                />
-            ),
-            cardStyle: { backgroundColor: NowTheme.COLORS.BASE }
-        }}
-    />
-);
-
-export const CashOutScreen = () => (
-    <Stack.Screen
-        name={ScreenName.CASH_OUT}
-        component={CashOut}
-        options={{
-            header: ({ navigation, scene }) => (
-                <Header
-                    title={ScreenTitle.CASH_OUT}
                     options
                     navigation={navigation}
                     scene={scene}
