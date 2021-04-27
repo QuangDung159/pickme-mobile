@@ -1,9 +1,9 @@
+import { Picker } from '@react-native-picker/picker';
 import {
     Block, Button, Input, Text
 } from 'galio-framework';
 import React, { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
-import DropDownPicker from 'react-native-dropdown-picker';
 import { useDispatch, useSelector } from 'react-redux';
 import { CenterLoader } from '../components/uiComponents';
 import {
@@ -30,6 +30,10 @@ export default function UpdateInfoAccount(props) {
     );
 
     // handler \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+    const renderListPickerItem = (list) => list.map((item) => (
+        <Picker.Item label={item.label} value={item.value} key={item.value} />
+    ));
+
     const renderDropdownDOBYear = () => {
         const currentYear = new Date().getFullYear();
         const DOBStartYear = currentYear - 58;
@@ -42,30 +46,13 @@ export default function UpdateInfoAccount(props) {
         }
 
         return (
-            <DropDownPicker
-                items={listDOBYear}
-                defaultValue={currentUser.dob.substr(0, 4)}
-                containerStyle={{
-                    borderRadius: 5,
-                    width: NowTheme.SIZES.WIDTH_BASE * 0.9,
-                    height: 44,
-                    marginBottom: 10
-                }}
-                selectedtLabelStyle={{
-                    color: 'red'
-                }}
-                placeholderStyle={{
-                    color: NowTheme.COLORS.MUTED
-                }}
-                itemStyle={{
-                    justifyContent: 'flex-start'
-                }}
-                activeLabelStyle={{ color: NowTheme.COLORS.ACTIVE }}
-                onChangeItem={(item) => onChangeDOBYear(item.value)}
-                labelStyle={{
-                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
-                }}
-            />
+            <Picker
+                selectedValue={newUser?.dob?.substr(0, 4)}
+                onValueChange={(itemValue) => onChangeDOBYear(itemValue)}
+                fontFamily={NowTheme.FONT.MONTSERRAT_REGULAR}
+            >
+                {renderListPickerItem(listDOBYear)}
+            </Picker>
         );
     };
 
@@ -286,7 +273,6 @@ export default function UpdateInfoAccount(props) {
                         width: NowTheme.SIZES.WIDTH_BASE * 0.9,
                         height: 44
                     }}
-                    keyboardType="number-pad"
                     color={NowTheme.COLORS.HEADER}
                     placeholder="Nhập sở thích..."
                     value={newUser.interests}
@@ -404,12 +390,17 @@ export default function UpdateInfoAccount(props) {
                                 marginVertical: 10
                             }}
                         >
-                            {renderInputName()}
-                            {renderInputHometown()}
-                            {renderInputDOB()}
-                            {renderInputInterests()}
-                            {renderInputDescription()}
-                            {renderButtonPanel()}
+                            {newUser && (
+                                <>
+                                    {renderInputName()}
+                                    {renderInputHometown()}
+                                    {renderInputDOB()}
+                                    {renderInputInterests()}
+                                    {renderInputDescription()}
+                                    {renderButtonPanel()}
+                                </>
+                            )}
+
                         </Block>
                     </ScrollView>
                 )}
