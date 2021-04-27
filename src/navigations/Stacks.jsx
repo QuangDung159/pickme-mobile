@@ -6,10 +6,8 @@ import { useSelector } from 'react-redux';
 import { NowTheme, ScreenName } from '../constants';
 import Onboarding from '../screens/Onboarding';
 import {
-    BankAccountScreen,
     BookingDetailScreen,
     CashInScreen,
-    CashOutScreen,
     ConversationListScreen,
     CreateAccountScreen, CreateBookingScreen,
     HomeScreen,
@@ -55,8 +53,6 @@ const PersonalStack = () => (
         {PersonalScreen()}
         {UpdateInfoAccountScreen()}
         {CashInScreen()}
-        {CashOutScreen()}
-        {BankAccountScreen()}
         {BookingDetailScreen()}
         {CreateBookingScreen()}
         {MessageScreen()}
@@ -84,8 +80,6 @@ const NotificationStack = () => (
         {CreateBookingScreen()}
         {PersonalScreen()}
         {CashInScreen()}
-        {CashOutScreen()}
-        {BankAccountScreen()}
         {SupportScreen()}
         {SettingsScreen()}
     </Stack.Navigator>

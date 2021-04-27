@@ -1,10 +1,10 @@
+import { Picker } from '@react-native-picker/picker';
 import { Block, Button, Text } from 'galio-framework';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import {
     Alert, Modal, RefreshControl, ScrollView, StyleSheet
 } from 'react-native';
-import DropDownPicker from 'react-native-dropdown-picker';
 import { AirbnbRating } from 'react-native-ratings';
 import { useDispatch, useSelector } from 'react-redux';
 import { CardBooking } from '../components/bussinessComponents';
@@ -40,7 +40,10 @@ export default function BookingDetail({
     const [modalReasonVisible, setModalReasonVisible] = useState(false);
     const [ratingValue, setRatingValue] = useState(4);
     const [reportDesc, setReportDesc] = useState();
-    const [reasonDesc, setReasonDesc] = useState(reasonDropdownArr[0].label);
+    const [reason, setReason] = useState({
+        label: reasonDropdownArr[0].label,
+        value: reasonDropdownArr[0].value
+    });
 
     const token = useSelector((state) => state.userReducer.token);
 
@@ -95,7 +98,7 @@ export default function BookingDetail({
             `${Rx.BOOKING.CANCEL_BOOKING}/${bookingId}`,
             'POST',
             {
-                rejectReason: reasonDesc
+                rejectReason: reason.label
             },
             {
                 Authorization: token
@@ -328,29 +331,28 @@ export default function BookingDetail({
         </Modal>
     );
 
+    const onChangeReason = (reasonValueInput) => {
+        const reasonInput = reasonDropdownArr.find((item) => item.value === reasonValueInput);
+        if (reason) {
+            setReason(reasonInput);
+        }
+    };
+
     const renderReasonDropdown = () => (
-        <DropDownPicker
-            items={reasonDropdownArr}
-            defaultValue={reasonDropdownArr[0].value}
-            containerStyle={[styles.inputWith, {
-                height: 43,
-                marginBottom: 10
-            }]}
-            selectedtLabelStyle={{
-                color: 'red'
-            }}
-            placeholderStyle={{
-                color: NowTheme.COLORS.MUTED
-            }}
-            itemStyle={{
-                justifyContent: 'flex-start'
-            }}
-            activeLabelStyle={{ color: NowTheme.COLORS.ACTIVE }}
-            onChangeItem={(item) => setReasonDesc(item.label)}
-            labelStyle={{
-                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
-            }}
-        />
+        <Picker
+            selectedValue={reason.value}
+            onValueChange={(itemValue) => onChangeReason(itemValue)}
+            fontFamily={NowTheme.FONT.MONTSERRAT_REGULAR}
+            style={[
+                styles.inputWith, {
+                    marginTop: -30
+                }
+            ]}
+        >
+            {reasonDropdownArr.map((item) => (
+                <Picker.Item value={item.value} label={item.label} key={item.value} />
+            ))}
+        </Picker>
     );
 
     const renderReasonCancelBookingModal = () => (
