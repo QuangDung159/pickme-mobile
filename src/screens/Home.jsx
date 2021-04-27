@@ -1,4 +1,6 @@
 /* eslint no-underscore-dangle: ["error", { "allow": ["_isMounted", "_id"] }] */
+/* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
+import { NO_AVATAR_URL } from '@env';
 import { Block, Text } from 'galio-framework';
 import React, { useEffect, useState } from 'react';
 import {
@@ -278,7 +280,7 @@ export default function Home({ navigation }) {
                             zIndex: 99
                         }}
                         width={NowTheme.SIZES.WIDTH_BASE}
-                        source={{ uri: item.imageUrl }}
+                        source={{ uri: item.imageUrl || NO_AVATAR_URL }}
                     />
                 </Block>
             </Block>
