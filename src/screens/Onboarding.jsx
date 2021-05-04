@@ -1,19 +1,25 @@
 import Constants from 'expo-constants';
 import * as SecureStore from 'expo-secure-store';
 import {
-    Block, Button, Text, theme
+    Block, Button, Text
 } from 'galio-framework';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     ImageBackground, Platform, StatusBar, StyleSheet
 } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { CenterLoader } from '../components/uiComponents';
 import {
-    Images, NowTheme, ScreenName, Utils
+    Images, NowTheme, Rx, ScreenName, Utils
 } from '../constants';
-import { setNavigation, setToken } from '../redux/Actions';
+import { setIsSignInOtherDeviceStore, setNavigation, setToken } from '../redux/Actions';
+import { rxUtil } from '../utils';
 
 export default function Onboarding({ navigation }) {
+    const [isShowSpinner, setIsShowSpinner] = useState(false);
+
+    const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
+
     const dispatch = useDispatch();
 
     useEffect(
@@ -25,9 +31,59 @@ export default function Onboarding({ navigation }) {
     useEffect(
         () => {
             dispatch(setNavigation(navigation));
-            getTokenFromLocal();
+            onLogin();
         }, []
     );
+
+    useEffect(
+        () => {
+            if (isSignInOtherDeviceStore) {
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: ScreenName.SIGN_IN_WITH_OTP }],
+                });
+            }
+        }, [isSignInOtherDeviceStore]
+    );
+
+    const onLogin = async () => {
+        const deviceId = await SecureStore.getItemAsync('deviceId');
+        const phoneNumber = await SecureStore.getItemAsync('phoneNumber');
+        const password = await SecureStore.getItemAsync('password');
+        if (phoneNumber && password) {
+            const data = {
+                username: phoneNumber,
+                password,
+                deviceId
+            };
+
+            setIsShowSpinner(true);
+            rxUtil(
+                Rx.AUTHENTICATION.LOGIN,
+                'POST',
+                data,
+                {},
+                () => {
+                    // const { status } = res;
+
+                    // for testing
+                    const status = 200;
+                    if (status === 200) {
+                        getTokenFromLocal();
+                        dispatch(setIsSignInOtherDeviceStore(false));
+                    }
+                    if (status === 201) {
+                        // re otp
+                        navigation.reset({
+                            index: 0,
+                            routes: [{ name: ScreenName.SIGN_IN_WITH_OTP }],
+                        });
+                    }
+                }
+            );
+            setIsShowSpinner(false);
+        }
+    };
 
     const getTokenFromLocal = async () => {
         const apiTokenLocal = await SecureStore.getItemAsync('api_token');
@@ -52,9 +108,12 @@ export default function Onboarding({ navigation }) {
                         resizeMode: 'cover',
                     }}
                 />
-                <Block space="between" style={styles.padded}>
-                    <Block>
-                        {/* <Block middle>
+                {isShowSpinner ? (
+                    <CenterLoader />
+                ) : (
+                    <Block space="between" style={styles.padded}>
+                        <Block>
+                            {/* <Block middle>
                             <Image
                                 source={Images.NowLogo}
                                 style={{
@@ -63,63 +122,64 @@ export default function Onboarding({ navigation }) {
                             />
                         </Block> */}
 
-                        <Block>
-                            <Block
-                                middle
-                                style={{
-                                    paddingBottom: NowTheme.SIZES.HEIGHT_BASE * 0.3
-                                }}
-                            >
-                                <Text
+                            <Block>
+                                <Block
+                                    middle
                                     style={{
-                                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                                        fontSize: NowTheme.SIZES.WIDTH_BASE * 0.1
+                                        paddingBottom: NowTheme.SIZES.HEIGHT_BASE * 0.3
                                     }}
-                                    color={NowTheme.COLORS.ACTIVE}
                                 >
-                                    PickMe
+                                    <Text
+                                        style={{
+                                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                                            fontSize: NowTheme.SIZES.WIDTH_BASE * 0.1
+                                        }}
+                                        color={NowTheme.COLORS.ACTIVE}
+                                    >
+                                        PickMe
+                                    </Text>
+                                </Block>
+                                <Button
+                                    shadowless
+                                    style={styles.button}
+                                    color={NowTheme.COLORS.PRIMARY}
+                                    onPress={() => {
+                                        navigation.navigate(ScreenName.SIGN_IN);
+                                    }}
+                                >
+                                    <Text
+                                        style={{ fontFamily: NowTheme.FONT.MONTSERRAT_BOLD, fontSize: 14 }}
+                                        color={NowTheme.COLORS.BASE}
+                                    >
+                                        Đăng nhập
+                                    </Text>
+                                </Button>
+                                <Button
+                                    shadowless
+                                    style={styles.button}
+                                    color={NowTheme.COLORS.PRIMARY}
+                                    onPress={() => navigation.navigate(ScreenName.SIGN_UP)}
+                                >
+                                    <Text
+                                        style={{ fontFamily: NowTheme.FONT.MONTSERRAT_BOLD, fontSize: 14 }}
+                                        color={NowTheme.COLORS.BASE}
+                                    >
+                                        Đăng kí
+                                    </Text>
+                                </Button>
+                            </Block>
+                            <Block middle>
+                                <Text
+                                    color={NowTheme.COLORS.DEFAULT}
+                                    size={NowTheme.SIZES.FONT_H4 - 2}
+                                    style={{ fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR }}
+                                >
+                                    {`${Constants.manifest.version}`}
                                 </Text>
                             </Block>
-                            <Button
-                                shadowless
-                                style={styles.button}
-                                color={NowTheme.COLORS.PRIMARY}
-                                onPress={() => {
-                                    navigation.navigate(ScreenName.SIGN_IN);
-                                }}
-                            >
-                                <Text
-                                    style={{ fontFamily: NowTheme.FONT.MONTSERRAT_BOLD, fontSize: 14 }}
-                                    color={NowTheme.COLORS.BASE}
-                                >
-                                    Đăng nhập
-                                </Text>
-                            </Button>
-                            <Button
-                                shadowless
-                                style={styles.button}
-                                color={NowTheme.COLORS.PRIMARY}
-                                onPress={() => navigation.navigate(ScreenName.SIGN_UP)}
-                            >
-                                <Text
-                                    style={{ fontFamily: NowTheme.FONT.MONTSERRAT_BOLD, fontSize: 14 }}
-                                    color={NowTheme.COLORS.BASE}
-                                >
-                                    Đăng kí
-                                </Text>
-                            </Button>
-                        </Block>
-                        <Block middle>
-                            <Text
-                                color={NowTheme.COLORS.DEFAULT}
-                                size={NowTheme.SIZES.FONT_H4 - 2}
-                                style={{ fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR }}
-                            >
-                                {`Version ${Constants.manifest.version}`}
-                            </Text>
                         </Block>
                     </Block>
-                </Block>
+                )}
             </Block>
         </Block>
     );
@@ -130,10 +190,10 @@ const styles = StyleSheet.create({
         marginTop: Platform.OS === 'android' ? -Utils.HeaderHeight : 0
     },
     padded: {
-        paddingHorizontal: theme.SIZES.BASE * 2,
         zIndex: 3,
         position: 'absolute',
-        bottom: Platform.OS === 'android' ? theme.SIZES.BASE * 2 : theme.SIZES.BASE * 3
+        bottom: NowTheme.SIZES.HEIGHT_BASE * 0.1,
+        alignSelf: 'center',
     },
     button: {
         width: NowTheme.SIZES.WIDTH_BASE * 0.8,

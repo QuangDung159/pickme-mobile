@@ -7,7 +7,9 @@ import { FlatList, TouchableWithoutFeedback } from 'react-native-gesture-handler
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useDispatch, useSelector } from 'react-redux';
 import { CenterLoader, IconCustom, Input } from '../components/uiComponents';
-import { GraphQueryString, IconFamily, NowTheme } from '../constants';
+import {
+    GraphQueryString, IconFamily, NowTheme, ScreenName
+} from '../constants';
 import { ToastHelpers } from '../helpers';
 import { setChattingWith, setNumberMessageUnread } from '../redux/Actions';
 import { socketRequestUtil } from '../utils';
@@ -23,6 +25,7 @@ export default function Message({ navigation, route }) {
     const messageListened = useSelector((state) => state.messageReducer.messageListened);
     const chattingWith = useSelector((state) => state.messageReducer.chattingWith);
     const numberMessageUnread = useSelector((state) => state.messageReducer.numberMessageUnread);
+    const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
 
     const dispatch = useDispatch();
 
@@ -85,6 +88,17 @@ export default function Message({ navigation, route }) {
                 );
             }
         }, [messageListened._id]
+    );
+
+    useEffect(
+        () => {
+            if (isSignInOtherDeviceStore) {
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: ScreenName.SIGN_IN_WITH_OTP }],
+                });
+            }
+        }, [isSignInOtherDeviceStore]
     );
 
     const calculateNumberOfNumberMessageUnread = (listMessage) => {

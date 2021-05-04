@@ -1,6 +1,6 @@
 import * as SecureStore from 'expo-secure-store';
 import {
-    Block, Button, Text
+    Block, Button
 } from 'galio-framework';
 import React, { useState } from 'react';
 import {
@@ -11,8 +11,11 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import Toast from 'react-native-toast-message';
 import { useDispatch, useSelector } from 'react-redux';
 import { ExpoNotification } from '../components/bussinessComponents';
-import { CenterLoader, Input } from '../components/uiComponents';
 import {
+    CenterLoader, IconCustom, Input, NoteText
+} from '../components/uiComponents';
+import {
+    IconFamily,
     Images, NowTheme, Rx, ScreenName
 } from '../constants';
 import { ToastHelpers } from '../helpers';
@@ -22,10 +25,9 @@ import {
 } from '../redux/Actions';
 import { rxUtil } from '../utils';
 
-export default function SignIn({ navigation }) {
-    const [phoneNumber, setPhoneNumber] = useState('huyvd');
-    const [password, setPassword] = useState('0000');
+export default function SignInWithOTP({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
+    const [otp, setOtp] = useState('');
 
     const expoToken = useSelector((state) => state.appConfigReducer.expoToken);
 
@@ -46,66 +48,70 @@ export default function SignIn({ navigation }) {
     };
 
     const onSubmitLogin = async () => {
-        if (validation()) {
-            const deviceId = await SecureStore.getItemAsync('deviceId');
-            const data = {
-                username: phoneNumber,
-                password,
-                deviceId
-            };
+        setIsShowSpinner(true);
+        const deviceId = await SecureStore.getItemAsync('deviceId');
+        const phoneNumber = await SecureStore.getItemAsync('phoneNumber');
+        const password = await SecureStore.getItemAsync('password');
 
-            toggleSpinner(true);
-            rxUtil(
-                Rx.AUTHENTICATION.LOGIN,
-                'POST',
-                data,
-                {},
-                (res) => {
-                    // const { status } = res;
+        const data = {
+            username: phoneNumber,
+            password,
+            deviceId
+        };
 
-                    // for testing
-                    const status = 200;
-                    if (status === 200) {
-                        onLoginSucess(res.data.data);
-                        dispatch(setIsSignInOtherDeviceStore(false));
-                    }
-                    if (status === 201) {
-                        // re otp
-                        navigation.reset({
-                            index: 0,
-                            routes: [{ name: ScreenName.SIGN_IN_WITH_OTP }],
-                        });
-                    }
-                },
-                () => {
-                    toggleSpinner(false);
-                    Toast.show({
-                        type: 'error',
-                        text1: 'Lỗi hệ thống! Vui lòng thử lại.'
-                    });
-                },
-                () => {
-                    toggleSpinner(false);
-                    Toast.show({
-                        type: 'error',
-                        text1: 'Lỗi hệ thống! Vui lòng thử lại.'
-                    });
-                }
-            );
-        }
+        toggleSpinner(true);
+        rxUtil(
+            Rx.AUTHENTICATION.LOGIN,
+            'POST',
+            data,
+            null,
+            (res) => {
+                onLoginSucess(res.data.data);
+            },
+            () => {
+                toggleSpinner(false);
+                Toast.show({
+                    type: 'error',
+                    text1: 'Lỗi hệ thống! Vui lòng thử lại.'
+                });
+            },
+            () => {
+                toggleSpinner(false);
+                Toast.show({
+                    type: 'error',
+                    text1: 'Lỗi hệ thống! Vui lòng thử lại.'
+                });
+            }
+        );
+        return true;
     };
 
-    const validation = () => {
-        if (!phoneNumber) {
-            ToastHelpers.renderToast('Tên đăng nhập không hợp lệ!', 'error');
-            return false;
-        }
+    const onClickGetOTP = async () => {
+        const phoneNumber = await SecureStore.getItemAsync('phoneNumber');
+        const password = await SecureStore.getItemAsync('password');
 
-        if (!password) {
-            ToastHelpers.renderToast('Mật khẩu không hợp lệ!', 'error');
-            return false;
-        }
+        rxUtil(
+            Rx.USER.GET_OTP_REGISTER,
+            'POST',
+            {
+                phoneNum: phoneNumber,
+                password
+            },
+            null,
+            (res) => {
+                ToastHelpers.renderToast(res.data.message, 'success');
 
+                // in testing, will remove when prod
+                setOtp(res.data.data.code);
+                setIsShowSpinner(false);
+            },
+            () => {
+                setIsShowSpinner(false);
+            },
+            () => {
+                setIsShowSpinner(false);
+            }
+        );
         return true;
     };
 
@@ -122,11 +128,7 @@ export default function SignIn({ navigation }) {
         SecureStore.setItemAsync('api_token', `${tokenFromAPI}`)
             .then(console.log('tokenFromAPI :>> ', tokenFromAPI));
 
-        SecureStore.setItemAsync('password', `${password}`)
-            .then(console.log('password :>> ', password));
-
-        SecureStore.setItemAsync('phoneNumber', `${phoneNumber}`)
-            .then(console.log('phoneNumber :>> ', phoneNumber));
+        dispatch(setIsSignInOtherDeviceStore(false));
     };
 
     const toggleSpinner = (isShowSpinnerToggled) => {
@@ -148,19 +150,31 @@ export default function SignIn({ navigation }) {
                                 middle
                                 style={{
                                     height: NowTheme.SIZES.HEIGHT_BASE * 0.3,
+                                    marginBottom: 10
                                 }}
                             >
-                                <Text
-                                    style={{
-                                        fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
-                                        textAlign: 'center'
-                                    }}
-                                    color="#333"
-                                    size={24}
-                                    height={100}
-                                >
-                                    Đăng nhập
-                                </Text>
+                                <Block>
+                                    <NoteText
+                                        width={NowTheme.SIZES.WIDTH_BASE * 0.77}
+                                        title="Dường như bạn đang đăng nhập từ một thiết bị khác:"
+                                        content="Bạn vui lòng đăng nhập lại để xác thực thiết bị này."
+                                        contentStyle={{
+                                            fontSize: NowTheme.SIZES.FONT_H4,
+                                            color: NowTheme.COLORS.ACTIVE,
+                                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                                            marginTop: 5
+                                        }}
+                                        iconComponent={(
+                                            <IconCustom
+                                                name="info-circle"
+                                                family={IconFamily.FONT_AWESOME}
+                                                size={18}
+                                                color={NowTheme.COLORS.ACTIVE}
+                                            />
+                                        )}
+                                        backgroundColor={NowTheme.COLORS.LIST_ITEM_BACKGROUND_1}
+                                    />
+                                </Block>
                             </Block>
 
                             {isShowSpinner ? (
@@ -180,41 +194,38 @@ export default function SignIn({ navigation }) {
                                             <Input
                                                 style={{
                                                     borderRadius: 5,
-                                                    width: NowTheme.SIZES.WIDTH_BASE * 0.77,
-                                                }}
-                                                placeholder="Nhập tên đăng nhập..."
-                                                value={phoneNumber}
-                                                onChangeText={
-                                                    (phoneNumberInput) => setPhoneNumber(phoneNumberInput)
-                                                }
-                                            />
-
-                                            <Input
-                                                placeholder="Nhập mật khẩu..."
-                                                style={{
-                                                    borderRadius: 5,
                                                     width: NowTheme.SIZES.WIDTH_BASE * 0.77
                                                 }}
-                                                password
-                                                viewPass
-                                                value={password}
-                                                onChangeText={
-                                                    (passwordInput) => setPassword(passwordInput)
-                                                }
+                                                keyboardType="number-pad"
+                                                value={otp}
+                                                placeholder="Nhập mã xác thực..."
+                                                onChangeText={(otpInput) => setOtp(otpInput)}
                                             />
                                         </Block>
                                     </Block>
 
                                     <Block center>
-                                        <Button
-                                            onPress={() => onSubmitLogin()}
-                                            style={[styles.button, {
-                                                marginVertical: 10
-                                            }]}
-                                            shadowless
-                                        >
-                                            Đăng nhập
-                                        </Button>
+                                        {otp === '' ? (
+                                            <Button
+                                                onPress={() => onClickGetOTP()}
+                                                style={[styles.button, {
+                                                    marginVertical: 10
+                                                }]}
+                                                shadowless
+                                            >
+                                                Nhận mã xác thực
+                                            </Button>
+                                        ) : (
+                                            <Button
+                                                onPress={() => onSubmitLogin()}
+                                                style={[styles.button, {
+                                                    marginVertical: 10
+                                                }]}
+                                                shadowless
+                                            >
+                                                Đăng nhập
+                                            </Button>
+                                        )}
                                     </Block>
                                 </>
                             )}

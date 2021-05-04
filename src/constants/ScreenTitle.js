@@ -27,4 +27,5 @@ export default {
     BUSY_CALENDAR: 'Lịch bận',
     SUPPORT: 'Hỗ trợ',
     VERIFICATION: 'Xác thực tài khoản',
+    SIGN_IN_WITH_OTP: 'Đăng nhập'
 };

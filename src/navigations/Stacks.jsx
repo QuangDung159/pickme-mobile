@@ -14,11 +14,12 @@ import {
     LeaderBoardScreen,
     MessageScreen,
     NotificationScreen,
+    OnboardingScreen,
     PersonalScreen,
     ProfileScreen,
     SettingsScreen,
     SignInScreen,
-    SignUpScreen,
+    SignInWithOTPScreen, SignUpScreen,
     SupportScreen, UpdateInfoAccountScreen,
     VerificationScreen
 } from './StackScreens';
@@ -36,6 +37,13 @@ const SignUpStack = () => (
 const SignInStack = () => (
     <Stack.Navigator initialRouteName={ScreenName.SIGN_IN} mode="card" headerMode="none">
         {SignInScreen()}
+        {SignInWithOTPScreen()}
+    </Stack.Navigator>
+);
+
+const SignInWithOTPStack = () => (
+    <Stack.Navigator initialRouteName={ScreenName.SIGN_IN} mode="card" headerMode="none">
+        {SignInWithOTPScreen()}
     </Stack.Navigator>
 );
 
@@ -90,6 +98,13 @@ const ConversationListStack = () => (
         {ConversationListScreen()}
         {MessageScreen()}
         {ProfileScreen()}
+    </Stack.Navigator>
+);
+
+const OnboardingStack = () => (
+    <Stack.Navigator initialRouteName={ScreenName.ONBOARDING} mode="card" headerMode="none">
+        {OnboardingScreen()}
+        {SignInWithOTPScreen()}
     </Stack.Navigator>
 );
 
@@ -164,19 +179,14 @@ const BottomTabMenuStack = () => {
 export default function AppStask() {
     return (
         <Stack.Navigator mode="card" headerMode="none">
-            <Stack.Screen
-                name={ScreenName.ONBOARDING}
-                component={Onboarding}
-                option={{
-                    headerTransparent: true
-                }}
-            />
+            <Stack.Screen name={ScreenName.ONBOARDING} component={OnboardingStack} />
             <Stack.Screen
                 name={ScreenName.APP}
                 component={BottomTabMenuStack}
             />
             <Stack.Screen name={ScreenName.SIGN_UP} component={SignUpStack} />
             <Stack.Screen name={ScreenName.SIGN_IN} component={SignInStack} />
+            <Stack.Screen name={ScreenName.SIGN_IN_WITH_OTP} component={SignInWithOTPStack} />
         </Stack.Navigator>
     );
 }
