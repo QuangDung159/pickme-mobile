@@ -11,8 +11,9 @@ import {
     Home,
     LeaderBoard,
     Message, Notification,
+    Onboarding,
     Payment, Personal,
-    Profile, Settings, SignIn, SignUp,
+    Profile, Settings, SignIn, SignInWithOTP, SignUp,
     Support, UpdateInfoAccount,
     Verification
 } from '../screens';
@@ -305,6 +306,48 @@ export const SignInScreen = () => (
     <Stack.Screen
         name={ScreenName.SIGN_IN}
         component={SignIn}
+        options={{
+            header: ({ navigation, scene }) => (
+                <Header
+                    title=""
+                    back
+                    white
+                    transparent
+                    navigation={navigation}
+                    scene={scene}
+                    showRight={false}
+                />
+            ),
+            headerTransparent: true
+        }}
+    />
+);
+
+export const SignInWithOTPScreen = () => (
+    <Stack.Screen
+        name={ScreenName.SIGN_IN_WITH_OTP}
+        component={SignInWithOTP}
+        options={{
+            header: ({ navigation, scene }) => (
+                <Header
+                    title=""
+                    back
+                    white
+                    transparent
+                    navigation={navigation}
+                    scene={scene}
+                    showRight={false}
+                />
+            ),
+            headerTransparent: true
+        }}
+    />
+);
+
+export const OnboardingScreen = () => (
+    <Stack.Screen
+        name={ScreenName.ONBOARDING}
+        component={Onboarding}
         options={{
             header: ({ navigation, scene }) => (
                 <Header

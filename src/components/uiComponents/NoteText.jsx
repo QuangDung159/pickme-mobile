@@ -27,9 +27,6 @@ export default class NoteText extends PureComponent {
                 >
                     <Block
                         row
-                        style={{
-                            alignItems: 'center',
-                        }}
                     >
                         {iconComponent}
                         {title && (

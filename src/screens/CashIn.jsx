@@ -1,9 +1,9 @@
 import Clipboard from 'expo-clipboard';
 import { Block, Text } from 'galio-framework';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { IconCustom, Line, NoteText } from '../components/uiComponents';
 import { IconFamily, NowTheme, ScreenName } from '../constants';
 import { ToastHelpers } from '../helpers';
@@ -11,6 +11,7 @@ import { setPersonTabActiveIndex } from '../redux/Actions';
 
 export default function CashIn(props) {
     const { navigation } = props;
+    const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
 
     const dispatch = useDispatch();
 
@@ -20,6 +21,17 @@ export default function CashIn(props) {
     };
 
     const moneyTransferContent = 'Số điện thoại - pickme';
+
+    useEffect(
+        () => {
+            if (isSignInOtherDeviceStore) {
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: ScreenName.SIGN_IN_WITH_OTP }],
+                });
+            }
+        }, [isSignInOtherDeviceStore]
+    );
 
     try {
         return (

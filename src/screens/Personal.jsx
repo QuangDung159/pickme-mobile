@@ -1,21 +1,20 @@
 import {
     Block, Text
 } from 'galio-framework';
-import React from 'react';
-import {
-    StyleSheet
-} from 'react-native';
+import React, { useEffect } from 'react';
+import { StyleSheet } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import { BookingList, UserInformation, Wallet } from '../components/bussinessComponents';
 import { IconCustom } from '../components/uiComponents';
 import {
-    IconFamily, NowTheme
+    IconFamily, NowTheme, ScreenName
 } from '../constants';
 import { setPersonTabActiveIndex } from '../redux/Actions';
 
 export default function Personal({ navigation, route }) {
     const personTabActiveIndex = useSelector((state) => state.appConfigReducer.personTabActiveIndex);
+    const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
 
     const dispatch = useDispatch();
 
@@ -54,6 +53,17 @@ export default function Personal({ navigation, route }) {
             )
         }
     ];
+
+    useEffect(
+        () => {
+            if (isSignInOtherDeviceStore) {
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: ScreenName.SIGN_IN_WITH_OTP }],
+                });
+            }
+        }, [isSignInOtherDeviceStore]
+    );
 
     // Render \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
     const renderTabButton = (tab, index) => {

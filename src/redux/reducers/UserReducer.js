@@ -3,7 +3,7 @@ import {
     SET_LIST_CASH_HISTORY_STORE,
     SET_TOKEN,
     SET_LIST_BOOKING_STORE,
-    SET_VERIFICATION_STORE
+    SET_IS_SIGN_IN_OTHER_DEVICE_STORE
 } from '../ActionTypes';
 
 const initState = {
@@ -13,7 +13,8 @@ const initState = {
     listCashHistoryStore: [],
     listBookingStore: [],
     verificationIdStore: '',
-    verificationStore: null
+    verificationStore: null,
+    isSignInOtherDeviceStore: false
 };
 
 const userReducer = (state = initState, action) => {
@@ -34,8 +35,8 @@ const userReducer = (state = initState, action) => {
         case SET_LIST_BOOKING_STORE: {
             return { ...state, listBookingStore: payload.listBookingStore };
         }
-        case SET_VERIFICATION_STORE: {
-            return { ...state, verificationStore: payload.verificationStore };
+        case SET_IS_SIGN_IN_OTHER_DEVICE_STORE: {
+            return { ...state, isSignInOtherDeviceStore: payload.isSignInOtherDeviceStore };
         }
         default: {
             return state;

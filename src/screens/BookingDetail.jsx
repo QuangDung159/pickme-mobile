@@ -46,6 +46,7 @@ export default function BookingDetail({
     });
 
     const token = useSelector((state) => state.userReducer.token);
+    const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
 
     const dispatch = useDispatch();
 
@@ -61,6 +62,17 @@ export default function BookingDetail({
 
             return eventTriggerGetBookingDetail;
         }, []
+    );
+
+    useEffect(
+        () => {
+            if (isSignInOtherDeviceStore) {
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: ScreenName.SIGN_IN_WITH_OTP }],
+                });
+            }
+        }, [isSignInOtherDeviceStore]
     );
 
     const onRefresh = () => {

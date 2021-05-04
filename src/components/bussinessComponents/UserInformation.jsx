@@ -115,6 +115,12 @@ export default function UserInformation({ navigation }) {
         dispatch(resetStoreSignOut());
         SecureStore.setItemAsync('api_token', '')
             .then(console.log('api_token was cleaned!'));
+
+        SecureStore.setItemAsync('phoneNumber', '')
+            .then(console.log('phoneNumber was cleaned!'));
+
+        SecureStore.setItemAsync('password', '')
+            .then(console.log('password was cleaned!'));
     };
 
     const fetchCurrentUserInfo = () => {

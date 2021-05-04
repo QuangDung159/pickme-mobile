@@ -17,6 +17,8 @@ export default function LeaderBoard({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(true);
     const [listGeneral, setlistGeneral] = useState({});
 
+    const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
+
     const token = useSelector((state) => state.userReducer.token);
 
     const tabs = [
@@ -52,6 +54,17 @@ export default function LeaderBoard({ navigation }) {
                 getListLeaderBoard(tab.endpoint, index);
             });
         }, []
+    );
+
+    useEffect(
+        () => {
+            if (isSignInOtherDeviceStore) {
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: ScreenName.SIGN_IN_WITH_OTP }],
+                });
+            }
+        }, [isSignInOtherDeviceStore]
     );
 
     // handler \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\

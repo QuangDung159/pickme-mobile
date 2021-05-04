@@ -7,11 +7,13 @@ import { ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handl
 import ImageView from 'react-native-image-viewing';
 import { useSelector } from 'react-redux';
 import { CenterLoader, IconCustom, NoteText } from '../components/uiComponents';
-import { IconFamily, NowTheme, Rx } from '../constants';
+import {
+    IconFamily, NowTheme, Rx, ScreenName
+} from '../constants';
 import { MediaHelpers, ToastHelpers } from '../helpers';
 import { rxUtil } from '../utils';
 
-export default function Support() {
+export default function Support({ navigation }) {
     const [tabActiveIndex, setTabActiveIndex] = useState(0);
     const [listQAN, setListQAN] = useState([]);
     const [bugReportForm, setBugReportForm] = useState({
@@ -26,6 +28,7 @@ export default function Support() {
     const [imageId, setImageId] = useState('');
 
     const token = useSelector((state) => state.userReducer.token);
+    const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
 
     const tabs = ['Câu hỏi thường gặp', 'Báo lỗi/hỗ trợ'];
 
@@ -34,6 +37,17 @@ export default function Support() {
         () => {
             getListQNA();
         }, []
+    );
+
+    useEffect(
+        () => {
+            if (isSignInOtherDeviceStore) {
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: ScreenName.SIGN_IN_WITH_OTP }],
+                });
+            }
+        }, [isSignInOtherDeviceStore]
     );
 
     const getListQNA = () => {
