@@ -28,6 +28,7 @@ const defaultDate = '2002-01-01T14:00:00';
 
 export default function CreateAccount(props) {
     const token = useSelector((state) => state.userReducer.token);
+    const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
 
     const dispatch = useDispatch();
 
@@ -56,6 +57,17 @@ export default function CreateAccount(props) {
             }
         })();
     }, []);
+
+    useEffect(
+        () => {
+            if (isSignInOtherDeviceStore) {
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: ScreenName.SIGN_IN_WITH_OTP }],
+                });
+            }
+        }, [isSignInOtherDeviceStore]
+    );
 
     const onClickUploadProfileImage = () => {
         MediaHelpers.pickImage(true, [1, 1], (result) => handleUploadImageProfile(result.uri));
