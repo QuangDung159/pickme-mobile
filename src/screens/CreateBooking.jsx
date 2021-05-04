@@ -54,6 +54,7 @@ export default function CreateBooking({ route, navigation }) {
 
     const token = useSelector((state) => state.userReducer.token);
     const listBookingLocation = useSelector((state) => state.locationReducer.listBookingLocation);
+    const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
 
     const dispatch = useDispatch();
 
@@ -62,6 +63,17 @@ export default function CreateBooking({ route, navigation }) {
             getCalendarPartner();
             fetchListBookingLocation();
         }, []
+    );
+
+    useEffect(
+        () => {
+            if (isSignInOtherDeviceStore) {
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: ScreenName.SIGN_IN_WITH_OTP }],
+                });
+            }
+        }, [isSignInOtherDeviceStore]
     );
 
     const fetchListBookingLocation = () => {

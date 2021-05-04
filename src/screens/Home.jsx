@@ -30,6 +30,7 @@ export default function Home({ navigation }) {
     const messageListened = useSelector((state) => state.messageReducer.messageListened);
     const numberMessageUnread = useSelector((state) => state.messageReducer.numberMessageUnread);
     const chattingWith = useSelector((state) => state.messageReducer.chattingWith);
+    const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
 
     const dispatch = useDispatch();
 
@@ -83,6 +84,17 @@ export default function Home({ navigation }) {
                 setListConversationGetAtHome(listConversationTemp);
             }
         }, [messageListened]
+    );
+
+    useEffect(
+        () => {
+            if (isSignInOtherDeviceStore) {
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: ScreenName.SIGN_IN_WITH_OTP }],
+                });
+            }
+        }, [isSignInOtherDeviceStore]
     );
 
     const getConversationByMessage = (message, listConversationSource) => {

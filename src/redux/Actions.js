@@ -1,7 +1,7 @@
 import {
     RESET_STORE_SIGN_OUT, SET_CHATING_WITH, SET_CURRENT_USER,
-    SET_DATA_LISTENED, SET_DEVICE_ID, SET_DEVICE_LOCALE, SET_DEVICE_TIMEZONE,
-    SET_EXPO_TOKEN, SET_LIST_BANK,
+    SET_DATA_LISTENED, SET_DEVICE_LOCALE, SET_DEVICE_TIMEZONE,
+    SET_EXPO_TOKEN, SET_IS_SIGN_IN_OTHER_DEVICE_STORE, SET_LIST_BANK,
     SET_LIST_BOOKING_LOCATION,
     SET_LIST_BOOKING_STORE,
     SET_LIST_CASH_HISTORY_STORE,
@@ -21,13 +21,6 @@ export const setDeviceTimezone = () => ({
 
 export const setDeviceLocale = () => ({
     type: SET_DEVICE_LOCALE,
-});
-
-export const setDeviceId = (deviceId) => ({
-    type: SET_DEVICE_ID,
-    payload: {
-        deviceId
-    }
 });
 
 export const setToken = (token) => ({
@@ -150,5 +143,12 @@ export const setVerificationStore = (verificationStore) => ({
     type: SET_VERIFICATION_STORE,
     payload: {
         verificationStore
+    }
+});
+
+export const setIsSignInOtherDeviceStore = (isSignInOtherDeviceStore) => ({
+    type: SET_IS_SIGN_IN_OTHER_DEVICE_STORE,
+    payload: {
+        isSignInOtherDeviceStore
     }
 });
