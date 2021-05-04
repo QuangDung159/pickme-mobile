@@ -1,11 +1,11 @@
 import { Block } from 'galio-framework';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { RefreshControl } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import { NotificationItem } from '../components/bussinessComponents';
 import { CenterLoader } from '../components/uiComponents';
-import { NowTheme, Rx } from '../constants';
+import { NowTheme, Rx, ScreenName } from '../constants';
 import { ToastHelpers } from '../helpers';
 import { setListNotification, setNumberNotificationUnread } from '../redux/Actions';
 import { rxUtil } from '../utils';
@@ -18,8 +18,20 @@ export default function Notification({ navigation }) {
         (state) => state.notificationReducer.listNotification
     );
     const token = useSelector((state) => state.userReducer.token);
+    const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
 
     const dispatch = useDispatch();
+
+    useEffect(
+        () => {
+            if (isSignInOtherDeviceStore) {
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: ScreenName.SIGN_IN_WITH_OTP }],
+                });
+            }
+        }, [isSignInOtherDeviceStore]
+    );
 
     const onRefresh = () => {
         setRefreshing(true);

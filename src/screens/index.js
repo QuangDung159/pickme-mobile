@@ -13,6 +13,7 @@ import Personal from './Personal';
 import Profile from './Profile';
 import Settings from './Settings';
 import SignIn from './SignIn';
+import SignInWithOTP from './SignInWithOTP';
 import SignUp from './SignUp';
 import Support from './Support';
 import UpdateInfoAccount from './UpdateInfoAccount';
@@ -32,5 +33,6 @@ export {
     Profile,
     UpdateInfoAccount,
     Support,
-    Verification
+    Verification,
+    SignInWithOTP
 };

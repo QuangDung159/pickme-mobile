@@ -17,6 +17,7 @@ export default function ConversationList({ navigation }) {
     const listConversation = useSelector((state) => state.messageReducer.listConversation);
     const numberMessageUnread = useSelector((state) => state.messageReducer.numberMessageUnread);
     const chattingWith = useSelector((state) => state.messageReducerchattingWith);
+    const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
 
     const dispatch = useDispatch();
 
@@ -35,6 +36,17 @@ export default function ConversationList({ navigation }) {
             );
             return onFocusScreen;
         }, []
+    );
+
+    useEffect(
+        () => {
+            if (isSignInOtherDeviceStore) {
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: ScreenName.SIGN_IN_WITH_OTP }],
+                });
+            }
+        }, [isSignInOtherDeviceStore]
     );
 
     useEffect(

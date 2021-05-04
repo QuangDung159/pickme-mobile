@@ -1,3 +1,4 @@
+import * as SecureStore from 'expo-secure-store';
 import {
     Block, Button, Checkbox, Text
 } from 'galio-framework';
@@ -15,7 +16,7 @@ import {
     Images, NowTheme, Rx, ScreenName
 } from '../constants';
 import { ToastHelpers } from '../helpers';
-import { setToken } from '../redux/Actions';
+import { setIsSignInOtherDeviceStore, setToken } from '../redux/Actions';
 import { rxUtil } from '../utils';
 
 export default function SignUp(props) {
@@ -30,10 +31,12 @@ export default function SignUp(props) {
     const { navigation } = props;
     const dispatch = useDispatch();
 
-    const loginWithSignUpInfo = () => {
+    const loginWithSignUpInfo = async () => {
+        const deviceId = await SecureStore.getItemAsync('deviceId');
         const data = {
             username: phoneNumber,
-            password
+            password,
+            deviceId: deviceId !== null ? deviceId : ''
         };
 
         rxUtil(
@@ -57,6 +60,7 @@ export default function SignUp(props) {
 
     const onLoginSucess = (tokenFromAPI) => {
         dispatch(setToken(tokenFromAPI));
+        dispatch(setIsSignInOtherDeviceStore(false));
         navigation.navigate(ScreenName.CREATE_ACCOUNT);
         Toast.show({
             type: 'success',
@@ -100,7 +104,7 @@ export default function SignUp(props) {
         );
     };
 
-    const onClickSubmitRegister = () => {
+    const onClickSubmitRegister = async () => {
         if (!otp) {
             ToastHelpers.renderToast('Mã OTP không hợp lệ!', 'error');
             return;
@@ -111,7 +115,13 @@ export default function SignUp(props) {
             return;
         }
 
-        const data = { password, phoneNum: phoneNumber, code: otp };
+        const deviceId = await SecureStore.getItemAsync('deviceId');
+        const data = {
+            password,
+            phoneNum: phoneNumber,
+            code: otp,
+            deviceId: deviceId !== null ? deviceId : ''
+        };
 
         setIsShowSpinner(true);
         rxUtil(Rx.AUTHENTICATION.SIGN_UP, 'POST', data, {
