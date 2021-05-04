@@ -160,7 +160,7 @@ export default function Main() {
                     // const { status } = res;
 
                     // for testing
-                    const status = 201;
+                    const status = 200;
 
                     if (status === 201) {
                         dispatch(setIsSignInOtherDeviceStore(true));
