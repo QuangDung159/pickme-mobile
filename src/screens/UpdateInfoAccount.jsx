@@ -155,7 +155,8 @@ export default function UpdateInfoAccount(props) {
             earningExpected,
             weight,
             homeTown,
-            interests
+            interests,
+            address: ''
         };
 
         const headers = {
