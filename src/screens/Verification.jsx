@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
     CenterLoader, Line
 } from '../components/uiComponents';
-import { NowTheme, Rx } from '../constants';
+import { NowTheme, Rx, ScreenName } from '../constants';
 import { MediaHelpers, ToastHelpers } from '../helpers';
 import { setVerificationStore } from '../redux/Actions';
 import { rxUtil } from '../utils';
@@ -24,6 +24,7 @@ export default function Verification({ navigation }) {
 
     const token = useSelector((state) => state.userReducer.token);
     const verificationStore = useSelector((state) => state.userReducer.verificationStore);
+    const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
 
     const dispatch = useDispatch();
 
@@ -39,6 +40,17 @@ export default function Verification({ navigation }) {
                 fillImageFromAPI(verificationStore.verificationDocuments);
             }
         }, []
+    );
+
+    useEffect(
+        () => {
+            if (isSignInOtherDeviceStore) {
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: ScreenName.SIGN_IN_WITH_OTP }],
+                });
+            }
+        }, [isSignInOtherDeviceStore]
     );
 
     const fetchVerification = () => {

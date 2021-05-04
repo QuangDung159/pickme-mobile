@@ -115,6 +115,12 @@ export default function UserInformation({ navigation }) {
         dispatch(resetStoreSignOut());
         SecureStore.setItemAsync('api_token', '')
             .then(console.log('api_token was cleaned!'));
+
+        SecureStore.setItemAsync('phoneNumber', '')
+            .then(console.log('phoneNumber was cleaned!'));
+
+        SecureStore.setItemAsync('password', '')
+            .then(console.log('password was cleaned!'));
     };
 
     const fetchCurrentUserInfo = () => {
@@ -356,41 +362,39 @@ export default function UserInformation({ navigation }) {
     );
 
     const renderButtonLogout = () => (
-        <Block
-            style={{
-                paddingTop: 20,
+        <TouchableWithoutFeedback
+            onPress={() => onSignOut(navigation)}
+            containerStyle={{
+                paddingVertical: 10,
+                paddingBottom: 20,
                 width: NowTheme.SIZES.WIDTH_BASE * 0.9,
                 alignSelf: 'center'
             }}
         >
-            <TouchableWithoutFeedback
-                onPress={() => onSignOut(navigation)}
+            <Block
+                row
+                style={{
+                    alignItems: 'center'
+                }}
             >
-                <Block
-                    row
+                <IconCustom
+                    name="sign-out"
+                    size={NowTheme.SIZES.FONT_H3}
+                    color={NowTheme.COLORS.SWITCH_OFF}
+                    family={IconFamily.FONT_AWESOME}
+                />
+                <Text
+                    color={NowTheme.COLORS.SWITCH_OFF}
                     style={{
-                        alignItems: 'center'
+                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                        marginLeft: 10
                     }}
+                    size={NowTheme.SIZES.FONT_H3}
                 >
-                    <IconCustom
-                        name="sign-out"
-                        size={NowTheme.SIZES.FONT_H3}
-                        color={NowTheme.COLORS.SWITCH_OFF}
-                        family={IconFamily.FONT_AWESOME}
-                    />
-                    <Text
-                        color={NowTheme.COLORS.SWITCH_OFF}
-                        style={{
-                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                            marginLeft: 10
-                        }}
-                        size={NowTheme.SIZES.FONT_H3}
-                    >
-                        Đăng xuất
-                    </Text>
-                </Block>
-            </TouchableWithoutFeedback>
-        </Block>
+                    Đăng xuất
+                </Text>
+            </Block>
+        </TouchableWithoutFeedback>
     );
 
     try {

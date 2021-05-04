@@ -23,11 +23,23 @@ export default function Profile({ route, navigation }) {
     const [imageIndex, setImageIndex] = useState(0);
 
     const token = useSelector((state) => state.userReducer.token);
+    const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
 
     useEffect(
         () => {
             getPartnerInfo();
         }, []
+    );
+
+    useEffect(
+        () => {
+            if (isSignInOtherDeviceStore) {
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: ScreenName.SIGN_IN_WITH_OTP }],
+                });
+            }
+        }, [isSignInOtherDeviceStore]
     );
 
     const getPartnerInfo = () => {
