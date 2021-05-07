@@ -410,25 +410,6 @@ export default function Profile({ route, navigation }) {
                                 middle
                                 row
                             >
-                                <Button
-                                    style={{
-                                        width: 114,
-                                        height: 44,
-                                        marginHorizontal: 5,
-                                        elevation: 0
-                                    }}
-                                    textStyle={{ fontSize: 16 }}
-                                    round
-                                    color={NowTheme.COLORS.ACTIVE}
-                                    onPress={() => {
-                                        navigation.navigate(ScreenName.CREATE_BOOKING, {
-                                            partner: partnerInfo,
-                                            from: ScreenName.PROFILE
-                                        });
-                                    }}
-                                >
-                                    Đặt hẹn
-                                </Button>
                                 <GaButton
                                     round
                                     onlyIcon
@@ -448,6 +429,26 @@ export default function Profile({ route, navigation }) {
                                         });
                                     }}
                                 />
+
+                                <Button
+                                    style={{
+                                        width: 114,
+                                        height: 44,
+                                        marginHorizontal: 5,
+                                        elevation: 0
+                                    }}
+                                    textStyle={{ fontSize: 16 }}
+                                    round
+                                    color={NowTheme.COLORS.ACTIVE}
+                                    onPress={() => {
+                                        navigation.navigate(ScreenName.CREATE_BOOKING, {
+                                            partner: partnerInfo,
+                                            from: ScreenName.PROFILE
+                                        });
+                                    }}
+                                >
+                                    Đặt hẹn
+                                </Button>
                             </Block>
                         </Block>
                     </>
