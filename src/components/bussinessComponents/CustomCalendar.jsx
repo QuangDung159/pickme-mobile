@@ -61,16 +61,19 @@ export default function CustomCalendar({ selectedDate, onChangeDate }) {
     );
 
     return (
-        <Block>
+        <Block
+            style={{
+                height: NowTheme.SIZES.HEIGHT_BASE * 0.18
+            }}
+        >
             {/* render header dow */}
             <Block
                 row
-                flex
             >
                 {arrDowByCurrentDate.map((item) => (
                     <Block
-                        flex
                         middle
+                        flex
                     >
                         <Text
                             size={13}
@@ -97,10 +100,6 @@ export default function CustomCalendar({ selectedDate, onChangeDate }) {
             <Block>
                 <Block
                     row
-                    flex
-                    style={{
-                        height: 35,
-                    }}
                 >
                     {arrDateLine1.map((item) => {
                         let buttonColor = NowTheme.COLORS.BASE;
@@ -142,10 +141,6 @@ export default function CustomCalendar({ selectedDate, onChangeDate }) {
             <Block>
                 <Block
                     row
-                    flex
-                    style={{
-                        height: 35,
-                    }}
                 >
                     {arrDateLine2.map((item) => {
                         let buttonColor = NowTheme.COLORS.BASE;

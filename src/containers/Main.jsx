@@ -156,12 +156,8 @@ export default function Main() {
                 'POST',
                 data,
                 {},
-                () => {
-                    // const { status } = res;
-
-                    // for testing
-                    const status = 200;
-
+                (res) => {
+                    const { status } = res;
                     if (status === 201) {
                         dispatch(setIsSignInOtherDeviceStore(true));
                     }
