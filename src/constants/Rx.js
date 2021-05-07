@@ -21,7 +21,9 @@ export default {
         GET_VERIFICATION_DETAIL: '/Users/VerificationRequestDetail',
         SUBMIT_VERIFICATION: '/Users/SubmitVerify',
         GENERATE_OTP_WHEN_CHANGE_DEVICE: '/users/CustomerGenerateOTPChangedDeviceId',
-        SUBMIT_CHANGE_DEVICE_CONFIRM: '/users/CustomerChangedDeviceIdConfirm'
+        SUBMIT_CHANGE_DEVICE_CONFIRM: '/users/CustomerChangedDeviceIdConfirm',
+        GENERATE_OTP_WHEN_FORGOT_PASSWORD: '/users/CustomerForGotPasswordOTP',
+        SUBMIT_FORGOT_PASSWORD_CONFIRM: '/users/CustomerForGotPasswordConfirm'
     },
     BANK: {
         BANK_ACCOUNTS: '/users/BankAccounts',

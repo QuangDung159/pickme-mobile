@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Toast from 'react-native-toast-message';
-import { useDispatch, useSelector } from 'react-redux';
 import { ExpoNotification } from '../components/bussinessComponents';
 import {
     CenterLoader, IconCustom, Input, NoteText
@@ -19,10 +18,6 @@ import {
     Images, NowTheme, Rx, ScreenName
 } from '../constants';
 import { ToastHelpers } from '../helpers';
-import {
-    setIsSignInOtherDeviceStore,
-    setToken
-} from '../redux/Actions';
 import { rxUtil } from '../utils';
 
 export default function ForgotPassword({ navigation }) {
@@ -31,10 +26,7 @@ export default function ForgotPassword({ navigation }) {
     const [deviceId, setDeviceId] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [password, setPassword] = useState('');
-
-    const expoToken = useSelector((state) => state.appConfigReducer.expoToken);
-
-    const dispatch = useDispatch();
+    const [rePassword, setRePassword] = useState('');
 
     useEffect(
         () => {
@@ -44,64 +36,14 @@ export default function ForgotPassword({ navigation }) {
 
     const getLocalValue = async () => {
         const deviceIdLocalStore = await SecureStore.getItemAsync('deviceId');
-        const phoneNumberLocalStore = await SecureStore.getItemAsync('phoneNumber');
-        const passwordLocalStore = await SecureStore.getItemAsync('password');
-
-        setPassword(passwordLocalStore);
-        setPhoneNumber(phoneNumberLocalStore);
         setDeviceId(deviceIdLocalStore);
     };
 
     // handler \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
-    const updateExpoTokenToServer = (bearerToken) => {
-        rxUtil(
-            Rx.USER.UPDATE_EXPO_TOKEN,
-            'POST',
-            {
-                token: expoToken
-            },
-            {
-                Authorization: bearerToken,
-            }
-        );
-    };
+    const onSubmitForgorPassword = () => {
+        if (!isPasswordMatch()) return;
 
-    const onLogin = async () => {
-        const data = {
-            username: phoneNumber,
-            password,
-            deviceId
-        };
-
-        toggleSpinner(true);
-        rxUtil(
-            Rx.AUTHENTICATION.LOGIN,
-            'POST',
-            data,
-            {},
-            (res) => {
-                onLoginSucess(res.data.data);
-            },
-            () => {
-                toggleSpinner(false);
-                Toast.show({
-                    type: 'error',
-                    text1: 'Lỗi hệ thống! Vui lòng thử lại.'
-                });
-            },
-            () => {
-                toggleSpinner(false);
-                Toast.show({
-                    type: 'error',
-                    text1: 'Lỗi hệ thống! Vui lòng thử lại.'
-                });
-            }
-        );
-    };
-
-    const onSubmitOTP = async () => {
         setIsShowSpinner(true);
-
         const data = {
             phoneNum: phoneNumber,
             password,
@@ -111,13 +53,13 @@ export default function ForgotPassword({ navigation }) {
 
         toggleSpinner(true);
         rxUtil(
-            Rx.USER.SUBMIT_CHANGE_DEVICE_CONFIRM,
+            Rx.USER.SUBMIT_FORGOT_PASSWORD_CONFIRM,
             'POST',
             data,
             null,
-            () => {
-                onLogin();
-                // ToastHelpers.renderToast(res.res.data.message);
+            (res) => {
+                navigation.navigate(ScreenName.SIGN_IN);
+                ToastHelpers.renderToast(res.data.message, 'success');
             },
             () => {
                 toggleSpinner(false);
@@ -134,12 +76,20 @@ export default function ForgotPassword({ navigation }) {
                 });
             }
         );
+    };
+
+    const isPasswordMatch = () => {
+        if (rePassword !== password) {
+            ToastHelpers.renderToast('Mật khẩu không khớp, bạn vui lòng kiểm tra lại.', 'error');
+            return false;
+        }
         return true;
     };
 
-    const onClickGetOTPWhenChangeDevice = async () => {
+    const onClickGetOTPWhenForgotPassword = () => {
+        setIsShowSpinner(true);
         rxUtil(
-            Rx.USER.GENERATE_OTP_WHEN_CHANGE_DEVICE,
+            Rx.USER.GENERATE_OTP_WHEN_FORGOT_PASSWORD,
             'POST',
             {
                 phoneNum: phoneNumber
@@ -147,35 +97,13 @@ export default function ForgotPassword({ navigation }) {
             null,
             (res) => {
                 ToastHelpers.renderToast(res.data.message, 'success');
-
+                setIsShowSpinner(false);
                 // for testing
                 setOtp(res.data.data.code);
-                setIsShowSpinner(false);
             },
-            () => {
-                setIsShowSpinner(false);
-            },
-            () => {
-                setIsShowSpinner(false);
-            }
+            () => setIsShowSpinner(false),
+            () => setIsShowSpinner(false)
         );
-        return true;
-    };
-
-    const onLoginSucess = (tokenFromAPI) => {
-        const bearerToken = `Bearer ${tokenFromAPI}`;
-        dispatch(setToken(tokenFromAPI));
-
-        navigation.reset({
-            index: 0,
-            routes: [{ name: ScreenName.APP }],
-        });
-
-        updateExpoTokenToServer(bearerToken);
-        SecureStore.setItemAsync('api_token', `${tokenFromAPI}`)
-            .then(console.log('tokenFromAPI :>> ', tokenFromAPI));
-
-        dispatch(setIsSignInOtherDeviceStore(false));
     };
 
     const toggleSpinner = (isShowSpinnerToggled) => {
@@ -184,10 +112,7 @@ export default function ForgotPassword({ navigation }) {
 
     const renderFormNewPassword = () => (
         <>
-            <Block style={{
-                height: NowTheme.SIZES.HEIGHT_BASE * 0.3
-            }}
-            >
+            <Block style={styles.formContainer}>
                 <Block
                     style={{
                         marginBottom: 10,
@@ -195,10 +120,7 @@ export default function ForgotPassword({ navigation }) {
                     }}
                 >
                     <Input
-                        style={{
-                            borderRadius: 5,
-                            width: NowTheme.SIZES.WIDTH_BASE * 0.77
-                        }}
+                        style={styles.input}
                         keyboardType="number-pad"
                         value={otp}
                         placeholder="Nhập mã xác thực..."
@@ -207,10 +129,7 @@ export default function ForgotPassword({ navigation }) {
 
                     <Input
                         placeholder="Nhập mật khẩu mới..."
-                        style={{
-                            borderRadius: 5,
-                            width: NowTheme.SIZES.WIDTH_BASE * 0.77
-                        }}
+                        style={styles.input}
                         password
                         viewPass
                         value={password}
@@ -221,15 +140,12 @@ export default function ForgotPassword({ navigation }) {
 
                     <Input
                         placeholder="Nhập lại mật khẩu mới..."
-                        style={{
-                            borderRadius: 5,
-                            width: NowTheme.SIZES.WIDTH_BASE * 0.77
-                        }}
+                        style={styles.input}
                         password
                         viewPass
-                        value={password}
+                        value={rePassword}
                         onChangeText={
-                            (passwordInput) => setPassword(passwordInput)
+                            (rePasswordInput) => setRePassword(rePasswordInput)
                         }
                     />
 
@@ -238,10 +154,8 @@ export default function ForgotPassword({ navigation }) {
 
             <Block center>
                 <Button
-                    onPress={() => onSubmitOTP()}
-                    style={[styles.button, {
-                        marginVertical: 10
-                    }]}
+                    onPress={() => onSubmitForgorPassword()}
+                    style={styles.button}
                     shadowless
                 >
                     Xác nhận
@@ -252,50 +166,28 @@ export default function ForgotPassword({ navigation }) {
 
     const renderFormOtp = () => (
         <>
-            <Block style={{
-                height: NowTheme.SIZES.HEIGHT_BASE * 0.3
-            }}
-            >
+            <Block style={styles.formContainer}>
                 <Block
                     style={{
                         marginBottom: 10,
                         alignItems: 'center'
                     }}
                 >
-                    {otp === '' ? (
-                        <Input
-                            style={{
-                                borderRadius: 5,
-                                width: NowTheme.SIZES.WIDTH_BASE * 0.77,
-                            }}
-                            placeholder="Nhập số điện thoại..."
-                            value={phoneNumber}
-                            onChangeText={
-                                (phoneNumberInput) => setPhoneNumber(phoneNumberInput)
-                            }
-                        />
-                    ) : (
-                        <Input
-                            style={{
-                                borderRadius: 5,
-                                width: NowTheme.SIZES.WIDTH_BASE * 0.77
-                            }}
-                            keyboardType="number-pad"
-                            value={otp}
-                            placeholder="Nhập mã xác thực..."
-                            onChangeText={(otpInput) => setOtp(otpInput)}
-                        />
-                    )}
-
+                    <Input
+                        style={styles.input}
+                        placeholder="Nhập số điện thoại..."
+                        value={phoneNumber}
+                        onChangeText={
+                            (phoneNumberInput) => setPhoneNumber(phoneNumberInput)
+                        }
+                    />
                 </Block>
             </Block>
 
             <Block center>
                 <Button
-                    onPress={() => onClickGetOTPWhenChangeDevice()}
-                    style={[styles.button, {
-                        marginVertical: 10
-                    }]}
+                    onPress={() => onClickGetOTPWhenForgotPassword()}
+                    style={styles.button}
                     shadowless
                 >
                     Nhận mã xác thực
@@ -318,8 +210,7 @@ export default function ForgotPassword({ navigation }) {
                             <Block
                                 middle
                                 style={{
-                                    height: NowTheme.SIZES.HEIGHT_BASE * 0.3,
-                                    marginBottom: 10
+                                    height: NowTheme.SIZES.HEIGHT_BASE * 0.3
                                 }}
                             >
                                 <Block>
@@ -396,7 +287,15 @@ const styles = StyleSheet.create({
         elevation: 1,
         overflow: 'hidden'
     },
+    formContainer: {
+        height: NowTheme.SIZES.HEIGHT_BASE * 0.3
+    },
     button: {
+        width: NowTheme.SIZES.WIDTH_BASE * 0.77,
+        marginVertical: 10
+    },
+    input: {
+        borderRadius: 5,
         width: NowTheme.SIZES.WIDTH_BASE * 0.77
     },
     centeredView: {
