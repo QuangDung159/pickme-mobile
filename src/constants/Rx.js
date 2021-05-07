@@ -19,7 +19,9 @@ export default {
         GET_OTP_REGISTER: '/users/CustomerRegister',
         UPLOAD_VERIFICATION_DOC: '/Users/AddVerifiDocument',
         GET_VERIFICATION_DETAIL: '/Users/VerificationRequestDetail',
-        SUBMIT_VERIFICATION: '/Users/SubmitVerify'
+        SUBMIT_VERIFICATION: '/Users/SubmitVerify',
+        GENERATE_OTP_WHEN_CHANGE_DEVICE: '/users/CustomerGenerateOTPChangedDeviceId',
+        SUBMIT_CHANGE_DEVICE_CONFIRM: '/users/CustomerChangedDeviceIdConfirm'
     },
     BANK: {
         BANK_ACCOUNTS: '/users/BankAccounts',

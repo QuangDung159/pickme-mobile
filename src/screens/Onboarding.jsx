@@ -63,15 +63,14 @@ export default function Onboarding({ navigation }) {
                 'POST',
                 data,
                 {},
-                () => {
-                    // const { status } = res;
+                (res) => {
+                    const { status } = res;
 
-                    // for testing
-                    const status = 200;
                     if (status === 200) {
                         getTokenFromLocal();
                         dispatch(setIsSignInOtherDeviceStore(false));
                     }
+
                     if (status === 201) {
                         // re otp
                         navigation.reset({

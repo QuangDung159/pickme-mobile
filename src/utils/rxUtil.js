@@ -27,7 +27,7 @@ export default (
         headers
     })
         .then((res) => {
-            if (res.status === 200) {
+            if (res.status === 200 || res.status === 201) {
                 generateLogData(endpoint, data, headers, res);
                 if (successCallBack) successCallBack(res);
             } else {
