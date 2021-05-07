@@ -240,7 +240,7 @@ export default function SignIn({ navigation }) {
                                             />
 
                                             {/* for testing */}
-                                            <Input
+                                            {/* <Input
                                                 placeholder="Empty or 'test'"
                                                 style={{
                                                     borderRadius: 5,
@@ -250,7 +250,7 @@ export default function SignIn({ navigation }) {
                                                 onChangeText={
                                                     (deviceIdInput) => setDeviceId(deviceIdInput)
                                                 }
-                                            />
+                                            /> */}
 
                                             {renderButtonForgotPassword()}
                                         </Block>
