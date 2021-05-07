@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Toast from 'react-native-toast-message';
-import { useDispatch, useSelector } from 'react-redux';
 import { ExpoNotification } from '../components/bussinessComponents';
 import {
     CenterLoader, IconCustom, Input, NoteText
@@ -19,22 +18,15 @@ import {
     Images, NowTheme, Rx, ScreenName
 } from '../constants';
 import { ToastHelpers } from '../helpers';
-import {
-    setIsSignInOtherDeviceStore,
-    setToken
-} from '../redux/Actions';
 import { rxUtil } from '../utils';
 
-export default function SignInWithOTP({ navigation }) {
+export default function ForgotPassword({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
     const [otp, setOtp] = useState('');
     const [deviceId, setDeviceId] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [password, setPassword] = useState('');
-
-    const expoToken = useSelector((state) => state.appConfigReducer.expoToken);
-
-    const dispatch = useDispatch();
+    const [rePassword, setRePassword] = useState('');
 
     useEffect(
         () => {
@@ -44,64 +36,14 @@ export default function SignInWithOTP({ navigation }) {
 
     const getLocalValue = async () => {
         const deviceIdLocalStore = await SecureStore.getItemAsync('deviceId');
-        const phoneNumberLocalStore = await SecureStore.getItemAsync('phoneNumber');
-        const passwordLocalStore = await SecureStore.getItemAsync('password');
-
-        setPassword(passwordLocalStore);
-        setPhoneNumber(phoneNumberLocalStore);
         setDeviceId(deviceIdLocalStore);
     };
 
     // handler \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
-    const updateExpoTokenToServer = (bearerToken) => {
-        rxUtil(
-            Rx.USER.UPDATE_EXPO_TOKEN,
-            'POST',
-            {
-                token: expoToken
-            },
-            {
-                Authorization: bearerToken,
-            }
-        );
-    };
+    const onSubmitForgorPassword = () => {
+        if (!isPasswordMatch()) return;
 
-    const onLogin = async () => {
-        const data = {
-            username: phoneNumber,
-            password,
-            deviceId
-        };
-
-        toggleSpinner(true);
-        rxUtil(
-            Rx.AUTHENTICATION.LOGIN,
-            'POST',
-            data,
-            {},
-            (res) => {
-                onLoginSucess(res.data.data);
-            },
-            () => {
-                toggleSpinner(false);
-                Toast.show({
-                    type: 'error',
-                    text1: 'Lỗi hệ thống! Vui lòng thử lại.'
-                });
-            },
-            () => {
-                toggleSpinner(false);
-                Toast.show({
-                    type: 'error',
-                    text1: 'Lỗi hệ thống! Vui lòng thử lại.'
-                });
-            }
-        );
-    };
-
-    const onSubmitOTP = async () => {
         setIsShowSpinner(true);
-
         const data = {
             phoneNum: phoneNumber,
             password,
@@ -111,13 +53,13 @@ export default function SignInWithOTP({ navigation }) {
 
         toggleSpinner(true);
         rxUtil(
-            Rx.USER.SUBMIT_CHANGE_DEVICE_CONFIRM,
+            Rx.USER.SUBMIT_FORGOT_PASSWORD_CONFIRM,
             'POST',
             data,
             null,
-            () => {
-                onLogin();
-                // ToastHelpers.renderToast(res.res.data.message);
+            (res) => {
+                navigation.navigate(ScreenName.SIGN_IN);
+                ToastHelpers.renderToast(res.data.message, 'success');
             },
             () => {
                 toggleSpinner(false);
@@ -134,12 +76,20 @@ export default function SignInWithOTP({ navigation }) {
                 });
             }
         );
+    };
+
+    const isPasswordMatch = () => {
+        if (rePassword !== password) {
+            ToastHelpers.renderToast('Mật khẩu không khớp, bạn vui lòng kiểm tra lại.', 'error');
+            return false;
+        }
         return true;
     };
 
-    const onClickGetOTPWhenChangeDevice = async () => {
+    const onClickGetOTPWhenForgotPassword = () => {
+        setIsShowSpinner(true);
         rxUtil(
-            Rx.USER.GENERATE_OTP_WHEN_CHANGE_DEVICE,
+            Rx.USER.GENERATE_OTP_WHEN_FORGOT_PASSWORD,
             'POST',
             {
                 phoneNum: phoneNumber
@@ -147,40 +97,104 @@ export default function SignInWithOTP({ navigation }) {
             null,
             (res) => {
                 ToastHelpers.renderToast(res.data.message, 'success');
-
-                // in testing, will remove when prod
+                setIsShowSpinner(false);
+                // for testing
                 setOtp(res.data.data.code);
-                setIsShowSpinner(false);
             },
-            () => {
-                setIsShowSpinner(false);
-            },
-            () => {
-                setIsShowSpinner(false);
-            }
+            () => setIsShowSpinner(false),
+            () => setIsShowSpinner(false)
         );
-        return true;
-    };
-
-    const onLoginSucess = (tokenFromAPI) => {
-        const bearerToken = `Bearer ${tokenFromAPI}`;
-        dispatch(setToken(tokenFromAPI));
-
-        navigation.reset({
-            index: 0,
-            routes: [{ name: ScreenName.APP }],
-        });
-
-        updateExpoTokenToServer(bearerToken);
-        SecureStore.setItemAsync('api_token', `${tokenFromAPI}`)
-            .then(console.log('tokenFromAPI :>> ', tokenFromAPI));
-
-        dispatch(setIsSignInOtherDeviceStore(false));
     };
 
     const toggleSpinner = (isShowSpinnerToggled) => {
         setIsShowSpinner(isShowSpinnerToggled);
     };
+
+    const renderFormNewPassword = () => (
+        <>
+            <Block style={styles.formContainer}>
+                <Block
+                    style={{
+                        marginBottom: 10,
+                        alignItems: 'center'
+                    }}
+                >
+                    <Input
+                        style={styles.input}
+                        keyboardType="number-pad"
+                        value={otp}
+                        placeholder="Nhập mã xác thực..."
+                        onChangeText={(otpInput) => setOtp(otpInput)}
+                    />
+
+                    <Input
+                        placeholder="Nhập mật khẩu mới..."
+                        style={styles.input}
+                        password
+                        viewPass
+                        value={password}
+                        onChangeText={
+                            (passwordInput) => setPassword(passwordInput)
+                        }
+                    />
+
+                    <Input
+                        placeholder="Nhập lại mật khẩu mới..."
+                        style={styles.input}
+                        password
+                        viewPass
+                        value={rePassword}
+                        onChangeText={
+                            (rePasswordInput) => setRePassword(rePasswordInput)
+                        }
+                    />
+
+                </Block>
+            </Block>
+
+            <Block center>
+                <Button
+                    onPress={() => onSubmitForgorPassword()}
+                    style={styles.button}
+                    shadowless
+                >
+                    Xác nhận
+                </Button>
+            </Block>
+        </>
+    );
+
+    const renderFormOtp = () => (
+        <>
+            <Block style={styles.formContainer}>
+                <Block
+                    style={{
+                        marginBottom: 10,
+                        alignItems: 'center'
+                    }}
+                >
+                    <Input
+                        style={styles.input}
+                        placeholder="Nhập số điện thoại..."
+                        value={phoneNumber}
+                        onChangeText={
+                            (phoneNumberInput) => setPhoneNumber(phoneNumberInput)
+                        }
+                    />
+                </Block>
+            </Block>
+
+            <Block center>
+                <Button
+                    onPress={() => onClickGetOTPWhenForgotPassword()}
+                    style={styles.button}
+                    shadowless
+                >
+                    Nhận mã xác thực
+                </Button>
+            </Block>
+        </>
+    );
 
     return (
         <Block flex middle>
@@ -202,8 +216,8 @@ export default function SignInWithOTP({ navigation }) {
                                 <Block>
                                     <NoteText
                                         width={NowTheme.SIZES.WIDTH_BASE * 0.77}
-                                        title="Dường như bạn đang đăng nhập từ một thiết bị khác:"
-                                        content="Bạn vui lòng đăng nhập lại để xác thực thiết bị này."
+                                        title="Bạn đang yêu cầu lấy lại mật khẩu:"
+                                        content="Bạn vui lòng nhập số điện thoại đã đăng kí để nhận mã xác thực."
                                         contentStyle={{
                                             fontSize: NowTheme.SIZES.FONT_H4,
                                             color: NowTheme.COLORS.ACTIVE,
@@ -227,52 +241,15 @@ export default function SignInWithOTP({ navigation }) {
                                 <CenterLoader />
                             ) : (
                                 <>
-                                    <Block style={{
-                                        height: NowTheme.SIZES.HEIGHT_BASE * 0.3
-                                    }}
-                                    >
-                                        <Block
-                                            style={{
-                                                marginBottom: 10,
-                                                alignItems: 'center'
-                                            }}
-                                        >
-                                            <Input
-                                                style={{
-                                                    borderRadius: 5,
-                                                    width: NowTheme.SIZES.WIDTH_BASE * 0.77
-                                                }}
-                                                keyboardType="number-pad"
-                                                value={otp}
-                                                placeholder="Nhập mã xác thực..."
-                                                onChangeText={(otpInput) => setOtp(otpInput)}
-                                            />
-                                        </Block>
-                                    </Block>
-
-                                    <Block center>
-                                        {otp === '' ? (
-                                            <Button
-                                                onPress={() => onClickGetOTPWhenChangeDevice()}
-                                                style={[styles.button, {
-                                                    marginVertical: 10
-                                                }]}
-                                                shadowless
-                                            >
-                                                Nhận mã xác thực
-                                            </Button>
-                                        ) : (
-                                            <Button
-                                                onPress={() => onSubmitOTP()}
-                                                style={[styles.button, {
-                                                    marginVertical: 10
-                                                }]}
-                                                shadowless
-                                            >
-                                                Đăng nhập
-                                            </Button>
-                                        )}
-                                    </Block>
+                                    {otp === '' ? (
+                                        <>
+                                            {renderFormOtp()}
+                                        </>
+                                    ) : (
+                                        <>
+                                            {renderFormNewPassword()}
+                                        </>
+                                    )}
                                 </>
                             )}
                         </Block>
@@ -310,7 +287,15 @@ const styles = StyleSheet.create({
         elevation: 1,
         overflow: 'hidden'
     },
+    formContainer: {
+        height: NowTheme.SIZES.HEIGHT_BASE * 0.3
+    },
     button: {
+        width: NowTheme.SIZES.WIDTH_BASE * 0.77,
+        marginVertical: 10
+    },
+    input: {
+        borderRadius: 5,
         width: NowTheme.SIZES.WIDTH_BASE * 0.77
     },
     centeredView: {

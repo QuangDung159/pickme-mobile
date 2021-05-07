@@ -7,6 +7,7 @@ import {
     ImageBackground,
     StyleSheet
 } from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Toast from 'react-native-toast-message';
 import { useDispatch, useSelector } from 'react-redux';
@@ -24,7 +25,8 @@ import { rxUtil } from '../utils';
 
 export default function SignIn({ navigation }) {
     const [phoneNumber, setPhoneNumber] = useState('huyvd');
-    const [password, setPassword] = useState('0000');
+    const [password, setPassword] = useState('');
+    const [deviceId, setDeviceId] = useState('');
     const [isShowSpinner, setIsShowSpinner] = useState(false);
 
     const expoToken = useSelector((state) => state.appConfigReducer.expoToken);
@@ -46,8 +48,12 @@ export default function SignIn({ navigation }) {
     };
 
     const onSubmitLogin = async () => {
+        if (deviceId === '') {
+            const deviceIdLocalStore = await SecureStore.getItemAsync('deviceId');
+            setDeviceId(deviceIdLocalStore);
+        }
+
         if (validation()) {
-            const deviceId = await SecureStore.getItemAsync('deviceId');
             const data = {
                 username: phoneNumber,
                 password,
@@ -61,21 +67,7 @@ export default function SignIn({ navigation }) {
                 data,
                 {},
                 (res) => {
-                    // const { status } = res;
-
-                    // for testing
-                    const status = 200;
-                    if (status === 200) {
-                        onLoginSucess(res.data.data);
-                        dispatch(setIsSignInOtherDeviceStore(false));
-                    }
-                    if (status === 201) {
-                        // re otp
-                        navigation.reset({
-                            index: 0,
-                            routes: [{ name: ScreenName.SIGN_IN_WITH_OTP }],
-                        });
-                    }
+                    onLoginSucess(res);
                 },
                 () => {
                     toggleSpinner(false);
@@ -109,16 +101,10 @@ export default function SignIn({ navigation }) {
         return true;
     };
 
-    const onLoginSucess = (tokenFromAPI) => {
-        const bearerToken = `Bearer ${tokenFromAPI}`;
-        dispatch(setToken(tokenFromAPI));
+    const onLoginSucess = (res) => {
+        const tokenFromAPI = res.data.data;
+        const { status } = res;
 
-        navigation.reset({
-            index: 0,
-            routes: [{ name: ScreenName.APP }],
-        });
-
-        updateExpoTokenToServer(bearerToken);
         SecureStore.setItemAsync('api_token', `${tokenFromAPI}`)
             .then(console.log('tokenFromAPI :>> ', tokenFromAPI));
 
@@ -127,11 +113,61 @@ export default function SignIn({ navigation }) {
 
         SecureStore.setItemAsync('phoneNumber', `${phoneNumber}`)
             .then(console.log('phoneNumber :>> ', phoneNumber));
+
+        if (status === 200) {
+            const bearerToken = `Bearer ${tokenFromAPI}`;
+            dispatch(setToken(tokenFromAPI));
+
+            navigation.reset({
+                index: 0,
+                routes: [{ name: ScreenName.APP }],
+            });
+
+            updateExpoTokenToServer(bearerToken);
+            dispatch(setIsSignInOtherDeviceStore(false));
+        }
+
+        if (status === 201) {
+            // re otp
+            navigation.reset({
+                index: 0,
+                routes: [{ name: ScreenName.SIGN_IN_WITH_OTP }],
+            });
+        }
     };
 
     const toggleSpinner = (isShowSpinnerToggled) => {
         setIsShowSpinner(isShowSpinnerToggled);
     };
+
+    const renderButtonForgotPassword = () => (
+        <TouchableWithoutFeedback
+            onPress={() => {
+                navigation.navigate(ScreenName.FORGOT_PASSWORD);
+            }}
+            containerStyle={{
+                width: NowTheme.SIZES.WIDTH_BASE * 0.77,
+                alignSelf: 'center'
+            }}
+        >
+            <Block
+                row
+                style={{
+                    alignItems: 'center'
+                }}
+            >
+                <Text
+                    color={NowTheme.COLORS.SWITCH_OFF}
+                    style={{
+                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                    }}
+                    size={NowTheme.SIZES.FONT_H4}
+                >
+                    Bạn quên mật khẩu?
+                </Text>
+            </Block>
+        </TouchableWithoutFeedback>
+    );
 
     return (
         <Block flex middle>
@@ -182,7 +218,7 @@ export default function SignIn({ navigation }) {
                                                     borderRadius: 5,
                                                     width: NowTheme.SIZES.WIDTH_BASE * 0.77,
                                                 }}
-                                                placeholder="Nhập tên đăng nhập..."
+                                                placeholder="Nhập số điện thoại..."
                                                 value={phoneNumber}
                                                 onChangeText={
                                                     (phoneNumberInput) => setPhoneNumber(phoneNumberInput)
@@ -202,6 +238,21 @@ export default function SignIn({ navigation }) {
                                                     (passwordInput) => setPassword(passwordInput)
                                                 }
                                             />
+
+                                            {/* for testing */}
+                                            <Input
+                                                placeholder="Empty or 'test'"
+                                                style={{
+                                                    borderRadius: 5,
+                                                    width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                                                }}
+                                                value={deviceId}
+                                                onChangeText={
+                                                    (deviceIdInput) => setDeviceId(deviceIdInput)
+                                                }
+                                            />
+
+                                            {renderButtonForgotPassword()}
                                         </Block>
                                     </Block>
 

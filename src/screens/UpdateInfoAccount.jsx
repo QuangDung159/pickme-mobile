@@ -1,12 +1,15 @@
 import { Picker } from '@react-native-picker/picker';
+import * as SecureStore from 'expo-secure-store';
 import {
-    Block, Button, Input, Text
+    Block, Button, Text
 } from 'galio-framework';
 import React, { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
-import { CenterLoader } from '../components/uiComponents';
+import { CenterLoader, IconCustom, Input } from '../components/uiComponents';
 import {
+    IconFamily,
     NowTheme, Rx, ScreenName
 } from '../constants';
 import { ToastHelpers } from '../helpers';
@@ -17,6 +20,10 @@ export default function UpdateInfoAccount(props) {
     const { navigation } = props;
     const [newUser, setNewUser] = useState({});
     const [isShowSpinner, setIsShowSpinner] = useState(false);
+    const [currentPassword, setCurrentPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [reNewPasssword, setReNewPasssword] = useState('');
+    const [isShowFormChangePassword, setIsShowFormChangePassword] = useState(false);
 
     const currentUser = useSelector((state) => state.userReducer.currentUser);
     const token = useSelector((state) => state.userReducer.token);
@@ -65,6 +72,190 @@ export default function UpdateInfoAccount(props) {
             >
                 {renderListPickerItem(listDOBYear)}
             </Picker>
+        );
+    };
+
+    const validateChangePasswordForm = async () => {
+        const password = await SecureStore.getItemAsync('password');
+
+        if (password !== currentPassword) {
+            ToastHelpers.renderToast('Mật khẩu hiện tại không đúng.', 'error');
+            return false;
+        }
+
+        if (newPassword !== reNewPasssword) {
+            ToastHelpers.renderToast('Mật khẩu mới không giống nhau.', 'error');
+            return false;
+        }
+
+        return true;
+    };
+
+    const renderFormNewPassword = () => (
+        <>
+            <Block
+                style={{
+                    marginBottom: 10,
+                }}
+            >
+                <Text
+                    color={NowTheme.COLORS.ACTIVE}
+                    size={16}
+                    style={{
+                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
+                    }}
+                >
+                    Mật khẩu hiện tại:
+                </Text>
+
+                <Input
+                    placeholder="Nhập mật khẩu hiện tại..."
+                    style={styles.input}
+                    password
+                    viewPass
+                    value={currentPassword}
+                    color={NowTheme.COLORS.HEADER}
+                    onChangeText={
+                        (passwordInput) => setCurrentPassword(passwordInput)
+                    }
+                />
+
+                <Text
+                    color={NowTheme.COLORS.ACTIVE}
+                    size={16}
+                    style={{
+                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
+                    }}
+                >
+                    Mật khẩu mới:
+                </Text>
+
+                <Input
+                    placeholder="Nhập mật khẩu mới..."
+                    style={styles.input}
+                    password
+                    viewPass
+                    value={newPassword}
+                    color={NowTheme.COLORS.HEADER}
+                    onChangeText={
+                        (passwordInput) => setNewPassword(passwordInput)
+                    }
+                />
+
+                <Text
+                    color={NowTheme.COLORS.ACTIVE}
+                    size={16}
+                    style={{
+                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
+                    }}
+                >
+                    Xác nhận mật khẩu mới:
+                </Text>
+
+                <Input
+                    placeholder="Nhập lại mật khẩu mới..."
+                    style={[styles.input, {
+                        marginBottom: 0
+                    }]}
+                    password
+                    viewPass
+                    value={reNewPasssword}
+                    color={NowTheme.COLORS.HEADER}
+                    onChangeText={
+                        (rePasswordInput) => setReNewPasssword(rePasswordInput)
+                    }
+                />
+            </Block>
+
+            <Block
+                row
+                space="between"
+            >
+                <Button
+                    shadowless
+                    onPress={() => onSubmitChangePassword()}
+                    style={styles.button}
+                >
+                    Xác nhận
+                </Button>
+                <Button
+                    shadowless
+                    color={NowTheme.COLORS.DEFAULT}
+                    style={styles.button}
+                    onPress={() => {
+                        setIsShowFormChangePassword(false);
+                    }}
+                >
+                    Huỷ bỏ
+                </Button>
+            </Block>
+        </>
+    );
+
+    const renderButtonChangePassword = () => (
+        <TouchableWithoutFeedback
+            onPress={() => setIsShowFormChangePassword(true)}
+            containerStyle={{
+                width: NowTheme.SIZES.WIDTH_BASE * 0.9,
+                alignSelf: 'center',
+                marginBottom: 10
+            }}
+        >
+            <Block
+                row
+                style={{
+                    alignItems: 'center'
+                }}
+            >
+                <IconCustom
+                    name="sign-out"
+                    size={NowTheme.SIZES.FONT_H3}
+                    color={NowTheme.COLORS.ACTIVE}
+                    family={IconFamily.FONT_AWESOME}
+                />
+                <Text
+                    color={NowTheme.COLORS.ACTIVE}
+                    style={{
+                        fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
+                        marginLeft: 5
+                    }}
+                    size={NowTheme.SIZES.FONT_H3}
+                >
+                    Đổi mật khẩu
+                </Text>
+            </Block>
+        </TouchableWithoutFeedback>
+    );
+
+    const onSubmitChangePassword = () => {
+        if (!validateChangePasswordForm) return;
+
+        setIsShowSpinner(true);
+        rxUtil(
+            Rx.USER.SBUMIT_CHANGE_PASSWORD,
+            'POST',
+            {
+                currentPassword,
+                newPassword,
+                confirmPassword: reNewPasssword
+            },
+            {
+                Authorization: token
+            },
+            (res) => {
+                ToastHelpers.renderToast(res.data.message, 'success');
+                setIsShowSpinner(false);
+                setIsShowFormChangePassword(false);
+
+                SecureStore.setItemAsync('password', newPassword)
+                    .then(console.log('password :>> ', newPassword));
+
+                setCurrentUser('');
+                setNewPassword('');
+                setReNewPasssword('');
+            },
+            () => setIsShowSpinner(false),
+            () => setIsShowSpinner(false)
         );
     };
 
@@ -196,11 +387,10 @@ export default function UpdateInfoAccount(props) {
     const renderInputName = () => (
         <Block
             middle
-            style={{
-                paddingTop: 10,
-            }}
         >
             <Block>
+                {renderButtonChangePassword()}
+
                 <Text
                     color={NowTheme.COLORS.ACTIVE}
                     size={16}
@@ -213,11 +403,7 @@ export default function UpdateInfoAccount(props) {
 
                 <Input
                     numberOfLines={2}
-                    style={{
-                        borderRadius: 5,
-                        width: NowTheme.SIZES.WIDTH_BASE * 0.9,
-                        height: 44
-                    }}
+                    style={styles.input}
                     color={NowTheme.COLORS.HEADER}
                     placeholder="Nhập tên hiển thị..."
                     value={newUser.fullName}
@@ -230,9 +416,6 @@ export default function UpdateInfoAccount(props) {
     const renderInputHometown = () => (
         <Block
             middle
-            style={{
-                paddingTop: 10
-            }}
         >
             <Block>
                 <Text
@@ -247,11 +430,7 @@ export default function UpdateInfoAccount(props) {
 
                 <Input
                     numberOfLines={2}
-                    style={{
-                        borderRadius: 5,
-                        width: NowTheme.SIZES.WIDTH_BASE * 0.9,
-                        height: 44
-                    }}
+                    style={styles.input}
                     color={NowTheme.COLORS.HEADER}
                     placeholder="Nhập quê quán..."
                     value={newUser.homeTown}
@@ -264,9 +443,6 @@ export default function UpdateInfoAccount(props) {
     const renderInputInterests = () => (
         <Block
             middle
-            style={{
-                paddingTop: 10
-            }}
         >
             <Block>
                 <Text
@@ -281,11 +457,7 @@ export default function UpdateInfoAccount(props) {
 
                 <Input
                     numberOfLines={2}
-                    style={{
-                        borderRadius: 5,
-                        width: NowTheme.SIZES.WIDTH_BASE * 0.9,
-                        height: 44
-                    }}
+                    style={styles.input}
                     color={NowTheme.COLORS.HEADER}
                     placeholder="Nhập sở thích..."
                     value={newUser.interests}
@@ -299,7 +471,6 @@ export default function UpdateInfoAccount(props) {
         <Block
             middle
             style={{
-                paddingTop: 10,
                 zIndex: 99
             }}
         >
@@ -310,7 +481,6 @@ export default function UpdateInfoAccount(props) {
                     style={{
                         fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
                         width: NowTheme.SIZES.WIDTH_BASE * 0.9,
-                        marginBottom: 10
                     }}
                 >
                     Năm sinh:
@@ -324,9 +494,6 @@ export default function UpdateInfoAccount(props) {
     const renderInputDescription = () => (
         <Block
             middle
-            style={{
-                paddingTop: 10
-            }}
         >
             <Block>
                 <Text
@@ -403,17 +570,24 @@ export default function UpdateInfoAccount(props) {
                                 marginVertical: 10
                             }}
                         >
-                            {newUser && (
+                            {isShowFormChangePassword ? (
                                 <>
-                                    {renderInputName()}
-                                    {renderInputHometown()}
-                                    {renderInputDOB()}
-                                    {renderInputInterests()}
-                                    {renderInputDescription()}
-                                    {renderButtonPanel()}
+                                    {renderFormNewPassword()}
+                                </>
+                            ) : (
+                                <>
+                                    {newUser && (
+                                        <>
+                                            {renderInputName()}
+                                            {renderInputHometown()}
+                                            {renderInputDOB()}
+                                            {renderInputInterests()}
+                                            {renderInputDescription()}
+                                            {renderButtonPanel()}
+                                        </>
+                                    )}
                                 </>
                             )}
-
                         </Block>
                     </ScrollView>
                 )}
@@ -433,5 +607,11 @@ const styles = StyleSheet.create({
     button: {
         margin: 0,
         width: NowTheme.SIZES.WIDTH_BASE * 0.44
+    },
+    input: {
+        borderRadius: 5,
+        width: NowTheme.SIZES.WIDTH_BASE * 0.9,
+        height: 44,
+        marginBottom: 10
     }
 });
