@@ -475,7 +475,7 @@ export default function CreateBooking({ route, navigation }) {
             space="between"
             row
             style={{
-                marginBottom: 10,
+                marginBottom: 30,
                 width: NowTheme.SIZES.WIDTH_BASE * 0.9,
             }}
         >
@@ -511,7 +511,7 @@ export default function CreateBooking({ route, navigation }) {
             >
                 {endTimeStr}
             </Button>
-            {renderIconShowModal()}
+            {/* {renderIconShowModal()} */}
         </Block>
     );
 
@@ -602,12 +602,16 @@ export default function CreateBooking({ route, navigation }) {
                         marginVertical: 10
                     }}
                 />
+
                 {renderInfoBlock(partner)}
+
                 <CustomCalendar
                     onChangeDate={(date) => { onChangeDateCalendar(date); }}
                     selectedDate={selectedDate}
                 />
+
                 {renderButtonTimePicker()}
+
                 {renderLocationPicker()}
             </Block>
         </Block>
@@ -677,37 +681,37 @@ export default function CreateBooking({ route, navigation }) {
                     />
                 </Text>
             </Block>
-            {renderButton()}
+            {renderButtonPanel()}
         </Block>
     );
 
-    const renderButton = () => (
+    const renderButtonPanel = () => (
         <Block
             row
-            center
             space="between"
+            style={{
+                paddingTop: 10
+            }}
         >
             <Button
-                onPress={() => {
-                    onSubmitBooking();
-                }}
                 shadowless
+                onPress={() => onSubmitBooking()}
+                style={styles.button}
             >
                 Xác nhận
             </Button>
-
             <Button
-                onPress={() => {
-                    renderAlert();
-                }}
                 shadowless
                 color={NowTheme.COLORS.DEFAULT}
+                style={styles.button}
+                onPress={() => renderAlert()}
             >
                 Huỷ bỏ
             </Button>
         </Block>
     );
 
+    // eslint-disable-next-line no-unused-vars
     const renderIconShowModal = () => (
         <Block
             middle
@@ -829,6 +833,12 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: NowTheme.COLORS.ACTIVE,
         borderRadius: 5,
-        width: NowTheme.SIZES.WIDTH_BASE * 0.37
-    }
+        margin: 0,
+        // width: NowTheme.SIZES.WIDTH_BASE * 0.37
+        width: NowTheme.SIZES.WIDTH_BASE * 0.44
+    },
+    button: {
+        margin: 0,
+        width: NowTheme.SIZES.WIDTH_BASE * 0.44
+    },
 });
