@@ -7,6 +7,7 @@ import {
     ImageBackground,
     StyleSheet
 } from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Toast from 'react-native-toast-message';
 import { useDispatch, useSelector } from 'react-redux';
@@ -139,6 +140,35 @@ export default function SignIn({ navigation }) {
         setIsShowSpinner(isShowSpinnerToggled);
     };
 
+    const renderButtonForgotPassword = () => (
+        <TouchableWithoutFeedback
+            onPress={() => {
+                navigation.navigate(ScreenName.FORGOT_PASSWORD);
+            }}
+            containerStyle={{
+                width: NowTheme.SIZES.WIDTH_BASE * 0.77,
+                alignSelf: 'center'
+            }}
+        >
+            <Block
+                row
+                style={{
+                    alignItems: 'center'
+                }}
+            >
+                <Text
+                    color={NowTheme.COLORS.SWITCH_OFF}
+                    style={{
+                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                    }}
+                    size={NowTheme.SIZES.FONT_H4}
+                >
+                    Bạn quên mật khẩu?
+                </Text>
+            </Block>
+        </TouchableWithoutFeedback>
+    );
+
     return (
         <Block flex middle>
             <ExpoNotification navigation={navigation} />
@@ -188,7 +218,7 @@ export default function SignIn({ navigation }) {
                                                     borderRadius: 5,
                                                     width: NowTheme.SIZES.WIDTH_BASE * 0.77,
                                                 }}
-                                                placeholder="Nhập tên đăng nhập..."
+                                                placeholder="Nhập số điện thoại..."
                                                 value={phoneNumber}
                                                 onChangeText={
                                                     (phoneNumberInput) => setPhoneNumber(phoneNumberInput)
@@ -221,6 +251,8 @@ export default function SignIn({ navigation }) {
                                                     (deviceIdInput) => setDeviceId(deviceIdInput)
                                                 }
                                             />
+
+                                            {renderButtonForgotPassword()}
                                         </Block>
                                     </Block>
 

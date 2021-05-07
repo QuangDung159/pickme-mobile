@@ -3,6 +3,7 @@ import CashIn from './CashIn';
 import ConversationList from './ConversationList';
 import CreateAccount from './CreateAccount';
 import CreateBooking from './CreateBooking';
+import ForgotPassword from './ForgotPassword';
 import Home from './Home';
 import LeaderBoard from './LeaderBoard';
 import Message from './Message';
@@ -34,5 +35,6 @@ export {
     UpdateInfoAccount,
     Support,
     Verification,
-    SignInWithOTP
+    SignInWithOTP,
+    ForgotPassword
 };

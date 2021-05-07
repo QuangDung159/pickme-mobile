@@ -4,13 +4,12 @@ import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { NowTheme, ScreenName } from '../constants';
-import Onboarding from '../screens/Onboarding';
 import {
     BookingDetailScreen,
     CashInScreen,
     ConversationListScreen,
     CreateAccountScreen, CreateBookingScreen,
-    HomeScreen,
+    ForgotPasswordScreen, HomeScreen,
     LeaderBoardScreen,
     MessageScreen,
     NotificationScreen,
@@ -38,6 +37,7 @@ const SignInStack = () => (
     <Stack.Navigator initialRouteName={ScreenName.SIGN_IN} mode="card" headerMode="none">
         {SignInScreen()}
         {SignInWithOTPScreen()}
+        {ForgotPasswordScreen()}
     </Stack.Navigator>
 );
 
