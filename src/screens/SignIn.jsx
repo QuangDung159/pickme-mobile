@@ -25,7 +25,7 @@ import { rxUtil } from '../utils';
 
 export default function SignIn({ navigation }) {
     const [phoneNumber, setPhoneNumber] = useState('huyvd');
-    const [password, setPassword] = useState('0000');
+    const [password, setPassword] = useState('');
     const [deviceId, setDeviceId] = useState('');
     const [isShowSpinner, setIsShowSpinner] = useState(false);
 
