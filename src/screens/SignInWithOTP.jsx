@@ -2,7 +2,7 @@ import * as SecureStore from 'expo-secure-store';
 import {
     Block, Button
 } from 'galio-framework';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     ImageBackground,
     StyleSheet
@@ -28,10 +28,29 @@ import { rxUtil } from '../utils';
 export default function SignInWithOTP({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
     const [otp, setOtp] = useState('');
+    const [deviceId, setDeviceId] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [password, setPassword] = useState('');
 
     const expoToken = useSelector((state) => state.appConfigReducer.expoToken);
 
     const dispatch = useDispatch();
+
+    useEffect(
+        () => {
+            getLocalValue();
+        }, []
+    );
+
+    const getLocalValue = async () => {
+        const deviceIdLocalStore = await SecureStore.getItemAsync('deviceId');
+        const phoneNumberLocalStore = await SecureStore.getItemAsync('phoneNumber');
+        const passwordLocalStore = await SecureStore.getItemAsync('password');
+
+        setPassword(passwordLocalStore);
+        setPhoneNumber(phoneNumberLocalStore);
+        setDeviceId(deviceIdLocalStore);
+    };
 
     // handler \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
     const updateExpoTokenToServer = (bearerToken) => {
@@ -47,12 +66,7 @@ export default function SignInWithOTP({ navigation }) {
         );
     };
 
-    const onSubmitLogin = async () => {
-        setIsShowSpinner(true);
-        const deviceId = await SecureStore.getItemAsync('deviceId');
-        const phoneNumber = await SecureStore.getItemAsync('phoneNumber');
-        const password = await SecureStore.getItemAsync('password');
-
+    const onLogin = async () => {
         const data = {
             username: phoneNumber,
             password,
@@ -64,9 +78,46 @@ export default function SignInWithOTP({ navigation }) {
             Rx.AUTHENTICATION.LOGIN,
             'POST',
             data,
-            null,
+            {},
             (res) => {
                 onLoginSucess(res.data.data);
+            },
+            () => {
+                toggleSpinner(false);
+                Toast.show({
+                    type: 'error',
+                    text1: 'Lỗi hệ thống! Vui lòng thử lại.'
+                });
+            },
+            () => {
+                toggleSpinner(false);
+                Toast.show({
+                    type: 'error',
+                    text1: 'Lỗi hệ thống! Vui lòng thử lại.'
+                });
+            }
+        );
+    };
+
+    const onSubmitOTP = async () => {
+        setIsShowSpinner(true);
+
+        const data = {
+            phoneNum: phoneNumber,
+            password,
+            deviceId,
+            code: otp
+        };
+
+        toggleSpinner(true);
+        rxUtil(
+            Rx.USER.SUBMIT_CHANGE_DEVICE_CONFIRM,
+            'POST',
+            data,
+            null,
+            () => {
+                onLogin();
+                // ToastHelpers.renderToast(res.res.data.message);
             },
             () => {
                 toggleSpinner(false);
@@ -86,16 +137,12 @@ export default function SignInWithOTP({ navigation }) {
         return true;
     };
 
-    const onClickGetOTP = async () => {
-        const phoneNumber = await SecureStore.getItemAsync('phoneNumber');
-        const password = await SecureStore.getItemAsync('password');
-
+    const onClickGetOTPWhenChangeDevice = async () => {
         rxUtil(
-            Rx.USER.GET_OTP_REGISTER,
+            Rx.USER.GENERATE_OTP_WHEN_CHANGE_DEVICE,
             'POST',
             {
-                phoneNum: phoneNumber,
-                password
+                phoneNum: phoneNumber
             },
             null,
             (res) => {
@@ -207,7 +254,7 @@ export default function SignInWithOTP({ navigation }) {
                                     <Block center>
                                         {otp === '' ? (
                                             <Button
-                                                onPress={() => onClickGetOTP()}
+                                                onPress={() => onClickGetOTPWhenChangeDevice()}
                                                 style={[styles.button, {
                                                     marginVertical: 10
                                                 }]}
@@ -217,7 +264,7 @@ export default function SignInWithOTP({ navigation }) {
                                             </Button>
                                         ) : (
                                             <Button
-                                                onPress={() => onSubmitLogin()}
+                                                onPress={() => onSubmitOTP()}
                                                 style={[styles.button, {
                                                     marginVertical: 10
                                                 }]}
