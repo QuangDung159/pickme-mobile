@@ -342,7 +342,7 @@ export default function UserInformation({ navigation }) {
                                 }}
                                 shadowless
                             >
-                                Chỉnh sửa trang cá nhân
+                                Chỉnh sửa thông tin cá nhân
                             </Button>
                         </Block>
                     </Block>
