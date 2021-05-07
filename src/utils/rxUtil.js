@@ -1,6 +1,7 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
 import { API_URL } from '@env';
 import axios from 'axios';
+import ToastHelpers from '../helpers/ToastHelpers';
 
 const generateLogData = (endpoint, data, headers, res) => {
     console.log(`${res.status} ${endpoint}`, {
@@ -46,6 +47,11 @@ export default (
             } = err;
             console.log('catch', response);
             generateLogData(endpoint, data, headers, response);
-            if (catchCallBack) catchCallBack(message);
+            if (message && message !== '') {
+                ToastHelpers.renderToast(message, 'error');
+                if (catchCallBack) catchCallBack(message);
+            } else {
+                ToastHelpers.renderToast();
+            }
         });
 };
