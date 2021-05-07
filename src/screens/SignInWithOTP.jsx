@@ -66,7 +66,7 @@ export default function SignInWithOTP({ navigation }) {
         );
     };
 
-    const onLogin = async () => {
+    const onLogin = () => {
         const data = {
             username: phoneNumber,
             password,
@@ -99,7 +99,7 @@ export default function SignInWithOTP({ navigation }) {
         );
     };
 
-    const onSubmitOTP = async () => {
+    const onSubmitOTP = () => {
         setIsShowSpinner(true);
 
         const data = {
@@ -117,7 +117,6 @@ export default function SignInWithOTP({ navigation }) {
             null,
             () => {
                 onLogin();
-                // ToastHelpers.renderToast(res.res.data.message);
             },
             () => {
                 toggleSpinner(false);
@@ -137,7 +136,8 @@ export default function SignInWithOTP({ navigation }) {
         return true;
     };
 
-    const onClickGetOTPWhenChangeDevice = async () => {
+    const onClickGetOTPWhenChangeDevice = () => {
+        setIsShowSpinner(true);
         rxUtil(
             Rx.USER.GENERATE_OTP_WHEN_CHANGE_DEVICE,
             'POST',
@@ -152,14 +152,9 @@ export default function SignInWithOTP({ navigation }) {
                 setOtp(res.data.data.code);
                 setIsShowSpinner(false);
             },
-            () => {
-                setIsShowSpinner(false);
-            },
-            () => {
-                setIsShowSpinner(false);
-            }
+            () => setIsShowSpinner(false),
+            () => setIsShowSpinner(false)
         );
-        return true;
     };
 
     const onLoginSucess = (tokenFromAPI) => {
@@ -196,7 +191,8 @@ export default function SignInWithOTP({ navigation }) {
                             <Block
                                 middle
                                 style={{
-                                    height: NowTheme.SIZES.HEIGHT_BASE * 0.3
+                                    height: NowTheme.SIZES.HEIGHT_BASE * 0.3,
+                                    marginBottom: 10
                                 }}
                             >
                                 <Block>
