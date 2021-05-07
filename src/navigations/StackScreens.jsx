@@ -8,6 +8,7 @@ import {
     BookingDetail,
     CashIn,
     ConversationList, CreateAccount, CreateBooking,
+    ForgotPassword,
     Home,
     LeaderBoard,
     Message, Notification,
@@ -327,6 +328,27 @@ export const SignInWithOTPScreen = () => (
     <Stack.Screen
         name={ScreenName.SIGN_IN_WITH_OTP}
         component={SignInWithOTP}
+        options={{
+            header: ({ navigation, scene }) => (
+                <Header
+                    title=""
+                    back
+                    white
+                    transparent
+                    navigation={navigation}
+                    scene={scene}
+                    showRight={false}
+                />
+            ),
+            headerTransparent: true
+        }}
+    />
+);
+
+export const ForgotPasswordScreen = () => (
+    <Stack.Screen
+        name={ScreenName.FORGOT_PASSWORD}
+        component={ForgotPassword}
         options={{
             header: ({ navigation, scene }) => (
                 <Header

@@ -27,5 +27,6 @@ export default {
     BUSY_CALENDAR: 'BusyCalendar',
     SUPPORT: 'Support',
     VERIFICATION: 'Verification',
-    SIGN_IN_WITH_OTP: 'SigninWithOTP'
+    SIGN_IN_WITH_OTP: 'SigninWithOTP',
+    FORGOT_PASSWORD: 'ForgotPassword'
 };

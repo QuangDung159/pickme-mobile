@@ -20,12 +20,12 @@ export default {
     CREATE_ACCOUNT: 'Tạo tài khoản',
     CASH_IN: 'Nạp kim cương',
     CASH_OUT: 'Rút kim cương',
-    LOG_OUT: 'Đăng xuất',
     CONVERSATION_LIST: 'Trò chuyện',
     UPDATE_INFO_ACCOUNT: 'Chỉnh sửa trang cá nhân',
     BANK_ACCOUNT: 'Tài khoản ngân hàng',
     BUSY_CALENDAR: 'Lịch bận',
     SUPPORT: 'Hỗ trợ',
     VERIFICATION: 'Xác thực tài khoản',
-    SIGN_IN_WITH_OTP: 'Đăng nhập'
+    SIGN_IN_WITH_OTP: 'Đăng nhập',
+    FORGOT_PASSWORD: 'Quên mật khẩu'
 };
