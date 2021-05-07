@@ -191,8 +191,7 @@ export default function SignInWithOTP({ navigation }) {
                             <Block
                                 middle
                                 style={{
-                                    height: NowTheme.SIZES.HEIGHT_BASE * 0.3,
-                                    marginBottom: 10
+                                    height: NowTheme.SIZES.HEIGHT_BASE * 0.3
                                 }}
                             >
                                 <Block>
