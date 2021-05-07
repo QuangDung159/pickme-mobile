@@ -7,7 +7,6 @@ import { WebSocketLink } from '@apollo/client/link/ws';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { SOCKET_URL } from '@env';
 import { NavigationContainer } from '@react-navigation/native';
-import * as Device from 'expo-device';
 import * as SecureStore from 'expo-secure-store';
 import { Block, GalioProvider } from 'galio-framework';
 import React, { useEffect } from 'react';
@@ -101,7 +100,7 @@ export default function Main() {
             const deviceId = await SecureStore.getItemAsync('deviceId');
             if (deviceId === null) {
                 // generate and save new device id to local storage
-                const myuuid = `${Device.modelId}.${uuidv4()}`;
+                const myuuid = `${uuidv4()}`;
                 console.log('new deviceId :>> ', myuuid);
                 storeDeviceId(myuuid);
             } else {
