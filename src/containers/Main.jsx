@@ -33,8 +33,6 @@ export default function Main() {
         () => {
             dispatch(setDeviceTimezone());
 
-            // generateNewDeviceId();
-
             AppState.addEventListener('change', handleAppStateChange);
             return () => {
                 AppState.removeEventListener('change', handleAppStateChange);
