@@ -1,4 +1,3 @@
-import * as SecureStore from 'expo-secure-store';
 import {
     Block, Button, Checkbox, Text
 } from 'galio-framework';
@@ -10,7 +9,7 @@ import {
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Toast from 'react-native-toast-message';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { CenterLoader, Input } from '../components/uiComponents';
 import {
     Images, NowTheme, Rx, ScreenName
@@ -19,7 +18,7 @@ import { ToastHelpers } from '../helpers';
 import { setIsSignInOtherDeviceStore, setToken } from '../redux/Actions';
 import { rxUtil } from '../utils';
 
-export default function SignUp(props) {
+export default function SignUp({ navigation }) {
     const [modalVisible, setModalVisible] = useState(false);
     const [step, setStep] = useState(1);
     const [phoneNumber, setPhoneNumber] = useState('');
@@ -28,15 +27,15 @@ export default function SignUp(props) {
     const [onCheckedDisclaimer, setOnCheckedDisclaimer] = useState(false);
     const [isShowSpinner, setIsShowSpinner] = useState(false);
 
-    const { navigation } = props;
+    const deviceIdStore = useSelector((state) => state.appConfigReducer.deviceIdStore);
+
     const dispatch = useDispatch();
 
-    const loginWithSignUpInfo = async () => {
-        const deviceId = await SecureStore.getItemAsync('deviceId');
+    const loginWithSignUpInfo = () => {
         const data = {
             username: phoneNumber,
             password,
-            deviceId: deviceId !== null ? deviceId : ''
+            deviceId: deviceIdStore !== null ? deviceIdStore : ''
         };
 
         rxUtil(
@@ -66,6 +65,7 @@ export default function SignUp(props) {
             type: 'success',
             text1: 'Tạo tài khoản thành công!'
         });
+        setIsShowSpinner(false);
     };
 
     const onClickGetOTP = () => {
@@ -104,7 +104,7 @@ export default function SignUp(props) {
         );
     };
 
-    const onClickSubmitRegister = async () => {
+    const onClickSubmitRegister = () => {
         if (!otp) {
             ToastHelpers.renderToast('Mã OTP không hợp lệ!', 'error');
             return;
@@ -115,12 +115,11 @@ export default function SignUp(props) {
             return;
         }
 
-        const deviceId = await SecureStore.getItemAsync('deviceId');
         const data = {
             password,
             phoneNum: phoneNumber,
             code: otp,
-            deviceId: deviceId !== null ? deviceId : ''
+            deviceId: deviceIdStore !== null ? deviceIdStore : ''
         };
 
         setIsShowSpinner(true);

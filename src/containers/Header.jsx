@@ -5,11 +5,12 @@ import React from 'react';
 import { Platform, StyleSheet, TouchableOpacity } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
+import * as SecureStore from 'expo-secure-store';
 import { IconCustom, Input, Tabs } from '../components/uiComponents';
 import {
     IconFamily, NowTheme, Rx, ScreenName
 } from '../constants';
-import { setListNotification, setNumberNotificationUnread } from '../redux/Actions';
+import { resetStoreSignOut, setListNotification, setNumberNotificationUnread } from '../redux/Actions';
 import { rxUtil } from '../utils';
 
 const iPhoneX = Platform.OS === 'ios';
@@ -218,6 +219,25 @@ export default function Header({
         return null;
     };
 
+    const clearAllCache = () => {
+        navigation.reset({
+            index: 0,
+            routes: [{ name: ScreenName.ONBOARDING }],
+        });
+        dispatch(resetStoreSignOut());
+        SecureStore.deleteItemAsync('api_token')
+            .then(console.log('api_token was cleaned!'));
+
+        SecureStore.deleteItemAsync('phoneNumber')
+            .then(console.log('phoneNumber was cleaned!'));
+
+        SecureStore.deleteItemAsync('password')
+            .then(console.log('password was cleaned!'));
+
+        SecureStore.deleteItemAsync('deviceId')
+            .then(console.log('deviceId was cleaned!'));
+    };
+
     const handleOnPressNavBar = () => {
         if (screenNameProp && screenNameProp === ScreenName.MESSAGE) {
             navigation.navigate(ScreenName.PROFILE, {
@@ -230,6 +250,7 @@ export default function Header({
         <Block style={headerStyles}>
             <TouchableWithoutFeedback
                 onPress={() => handleOnPressNavBar()}
+                onLongPress={() => clearAllCache()}
             >
                 <NavBar
                     back={false}

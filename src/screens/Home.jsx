@@ -245,7 +245,7 @@ export default function Home({ navigation }) {
                         }}
                     >
                         <Image
-                            source={{ uri: item.url }}
+                            source={{ uri: item.url || NO_AVATAR_URL }}
                             style={{
                                 width: 45,
                                 height: 45,
