@@ -120,6 +120,7 @@ export default function ForgotPassword({ navigation }) {
                     <Input
                         placeholder="Nhập mật khẩu mới..."
                         style={styles.input}
+                        keyboardType="number-pad"
                         password
                         viewPass
                         value={password}
@@ -133,6 +134,7 @@ export default function ForgotPassword({ navigation }) {
                         style={styles.input}
                         password
                         viewPass
+                        keyboardType="number-pad"
                         value={rePassword}
                         onChangeText={
                             (rePasswordInput) => setRePassword(rePasswordInput)

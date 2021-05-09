@@ -217,21 +217,36 @@ export default function SignInWithOTP({ navigation }) {
                                                 alignItems: 'center'
                                             }}
                                         >
-                                            <Input
-                                                style={{
-                                                    borderRadius: 5,
-                                                    width: NowTheme.SIZES.WIDTH_BASE * 0.77
-                                                }}
-                                                keyboardType="number-pad"
-                                                value={otp}
-                                                placeholder="Nhập mã xác thực..."
-                                                onChangeText={(otpInput) => setOtp(otpInput)}
-                                            />
+
+                                            {!otp ? (
+                                                <Input
+                                                    style={{
+                                                        borderRadius: 5,
+                                                        width: NowTheme.SIZES.WIDTH_BASE * 0.77,
+                                                    }}
+                                                    placeholder="Nhập số điện thoại..."
+                                                    value={phoneNumber}
+                                                    onChangeText={
+                                                        (phoneNumberInput) => setPhoneNumber(phoneNumberInput)
+                                                    }
+                                                />
+                                            ) : (
+                                                <Input
+                                                    style={{
+                                                        borderRadius: 5,
+                                                        width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                                                    }}
+                                                    keyboardType="number-pad"
+                                                    value={otp}
+                                                    placeholder="Nhập mã xác thực..."
+                                                    onChangeText={(otpInput) => setOtp(otpInput)}
+                                                />
+                                            )}
                                         </Block>
                                     </Block>
 
                                     <Block center>
-                                        {otp === '' ? (
+                                        {!otp ? (
                                             <Button
                                                 onPress={() => onClickGetOTPWhenChangeDevice()}
                                                 style={[styles.button, {
@@ -239,7 +254,7 @@ export default function SignInWithOTP({ navigation }) {
                                                 }]}
                                                 shadowless
                                             >
-                                                Nhận mã xác thực
+                                                Yêu cầu mã xác thực
                                             </Button>
                                         ) : (
                                             <Button
@@ -249,7 +264,7 @@ export default function SignInWithOTP({ navigation }) {
                                                 }]}
                                                 shadowless
                                             >
-                                                Đăng nhập
+                                                Xác thực và đăng nhập
                                             </Button>
                                         )}
                                     </Block>

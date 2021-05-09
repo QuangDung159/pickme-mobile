@@ -223,6 +223,7 @@ export default function SignUp({ navigation }) {
                                 <Input
                                     placeholder="Nhập mật khẩu..."
                                     style={styles.input}
+                                    keyboardType="number-pad"
                                     password
                                     viewPass
                                     value={password}

@@ -227,6 +227,7 @@ export default function SignIn({ navigation }) {
                                                 }}
                                                 password
                                                 viewPass
+                                                keyboardType="number-pad"
                                                 value={password}
                                                 onChangeText={
                                                     (passwordInput) => setPassword(passwordInput)
