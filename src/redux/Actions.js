@@ -1,6 +1,6 @@
 import {
     RESET_STORE_SIGN_OUT, SET_CHATING_WITH, SET_CURRENT_USER,
-    SET_DATA_LISTENED, SET_DEVICE_LOCALE, SET_DEVICE_TIMEZONE,
+    SET_DATA_LISTENED, SET_DEVICE_ID_STORE, SET_DEVICE_LOCALE, SET_DEVICE_TIMEZONE,
     SET_EXPO_TOKEN, SET_IS_SIGN_IN_OTHER_DEVICE_STORE, SET_LIST_BANK,
     SET_LIST_BOOKING_LOCATION,
     SET_LIST_BOOKING_STORE,
@@ -150,5 +150,12 @@ export const setIsSignInOtherDeviceStore = (isSignInOtherDeviceStore) => ({
     type: SET_IS_SIGN_IN_OTHER_DEVICE_STORE,
     payload: {
         isSignInOtherDeviceStore
+    }
+});
+
+export const setDeviceIdStore = (deviceIdStore) => ({
+    type: SET_DEVICE_ID_STORE,
+    payload: {
+        deviceIdStore
     }
 });

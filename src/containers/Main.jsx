@@ -11,12 +11,13 @@ import * as SecureStore from 'expo-secure-store';
 import { Block, GalioProvider } from 'galio-framework';
 import React, { useEffect } from 'react';
 import { AppState } from 'react-native';
+import uuid from 'react-native-uuid';
 import { useDispatch, useSelector } from 'react-redux';
-import { v4 as uuidv4 } from 'uuid';
 import { Listener } from '../components/bussinessComponents';
 import { NowTheme, Rx } from '../constants';
 import Stacks from '../navigations/Stacks';
 import {
+    setDeviceIdStore,
     setDeviceTimezone, setIsSignInOtherDeviceStore, setListNotification, setMessageListened, setNumberNotificationUnread
 } from '../redux/Actions';
 import { rxUtil } from '../utils';
@@ -26,6 +27,24 @@ export default function Main() {
 
     const dispatch = useDispatch();
     const token = useSelector((state) => state.userReducer.token);
+    const deviceIdStore = useSelector((state) => state.appConfigReducer.deviceIdStore);
+
+    useEffect(
+        () => {
+            dispatch(setDeviceTimezone());
+
+            AppState.addEventListener('change', handleAppStateChange);
+            return () => {
+                AppState.removeEventListener('change', handleAppStateChange);
+            };
+        }, []
+    );
+
+    useEffect(
+        () => {
+            generateNewDeviceId();
+        }, [deviceIdStore]
+    );
 
     const getListNotificationAPI = () => {
         rxUtil(
@@ -95,19 +114,18 @@ export default function Main() {
     });
 
     const generateNewDeviceId = async () => {
-        try {
-            // get deviceId from local storage
-            const deviceId = await SecureStore.getItemAsync('deviceId');
-            if (deviceId === null) {
-                // generate and save new device id to local storage
-                const myuuid = `${uuidv4()}`;
-                console.log('new deviceId :>> ', myuuid);
-                storeDeviceId(myuuid);
-            } else {
-                console.log('current deviceId :>> ', deviceId);
-            }
-        } catch (e) {
-            console.log('error', e);
+        const deviceId = await SecureStore.getItemAsync('deviceId');
+
+        if (!deviceId) {
+            const myuuid = uuid.v4();
+
+            // store deviceId to redux storage
+            dispatch(setDeviceIdStore(myuuid));
+
+            // store deviceId to device storage
+            storeDeviceId(myuuid);
+        } else {
+            dispatch(setDeviceIdStore(deviceId));
         }
     };
 
@@ -120,19 +138,6 @@ export default function Main() {
         }
     };
 
-    useEffect(
-        () => {
-            dispatch(setDeviceTimezone());
-            generateNewDeviceId();
-
-            AppState.addEventListener('change', handleAppStateChange);
-
-            return () => {
-                AppState.removeEventListener('change', handleAppStateChange);
-            };
-        }, []
-    );
-
     const handleAppStateChange = (nextAppState) => {
         if (nextAppState === 'active') {
             onLogin();
@@ -140,14 +145,14 @@ export default function Main() {
     };
 
     const onLogin = async () => {
-        const deviceId = await SecureStore.getItemAsync('deviceId');
         const phoneNumber = await SecureStore.getItemAsync('phoneNumber');
         const password = await SecureStore.getItemAsync('password');
+
         if (phoneNumber && password) {
             const data = {
                 username: phoneNumber,
                 password,
-                deviceId
+                deviceId: deviceIdStore
             };
 
             rxUtil(
