@@ -113,13 +113,13 @@ export default function UserInformation({ navigation }) {
             routes: [{ name: ScreenName.ONBOARDING }],
         });
         dispatch(resetStoreSignOut());
-        SecureStore.setItemAsync('api_token', '')
+        SecureStore.deleteItemAsync('api_token')
             .then(console.log('api_token was cleaned!'));
 
-        SecureStore.setItemAsync('phoneNumber', '')
+        SecureStore.deleteItemAsync('phoneNumber')
             .then(console.log('phoneNumber was cleaned!'));
 
-        SecureStore.setItemAsync('password', '')
+        SecureStore.deleteItemAsync('password')
             .then(console.log('password was cleaned!'));
     };
 
