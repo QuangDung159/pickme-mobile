@@ -1,14 +1,14 @@
-import * as SecureStore from 'expo-secure-store';
 import {
     Block, Button
 } from 'galio-framework';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
     ImageBackground,
     StyleSheet
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Toast from 'react-native-toast-message';
+import { useSelector } from 'react-redux';
 import { ExpoNotification } from '../components/bussinessComponents';
 import {
     CenterLoader, IconCustom, Input, NoteText
@@ -23,21 +23,11 @@ import { rxUtil } from '../utils';
 export default function ForgotPassword({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
     const [otp, setOtp] = useState('');
-    const [deviceId, setDeviceId] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [password, setPassword] = useState('');
     const [rePassword, setRePassword] = useState('');
 
-    useEffect(
-        () => {
-            getLocalValue();
-        }, []
-    );
-
-    const getLocalValue = async () => {
-        const deviceIdLocalStore = await SecureStore.getItemAsync('deviceId');
-        setDeviceId(deviceIdLocalStore);
-    };
+    const deviceIdStore = useSelector((state) => state.appConfigReducer.deviceIdStore);
 
     // handler \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
     const onSubmitForgorPassword = () => {
@@ -47,7 +37,7 @@ export default function ForgotPassword({ navigation }) {
         const data = {
             phoneNum: phoneNumber,
             password,
-            deviceId,
+            deviceId: deviceIdStore,
             code: otp
         };
 

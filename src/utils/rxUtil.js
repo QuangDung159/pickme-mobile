@@ -47,6 +47,7 @@ export default (
             } = err;
             console.log('catch', response);
             generateLogData(endpoint, data, headers, response);
+
             if (message && message !== '') {
                 ToastHelpers.renderToast(message, 'error');
                 if (catchCallBack) catchCallBack(message);

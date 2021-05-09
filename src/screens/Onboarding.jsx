@@ -19,6 +19,7 @@ export default function Onboarding({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
 
     const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
+    const deviceIdStore = useSelector((state) => state.appConfigReducer.deviceIdStore);
 
     const dispatch = useDispatch();
 
@@ -47,15 +48,16 @@ export default function Onboarding({ navigation }) {
     );
 
     const onLogin = async () => {
-        const deviceId = await SecureStore.getItemAsync('deviceId');
         const phoneNumber = await SecureStore.getItemAsync('phoneNumber');
         const password = await SecureStore.getItemAsync('password');
         if (phoneNumber && password) {
             const data = {
                 username: phoneNumber,
                 password,
-                deviceId
+                deviceId: deviceIdStore
             };
+
+            console.log('deviceIdStore :>> ', deviceIdStore);
 
             setIsShowSpinner(true);
             rxUtil(
@@ -174,6 +176,13 @@ export default function Onboarding({ navigation }) {
                                     style={{ fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR }}
                                 >
                                     {`${Constants.manifest.version}`}
+                                </Text>
+                                <Text
+                                    color={NowTheme.COLORS.DEFAULT}
+                                    size={NowTheme.SIZES.FONT_H4 - 2}
+                                    style={{ fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR }}
+                                >
+                                    {deviceIdStore}
                                 </Text>
                             </Block>
                         </Block>

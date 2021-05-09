@@ -8,7 +8,6 @@ import {
     StyleSheet
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import Toast from 'react-native-toast-message';
 import { useDispatch, useSelector } from 'react-redux';
 import { ExpoNotification } from '../components/bussinessComponents';
 import {
@@ -28,11 +27,11 @@ import { rxUtil } from '../utils';
 export default function SignInWithOTP({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
     const [otp, setOtp] = useState('');
-    const [deviceId, setDeviceId] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [password, setPassword] = useState('');
 
     const expoToken = useSelector((state) => state.appConfigReducer.expoToken);
+    const deviceIdStore = useSelector((state) => state.appConfigReducer.deviceIdStore);
 
     const dispatch = useDispatch();
 
@@ -43,13 +42,11 @@ export default function SignInWithOTP({ navigation }) {
     );
 
     const getLocalValue = async () => {
-        const deviceIdLocalStore = await SecureStore.getItemAsync('deviceId');
         const phoneNumberLocalStore = await SecureStore.getItemAsync('phoneNumber');
         const passwordLocalStore = await SecureStore.getItemAsync('password');
 
         setPassword(passwordLocalStore);
         setPhoneNumber(phoneNumberLocalStore);
-        setDeviceId(deviceIdLocalStore);
     };
 
     // handler \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
@@ -70,10 +67,10 @@ export default function SignInWithOTP({ navigation }) {
         const data = {
             username: phoneNumber,
             password,
-            deviceId
+            deviceId: deviceIdStore
         };
 
-        toggleSpinner(true);
+        setIsShowSpinner(true);
         rxUtil(
             Rx.AUTHENTICATION.LOGIN,
             'POST',
@@ -82,34 +79,31 @@ export default function SignInWithOTP({ navigation }) {
             (res) => {
                 onLoginSucess(res.data.data);
             },
-            () => {
-                toggleSpinner(false);
-                Toast.show({
-                    type: 'error',
-                    text1: 'Lỗi hệ thống! Vui lòng thử lại.'
-                });
+            (err) => {
+                setIsShowSpinner(false);
+                ToastHelpers.renderToast(err, 'error');
             },
-            () => {
-                toggleSpinner(false);
-                Toast.show({
-                    type: 'error',
-                    text1: 'Lỗi hệ thống! Vui lòng thử lại.'
-                });
+            (err) => {
+                setIsShowSpinner(false);
+                ToastHelpers.renderToast(err, 'error');
             }
         );
     };
 
-    const onSubmitOTP = () => {
+    const onSubmitOTP = async () => {
         setIsShowSpinner(true);
-
         const data = {
             phoneNum: phoneNumber,
             password,
-            deviceId,
+            deviceId: deviceIdStore,
             code: otp
         };
 
-        toggleSpinner(true);
+        if (!deviceIdStore) {
+            const deviceIdLocal = await SecureStore.getItemAsync('deviceId');
+            data.deviceId = deviceIdLocal;
+        }
+
         rxUtil(
             Rx.USER.SUBMIT_CHANGE_DEVICE_CONFIRM,
             'POST',
@@ -118,19 +112,13 @@ export default function SignInWithOTP({ navigation }) {
             () => {
                 onLogin();
             },
-            () => {
-                toggleSpinner(false);
-                Toast.show({
-                    type: 'error',
-                    text1: 'Lỗi hệ thống! Vui lòng thử lại.'
-                });
+            (err) => {
+                setIsShowSpinner(false);
+                ToastHelpers.renderToast(err, 'error');
             },
-            () => {
-                toggleSpinner(false);
-                Toast.show({
-                    type: 'error',
-                    text1: 'Lỗi hệ thống! Vui lòng thử lại.'
-                });
+            (err) => {
+                setIsShowSpinner(false);
+                ToastHelpers.renderToast(err, 'error');
             }
         );
         return true;
@@ -171,10 +159,7 @@ export default function SignInWithOTP({ navigation }) {
             .then(console.log('tokenFromAPI :>> ', tokenFromAPI));
 
         dispatch(setIsSignInOtherDeviceStore(false));
-    };
-
-    const toggleSpinner = (isShowSpinnerToggled) => {
-        setIsShowSpinner(isShowSpinnerToggled);
+        setIsShowSpinner(false);
     };
 
     return (

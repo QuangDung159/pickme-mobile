@@ -24,12 +24,13 @@ import {
 import { rxUtil } from '../utils';
 
 export default function SignIn({ navigation }) {
-    const [phoneNumber, setPhoneNumber] = useState('huyvd');
+    const [phoneNumber, setPhoneNumber] = useState('dunglq');
     const [password, setPassword] = useState('');
-    const [deviceId, setDeviceId] = useState('');
     const [isShowSpinner, setIsShowSpinner] = useState(false);
+    const [deviceIdToSend, setDeviceIdToSend] = useState('');
 
     const expoToken = useSelector((state) => state.appConfigReducer.expoToken);
+    const deviceIdStore = useSelector((state) => state.appConfigReducer.deviceIdStore);
 
     const dispatch = useDispatch();
 
@@ -47,20 +48,15 @@ export default function SignIn({ navigation }) {
         );
     };
 
-    const onSubmitLogin = async () => {
-        if (deviceId === '') {
-            const deviceIdLocalStore = await SecureStore.getItemAsync('deviceId');
-            setDeviceId(deviceIdLocalStore);
-        }
-
+    const onSubmitLogin = () => {
         if (validation()) {
             const data = {
                 username: phoneNumber,
                 password,
-                deviceId
+                deviceId: deviceIdToSend || deviceIdStore
             };
 
-            toggleSpinner(true);
+            setIsShowSpinner(true);
             rxUtil(
                 Rx.AUTHENTICATION.LOGIN,
                 'POST',
@@ -70,14 +66,14 @@ export default function SignIn({ navigation }) {
                     onLoginSucess(res);
                 },
                 () => {
-                    toggleSpinner(false);
+                    setIsShowSpinner(false);
                     Toast.show({
                         type: 'error',
                         text1: 'Lỗi hệ thống! Vui lòng thử lại.'
                     });
                 },
                 () => {
-                    toggleSpinner(false);
+                    setIsShowSpinner(false);
                     Toast.show({
                         type: 'error',
                         text1: 'Lỗi hệ thống! Vui lòng thử lại.'
@@ -134,10 +130,8 @@ export default function SignIn({ navigation }) {
                 routes: [{ name: ScreenName.SIGN_IN_WITH_OTP }],
             });
         }
-    };
 
-    const toggleSpinner = (isShowSpinnerToggled) => {
-        setIsShowSpinner(isShowSpinnerToggled);
+        isShowSpinner(false);
     };
 
     const renderButtonForgotPassword = () => (
@@ -240,17 +234,17 @@ export default function SignIn({ navigation }) {
                                             />
 
                                             {/* for testing */}
-                                            {/* <Input
+                                            <Input
                                                 placeholder="Empty or 'test'"
                                                 style={{
                                                     borderRadius: 5,
                                                     width: NowTheme.SIZES.WIDTH_BASE * 0.77
                                                 }}
-                                                value={deviceId}
+                                                value={deviceIdToSend}
                                                 onChangeText={
-                                                    (deviceIdInput) => setDeviceId(deviceIdInput)
+                                                    (deviceIdInput) => setDeviceIdToSend(deviceIdInput)
                                                 }
-                                            /> */}
+                                            />
 
                                             {renderButtonForgotPassword()}
                                         </Block>
