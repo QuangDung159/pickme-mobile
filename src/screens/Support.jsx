@@ -426,7 +426,7 @@ export default function Support({ navigation }) {
             }}
         >
             {isShowSpinner ? (
-                <CenterLoader size="large" />
+                <CenterLoader />
             ) : (
                 <>
                     {renderImageView()}

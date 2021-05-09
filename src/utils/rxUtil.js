@@ -50,9 +50,10 @@ export default (
 
             if (message && message !== '') {
                 ToastHelpers.renderToast(message, 'error');
-                if (catchCallBack) catchCallBack(message);
             } else {
                 ToastHelpers.renderToast();
             }
+
+            if (catchCallBack) catchCallBack(response);
         });
 };

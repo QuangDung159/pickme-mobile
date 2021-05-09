@@ -111,7 +111,7 @@ export default function Notification({ navigation }) {
         return (
             <>
                 {isShowSpinner ? (
-                    <CenterLoader size="large" />
+                    <CenterLoader />
                 ) : (
                     <Block
                         flex

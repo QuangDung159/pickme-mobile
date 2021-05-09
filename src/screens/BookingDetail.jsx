@@ -531,7 +531,7 @@ export default function BookingDetail({
         return (
             <>
                 {isShowSpinner ? (
-                    <CenterLoader size="large" />
+                    <CenterLoader />
                 ) : (
                     <ScrollView
                         showsVerticalScrollIndicator={false}
