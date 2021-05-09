@@ -112,6 +112,7 @@ export default function UpdateInfoAccount(props) {
                     placeholder="Nhập mật khẩu hiện tại..."
                     style={styles.input}
                     password
+                    keyboardType="number-pad"
                     viewPass
                     value={currentPassword}
                     color={NowTheme.COLORS.HEADER}
@@ -134,6 +135,7 @@ export default function UpdateInfoAccount(props) {
                     placeholder="Nhập mật khẩu mới..."
                     style={styles.input}
                     password
+                    keyboardType="number-pad"
                     viewPass
                     value={newPassword}
                     color={NowTheme.COLORS.HEADER}
@@ -158,6 +160,7 @@ export default function UpdateInfoAccount(props) {
                         marginBottom: 0
                     }]}
                     password
+                    keyboardType="number-pad"
                     viewPass
                     value={reNewPasssword}
                     color={NowTheme.COLORS.HEADER}
