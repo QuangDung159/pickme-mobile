@@ -347,7 +347,7 @@ export default function Verification({ navigation }) {
             <>
                 {isShowSpinner ? (
                     // eslint-disable-next-line max-len
-                    <CenterLoader size="large" content={`Quá trình tải lên mất nhiều thời gian do chất lượng hình ảnh. Bạn vui lòng đợi nhé ${'<3'}!`} />
+                    <CenterLoader content={`Quá trình tải lên mất nhiều thời gian do chất lượng hình ảnh. Bạn vui lòng đợi nhé ${'<3'}!`} />
                 ) : (
                     <KeyboardAwareScrollView
                         showsVerticalScrollIndicator={false}

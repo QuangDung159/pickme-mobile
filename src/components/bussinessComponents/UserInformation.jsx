@@ -212,7 +212,7 @@ export default function UserInformation({ navigation }) {
                             setListImageReview([{ url: currentUser.url }]);
                         }}
                     >
-                        <CenterLoader size="small" />
+                        <CenterLoader />
                         <Block
                             style={{
                                 zIndex: 99

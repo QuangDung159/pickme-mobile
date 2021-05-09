@@ -769,7 +769,7 @@ export default function CreateBooking({ route, navigation }) {
         return (
             <>
                 {isShowSpinner ? (
-                    <CenterLoader size="large" />
+                    <CenterLoader />
                 ) : (
                     <>
                         <KeyboardAwareScrollView

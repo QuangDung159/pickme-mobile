@@ -332,7 +332,7 @@ export default function SignUp({ navigation }) {
 
                                 {/* render from this shit */}
                                 {isShowSpinner ? (
-                                    <CenterLoader size="large" />
+                                    <CenterLoader />
                                 ) : (
                                     <>
                                         {renderSignUpViewByStep()}

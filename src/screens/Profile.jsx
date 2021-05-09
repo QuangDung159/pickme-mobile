@@ -97,7 +97,7 @@ export default function Profile({ route, navigation }) {
         return (
             <>
                 {isShowSpinner ? (
-                    <CenterLoader size="large" />
+                    <CenterLoader />
                 ) : (
                     <>
                         <Block style={{
@@ -120,7 +120,7 @@ export default function Profile({ route, navigation }) {
                                     showsVerticalScrollIndicator={false}
                                 >
                                     <Block>
-                                        <CenterLoader size="small" />
+                                        <CenterLoader />
                                         <Block
                                             style={{
                                                 zIndex: 99

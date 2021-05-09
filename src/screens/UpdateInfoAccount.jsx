@@ -244,7 +244,6 @@ export default function UpdateInfoAccount(props) {
             },
             (res) => {
                 ToastHelpers.renderToast(res.data.message, 'success');
-                setIsShowSpinner(false);
                 setIsShowFormChangePassword(false);
 
                 SecureStore.setItemAsync('password', newPassword)
@@ -253,6 +252,8 @@ export default function UpdateInfoAccount(props) {
                 setCurrentUser('');
                 setNewPassword('');
                 setReNewPasssword('');
+
+                setIsShowSpinner(false);
             },
             () => setIsShowSpinner(false),
             () => setIsShowSpinner(false)
@@ -268,7 +269,8 @@ export default function UpdateInfoAccount(props) {
             Authorization: token
         };
 
-        rxUtil(Rx.USER.CURRENT_USER_INFO, 'GET', '', headers,
+        rxUtil(
+            Rx.USER.CURRENT_USER_INFO, 'GET', '', headers,
             (res) => {
                 dispatch(setCurrentUser(res.data.data));
                 setIsShowSpinner(false);
@@ -279,12 +281,9 @@ export default function UpdateInfoAccount(props) {
                 navigation.navigate(ScreenName.PERSONAL);
                 dispatch(setPersonTabActiveIndex(0));
             },
-            () => {
-                setIsShowSpinner(false);
-            },
-            () => {
-                setIsShowSpinner(false);
-            });
+            () => setIsShowSpinner(false),
+            () => setIsShowSpinner(false)
+        );
     };
 
     const onChangeName = (nameInput) => {
@@ -329,9 +328,10 @@ export default function UpdateInfoAccount(props) {
             dob,
             height,
             weight,
-            earningExpected,
             homeTown,
-            interests
+            interests,
+            earningExpected,
+            address
         } = newUser;
 
         if (!validate()) {
@@ -347,7 +347,7 @@ export default function UpdateInfoAccount(props) {
             weight,
             homeTown,
             interests,
-            address: ''
+            address
         };
 
         const headers = {
@@ -366,19 +366,9 @@ export default function UpdateInfoAccount(props) {
             },
             () => {
                 setIsShowSpinner(false);
-
-                ToastHelpers.renderToast(
-                    'Lỗi hệ thống! Vui lòng thử lại.',
-                    'error'
-                );
             },
             () => {
                 setIsShowSpinner(false);
-
-                ToastHelpers.renderToast(
-                    'Lỗi hệ thống! Vui lòng thử lại.',
-                    'error'
-                );
             }
         );
     };
@@ -555,7 +545,7 @@ export default function UpdateInfoAccount(props) {
         return (
             <>
                 {isShowSpinner ? (
-                    <CenterLoader size="large" />
+                    <CenterLoader />
                 ) : (
                     <ScrollView
                         showsVerticalScrollIndicator={false}
