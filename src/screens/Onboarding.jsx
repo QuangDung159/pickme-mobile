@@ -80,9 +80,10 @@ export default function Onboarding({ navigation }) {
                             routes: [{ name: ScreenName.SIGN_IN_WITH_OTP }],
                         });
                     }
-                }
+                },
+                () => setIsShowSpinner(false),
+                () => setIsShowSpinner(false)
             );
-            setIsShowSpinner(false);
         }
     };
 

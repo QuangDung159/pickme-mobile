@@ -8,7 +8,7 @@ const iPhoneX = () => Platform.OS === 'ios' && (height === 812 || width === 812)
 
 const TIME_FORMAT = {
     TIME_FORMAT_ZULU: 'YYYY-MM-DDTHH:mm:ss.SSS',
-    TIME_FROMAT_DDMMYYYY: 'DD-MM-YYYY',
+    TIME_FORMAT_DDMMYYYY: 'DD-MM-YYYY',
 };
 
 export default {

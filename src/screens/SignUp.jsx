@@ -44,7 +44,7 @@ export default function SignUp({ navigation }) {
             data,
             {},
             (res) => {
-                onLoginSucess(res.data.data);
+                onLoginSuccess(res.data.data);
             },
             () => {
                 setIsShowSpinner(false);
@@ -57,7 +57,7 @@ export default function SignUp({ navigation }) {
         );
     };
 
-    const onLoginSucess = (tokenFromAPI) => {
+    const onLoginSuccess = (tokenFromAPI) => {
         dispatch(setToken(tokenFromAPI));
         dispatch(setIsSignInOtherDeviceStore(false));
         navigation.navigate(ScreenName.CREATE_ACCOUNT);
@@ -223,6 +223,7 @@ export default function SignUp({ navigation }) {
                                 <Input
                                     placeholder="Nhập mật khẩu..."
                                     style={styles.input}
+                                    keyboardType="number-pad"
                                     password
                                     viewPass
                                     value={password}
@@ -332,7 +333,7 @@ export default function SignUp({ navigation }) {
 
                                 {/* render from this shit */}
                                 {isShowSpinner ? (
-                                    <CenterLoader size="large" />
+                                    <CenterLoader />
                                 ) : (
                                     <>
                                         {renderSignUpViewByStep()}

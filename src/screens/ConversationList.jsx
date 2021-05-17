@@ -16,7 +16,7 @@ export default function ConversationList({ navigation }) {
     const currentUser = useSelector((state) => state.userReducer.currentUser);
     const listConversation = useSelector((state) => state.messageReducer.listConversation);
     const numberMessageUnread = useSelector((state) => state.messageReducer.numberMessageUnread);
-    const chattingWith = useSelector((state) => state.messageReducerchattingWith);
+    const chattingWith = useSelector((state) => state.messageReducer.chattingWith);
     const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
 
     const dispatch = useDispatch();

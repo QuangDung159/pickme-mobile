@@ -93,7 +93,7 @@ export default function Verification({ navigation }) {
         </Block>
     );
 
-    const renderDocSecion = () => (
+    const renderDocSection = () => (
         <>
             {renderUploadDocForm(0, 'Ảnh chụp cá nhân')}
             {renderDocImageByType(0, faceUrl)}
@@ -347,7 +347,7 @@ export default function Verification({ navigation }) {
             <>
                 {isShowSpinner ? (
                     // eslint-disable-next-line max-len
-                    <CenterLoader size="large" content={`Quá trình tải lên mất nhiều thời gian do chất lượng hình ảnh. Bạn vui lòng đợi nhé ${'<3'}!`} />
+                    <CenterLoader content={`Quá trình tải lên mất nhiều thời gian do chất lượng hình ảnh. Bạn vui lòng đợi nhé ${'<3'}!`} />
                 ) : (
                     <KeyboardAwareScrollView
                         showsVerticalScrollIndicator={false}
@@ -383,7 +383,7 @@ export default function Verification({ navigation }) {
                                     borderWidth={0.5}
                                     borderColor={NowTheme.COLORS.ACTIVE}
                                 />
-                                {renderDocSecion()}
+                                {renderDocSection()}
                             </Block>
                         </Block>
 

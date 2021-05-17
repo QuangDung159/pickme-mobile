@@ -24,7 +24,7 @@ export default {
         SUBMIT_CHANGE_DEVICE_CONFIRM: '/users/CustomerChangedDeviceIdConfirm',
         GENERATE_OTP_WHEN_FORGOT_PASSWORD: '/users/CustomerForGotPasswordOTP',
         SUBMIT_FORGOT_PASSWORD_CONFIRM: '/users/CustomerForGotPasswordConfirm',
-        SBUMIT_CHANGE_PASSWORD: '/users/changepassword'
+        SUBMIT_CHANGE_PASSWORD: '/users/changepassword'
     },
     BANK: {
         BANK_ACCOUNTS: '/users/BankAccounts',
@@ -33,7 +33,7 @@ export default {
     },
     BOOKING: {
         SCHEDULE_BOOKING: '/bookings/ScheduleBooking',
-        UDPATE_BOOKING: '/bookings/UpdateBooking',
+        UPDATE_BOOKING: '/bookings/UpdateBooking',
         GET_MY_BOOKING_AS_PARTNER: '/bookings/GetMyBookingAsPartner',
         GET_LIST_BOOKING_LOCATION: '/Settings/Locations',
         GET_MY_BOOKING_AS_CUSTOMER: '/bookings/GetMyBookingAsCustomer',

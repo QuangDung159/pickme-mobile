@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useDispatch, useSelector } from 'react-redux';
-import { ExpoNotification } from '../components/bussinessComponents';
+import { ExpoNotification } from '../components/businessComponents';
 import {
     CenterLoader, IconCustom, Input, NoteText
 } from '../components/uiComponents';
@@ -77,7 +77,7 @@ export default function SignInWithOTP({ navigation }) {
             data,
             {},
             (res) => {
-                onLoginSucess(res.data.data);
+                onLoginSuccess(res.data.data);
             },
             (err) => {
                 setIsShowSpinner(false);
@@ -145,7 +145,7 @@ export default function SignInWithOTP({ navigation }) {
         );
     };
 
-    const onLoginSucess = (tokenFromAPI) => {
+    const onLoginSuccess = (tokenFromAPI) => {
         const bearerToken = `Bearer ${tokenFromAPI}`;
         dispatch(setToken(tokenFromAPI));
 
@@ -217,21 +217,36 @@ export default function SignInWithOTP({ navigation }) {
                                                 alignItems: 'center'
                                             }}
                                         >
-                                            <Input
-                                                style={{
-                                                    borderRadius: 5,
-                                                    width: NowTheme.SIZES.WIDTH_BASE * 0.77
-                                                }}
-                                                keyboardType="number-pad"
-                                                value={otp}
-                                                placeholder="Nhập mã xác thực..."
-                                                onChangeText={(otpInput) => setOtp(otpInput)}
-                                            />
+
+                                            {!otp ? (
+                                                <Input
+                                                    style={{
+                                                        borderRadius: 5,
+                                                        width: NowTheme.SIZES.WIDTH_BASE * 0.77,
+                                                    }}
+                                                    placeholder="Nhập số điện thoại..."
+                                                    value={phoneNumber}
+                                                    onChangeText={
+                                                        (phoneNumberInput) => setPhoneNumber(phoneNumberInput)
+                                                    }
+                                                />
+                                            ) : (
+                                                <Input
+                                                    style={{
+                                                        borderRadius: 5,
+                                                        width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                                                    }}
+                                                    keyboardType="number-pad"
+                                                    value={otp}
+                                                    placeholder="Nhập mã xác thực..."
+                                                    onChangeText={(otpInput) => setOtp(otpInput)}
+                                                />
+                                            )}
                                         </Block>
                                     </Block>
 
                                     <Block center>
-                                        {otp === '' ? (
+                                        {!otp ? (
                                             <Button
                                                 onPress={() => onClickGetOTPWhenChangeDevice()}
                                                 style={[styles.button, {
@@ -239,7 +254,7 @@ export default function SignInWithOTP({ navigation }) {
                                                 }]}
                                                 shadowless
                                             >
-                                                Nhận mã xác thực
+                                                Yêu cầu mã xác thực
                                             </Button>
                                         ) : (
                                             <Button
@@ -249,7 +264,7 @@ export default function SignInWithOTP({ navigation }) {
                                                 }]}
                                                 shadowless
                                             >
-                                                Đăng nhập
+                                                Xác thực và đăng nhập
                                             </Button>
                                         )}
                                     </Block>
