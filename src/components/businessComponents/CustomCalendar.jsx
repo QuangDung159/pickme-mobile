@@ -74,6 +74,7 @@ export default function CustomCalendar({ selectedDate, onChangeDate }) {
                     <Block
                         middle
                         flex
+                        key={item}
                     >
                         <Text
                             size={13}

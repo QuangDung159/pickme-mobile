@@ -15,7 +15,7 @@ import { rxUtil } from '../utils';
 export default function LeaderBoard({ navigation }) {
     const [tabActiveIndex, setTabActiveIndex] = useState(0);
     const [isShowSpinner, setIsShowSpinner] = useState(true);
-    const [listGeneral, setlistGeneral] = useState({});
+    const [listGeneral, setListGeneral] = useState({});
 
     const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
 
@@ -80,7 +80,7 @@ export default function LeaderBoard({ navigation }) {
             },
             (res) => {
                 setIsShowSpinner(false);
-                setlistGeneral((prevState) => ({ ...prevState, [index]: res.data.data }));
+                setListGeneral((prevState) => ({ ...prevState, [index]: res.data.data }));
             },
             () => {
                 setIsShowSpinner(false);
@@ -214,7 +214,7 @@ export default function LeaderBoard({ navigation }) {
         );
     };
 
-    const renderAchieveValueTopPannel = (achieveValue) => (
+    const renderAchieveValueTopPanel = (achieveValue) => (
         <Block middle row>
             <Text
                 color={NowTheme.COLORS.ACTIVE}
@@ -316,7 +316,7 @@ export default function LeaderBoard({ navigation }) {
                         </Text>
                     </Block>
                     <Block>
-                        {renderAchieveValueTopPannel(achieveValue)}
+                        {renderAchieveValueTopPanel(achieveValue)}
                     </Block>
                 </Block>
             </Block>

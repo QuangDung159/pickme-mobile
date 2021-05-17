@@ -1,5 +1,5 @@
 import {
-    RESET_STORE_SIGN_OUT, SET_CHATING_WITH, SET_CURRENT_USER,
+    RESET_STORE_SIGN_OUT, SET_CHATTING_WITH, SET_CURRENT_USER,
     SET_DATA_LISTENED, SET_DEVICE_ID_STORE, SET_DEVICE_LOCALE, SET_DEVICE_TIMEZONE,
     SET_EXPO_TOKEN, SET_IS_SIGN_IN_OTHER_DEVICE_STORE, SET_LIST_BANK,
     SET_LIST_BOOKING_LOCATION,
@@ -80,7 +80,7 @@ export const setNumberMessageUnread = (numberMessageUnread) => ({
 });
 
 export const setChattingWith = (chattingWith) => ({
-    type: SET_CHATING_WITH,
+    type: SET_CHATTING_WITH,
     payload: {
         chattingWith
     }
