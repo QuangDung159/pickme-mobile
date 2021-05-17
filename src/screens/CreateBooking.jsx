@@ -12,7 +12,7 @@ import { ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handl
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import ScrollPicker from 'react-native-wheel-scroll-picker';
 import { useDispatch, useSelector } from 'react-redux';
-import { CustomCalendar } from '../components/bussinessComponents';
+import { CustomCalendar } from '../components/businessComponents';
 import { CenterLoader, IconCustom, Line } from '../components/uiComponents';
 import {
     DateTimeConst, IconFamily, NowTheme, Rx, ScreenName

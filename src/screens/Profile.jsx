@@ -10,7 +10,7 @@ import {
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import ImageView from 'react-native-image-viewing';
 import { useSelector } from 'react-redux';
-import { CardImage } from '../components/bussinessComponents';
+import { CardImage } from '../components/businessComponents';
 import { Button, CenterLoader } from '../components/uiComponents';
 import { NowTheme, Rx, ScreenName } from '../constants';
 import { ToastHelpers } from '../helpers';

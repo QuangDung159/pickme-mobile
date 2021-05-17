@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { RefreshControl } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
-import { NotificationItem } from '../components/bussinessComponents';
+import { NotificationItem } from '../components/businessComponents';
 import { CenterLoader } from '../components/uiComponents';
 import { NowTheme, Rx, ScreenName } from '../constants';
 import { ToastHelpers } from '../helpers';
@@ -94,7 +94,7 @@ export default function Notification({ navigation }) {
                 />
             )}
             contentContainerStyle={{
-                backgroundColot: NowTheme.COLORS.BASE,
+                backgroundColor: NowTheme.COLORS.BASE,
             }}
             showsVerticalScrollIndicator={false}
             data={listNotification}

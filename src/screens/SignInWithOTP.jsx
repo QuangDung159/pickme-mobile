@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useDispatch, useSelector } from 'react-redux';
-import { ExpoNotification } from '../components/bussinessComponents';
+import { ExpoNotification } from '../components/businessComponents';
 import {
     CenterLoader, IconCustom, Input, NoteText
 } from '../components/uiComponents';
@@ -77,7 +77,7 @@ export default function SignInWithOTP({ navigation }) {
             data,
             {},
             (res) => {
-                onLoginSucess(res.data.data);
+                onLoginSuccess(res.data.data);
             },
             (err) => {
                 setIsShowSpinner(false);
@@ -145,7 +145,7 @@ export default function SignInWithOTP({ navigation }) {
         );
     };
 
-    const onLoginSucess = (tokenFromAPI) => {
+    const onLoginSuccess = (tokenFromAPI) => {
         const bearerToken = `Bearer ${tokenFromAPI}`;
         dispatch(setToken(tokenFromAPI));
 

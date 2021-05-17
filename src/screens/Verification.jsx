@@ -93,7 +93,7 @@ export default function Verification({ navigation }) {
         </Block>
     );
 
-    const renderDocSecion = () => (
+    const renderDocSection = () => (
         <>
             {renderUploadDocForm(0, 'Ảnh chụp cá nhân')}
             {renderDocImageByType(0, faceUrl)}
@@ -383,7 +383,7 @@ export default function Verification({ navigation }) {
                                     borderWidth={0.5}
                                     borderColor={NowTheme.COLORS.ACTIVE}
                                 />
-                                {renderDocSecion()}
+                                {renderDocSection()}
                             </Block>
                         </Block>
 

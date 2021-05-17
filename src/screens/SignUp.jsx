@@ -44,7 +44,7 @@ export default function SignUp({ navigation }) {
             data,
             {},
             (res) => {
-                onLoginSucess(res.data.data);
+                onLoginSuccess(res.data.data);
             },
             () => {
                 setIsShowSpinner(false);
@@ -57,7 +57,7 @@ export default function SignUp({ navigation }) {
         );
     };
 
-    const onLoginSucess = (tokenFromAPI) => {
+    const onLoginSuccess = (tokenFromAPI) => {
         dispatch(setToken(tokenFromAPI));
         dispatch(setIsSignInOtherDeviceStore(false));
         navigation.navigate(ScreenName.CREATE_ACCOUNT);

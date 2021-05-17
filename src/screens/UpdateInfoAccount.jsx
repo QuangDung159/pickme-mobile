@@ -22,7 +22,7 @@ export default function UpdateInfoAccount(props) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
-    const [reNewPasssword, setReNewPasssword] = useState('');
+    const [reNewPassword, setReNewPassword] = useState('');
     const [isShowFormChangePassword, setIsShowFormChangePassword] = useState(false);
 
     const currentUser = useSelector((state) => state.userReducer.currentUser);
@@ -83,7 +83,7 @@ export default function UpdateInfoAccount(props) {
             return false;
         }
 
-        if (newPassword !== reNewPasssword) {
+        if (newPassword !== reNewPassword) {
             ToastHelpers.renderToast('Mật khẩu mới không giống nhau.', 'error');
             return false;
         }
@@ -162,10 +162,10 @@ export default function UpdateInfoAccount(props) {
                     password
                     keyboardType="number-pad"
                     viewPass
-                    value={reNewPasssword}
+                    value={reNewPassword}
                     color={NowTheme.COLORS.HEADER}
                     onChangeText={
-                        (rePasswordInput) => setReNewPasssword(rePasswordInput)
+                        (rePasswordInput) => setReNewPassword(rePasswordInput)
                     }
                 />
             </Block>
@@ -235,12 +235,12 @@ export default function UpdateInfoAccount(props) {
 
         setIsShowSpinner(true);
         rxUtil(
-            Rx.USER.SBUMIT_CHANGE_PASSWORD,
+            Rx.USER.SUBMIT_CHANGE_PASSWORD,
             'POST',
             {
                 currentPassword,
                 newPassword,
-                confirmPassword: reNewPasssword
+                confirmPassword: reNewPassword
             },
             {
                 Authorization: token
@@ -254,7 +254,7 @@ export default function UpdateInfoAccount(props) {
 
                 setCurrentUser('');
                 setNewPassword('');
-                setReNewPasssword('');
+                setReNewPassword('');
 
                 setIsShowSpinner(false);
             },

@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import { AirbnbRating } from 'react-native-ratings';
 import { useDispatch, useSelector } from 'react-redux';
-import { CardBooking } from '../components/bussinessComponents';
+import { CardBooking } from '../components/businessComponents';
 import { CenterLoader, Input, Line } from '../components/uiComponents';
 import {
     BookingStatus, NowTheme, Rx, ScreenName
@@ -207,7 +207,7 @@ export default function BookingDetail({
 
     const handleShowButtonByStatus = () => {
         // partner confirmed: payment, cancel
-        // customer payemnt: cancel
+        // customer payment: cancel
         // booking is going on: N/A
         // booking done: complete => report/rating
         if (isBookingGoingOn() || booking.status === BookingStatus.CANCEL) return null;
@@ -598,13 +598,7 @@ export default function BookingDetail({
                                 size={NowTheme.SIZES.FONT_H3}
                                 style={styles.subTitle}
                             >
-                                Lorem ipsum dolor, sit amet consectetur
-                                adipisicing elit. Culpa, voluptates in
-                                voluptate vel mollitia unde repellendus f
-                                acere asperiores maxime velit esse sint eos ut minus,
-                                possimus exercitationem. Reiciendis, sapiente quibusdam!
-                                Lorem ipsum dolor, sit amet consectetur
-                                adipisicing elit. Culpa, voluptates
+                                Ghi chú, Ghi chú, Ghi chú, Ghi chú, Ghi chú, Ghi chú, Ghi chú
                             </Text>
 
                             <Block

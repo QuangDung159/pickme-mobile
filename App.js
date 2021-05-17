@@ -10,7 +10,7 @@ import {
 import { MenuProvider } from 'react-native-popup-menu';
 import Toast from 'react-native-toast-message';
 import { Provider } from 'react-redux';
-import { ExpoNotification } from './src/components/bussinessComponents';
+import { ExpoNotification } from './src/components/businessComponents';
 import { IconCustom } from './src/components/uiComponents';
 import { IconFamily, Images, NowTheme } from './src/constants';
 import Main from './src/containers/Main';

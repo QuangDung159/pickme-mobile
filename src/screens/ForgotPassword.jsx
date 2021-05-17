@@ -9,7 +9,7 @@ import {
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Toast from 'react-native-toast-message';
 import { useSelector } from 'react-redux';
-import { ExpoNotification } from '../components/bussinessComponents';
+import { ExpoNotification } from '../components/businessComponents';
 import {
     CenterLoader, IconCustom, Input, NoteText
 } from '../components/uiComponents';
@@ -30,7 +30,7 @@ export default function ForgotPassword({ navigation }) {
     const deviceIdStore = useSelector((state) => state.appConfigReducer.deviceIdStore);
 
     // handler \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
-    const onSubmitForgorPassword = () => {
+    const onSubmitForgotPassword = () => {
         if (!isPasswordMatch()) return;
 
         setIsShowSpinner(true);
@@ -146,7 +146,7 @@ export default function ForgotPassword({ navigation }) {
 
             <Block center>
                 <Button
-                    onPress={() => onSubmitForgorPassword()}
+                    onPress={() => onSubmitForgotPassword()}
                     style={styles.button}
                     shadowless
                 >

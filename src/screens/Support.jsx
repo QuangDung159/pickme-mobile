@@ -72,8 +72,8 @@ export default function Support({ navigation }) {
         );
     };
 
-    const onChangeDesctiption = (desctionInput) => {
-        setBugReportForm({ ...bugReportForm, description: desctionInput });
+    const onChangeDescription = (descriptionInput) => {
+        setBugReportForm({ ...bugReportForm, description: descriptionInput });
     };
 
     const onChangeBugTitle = (titleInput) => {
@@ -390,7 +390,7 @@ export default function Support({ navigation }) {
                     color={NowTheme.COLORS.HEADER}
                     placeholder="Nhập chi tiết lỗi..."
                     value={bugReportForm.description}
-                    onChangeText={(input) => onChangeDesctiption(input)}
+                    onChangeText={(input) => onChangeDescription(input)}
                 />
             </Block>
         </Block>
