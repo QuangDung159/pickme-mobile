@@ -12,32 +12,13 @@ import {
     Home,
     LeaderBoard,
     Message, Notification,
-    Onboarding,
-    Payment, Personal,
+    Onboarding, Personal,
     Profile, Settings, SignIn, SignInWithOTP, SignUp,
     Support, UpdateInfoAccount,
     Verification
 } from '../screens';
 
 const Stack = createStackNavigator();
-
-export const PaymentScreen = () => (
-    <Stack.Screen
-        name={ScreenName.PAYMENT}
-        component={Payment}
-        options={{
-            header: ({ navigation, scene }) => (
-                <Header
-                    title={ScreenTitle.PAYMENT}
-                    options
-                    navigation={navigation}
-                    scene={scene}
-                />
-            ),
-            cardStyle: { backgroundColor: NowTheme.COLORS.BASE }
-        }}
-    />
-);
 
 export const PersonalScreen = () => (
     <Stack.Screen

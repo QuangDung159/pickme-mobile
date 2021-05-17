@@ -1,5 +1,5 @@
 import {
-    SET_CHATING_WITH,
+    SET_CHATTING_WITH,
     SET_DATA_LISTENED,
     SET_LIST_CONVERSATION,
     SET_MESSAGE_LISTENED,
@@ -18,7 +18,7 @@ const initState = {
 const messageReducer = (state = initState, action) => {
     const { type, payload } = action;
     switch (type) {
-        case SET_CHATING_WITH: {
+        case SET_CHATTING_WITH: {
             return { ...state, chattingWith: payload.chattingWith };
         }
         case SET_DATA_LISTENED: {

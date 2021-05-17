@@ -10,7 +10,7 @@ import {
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import ImageView from 'react-native-image-viewing';
 import { useSelector } from 'react-redux';
-import { CardImage } from '../components/bussinessComponents';
+import { CardImage } from '../components/businessComponents';
 import { Button, CenterLoader } from '../components/uiComponents';
 import { NowTheme, Rx, ScreenName } from '../constants';
 import { ToastHelpers } from '../helpers';
@@ -97,7 +97,7 @@ export default function Profile({ route, navigation }) {
         return (
             <>
                 {isShowSpinner ? (
-                    <CenterLoader size="large" />
+                    <CenterLoader />
                 ) : (
                     <>
                         <Block style={{
@@ -120,7 +120,7 @@ export default function Profile({ route, navigation }) {
                                     showsVerticalScrollIndicator={false}
                                 >
                                     <Block>
-                                        <CenterLoader size="small" />
+                                        <CenterLoader />
                                         <Block
                                             style={{
                                                 zIndex: 99

@@ -115,7 +115,7 @@ export default function CardImage({
                         source={{ uri: imageUrl }}
                     />
                 </TouchableWithoutFeedback>
-                <CenterLoader size="large" />
+                <CenterLoader />
             </Block>
         </Block>
     );
