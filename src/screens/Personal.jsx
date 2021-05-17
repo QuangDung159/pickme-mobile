@@ -5,7 +5,7 @@ import React, { useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
-import { BookingList, UserInformation, Wallet } from '../components/bussinessComponents';
+import { BookingList, UserInformation, Wallet } from '../components/businessComponents';
 import { IconCustom } from '../components/uiComponents';
 import {
     IconFamily, NowTheme, ScreenName

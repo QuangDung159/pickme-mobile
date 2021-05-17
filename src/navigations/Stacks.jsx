@@ -176,7 +176,7 @@ const BottomTabMenuStack = () => {
     );
 };
 
-export default function AppStask() {
+export default function AppStack() {
     return (
         <Stack.Navigator mode="card" headerMode="none">
             <Stack.Screen name={ScreenName.ONBOARDING} component={OnboardingStack} />

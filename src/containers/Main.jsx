@@ -13,7 +13,7 @@ import React, { useEffect } from 'react';
 import { AppState } from 'react-native';
 import uuid from 'react-native-uuid';
 import { useDispatch, useSelector } from 'react-redux';
-import { Listener } from '../components/bussinessComponents';
+import { Listener } from '../components/businessComponents';
 import { NowTheme, Rx } from '../constants';
 import Stacks from '../navigations/Stacks';
 import {

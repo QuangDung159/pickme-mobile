@@ -22,7 +22,7 @@ export default function UpdateInfoAccount(props) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
-    const [reNewPasssword, setReNewPasssword] = useState('');
+    const [reNewPassword, setReNewPassword] = useState('');
     const [isShowFormChangePassword, setIsShowFormChangePassword] = useState(false);
 
     const currentUser = useSelector((state) => state.userReducer.currentUser);
@@ -83,7 +83,7 @@ export default function UpdateInfoAccount(props) {
             return false;
         }
 
-        if (newPassword !== reNewPasssword) {
+        if (newPassword !== reNewPassword) {
             ToastHelpers.renderToast('Mật khẩu mới không giống nhau.', 'error');
             return false;
         }
@@ -112,6 +112,7 @@ export default function UpdateInfoAccount(props) {
                     placeholder="Nhập mật khẩu hiện tại..."
                     style={styles.input}
                     password
+                    keyboardType="number-pad"
                     viewPass
                     value={currentPassword}
                     color={NowTheme.COLORS.HEADER}
@@ -134,6 +135,7 @@ export default function UpdateInfoAccount(props) {
                     placeholder="Nhập mật khẩu mới..."
                     style={styles.input}
                     password
+                    keyboardType="number-pad"
                     viewPass
                     value={newPassword}
                     color={NowTheme.COLORS.HEADER}
@@ -158,11 +160,12 @@ export default function UpdateInfoAccount(props) {
                         marginBottom: 0
                     }]}
                     password
+                    keyboardType="number-pad"
                     viewPass
-                    value={reNewPasssword}
+                    value={reNewPassword}
                     color={NowTheme.COLORS.HEADER}
                     onChangeText={
-                        (rePasswordInput) => setReNewPasssword(rePasswordInput)
+                        (rePasswordInput) => setReNewPassword(rePasswordInput)
                     }
                 />
             </Block>
@@ -232,19 +235,18 @@ export default function UpdateInfoAccount(props) {
 
         setIsShowSpinner(true);
         rxUtil(
-            Rx.USER.SBUMIT_CHANGE_PASSWORD,
+            Rx.USER.SUBMIT_CHANGE_PASSWORD,
             'POST',
             {
                 currentPassword,
                 newPassword,
-                confirmPassword: reNewPasssword
+                confirmPassword: reNewPassword
             },
             {
                 Authorization: token
             },
             (res) => {
                 ToastHelpers.renderToast(res.data.message, 'success');
-                setIsShowSpinner(false);
                 setIsShowFormChangePassword(false);
 
                 SecureStore.setItemAsync('password', newPassword)
@@ -252,7 +254,9 @@ export default function UpdateInfoAccount(props) {
 
                 setCurrentUser('');
                 setNewPassword('');
-                setReNewPasssword('');
+                setReNewPassword('');
+
+                setIsShowSpinner(false);
             },
             () => setIsShowSpinner(false),
             () => setIsShowSpinner(false)
@@ -268,7 +272,8 @@ export default function UpdateInfoAccount(props) {
             Authorization: token
         };
 
-        rxUtil(Rx.USER.CURRENT_USER_INFO, 'GET', '', headers,
+        rxUtil(
+            Rx.USER.CURRENT_USER_INFO, 'GET', '', headers,
             (res) => {
                 dispatch(setCurrentUser(res.data.data));
                 setIsShowSpinner(false);
@@ -279,12 +284,9 @@ export default function UpdateInfoAccount(props) {
                 navigation.navigate(ScreenName.PERSONAL);
                 dispatch(setPersonTabActiveIndex(0));
             },
-            () => {
-                setIsShowSpinner(false);
-            },
-            () => {
-                setIsShowSpinner(false);
-            });
+            () => setIsShowSpinner(false),
+            () => setIsShowSpinner(false)
+        );
     };
 
     const onChangeName = (nameInput) => {
@@ -329,9 +331,10 @@ export default function UpdateInfoAccount(props) {
             dob,
             height,
             weight,
-            earningExpected,
             homeTown,
-            interests
+            interests,
+            earningExpected,
+            address
         } = newUser;
 
         if (!validate()) {
@@ -347,7 +350,7 @@ export default function UpdateInfoAccount(props) {
             weight,
             homeTown,
             interests,
-            address: ''
+            address
         };
 
         const headers = {
@@ -366,19 +369,9 @@ export default function UpdateInfoAccount(props) {
             },
             () => {
                 setIsShowSpinner(false);
-
-                ToastHelpers.renderToast(
-                    'Lỗi hệ thống! Vui lòng thử lại.',
-                    'error'
-                );
             },
             () => {
                 setIsShowSpinner(false);
-
-                ToastHelpers.renderToast(
-                    'Lỗi hệ thống! Vui lòng thử lại.',
-                    'error'
-                );
             }
         );
     };
@@ -555,7 +548,7 @@ export default function UpdateInfoAccount(props) {
         return (
             <>
                 {isShowSpinner ? (
-                    <CenterLoader size="large" />
+                    <CenterLoader />
                 ) : (
                     <ScrollView
                         showsVerticalScrollIndicator={false}

@@ -64,7 +64,7 @@ export default function Message({ navigation, route }) {
                     }
                 );
 
-                // check lastest message from another and unread by current user
+                // check latest message from another and unread by current user
 
                 return () => {
                     onBlurScreen;
@@ -107,9 +107,9 @@ export default function Message({ navigation, route }) {
                 toUserId
             }
         } = route;
-        const lastestMessage = listMessage[0];
+        const latestMessage = listMessage[0];
 
-        if (lastestMessage.from !== currentUser.id && !lastestMessage.isRead) {
+        if (latestMessage.from !== currentUser.id && !latestMessage.isRead) {
             if (numberMessageUnread > 0) {
                 dispatch(setNumberMessageUnread(numberMessageUnread - 1));
             }
@@ -229,7 +229,7 @@ export default function Message({ navigation, route }) {
         }, 2000);
     };
 
-    const addLastestMessage = (messagePayload) => {
+    const addLatestMessage = (messagePayload) => {
         const { id } = currentUser;
 
         // eslint-disable-next-line no-param-reassign
@@ -260,13 +260,13 @@ export default function Message({ navigation, route }) {
             token
         );
 
-        const messagePayoad = {
+        const messagePayload = {
             from: '',
             content: messageFromInput,
             createdAt: moment().unix() * 1000
         };
 
-        addLastestMessage(messagePayoad);
+        addLatestMessage(messagePayload);
         setMessageFromInput('');
     };
 
