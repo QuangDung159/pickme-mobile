@@ -252,7 +252,6 @@ export default function UpdateInfoAccount(props) {
                 SecureStore.setItemAsync('password', newPassword)
                     .then(console.log('password :>> ', newPassword));
 
-                setCurrentUser('');
                 setNewPassword('');
                 setReNewPassword('');
 
