@@ -186,8 +186,6 @@ export default function Home({ navigation }) {
     };
 
     const setIntervalToUpdateLastActiveOfUserStatus = () => {
-        const { url } = currentUser;
-
         const intervalUpdateLastActive = setInterval(() => {
             if (token === 'Bearer ') {
                 clearInterval(intervalUpdateLastActive);
@@ -195,7 +193,7 @@ export default function Home({ navigation }) {
 
             const data = {
                 query: GraphQueryString.UPDATE_LAST_ACTIVE,
-                variables: { url }
+                variables: { url: currentUser.url }
             };
 
             socketRequestUtil(
