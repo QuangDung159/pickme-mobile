@@ -2,9 +2,8 @@
 import { Block, Text } from 'galio-framework';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet } from 'react-native';
+import { KeyboardAvoidingView, Platform, StyleSheet } from 'react-native';
 import { FlatList, TouchableWithoutFeedback } from 'react-native-gesture-handler';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useDispatch, useSelector } from 'react-redux';
 import { CenterLoader, IconCustom, Input } from '../components/uiComponents';
 import {
@@ -216,7 +215,7 @@ export default function Message({ navigation, route }) {
         setTimeout(() => {
             fetchListMessage(
                 toUserId,
-                nextPageIndex, 12,
+                nextPageIndex, 15,
                 (data) => {
                     const newListMessage = listMessageFromAPI.concat(
                         data.data.data.messages
@@ -276,63 +275,66 @@ export default function Message({ navigation, route }) {
         }
     } = route;
 
+    const renderInputMessage = () => (
+        <Block
+            row
+            space="between"
+            center
+            style={{
+                width: NowTheme.SIZES.WIDTH_BASE
+            }}
+        >
+            <Input
+                style={{
+                    borderWidth: 0,
+                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                    width: NowTheme.SIZES.WIDTH_BASE * 0.85
+                }}
+                placeholder="Nhập tin nhắn..."
+                value={messageFromInput}
+                onChangeText={(input) => onChangeMessageInput(input)}
+                textInputStyle={{
+                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                    fontSize: 16
+                }}
+            />
+
+            <TouchableWithoutFeedback
+                onPress={() => {
+                    if (messageFromInput !== '') {
+                        triggerSendMessage();
+                    }
+                }}
+                style={{
+                    marginRight: 10
+                }}
+            >
+                <IconCustom
+                    name="send"
+                    family={IconFamily.FEATHER}
+                    size={30}
+                    color={NowTheme.COLORS.ACTIVE}
+                />
+            </TouchableWithoutFeedback>
+        </Block>
+    );
+
     try {
         return (
             <>
                 {isShowLoader ? (
                     <CenterLoader />
                 ) : (
-                    <KeyboardAwareScrollView
-                        contentContainerStyle={{
-                            flex: 1
-                        }}
-                    >
+                    <>
                         {renderListMessage()}
-
-                        <Block
-                            row
-                            space="between"
-                            center
-                            style={{
-                                width: NowTheme.SIZES.WIDTH_BASE
-                            }}
+                        <KeyboardAvoidingView
+                            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                            keyboardVerticalOffset={NowTheme.SIZES.HEIGHT_BASE * 0.11}
                         >
-                            <Input
-                                style={{
-                                    borderWidth: 0,
-                                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                                    width: NowTheme.SIZES.WIDTH_BASE * 0.85
-                                }}
-                                placeholder="Nhập tin nhắn..."
-                                value={messageFromInput}
-                                onChangeText={(input) => onChangeMessageInput(input)}
-                                textInputStyle={{
-                                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                                    fontSize: 16
-                                }}
-                            />
-
-                            <TouchableWithoutFeedback
-                                onPress={() => {
-                                    if (messageFromInput !== '') {
-                                        triggerSendMessage();
-                                    }
-                                }}
-                                style={{
-                                    marginRight: 10
-                                }}
-                            >
-                                <IconCustom
-                                    name="send"
-                                    family={IconFamily.FEATHER}
-                                    size={30}
-                                    color={NowTheme.COLORS.ACTIVE}
-                                />
-                            </TouchableWithoutFeedback>
-                        </Block>
-                    </KeyboardAwareScrollView>
+                            {renderInputMessage()}
+                        </KeyboardAvoidingView>
+                    </>
                 )}
-
             </>
         );
     } catch (exception) {
