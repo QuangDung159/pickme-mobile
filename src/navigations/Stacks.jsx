@@ -115,6 +115,13 @@ const BottomTabMenuStack = () => {
         (state) => state.messageReducer.numberMessageUnread
     );
 
+    let numberMessageUnreadDisplay = 0;
+    if (numberMessageUnread > 99) {
+        numberMessageUnreadDisplay = '99+';
+    } else if (numberMessageUnread > 0) {
+        numberMessageUnreadDisplay = numberMessageUnread;
+    }
+
     const numberNotificationUnread = useSelector(
         (state) => state.notificationReducer.numberNotificationUnread
     );
@@ -162,8 +169,8 @@ const BottomTabMenuStack = () => {
                 name={ScreenName.CONVERSATION_LIST}
                 component={ConversationListStack}
                 options={
-                    numberMessageUnread !== 0
-                        ? { tabBarBadge: numberMessageUnread }
+                    numberMessageUnreadDisplay !== 0
+                        ? { tabBarBadge: numberMessageUnreadDisplay }
                         : {}
                 }
             />
