@@ -86,6 +86,8 @@ export default function Message({ navigation, route }) {
                     }
                 );
             }
+
+            triggerReadAllMessage(toUserId);
         }, [messageListened._id]
     );
 
