@@ -15,6 +15,7 @@ import {
 } from '../constants';
 import { ToastHelpers } from '../helpers';
 import {
+    setCurrentUser,
     setListConversation, setNumberMessageUnread
 } from '../redux/Actions';
 import { rxUtil, socketRequestUtil } from '../utils';
@@ -36,6 +37,7 @@ export default function Home({ navigation }) {
 
     useEffect(
         () => {
+            fetchCurrentUserInfo();
             getListPartner();
             const intervalUpdateLatest = setIntervalToUpdateLastActiveOfUserStatus();
 
@@ -96,6 +98,26 @@ export default function Home({ navigation }) {
             }
         }, [isSignInOtherDeviceStore]
     );
+
+    const fetchCurrentUserInfo = () => {
+        rxUtil(
+            Rx.USER.CURRENT_USER_INFO,
+            'GET',
+            null,
+            {
+                Authorization: token
+            },
+            (res) => {
+                dispatch(setCurrentUser(res.data.data));
+            },
+            () => {
+                setIsShowSpinner(false);
+            },
+            () => {
+                setIsShowSpinner(false);
+            }
+        );
+    };
 
     const getConversationByMessage = (message, listConversationSource) => {
         const index = listConversationSource.findIndex(
@@ -164,8 +186,6 @@ export default function Home({ navigation }) {
     };
 
     const setIntervalToUpdateLastActiveOfUserStatus = () => {
-        const { url } = currentUser;
-
         const intervalUpdateLastActive = setInterval(() => {
             if (token === 'Bearer ') {
                 clearInterval(intervalUpdateLastActive);
@@ -173,7 +193,7 @@ export default function Home({ navigation }) {
 
             const data = {
                 query: GraphQueryString.UPDATE_LAST_ACTIVE,
-                variables: { url }
+                variables: { url: currentUser.url }
             };
 
             socketRequestUtil(
