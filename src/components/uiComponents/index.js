@@ -1,13 +1,15 @@
-import IconCustom from './IconCustom';
-import Input from './Input';
-import Tabs from './Tabs';
+import Button from './Button';
 import CenterLoader from './CenterLoader';
-import Switch from './Switch';
+import IconCustom from './IconCustom';
+import IndicatorVerticalLine from './IndicatorVerticalLine';
+import Input from './Input';
 import Line from './Line';
 import NoteText from './NoteText';
-import Button from './Button';
 import StepIndicator from './StepIndicator';
-import IndicatorVerticalLine from './IndicatorVerticalLine';
+import Switch from './Switch';
+import Tabs from './Tabs';
+import UserInfoItem from './UserInfoItem';
+import UserInfoSection from './UserInfoSection';
 
 export {
     IconCustom, Input, Tabs,
@@ -15,5 +17,7 @@ export {
     Switch,
     Line, NoteText,
     Button, StepIndicator,
-    IndicatorVerticalLine
+    IndicatorVerticalLine,
+    UserInfoItem,
+    UserInfoSection
 };

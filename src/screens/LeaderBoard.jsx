@@ -38,8 +38,8 @@ export default function LeaderBoard({ navigation }) {
             tabLabel: 'Đơn hẹn',
             tabIcon: (
                 <IconCustom
-                    name="clipboard-list"
-                    family={IconFamily.FONT_AWESOME_5}
+                    name="list-alt"
+                    family={IconFamily.FONT_AWESOME}
                     size={NowTheme.SIZES.FONT_H4}
                     color={NowTheme.COLORS.ACTIVE}
                 />
