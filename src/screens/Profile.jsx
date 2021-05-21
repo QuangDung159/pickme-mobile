@@ -11,6 +11,7 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import ImageView from 'react-native-image-viewing';
 import { useSelector } from 'react-redux';
 import { CardImage } from '../components/businessComponents';
+import ProfileInfoRow from '../components/businessComponents/ProfileInfoRow';
 import { Button, CenterLoader } from '../components/uiComponents';
 import { NowTheme, Rx, ScreenName } from '../constants';
 import { ToastHelpers } from '../helpers';
@@ -84,6 +85,146 @@ export default function Profile({ route, navigation }) {
         return listImagePreview;
     };
 
+    const renderSubInfo = () => (
+        <Block style={{
+            marginTop: 30
+        }}
+        >
+            <Block row center style={{ marginBottom: 20 }}>
+                <Text
+                    style={{
+                        color: NowTheme.COLORS.ACTIVE,
+                        fontWeight: 'bold',
+                        fontSize: 25,
+                        fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
+                    }}
+                >
+                    {partnerInfo.fullName}
+                    {' '}
+                </Text>
+            </Block>
+
+            <Block
+                center
+                style={{
+                    width: NowTheme.SIZES.WIDTH_BASE - 40,
+                    paddingBottom: 40,
+                }}
+            >
+                <Text
+                    style={{
+                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                        textAlign: 'center',
+                    }}
+                    size={NowTheme.SIZES.FONT_H2}
+                    color={NowTheme.COLORS.DEFAULT}
+                >
+                    {'"'}
+                    {partnerInfo.description}
+                    {'"'}
+                </Text>
+            </Block>
+
+            <ProfileInfoRow
+                listProfileInfo={
+                    [
+                        {
+                            value: partnerInfo.earningExpected,
+                            label: 'Kim cương/p'
+                        },
+                        {
+                            value: 26,
+                            label: 'Đơn hẹn'
+                        },
+                        {
+                            value: '4.8/5',
+                            label: 'Đánh giá'
+                        },
+                    ]
+                }
+            />
+
+            <ProfileInfoRow
+                listProfileInfo={
+                    [
+                        {
+                            value: `${partnerInfo.height} cm`,
+                            label: 'Chiều cao'
+                        },
+                        {
+                            value: `${partnerInfo.weight} kg`,
+                            label: 'Cân nặng'
+                        },
+                        {
+                            value: moment(partnerInfo.dob).format('YYYY').toString(),
+                            label: 'Năm sinh'
+                        },
+                    ]
+                }
+                style={{
+                    marginTop: 5
+                }}
+            />
+
+            <ProfileInfoRow
+                listProfileInfo={
+                    [
+                        {
+                            value: partnerInfo.interests || 'N/a',
+                            label: 'Sở thích'
+                        },
+                        {
+                            value: partnerInfo.homeTown || 'N/a',
+                            label: 'Quê quán'
+                        },
+                        {
+                            value: '',
+                            label: ''
+                        },
+                    ]
+                }
+                style={{
+                    marginTop: 5
+                }}
+            />
+        </Block>
+    );
+
+    const renderListPostImage = () => (
+        <>
+            {listImage && (
+                <Block>
+                    {listImage.map((imageItem, index) => (
+                        <Block key={`${imageItem.url}`}>
+                            {index === 0 ? (<></>) : (
+                                <Block style={{
+                                    marginVertical: 20
+                                }}
+                                >
+                                    <TouchableWithoutFeedback
+                                        onPress={() => {
+                                            setImageIndex(index);
+                                            setVisible(true);
+                                        }}
+                                    >
+                                        <CardImage
+                                            key={imageItem.imageId}
+                                            imageUrl={imageItem.url}
+                                            user={partnerInfo}
+                                            isShowTitle={false}
+                                            navigation={navigation}
+                                        />
+                                    </TouchableWithoutFeedback>
+                                </Block>
+                            )}
+                        </Block>
+                    ))}
+                    <Block style={{ height: NowTheme.SIZES.HEIGHT_BASE * 0.13 }} />
+                </Block>
+            )}
+        </>
+    );
+
     const listImage = partnerInfo.images;
     const listImagePreview = createListImageForImageView();
 
@@ -148,259 +289,8 @@ export default function Profile({ route, navigation }) {
                                     </Block>
 
                                     <Block style={{ marginTop: -(NowTheme.SIZES.HEIGHT_BASE * 0.4) }}>
-                                        <Block style={{
-                                            marginTop: 30
-                                        }}
-                                        >
-                                            <Block row center style={{ marginBottom: 20 }}>
-                                                <Text
-                                                    style={{
-                                                        color: NowTheme.COLORS.ACTIVE,
-                                                        fontWeight: 'bold',
-                                                        fontSize: 25,
-                                                        fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
-                                                    }}
-                                                >
-                                                    {partnerInfo.fullName}
-                                                    {' '}
-                                                </Text>
-                                            </Block>
-
-                                            <Block
-                                                center
-                                                style={{
-                                                    width: NowTheme.SIZES.WIDTH_BASE - 40,
-                                                    paddingBottom: 40,
-                                                }}
-                                            >
-                                                <Text
-                                                    style={{
-                                                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                                                        textAlign: 'center',
-                                                    }}
-                                                    size={NowTheme.SIZES.FONT_H2}
-                                                    color={NowTheme.COLORS.DEFAULT}
-                                                >
-                                                    {'"'}
-                                                    {partnerInfo.description}
-                                                    {'"'}
-                                                </Text>
-                                            </Block>
-
-                                            <Block style={styles.info}>
-                                                <Block row space="around">
-                                                    <Block
-                                                        middle
-                                                        style={styles.subInfoItemContainer}
-                                                    >
-                                                        <Text
-                                                            size={NowTheme.SIZES.FONT_H2}
-                                                            color={NowTheme.COLORS.DEFAULT}
-                                                            style={styles.subInfoText}
-                                                        >
-                                                            {partnerInfo.earningExpected}
-                                                        </Text>
-                                                        <Text
-                                                            style={{ fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR }}
-                                                            size={NowTheme.SIZES.FONT_H4}
-                                                            color={NowTheme.COLORS.DEFAULT}
-                                                        >
-                                                            Kim cương/p
-                                                        </Text>
-                                                    </Block>
-
-                                                    <Block
-                                                        middle
-                                                        style={styles.subInfoItemContainer}
-                                                    >
-                                                        <Text
-                                                            color={NowTheme.COLORS.DEFAULT}
-                                                            size={NowTheme.SIZES.FONT_H2}
-                                                            style={styles.subInfoText}
-                                                        >
-                                                            26
-                                                        </Text>
-                                                        <Text
-                                                            style={{ fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR }}
-                                                            size={NowTheme.SIZES.FONT_H4}
-                                                            color={NowTheme.COLORS.DEFAULT}
-                                                        >
-                                                            Đơn hẹn
-                                                        </Text>
-                                                    </Block>
-
-                                                    <Block
-                                                        middle
-                                                        style={styles.subInfoItemContainer}
-                                                    >
-                                                        <Text
-                                                            color={NowTheme.COLORS.DEFAULT}
-                                                            size={NowTheme.SIZES.FONT_H2}
-                                                            style={styles.subInfoText}
-                                                        >
-                                                            4.8/5
-                                                        </Text>
-                                                        <Text
-                                                            style={{ fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR }}
-                                                            size={NowTheme.SIZES.FONT_H4}
-                                                            color={NowTheme.COLORS.DEFAULT}
-                                                        >
-                                                            Đánh giá
-                                                        </Text>
-                                                    </Block>
-                                                </Block>
-                                            </Block>
-
-                                            <Block style={[
-                                                styles.info,
-                                                {
-                                                    marginTop: 10
-                                                }
-                                            ]}
-                                            >
-                                                <Block row space="around">
-                                                    <Block
-                                                        middle
-                                                        style={styles.subInfoItemContainer}
-                                                    >
-                                                        <Text
-                                                            size={NowTheme.SIZES.FONT_H2}
-                                                            color={NowTheme.COLORS.DEFAULT}
-                                                            style={styles.subInfoText}
-                                                        >
-                                                            {`${partnerInfo.height} cm`}
-                                                        </Text>
-                                                        <Text
-                                                            style={{ fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR }}
-                                                            size={NowTheme.SIZES.FONT_H4}
-                                                            color={NowTheme.COLORS.DEFAULT}
-                                                        >
-                                                            Chiều cao
-                                                        </Text>
-                                                    </Block>
-
-                                                    <Block
-                                                        middle
-                                                        style={styles.subInfoItemContainer}
-                                                    >
-                                                        <Text
-                                                            color={NowTheme.COLORS.DEFAULT}
-                                                            size={NowTheme.SIZES.FONT_H2}
-                                                            style={styles.subInfoText}
-                                                        >
-                                                            {`${partnerInfo.weight} kg`}
-                                                        </Text>
-                                                        <Text
-                                                            style={{ fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR }}
-                                                            size={NowTheme.SIZES.FONT_H4}
-                                                            color={NowTheme.COLORS.DEFAULT}
-                                                        >
-                                                            Cân nặng
-                                                        </Text>
-                                                    </Block>
-
-                                                    <Block
-                                                        middle
-                                                        style={styles.subInfoItemContainer}
-                                                    >
-                                                        <Text
-                                                            color={NowTheme.COLORS.DEFAULT}
-                                                            size={NowTheme.SIZES.FONT_H2}
-                                                            style={styles.subInfoText}
-                                                        >
-                                                            {moment(partnerInfo.dob).format('YYYY').toString()}
-                                                        </Text>
-                                                        <Text
-                                                            style={{ fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR }}
-                                                            size={NowTheme.SIZES.FONT_H4}
-                                                            color={NowTheme.COLORS.DEFAULT}
-                                                        >
-                                                            Năm sinh
-                                                        </Text>
-                                                    </Block>
-                                                </Block>
-                                            </Block>
-
-                                            <Block style={[
-                                                styles.info,
-                                                {
-                                                    marginTop: 10
-                                                }
-                                            ]}
-                                            >
-                                                <Block row space="around">
-                                                    <Block
-                                                        middle
-                                                        style={styles.subInfoItemContainer}
-                                                    >
-                                                        <Text
-                                                            size={NowTheme.SIZES.FONT_H2}
-                                                            color={NowTheme.COLORS.DEFAULT}
-                                                            style={styles.subInfoText}
-                                                        >
-                                                            {partnerInfo.interests || 'N/A'}
-                                                        </Text>
-                                                        <Text
-                                                            style={{ fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR }}
-                                                            size={NowTheme.SIZES.FONT_H4}
-                                                            color={NowTheme.COLORS.DEFAULT}
-                                                        >
-                                                            Sở thích
-                                                        </Text>
-                                                    </Block>
-
-                                                    <Block
-                                                        middle
-                                                        style={styles.subInfoItemContainer}
-                                                    >
-                                                        <Text
-                                                            color={NowTheme.COLORS.DEFAULT}
-                                                            size={NowTheme.SIZES.FONT_H2}
-                                                            style={styles.subInfoText}
-                                                        >
-                                                            {partnerInfo.homeTown || 'N/A'}
-                                                        </Text>
-                                                        <Text
-                                                            style={{ fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR }}
-                                                            size={NowTheme.SIZES.FONT_H4}
-                                                            color={NowTheme.COLORS.DEFAULT}
-                                                        >
-                                                            Quê quán
-                                                        </Text>
-                                                    </Block>
-                                                </Block>
-                                            </Block>
-                                        </Block>
-                                        {listImage && (
-                                            <Block>
-                                                {listImage.map((imageItem, index) => (
-                                                    <Block key={imageItem.url}>
-                                                        {index === 0 ? (<></>) : (
-                                                            <Block style={{
-                                                                marginVertical: 20
-                                                            }}
-                                                            >
-                                                                <TouchableWithoutFeedback
-                                                                    onPress={() => {
-                                                                        setImageIndex(index);
-                                                                        setVisible(true);
-                                                                    }}
-                                                                >
-                                                                    <CardImage
-                                                                        key={imageItem.imageId}
-                                                                        imageUrl={imageItem.url}
-                                                                        user={partnerInfo}
-                                                                        isShowTitle={false}
-                                                                        navigation={navigation}
-                                                                    />
-                                                                </TouchableWithoutFeedback>
-                                                            </Block>
-                                                        )}
-                                                    </Block>
-                                                ))}
-                                                <Block style={{ height: NowTheme.SIZES.HEIGHT_BASE * 0.13 }} />
-                                            </Block>
-                                        )}
+                                        {renderSubInfo()}
+                                        {renderListPostImage()}
                                     </Block>
                                 </ScrollView>
                             </Block>
@@ -484,12 +374,6 @@ const styles = StyleSheet.create({
         width: NowTheme.SIZES.WIDTH_BASE,
         height: NowTheme.SIZES.HEIGHT_BASE * 0.6
     },
-
-    info: {
-        paddingHorizontal: 10,
-        marginBottom: 20,
-        marginTop: -13
-    },
     nameInfo: {
         marginTop: 35
     },
@@ -511,12 +395,4 @@ const styles = StyleSheet.create({
         zIndex: 2,
         width: NowTheme.SIZES.WIDTH_BASE,
     },
-    subInfoText: {
-        marginBottom: 4,
-        fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
-        color: NowTheme.COLORS.ACTIVE
-    },
-    subInfoItemContainer: {
-        width: NowTheme.SIZES.WIDTH_BASE * 0.3
-    }
 });

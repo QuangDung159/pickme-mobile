@@ -49,8 +49,8 @@ export default function UpdateInfoAccount(props) {
     );
 
     // handler \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
-    const renderListPickerItem = (list) => list.map((item) => (
-        <Picker.Item label={item.label} value={item.value} key={item.value} />
+    const renderListPickerItem = (list) => list.map(({ value, label }) => (
+        <Picker.Item label={label} value={value} key={value} />
     ));
 
     const renderDropdownDOBYear = () => {

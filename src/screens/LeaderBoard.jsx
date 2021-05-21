@@ -202,6 +202,7 @@ export default function LeaderBoard({ navigation }) {
                     justifyContent: 'center',
                     flex: 3
                 }}
+                key={tabLabel}
             >
                 <Text
                     size={12}
