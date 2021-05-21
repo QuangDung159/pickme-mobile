@@ -361,8 +361,8 @@ export default function BookingDetail({
                 }
             ]}
         >
-            {reasonDropdownArr.map((item) => (
-                <Picker.Item value={item.value} label={item.label} key={item.value} />
+            {reasonDropdownArr.map(({ value, label }) => (
+                <Picker.Item value={value} label={label} key={value} />
             ))}
         </Picker>
     );
