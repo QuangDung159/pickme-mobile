@@ -433,7 +433,7 @@ export default function Support({ navigation }) {
                     <Block
                         row
                         style={[{
-                            height: NowTheme.SIZES.HEIGHT_BASE * 0.06
+                            height: NowTheme.SIZES.HEIGHT_BASE * 0.07
                         }]}
                     >
                         {tabs.map((title, index) => renderTopButton(title, index))}

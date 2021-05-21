@@ -6,10 +6,7 @@ import { StyleSheet } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import { BookingList, UserInformation, Wallet } from '../components/businessComponents';
-import { IconCustom } from '../components/uiComponents';
-import {
-    IconFamily, NowTheme, ScreenName
-} from '../constants';
+import { NowTheme, ScreenName } from '../constants';
 import { setPersonTabActiveIndex } from '../redux/Actions';
 
 export default function Personal({ navigation, route }) {
@@ -21,36 +18,12 @@ export default function Personal({ navigation, route }) {
     const tabs = [
         {
             tabLabel: 'Cá nhân',
-            tabIcon: (
-                <IconCustom
-                    name="user-circle-o"
-                    family={IconFamily.FONT_AWESOME}
-                    size={12}
-                    color={NowTheme.COLORS.ACTIVE}
-                />
-            )
         },
         {
             tabLabel: 'Rương kim cương',
-            tabIcon: (
-                <IconCustom
-                    name="treasure-chest"
-                    family={IconFamily.MATERIAL_COMMUNITY_ICONS}
-                    size={NowTheme.SIZES.FONT_H4}
-                    color={NowTheme.COLORS.ACTIVE}
-                />
-            )
         },
         {
             tabLabel: 'Đơn hẹn',
-            tabIcon: (
-                <IconCustom
-                    name="clipboard-list"
-                    family={IconFamily.FONT_AWESOME_5}
-                    size={NowTheme.SIZES.FONT_H4}
-                    color={NowTheme.COLORS.ACTIVE}
-                />
-            )
         }
     ];
 
