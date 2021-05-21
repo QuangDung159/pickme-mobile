@@ -57,8 +57,6 @@ export default function Onboarding({ navigation }) {
                 deviceId: deviceIdStore
             };
 
-            console.log('deviceIdStore :>> ', deviceIdStore);
-
             setIsShowSpinner(true);
             rxUtil(
                 Rx.AUTHENTICATION.LOGIN,
