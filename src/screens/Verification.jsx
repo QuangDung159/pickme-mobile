@@ -10,7 +10,7 @@ import {
 } from '../components/uiComponents';
 import { NowTheme, Rx, ScreenName } from '../constants';
 import { MediaHelpers, ToastHelpers } from '../helpers';
-import { setVerificationStore } from '../redux/Actions';
+import { setCurrentUser, setPersonTabActiveIndex, setVerificationStore } from '../redux/Actions';
 import { rxUtil } from '../utils';
 
 let count = 0;
@@ -34,11 +34,7 @@ export default function Verification({ navigation }) {
 
     useEffect(
         () => {
-            if (!verificationStore) {
-                fetchVerification();
-            } else {
-                fillImageFromAPI(verificationStore.verificationDocuments);
-            }
+            fetchVerification();
         }, []
     );
 
@@ -193,10 +189,22 @@ export default function Verification({ navigation }) {
         );
     };
 
+    const onGetCurrentUserData = () => {
+        rxUtil(
+            Rx.USER.CURRENT_USER_INFO, 'GET', '', headers,
+            (res) => {
+                dispatch(setCurrentUser(res.data.data));
+                navigation.navigate(ScreenName.PERSONAL);
+                dispatch(setPersonTabActiveIndex(0));
+            }
+        );
+    };
+
     const onSubmitUploadList = () => {
         setIsShowSpinner(true);
         setTimeout(() => {
             navigation.goBack();
+            onGetCurrentUserData();
             ToastHelpers.renderToast('Tải lên thành công.', 'success');
         }, 5000);
         uploadDoc(0, faceUrl);
