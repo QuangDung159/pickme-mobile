@@ -73,8 +73,8 @@ export default function CreateAccount(props) {
         MediaHelpers.pickImage(true, [1, 1], (result) => handleUploadImageProfile(result.uri));
     };
 
-    const renderListPickerItem = (list) => list.map((item) => (
-        <Picker.Item label={item.label} value={item.value} key={item.value} />
+    const renderListPickerItem = (list) => list.map(({ label, value }) => (
+        <Picker.Item label={label} value={value} key={value} />
     ));
 
     const renderDropdownDOBYear = () => {

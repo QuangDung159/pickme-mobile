@@ -1,7 +1,7 @@
 import { Block, Button, Text } from 'galio-framework';
 import moment from 'moment';
-import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
 import { NowTheme } from '../../constants';
 import { Line } from '../uiComponents';
 
@@ -119,6 +119,7 @@ export default function CustomCalendar({ selectedDate, onChangeDate }) {
                             <Block
                                 flex
                                 middle
+                                key={item.toString()}
                             >
                                 <Button
                                     onPress={() => { onClickDate(item); }}
@@ -160,6 +161,7 @@ export default function CustomCalendar({ selectedDate, onChangeDate }) {
                             <Block
                                 flex
                                 middle
+                                key={item.toString()}
                             >
                                 <Button
                                     onPress={() => { onClickDate(item); }}

@@ -1,67 +1,54 @@
 import {
     Block, Text
 } from 'galio-framework';
+import PropTypes from 'prop-types';
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import PropTypes from 'prop-types';
-import { IconFamily, NowTheme } from '../../constants';
-import { IconCustom } from '../uiComponents';
+import { NowTheme } from '../../constants';
 
 export default function ProfileInfoItem({
-    iconName,
-    iconFamily,
-    iconSize,
-    iconColor,
-    content,
-    fontSize,
+    label, value
 }) {
     return (
         <Block
-            row
-            style={[styles.container]}
+            middle
+            style={styles.subInfoItemContainer}
         >
-            <IconCustom
-                name={iconName}
-                family={iconFamily}
-                size={iconSize ?? NowTheme.SIZES.BASE * 1.375}
-                color={iconColor ?? NowTheme.COLORS.DEFAULT}
-            />
             <Text
-                size={fontSize}
-                muted
-                style={{
-                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                    zIndex: 2,
-                    lineHeight: 25,
-                    color: NowTheme.COLORS.DEFAULT,
-                    paddingHorizontal: 15
-                }}
+                size={NowTheme.SIZES.FONT_H2}
+                color={NowTheme.COLORS.DEFAULT}
+                style={styles.subInfoText}
             >
-                {content}
+                {value}
+            </Text>
+            <Text
+                style={{ fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR }}
+                size={NowTheme.SIZES.FONT_H4}
+                color={NowTheme.COLORS.DEFAULT}
+            >
+                {label}
             </Text>
         </Block>
     );
 }
 
 ProfileInfoItem.propTypes = {
-    iconName: PropTypes.string,
-    iconFamily: PropTypes.string,
-    iconSize: PropTypes.number,
-    iconColor: PropTypes.string,
-    content: PropTypes.string.isRequired,
-    fontSize: PropTypes.number
+    label: PropTypes.string,
+    value: PropTypes.string,
 };
 
 ProfileInfoItem.defaultProps = {
-    iconName: 'home',
-    iconSize: 24,
-    iconFamily: IconFamily.FONT_AWESOME,
-    iconColor: NowTheme.COLORS.ACTIVE,
-    fontSize: 24
+    label: 'label',
+    value: 'N/a',
 };
 
 const styles = StyleSheet.create({
-    container: {
-        margin: 5
+    subInfoText: {
+        marginBottom: 4,
+        fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
+        color: NowTheme.COLORS.ACTIVE
     },
+    subInfoItemContainer: {
+        width: NowTheme.SIZES.WIDTH_BASE * 0.3
+    }
 });
