@@ -4,6 +4,7 @@ import * as SecureStore from 'expo-secure-store';
 import {
     Block, Button, Text
 } from 'galio-framework';
+import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { Image, RefreshControl, StyleSheet } from 'react-native';
 import { ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler';
@@ -16,9 +17,8 @@ import { MediaHelpers, ToastHelpers } from '../../helpers';
 import { resetStoreSignOut, setCurrentUser } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
 import {
-    CenterLoader, IconCustom, Line
+    CenterLoader, IconCustom, Line, UserInfoSection
 } from '../uiComponents';
-import SubInfoProfile from './SubInfoProfile';
 import VerificationStatusPanel from './VerificationStatusPanel';
 
 export default function UserInformation({ navigation }) {
@@ -191,72 +191,96 @@ export default function UserInformation({ navigation }) {
     };
 
     const renderAvatarPanel = () => (
-        <Block>
-            <Block
-                row
-                center
-                style={{
-                    width: NowTheme.SIZES.WIDTH_BASE * 0.9,
-                    marginVertical: 10,
-                }}
-            >
-                <Block
-                    style={{
-                        width: NowTheme.SIZES.WIDTH_BASE * 0.3
+        <Block
+            style={{
+                width: NowTheme.SIZES.WIDTH_BASE * 0.3,
+                marginTop: 5
+            }}
+        >
+            <Block>
+                <TouchableWithoutFeedback
+                    onPress={() => {
+                        setVisible(true);
+                        setImageIndex(0);
+                        setListImageReview([{ url: currentUser.url }]);
                     }}
                 >
-                    <TouchableWithoutFeedback
-                        onPress={() => {
-                            setVisible(true);
-                            setImageIndex(0);
-                            setListImageReview([{ url: currentUser.url }]);
+                    <CenterLoader />
+                    <Block
+                        style={{
+                            zIndex: 99
                         }}
                     >
-                        <CenterLoader />
                         <Block
-                            style={{
-                                zIndex: 99
-                            }}
+                            style={styles.updateAvatarButton}
                         >
-                            <Block
-                                style={styles.updateAvatarButton}
+                            <TouchableWithoutFeedback
+                                onPress={() => onClickUpdateAvatar()}
                             >
-                                <TouchableWithoutFeedback
-                                    onPress={() => onClickUpdateAvatar()}
-                                >
-                                    <IconCustom
-                                        name="photo-camera"
-                                        family={IconFamily.MATERIAL_ICONS}
-                                        color={NowTheme.COLORS.DEFAULT}
-                                        size={15}
-                                    />
-                                </TouchableWithoutFeedback>
-                            </Block>
-                            {renderAvatar()}
+                                <IconCustom
+                                    name="photo-camera"
+                                    family={IconFamily.MATERIAL_ICONS}
+                                    color={NowTheme.COLORS.DEFAULT}
+                                    size={15}
+                                />
+                            </TouchableWithoutFeedback>
                         </Block>
-                    </TouchableWithoutFeedback>
-                </Block>
+                        {renderAvatar()}
+                    </Block>
+                </TouchableWithoutFeedback>
+            </Block>
+        </Block>
+    );
 
-                <Block
-                    center
-                    style={{
-                        width: NowTheme.SIZES.WIDTH_BASE * 0.6,
-                    }}
-                >
-                    <SubInfoProfile user={currentUser} />
-                </Block>
-            </Block>
-            <Block>
-                <Block
-                    middle
-                >
-                    <Line
-                        borderColor={NowTheme.COLORS.ACTIVE}
-                        borderWidth={0.5}
-                        width={NowTheme.SIZES.WIDTH_BASE * 0.9}
-                    />
-                </Block>
-            </Block>
+    const renderSubInfoPanel = () => (
+        <Block
+            style={{
+                width: NowTheme.SIZES.WIDTH_BASE * 0.6,
+                marginTop: 10
+            }}
+        >
+            <UserInfoSection
+                listUserInfo={
+                    [
+                        {
+                            value: currentUser.walletAmount.toString(),
+                            icon: {
+                                name: 'diamond',
+                                family: IconFamily.SIMPLE_LINE_ICONS,
+                                color: NowTheme.COLORS.ACTIVE,
+                                size: 24
+                            }
+                        },
+                        {
+                            value: moment(currentUser.dob).format('YYYY').toString(),
+                            icon: {
+                                name: 'birthday-cake',
+                                family: IconFamily.FONT_AWESOME,
+                                color: NowTheme.COLORS.ACTIVE,
+                                size: 23
+                            }
+                        },
+                        {
+                            value: currentUser.homeTown,
+                            icon: {
+                                name: 'home',
+                                family: IconFamily.FONT_AWESOME,
+                                color: NowTheme.COLORS.ACTIVE,
+                                size: 28
+                            }
+                        },
+                        {
+                            value: currentUser.interests,
+                            icon: {
+                                name: 'badminton',
+                                family: IconFamily.MATERIAL_COMMUNITY_ICONS,
+                                color: NowTheme.COLORS.ACTIVE,
+                                size: 24
+                            }
+                        },
+                    ]
+                }
+            />
         </Block>
     );
 
@@ -420,7 +444,28 @@ export default function UserInformation({ navigation }) {
                     <>
                         {renderImageView()}
 
-                        {renderAvatarPanel()}
+                        <Block
+                            row
+                            style={{
+                                width: NowTheme.SIZES.WIDTH_BASE * 0.9,
+                                alignSelf: 'center'
+                            }}
+                        >
+                            {renderAvatarPanel()}
+                            {renderSubInfoPanel()}
+                        </Block>
+
+                        <Block>
+                            <Block
+                                middle
+                            >
+                                <Line
+                                    borderColor={NowTheme.COLORS.ACTIVE}
+                                    borderWidth={0.5}
+                                    width={NowTheme.SIZES.WIDTH_BASE * 0.9}
+                                />
+                            </Block>
+                        </Block>
 
                         {renderInfoPanel(currentUser, navigation)}
 

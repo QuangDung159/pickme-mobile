@@ -7,7 +7,6 @@ import ExpoNotification from './ExpoNotification';
 import Listener from './Listener';
 import NotificationItem from './NotificationItem';
 import ProfileInfoItem from './ProfileInfoItem';
-import SubInfoProfile from './SubInfoProfile';
 import UserInformation from './UserInformation';
 import VerificationStatusPanel from './VerificationStatusPanel';
 import Wallet from './Wallet';
@@ -17,12 +16,11 @@ export {
     CustomCalendar,
     NotificationItem,
     CardBooking,
-    SubInfoProfile,
     ProfileInfoItem,
     CardImage,
     ExpoNotification,
     UserInformation,
     Wallet,
     BookingList,
-    VerificationStatusPanel
+    VerificationStatusPanel,
 };

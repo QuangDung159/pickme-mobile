@@ -11,9 +11,12 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import ImageView from 'react-native-image-viewing';
 import { useSelector } from 'react-redux';
 import { CardImage } from '../components/businessComponents';
-import ProfileInfoRow from '../components/businessComponents/ProfileInfoRow';
-import { Button, CenterLoader } from '../components/uiComponents';
-import { NowTheme, Rx, ScreenName } from '../constants';
+import {
+    Button, CenterLoader, UserInfoSection
+} from '../components/uiComponents';
+import {
+    IconFamily, NowTheme, Rx, ScreenName
+} from '../constants';
 import { ToastHelpers } from '../helpers';
 import { rxUtil } from '../utils';
 
@@ -85,110 +88,141 @@ export default function Profile({ route, navigation }) {
         return listImagePreview;
     };
 
-    const renderSubInfo = () => (
-        <Block style={{
-            marginTop: 30
-        }}
-        >
-            <Block row center style={{ marginBottom: 20 }}>
-                <Text
-                    style={{
-                        color: NowTheme.COLORS.ACTIVE,
-                        fontWeight: 'bold',
-                        fontSize: 25,
-                        fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
-                    }}
-                >
-                    {partnerInfo.fullName}
-                    {' '}
-                </Text>
-            </Block>
+    const renderSubInfo = () => {
+        const {
+            description,
+            earningExpected,
+            fullName,
+            height,
+            weight,
+            dob,
+            homeTown,
+            interests
+        } = partnerInfo;
 
-            <Block
-                center
-                style={{
-                    width: NowTheme.SIZES.WIDTH_BASE - 40,
-                    paddingBottom: 40,
-                }}
+        return (
+            <Block style={{
+                marginTop: 30,
+                width: NowTheme.SIZES.WIDTH_BASE * 0.9,
+                alignSelf: 'center'
+            }}
             >
-                <Text
+                <Block row center>
+                    <Text
+                        style={{
+                            color: NowTheme.COLORS.ACTIVE,
+                            fontWeight: 'bold',
+                            fontSize: 25,
+                            fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
+                        }}
+                    >
+                        {fullName}
+                        {' '}
+                    </Text>
+                </Block>
+
+                <Block
+                    center
                     style={{
-                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                        textAlign: 'center',
+                        width: NowTheme.SIZES.WIDTH_BASE - 40,
+                        paddingBottom: 30,
                     }}
-                    size={NowTheme.SIZES.FONT_H2}
-                    color={NowTheme.COLORS.DEFAULT}
                 >
-                    {'"'}
-                    {partnerInfo.description}
-                    {'"'}
-                </Text>
+                    <Text
+                        style={{
+                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                            textAlign: 'center',
+                        }}
+                        size={NowTheme.SIZES.FONT_H2}
+                        color={NowTheme.COLORS.DEFAULT}
+                    >
+                        {'"'}
+                        {description}
+                        {'"'}
+                    </Text>
+                </Block>
+
+                <UserInfoSection
+                    listUserInfo={
+                        [
+                            {
+                                value: earningExpected && `${earningExpected.toString()} kim cương/phút`,
+                                icon: {
+                                    name: 'diamond',
+                                    family: IconFamily.SIMPLE_LINE_ICONS,
+                                    color: NowTheme.COLORS.ACTIVE,
+                                    size: 24
+                                }
+                            },
+                            {
+                                value: '26 đơn hẹn',
+                                icon: {
+                                    name: 'list-alt',
+                                    family: IconFamily.FONT_AWESOME,
+                                    color: NowTheme.COLORS.ACTIVE,
+                                    size: 24
+                                }
+                            },
+                            {
+                                value: '4.8/5 đánh giá',
+                                icon: {
+                                    name: 'star-o',
+                                    family: IconFamily.FONT_AWESOME,
+                                    color: NowTheme.COLORS.ACTIVE,
+                                    size: 28
+                                }
+                            },
+                            {
+                                value: `${height} cm`,
+                                icon: {
+                                    name: 'human-male-height',
+                                    family: IconFamily.MATERIAL_COMMUNITY_ICONS,
+                                    color: NowTheme.COLORS.ACTIVE,
+                                    size: 26
+                                }
+                            },
+                            {
+                                value: `${weight} kg`,
+                                icon: {
+                                    name: 'weight',
+                                    family: IconFamily.FONT_AWESOME_5,
+                                    color: NowTheme.COLORS.ACTIVE,
+                                    size: 24
+                                }
+                            },
+                            {
+                                value: moment(dob).format('YYYY').toString(),
+                                icon: {
+                                    name: 'birthday-cake',
+                                    family: IconFamily.FONT_AWESOME,
+                                    color: NowTheme.COLORS.ACTIVE,
+                                    size: 23
+                                }
+                            },
+                            {
+                                value: homeTown,
+                                icon: {
+                                    name: 'home',
+                                    family: IconFamily.FONT_AWESOME,
+                                    color: NowTheme.COLORS.ACTIVE,
+                                    size: 28
+                                }
+                            },
+                            {
+                                value: interests,
+                                icon: {
+                                    name: 'badminton',
+                                    family: IconFamily.MATERIAL_COMMUNITY_ICONS,
+                                    color: NowTheme.COLORS.ACTIVE,
+                                    size: 24
+                                }
+                            },
+                        ]
+                    }
+                />
             </Block>
-
-            <ProfileInfoRow
-                listProfileInfo={
-                    [
-                        {
-                            value: partnerInfo.earningExpected,
-                            label: 'Kim cương/p'
-                        },
-                        {
-                            value: 26,
-                            label: 'Đơn hẹn'
-                        },
-                        {
-                            value: '4.8/5',
-                            label: 'Đánh giá'
-                        },
-                    ]
-                }
-            />
-
-            <ProfileInfoRow
-                listProfileInfo={
-                    [
-                        {
-                            value: `${partnerInfo.height} cm`,
-                            label: 'Chiều cao'
-                        },
-                        {
-                            value: `${partnerInfo.weight} kg`,
-                            label: 'Cân nặng'
-                        },
-                        {
-                            value: moment(partnerInfo.dob).format('YYYY').toString(),
-                            label: 'Năm sinh'
-                        },
-                    ]
-                }
-                style={{
-                    marginTop: 5
-                }}
-            />
-
-            <ProfileInfoRow
-                listProfileInfo={
-                    [
-                        {
-                            value: partnerInfo.interests || 'N/a',
-                            label: 'Sở thích'
-                        },
-                        {
-                            value: partnerInfo.homeTown || 'N/a',
-                            label: 'Quê quán'
-                        },
-                        {
-                            value: '',
-                            label: ''
-                        },
-                    ]
-                }
-                style={{
-                    marginTop: 5
-                }}
-            />
-        </Block>
-    );
+        );
+    };
 
     const renderListPostImage = () => (
         <>
