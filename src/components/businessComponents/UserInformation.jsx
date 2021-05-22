@@ -198,104 +198,116 @@ export default function UserInformation({ navigation }) {
             }}
         >
             <Block>
-                <TouchableWithoutFeedback
-                    onPress={() => {
-                        setVisible(true);
-                        setImageIndex(0);
-                        setListImageReview([{ url: currentUser.url }]);
+                <CenterLoader />
+                <Block
+                    style={{
+                        zIndex: 99,
                     }}
                 >
-                    <CenterLoader />
-                    <Block
-                        style={{
-                            zIndex: 99
+                    <TouchableWithoutFeedback
+                        onPress={() => {
+                            setVisible(true);
+                            setImageIndex(0);
+                            setListImageReview([{ url: currentUser.url }]);
                         }}
                     >
-                        <Block
-                            style={styles.updateAvatarButton}
-                        >
-                            <TouchableWithoutFeedback
-                                onPress={() => onClickUpdateAvatar()}
-                            >
-                                <IconCustom
-                                    name="photo-camera"
-                                    family={IconFamily.MATERIAL_ICONS}
-                                    color={NowTheme.COLORS.DEFAULT}
-                                    size={15}
-                                />
-                            </TouchableWithoutFeedback>
-                        </Block>
                         {renderAvatar()}
+                    </TouchableWithoutFeedback>
+                    <Block>
+                        <Button
+                            shadowless
+                            style={{
+                                margin: 0,
+                                width: NowTheme.SIZES.WIDTH_BASE * 0.25,
+                            }}
+                            color={NowTheme.COLORS.TRANSPARENT}
+                            textStyle={{
+                                color: NowTheme.COLORS.DEFAULT,
+                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                                fontSize: NowTheme.SIZES.FONT_H3
+                            }}
+                            onPress={() => onClickUpdateAvatar()}
+                        >
+                            Đổi avatar
+                        </Button>
                     </Block>
-                </TouchableWithoutFeedback>
+                </Block>
             </Block>
         </Block>
     );
 
-    const renderSubInfoPanel = () => (
-        <Block
-            style={{
-                width: NowTheme.SIZES.WIDTH_BASE * 0.6,
-                marginTop: 10
-            }}
-        >
-            <UserInfoSection
-                listUserInfo={
-                    [
-                        {
-                            value: currentUser.walletAmount.toString(),
-                            icon: {
-                                name: 'diamond',
-                                family: IconFamily.SIMPLE_LINE_ICONS,
-                                color: NowTheme.COLORS.ACTIVE,
-                                size: 24
-                            }
-                        },
-                        {
-                            value: moment(currentUser.dob).format('YYYY').toString(),
-                            icon: {
-                                name: 'birthday-cake',
-                                family: IconFamily.FONT_AWESOME,
-                                color: NowTheme.COLORS.ACTIVE,
-                                size: 23
-                            }
-                        },
-                        {
-                            value: currentUser.homeTown,
-                            icon: {
-                                name: 'home',
-                                family: IconFamily.FONT_AWESOME,
-                                color: NowTheme.COLORS.ACTIVE,
-                                size: 28
-                            }
-                        },
-                        {
-                            value: currentUser.interests,
-                            icon: {
-                                name: 'badminton',
-                                family: IconFamily.MATERIAL_COMMUNITY_ICONS,
-                                color: NowTheme.COLORS.ACTIVE,
-                                size: 24
-                            }
-                        },
-                    ]
-                }
-            />
-        </Block>
-    );
+    const renderSubInfoPanel = () => {
+        const {
+            walletAmount,
+            dob,
+            homeTown,
+            interests
+        } = currentUser;
+        return (
+            <Block
+                style={{
+                    width: NowTheme.SIZES.WIDTH_BASE * 0.6,
+                    marginVertical: 15,
+                }}
+            >
+                <UserInfoSection
+                    listUserInfo={
+                        [
+                            {
+                                value: walletAmount && walletAmount.toString(),
+                                icon: {
+                                    name: 'diamond',
+                                    family: IconFamily.SIMPLE_LINE_ICONS,
+                                    color: NowTheme.COLORS.ACTIVE,
+                                    size: 24
+                                }
+                            },
+                            {
+                                value: moment(dob).format('YYYY').toString(),
+                                icon: {
+                                    name: 'birthday-cake',
+                                    family: IconFamily.FONT_AWESOME,
+                                    color: NowTheme.COLORS.ACTIVE,
+                                    size: 23
+                                }
+                            },
+                            {
+                                value: homeTown,
+                                icon: {
+                                    name: 'home',
+                                    family: IconFamily.FONT_AWESOME,
+                                    color: NowTheme.COLORS.ACTIVE,
+                                    size: 28
+                                }
+                            },
+                            {
+                                value: interests,
+                                icon: {
+                                    name: 'badminton',
+                                    family: IconFamily.MATERIAL_COMMUNITY_ICONS,
+                                    color: NowTheme.COLORS.ACTIVE,
+                                    size: 24
+                                }
+                            },
+                        ]
+                    }
+                />
+            </Block>
+        );
+    };
 
     const renderInfoPanel = () => (
         <Block>
             <Block
                 style={{
-                    marginVertical: 20,
+                    marginTop: 20,
                 }}
             >
                 <Text
                     center
                     style={{
                         color: NowTheme.COLORS.ACTIVE,
-                        fontSize: 25,
+                        fontSize: NowTheme.SIZES.FONT_H1,
                         fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
                     }}
                 >
@@ -499,10 +511,4 @@ const styles = StyleSheet.create({
         width: NowTheme.SIZES.WIDTH_BASE * 0.25,
         height: NowTheme.SIZES.WIDTH_BASE * 0.25,
     },
-    updateAvatarButton: {
-        position: 'absolute',
-        bottom: 0,
-        right: NowTheme.SIZES.WIDTH_BASE * 0.05,
-        zIndex: 99,
-    }
 });
