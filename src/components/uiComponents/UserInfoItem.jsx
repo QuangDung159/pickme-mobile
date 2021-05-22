@@ -13,7 +13,7 @@ export default function UserInfoItem({
             row
             style={{
                 alignSelf: 'center',
-                marginBottom: 10,
+                marginBottom: 10
             }}
         >
             <Block

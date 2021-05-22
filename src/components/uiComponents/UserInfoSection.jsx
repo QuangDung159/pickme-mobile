@@ -5,7 +5,7 @@ export default function UserInfoSection({ listUserInfo }) {
     return (
         <>
             {listUserInfo.map(({ value, icon }) => (
-                <UserInfoItem value={value} icon={icon} />
+                <UserInfoItem value={value} icon={icon} key={icon.name} />
             ))}
         </>
     );
