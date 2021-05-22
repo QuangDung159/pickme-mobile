@@ -112,7 +112,7 @@ export default function Profile({ route, navigation }) {
                         style={{
                             color: NowTheme.COLORS.ACTIVE,
                             fontWeight: 'bold',
-                            fontSize: 25,
+                            fontSize: NowTheme.SIZES.FONT_H1,
                             fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
                         }}
                     >
