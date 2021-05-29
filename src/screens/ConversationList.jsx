@@ -266,7 +266,6 @@ export default function ConversationList({ navigation }) {
                     </ScrollView>
                 )}
             </>
-
         );
     } catch (exception) {
         console.log('exception :>> ', exception);
