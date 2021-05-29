@@ -17,9 +17,10 @@ export default (
     headers,
     successCallBack = null,
     failCallBack = null,
-    catchCallBack = null
+    catchCallBack = null,
+    domain = API_URL
 ) => {
-    const url = `${API_URL}${endpoint}`;
+    const url = `${domain}${endpoint}`;
     axios({
         url,
         data,
@@ -38,20 +39,9 @@ export default (
         .catch((err) => {
             const {
                 response,
-                // response: {
-                //     data: {
-                //         message
-                //     }
-                // }
             } = err;
             console.log('catch', response);
             generateLogData(endpoint, data, headers, response);
-
-            // if (message && message !== '') {
-            //     ToastHelpers.renderToast(message, 'error');
-            // } else {
-            //     ToastHelpers.renderToast();
-            // }
 
             if (catchCallBack) catchCallBack(response);
         });

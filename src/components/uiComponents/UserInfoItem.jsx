@@ -8,6 +8,11 @@ export default function UserInfoItem({
         name, family, color, size
     }
 }) {
+    let handleValue = value;
+    if (value === null || value === undefined || value.toString() === '') {
+        handleValue = 'N/a';
+    }
+
     return (
         <Block
             row
@@ -37,7 +42,7 @@ export default function UserInfoItem({
                         fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
                     }}
                 >
-                    {value || 'N/a'}
+                    {handleValue}
                 </Text>
             </Block>
         </Block>

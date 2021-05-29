@@ -44,6 +44,7 @@ export default function SignIn({ navigation }) {
             {
                 Authorization: bearerToken,
             },
+            () => {},
             (res) => ToastHelpers.renderToast(res.data.message, 'error'),
             (res) => ToastHelpers.renderToast(res.data.message, 'error')
         );

@@ -21,6 +21,7 @@ export default function Verification({ navigation }) {
     const [frontUrl, setFrontUrl] = useState('');
     const [backUrl, setBackUrl] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
+    const [isShowButtonPanel, setIsShowButtonPanel] = useState(false);
 
     const token = useSelector((state) => state.userReducer.token);
     const verificationStore = useSelector((state) => state.userReducer.verificationStore);
@@ -49,6 +50,12 @@ export default function Verification({ navigation }) {
         }, [isSignInOtherDeviceStore]
     );
 
+    useEffect(
+        () => {
+            triggerShowButtonPanel();
+        }, [verificationStore]
+    );
+
     const fetchVerification = () => {
         rxUtil(
             Rx.USER.GET_VERIFICATION_DETAIL,
@@ -57,11 +64,33 @@ export default function Verification({ navigation }) {
             headers,
             (res) => {
                 dispatch(setVerificationStore(res.data.data));
-                fillImageFromAPI(res.data.data.verificationDocuments);
+                const listDocUrl = res.data.data.verificationDocuments;
+                fillImageFromAPI(listDocUrl);
+                if (listDocUrl.length !== 0) {
+                    setIsShowButtonPanel(true);
+                }
             },
             (res) => ToastHelpers.renderToast(res.data.message, 'error'),
             (res) => ToastHelpers.renderToast(res.data.message, 'error')
         );
+    };
+
+    const triggerShowButtonPanel = () => {
+        if (!verificationStore) {
+            setIsShowButtonPanel(true);
+            return;
+        }
+
+        const listDocUrl = verificationStore.verificationDocuments;
+        if (listDocUrl.length !== 0) {
+            setIsShowButtonPanel(true);
+            return;
+        }
+
+        const { verifyStatus } = verificationStore;
+        if (verifyStatus === 'None' || verifyStatus === 'Reject') {
+            setIsShowButtonPanel(true);
+        }
     };
 
     const renderUploadDocForm = (docType, buttonText) => (
@@ -83,7 +112,7 @@ export default function Verification({ navigation }) {
                         color: NowTheme.COLORS.ACTIVE
                     }}
                     shadowless
-                    disabled={(verificationStore && verificationStore.verifyStatus === 'InProcess')}
+                    // disabled={(verificationStore && verificationStore.verifyStatus === 'InProcess')}
                 >
                     {buttonText}
                 </Button>
@@ -209,51 +238,52 @@ export default function Verification({ navigation }) {
     };
 
     const onSubmitUploadList = () => {
+        if (!(backUrl && faceUrl && frontUrl)) {
+            ToastHelpers.renderToast('Vui lòng chọn đủ hình ảnh');
+            return;
+        }
+
         setIsShowSpinner(true);
         setTimeout(() => {
             navigation.goBack();
             onGetCurrentUserData();
             ToastHelpers.renderToast('Tải lên thành công.', 'success');
         }, 5000);
+
         uploadDoc(0, faceUrl);
         uploadDoc(1, frontUrl);
         uploadDoc(2, backUrl);
     };
 
     const renderButtonPanel = () => {
-        if (verificationStore) {
-            const { verifyStatus } = verificationStore;
+        if (isShowButtonPanel) {
             return (
-                <>
-                    {(verifyStatus === 'None' || verifyStatus === 'Reject') && (
-                        <Block
-                            row
-                            space="between"
-                            style={{
-                                paddingVertical: 10,
-                                marginTop: 10
-                            }}
-                        >
-                            <Button
-                                shadowless
-                                onPress={() => onSubmitUploadList()}
-                                style={styles.button}
-                            >
-                                Xác nhận
-                            </Button>
-                            <Button
-                                shadowless
-                                color={NowTheme.COLORS.DEFAULT}
-                                style={styles.button}
-                                onPress={() => {
-                                    navigation.goBack();
-                                }}
-                            >
-                                Huỷ bỏ
-                            </Button>
-                        </Block>
-                    )}
-                </>
+                <Block
+                    row
+                    space="between"
+                    style={{
+                        paddingVertical: 10,
+                        marginTop: 10
+                    }}
+                >
+                    <Button
+                        shadowless
+                        onPress={() => onSubmitUploadList()}
+                        style={styles.button}
+                    >
+                        Xác nhận
+                    </Button>
+                    <Button
+                        shadowless
+                        color={NowTheme.COLORS.DEFAULT}
+                        style={styles.button}
+                        onPress={() => {
+                            navigation.goBack();
+                        }}
+                    >
+                        Huỷ bỏ
+                    </Button>
+                </Block>
             );
         }
         return null;

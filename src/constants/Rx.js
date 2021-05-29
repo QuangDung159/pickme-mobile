@@ -44,8 +44,8 @@ export default {
         BOOKING_RATE: '/Ratings/Insert'
     },
     PARTNER: {
-        LEADER_BOARD_DIAMOND: '/Users/LeaderBoadDiamon',
-        LEADER_BOARD_BOOKING: '/Users/LeaderBoadBooking',
+        LEADER_BOARD_DIAMOND: '/diamon',
+        LEADER_BOARD_BOOKING: '/booking',
         PARTNER_DETAIL: '/users/PartnerDetail',
         GET_LIST_PARTNER: '/users/Partners',
     },
@@ -64,7 +64,7 @@ export default {
         CREATE_PAYMENT: '/Payments/CreatePayment'
     },
     SYSTEM: {
-        GET_QNA: '/Systems/GetQnAs',
+        GET_QNA: '/faq',
         CREATE_BUG: '/Systems/CreateBug'
     }
 };

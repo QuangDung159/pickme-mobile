@@ -213,7 +213,12 @@ export default function UserInformation({ navigation }) {
                             setListImageReview([{ url: currentUser.url }]);
                         }}
                     >
-                        {renderAvatar()}
+                        <Block style={{
+                            marginTop: 10
+                        }}
+                        >
+                            {renderAvatar()}
+                        </Block>
                     </TouchableWithoutFeedback>
                     <Block>
                         <Button
