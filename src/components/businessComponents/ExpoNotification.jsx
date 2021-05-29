@@ -161,7 +161,6 @@ export default function ExpoNotification() {
                 // set store
                 dispatch(setListNotification(res.data.data));
                 countNumberNotificationUnread(res.data.data);
-                ToastHelpers.renderToast(res.data.message, 'error');
             },
             (res) => ToastHelpers.renderToast(res.data.message, 'error'),
             (res) => ToastHelpers.renderToast(res.data.message, 'error')
