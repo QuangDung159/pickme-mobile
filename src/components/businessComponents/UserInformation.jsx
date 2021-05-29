@@ -65,8 +65,8 @@ export default function UserInformation({ navigation }) {
                 setListImageReview(res.data.data);
                 setRefreshing(false);
             },
-            () => {},
-            () => {}
+            (res) => ToastHelpers.renderToast(res.data.message, 'error'),
+            (res) => ToastHelpers.renderToast(res.data.message, 'error')
         );
     };
 
@@ -136,11 +136,13 @@ export default function UserInformation({ navigation }) {
                 setIsShowSpinner(false);
                 getListImagesByUser();
             },
-            () => {
+            (res) => {
                 setIsShowSpinner(false);
+                ToastHelpers.renderToast(res.data.message, 'error');
             },
-            () => {
+            (res) => {
                 setIsShowSpinner(false);
+                ToastHelpers.renderToast(res.data.message, 'error');
             }
         );
     };

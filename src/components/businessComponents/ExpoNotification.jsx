@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Rx, ScreenName } from '../../constants';
+import { ToastHelpers } from '../../helpers';
 import {
     setCurrentUser,
     setExpoToken,
@@ -96,7 +97,9 @@ export default function ExpoNotification() {
             },
             (res) => {
                 dispatch(setCurrentUser(res.data.data));
-            }
+            },
+            (res) => ToastHelpers.renderToast(res.data.message, 'error'),
+            (res) => ToastHelpers.renderToast(res.data.message, 'error')
         );
     };
 
@@ -110,7 +113,9 @@ export default function ExpoNotification() {
             },
             (res) => {
                 dispatch(setListCashHistoryStore(res.data.data));
-            }
+            },
+            (res) => ToastHelpers.renderToast(res.data.message, 'error'),
+            (res) => ToastHelpers.renderToast(res.data.message, 'error')
         );
     };
 
@@ -127,7 +132,9 @@ export default function ExpoNotification() {
             () => {
                 handleNavigation(navigationId, navigationType);
                 getListNotiFromAPI();
-            }
+            },
+            (res) => ToastHelpers.renderToast(res.data.message, 'error'),
+            (res) => ToastHelpers.renderToast(res.data.message, 'error')
         );
     };
 
@@ -154,7 +161,10 @@ export default function ExpoNotification() {
                 // set store
                 dispatch(setListNotification(res.data.data));
                 countNumberNotificationUnread(res.data.data);
-            }
+                ToastHelpers.renderToast(res.data.message, 'error');
+            },
+            (res) => ToastHelpers.renderToast(res.data.message, 'error'),
+            (res) => ToastHelpers.renderToast(res.data.message, 'error')
         );
     };
 
@@ -170,7 +180,9 @@ export default function ExpoNotification() {
             },
             (res) => {
                 dispatch(setListBookingStore(res.data.data));
-            }
+            },
+            (res) => ToastHelpers.renderToast(res.data.message, 'error'),
+            (res) => ToastHelpers.renderToast(res.data.message, 'error')
         );
     };
 

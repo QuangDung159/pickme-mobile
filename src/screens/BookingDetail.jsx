@@ -93,13 +93,15 @@ export default function BookingDetail({
                 setRefreshing(false);
                 setIsShowSpinner(false);
             },
-            () => {
+            (res) => {
                 setRefreshing(false);
                 setIsShowSpinner(false);
+                ToastHelpers.renderToast(res.data.message, 'error');
             },
-            () => {
+            (res) => {
                 setRefreshing(false);
                 setIsShowSpinner(false);
+                ToastHelpers.renderToast(res.data.message, 'error');
             }
         );
     };
@@ -120,13 +122,13 @@ export default function BookingDetail({
                 dispatch(setPersonTabActiveIndex(2));
                 ToastHelpers.renderToast(res.data.message, 'success');
             },
-            () => {
+            (res) => {
                 setIsShowSpinner(false);
-                ToastHelpers.renderToast();
+                ToastHelpers.renderToast(res.data.message, 'error');
             },
-            (errMessage) => {
+            (res) => {
                 setIsShowSpinner(false);
-                ToastHelpers.renderToast(errMessage, 'error');
+                ToastHelpers.renderToast(res.data.message, 'error');
             }
         );
     };
@@ -149,12 +151,13 @@ export default function BookingDetail({
                 dispatch(setPersonTabActiveIndex(2));
                 setIsShowSpinner(false);
             },
-            () => {
+            (res) => {
                 ToastHelpers.renderToast();
                 setIsShowSpinner(false);
+                ToastHelpers.renderToast(res.data.message, 'error');
             },
-            (errMessage) => {
-                ToastHelpers.renderToast(errMessage, 'error');
+            (res) => {
+                ToastHelpers.renderToast(res, 'error');
                 setIsShowSpinner(false);
             }
         );
@@ -171,13 +174,9 @@ export default function BookingDetail({
             {
                 Authorization: token
             },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'success');
-            },
-            () => {},
-            (catchRes) => {
-                ToastHelpers.renderToast(catchRes);
-            }
+            (res) => ToastHelpers.renderToast(res.data.message, 'success'),
+            (res) => ToastHelpers.renderToast(res.data.message, 'error'),
+            (res) => ToastHelpers.renderToast(res.data.message, 'error')
         );
     };
 
@@ -253,12 +252,13 @@ export default function BookingDetail({
                 dispatch(setPersonTabActiveIndex(2));
                 ToastHelpers.renderToast(res.message || 'Thao tác thành công.', 'success');
             },
-            () => {
+            (res) => {
                 ToastHelpers.renderToast();
                 setIsShowSpinner(false);
+                ToastHelpers.renderToast(res.data.message, 'error');
             },
-            (errMessage) => {
-                ToastHelpers.renderToast(errMessage || 'Lỗi hệ thống, vui lòng thử lại.', 'error');
+            (res) => {
+                ToastHelpers.renderToast(res.data.message, 'error');
                 setIsShowSpinner(false);
             }
         );

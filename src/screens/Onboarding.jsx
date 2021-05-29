@@ -12,6 +12,7 @@ import { CenterLoader } from '../components/uiComponents';
 import {
     Images, NowTheme, Rx, ScreenName, Utils
 } from '../constants';
+import { ToastHelpers } from '../helpers';
 import { setIsSignInOtherDeviceStore, setNavigation, setToken } from '../redux/Actions';
 import { rxUtil } from '../utils';
 
@@ -79,8 +80,14 @@ export default function Onboarding({ navigation }) {
                         });
                     }
                 },
-                () => setIsShowSpinner(false),
-                () => setIsShowSpinner(false)
+                (res) => {
+                    setIsShowSpinner(false);
+                    ToastHelpers.renderToast(res.data.message, 'error');
+                },
+                (res) => {
+                    setIsShowSpinner(false);
+                    ToastHelpers.renderToast(res.data.message, 'error');
+                }
             );
         }
     };

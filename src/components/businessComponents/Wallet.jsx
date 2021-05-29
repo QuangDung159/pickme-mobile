@@ -1,7 +1,7 @@
 import { Block, Button, Text } from 'galio-framework';
 import React, { useEffect, useState } from 'react';
 import { RefreshControl } from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
+import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     IconFamily, NowTheme, Rx, ScreenName
@@ -209,13 +209,15 @@ export default function Wallet({ navigation, route }) {
                 setIsShowSpinner(false);
                 setRefreshing(false);
             },
-            () => {
+            (res) => {
                 setIsShowSpinner(false);
                 setRefreshing(false);
+                ToastHelpers.renderToast(res.data.message, 'error');
             },
-            () => {
+            (res) => {
                 setIsShowSpinner(false);
                 setRefreshing(false);
+                ToastHelpers.renderToast(res.data.message, 'error');
             }
         );
     };
@@ -243,22 +245,31 @@ export default function Wallet({ navigation, route }) {
         }
 
         return (
-            <Block
-                style={{
-                    alignItems: 'center',
-                    marginVertical: 15
-                }}
+            <ScrollView
+                refreshControl={(
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={() => onRefresh()}
+                    />
+                )}
             >
-                <Text
-                    color={NowTheme.COLORS.SWITCH_OFF}
+                <Block
                     style={{
-                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                        alignItems: 'center',
+                        marginVertical: 15
                     }}
-                    size={NowTheme.SIZES.FONT_H2}
                 >
-                    Danh sách trống
-                </Text>
-            </Block>
+                    <Text
+                        color={NowTheme.COLORS.SWITCH_OFF}
+                        style={{
+                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                        }}
+                        size={NowTheme.SIZES.FONT_H2}
+                    >
+                        Danh sách trống
+                    </Text>
+                </Block>
+            </ScrollView>
         );
     };
 

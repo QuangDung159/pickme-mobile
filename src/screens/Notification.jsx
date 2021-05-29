@@ -1,7 +1,7 @@
-import { Block } from 'galio-framework';
+import { Block, Text } from 'galio-framework';
 import React, { useEffect, useState } from 'react';
 import { RefreshControl } from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
+import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import { NotificationItem } from '../components/businessComponents';
 import { CenterLoader } from '../components/uiComponents';
@@ -65,11 +65,13 @@ export default function Notification({ navigation }) {
                 dispatch(setListNotification(res.data.data));
                 countNumberNotificationUnread(res.data.data);
             },
-            () => {
+            (res) => {
+                ToastHelpers.renderToast(res.data.message, 'error');
                 setIsShowSpinner(false);
                 setRefreshing(false);
             },
-            () => {
+            (res) => {
+                ToastHelpers.renderToast(res.data.message, 'error');
                 setIsShowSpinner(false);
                 setRefreshing(false);
             }
@@ -116,7 +118,36 @@ export default function Notification({ navigation }) {
                     <Block
                         flex
                     >
-                        {renderListNoti()}
+                        {listNotification && listNotification.length !== 0 ? (
+                            renderListNoti()
+                        ) : (
+                            <ScrollView
+                                refreshControl={(
+                                    <RefreshControl
+                                        refreshing={refreshing}
+                                        onRefresh={() => onRefresh()}
+                                    />
+                                )}
+                            >
+                                <Block
+                                    style={{
+                                        alignItems: 'center',
+                                        marginVertical: 15
+                                    }}
+                                >
+                                    <Text
+                                        color={NowTheme.COLORS.SWITCH_OFF}
+                                        style={{
+                                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                                        }}
+                                        size={NowTheme.SIZES.FONT_H2}
+                                    >
+                                        Danh sách trống
+                                    </Text>
+                                </Block>
+                            </ScrollView>
+                        )}
+
                     </Block>
                 )}
             </>

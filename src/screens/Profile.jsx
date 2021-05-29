@@ -64,10 +64,12 @@ export default function Profile({ route, navigation }) {
                 setIsShowSpinner(false);
                 setPartnerInfo(res.data.data);
             },
-            () => {
+            (res) => {
+                ToastHelpers.renderToast(res.data.message, 'error');
                 setIsShowSpinner(false);
             },
-            () => {
+            (res) => {
+                ToastHelpers.renderToast(res.data.message, 'error');
                 setIsShowSpinner(false);
             }
         );
