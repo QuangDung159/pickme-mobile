@@ -14,6 +14,7 @@ import { ExpoNotification } from './src/components/businessComponents';
 import { IconCustom } from './src/components/uiComponents';
 import { IconFamily, Images, NowTheme } from './src/constants';
 import Main from './src/containers/Main';
+import { ToastHelpers } from './src/helpers';
 import store from './src/redux/Store';
 
 // images caching
