@@ -257,8 +257,14 @@ export default function UpdateInfoAccount(props) {
 
                 setIsShowSpinner(false);
             },
-            () => setIsShowSpinner(false),
-            () => setIsShowSpinner(false)
+            (res) => {
+                setIsShowSpinner(false);
+                ToastHelpers.renderToast(res.data.message, 'error');
+            },
+            (res) => {
+                setIsShowSpinner(false);
+                ToastHelpers.renderToast(res.data.message, 'error');
+            }
         );
     };
 
@@ -283,8 +289,14 @@ export default function UpdateInfoAccount(props) {
                 navigation.navigate(ScreenName.PERSONAL);
                 dispatch(setPersonTabActiveIndex(0));
             },
-            () => setIsShowSpinner(false),
-            () => setIsShowSpinner(false)
+            (res) => {
+                setIsShowSpinner(false);
+                ToastHelpers.renderToast(res.data.message, 'error');
+            },
+            (res) => {
+                setIsShowSpinner(false);
+                ToastHelpers.renderToast(res.data.message, 'error');
+            }
         );
     };
 
@@ -366,10 +378,12 @@ export default function UpdateInfoAccount(props) {
             () => {
                 onGetCurrentUserData();
             },
-            () => {
+            (res) => {
+                ToastHelpers.renderToast(res.data.message, 'error');
                 setIsShowSpinner(false);
             },
-            () => {
+            (res) => {
+                ToastHelpers.renderToast(res.data.message, 'error');
                 setIsShowSpinner(false);
             }
         );

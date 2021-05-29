@@ -1,3 +1,4 @@
+import * as SecureStore from 'expo-secure-store';
 import {
     Block, NavBar, Text, theme
 } from 'galio-framework';
@@ -5,11 +6,11 @@ import React from 'react';
 import { Platform, StyleSheet, TouchableOpacity } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
-import * as SecureStore from 'expo-secure-store';
 import { IconCustom, Input, Tabs } from '../components/uiComponents';
 import {
     IconFamily, NowTheme, Rx, ScreenName
 } from '../constants';
+import { ToastHelpers } from '../helpers';
 import { resetStoreSignOut, setListNotification, setNumberNotificationUnread } from '../redux/Actions';
 import { rxUtil } from '../utils';
 
@@ -65,7 +66,9 @@ export default function Header({
                 // set store
                 dispatch(setListNotification(res.data.data));
                 countNumberNotificationUnread(res.data.data);
-            }
+            },
+            (res) => ToastHelpers.renderToast(res.data.message, 'error'),
+            (res) => ToastHelpers.renderToast(res.data.message, 'error')
         );
     };
 
@@ -80,8 +83,8 @@ export default function Header({
             () => {
                 getListNotiFromAPI();
             },
-            () => {},
-            () => {}
+            (res) => ToastHelpers.renderToast(res.data.message, 'error'),
+            (res) => ToastHelpers.renderToast(res.data.message, 'error')
         );
     };
 

@@ -15,6 +15,7 @@ import uuid from 'react-native-uuid';
 import { useDispatch, useSelector } from 'react-redux';
 import { Listener } from '../components/businessComponents';
 import { NowTheme, Rx } from '../constants';
+import { ToastHelpers } from '../helpers';
 import Stacks from '../navigations/Stacks';
 import {
     setDeviceIdStore,
@@ -60,7 +61,9 @@ export default function Main() {
                     dispatch(setListNotification(res.data.data));
                     countNumberNotificationUnread(res.data.data);
                 }
-            }
+            },
+            (res) => ToastHelpers.renderToast(res.data.message, 'error'),
+            (res) => ToastHelpers.renderToast(res.data.message, 'error')
         );
     };
 
@@ -165,7 +168,9 @@ export default function Main() {
                     if (status === 201) {
                         dispatch(setIsSignInOtherDeviceStore(true));
                     }
-                }
+                },
+                (res) => ToastHelpers.renderToast(res.data.message, 'error'),
+                (res) => ToastHelpers.renderToast(res.data.message, 'error')
             );
         }
     };

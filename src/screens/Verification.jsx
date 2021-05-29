@@ -58,7 +58,9 @@ export default function Verification({ navigation }) {
             (res) => {
                 dispatch(setVerificationStore(res.data.data));
                 fillImageFromAPI(res.data.data.verificationDocuments);
-            }
+            },
+            (res) => ToastHelpers.renderToast(res.data.message, 'error'),
+            (res) => ToastHelpers.renderToast(res.data.message, 'error')
         );
     };
 
@@ -170,7 +172,10 @@ export default function Verification({ navigation }) {
             Rx.USER.SUBMIT_VERIFICATION,
             'POST',
             null,
-            headers
+            headers,
+            () => {},
+            (res) => ToastHelpers.renderToast(res.data.message, 'error'),
+            (res) => ToastHelpers.renderToast(res.data.message, 'error')
         );
     };
 
@@ -196,7 +201,10 @@ export default function Verification({ navigation }) {
                 dispatch(setCurrentUser(res.data.data));
                 navigation.navigate(ScreenName.PERSONAL);
                 dispatch(setPersonTabActiveIndex(0));
-            }
+            },
+            () => {},
+            (res) => ToastHelpers.renderToast(res.data.message, 'error'),
+            (res) => ToastHelpers.renderToast(res.data.message, 'error')
         );
     };
 

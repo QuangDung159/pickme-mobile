@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import Toast from 'react-native-toast-message';
 import { useDispatch, useSelector } from 'react-redux';
 import { ExpoNotification } from '../components/businessComponents';
 import { CenterLoader, Input } from '../components/uiComponents';
@@ -24,7 +23,7 @@ import {
 import { rxUtil } from '../utils';
 
 export default function SignIn({ navigation }) {
-    const [phoneNumber, setPhoneNumber] = useState('huyvd');
+    const [phoneNumber, setPhoneNumber] = useState('0933522613');
     const [password, setPassword] = useState('');
     const [isShowSpinner, setIsShowSpinner] = useState(false);
     const [deviceIdToSend, setDeviceIdToSend] = useState('');
@@ -44,7 +43,9 @@ export default function SignIn({ navigation }) {
             },
             {
                 Authorization: bearerToken,
-            }
+            },
+            (res) => ToastHelpers.renderToast(res.data.message, 'error'),
+            (res) => ToastHelpers.renderToast(res.data.message, 'error')
         );
     };
 
@@ -65,19 +66,13 @@ export default function SignIn({ navigation }) {
                 (res) => {
                     onLoginSuccess(res);
                 },
-                () => {
+                (res) => {
+                    ToastHelpers.renderToast(res.data.message, 'error');
                     setIsShowSpinner(false);
-                    Toast.show({
-                        type: 'error',
-                        text1: 'Lỗi hệ thống! Vui lòng thử lại.'
-                    });
                 },
-                () => {
+                (res) => {
+                    ToastHelpers.renderToast(res.data.message, 'error');
                     setIsShowSpinner(false);
-                    Toast.show({
-                        type: 'error',
-                        text1: 'Lỗi hệ thống! Vui lòng thử lại.'
-                    });
                 }
             );
         }
