@@ -17,9 +17,10 @@ export default (
     headers,
     successCallBack = null,
     failCallBack = null,
-    catchCallBack = null
+    catchCallBack = null,
+    domain = API_URL
 ) => {
-    const url = `${API_URL}${endpoint}`;
+    const url = `${domain}${endpoint}`;
     axios({
         url,
         data,

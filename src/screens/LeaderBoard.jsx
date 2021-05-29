@@ -1,5 +1,5 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
-import { NO_AVATAR_URL } from '@env';
+import { NO_AVATAR_URL, PICKME_INFO_URL } from '@env';
 import { Block, Text } from 'galio-framework';
 import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet } from 'react-native';
@@ -18,7 +18,6 @@ export default function LeaderBoard({ navigation }) {
     const [listGeneral, setListGeneral] = useState({});
 
     const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
-
     const token = useSelector((state) => state.userReducer.token);
 
     const tabs = [
@@ -28,7 +27,7 @@ export default function LeaderBoard({ navigation }) {
                 <IconCustom
                     name="diamond"
                     family={IconFamily.SIMPLE_LINE_ICONS}
-                    size={12}
+                    size={16}
                     color={NowTheme.COLORS.ACTIVE}
                 />
             ),
@@ -40,7 +39,7 @@ export default function LeaderBoard({ navigation }) {
                 <IconCustom
                     name="list-alt"
                     family={IconFamily.FONT_AWESOME}
-                    size={NowTheme.SIZES.FONT_H4}
+                    size={16}
                     color={NowTheme.COLORS.ACTIVE}
                 />
             ),
@@ -80,7 +79,7 @@ export default function LeaderBoard({ navigation }) {
             },
             (res) => {
                 setIsShowSpinner(false);
-                setListGeneral((prevState) => ({ ...prevState, [index]: res.data.data }));
+                setListGeneral((prevState) => ({ ...prevState, [index]: res.data }));
             },
             (res) => {
                 ToastHelpers.renderToast(res.data.message, 'error');
@@ -89,7 +88,8 @@ export default function LeaderBoard({ navigation }) {
             (res) => {
                 ToastHelpers.renderToast(res.data.message, 'error');
                 setIsShowSpinner(false);
-            }
+            },
+            PICKME_INFO_URL
         );
     };
 
@@ -161,7 +161,7 @@ export default function LeaderBoard({ navigation }) {
                             >
                                 <Text
                                     color={NowTheme.COLORS.ACTIVE}
-                                    size={16}
+                                    size={NowTheme.SIZES.FONT_H3}
                                     fontFamily={NowTheme.FONT.MONTSERRAT_REGULAR}
                                 >
                                     {leaderBoardItem.fullName}
@@ -179,7 +179,7 @@ export default function LeaderBoard({ navigation }) {
                                     size={16}
                                     fontFamily={NowTheme.FONT.MONTSERRAT_REGULAR}
                                 >
-                                    {leaderBoardItem.achieveValue}
+                                    {leaderBoardItem.value}
                                     {' '}
                                     {tabs[tabActiveIndex].tabIcon}
                                 </Text>
@@ -222,19 +222,13 @@ export default function LeaderBoard({ navigation }) {
             <Text
                 color={NowTheme.COLORS.ACTIVE}
                 size={NowTheme.SIZES.FONT_H2}
-                style={[
-                    styles.titleBold,
-                    { marginRight: 5 }
-                ]}
+                style={{
+                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
+                }}
             >
                 {achieveValue}
-            </Text>
-            <Text
-                style={{ fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR }}
-                size={NowTheme.SIZES.FONT_H2}
-                color={NowTheme.COLORS.DEFAULT}
-            >
-                {tabs[tabActiveIndex].tabLabel}
+                {' '}
+                {tabs[tabActiveIndex].tabIcon}
             </Text>
         </Block>
     );
@@ -248,7 +242,7 @@ export default function LeaderBoard({ navigation }) {
         const topOnePartner = listGeneral[tabActiveIndex][0];
         const {
             url,
-            achieveValue,
+            value,
             fullName
         } = topOnePartner;
 
@@ -311,15 +305,17 @@ export default function LeaderBoard({ navigation }) {
                         }}
                     >
                         <Text
-                            style={styles.titleBold}
-                            size={20}
+                            style={{
+                                fontFamily: NowTheme.FONT.MONTSERRAT_BOLD
+                            }}
+                            size={NowTheme.SIZES.FONT_H2}
                             color={NowTheme.COLORS.ACTIVE}
                         >
                             {fullName}
                         </Text>
                     </Block>
                     <Block>
-                        {renderAchieveValueTopPanel(achieveValue)}
+                        {renderAchieveValueTopPanel(value)}
                     </Block>
                 </Block>
             </Block>
@@ -329,37 +325,36 @@ export default function LeaderBoard({ navigation }) {
     try {
         return (
             <>
-                <Block
-                    style={[{
-                        height: NowTheme.SIZES.HEIGHT_BASE * 0.4,
-                        alignItems: 'center',
-                    }, styles.shadow]}
-                >
-                    <Block
-                        row
-                        style={[{
-                            marginBottom: 20,
-                            height: NowTheme.SIZES.HEIGHT_BASE * 0.07
-                        }]}
-                    >
-                        {tabs.map((tab, index) => renderTopButton(tab, index))}
-                    </Block>
-
-                    {renderTopPanel()}
-                </Block>
                 {isShowSpinner ? (
-                    <Block
-                        style={styles.centerLoaderContainer}
-                    >
-                        <CenterLoader />
-                    </Block>
+                    <CenterLoader />
                 ) : (
-                    <FlatList
-                        data={listGeneral[tabActiveIndex]}
-                        keyExtractor={(item) => item.userId}
-                        renderItem={({ item, index }) => renderLeaderBoardItem(item, index)}
-                    />
+                    <>
+                        <Block
+                            style={[{
+                                height: NowTheme.SIZES.HEIGHT_BASE * 0.4,
+                                alignItems: 'center',
+                            }, styles.shadow]}
+                        >
+                            <Block
+                                row
+                                style={[{
+                                    marginBottom: 20,
+                                    height: NowTheme.SIZES.HEIGHT_BASE * 0.07
+                                }]}
+                            >
+                                {tabs.map((tab, index) => renderTopButton(tab, index))}
+                            </Block>
+
+                            {renderTopPanel()}
+                        </Block>
+                        <FlatList
+                            data={listGeneral[tabActiveIndex]}
+                            keyExtractor={(item) => item.userId}
+                            renderItem={({ item, index }) => renderLeaderBoardItem(item, index)}
+                        />
+                    </>
                 )}
+
             </>
         );
     } catch (exception) {

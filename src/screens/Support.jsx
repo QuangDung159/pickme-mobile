@@ -1,3 +1,5 @@
+/* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
+import { PICKME_INFO_URL } from '@env';
 import {
     Block, Button, Input, Text
 } from 'galio-framework';
@@ -70,7 +72,8 @@ export default function Support({ navigation }) {
             (res) => {
                 ToastHelpers.renderToast(res.data.message, 'error');
                 setIsShowSpinner(false);
-            }
+            },
+            PICKME_INFO_URL
         );
     };
 
@@ -109,7 +112,8 @@ export default function Support({ navigation }) {
             (res) => {
                 ToastHelpers.renderToast(res.data.message, 'error');
                 setIsShowSpinner(false);
-            }
+            },
+            PICKME_INFO_URL
         );
     };
 
@@ -158,7 +162,8 @@ export default function Support({ navigation }) {
                 setImage();
             },
             (res) => ToastHelpers.renderToast(res.data.message, 'error'),
-            (res) => ToastHelpers.renderToast(res.data.message, 'error')
+            (res) => ToastHelpers.renderToast(res.data.message, 'error'),
+            PICKME_INFO_URL
         );
     };
 
