@@ -100,7 +100,9 @@ export default function CreateBooking({ route, navigation }) {
                         dispatch(setListBookingLocation(listLocationFromAPI));
                         setLocationActive(listLocationFromAPI[0]);
                     }
-                }
+                },
+                (res) => ToastHelpers.renderToast(res.data.message, 'error'),
+                (res) => ToastHelpers.renderToast(res.data.message, 'error')
             );
         }
     };
@@ -126,11 +128,13 @@ export default function CreateBooking({ route, navigation }) {
                 setBusyCalendar(res.data.data);
                 setIsShowSpinner(false);
             },
-            () => {
+            (res) => {
                 setIsShowSpinner(false);
+                ToastHelpers.renderToast(res.data.message, 'error');
             },
-            () => {
+            (res) => {
                 setIsShowSpinner(false);
+                ToastHelpers.renderToast(res.data.message, 'error');
             }
         );
     };
@@ -174,13 +178,14 @@ export default function CreateBooking({ route, navigation }) {
                 });
                 dispatch(setPersonTabActiveIndex(2));
             },
-            () => {
+            (res) => {
                 setIsShowSpinner(false);
                 ToastHelpers.renderToast();
+                ToastHelpers.renderToast(res.data.message, 'error');
             },
-            (errResponse) => {
+            (res) => {
                 setIsShowSpinner(false);
-                ToastHelpers.renderToast(errResponse, 'error');
+                ToastHelpers.renderToast(res.data.message, 'error');
             }
         );
     };
@@ -522,7 +527,7 @@ export default function CreateBooking({ route, navigation }) {
             [
                 {
                     text: 'Tiếp tục đặt',
-                    onPress: () => {},
+                    onPress: (res) => ToastHelpers.renderToast(res.data.message, 'error'),
                     style: 'cancel'
                 },
                 {

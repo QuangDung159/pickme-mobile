@@ -8,6 +8,10 @@ import { NowTheme } from '../../constants';
 export default function ProfileInfoItem({
     label, value
 }) {
+    let handleValue = value;
+    if (value === null || value === undefined || value.toString() === '') {
+        handleValue = 'N/a';
+    }
     return (
         <Block
             style={{
@@ -30,7 +34,7 @@ export default function ProfileInfoItem({
                     fontFamily: NowTheme.FONT.MONTSERRAT_BOLD
                 }}
             >
-                {value}
+                {handleValue}
             </Text>
         </Block>
     );

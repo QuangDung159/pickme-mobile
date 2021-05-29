@@ -63,10 +63,12 @@ export default function Support({ navigation }) {
                 setListQAN(res.data.data);
                 setIsShowSpinner(false);
             },
-            () => {
+            (res) => {
+                ToastHelpers.renderToast(res.data.message, 'error');
                 setIsShowSpinner(false);
             },
-            () => {
+            (res) => {
+                ToastHelpers.renderToast(res.data.message, 'error');
                 setIsShowSpinner(false);
             }
         );
@@ -100,10 +102,12 @@ export default function Support({ navigation }) {
                 setImage();
                 setIsShowSpinner(false);
             },
-            () => {
+            (res) => {
+                ToastHelpers.renderToast(res.data.message, 'error');
                 setIsShowSpinner(false);
             },
-            () => {
+            (res) => {
+                ToastHelpers.renderToast(res.data.message, 'error');
                 setIsShowSpinner(false);
             }
         );
@@ -153,8 +157,8 @@ export default function Support({ navigation }) {
                 setImageId('');
                 setImage();
             },
-            () => {},
-            () => {}
+            (res) => ToastHelpers.renderToast(res.data.message, 'error'),
+            (res) => ToastHelpers.renderToast(res.data.message, 'error')
         );
     };
 

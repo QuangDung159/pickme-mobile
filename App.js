@@ -82,7 +82,7 @@ const toastConfig = {
             </Text>
         </Block>
     ),
-    info: () => {},
+    info: (res) => ToastHelpers.renderToast(res.data.message, 'error'),
     any_custom_type: () => {}
 };
 

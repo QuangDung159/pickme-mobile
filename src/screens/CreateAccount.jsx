@@ -251,19 +251,13 @@ export default function CreateAccount(props) {
                     setIsShowSpinner(false);
                     goToStep(6);
                 },
-                () => {
+                (res) => {
                     setIsShowSpinner(false);
-                    ToastHelpers.renderToast(
-                        'Lỗi hệ thống! Vui lòng thử lại.',
-                        'error'
-                    );
+                    ToastHelpers.renderToast(res.data.message, 'error');
                 },
-                () => {
+                (res) => {
                     setIsShowSpinner(false);
-                    ToastHelpers.renderToast(
-                        'Lỗi hệ thống! Vui lòng thử lại.',
-                        'error'
-                    );
+                    ToastHelpers.renderToast(res.data.message, 'error');
                 }
             );
         }

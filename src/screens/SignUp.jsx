@@ -46,13 +46,13 @@ export default function SignUp({ navigation }) {
             (res) => {
                 onLoginSuccess(res.data.data);
             },
-            () => {
+            (res) => {
+                ToastHelpers.renderToast(res.data.message, 'error');
                 setIsShowSpinner(false);
-                ToastHelpers.renderToast('Lỗi hệ thống!', 'error');
             },
-            () => {
+            (res) => {
+                ToastHelpers.renderToast(res.data.message, 'error');
                 setIsShowSpinner(false);
-                ToastHelpers.renderToast('Lỗi hệ thống!', 'error');
             }
         );
     };
@@ -95,10 +95,12 @@ export default function SignUp({ navigation }) {
                 setOtp(res.data.data.code);
                 setIsShowSpinner(false);
             },
-            () => {
+            (res) => {
+                ToastHelpers.renderToast(res.data.message, 'error');
                 setIsShowSpinner(false);
             },
-            () => {
+            (res) => {
+                ToastHelpers.renderToast(res.data.message, 'error');
                 setIsShowSpinner(false);
             }
         );
@@ -127,13 +129,13 @@ export default function SignUp({ navigation }) {
             'Content-Type': 'application/json'
         },
         () => loginWithSignUpInfo(),
-        () => {
-            ToastHelpers.renderToast('Lỗi hệ thống', 'error');
+        (res) => {
             setIsShowSpinner(false);
+            ToastHelpers.renderToast(res.data.message, 'error');
         },
         (res) => {
-            ToastHelpers.renderToast(res, 'error');
             setIsShowSpinner(false);
+            ToastHelpers.renderToast(res.data.message, 'error');
         });
     };
 
