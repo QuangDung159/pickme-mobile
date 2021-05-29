@@ -7,7 +7,6 @@ import {
     StyleSheet
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import Toast from 'react-native-toast-message';
 import { useSelector } from 'react-redux';
 import { ExpoNotification } from '../components/businessComponents';
 import {
@@ -51,19 +50,13 @@ export default function ForgotPassword({ navigation }) {
                 navigation.navigate(ScreenName.SIGN_IN);
                 ToastHelpers.renderToast(res.data.message, 'success');
             },
-            () => {
+            (res) => {
+                ToastHelpers.renderToast(res.data.message, 'error');
                 toggleSpinner(false);
-                Toast.show({
-                    type: 'error',
-                    text1: 'Lỗi hệ thống! Vui lòng thử lại.'
-                });
             },
-            () => {
+            (res) => {
+                ToastHelpers.renderToast(res.data.message, 'error');
                 toggleSpinner(false);
-                Toast.show({
-                    type: 'error',
-                    text1: 'Lỗi hệ thống! Vui lòng thử lại.'
-                });
             }
         );
     };
@@ -91,8 +84,14 @@ export default function ForgotPassword({ navigation }) {
                 // for testing
                 setOtp(res.data.data.code);
             },
-            () => setIsShowSpinner(false),
-            () => setIsShowSpinner(false)
+            (res) => {
+                setIsShowSpinner(false);
+                ToastHelpers.renderToast(res.data.message, 'error');
+            },
+            (res) => {
+                setIsShowSpinner(false);
+                ToastHelpers.renderToast(res.data.message, 'error');
+            }
         );
     };
 

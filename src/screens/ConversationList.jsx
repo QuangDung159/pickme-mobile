@@ -1,8 +1,8 @@
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 import { Block, Text } from 'galio-framework';
-import React, { useEffect } from 'react';
-import { Image } from 'react-native';
-import { FlatList, TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import React, { useEffect, useState } from 'react';
+import { Image, RefreshControl } from 'react-native';
+import { FlatList, ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import { Line } from '../components/uiComponents';
 import { GraphQueryString, NowTheme, ScreenName } from '../constants';
@@ -11,6 +11,8 @@ import { setListConversation, setNumberMessageUnread } from '../redux/Actions';
 import { socketRequestUtil } from '../utils';
 
 export default function ConversationList({ navigation }) {
+    const [refreshing, setRefreshing] = useState(false);
+
     const messageListened = useSelector((state) => state.messageReducer.messageListened);
     const token = useSelector((state) => state.userReducer.token);
     const currentUser = useSelector((state) => state.userReducer.currentUser);
@@ -97,6 +99,20 @@ export default function ConversationList({ navigation }) {
             token,
             (res) => {
                 onFetchData(res);
+                setRefreshing(false);
+            },
+            () => setRefreshing(false),
+            () => setRefreshing(false)
+        );
+    };
+
+    const onRefresh = () => {
+        setRefreshing(true);
+        getListConversationFromSocket(
+            1, 20,
+            (data) => {
+                dispatch(setListConversation(data.data.data.getRecently));
+                countNumberOfUnreadConversation(data.data.data.getRecently);
             }
         );
     };
@@ -209,11 +225,48 @@ export default function ConversationList({ navigation }) {
 
     try {
         return (
-            <FlatList
-                data={listConversation}
-                renderItem={({ item, index }) => renderConversationItem(item, index)}
-                keyExtractor={(item) => item.id}
-            />
+            <>
+                {listConversation && listConversation.length !== 0 ? (
+                    <FlatList
+                        data={listConversation}
+                        renderItem={({ item, index }) => renderConversationItem(item, index)}
+                        keyExtractor={(item) => item.id}
+                        refreshControl={(
+                            <RefreshControl
+                                refreshing={refreshing}
+                                onRefresh={() => onRefresh()}
+                            />
+                        )}
+                    />
+                ) : (
+                    <ScrollView
+                        refreshControl={(
+                            <RefreshControl
+                                refreshing={refreshing}
+                                onRefresh={() => onRefresh()}
+                            />
+                        )}
+                    >
+                        <Block
+                            style={{
+                                alignItems: 'center',
+                                marginVertical: 15
+                            }}
+                        >
+                            <Text
+                                color={NowTheme.COLORS.SWITCH_OFF}
+                                style={{
+                                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                                }}
+                                size={NowTheme.SIZES.FONT_H2}
+                            >
+                                Danh sách trống
+                            </Text>
+                        </Block>
+                    </ScrollView>
+                )}
+            </>
+
         );
     } catch (exception) {
         console.log('exception :>> ', exception);

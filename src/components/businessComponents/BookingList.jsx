@@ -49,13 +49,15 @@ export default function BookingList({ navigation }) {
                 setIsShowSpinner(false);
                 setRefreshing(false);
             },
-            () => {
+            (res) => {
                 setIsShowSpinner(false);
                 setRefreshing(false);
+                ToastHelpers.renderToast(res.data.message, 'error');
             },
-            () => {
+            (res) => {
                 setIsShowSpinner(false);
                 setRefreshing(false);
+                ToastHelpers.renderToast(res.data.message, 'error');
             }
         );
     };

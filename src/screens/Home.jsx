@@ -110,10 +110,12 @@ export default function Home({ navigation }) {
             (res) => {
                 dispatch(setCurrentUser(res.data.data));
             },
-            () => {
+            (res) => {
+                ToastHelpers.renderToast(res.data.message, 'error');
                 setIsShowSpinner(false);
             },
-            () => {
+            (res) => {
+                ToastHelpers.renderToast(res.data.message, 'error');
                 setIsShowSpinner(false);
             }
         );
@@ -174,11 +176,13 @@ export default function Home({ navigation }) {
                 setIsShowSpinner(false);
                 setListPartnerHome(res.data.data);
             },
-            () => {
+            (res) => {
+                ToastHelpers.renderToast(res.data.message, 'error');
                 setRefreshing(false);
                 setIsShowSpinner(false);
             },
-            () => {
+            (res) => {
+                ToastHelpers.renderToast(res.data.message, 'error');
                 setRefreshing(false);
                 setIsShowSpinner(false);
             }

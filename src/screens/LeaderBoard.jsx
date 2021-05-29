@@ -82,10 +82,12 @@ export default function LeaderBoard({ navigation }) {
                 setIsShowSpinner(false);
                 setListGeneral((prevState) => ({ ...prevState, [index]: res.data.data }));
             },
-            () => {
+            (res) => {
+                ToastHelpers.renderToast(res.data.message, 'error');
                 setIsShowSpinner(false);
             },
-            () => {
+            (res) => {
+                ToastHelpers.renderToast(res.data.message, 'error');
                 setIsShowSpinner(false);
             }
         );

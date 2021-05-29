@@ -59,7 +59,10 @@ export default function SignInWithOTP({ navigation }) {
             },
             {
                 Authorization: bearerToken,
-            }
+            },
+            () => {},
+            (res) => ToastHelpers.renderToast(res.data.message, 'error'),
+            (res) => ToastHelpers.renderToast(res.data.message, 'error')
         );
     };
 
@@ -79,13 +82,13 @@ export default function SignInWithOTP({ navigation }) {
             (res) => {
                 onLoginSuccess(res.data.data);
             },
-            (err) => {
+            (res) => {
                 setIsShowSpinner(false);
-                ToastHelpers.renderToast(err, 'error');
+                ToastHelpers.renderToast(res.data.message, 'error');
             },
-            (err) => {
+            (res) => {
                 setIsShowSpinner(false);
-                ToastHelpers.renderToast(err, 'error');
+                ToastHelpers.renderToast(res.data.message, 'error');
             }
         );
     };
@@ -112,13 +115,13 @@ export default function SignInWithOTP({ navigation }) {
             () => {
                 onLogin();
             },
-            (err) => {
+            (res) => {
+                ToastHelpers.renderToast(res.data.message, 'error');
                 setIsShowSpinner(false);
-                ToastHelpers.renderToast(err, 'error');
             },
-            (err) => {
+            (res) => {
+                ToastHelpers.renderToast(res.data.message, 'error');
                 setIsShowSpinner(false);
-                ToastHelpers.renderToast(err, 'error');
             }
         );
         return true;
@@ -140,8 +143,14 @@ export default function SignInWithOTP({ navigation }) {
                 setOtp(res.data.data.code);
                 setIsShowSpinner(false);
             },
-            () => setIsShowSpinner(false),
-            () => setIsShowSpinner(false)
+            (res) => {
+                setIsShowSpinner(false);
+                ToastHelpers.renderToast(res.data.message, 'error');
+            },
+            (res) => {
+                setIsShowSpinner(false);
+                ToastHelpers.renderToast(res.data.message, 'error');
+            }
         );
     };
 

@@ -6,6 +6,7 @@ import React from 'react';
 import { Image, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { NowTheme, Rx, ScreenName } from '../../constants';
+import { ToastHelpers } from '../../helpers';
 import { setPersonTabActiveIndex } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
 
@@ -30,11 +31,9 @@ export default function NotificationItem({
             {
                 Authorization: token
             },
-            () => {
-                onTriggerRead();
-            },
-            () => {},
-            () => {}
+            () => onTriggerRead(),
+            (res) => ToastHelpers.renderToast(res.data.message, 'error'),
+            (res) => ToastHelpers.renderToast(res.data.message, 'error')
         );
     };
 
