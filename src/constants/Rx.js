@@ -50,9 +50,6 @@ export default {
         GET_LIST_PARTNER: '/users/Partners',
     },
     CASH: {
-        GET_LIST_CASH_IN: '/Cashs/MyCashInRequests',
-        GET_LIST_CASH_OUT: '/Cashs/MyCashOutRequests',
-        CREATE_CASH_OUT_REQUEST: '/cashs/CreateCashOutRequest',
         GET_CASH_HISTORY: '/users/UserHistories'
     },
     NOTIFICATION: {

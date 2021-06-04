@@ -23,7 +23,7 @@ import {
 import { rxUtil } from '../utils';
 
 export default function SignIn({ navigation }) {
-    const [phoneNumber, setPhoneNumber] = useState('0933522613');
+    const [phoneNumber, setPhoneNumber] = useState('dunglq');
     const [password, setPassword] = useState('');
     const [isShowSpinner, setIsShowSpinner] = useState(false);
     const [deviceIdToSend, setDeviceIdToSend] = useState('');

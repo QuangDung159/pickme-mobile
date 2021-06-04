@@ -1,13 +1,16 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
 import { API_URL } from '@env';
 import axios from 'axios';
+import slackUtil from './slackUtil';
 
 const generateLogData = (endpoint, data, headers, res) => {
-    console.log(`${res.status} ${endpoint}`, {
+    const objectStr = JSON.stringify({
         headers,
         data,
         res
     });
+
+    return `${res.status} ${endpoint}:\n ${objectStr}`;
 };
 
 export default (
@@ -34,14 +37,23 @@ export default (
             } else {
                 generateLogData(endpoint, data, headers, res);
                 if (failCallBack) failCallBack(res);
+                const logInfo = generateLogData(endpoint, data, headers, res);
+                slackUtil('error', logInfo);
             }
         })
         .catch((err) => {
             const {
                 response,
             } = err;
-            console.log('catch', response);
-            generateLogData(endpoint, data, headers, response);
+
+            console.log(`${response.status} ${endpoint}`, {
+                headers,
+                data,
+                response
+            });
+
+            const logInfo = generateLogData(endpoint, data, headers, response);
+            slackUtil('catch', logInfo);
 
             if (catchCallBack) catchCallBack(response);
         });

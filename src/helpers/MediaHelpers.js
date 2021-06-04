@@ -2,7 +2,7 @@ import * as ImagePicker from 'expo-image-picker';
 import FormData from 'form-data';
 import { rxUtil } from '../utils';
 
-const uploadImage = (uri, uploadUrl, token, successCallBack, errorCallBack, catchCallBack) => {
+const uploadImage = (uri, uploadUrl, token, successCallBack, errorCallBack, catchCallBack, imgTitle = '') => {
     const filename = uri.split('/').pop();
 
     // Infer the type of the image
@@ -13,6 +13,7 @@ const uploadImage = (uri, uploadUrl, token, successCallBack, errorCallBack, catc
     const formData = new FormData();
     // Assume "file" is the name of the form field the server expects
     formData.append('image', { uri, name: filename, type });
+    formData.append('Title', imgTitle);
 
     const headers = {
         'content-type': 'multipart/form-data',
