@@ -7,9 +7,9 @@ import {
     IconFamily, NowTheme, Rx, ScreenName
 } from '../../constants';
 import { ToastHelpers } from '../../helpers';
+import { setListCashHistoryStore } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
 import { CenterLoader, IconCustom } from '../uiComponents';
-import { setListCashHistoryStore } from '../../redux/Actions';
 
 export default function Wallet({ navigation, route }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
@@ -42,13 +42,9 @@ export default function Wallet({ navigation, route }) {
     };
 
     const renderHistoryItem = (item) => {
-        const { type } = item;
-        // const backgroundColor = type === 'CashIn'
-        //     ? NowTheme.COLORS.LIST_ITEM_BACKGROUND_2 : NowTheme.COLORS.LIST_ITEM_BACKGROUND_1;
+        const { isIncrease } = item;
 
         return (
-        // 1: cash in
-        // 0: cash out
             <Block>
                 <Block
                     row
@@ -64,7 +60,7 @@ export default function Wallet({ navigation, route }) {
                     }}
                     >
                         <IconCustom
-                            name={type === 'CashIn' ? 'chevron-circle-right' : 'chevron-circle-left'}
+                            name={isIncrease ? 'chevron-circle-right' : 'chevron-circle-left'}
                             size={NowTheme.SIZES.FONT_H1}
                             color={NowTheme.COLORS.DEFAULT}
                             family={IconFamily.FONT_AWESOME}
@@ -78,7 +74,7 @@ export default function Wallet({ navigation, route }) {
 
     const renderHistoryItemContent = (historyItem) => {
         const {
-            content, type,
+            content, isIncrease,
             amountChanged,
         } = historyItem;
 
@@ -90,15 +86,6 @@ export default function Wallet({ navigation, route }) {
                     row
                     space="between"
                 >
-                    {/* <Text
-                        color={NowTheme.COLORS.DEFAULT}
-                        size={16}
-                        style={{
-                            fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
-                        }}
-                    >
-                        {moment(createdDate).format('DD/MM/YYYY HH:mm:ss')}
-                    </Text> */}
                     <Block
                         style={{
                             width: NowTheme.SIZES.WIDTH_BASE * 0.6
@@ -121,10 +108,11 @@ export default function Wallet({ navigation, route }) {
                             color={NowTheme.COLORS.ACTIVE}
                             size={16}
                             style={{
-                                fontFamily: NowTheme.FONT.MONTSERRAT_BOLD
+                                fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
+                                marginRight: 5
                             }}
                         >
-                            {type === 'CashIn' ? `+ ${amountChanged}` : `- ${amountChanged}`}
+                            {isIncrease ? `+ ${amountChanged}` : `- ${amountChanged}`}
                         </Text>
                         <IconCustom
                             name="diamond"
@@ -230,7 +218,7 @@ export default function Wallet({ navigation, route }) {
                 >
                     <FlatList
                         data={listCashHistoryStore}
-                        keyExtractor={(item) => item.id}
+                        keyExtractor={(item) => item.navigationId}
                         renderItem={({ item }) => renderHistoryItem(item)}
                         showsVerticalScrollIndicator={false}
                         refreshControl={(
