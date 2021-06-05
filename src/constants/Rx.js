@@ -10,7 +10,7 @@ export default {
     },
     USER: {
         CURRENT_USER_INFO: '/users/CurrentCustomerInfo',
-        UPDATE_AVATAR: '/Users/UpdateAvatar',
+        UPDATE_AVATAR: '/Uploads/UpdateAvatar',
         UPDATE_USER_INFO: '/users/UpdateUserInfo',
         UPLOAD_PROFILE_IMAGE: '/Users/UploadImage',
         REMOVE_PROFILE_IMAGE: '/Users/RemovePost',

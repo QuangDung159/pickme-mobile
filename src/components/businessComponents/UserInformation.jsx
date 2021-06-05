@@ -53,26 +53,21 @@ export default function UserInformation({ navigation }) {
             token,
             (res) => {
                 ToastHelpers.renderToast(
-                    res?.data?.message || 'Tải ảnh lên thành công!', 'success'
+                    res.data.message || 'Tải ảnh lên thành công!', 'success'
                 );
                 setIsShowSpinner(false);
                 setImage(uri);
 
-                if (res?.data?.data) {
-                    dispatch(
-                        setCurrentUser({ ...currentUser, url: res?.data?.data || '' })
-                    );
-                }
-            },
-            (err) => {
-                ToastHelpers.renderToast(
-                    err?.data?.message || 'Tải ảnh lên thất bại! Vui lòng thử lại.', 'error'
+                dispatch(
+                    setCurrentUser({ ...currentUser, url: res.data.data.url || NO_AVATAR_URL })
                 );
+            },
+            (res) => {
+                ToastHelpers.renderToast(res.data.message, 'error');
                 setIsShowSpinner(false);
             },
-            () => {
-                ToastHelpers.renderToast('Tải ảnh lên thất bại! Vui lòng thử lại.', 'error');
-                setIsShowSpinner(false);
+            (res) => {
+                ToastHelpers.renderToast(res.data.message, 'error');
             }
         );
     };
