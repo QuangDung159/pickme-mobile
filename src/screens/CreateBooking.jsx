@@ -18,7 +18,7 @@ import {
     DateTimeConst, IconFamily, NowTheme, Rx, ScreenName
 } from '../constants';
 import { ToastHelpers } from '../helpers';
-import { setListBookingLocation, setPersonTabActiveIndex } from '../redux/Actions';
+import { setCurrentUser, setListBookingLocation, setPersonTabActiveIndex } from '../redux/Actions';
 import { rxUtil } from '../utils';
 
 const hourArr = DateTimeConst.HOUR_ARR;
@@ -177,6 +177,7 @@ export default function CreateBooking({ route, navigation }) {
                     routes: [{ name: ScreenName.PERSONAL }],
                 });
                 dispatch(setPersonTabActiveIndex(2));
+                fetchCurrentUserInfo();
             },
             (res) => {
                 setIsShowSpinner(false);
@@ -187,6 +188,20 @@ export default function CreateBooking({ route, navigation }) {
                 setIsShowSpinner(false);
                 ToastHelpers.renderToast(res.data.message, 'error');
             }
+        );
+    };
+
+    const fetchCurrentUserInfo = () => {
+        rxUtil(
+            Rx.USER.CURRENT_USER_INFO,
+            'GET',
+            null,
+            {
+                Authorization: token
+            },
+            (res) => dispatch(setCurrentUser(res.data.data)),
+            (res) => ToastHelpers.renderToast(res.data.message, 'error'),
+            (res) => ToastHelpers.renderToast(res.data.message, 'error')
         );
     };
 
@@ -695,7 +710,7 @@ export default function CreateBooking({ route, navigation }) {
             row
             space="between"
             style={{
-                paddingTop: 10
+                paddingVertical: 10,
             }}
         >
             <Button
