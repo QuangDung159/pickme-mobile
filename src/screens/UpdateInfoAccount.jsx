@@ -271,34 +271,6 @@ export default function UpdateInfoAccount(props) {
         setNewUser({ ...newUser, dob: `${yearInput}-01-01T14:00:00` });
     };
 
-    const onGetCurrentUserData = () => {
-        const headers = {
-            Authorization: token
-        };
-
-        rxUtil(
-            Rx.USER.CURRENT_USER_INFO, 'GET', '', headers,
-            (res) => {
-                dispatch(setCurrentUser(res.data.data));
-                setIsShowSpinner(false);
-                ToastHelpers.renderToast(
-                    'Cập nhật thông tin thành công!',
-                    'success'
-                );
-                navigation.navigate(ScreenName.PERSONAL);
-                dispatch(setPersonTabActiveIndex(0));
-            },
-            (res) => {
-                setIsShowSpinner(false);
-                ToastHelpers.renderToast(res.data.message, 'error');
-            },
-            (res) => {
-                setIsShowSpinner(false);
-                ToastHelpers.renderToast(res.data.message, 'error');
-            }
-        );
-    };
-
     const onChangeName = (nameInput) => {
         setNewUser({ ...newUser, fullName: nameInput });
     };
@@ -375,7 +347,22 @@ export default function UpdateInfoAccount(props) {
             data,
             headers,
             () => {
-                onGetCurrentUserData();
+                const userInfo = {
+                    ...currentUser,
+                    fullName,
+                    dob,
+                    homeTown,
+                    interests
+                };
+
+                dispatch(setCurrentUser(userInfo));
+                setIsShowSpinner(false);
+                ToastHelpers.renderToast(
+                    'Cập nhật thông tin thành công!',
+                    'success'
+                );
+                navigation.navigate(ScreenName.PERSONAL);
+                dispatch(setPersonTabActiveIndex(0));
             },
             (res) => {
                 ToastHelpers.renderToast(res.data.message, 'error');
