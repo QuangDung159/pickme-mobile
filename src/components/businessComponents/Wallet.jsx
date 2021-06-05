@@ -7,45 +7,29 @@ import {
     IconFamily, NowTheme, Rx, ScreenName
 } from '../../constants';
 import { ToastHelpers } from '../../helpers';
-import { setCurrentUser } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
-import { IconCustom } from '../uiComponents';
+import { CenterLoader, IconCustom } from '../uiComponents';
+import { setListCashHistoryStore } from '../../redux/Actions';
 
 export default function Wallet({ navigation, route }) {
+    const [isShowSpinner, setIsShowSpinner] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
 
     const currentUser = useSelector((state) => state.userReducer.currentUser);
+    const listCashHistoryStore = useSelector((state) => state.userReducer.listCashHistoryStore);
     const token = useSelector((state) => state.userReducer.token);
 
     const dispatch = useDispatch();
 
-    const fetchCurrentUserInfo = () => {
-        rxUtil(
-            Rx.USER.CURRENT_USER_INFO,
-            'GET',
-            null,
-            {
-                Authorization: token
-            },
-            (res) => {
-                dispatch(setCurrentUser(res.data.data));
-                setRefreshing(false);
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
-                setRefreshing(false);
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
-                setRefreshing(false);
-            }
-        );
-    };
-
     useEffect(
         () => {
+            if (!listCashHistoryStore || listCashHistoryStore.length === 0) {
+                setIsShowSpinner(true);
+                fetchHistory();
+            }
+
             const eventTriggerGetListHistory = navigation.addListener('focus', () => {
-                //
+                fetchHistory();
             });
 
             return eventTriggerGetListHistory;
@@ -54,11 +38,11 @@ export default function Wallet({ navigation, route }) {
 
     const onRefresh = () => {
         setRefreshing(true);
-        fetchCurrentUserInfo();
+        fetchHistory();
     };
 
     const renderHistoryItem = (item) => {
-        const { isIncrease } = item;
+        const { type } = item;
         // const backgroundColor = type === 'CashIn'
         //     ? NowTheme.COLORS.LIST_ITEM_BACKGROUND_2 : NowTheme.COLORS.LIST_ITEM_BACKGROUND_1;
 
@@ -80,7 +64,7 @@ export default function Wallet({ navigation, route }) {
                     }}
                     >
                         <IconCustom
-                            name={isIncrease ? 'chevron-circle-right' : 'chevron-circle-left'}
+                            name={type === 'CashIn' ? 'chevron-circle-right' : 'chevron-circle-left'}
                             size={NowTheme.SIZES.FONT_H1}
                             color={NowTheme.COLORS.DEFAULT}
                             family={IconFamily.FONT_AWESOME}
@@ -94,7 +78,7 @@ export default function Wallet({ navigation, route }) {
 
     const renderHistoryItemContent = (historyItem) => {
         const {
-            content, isIncrease,
+            content, type,
             amountChanged,
         } = historyItem;
 
@@ -140,7 +124,7 @@ export default function Wallet({ navigation, route }) {
                                 fontFamily: NowTheme.FONT.MONTSERRAT_BOLD
                             }}
                         >
-                            {isIncrease ? `+ ${amountChanged}` : `- ${amountChanged}`}
+                            {type === 'CashIn' ? `+ ${amountChanged}` : `- ${amountChanged}`}
                         </Text>
                         <IconCustom
                             name="diamond"
@@ -212,15 +196,40 @@ export default function Wallet({ navigation, route }) {
         );
     };
 
+    const fetchHistory = () => {
+        rxUtil(
+            Rx.CASH.GET_CASH_HISTORY,
+            'GET',
+            null,
+            {
+                Authorization: token
+            },
+            (res) => {
+                dispatch(setListCashHistoryStore(res.data.data));
+                setIsShowSpinner(false);
+                setRefreshing(false);
+            },
+            (res) => {
+                setIsShowSpinner(false);
+                setRefreshing(false);
+                ToastHelpers.renderToast(res.data.message, 'error');
+            },
+            (res) => {
+                setIsShowSpinner(false);
+                setRefreshing(false);
+                ToastHelpers.renderToast(res.data.message, 'error');
+            }
+        );
+    };
+
     const renderHistory = () => {
-        const { userHistories } = currentUser;
-        if (userHistories && userHistories.length !== 0) {
+        if (listCashHistoryStore && listCashHistoryStore.length !== 0) {
             return (
                 <Block
                     flex
                 >
                     <FlatList
-                        data={userHistories}
+                        data={listCashHistoryStore}
                         keyExtractor={(item) => item.id}
                         renderItem={({ item }) => renderHistoryItem(item)}
                         showsVerticalScrollIndicator={false}
@@ -277,7 +286,21 @@ export default function Wallet({ navigation, route }) {
                 >
                     {renderWalletAmountPanel()}
                 </Block>
-                {renderHistory()}
+                <>
+                    {isShowSpinner ? (
+                        <Block
+                            style={{
+                                marginTop: NowTheme.SIZES.HEIGHT_BASE * 0.1
+                            }}
+                        >
+                            <CenterLoader />
+                        </Block>
+                    ) : (
+                        <>
+                            {renderHistory()}
+                        </>
+                    )}
+                </>
             </>
         );
     } catch (exception) {
