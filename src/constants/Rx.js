@@ -12,7 +12,6 @@ export default {
         CURRENT_USER_INFO: '/users/CurrentCustomerInfo',
         UPDATE_AVATAR: '/Users/UpdateAvatar',
         UPDATE_USER_INFO: '/users/UpdateUserInfo',
-        GET_LIST_IMAGE_BY_USER: '/Users/MyPosts',
         UPLOAD_PROFILE_IMAGE: '/Users/UploadImage',
         REMOVE_PROFILE_IMAGE: '/Users/RemovePost',
         UPDATE_EXPO_TOKEN: '/Users/UpdateExpoToken',
@@ -61,7 +60,6 @@ export default {
         CREATE_PAYMENT: '/Payments/CreatePayment'
     },
     SYSTEM: {
-        GET_QNA: '/faq',
         CREATE_BUG: '/Systems/CreateBug',
         PICK_ME_INFO: '/master'
     }
