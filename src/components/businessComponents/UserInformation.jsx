@@ -25,7 +25,6 @@ export default function UserInformation({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
     const [visible, setVisible] = useState(false);
     const [imageIndex, setImageIndex] = useState(0);
-    const [listImageReview, setListImageReview] = useState([]);
     const [image, setImage] = useState('');
     const [refreshing, setRefreshing] = useState(false);
 
@@ -42,33 +41,8 @@ export default function UserInformation({ navigation }) {
                 setIsShowSpinner(true);
                 fetchCurrentUserInfo();
             }
-
-            const eventTriggerGetCurrentUserInfo = navigation.addListener('focus', () => {
-                fetchCurrentUserInfo();
-            });
-
-            return eventTriggerGetCurrentUserInfo;
         }, []
     );
-
-    const getListImagesByUser = () => {
-        const headers = {
-            Authorization: token
-        };
-
-        rxUtil(
-            Rx.USER.GET_LIST_IMAGE_BY_USER,
-            'GET',
-            null,
-            headers,
-            (res) => {
-                setListImageReview(res.data.data);
-                setRefreshing(false);
-            },
-            (res) => ToastHelpers.renderToast(res.data.message, 'error'),
-            (res) => ToastHelpers.renderToast(res.data.message, 'error')
-        );
-    };
 
     const handleOnPickAvatar = (uri) => {
         setIsShowSpinner(true);
@@ -134,15 +108,17 @@ export default function UserInformation({ navigation }) {
             (res) => {
                 dispatch(setCurrentUser(res.data.data));
                 setIsShowSpinner(false);
-                getListImagesByUser();
+                setRefreshing(false);
             },
             (res) => {
                 setIsShowSpinner(false);
                 ToastHelpers.renderToast(res.data.message, 'error');
+                setRefreshing(false);
             },
             (res) => {
                 setIsShowSpinner(false);
                 ToastHelpers.renderToast(res.data.message, 'error');
+                setRefreshing(false);
             }
         );
     };
@@ -154,18 +130,10 @@ export default function UserInformation({ navigation }) {
 
     // Render \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
     const renderImageView = () => {
-        const listImageObj = [];
-
-        listImageReview.forEach((item) => {
-            listImageObj.push({
-                uri: item.url
-            });
-        });
-
         if (visible) {
             return (
                 <ImageView
-                    images={listImageObj}
+                    images={[{ uri: currentUser.url }]}
                     imageIndex={imageIndex}
                     visible={visible}
                     onRequestClose={() => setVisible(false)}
@@ -210,7 +178,6 @@ export default function UserInformation({ navigation }) {
                         onPress={() => {
                             setVisible(true);
                             setImageIndex(0);
-                            setListImageReview([{ url: currentUser.url }]);
                         }}
                     >
                         <Block style={{
