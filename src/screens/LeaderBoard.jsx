@@ -1,5 +1,5 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
-import { NO_AVATAR_URL, PICKME_INFO_URL } from '@env';
+import { NO_AVATAR_URL } from '@env';
 import { Block, Text } from 'galio-framework';
 import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet } from 'react-native';
@@ -10,29 +10,15 @@ import {
     IconFamily, NowTheme, Rx, ScreenName
 } from '../constants';
 import { ToastHelpers } from '../helpers';
-import { rxUtil } from '../utils';
 
 export default function LeaderBoard({ navigation }) {
     const [tabActiveIndex, setTabActiveIndex] = useState(0);
-    const [isShowSpinner, setIsShowSpinner] = useState(true);
-    const [listGeneral, setListGeneral] = useState({});
+    const [listLeaderBoard, setListLeaderBoard] = useState([]);
 
+    const pickMeInfoStore = useSelector((state) => state.appConfigReducer.pickMeInfoStore);
     const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
-    const token = useSelector((state) => state.userReducer.token);
 
     const tabs = [
-        {
-            tabLabel: 'Kim cương',
-            tabIcon: (
-                <IconCustom
-                    name="diamond"
-                    family={IconFamily.SIMPLE_LINE_ICONS}
-                    size={16}
-                    color={NowTheme.COLORS.ACTIVE}
-                />
-            ),
-            endpoint: Rx.PARTNER.LEADER_BOARD_DIAMOND
-        },
         {
             tabLabel: 'Đơn hẹn',
             tabIcon: (
@@ -44,14 +30,24 @@ export default function LeaderBoard({ navigation }) {
                 />
             ),
             endpoint: Rx.PARTNER.LEADER_BOARD_BOOKING
+        },
+        {
+            tabLabel: 'Kim cương',
+            tabIcon: (
+                <IconCustom
+                    name="diamond"
+                    family={IconFamily.SIMPLE_LINE_ICONS}
+                    size={16}
+                    color={NowTheme.COLORS.ACTIVE}
+                />
+            ),
+            endpoint: Rx.PARTNER.LEADER_BOARD_DIAMOND
         }
     ];
 
     useEffect(
         () => {
-            tabs.forEach((tab, index) => {
-                getListLeaderBoard(tab.endpoint, index);
-            });
+            setListLeaderBoard(pickMeInfoStore.booking);
         }, []
     );
 
@@ -67,34 +63,13 @@ export default function LeaderBoard({ navigation }) {
     );
 
     // handler \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
-    const getListLeaderBoard = (endpoint, index) => {
-        setIsShowSpinner(true);
-
-        rxUtil(
-            `${endpoint}`,
-            'GET',
-            null,
-            {
-                Authorization: token
-            },
-            (res) => {
-                setIsShowSpinner(false);
-                setListGeneral((prevState) => ({ ...prevState, [index]: res.data }));
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
-                setIsShowSpinner(false);
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
-                setIsShowSpinner(false);
-            },
-            PICKME_INFO_URL
-        );
-    };
-
     const changeTabIndexActive = (tabIndex) => {
         setTabActiveIndex(tabIndex);
+        if (tabIndex === 0) {
+            setListLeaderBoard(pickMeInfoStore.booking);
+        } else {
+            setListLeaderBoard(pickMeInfoStore.diamon);
+        }
     };
 
     // render \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
@@ -234,12 +209,10 @@ export default function LeaderBoard({ navigation }) {
     );
 
     const renderTopPanel = () => {
-        if (!listGeneral
-            || !listGeneral[tabActiveIndex]
-            || listGeneral[tabActiveIndex].length === 0) { return <></>; }
+        if (!pickMeInfoStore || (!listLeaderBoard || listLeaderBoard.length === 0)) return <></>;
 
         // get first partner in list by tabActiveIndex
-        const topOnePartner = listGeneral[tabActiveIndex][0];
+        const topOnePartner = listLeaderBoard[0];
         const {
             url,
             value,
@@ -325,34 +298,30 @@ export default function LeaderBoard({ navigation }) {
     try {
         return (
             <>
-                {isShowSpinner ? (
-                    <CenterLoader />
-                ) : (
-                    <>
-                        <Block
-                            style={[{
-                                height: NowTheme.SIZES.HEIGHT_BASE * 0.4,
-                                alignItems: 'center',
-                            }, styles.shadow]}
-                        >
-                            <Block
-                                row
-                                style={[{
-                                    marginBottom: 20,
-                                    height: NowTheme.SIZES.HEIGHT_BASE * 0.07
-                                }]}
-                            >
-                                {tabs.map((tab, index) => renderTopButton(tab, index))}
-                            </Block>
+                <Block
+                    style={[{
+                        height: NowTheme.SIZES.HEIGHT_BASE * 0.4,
+                        alignItems: 'center',
+                    }, styles.shadow]}
+                >
+                    <Block
+                        row
+                        style={[{
+                            marginBottom: 20,
+                            height: NowTheme.SIZES.HEIGHT_BASE * 0.07
+                        }]}
+                    >
+                        {tabs.map((tab, index) => renderTopButton(tab, index))}
+                    </Block>
 
-                            {renderTopPanel()}
-                        </Block>
-                        <FlatList
-                            data={listGeneral[tabActiveIndex]}
-                            keyExtractor={(item) => item.userId}
-                            renderItem={({ item, index }) => renderLeaderBoardItem(item, index)}
-                        />
-                    </>
+                    {renderTopPanel()}
+                </Block>
+                {listLeaderBoard && listLeaderBoard.length !== 0 && (
+                    <FlatList
+                        data={listLeaderBoard}
+                        keyExtractor={(item) => item.userId}
+                        renderItem={({ item, index }) => renderLeaderBoardItem(item, index)}
+                    />
                 )}
 
             </>

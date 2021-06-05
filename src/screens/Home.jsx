@@ -1,6 +1,6 @@
 /* eslint no-underscore-dangle: ["error", { "allow": ["_isMounted", "_id"] }] */
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
-import { NO_AVATAR_URL } from '@env';
+import { NO_AVATAR_URL, PICKME_INFO_URL } from '@env';
 import { Block, Text } from 'galio-framework';
 import React, { useEffect, useState } from 'react';
 import {
@@ -16,7 +16,7 @@ import {
 import { ToastHelpers } from '../helpers';
 import {
     setCurrentUser,
-    setListConversation, setNumberMessageUnread
+    setListConversation, setNumberMessageUnread, setPickMeInfoStore
 } from '../redux/Actions';
 import { rxUtil, socketRequestUtil } from '../utils';
 
@@ -38,6 +38,7 @@ export default function Home({ navigation }) {
     useEffect(
         () => {
             fetchCurrentUserInfo();
+            fetchPickMeInfo();
             getListPartner();
             const intervalUpdateLatest = setIntervalToUpdateLastActiveOfUserStatus();
 
@@ -98,6 +99,30 @@ export default function Home({ navigation }) {
             }
         }, [isSignInOtherDeviceStore]
     );
+
+    const fetchPickMeInfo = () => {
+        rxUtil(
+            Rx.SYSTEM.PICK_ME_INFO,
+            'GET',
+            null,
+            {
+                Authorization: token
+            },
+            (res) => {
+                dispatch(setPickMeInfoStore(res.data));
+                setIsShowSpinner(false);
+            },
+            (res) => {
+                ToastHelpers.renderToast(res.data.message, 'error');
+                setIsShowSpinner(false);
+            },
+            (res) => {
+                ToastHelpers.renderToast(res.data.message, 'error');
+                setIsShowSpinner(false);
+            },
+            PICKME_INFO_URL
+        );
+    };
 
     const fetchCurrentUserInfo = () => {
         rxUtil(

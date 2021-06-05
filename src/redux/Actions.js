@@ -11,7 +11,7 @@ import {
     SET_NUMBER_MESSAGE_UNREAD,
     SET_NUMBER_NOTIFICATION_UNREAD,
     SET_PERSON_TAB_ACTIVE_INDEX,
-    SET_TOKEN,
+    SET_PICK_ME_INFO_STORE, SET_TOKEN,
     SET_VERIFICATION_STORE
 } from './ActionTypes';
 
@@ -157,5 +157,12 @@ export const setDeviceIdStore = (deviceIdStore) => ({
     type: SET_DEVICE_ID_STORE,
     payload: {
         deviceIdStore
+    }
+});
+
+export const setPickMeInfoStore = (pickMeInfoStore) => ({
+    type: SET_PICK_ME_INFO_STORE,
+    payload: {
+        pickMeInfoStore
     }
 });

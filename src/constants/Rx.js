@@ -62,6 +62,7 @@ export default {
     },
     SYSTEM: {
         GET_QNA: '/faq',
-        CREATE_BUG: '/Systems/CreateBug'
+        CREATE_BUG: '/Systems/CreateBug',
+        PICK_ME_INFO: '/master'
     }
 };
