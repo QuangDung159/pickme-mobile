@@ -1,76 +1,54 @@
 import { Block, Text } from 'galio-framework';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { FlatList, RefreshControl } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import { NowTheme, Rx, ScreenName } from '../../constants';
 import { ToastHelpers } from '../../helpers';
-import { setListBookingStore } from '../../redux/Actions';
+import { setCurrentUser } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
-import { CenterLoader, Line } from '../uiComponents';
+import { Line } from '../uiComponents';
 import CardBooking from './CardBooking';
 
 export default function BookingList({ navigation }) {
-    const [isShowSpinner, setIsShowSpinner] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
 
-    const token = useSelector((state) => state.userReducer.token);
-    const listBookingStore = useSelector((state) => state.userReducer.listBookingStore);
+    const { token, currentUser } = useSelector((state) => state.userReducer);
+    const { bookingsAsCustomer } = currentUser;
 
     const dispatch = useDispatch();
 
-    useEffect(
-        () => {
-            if (!listBookingStore || listBookingStore.length === 0) {
-                setIsShowSpinner(true);
-                getListBooking();
-            }
+    const onRefresh = () => {
+        setRefreshing(true);
+        fetchCurrentUserInfo();
+    };
 
-            const eventTriggerGetListBooking = navigation.addListener('focus', () => {
-                setIsShowSpinner(true);
-                getListBooking();
-            });
-
-            return eventTriggerGetListBooking;
-        }, []
-    );
-
-    const getListBooking = () => {
-        const pagingStr = '?pageIndex=1&pageSize=100';
-
+    const fetchCurrentUserInfo = () => {
         rxUtil(
-            `${Rx.BOOKING.GET_MY_BOOKING_AS_CUSTOMER}${pagingStr}`,
+            Rx.USER.CURRENT_USER_INFO,
             'GET',
             null,
             {
                 Authorization: token
             },
             (res) => {
-                dispatch(setListBookingStore(res.data.data));
-                setIsShowSpinner(false);
+                dispatch(setCurrentUser(res.data.data));
                 setRefreshing(false);
             },
             (res) => {
-                setIsShowSpinner(false);
-                setRefreshing(false);
                 ToastHelpers.renderToast(res.data.message, 'error');
+                setRefreshing(false);
             },
             (res) => {
-                setIsShowSpinner(false);
-                setRefreshing(false);
                 ToastHelpers.renderToast(res.data.message, 'error');
+                setRefreshing(false);
             }
         );
     };
 
-    const onRefresh = () => {
-        setRefreshing(true);
-        getListBooking();
-    };
-
     const renderListBooking = () => (
         <>
-            {listBookingStore && listBookingStore.length !== 0 ? (
+            {bookingsAsCustomer && bookingsAsCustomer.length !== 0 ? (
                 <FlatList
                     showsVerticalScrollIndicator={false}
                     contentContainerStyle={{
@@ -83,7 +61,7 @@ export default function BookingList({ navigation }) {
                             onRefresh={() => onRefresh()}
                         />
                     )}
-                    data={listBookingStore}
+                    data={bookingsAsCustomer}
                     keyExtractor={(item) => item.id}
                     renderItem={({ item }) => (
                         <TouchableWithoutFeedback
@@ -136,14 +114,7 @@ export default function BookingList({ navigation }) {
     try {
         return (
             <>
-                {isShowSpinner ? (
-                    <CenterLoader />
-                ) : (
-                    <>
-                        {renderListBooking()}
-                    </>
-                )}
-
+                {renderListBooking()}
             </>
         );
     } catch (exception) {
