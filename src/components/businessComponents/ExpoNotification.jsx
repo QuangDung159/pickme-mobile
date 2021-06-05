@@ -11,7 +11,8 @@ import { ToastHelpers } from '../../helpers';
 import {
     setCurrentUser,
     setExpoToken,
-
+    setListBookingStore,
+    setListCashHistoryStore,
     setListNotification,
     setNumberNotificationUnread,
     setPersonTabActiveIndex
@@ -48,11 +49,26 @@ export default function ExpoNotification() {
         () => {
         // This listener is fired whenever a notification is received while the app is foregrounded
             notificationListener.current = Notifications.addNotificationReceivedListener((notificationReceived) => {
-                console.log('notificationReceived :>> ', notificationReceived);
-                // in app trigger
+            // in app trigger
                 if (token && token !== 'Bearer ' && token !== 'Bearer null') {
                     getListNotiFromAPI();
-                    fetchCurrentUserInfo();
+
+                    const notiType = notificationReceived.request?.content?.data?.Type;
+
+                    switch (notiType) {
+                        case 1: {
+                            getListBooking();
+                            break;
+                        }
+                        case 2: {
+                            fetchCurrentUserInfo();
+                            fetchHistory();
+                            break;
+                        }
+                        default: {
+                            break;
+                        }
+                    }
                 }
             });
         }, [token]
@@ -79,7 +95,25 @@ export default function ExpoNotification() {
             {
                 Authorization: token
             },
-            (res) => dispatch(setCurrentUser(res.data.data)),
+            (res) => {
+                dispatch(setCurrentUser(res.data.data));
+            },
+            (res) => ToastHelpers.renderToast(res.data.message, 'error'),
+            (res) => ToastHelpers.renderToast(res.data.message, 'error')
+        );
+    };
+
+    const fetchHistory = () => {
+        rxUtil(
+            Rx.CASH.GET_CASH_HISTORY,
+            'GET',
+            null,
+            {
+                Authorization: token
+            },
+            (res) => {
+                dispatch(setListCashHistoryStore(res.data.data));
+            },
             (res) => ToastHelpers.renderToast(res.data.message, 'error'),
             (res) => ToastHelpers.renderToast(res.data.message, 'error')
         );
@@ -127,6 +161,24 @@ export default function ExpoNotification() {
                 // set store
                 dispatch(setListNotification(res.data.data));
                 countNumberNotificationUnread(res.data.data);
+            },
+            (res) => ToastHelpers.renderToast(res.data.message, 'error'),
+            (res) => ToastHelpers.renderToast(res.data.message, 'error')
+        );
+    };
+
+    const getListBooking = () => {
+        const pagingStr = '?pageIndex=1&pageSize=100';
+
+        rxUtil(
+            `${Rx.BOOKING.GET_MY_BOOKING_AS_CUSTOMER}${pagingStr}`,
+            'GET',
+            null,
+            {
+                Authorization: token
+            },
+            (res) => {
+                dispatch(setListBookingStore(res.data.data));
             },
             (res) => ToastHelpers.renderToast(res.data.message, 'error'),
             (res) => ToastHelpers.renderToast(res.data.message, 'error')
