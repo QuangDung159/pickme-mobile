@@ -291,15 +291,26 @@ export default function UpdateInfoAccount(props) {
         const {
             fullName,
             description,
+            homeTown, interests
         } = newUser;
 
         if (!fullName) {
-            ToastHelpers.renderToast('Tên của bạn không hợp lệ!', 'error');
+            ToastHelpers.renderToast('Tên của bạn không được trống!', 'error');
+            return false;
+        }
+
+        if (!homeTown) {
+            ToastHelpers.renderToast('Quê quán không được trống!', 'error');
+            return false;
+        }
+
+        if (!interests) {
+            ToastHelpers.renderToast('Sở thích không được trống!', 'error');
             return false;
         }
 
         if (!description) {
-            ToastHelpers.renderToast('Mô tả không hợp lệ!', 'error');
+            ToastHelpers.renderToast('Mô tả không được trống!', 'error');
             return false;
         }
 
