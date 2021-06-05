@@ -249,8 +249,7 @@ export default function UpdateInfoAccount(props) {
                 ToastHelpers.renderToast(res.data.message, 'success');
                 setIsShowFormChangePassword(false);
 
-                SecureStore.setItemAsync('password', newPassword)
-                    .then(console.log('password :>> ', newPassword));
+                SecureStore.setItemAsync('password', newPassword);
 
                 setNewPassword('');
                 setReNewPassword('');

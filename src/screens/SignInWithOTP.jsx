@@ -164,8 +164,7 @@ export default function SignInWithOTP({ navigation }) {
         });
 
         updateExpoTokenToServer(bearerToken);
-        SecureStore.setItemAsync('api_token', `${tokenFromAPI}`)
-            .then(console.log('tokenFromAPI :>> ', tokenFromAPI));
+        SecureStore.setItemAsync('api_token', `${tokenFromAPI}`);
 
         dispatch(setIsSignInOtherDeviceStore(false));
         setIsShowSpinner(false);

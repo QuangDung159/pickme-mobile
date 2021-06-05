@@ -32,10 +32,20 @@ export default (
     })
         .then((res) => {
             if (res.status === 200 || res.status === 201) {
-                generateLogData(endpoint, data, headers, res);
+                console.log(`${res.status} ${endpoint}`, {
+                    headers,
+                    data,
+                    res
+                });
+
                 if (successCallBack) successCallBack(res);
             } else {
-                generateLogData(endpoint, data, headers, res);
+                console.log(`${res.status} ${endpoint}`, {
+                    headers,
+                    data,
+                    res
+                });
+
                 if (failCallBack) failCallBack(res);
                 const logInfo = generateLogData(endpoint, data, headers, res);
                 slackUtil('error', logInfo);

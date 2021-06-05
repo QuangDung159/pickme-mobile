@@ -23,8 +23,8 @@ import {
 import { rxUtil } from '../utils';
 
 export default function SignIn({ navigation }) {
-    const [phoneNumber, setPhoneNumber] = useState('dunglq');
-    const [password, setPassword] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('huyvd');
+    const [password, setPassword] = useState('0000');
     const [isShowSpinner, setIsShowSpinner] = useState(false);
     const [deviceIdToSend, setDeviceIdToSend] = useState('');
 
@@ -97,14 +97,11 @@ export default function SignIn({ navigation }) {
         const tokenFromAPI = res.data.data;
         const { status } = res;
 
-        SecureStore.setItemAsync('api_token', `${tokenFromAPI}`)
-            .then(console.log('tokenFromAPI :>> ', tokenFromAPI));
+        SecureStore.setItemAsync('api_token', `${tokenFromAPI}`);
 
-        SecureStore.setItemAsync('password', `${password}`)
-            .then(console.log('password :>> ', password));
+        SecureStore.setItemAsync('password', `${password}`);
 
-        SecureStore.setItemAsync('phoneNumber', `${phoneNumber}`)
-            .then(console.log('phoneNumber :>> ', phoneNumber));
+        SecureStore.setItemAsync('phoneNumber', `${phoneNumber}`);
 
         if (status === 200) {
             const bearerToken = `Bearer ${tokenFromAPI}`;

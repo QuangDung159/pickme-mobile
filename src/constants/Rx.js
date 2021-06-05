@@ -9,7 +9,7 @@ export default {
         LOGIN: '/users/CustomerLogin',
     },
     USER: {
-        CURRENT_USER_INFO: '/users/currentuserinfo',
+        CURRENT_USER_INFO: '/users/CurrentCustomerInfo',
         UPDATE_AVATAR: '/Users/UpdateAvatar',
         UPDATE_USER_INFO: '/users/UpdateUserInfo',
         GET_LIST_IMAGE_BY_USER: '/Users/MyPosts',
@@ -24,7 +24,7 @@ export default {
         SUBMIT_CHANGE_DEVICE_CONFIRM: '/users/CustomerChangedDeviceIdConfirm',
         GENERATE_OTP_WHEN_FORGOT_PASSWORD: '/users/CustomerForGotPasswordOTP',
         SUBMIT_FORGOT_PASSWORD_CONFIRM: '/users/CustomerForGotPasswordConfirm',
-        SUBMIT_CHANGE_PASSWORD: '/users/changepassword'
+        SUBMIT_CHANGE_PASSWORD: '/users/changepassword',
     },
     BANK: {
         BANK_ACCOUNTS: '/users/BankAccounts',
