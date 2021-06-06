@@ -40,6 +40,7 @@ export default function CreateBooking({ route, navigation }) {
     const [busyCalendar, setBusyCalendar] = useState([]);
     const [modalVisible, setModalVisible] = useState(false);
     const [modalTimePickerVisible, setModalTimePickerVisible] = useState(false);
+    const [modalPartnerPackageVisible, setModalPartnerPackageVisible] = useState(false);
 
     const [modalActiveType, setModalActiveType] = useState('start');
     const [startTimeStr, setStartTimeStr] = useState('07:00');
@@ -49,8 +50,10 @@ export default function CreateBooking({ route, navigation }) {
     const [startMinuteActive, setStartMinuteActive] = useState(0);
     const [endHourActive, setEndHourActive] = useState(0);
     const [endMinuteActive, setEndMinuteActive] = useState(0);
+    const [listPartnerPackage, setListPartnerPackage] = useState([]);
 
     const [locationActive, setLocationActive] = useState();
+    const [packageActive, setPackageActive] = useState();
 
     const token = useSelector((state) => state.userReducer.token);
     const listBookingLocation = useSelector((state) => state.locationReducer.listBookingLocation);
@@ -60,8 +63,8 @@ export default function CreateBooking({ route, navigation }) {
 
     useEffect(
         () => {
-            getCalendarPartner();
-            fetchListBookingLocation();
+            // getCalendarPartner();
+            // fetchListBookingLocation();
             fetchListPartnerPackage();
         }, []
     );
@@ -94,6 +97,8 @@ export default function CreateBooking({ route, navigation }) {
             },
             (res) => {
                 console.log('res.data.data :>> ', res.data.data);
+                setListPartnerPackage(res.data.data);
+                setPackageActive(res.data.data[0]);
                 setIsShowSpinner(false);
             },
             (res) => {
@@ -389,6 +394,102 @@ export default function CreateBooking({ route, navigation }) {
         </Block>
     );
 
+    const renderPartnerPackage = () => (
+        <Block
+            row
+            space="between"
+            style={{
+                justifyContent: 'center',
+                width: NowTheme.SIZES.WIDTH_BASE * 0.8
+            }}
+        >
+            {listPartnerPackage && packageActive && (
+                <Block
+                    style={{
+                        width: NowTheme.SIZES.WIDTH_BASE * 0.8,
+                    }}
+                >
+                    <Picker
+                        selectedValue={packageActive.id}
+                        onValueChange={(itemValue) => onChangePackage(itemValue)}
+                        fontFamily={NowTheme.FONT.MONTSERRAT_REGULAR}
+                    >
+                        {listPartnerPackage.map((item) => (
+                            <Picker.Item value={item.id} label={item.title} key={item.id} />
+                        ))}
+                    </Picker>
+                    <Block
+                        row
+                        space="around"
+                    >
+                        <Text
+                            style={{
+                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                                color: NowTheme.COLORS.ACTIVE,
+                                fontSize: NowTheme.SIZES.FONT_H1,
+                                marginBottom: 10
+                            }}
+                        >
+                            {convertMinutesToStringHours(packageActive.startAt)}
+                        </Text>
+                        <Text
+                            style={{
+                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                                color: NowTheme.COLORS.ACTIVE,
+                                fontSize: NowTheme.SIZES.FONT_H1,
+                                marginBottom: 10
+                            }}
+                        >
+                            {convertMinutesToStringHours(packageActive.endAt)}
+                        </Text>
+                    </Block>
+
+                    <Text
+                        style={{
+                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                            color: NowTheme.COLORS.DEFAULT,
+                            fontSize: NowTheme.SIZES.FONT_H3,
+                            marginBottom: 10
+                        }}
+                    >
+                        {packageActive.description}
+                    </Text>
+                    <Text
+                        style={{
+                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                            color: NowTheme.COLORS.DEFAULT,
+                            fontSize: NowTheme.SIZES.FONT_H3,
+                            marginBottom: 10
+                        }}
+                    >
+                        {`Lời nhắn từ đối tác: ${packageActive.noted}`}
+                    </Text>
+                    <Block
+                        middle
+                    >
+                        <Text
+                            style={{
+                                fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
+                                fontSize: 30,
+                                paddingVertical: 10
+                            }}
+                            color={NowTheme.COLORS.ACTIVE}
+                        >
+                            {packageActive.totalAmount}
+                            {' '}
+                            <IconCustom
+                                name="diamond"
+                                family={IconFamily.SIMPLE_LINE_ICONS}
+                                size={20}
+                                color={NowTheme.COLORS.ACTIVE}
+                            />
+                        </Text>
+                    </Block>
+                </Block>
+            )}
+        </Block>
+    );
+
     const renderListBusySection = () => {
         if (listBusyBySelectedDate[0] !== '') {
             return listBusyBySelectedDate.map((item, sectionIndex) => {
@@ -529,6 +630,39 @@ export default function CreateBooking({ route, navigation }) {
         </Modal>
     );
 
+    const renderPartnerPackageModal = () => (
+        <Modal
+            animationType="slide"
+            transparent
+            visible={modalPartnerPackageVisible}
+        >
+            <ScrollView
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={{
+                    marginTop: -NowTheme.SIZES.HEIGHT_BASE * 0.1
+                }}
+            >
+                <Block style={styles.centeredView}>
+                    <Block style={styles.modalView}>
+                        {renderPartnerPackage()}
+
+                        <Block center>
+                            <Button
+                                onPress={() => {
+                                    setModalPartnerPackageVisible(false);
+                                }}
+                                style={{ marginVertical: 10 }}
+                                shadowless
+                            >
+                                Đóng
+                            </Button>
+                        </Block>
+                    </Block>
+                </Block>
+            </ScrollView>
+        </Modal>
+    );
+
     const renderButtonTimePicker = () => (
         <Block
             space="between"
@@ -605,6 +739,14 @@ export default function CreateBooking({ route, navigation }) {
         }
     };
 
+    const onChangePackage = (packageIdInput) => {
+        const packageChoose = listPartnerPackage.find((item) => item.id === packageIdInput);
+
+        if (packageChoose) {
+            setPackageActive(packageChoose);
+        }
+    };
+
     const renderLocationPicker = () => (
         <>
             {locationActive && (
@@ -668,6 +810,25 @@ export default function CreateBooking({ route, navigation }) {
                     onChangeDate={(date) => { onChangeDateCalendar(date); }}
                     selectedDate={selectedDate}
                 />
+
+                <TouchableWithoutFeedback
+                    containerStyle={{
+                        width: NowTheme.SIZES.WIDTH_BASE * 0.9,
+                        alignSelf: 'center',
+                        paddingVertical: 10,
+                    }}
+                    onPress={() => setModalPartnerPackageVisible(true)}
+                >
+                    <Text
+                        style={{
+                            fontSize: NowTheme.SIZES.FONT_H3,
+                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                            color: NowTheme.COLORS.ACTIVE
+                        }}
+                    >
+                        Chọn gói đơn hẹn
+                    </Text>
+                </TouchableWithoutFeedback>
 
                 {renderButtonTimePicker()}
 
@@ -840,6 +1001,7 @@ export default function CreateBooking({ route, navigation }) {
                         >
                             {renderModal()}
                             {renderTimePickerModal()}
+                            {renderPartnerPackageModal()}
                             {renderFormBlock(partner)}
                             {renderTotal()}
                         </KeyboardAwareScrollView>
