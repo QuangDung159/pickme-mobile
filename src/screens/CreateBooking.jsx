@@ -55,6 +55,8 @@ export default function CreateBooking({ route, navigation }) {
     const [locationActive, setLocationActive] = useState();
     const [packageActive, setPackageActive] = useState();
 
+    const [total, setTotal] = useState(0);
+
     const token = useSelector((state) => state.userReducer.token);
     const listBookingLocation = useSelector((state) => state.locationReducer.listBookingLocation);
     const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
@@ -63,8 +65,8 @@ export default function CreateBooking({ route, navigation }) {
 
     useEffect(
         () => {
-            // getCalendarPartner();
-            // fetchListBookingLocation();
+            getCalendarPartner();
+            fetchListBookingLocation();
             fetchListPartnerPackage();
         }, []
     );
@@ -96,7 +98,6 @@ export default function CreateBooking({ route, navigation }) {
                 Authorization: token
             },
             (res) => {
-                console.log('res.data.data :>> ', res.data.data);
                 setListPartnerPackage(res.data.data);
                 setPackageActive(res.data.data[0]);
                 setIsShowSpinner(false);
@@ -262,6 +263,7 @@ export default function CreateBooking({ route, navigation }) {
         .format('HH:mm');
 
     const calculateTotalAmount = (start, end) => {
+        if (total !== 0) return total;
         const { earningExpected } = route.params.partner;
         const startMinutesNumber = convertStringHoursToMinutes(start) || 0;
         const endMinutesNumber = convertStringHoursToMinutes(end) || 0;
@@ -281,6 +283,7 @@ export default function CreateBooking({ route, navigation }) {
     };
 
     const onChangeHourTimePicker = (data) => {
+        setTotal(0);
         if (modalActiveType === 'start') {
             const startTimeArr = startTimeStr.split(':');
             startTimeArr[0] = data;
@@ -297,6 +300,7 @@ export default function CreateBooking({ route, navigation }) {
     };
 
     const onChangeMinuteTimePicker = (data) => {
+        setTotal(0);
         if (modalActiveType === 'start') {
             const startTimeArr = startTimeStr.split(':');
             startTimeArr[1] = data;
@@ -636,30 +640,68 @@ export default function CreateBooking({ route, navigation }) {
             transparent
             visible={modalPartnerPackageVisible}
         >
-            <ScrollView
-                showsVerticalScrollIndicator={false}
-                contentContainerStyle={{
-                    marginTop: -NowTheme.SIZES.HEIGHT_BASE * 0.1
+            <Block
+                style={{
+                    marginTop: -NowTheme.SIZES.HEIGHT_BASE * 0.17
                 }}
             >
-                <Block style={styles.centeredView}>
-                    <Block style={styles.modalView}>
-                        {renderPartnerPackage()}
+                <ScrollView
+                    showsVerticalScrollIndicator={false}
+                >
+                    <Block style={styles.centeredView}>
+                        <Block style={styles.modalView}>
+                            {renderPartnerPackage()}
 
-                        <Block center>
-                            <Button
-                                onPress={() => {
-                                    setModalPartnerPackageVisible(false);
+                            <Block
+                                row
+                                space="between"
+                                style={{
+                                    paddingVertical: 10,
+                                    width: NowTheme.SIZES.WIDTH_BASE * 0.8
                                 }}
-                                style={{ marginVertical: 10 }}
-                                shadowless
                             >
-                                Đóng
-                            </Button>
+                                <Button
+                                    shadowless
+                                    onPress={() => {
+                                        setModalPartnerPackageVisible(false);
+                                        const startHourString = convertMinutesToStringHours(
+                                            packageActive.startAt
+                                        );
+
+                                        const endHourString = convertMinutesToStringHours(
+                                            packageActive.endAt
+                                        );
+
+                                        setStartTimeStr(startHourString);
+                                        setEndTimeStr(endHourString);
+
+                                        setTotal(packageActive.totalAmount);
+                                    }}
+                                    style={{
+                                        margin: 0,
+                                        width: NowTheme.SIZES.WIDTH_BASE * 0.39
+                                    }}
+                                >
+                                    Xác nhận
+                                </Button>
+                                <Button
+                                    shadowless
+                                    color={NowTheme.COLORS.DEFAULT}
+                                    style={{
+                                        margin: 0,
+                                        width: NowTheme.SIZES.WIDTH_BASE * 0.39
+                                    }}
+                                    onPress={() => {
+                                        setModalPartnerPackageVisible(false);
+                                    }}
+                                >
+                                    Huỷ bỏ
+                                </Button>
+                            </Block>
                         </Block>
                     </Block>
-                </Block>
-            </ScrollView>
+                </ScrollView>
+            </Block>
         </Modal>
     );
 
@@ -811,24 +853,26 @@ export default function CreateBooking({ route, navigation }) {
                     selectedDate={selectedDate}
                 />
 
-                <TouchableWithoutFeedback
-                    containerStyle={{
-                        width: NowTheme.SIZES.WIDTH_BASE * 0.9,
-                        alignSelf: 'center',
-                        paddingVertical: 10,
-                    }}
-                    onPress={() => setModalPartnerPackageVisible(true)}
-                >
-                    <Text
-                        style={{
-                            fontSize: NowTheme.SIZES.FONT_H3,
-                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                            color: NowTheme.COLORS.ACTIVE
+                {listPartnerPackage && listPartnerPackage.length !== 0 && (
+                    <TouchableWithoutFeedback
+                        containerStyle={{
+                            width: NowTheme.SIZES.WIDTH_BASE * 0.9,
+                            alignSelf: 'center',
+                            paddingVertical: 10,
                         }}
+                        onPress={() => setModalPartnerPackageVisible(true)}
                     >
-                        Chọn gói đơn hẹn
-                    </Text>
-                </TouchableWithoutFeedback>
+                        <Text
+                            style={{
+                                fontSize: NowTheme.SIZES.FONT_H3,
+                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                                color: NowTheme.COLORS.ACTIVE
+                            }}
+                        >
+                            Chọn gói đơn hẹn
+                        </Text>
+                    </TouchableWithoutFeedback>
+                )}
 
                 {renderButtonTimePicker()}
 
@@ -1001,6 +1045,13 @@ export default function CreateBooking({ route, navigation }) {
                         >
                             {renderModal()}
                             {renderTimePickerModal()}
+                            {/* <Block
+                                style={{
+                                    marginTop: -100
+                                }}
+                            >
+                                {renderPartnerPackageModal()}
+                            </Block> */}
                             {renderPartnerPackageModal()}
                             {renderFormBlock(partner)}
                             {renderTotal()}
