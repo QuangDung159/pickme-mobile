@@ -16,7 +16,7 @@ export default {
         REMOVE_PROFILE_IMAGE: '/Users/RemovePost',
         UPDATE_EXPO_TOKEN: '/Users/UpdateExpoToken',
         GET_OTP_REGISTER: '/users/CustomerRegister',
-        UPLOAD_VERIFICATION_DOC: '/Users/AddVerifiDocument',
+        UPLOAD_VERIFICATION_DOC: '/Uploads/AddVerifiDocument',
         GET_VERIFICATION_DETAIL: '/Users/VerificationRequestDetail',
         SUBMIT_VERIFICATION: '/Users/SubmitVerify',
         GENERATE_OTP_WHEN_CHANGE_DEVICE: '/users/CustomerGenerateOTPChangedDeviceId',

@@ -8,7 +8,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
     CenterLoader, Line
 } from '../components/uiComponents';
-import { NowTheme, Rx, ScreenName } from '../constants';
+import {
+    DocumentType, NowTheme, Rx, ScreenName, VerificationStatus
+} from '../constants';
 import { MediaHelpers, ToastHelpers } from '../helpers';
 import { setCurrentUser, setPersonTabActiveIndex, setVerificationStore } from '../redux/Actions';
 import { rxUtil } from '../utils';
@@ -21,9 +23,9 @@ export default function Verification({ navigation }) {
     const [frontUrl, setFrontUrl] = useState('');
     const [backUrl, setBackUrl] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
-    const [isShowButtonPanel, setIsShowButtonPanel] = useState(false);
 
     const token = useSelector((state) => state.userReducer.token);
+    const currentUser = useSelector((state) => state.userReducer.currentUser);
     const verificationStore = useSelector((state) => state.userReducer.verificationStore);
     const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
 
@@ -35,7 +37,9 @@ export default function Verification({ navigation }) {
 
     useEffect(
         () => {
-            fetchVerification();
+            if (!verificationStore || verificationStore.length === 0) {
+                fetchVerification();
+            }
         }, []
     );
 
@@ -50,12 +54,6 @@ export default function Verification({ navigation }) {
         }, [isSignInOtherDeviceStore]
     );
 
-    useEffect(
-        () => {
-            triggerShowButtonPanel();
-        }, [verificationStore]
-    );
-
     const fetchVerification = () => {
         rxUtil(
             Rx.USER.GET_VERIFICATION_DETAIL,
@@ -66,75 +64,61 @@ export default function Verification({ navigation }) {
                 dispatch(setVerificationStore(res.data.data));
                 const listDocUrl = res.data.data.verificationDocuments;
                 fillImageFromAPI(listDocUrl);
-                if (listDocUrl.length !== 0) {
-                    setIsShowButtonPanel(true);
-                }
             },
             (res) => ToastHelpers.renderToast(res.data.message, 'error'),
             (res) => ToastHelpers.renderToast(res.data.message, 'error')
         );
     };
 
-    const triggerShowButtonPanel = () => {
-        if (!verificationStore) {
-            setIsShowButtonPanel(true);
-            return;
+    const renderUploadDocForm = (docType, buttonText) => {
+        let isDisabled = false;
+        if (currentUser.verifyStatus !== VerificationStatus.NONE
+            || currentUser.verifyStatus !== VerificationStatus.REJECT) {
+            isDisabled = true;
         }
-
-        const listDocUrl = verificationStore.verificationDocuments;
-        if (listDocUrl.length !== 0) {
-            setIsShowButtonPanel(true);
-            return;
-        }
-
-        const { verifyStatus } = verificationStore;
-        if (verifyStatus === 'None' || verifyStatus === 'Reject') {
-            setIsShowButtonPanel(true);
-        }
-    };
-
-    const renderUploadDocForm = (docType, buttonText) => (
-        <Block style={{
-            alignItems: 'center',
-        }}
-        >
-            <Block>
-                <Button
-                    color={NowTheme.COLORS.BLOCK}
-                    fontSize={NowTheme.SIZES.FONT_H3}
-                    style={{
-                        width: NowTheme.SIZES.WIDTH_BASE * 0.9,
-                    }}
-                    onPress={
-                        () => onPickVerificationDoc(docType)
-                    }
-                    textStyle={{
-                        color: NowTheme.COLORS.ACTIVE
-                    }}
-                    shadowless
-                    // disabled={(verificationStore && verificationStore.verifyStatus === 'InProcess')}
-                >
-                    {buttonText}
-                </Button>
+        return (
+            <Block style={{
+                alignItems: 'center',
+            }}
+            >
+                <Block>
+                    <Button
+                        color={NowTheme.COLORS.BLOCK}
+                        fontSize={NowTheme.SIZES.FONT_H3}
+                        style={{
+                            width: NowTheme.SIZES.WIDTH_BASE * 0.9,
+                        }}
+                        onPress={
+                            () => onPickVerificationDoc(docType)
+                        }
+                        textStyle={{
+                            color: NowTheme.COLORS.ACTIVE
+                        }}
+                        shadowless
+                        disabled={isDisabled}
+                    >
+                        {buttonText}
+                    </Button>
+                </Block>
             </Block>
-        </Block>
-    );
+        );
+    };
 
     const renderDocSection = () => (
         <>
-            {renderUploadDocForm(0, 'Ảnh chụp cá nhân')}
-            {renderDocImageByType(0, faceUrl)}
+            {renderUploadDocForm(DocumentType.FACE_IMAGE, 'Ảnh chụp cá nhân')}
+            {renderDocImageByType(DocumentType.FACE_IMAGE, faceUrl)}
             <Block
                 style={styles.docFormContainer}
             >
-                {renderUploadDocForm(1, 'Mặt trước CMND/CCCD/bằng lái xe còn thời hạn')}
-                {renderDocImageByType(1, frontUrl)}
+                {renderUploadDocForm(DocumentType.DRIVER_FRONT, 'Mặt trước CMND/CCCD/bằng lái xe còn thời hạn')}
+                {renderDocImageByType(DocumentType.DRIVER_FRONT, frontUrl)}
             </Block>
             <Block
                 style={styles.docFormContainer}
             >
-                {renderUploadDocForm(2, 'Mặt sau CMND/CCCD/bằng lái xe còn thời hạn')}
-                {renderDocImageByType(2, backUrl)}
+                {renderUploadDocForm(DocumentType.DRIVER_BACK, 'Mặt sau CMND/CCCD/bằng lái xe còn thời hạn')}
+                {renderDocImageByType(DocumentType.DRIVER_BACK, backUrl)}
             </Block>
         </>
     );
@@ -145,15 +129,15 @@ export default function Verification({ navigation }) {
         listDocs.forEach((docItem) => {
             const docImage = docItem.url;
             switch (docItem.type) {
-                case 'FaceImage': {
+                case DocumentType.FACE_IMAGE: {
                     setFaceUrl(docImage);
                     break;
                 }
-                case 'DriverFont': {
+                case DocumentType.DRIVER_FRONT: {
                     setFrontUrl(docImage);
                     break;
                 }
-                case 'DriverBack': {
+                case DocumentType.DRIVER_BACK: {
                     setBackUrl(docImage);
                     break;
                 }
@@ -171,22 +155,21 @@ export default function Verification({ navigation }) {
             [4, 3],
             (result) => {
                 handleOnPickVerificationDoc(result.uri, docType);
-            },
-            0.1
+            }
         );
     };
 
     const handleOnPickVerificationDoc = (uri, docType) => {
         switch (docType) {
-            case 0: {
+            case DocumentType.FACE_IMAGE: {
                 setFaceUrl(uri);
                 break;
             }
-            case 1: {
+            case DocumentType.DRIVER_FRONT: {
                 setFrontUrl(uri);
                 break;
             }
-            case 2: {
+            case DocumentType.DRIVER_BACK: {
                 setBackUrl(uri);
                 break;
             }
@@ -202,7 +185,12 @@ export default function Verification({ navigation }) {
             'POST',
             null,
             headers,
-            () => {},
+            () => {
+                dispatch(setCurrentUser({
+                    ...currentUser,
+                    verifyStatus: VerificationStatus.IN_PROCESS
+                }));
+            },
             (res) => ToastHelpers.renderToast(res.data.message, 'error'),
             (res) => ToastHelpers.renderToast(res.data.message, 'error')
         );
@@ -218,6 +206,7 @@ export default function Verification({ navigation }) {
                 count += 1;
                 if (count === 3) {
                     submitVerificationRequest();
+                    count = 0;
                 }
             }
         );
@@ -250,13 +239,13 @@ export default function Verification({ navigation }) {
             ToastHelpers.renderToast('Tải lên thành công.', 'success');
         }, 5000);
 
-        uploadDoc(0, faceUrl);
-        uploadDoc(1, frontUrl);
-        uploadDoc(2, backUrl);
+        uploadDoc(DocumentType.FACE_IMAGE, faceUrl);
+        uploadDoc(DocumentType.DRIVER_FRONT, frontUrl);
+        uploadDoc(DocumentType.DRIVER_BACK, backUrl);
     };
 
     const renderButtonPanel = () => {
-        if (isShowButtonPanel) {
+        if (currentUser.verifyStatus === VerificationStatus.NONE) {
             return (
                 <Block
                     row

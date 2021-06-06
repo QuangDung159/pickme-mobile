@@ -72,7 +72,7 @@ const removeImage = (removeUrl, headers, successCallBack, failCallBack, catchCal
     );
 };
 
-const pickImage = async (allowCrop, uploadAspect, callBack, quality = 0.2) => {
+const pickImage = async (allowCrop, uploadAspect, callBack, quality = 0) => {
     const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
         allowsEditing: allowCrop,
