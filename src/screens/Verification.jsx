@@ -37,8 +37,10 @@ export default function Verification({ navigation }) {
 
     useEffect(
         () => {
-            if (!verificationStore || verificationStore.length === 0) {
+            if (!verificationStore?.verificationDocuments || verificationStore.verificationDocuments.length === 0) {
                 fetchVerification();
+            } else {
+                fillImageFromAPI(verificationStore.verificationDocuments);
             }
         }, []
     );
@@ -73,7 +75,7 @@ export default function Verification({ navigation }) {
     const renderUploadDocForm = (docType, buttonText) => {
         let isDisabled = false;
         if (currentUser.verifyStatus !== VerificationStatus.NONE
-            || currentUser.verifyStatus !== VerificationStatus.REJECT) {
+            && currentUser.verifyStatus !== VerificationStatus.REJECT) {
             isDisabled = true;
         }
         return (

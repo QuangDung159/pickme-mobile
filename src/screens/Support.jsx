@@ -228,7 +228,7 @@ export default function Support({ navigation }) {
                 <>
                     {listFAQ.map((item) => (
                         <Block
-                            key={item.id}
+                            key={item.answer}
                             style={{
                                 marginBottom: 10
                             }}
@@ -394,6 +394,7 @@ export default function Support({ navigation }) {
                 alignItems: 'center',
                 justifyContent: 'center'
             }}
+            key={title}
         >
             <Text
                 color={(index === tabActiveIndex) ? NowTheme.COLORS.ACTIVE : NowTheme.COLORS.DEFAULT}
