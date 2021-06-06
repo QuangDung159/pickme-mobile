@@ -40,7 +40,8 @@ export default {
         CANCEL_BOOKING: '/bookings/CancelBooking',
         COMPLETE_BOOKING: '/bookings/CompleteBooking',
         DETAIL_BOOKING: '/bookings/DetailBooking',
-        BOOKING_RATE: '/Ratings/Insert'
+        BOOKING_RATE: '/Ratings/Insert',
+        GET_PARTNER_PACKAGE: '/UserPackages/Packages'
     },
     PARTNER: {
         LEADER_BOARD_DIAMOND: '/diamon',

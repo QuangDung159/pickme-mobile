@@ -62,6 +62,7 @@ export default function CreateBooking({ route, navigation }) {
         () => {
             getCalendarPartner();
             fetchListBookingLocation();
+            fetchListPartnerPackage();
         }, []
     );
 
@@ -75,6 +76,36 @@ export default function CreateBooking({ route, navigation }) {
             }
         }, [isSignInOtherDeviceStore]
     );
+
+    const fetchListPartnerPackage = async () => {
+        const {
+            params: {
+                partner: {
+                    id
+                }
+            }
+        } = route;
+        rxUtil(
+            `${Rx.BOOKING.GET_PARTNER_PACKAGE}/${id}`,
+            'GET',
+            null,
+            {
+                Authorization: token
+            },
+            (res) => {
+                console.log('res.data.data :>> ', res.data.data);
+                setIsShowSpinner(false);
+            },
+            (res) => {
+                setIsShowSpinner(false);
+                ToastHelpers.renderToast(res.data.message, 'error');
+            },
+            (res) => {
+                setIsShowSpinner(false);
+                ToastHelpers.renderToast(res.data.message, 'error');
+            }
+        );
+    };
 
     const fetchListBookingLocation = () => {
         if (listBookingLocation && listBookingLocation.length > 0) {
