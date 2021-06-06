@@ -195,7 +195,8 @@ export default function CreateBooking({ route, navigation }) {
             Longtitude: locationActive.longtitude,
             Latitude: locationActive.latitude,
             Description: locationActive.description,
-            Noted: 'N/A'
+            Noted: 'N/A',
+            totalAmount: total !== 0 ? total : calculateTotalAmount(startTimeStr, endTimeStr)
         };
 
         setIsShowSpinner(true);
