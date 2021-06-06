@@ -25,13 +25,6 @@ export default function BookingList({ navigation }) {
                 setIsShowSpinner(true);
                 getListBooking();
             }
-
-            const eventTriggerGetListBooking = navigation.addListener('focus', () => {
-                setIsShowSpinner(true);
-                getListBooking();
-            });
-
-            return eventTriggerGetListBooking;
         }, []
     );
 

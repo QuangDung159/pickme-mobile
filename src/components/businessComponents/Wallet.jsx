@@ -176,6 +176,7 @@ export default function Wallet({ navigation, route }) {
                             width: NowTheme.SIZES.WIDTH_BASE * 0.4,
                             margin: 0
                         }}
+                        shadowless
                     >
                         Nạp kim cương
                     </Button>

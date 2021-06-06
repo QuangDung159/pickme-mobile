@@ -27,6 +27,7 @@ export default function Home({ navigation }) {
     const [listConversationGetAtHome, setListConversationGetAtHome] = useState([]);
 
     const token = useSelector((state) => state.userReducer.token);
+    const pickMeInfoStore = useSelector((state) => state.appConfigReducer.pickMeInfoStore);
     const currentUser = useSelector((state) => state.userReducer.currentUser);
     const messageListened = useSelector((state) => state.messageReducer.messageListened);
     const numberMessageUnread = useSelector((state) => state.messageReducer.numberMessageUnread);
@@ -38,7 +39,9 @@ export default function Home({ navigation }) {
     useEffect(
         () => {
             fetchCurrentUserInfo();
-            fetchPickMeInfo();
+
+            if (!pickMeInfoStore) fetchPickMeInfo();
+
             getListPartner();
             const intervalUpdateLatest = setIntervalToUpdateLastActiveOfUserStatus();
 
