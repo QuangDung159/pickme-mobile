@@ -8,12 +8,12 @@ import { Image, StyleSheet } from 'react-native';
 import { ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import ImageView from 'react-native-image-viewing';
 import { useSelector } from 'react-redux';
-import { CenterLoader, IconCustom, NoteText } from '../components/uiComponents';
+import { CenterLoader, IconCustom, NoteText } from '../../components/uiComponents';
 import {
     IconFamily, NowTheme, Rx, ScreenName
-} from '../constants';
-import { MediaHelpers, ToastHelpers } from '../helpers';
-import { rxUtil } from '../utils';
+} from '../../constants';
+import { MediaHelpers, ToastHelpers } from '../../helpers';
+import { rxUtil } from '../../utils';
 
 export default function Support({ navigation }) {
     const [tabActiveIndex, setTabActiveIndex] = useState(0);

@@ -12,15 +12,15 @@ import {
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import ImageView from 'react-native-image-viewing';
 import { useSelector } from 'react-redux';
-import { CardImage } from '../components/businessComponents';
+import { CardImage } from '../../components/businessComponents';
 import {
     Button, CenterLoader, UserInfoSection
-} from '../components/uiComponents';
+} from '../../components/uiComponents';
 import {
     IconFamily, NowTheme, Rx, ScreenName
-} from '../constants';
-import { ToastHelpers } from '../helpers';
-import { rxUtil } from '../utils';
+} from '../../constants';
+import { ToastHelpers } from '../../helpers';
+import { rxUtil } from '../../utils';
 
 export default function Profile({ route, navigation }) {
     const [visible, setVisible] = useState(false);

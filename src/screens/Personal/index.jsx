@@ -5,9 +5,9 @@ import React, { useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
-import { BookingList, UserInformation, Wallet } from '../components/businessComponents';
-import { NowTheme, ScreenName } from '../constants';
-import { setPersonTabActiveIndex } from '../redux/Actions';
+import { BookingList, UserInformation, Wallet } from '../../components/businessComponents';
+import { NowTheme, ScreenName } from '../../constants';
+import { setPersonTabActiveIndex } from '../../redux/Actions';
 
 export default function Personal({ navigation, route }) {
     const personTabActiveIndex = useSelector((state) => state.appConfigReducer.personTabActiveIndex);

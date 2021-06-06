@@ -15,14 +15,14 @@ import {
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useDispatch, useSelector } from 'react-redux';
-import noAvatar from '../../assets/images/no-avatar.png';
-import { CenterLoader, Input } from '../components/uiComponents';
+import noAvatar from '../../../assets/images/no-avatar.png';
+import { CenterLoader, Input } from '../../components/uiComponents';
 import {
     Images, NowTheme, Rx, ScreenName
-} from '../constants';
-import { MediaHelpers, ToastHelpers } from '../helpers';
-import { setToken } from '../redux/Actions';
-import { rxUtil } from '../utils';
+} from '../../constants';
+import { MediaHelpers, ToastHelpers } from '../../helpers';
+import { setToken } from '../../redux/Actions';
+import { rxUtil } from '../../utils';
 
 const defaultDate = '2002-01-01T14:00:00';
 

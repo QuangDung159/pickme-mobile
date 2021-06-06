@@ -10,17 +10,17 @@ import {
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useDispatch, useSelector } from 'react-redux';
-import { ExpoNotification } from '../components/businessComponents';
-import { CenterLoader, Input } from '../components/uiComponents';
+import { ExpoNotification } from '../../components/businessComponents';
+import { CenterLoader, Input } from '../../components/uiComponents';
 import {
     Images, NowTheme, Rx, ScreenName
-} from '../constants';
-import { ToastHelpers } from '../helpers';
+} from '../../constants';
+import { ToastHelpers } from '../../helpers';
 import {
     setIsSignInOtherDeviceStore,
     setToken
-} from '../redux/Actions';
-import { rxUtil } from '../utils';
+} from '../../redux/Actions';
+import { rxUtil } from '../../utils';
 
 export default function SignIn({ navigation }) {
     const [phoneNumber, setPhoneNumber] = useState('huyvd');

@@ -5,13 +5,13 @@ import React, { useEffect, useState } from 'react';
 import { KeyboardAvoidingView, Platform, StyleSheet } from 'react-native';
 import { FlatList, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
-import { CenterLoader, IconCustom, Input } from '../components/uiComponents';
+import { CenterLoader, IconCustom, Input } from '../../components/uiComponents';
 import {
     GraphQueryString, IconFamily, NowTheme, ScreenName
-} from '../constants';
-import { ToastHelpers } from '../helpers';
-import { setChattingWith, setNumberMessageUnread } from '../redux/Actions';
-import { socketRequestUtil } from '../utils';
+} from '../../constants';
+import { ToastHelpers } from '../../helpers';
+import { setChattingWith, setNumberMessageUnread } from '../../redux/Actions';
+import { socketRequestUtil } from '../../utils';
 
 export default function Message({ navigation, route }) {
     const [listMessageFromAPI, setListMessageFromAPI] = useState([]);

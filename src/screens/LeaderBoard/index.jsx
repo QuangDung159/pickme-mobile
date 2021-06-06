@@ -5,11 +5,11 @@ import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet } from 'react-native';
 import { FlatList, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useSelector } from 'react-redux';
-import { CenterLoader, IconCustom } from '../components/uiComponents';
+import { CenterLoader, IconCustom } from '../../components/uiComponents';
 import {
     IconFamily, NowTheme, Rx, ScreenName
-} from '../constants';
-import { ToastHelpers } from '../helpers';
+} from '../../constants';
+import { ToastHelpers } from '../../helpers';
 
 export default function LeaderBoard({ navigation }) {
     const [tabActiveIndex, setTabActiveIndex] = useState(0);

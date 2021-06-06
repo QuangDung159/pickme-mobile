@@ -12,14 +12,14 @@ import { ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handl
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import ScrollPicker from 'react-native-wheel-scroll-picker';
 import { useDispatch, useSelector } from 'react-redux';
-import { CustomCalendar } from '../components/businessComponents';
-import { CenterLoader, IconCustom, Line } from '../components/uiComponents';
+import { CustomCalendar } from '../../components/businessComponents';
+import { CenterLoader, IconCustom, Line } from '../../components/uiComponents';
 import {
     DateTimeConst, IconFamily, NowTheme, Rx, ScreenName
-} from '../constants';
-import { ToastHelpers } from '../helpers';
-import { setListBookingLocation, setListBookingStore, setPersonTabActiveIndex } from '../redux/Actions';
-import { rxUtil } from '../utils';
+} from '../../constants';
+import { ToastHelpers } from '../../helpers';
+import { setListBookingLocation, setListBookingStore, setPersonTabActiveIndex } from '../../redux/Actions';
+import { rxUtil } from '../../utils';
 
 const hourArr = DateTimeConst.HOUR_ARR;
 const minuteArr = DateTimeConst.MINUTE_ARR;

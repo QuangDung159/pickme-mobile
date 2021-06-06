@@ -7,13 +7,13 @@ import ImageScalable from 'react-native-scalable-image';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     CenterLoader, Line
-} from '../components/uiComponents';
+} from '../../components/uiComponents';
 import {
     DocumentType, NowTheme, Rx, ScreenName, VerificationStatus
-} from '../constants';
-import { MediaHelpers, ToastHelpers } from '../helpers';
-import { setCurrentUser, setPersonTabActiveIndex, setVerificationStore } from '../redux/Actions';
-import { rxUtil } from '../utils';
+} from '../../constants';
+import { MediaHelpers, ToastHelpers } from '../../helpers';
+import { setCurrentUser, setPersonTabActiveIndex, setVerificationStore } from '../../redux/Actions';
+import { rxUtil } from '../../utils';
 
 let count = 0;
 

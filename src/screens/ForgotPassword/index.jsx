@@ -8,16 +8,16 @@ import {
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useSelector } from 'react-redux';
-import { ExpoNotification } from '../components/businessComponents';
+import { ExpoNotification } from '../../components/businessComponents';
 import {
     CenterLoader, IconCustom, Input, NoteText
-} from '../components/uiComponents';
+} from '../../components/uiComponents';
 import {
     IconFamily,
     Images, NowTheme, Rx, ScreenName
-} from '../constants';
-import { ToastHelpers } from '../helpers';
-import { rxUtil } from '../utils';
+} from '../../constants';
+import { ToastHelpers } from '../../helpers';
+import { rxUtil } from '../../utils';
 
 export default function ForgotPassword({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);

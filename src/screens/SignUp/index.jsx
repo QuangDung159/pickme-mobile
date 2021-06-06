@@ -10,13 +10,13 @@ import {
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Toast from 'react-native-toast-message';
 import { useDispatch, useSelector } from 'react-redux';
-import { CenterLoader, Input } from '../components/uiComponents';
+import { CenterLoader, Input } from '../../components/uiComponents';
 import {
     Images, NowTheme, Rx, ScreenName
-} from '../constants';
-import { ToastHelpers } from '../helpers';
-import { setIsSignInOtherDeviceStore, setToken } from '../redux/Actions';
-import { rxUtil } from '../utils';
+} from '../../constants';
+import { ToastHelpers } from '../../helpers';
+import { setIsSignInOtherDeviceStore, setToken } from '../../redux/Actions';
+import { rxUtil } from '../../utils';
 
 export default function SignUp({ navigation }) {
     const [modalVisible, setModalVisible] = useState(false);

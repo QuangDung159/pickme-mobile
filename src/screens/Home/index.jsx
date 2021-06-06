@@ -9,16 +9,16 @@ import {
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import ImageScalable from 'react-native-scalable-image';
 import { useDispatch, useSelector } from 'react-redux';
-import { CenterLoader } from '../components/uiComponents';
+import { CenterLoader } from '../../components/uiComponents';
 import {
     GraphQueryString, NowTheme, Rx, ScreenName
-} from '../constants';
-import { ToastHelpers } from '../helpers';
+} from '../../constants';
+import { ToastHelpers } from '../../helpers';
 import {
     setCurrentUser,
     setListConversation, setNumberMessageUnread, setPickMeInfoStore
-} from '../redux/Actions';
-import { rxUtil, socketRequestUtil } from '../utils';
+} from '../../redux/Actions';
+import { rxUtil, socketRequestUtil } from '../../utils';
 
 export default function Home({ navigation }) {
     const [refreshing, setRefreshing] = useState(false);

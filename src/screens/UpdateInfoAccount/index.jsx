@@ -7,14 +7,14 @@ import React, { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
-import { CenterLoader, IconCustom, Input } from '../components/uiComponents';
+import { CenterLoader, IconCustom, Input } from '../../components/uiComponents';
 import {
     IconFamily,
     NowTheme, Rx, ScreenName
-} from '../constants';
-import { ToastHelpers } from '../helpers';
-import { setCurrentUser, setPersonTabActiveIndex } from '../redux/Actions';
-import { rxUtil } from '../utils';
+} from '../../constants';
+import { ToastHelpers } from '../../helpers';
+import { setCurrentUser, setPersonTabActiveIndex } from '../../redux/Actions';
+import { rxUtil } from '../../utils';
 
 export default function UpdateInfoAccount(props) {
     const { navigation } = props;
