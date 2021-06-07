@@ -36,7 +36,6 @@ export default function UserInformation({ navigation }) {
     // Render \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
     useEffect(
         () => {
-            // onSignOut(navigation);
             if (JSON.stringify(currentUser) === JSON.stringify({})) {
                 setIsShowSpinner(true);
                 fetchCurrentUserInfo();
