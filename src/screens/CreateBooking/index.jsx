@@ -12,14 +12,14 @@ import { ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handl
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import ScrollPicker from 'react-native-wheel-scroll-picker';
 import { useDispatch, useSelector } from 'react-redux';
-import { CustomCalendar } from '../components/businessComponents';
-import { CenterLoader, IconCustom, Line } from '../components/uiComponents';
+import { CustomCalendar } from '../../components/businessComponents';
+import { CenterLoader, IconCustom, Line } from '../../components/uiComponents';
 import {
     DateTimeConst, IconFamily, NowTheme, Rx, ScreenName
-} from '../constants';
-import { ToastHelpers } from '../helpers';
-import { setListBookingLocation, setPersonTabActiveIndex } from '../redux/Actions';
-import { rxUtil } from '../utils';
+} from '../../constants';
+import { ToastHelpers } from '../../helpers';
+import { setListBookingLocation, setListBookingStore, setPersonTabActiveIndex } from '../../redux/Actions';
+import { rxUtil } from '../../utils';
 
 const hourArr = DateTimeConst.HOUR_ARR;
 const minuteArr = DateTimeConst.MINUTE_ARR;
@@ -40,6 +40,7 @@ export default function CreateBooking({ route, navigation }) {
     const [busyCalendar, setBusyCalendar] = useState([]);
     const [modalVisible, setModalVisible] = useState(false);
     const [modalTimePickerVisible, setModalTimePickerVisible] = useState(false);
+    const [modalPartnerPackageVisible, setModalPartnerPackageVisible] = useState(false);
 
     const [modalActiveType, setModalActiveType] = useState('start');
     const [startTimeStr, setStartTimeStr] = useState('07:00');
@@ -49,8 +50,12 @@ export default function CreateBooking({ route, navigation }) {
     const [startMinuteActive, setStartMinuteActive] = useState(0);
     const [endHourActive, setEndHourActive] = useState(0);
     const [endMinuteActive, setEndMinuteActive] = useState(0);
+    const [listPartnerPackage, setListPartnerPackage] = useState([]);
 
     const [locationActive, setLocationActive] = useState();
+    const [packageActive, setPackageActive] = useState();
+
+    const [total, setTotal] = useState(0);
 
     const token = useSelector((state) => state.userReducer.token);
     const listBookingLocation = useSelector((state) => state.locationReducer.listBookingLocation);
@@ -62,6 +67,7 @@ export default function CreateBooking({ route, navigation }) {
         () => {
             getCalendarPartner();
             fetchListBookingLocation();
+            fetchListPartnerPackage();
         }, []
     );
 
@@ -75,6 +81,37 @@ export default function CreateBooking({ route, navigation }) {
             }
         }, [isSignInOtherDeviceStore]
     );
+
+    const fetchListPartnerPackage = async () => {
+        const {
+            params: {
+                partner: {
+                    id
+                }
+            }
+        } = route;
+        rxUtil(
+            `${Rx.BOOKING.GET_PARTNER_PACKAGE}/${id}`,
+            'GET',
+            null,
+            {
+                Authorization: token
+            },
+            (res) => {
+                setListPartnerPackage(res.data.data);
+                setPackageActive(res.data.data[0]);
+                setIsShowSpinner(false);
+            },
+            (res) => {
+                setIsShowSpinner(false);
+                ToastHelpers.renderToast(res.data.message, 'error');
+            },
+            (res) => {
+                setIsShowSpinner(false);
+                ToastHelpers.renderToast(res.data.message, 'error');
+            }
+        );
+    };
 
     const fetchListBookingLocation = () => {
         if (listBookingLocation && listBookingLocation.length > 0) {
@@ -158,7 +195,8 @@ export default function CreateBooking({ route, navigation }) {
             Longtitude: locationActive.longtitude,
             Latitude: locationActive.latitude,
             Description: locationActive.description,
-            Noted: 'N/A'
+            Noted: 'N/A',
+            totalAmount: total !== 0 ? total : calculateTotalAmount(startTimeStr, endTimeStr)
         };
 
         setIsShowSpinner(true);
@@ -176,6 +214,7 @@ export default function CreateBooking({ route, navigation }) {
                     index: 0,
                     routes: [{ name: ScreenName.PERSONAL }],
                 });
+                getListBooking();
                 dispatch(setPersonTabActiveIndex(2));
             },
             (res) => {
@@ -185,6 +224,28 @@ export default function CreateBooking({ route, navigation }) {
             },
             (res) => {
                 setIsShowSpinner(false);
+                ToastHelpers.renderToast(res.data.message, 'error');
+            }
+        );
+    };
+
+    const getListBooking = () => {
+        const pagingStr = '?pageIndex=1&pageSize=100';
+
+        rxUtil(
+            `${Rx.BOOKING.GET_MY_BOOKING_AS_CUSTOMER}${pagingStr}`,
+            'GET',
+            null,
+            {
+                Authorization: token
+            },
+            (res) => {
+                dispatch(setListBookingStore(res.data.data));
+            },
+            (res) => {
+                ToastHelpers.renderToast(res.data.message, 'error');
+            },
+            (res) => {
                 ToastHelpers.renderToast(res.data.message, 'error');
             }
         );
@@ -203,6 +264,7 @@ export default function CreateBooking({ route, navigation }) {
         .format('HH:mm');
 
     const calculateTotalAmount = (start, end) => {
+        if (total !== 0) return total;
         const { earningExpected } = route.params.partner;
         const startMinutesNumber = convertStringHoursToMinutes(start) || 0;
         const endMinutesNumber = convertStringHoursToMinutes(end) || 0;
@@ -222,6 +284,7 @@ export default function CreateBooking({ route, navigation }) {
     };
 
     const onChangeHourTimePicker = (data) => {
+        setTotal(0);
         if (modalActiveType === 'start') {
             const startTimeArr = startTimeStr.split(':');
             startTimeArr[0] = data;
@@ -238,6 +301,7 @@ export default function CreateBooking({ route, navigation }) {
     };
 
     const onChangeMinuteTimePicker = (data) => {
+        setTotal(0);
         if (modalActiveType === 'start') {
             const startTimeArr = startTimeStr.split(':');
             startTimeArr[1] = data;
@@ -332,6 +396,102 @@ export default function CreateBooking({ route, navigation }) {
                 activeItemColor="#222121"
                 itemColor="#B4B4B4"
             />
+        </Block>
+    );
+
+    const renderPartnerPackage = () => (
+        <Block
+            row
+            space="between"
+            style={{
+                justifyContent: 'center',
+                width: NowTheme.SIZES.WIDTH_BASE * 0.8
+            }}
+        >
+            {listPartnerPackage && packageActive && (
+                <Block
+                    style={{
+                        width: NowTheme.SIZES.WIDTH_BASE * 0.8,
+                    }}
+                >
+                    <Picker
+                        selectedValue={packageActive.id}
+                        onValueChange={(itemValue) => onChangePackage(itemValue)}
+                        fontFamily={NowTheme.FONT.MONTSERRAT_REGULAR}
+                    >
+                        {listPartnerPackage.map((item) => (
+                            <Picker.Item value={item.id} label={item.title} key={item.id} />
+                        ))}
+                    </Picker>
+                    <Block
+                        row
+                        space="around"
+                    >
+                        <Text
+                            style={{
+                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                                color: NowTheme.COLORS.ACTIVE,
+                                fontSize: NowTheme.SIZES.FONT_H1,
+                                marginBottom: 10
+                            }}
+                        >
+                            {convertMinutesToStringHours(packageActive.startAt)}
+                        </Text>
+                        <Text
+                            style={{
+                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                                color: NowTheme.COLORS.ACTIVE,
+                                fontSize: NowTheme.SIZES.FONT_H1,
+                                marginBottom: 10
+                            }}
+                        >
+                            {convertMinutesToStringHours(packageActive.endAt)}
+                        </Text>
+                    </Block>
+
+                    <Text
+                        style={{
+                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                            color: NowTheme.COLORS.DEFAULT,
+                            fontSize: NowTheme.SIZES.FONT_H3,
+                            marginBottom: 10
+                        }}
+                    >
+                        {packageActive.description}
+                    </Text>
+                    <Text
+                        style={{
+                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                            color: NowTheme.COLORS.DEFAULT,
+                            fontSize: NowTheme.SIZES.FONT_H3,
+                            marginBottom: 10
+                        }}
+                    >
+                        {`Lời nhắn từ đối tác: ${packageActive.noted}`}
+                    </Text>
+                    <Block
+                        middle
+                    >
+                        <Text
+                            style={{
+                                fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
+                                fontSize: 30,
+                                paddingVertical: 10
+                            }}
+                            color={NowTheme.COLORS.ACTIVE}
+                        >
+                            {packageActive.totalAmount}
+                            {' '}
+                            <IconCustom
+                                name="diamond"
+                                family={IconFamily.SIMPLE_LINE_ICONS}
+                                size={20}
+                                color={NowTheme.COLORS.ACTIVE}
+                            />
+                        </Text>
+                    </Block>
+                </Block>
+            )}
         </Block>
     );
 
@@ -475,6 +635,77 @@ export default function CreateBooking({ route, navigation }) {
         </Modal>
     );
 
+    const renderPartnerPackageModal = () => (
+        <Modal
+            animationType="slide"
+            transparent
+            visible={modalPartnerPackageVisible}
+        >
+            <Block
+                style={{
+                    marginTop: -NowTheme.SIZES.HEIGHT_BASE * 0.17
+                }}
+            >
+                <ScrollView
+                    showsVerticalScrollIndicator={false}
+                >
+                    <Block style={styles.centeredView}>
+                        <Block style={styles.modalView}>
+                            {renderPartnerPackage()}
+
+                            <Block
+                                row
+                                space="between"
+                                style={{
+                                    paddingVertical: 10,
+                                    width: NowTheme.SIZES.WIDTH_BASE * 0.8
+                                }}
+                            >
+                                <Button
+                                    shadowless
+                                    onPress={() => {
+                                        setModalPartnerPackageVisible(false);
+                                        const startHourString = convertMinutesToStringHours(
+                                            packageActive.startAt
+                                        );
+
+                                        const endHourString = convertMinutesToStringHours(
+                                            packageActive.endAt
+                                        );
+
+                                        setStartTimeStr(startHourString);
+                                        setEndTimeStr(endHourString);
+
+                                        setTotal(packageActive.totalAmount);
+                                    }}
+                                    style={{
+                                        margin: 0,
+                                        width: NowTheme.SIZES.WIDTH_BASE * 0.39
+                                    }}
+                                >
+                                    Xác nhận
+                                </Button>
+                                <Button
+                                    shadowless
+                                    color={NowTheme.COLORS.DEFAULT}
+                                    style={{
+                                        margin: 0,
+                                        width: NowTheme.SIZES.WIDTH_BASE * 0.39
+                                    }}
+                                    onPress={() => {
+                                        setModalPartnerPackageVisible(false);
+                                    }}
+                                >
+                                    Huỷ bỏ
+                                </Button>
+                            </Block>
+                        </Block>
+                    </Block>
+                </ScrollView>
+            </Block>
+        </Modal>
+    );
+
     const renderButtonTimePicker = () => (
         <Block
             space="between"
@@ -551,6 +782,14 @@ export default function CreateBooking({ route, navigation }) {
         }
     };
 
+    const onChangePackage = (packageIdInput) => {
+        const packageChoose = listPartnerPackage.find((item) => item.id === packageIdInput);
+
+        if (packageChoose) {
+            setPackageActive(packageChoose);
+        }
+    };
+
     const renderLocationPicker = () => (
         <>
             {locationActive && (
@@ -614,6 +853,27 @@ export default function CreateBooking({ route, navigation }) {
                     onChangeDate={(date) => { onChangeDateCalendar(date); }}
                     selectedDate={selectedDate}
                 />
+
+                {listPartnerPackage && listPartnerPackage.length !== 0 && (
+                    <TouchableWithoutFeedback
+                        containerStyle={{
+                            width: NowTheme.SIZES.WIDTH_BASE * 0.9,
+                            alignSelf: 'center',
+                            paddingVertical: 10,
+                        }}
+                        onPress={() => setModalPartnerPackageVisible(true)}
+                    >
+                        <Text
+                            style={{
+                                fontSize: NowTheme.SIZES.FONT_H3,
+                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                                color: NowTheme.COLORS.ACTIVE
+                            }}
+                        >
+                            Chọn gói đơn hẹn
+                        </Text>
+                    </TouchableWithoutFeedback>
+                )}
 
                 {renderButtonTimePicker()}
 
@@ -695,7 +955,7 @@ export default function CreateBooking({ route, navigation }) {
             row
             space="between"
             style={{
-                paddingTop: 10
+                paddingVertical: 10,
             }}
         >
             <Button
@@ -786,6 +1046,14 @@ export default function CreateBooking({ route, navigation }) {
                         >
                             {renderModal()}
                             {renderTimePickerModal()}
+                            {/* <Block
+                                style={{
+                                    marginTop: -100
+                                }}
+                            >
+                                {renderPartnerPackageModal()}
+                            </Block> */}
+                            {renderPartnerPackageModal()}
                             {renderFormBlock(partner)}
                             {renderTotal()}
                         </KeyboardAwareScrollView>

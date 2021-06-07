@@ -4,10 +4,10 @@ import React, { useEffect } from 'react';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useDispatch, useSelector } from 'react-redux';
-import { IconCustom, Line, NoteText } from '../components/uiComponents';
-import { IconFamily, NowTheme, ScreenName } from '../constants';
-import { ToastHelpers } from '../helpers';
-import { setPersonTabActiveIndex } from '../redux/Actions';
+import { IconCustom, Line, NoteText } from '../../components/uiComponents';
+import { IconFamily, NowTheme, ScreenName } from '../../constants';
+import { ToastHelpers } from '../../helpers';
+import { setPersonTabActiveIndex } from '../../redux/Actions';
 
 export default function CashIn(props) {
     const { navigation } = props;

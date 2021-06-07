@@ -8,13 +8,13 @@ import {
     ImageBackground, Platform, StatusBar, StyleSheet
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { CenterLoader } from '../components/uiComponents';
+import { CenterLoader } from '../../components/uiComponents';
 import {
     Images, NowTheme, Rx, ScreenName, Utils
-} from '../constants';
-import { ToastHelpers } from '../helpers';
-import { setIsSignInOtherDeviceStore, setNavigation, setToken } from '../redux/Actions';
-import { rxUtil } from '../utils';
+} from '../../constants';
+import { ToastHelpers } from '../../helpers';
+import { setIsSignInOtherDeviceStore, setNavigation, setToken } from '../../redux/Actions';
+import { rxUtil } from '../../utils';
 
 export default function Onboarding({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);

@@ -21,7 +21,7 @@ export default function CardBooking({ booking }) {
             endAt,
             partner,
             totalAmount,
-            status,
+            statusValue,
             date,
             idReadAble,
             address
@@ -105,7 +105,7 @@ export default function CardBooking({ booking }) {
                                 size={NowTheme.SIZES.FONT_H3}
                                 color={NowTheme.COLORS.DEFAULT}
                             >
-                                {`Trạng thái: ${status}`}
+                                {`Trạng thái: ${statusValue}`}
                             </Text>
                             <Block
                                 row

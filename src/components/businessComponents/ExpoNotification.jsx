@@ -31,6 +31,7 @@ export default function ExpoNotification() {
     const notificationListener = useRef();
     const responseListener = useRef();
 
+    const currentUser = useSelector((state) => state.userReducer.currentUser);
     const token = useSelector((state) => state.userReducer.token);
     const navigationObj = useSelector((state) => state.appConfigReducer.navigationObj);
 
@@ -61,7 +62,6 @@ export default function ExpoNotification() {
                             break;
                         }
                         case 2: {
-                            fetchCurrentUserInfo();
                             fetchHistory();
                             break;
                         }
@@ -87,22 +87,6 @@ export default function ExpoNotification() {
         }, [navigationObj]
     );
 
-    const fetchCurrentUserInfo = () => {
-        rxUtil(
-            Rx.USER.CURRENT_USER_INFO,
-            'GET',
-            null,
-            {
-                Authorization: token
-            },
-            (res) => {
-                dispatch(setCurrentUser(res.data.data));
-            },
-            (res) => ToastHelpers.renderToast(res.data.message, 'error'),
-            (res) => ToastHelpers.renderToast(res.data.message, 'error')
-        );
-    };
-
     const fetchHistory = () => {
         rxUtil(
             Rx.CASH.GET_CASH_HISTORY,
@@ -112,7 +96,16 @@ export default function ExpoNotification() {
                 Authorization: token
             },
             (res) => {
-                dispatch(setListCashHistoryStore(res.data.data));
+                const history = res.data.data;
+                if (history && history.length !== 0) {
+                    dispatch(setListCashHistoryStore(history));
+                    const latestUpdatedAmount = history[0].updatedWalletAmount;
+
+                    dispatch(setCurrentUser({
+                        ...currentUser,
+                        walletAmount: latestUpdatedAmount
+                    }));
+                }
             },
             (res) => ToastHelpers.renderToast(res.data.message, 'error'),
             (res) => ToastHelpers.renderToast(res.data.message, 'error')

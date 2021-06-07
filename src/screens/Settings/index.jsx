@@ -7,9 +7,9 @@ import {
     ScrollView, StyleSheet,
     TouchableOpacity
 } from 'react-native';
-import { Switch } from '../components/uiComponents';
-import { NowTheme } from '../constants';
-import { ToastHelpers } from '../helpers';
+import { Switch } from '../../components/uiComponents';
+import { NowTheme } from '../../constants';
+import { ToastHelpers } from '../../helpers';
 
 const recommended = [
     {
