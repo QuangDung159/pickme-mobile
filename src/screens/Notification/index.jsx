@@ -3,12 +3,12 @@ import React, { useEffect, useState } from 'react';
 import { RefreshControl } from 'react-native';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
-import { NotificationItem } from '../components/businessComponents';
-import { CenterLoader } from '../components/uiComponents';
-import { NowTheme, Rx, ScreenName } from '../constants';
-import { ToastHelpers } from '../helpers';
-import { setListNotification, setNumberNotificationUnread } from '../redux/Actions';
-import { rxUtil } from '../utils';
+import { NotificationItem } from '../../components/businessComponents';
+import { CenterLoader } from '../../components/uiComponents';
+import { NowTheme, Rx, ScreenName } from '../../constants';
+import { ToastHelpers } from '../../helpers';
+import { setListNotification, setNumberNotificationUnread } from '../../redux/Actions';
+import { rxUtil } from '../../utils';
 
 export default function Notification({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);

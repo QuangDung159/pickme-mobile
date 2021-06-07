@@ -8,16 +8,16 @@ import { Image, StyleSheet } from 'react-native';
 import { ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import ImageView from 'react-native-image-viewing';
 import { useSelector } from 'react-redux';
-import { CenterLoader, IconCustom, NoteText } from '../components/uiComponents';
+import { CenterLoader, IconCustom, NoteText } from '../../components/uiComponents';
 import {
     IconFamily, NowTheme, Rx, ScreenName
-} from '../constants';
-import { MediaHelpers, ToastHelpers } from '../helpers';
-import { rxUtil } from '../utils';
+} from '../../constants';
+import { MediaHelpers, ToastHelpers } from '../../helpers';
+import { rxUtil } from '../../utils';
 
 export default function Support({ navigation }) {
     const [tabActiveIndex, setTabActiveIndex] = useState(0);
-    const [listQAN, setListQAN] = useState([]);
+    const [listFAQ, setListFAQ] = useState([]);
     const [bugReportForm, setBugReportForm] = useState({
         title: '',
         description: '',
@@ -30,6 +30,7 @@ export default function Support({ navigation }) {
     const [imageId, setImageId] = useState('');
 
     const token = useSelector((state) => state.userReducer.token);
+    const pickMeInfoStore = useSelector((state) => state.appConfigReducer.pickMeInfoStore);
     const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
 
     const tabs = ['Câu hỏi thường gặp', 'Báo lỗi/hỗ trợ'];
@@ -37,7 +38,9 @@ export default function Support({ navigation }) {
     // handler \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
     useEffect(
         () => {
-            getListQNA();
+            if (pickMeInfoStore?.faq) {
+                setListFAQ(pickMeInfoStore.faq);
+            }
         }, []
     );
 
@@ -51,31 +54,6 @@ export default function Support({ navigation }) {
             }
         }, [isSignInOtherDeviceStore]
     );
-
-    const getListQNA = () => {
-        setIsShowSpinner(true);
-        rxUtil(
-            Rx.SYSTEM.GET_QNA,
-            'GET',
-            null,
-            {
-                Authorization: token
-            },
-            (res) => {
-                setListQAN(res.data.data);
-                setIsShowSpinner(false);
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
-                setIsShowSpinner(false);
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
-                setIsShowSpinner(false);
-            },
-            PICKME_INFO_URL
-        );
-    };
 
     const onChangeDescription = (descriptionInput) => {
         setBugReportForm({ ...bugReportForm, description: descriptionInput });
@@ -245,12 +223,12 @@ export default function Support({ navigation }) {
     );
 
     const renderListQNA = () => {
-        if (listQAN && listQAN.length !== 0) {
+        if (listFAQ && listFAQ.length !== 0) {
             return (
                 <>
-                    {listQAN.map((item) => (
+                    {listFAQ.map((item) => (
                         <Block
-                            key={item.id}
+                            key={item.answer}
                             style={{
                                 marginBottom: 10
                             }}
@@ -416,6 +394,7 @@ export default function Support({ navigation }) {
                 alignItems: 'center',
                 justifyContent: 'center'
             }}
+            key={title}
         >
             <Text
                 color={(index === tabActiveIndex) ? NowTheme.COLORS.ACTIVE : NowTheme.COLORS.DEFAULT}
@@ -448,6 +427,7 @@ export default function Support({ navigation }) {
                         {tabs.map((title, index) => renderTopButton(title, index))}
                     </Block>
                     <ScrollView
+                        showsVerticalScrollIndicator={false}
                         contentContainerStyle={{
                             width: NowTheme.SIZES.WIDTH_BASE * 0.9,
                             paddingVertical: 10

@@ -9,20 +9,20 @@ import {
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useDispatch, useSelector } from 'react-redux';
-import { ExpoNotification } from '../components/businessComponents';
+import { ExpoNotification } from '../../components/businessComponents';
 import {
     CenterLoader, IconCustom, Input, NoteText
-} from '../components/uiComponents';
+} from '../../components/uiComponents';
 import {
     IconFamily,
     Images, NowTheme, Rx, ScreenName
-} from '../constants';
-import { ToastHelpers } from '../helpers';
+} from '../../constants';
+import { ToastHelpers } from '../../helpers';
 import {
     setIsSignInOtherDeviceStore,
     setToken
-} from '../redux/Actions';
-import { rxUtil } from '../utils';
+} from '../../redux/Actions';
+import { rxUtil } from '../../utils';
 
 export default function SignInWithOTP({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
@@ -164,8 +164,7 @@ export default function SignInWithOTP({ navigation }) {
         });
 
         updateExpoTokenToServer(bearerToken);
-        SecureStore.setItemAsync('api_token', `${tokenFromAPI}`)
-            .then(console.log('tokenFromAPI :>> ', tokenFromAPI));
+        SecureStore.setItemAsync('api_token', `${tokenFromAPI}`);
 
         dispatch(setIsSignInOtherDeviceStore(false));
         setIsShowSpinner(false);

@@ -1,5 +1,6 @@
 import BookingStatus from './BookingStatus';
 import DateTimeConst from './DateTimeConst';
+import DocumentType from './DocumentType';
 import GraphQueryString from './GraphQueryString';
 import IconFamily from './IconFamily';
 import Images from './Images';
@@ -8,6 +9,7 @@ import Rx from './Rx';
 import ScreenName from './ScreenName';
 import ScreenTitle from './ScreenTitle';
 import Utils from './Utils';
+import VerificationStatus from './VerificationStatus';
 
 export {
     Images,
@@ -19,5 +21,7 @@ export {
     Rx,
     GraphQueryString,
     BookingStatus,
-    DateTimeConst
+    DateTimeConst,
+    VerificationStatus,
+    DocumentType
 };

@@ -4,7 +4,8 @@ import {
     SET_DEVICE_LOCALE, SET_DEVICE_TIMEZONE,
     SET_EXPO_TOKEN,
     SET_NAVIGATION,
-    SET_PERSON_TAB_ACTIVE_INDEX
+    SET_PERSON_TAB_ACTIVE_INDEX,
+    SET_PICK_ME_INFO_STORE
 } from '../ActionTypes';
 
 const initState = {
@@ -13,7 +14,8 @@ const initState = {
     expoToken: '',
     navigationObj: null,
     personTabActiveIndex: 0,
-    deviceIdStore: ''
+    deviceIdStore: '',
+    pickMeInfoStore: null
 };
 
 const appConfigReducer = (state = initState, action) => {
@@ -36,6 +38,9 @@ const appConfigReducer = (state = initState, action) => {
         }
         case SET_DEVICE_ID_STORE: {
             return { ...state, deviceIdStore: payload.deviceIdStore };
+        }
+        case SET_PICK_ME_INFO_STORE: {
+            return { ...state, pickMeInfoStore: payload.pickMeInfoStore };
         }
         default: {
             return state;

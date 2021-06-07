@@ -7,15 +7,15 @@ import {
 } from 'react-native';
 import { AirbnbRating } from 'react-native-ratings';
 import { useDispatch, useSelector } from 'react-redux';
-import { CardBooking } from '../components/businessComponents';
-import { CenterLoader, Input, Line } from '../components/uiComponents';
+import { CardBooking } from '../../components/businessComponents';
+import { CenterLoader, Input, Line } from '../../components/uiComponents';
 import {
     BookingStatus, NowTheme, Rx, ScreenName
-} from '../constants';
-import BookingProgressFlow from '../containers/BookingProgressFlow';
-import { ToastHelpers } from '../helpers';
-import { setPersonTabActiveIndex } from '../redux/Actions';
-import { rxUtil } from '../utils';
+} from '../../constants';
+import BookingProgressFlow from '../../containers/BookingProgressFlow';
+import { ToastHelpers } from '../../helpers';
+import { setPersonTabActiveIndex } from '../../redux/Actions';
+import { rxUtil } from '../../utils';
 
 const reasonDropdownArr = [
     { label: 'Bận đột xuất', value: 0 },

@@ -1,3 +1,5 @@
+/* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
+import { NO_AVATAR_URL } from '@env';
 import {
     Block, Button as GaButton, Text
 } from 'galio-framework';
@@ -10,21 +12,22 @@ import {
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import ImageView from 'react-native-image-viewing';
 import { useSelector } from 'react-redux';
-import { CardImage } from '../components/businessComponents';
+import { CardImage } from '../../components/businessComponents';
 import {
     Button, CenterLoader, UserInfoSection
-} from '../components/uiComponents';
+} from '../../components/uiComponents';
 import {
     IconFamily, NowTheme, Rx, ScreenName
-} from '../constants';
-import { ToastHelpers } from '../helpers';
-import { rxUtil } from '../utils';
+} from '../../constants';
+import { ToastHelpers } from '../../helpers';
+import { rxUtil } from '../../utils';
 
 export default function Profile({ route, navigation }) {
     const [visible, setVisible] = useState(false);
     const [partnerInfo, setPartnerInfo] = useState({});
     const [isShowSpinner, setIsShowSpinner] = useState(true);
     const [imageIndex, setImageIndex] = useState(0);
+    const [listImageFullscreen, setListImageFullscreen] = useState([]);
 
     const token = useSelector((state) => state.userReducer.token);
     const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
@@ -62,7 +65,26 @@ export default function Profile({ route, navigation }) {
             },
             (res) => {
                 setIsShowSpinner(false);
-                setPartnerInfo(res.data.data);
+                const {
+                    data, data: {
+                        posts
+                    }
+                } = res.data;
+                setPartnerInfo(data);
+
+                const listImage = [
+                    {
+                        uri: data.url,
+                    }
+                ];
+
+                posts.forEach((post) => {
+                    listImage.push({
+                        uri: post.url
+                    });
+                });
+
+                setListImageFullscreen(listImage);
             },
             (res) => {
                 ToastHelpers.renderToast(res.data.message, 'error');
@@ -73,21 +95,6 @@ export default function Profile({ route, navigation }) {
                 setIsShowSpinner(false);
             }
         );
-    };
-
-    const createListImageForImageView = () => {
-        const { images } = partnerInfo;
-
-        const listImagePreview = [];
-
-        if (images) {
-            images.forEach((image) => {
-                const item = { ...image };
-                item.uri = image.url;
-                listImagePreview.push(item);
-            });
-        }
-        return listImagePreview;
     };
 
     const renderSubInfo = () => {
@@ -228,10 +235,10 @@ export default function Profile({ route, navigation }) {
 
     const renderListPostImage = () => (
         <>
-            {listImage && (
+            {listImageFullscreen && (
                 <Block>
-                    {listImage.map((imageItem, index) => (
-                        <Block key={`${imageItem.url}`}>
+                    {listImageFullscreen.map((imageItem, index) => (
+                        <Block key={`${imageItem.uri}`}>
                             {index === 0 ? (<></>) : (
                                 <Block style={{
                                     marginVertical: 20
@@ -245,7 +252,7 @@ export default function Profile({ route, navigation }) {
                                     >
                                         <CardImage
                                             key={imageItem.imageId}
-                                            imageUrl={imageItem.url}
+                                            imageUrl={imageItem.uri}
                                             user={partnerInfo}
                                             isShowTitle={false}
                                             navigation={navigation}
@@ -261,8 +268,8 @@ export default function Profile({ route, navigation }) {
         </>
     );
 
-    const listImage = partnerInfo.images;
-    const listImagePreview = createListImageForImageView();
+    // const listImage = partnerInfo.posts;
+    // const listImagePreview = createListImageForImageView();
 
     const {
         params: {
@@ -286,7 +293,7 @@ export default function Profile({ route, navigation }) {
                         }}
                         >
                             <ImageView
-                                images={listImagePreview}
+                                images={listImageFullscreen}
                                 imageIndex={imageIndex}
                                 visible={visible}
                                 onRequestClose={() => setVisible(false)}
@@ -297,36 +304,32 @@ export default function Profile({ route, navigation }) {
                                     showsVerticalScrollIndicator={false}
                                 >
                                     <Block>
-                                        <CenterLoader />
-                                        <Block
-                                            style={{
-                                                zIndex: 99
+                                        <TouchableWithoutFeedback
+                                            onPress={() => {
+                                                setVisible(true);
+                                                setImageIndex(0);
                                             }}
                                         >
-                                            <TouchableWithoutFeedback
-                                                onPress={() => {
-                                                    setVisible(true);
-                                                    setImageIndex(0);
+                                            <Block
+                                                style={{
+                                                    zIndex: 99
                                                 }}
                                             >
-                                                {listImage && (
-                                                    <ImageBackground
-                                                        source={{
-                                                            uri: listImage.length !== 0
-                                                                ? listImage[0].url
-                                                                : 'google.com'
-                                                        }}
-                                                        style={[styles.profileContainer]}
-                                                        imageStyle={styles.profileBackground}
-                                                    />
-                                                )}
-                                            </TouchableWithoutFeedback>
-                                        </Block>
-                                    </Block>
+                                                <ImageBackground
+                                                    source={{
+                                                        uri: partnerInfo.url || NO_AVATAR_URL
+                                                    }}
+                                                    style={[styles.profileContainer]}
+                                                    imageStyle={styles.profileBackground}
+                                                />
+                                            </Block>
+                                            <CenterLoader />
+                                        </TouchableWithoutFeedback>
 
-                                    <Block style={{ marginTop: -(NowTheme.SIZES.HEIGHT_BASE * 0.4) }}>
-                                        {renderSubInfo()}
-                                        {renderListPostImage()}
+                                        <Block style={{ marginTop: -(NowTheme.SIZES.HEIGHT_BASE * 0.4) }}>
+                                            {renderSubInfo()}
+                                            {renderListPostImage()}
+                                        </Block>
                                     </Block>
                                 </ScrollView>
                             </Block>

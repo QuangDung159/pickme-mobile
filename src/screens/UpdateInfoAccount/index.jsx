@@ -7,14 +7,14 @@ import React, { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
-import { CenterLoader, IconCustom, Input } from '../components/uiComponents';
+import { CenterLoader, IconCustom, Input } from '../../components/uiComponents';
 import {
     IconFamily,
     NowTheme, Rx, ScreenName
-} from '../constants';
-import { ToastHelpers } from '../helpers';
-import { setCurrentUser, setPersonTabActiveIndex } from '../redux/Actions';
-import { rxUtil } from '../utils';
+} from '../../constants';
+import { ToastHelpers } from '../../helpers';
+import { setCurrentUser, setPersonTabActiveIndex } from '../../redux/Actions';
+import { rxUtil } from '../../utils';
 
 export default function UpdateInfoAccount(props) {
     const { navigation } = props;
@@ -249,8 +249,7 @@ export default function UpdateInfoAccount(props) {
                 ToastHelpers.renderToast(res.data.message, 'success');
                 setIsShowFormChangePassword(false);
 
-                SecureStore.setItemAsync('password', newPassword)
-                    .then(console.log('password :>> ', newPassword));
+                SecureStore.setItemAsync('password', newPassword);
 
                 setNewPassword('');
                 setReNewPassword('');
@@ -270,34 +269,6 @@ export default function UpdateInfoAccount(props) {
 
     const onChangeDOBYear = (yearInput) => {
         setNewUser({ ...newUser, dob: `${yearInput}-01-01T14:00:00` });
-    };
-
-    const onGetCurrentUserData = () => {
-        const headers = {
-            Authorization: token
-        };
-
-        rxUtil(
-            Rx.USER.CURRENT_USER_INFO, 'GET', '', headers,
-            (res) => {
-                dispatch(setCurrentUser(res.data.data));
-                setIsShowSpinner(false);
-                ToastHelpers.renderToast(
-                    'Cập nhật thông tin thành công!',
-                    'success'
-                );
-                navigation.navigate(ScreenName.PERSONAL);
-                dispatch(setPersonTabActiveIndex(0));
-            },
-            (res) => {
-                setIsShowSpinner(false);
-                ToastHelpers.renderToast(res.data.message, 'error');
-            },
-            (res) => {
-                setIsShowSpinner(false);
-                ToastHelpers.renderToast(res.data.message, 'error');
-            }
-        );
     };
 
     const onChangeName = (nameInput) => {
@@ -320,15 +291,26 @@ export default function UpdateInfoAccount(props) {
         const {
             fullName,
             description,
+            homeTown, interests
         } = newUser;
 
         if (!fullName) {
-            ToastHelpers.renderToast('Tên của bạn không hợp lệ!', 'error');
+            ToastHelpers.renderToast('Tên của bạn không được trống!', 'error');
+            return false;
+        }
+
+        if (!homeTown) {
+            ToastHelpers.renderToast('Quê quán không được trống!', 'error');
+            return false;
+        }
+
+        if (!interests) {
+            ToastHelpers.renderToast('Sở thích không được trống!', 'error');
             return false;
         }
 
         if (!description) {
-            ToastHelpers.renderToast('Mô tả không hợp lệ!', 'error');
+            ToastHelpers.renderToast('Mô tả không được trống!', 'error');
             return false;
         }
 
@@ -376,7 +358,22 @@ export default function UpdateInfoAccount(props) {
             data,
             headers,
             () => {
-                onGetCurrentUserData();
+                const userInfo = {
+                    ...currentUser,
+                    fullName,
+                    dob,
+                    homeTown,
+                    interests
+                };
+
+                dispatch(setCurrentUser(userInfo));
+                setIsShowSpinner(false);
+                ToastHelpers.renderToast(
+                    'Cập nhật thông tin thành công!',
+                    'success'
+                );
+                navigation.navigate(ScreenName.PERSONAL);
+                dispatch(setPersonTabActiveIndex(0));
             },
             (res) => {
                 ToastHelpers.renderToast(res.data.message, 'error');

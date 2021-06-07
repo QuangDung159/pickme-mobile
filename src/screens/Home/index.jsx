@@ -1,6 +1,6 @@
 /* eslint no-underscore-dangle: ["error", { "allow": ["_isMounted", "_id"] }] */
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
-import { NO_AVATAR_URL } from '@env';
+import { NO_AVATAR_URL, PICKME_INFO_URL } from '@env';
 import { Block, Text } from 'galio-framework';
 import React, { useEffect, useState } from 'react';
 import {
@@ -9,16 +9,16 @@ import {
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import ImageScalable from 'react-native-scalable-image';
 import { useDispatch, useSelector } from 'react-redux';
-import { CenterLoader } from '../components/uiComponents';
+import { CenterLoader } from '../../components/uiComponents';
 import {
     GraphQueryString, NowTheme, Rx, ScreenName
-} from '../constants';
-import { ToastHelpers } from '../helpers';
+} from '../../constants';
+import { ToastHelpers } from '../../helpers';
 import {
     setCurrentUser,
-    setListConversation, setNumberMessageUnread
-} from '../redux/Actions';
-import { rxUtil, socketRequestUtil } from '../utils';
+    setListConversation, setNumberMessageUnread, setPickMeInfoStore
+} from '../../redux/Actions';
+import { rxUtil, socketRequestUtil } from '../../utils';
 
 export default function Home({ navigation }) {
     const [refreshing, setRefreshing] = useState(false);
@@ -27,6 +27,7 @@ export default function Home({ navigation }) {
     const [listConversationGetAtHome, setListConversationGetAtHome] = useState([]);
 
     const token = useSelector((state) => state.userReducer.token);
+    const pickMeInfoStore = useSelector((state) => state.appConfigReducer.pickMeInfoStore);
     const currentUser = useSelector((state) => state.userReducer.currentUser);
     const messageListened = useSelector((state) => state.messageReducer.messageListened);
     const numberMessageUnread = useSelector((state) => state.messageReducer.numberMessageUnread);
@@ -38,6 +39,9 @@ export default function Home({ navigation }) {
     useEffect(
         () => {
             fetchCurrentUserInfo();
+
+            if (!pickMeInfoStore) fetchPickMeInfo();
+
             getListPartner();
             const intervalUpdateLatest = setIntervalToUpdateLastActiveOfUserStatus();
 
@@ -98,6 +102,30 @@ export default function Home({ navigation }) {
             }
         }, [isSignInOtherDeviceStore]
     );
+
+    const fetchPickMeInfo = () => {
+        rxUtil(
+            Rx.SYSTEM.PICK_ME_INFO,
+            'GET',
+            null,
+            {
+                Authorization: token
+            },
+            (res) => {
+                dispatch(setPickMeInfoStore(res.data));
+                setIsShowSpinner(false);
+            },
+            (res) => {
+                ToastHelpers.renderToast(res.data.message, 'error');
+                setIsShowSpinner(false);
+            },
+            (res) => {
+                ToastHelpers.renderToast(res.data.message, 'error');
+                setIsShowSpinner(false);
+            },
+            PICKME_INFO_URL
+        );
+    };
 
     const fetchCurrentUserInfo = () => {
         rxUtil(
