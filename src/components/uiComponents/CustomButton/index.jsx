@@ -8,7 +8,7 @@ import IconCustom from '../IconCustom';
 CustomButton.propTypes = {
     label: PropTypes.string,
     labelStyle: PropTypes.object,
-    buttonStyle: PropTypes.object,
+    buttonStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
     leftIcon: PropTypes.object,
     onPressLeftIcon: PropTypes.func,
     type: PropTypes.oneOf(['active', 'default'])

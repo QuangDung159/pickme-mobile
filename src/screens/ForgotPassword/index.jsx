@@ -1,16 +1,16 @@
+import * as SecureStore from 'expo-secure-store';
 import {
-    Block, Button
+    Block
 } from 'galio-framework';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     ImageBackground,
     StyleSheet
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { useSelector } from 'react-redux';
 import { ExpoNotification } from '../../components/businessComponents';
 import {
-    CenterLoader, IconCustom, Input, NoteText
+    CenterLoader, CustomButton, CustomInput, IconCustom, NoteText
 } from '../../components/uiComponents';
 import {
     IconFamily,
@@ -22,11 +22,24 @@ import { rxUtil } from '../../utils';
 export default function ForgotPassword({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
     const [otp, setOtp] = useState('');
+    const [deviceId, setDeviceId] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [password, setPassword] = useState('');
     const [rePassword, setRePassword] = useState('');
 
-    const deviceIdStore = useSelector((state) => state.appConfigReducer.deviceIdStore);
+    const [isShowPassword, setIsShowPassword] = useState('');
+    const [isShowRePassword, setIsShowRePassword] = useState('');
+
+    useEffect(
+        () => {
+            getLocalValue();
+        }, []
+    );
+
+    const getLocalValue = async () => {
+        const deviceIdLocalStore = await SecureStore.getItemAsync('deviceId');
+        setDeviceId(deviceIdLocalStore);
+    };
 
     // handler \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
     const onSubmitForgotPassword = () => {
@@ -36,7 +49,7 @@ export default function ForgotPassword({ navigation }) {
         const data = {
             phoneNum: phoneNumber,
             password,
-            deviceId: deviceIdStore,
+            deviceId,
             code: otp
         };
 
@@ -51,12 +64,12 @@ export default function ForgotPassword({ navigation }) {
                 ToastHelpers.renderToast(res.data.message, 'success');
             },
             (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
                 toggleSpinner(false);
+                ToastHelpers.renderToast(res.data.message, 'error');
             },
             (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
                 toggleSpinner(false);
+                ToastHelpers.renderToast(res.data.message, 'error');
             }
         );
     };
@@ -108,49 +121,76 @@ export default function ForgotPassword({ navigation }) {
                         alignItems: 'center'
                     }}
                 >
-                    <Input
-                        style={styles.input}
-                        keyboardType="number-pad"
+                    <CustomInput
                         value={otp}
-                        placeholder="Nhập mã xác thực..."
+                        inputStyle={{
+                            width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                        }}
                         onChangeText={(otpInput) => setOtp(otpInput)}
+                        keyboardType="number-pad"
+                        containerStyle={{
+                            marginVertical: 10,
+                            width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                        }}
+                        placeholder="Nhập mã xác thực..."
                     />
 
-                    <Input
-                        placeholder="Nhập mật khẩu mới..."
-                        style={styles.input}
-                        keyboardType="number-pad"
-                        password
-                        viewPass
+                    <CustomInput
                         value={password}
-                        onChangeText={
-                            (passwordInput) => setPassword(passwordInput)
-                        }
+                        inputStyle={{
+                            width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                        }}
+                        onChangeText={(passwordInput) => setPassword(passwordInput)}
+                        keyboardType="number-pad"
+                        containerStyle={{
+                            marginVertical: 10,
+                            width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                        }}
+                        secureTextEntry={!isShowPassword}
+                        placeholder="Nhập mật khẩu mới..."
+                        rightIcon={{
+                            name: 'eye',
+                            family: IconFamily.ENTYPO,
+                            size: 20,
+                            color: NowTheme.COLORS.DEFAULT
+                        }}
+                        onPressRightIcon={() => setIsShowPassword(!isShowPassword)}
                     />
 
-                    <Input
-                        placeholder="Nhập lại mật khẩu mới..."
-                        style={styles.input}
-                        password
-                        viewPass
-                        keyboardType="number-pad"
+                    <CustomInput
                         value={rePassword}
+                        inputStyle={{
+                            width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                        }}
                         onChangeText={
                             (rePasswordInput) => setRePassword(rePasswordInput)
                         }
+                        keyboardType="number-pad"
+                        containerStyle={{
+                            marginVertical: 10,
+                            width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                        }}
+                        secureTextEntry={!isShowRePassword}
+                        placeholder="Nhập lại mật khẩu mới..."
+                        rightIcon={{
+                            name: 'eye',
+                            family: IconFamily.ENTYPO,
+                            size: 20,
+                            color: NowTheme.COLORS.DEFAULT
+                        }}
+                        onPressRightIcon={() => setIsShowRePassword(!isShowRePassword)}
                     />
 
                 </Block>
             </Block>
 
             <Block center>
-                <Button
+                <CustomButton
                     onPress={() => onSubmitForgotPassword()}
-                    style={styles.button}
-                    shadowless
-                >
-                    Xác nhận
-                </Button>
+                    buttonStyle={styles.button}
+                    type="active"
+                    label="Xác nhận"
+                />
             </Block>
         </>
     );
@@ -164,25 +204,27 @@ export default function ForgotPassword({ navigation }) {
                         alignItems: 'center'
                     }}
                 >
-                    <Input
-                        style={styles.input}
+                    <CustomInput
                         placeholder="Nhập số điện thoại..."
                         value={phoneNumber}
                         onChangeText={
                             (phoneNumberInput) => setPhoneNumber(phoneNumberInput)
                         }
+                        containerStyle={{
+                            marginVertical: 10,
+                            width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                        }}
                     />
                 </Block>
             </Block>
 
             <Block center>
-                <Button
+                <CustomButton
                     onPress={() => onClickGetOTPWhenForgotPassword()}
-                    style={styles.button}
-                    shadowless
-                >
-                    Nhận mã xác thực
-                </Button>
+                    buttonStyle={styles.button}
+                    type="active"
+                    label="Nhận mã xác thực"
+                />
             </Block>
         </>
     );
@@ -284,46 +326,5 @@ const styles = StyleSheet.create({
     button: {
         width: NowTheme.SIZES.WIDTH_BASE * 0.77,
         marginVertical: 10
-    },
-    input: {
-        borderRadius: 5,
-        width: NowTheme.SIZES.WIDTH_BASE * 0.77
-    },
-    centeredView: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 22
-    },
-    modalView: {
-        margin: 20,
-        backgroundColor: 'white',
-        borderRadius: 20,
-        padding: 35,
-        alignItems: 'center',
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 2
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5
-    },
-    openButton: {
-        backgroundColor: '#F194FF',
-        borderRadius: 20,
-        padding: 10,
-        elevation: 2
-    },
-    textStyle: {
-        color: 'white',
-        fontWeight: 'bold',
-        textAlign: 'center'
-    },
-    modalText: {
-        marginBottom: 15,
-        textAlign: 'center',
-        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
     }
 });

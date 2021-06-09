@@ -1,8 +1,8 @@
 /* eslint-disable max-len */
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { IconFamily, NowTheme, VerificationStatus } from '../../constants';
-import { IconCustom, NoteText } from '../uiComponents';
+import { IconCustom, NoteText } from '../../../components/uiComponents';
+import { IconFamily, NowTheme, VerificationStatus } from '../../../constants';
 
 export default function VerificationStatusPanel() {
     const currentUser = useSelector((state) => state.userReducer.currentUser);

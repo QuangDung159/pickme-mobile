@@ -5,9 +5,9 @@ import React from 'react';
 import {
     StyleSheet
 } from 'react-native';
-import { IconFamily, NowTheme } from '../../constants';
-import { ToastHelpers } from '../../helpers';
-import { IconCustom } from '../uiComponents';
+import { IconCustom } from '../../../components/uiComponents';
+import { IconFamily, NowTheme } from '../../../constants';
+import { ToastHelpers } from '../../../helpers';
 
 export default function CardBooking({ booking }) {
     const convertMinutesToStringHours = (minutes) => moment.utc()

@@ -20,7 +20,7 @@ export default {
         GET_VERIFICATION_DETAIL: '/Verify/VerificationRequestDetail',
         SUBMIT_VERIFICATION: '/Verify/SubmitVerify',
         GENERATE_OTP_WHEN_CHANGE_DEVICE: '/Devices/CustomerGenerateOTPChangedDeviceId',
-        SUBMIT_CHANGE_DEVICE_CONFIRM: '/users/CustomerChangedDeviceIdConfirm',
+        SUBMIT_CHANGE_DEVICE_CONFIRM: '/Devices/CustomerChangedDeviceIdConfirm',
         GENERATE_OTP_WHEN_FORGOT_PASSWORD: '/users/CustomerForGotPasswordOTP',
         SUBMIT_FORGOT_PASSWORD_CONFIRM: '/users/CustomerForGotPasswordConfirm',
         SUBMIT_CHANGE_PASSWORD: '/users/changepassword',

@@ -3,11 +3,11 @@ import React, { useEffect, useState } from 'react';
 import { FlatList, RefreshControl } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
-import { NowTheme, Rx, ScreenName } from '../../constants';
-import { ToastHelpers } from '../../helpers';
-import { setListBookingStore } from '../../redux/Actions';
-import { rxUtil } from '../../utils';
-import { CenterLoader, Line } from '../uiComponents';
+import { CenterLoader, Line } from '../../../components/uiComponents';
+import { NowTheme, Rx, ScreenName } from '../../../constants';
+import { ToastHelpers } from '../../../helpers';
+import { setListBookingStore } from '../../../redux/Actions';
+import { rxUtil } from '../../../utils';
 import CardBooking from './CardBooking';
 
 export default function BookingList({ navigation }) {

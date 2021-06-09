@@ -3,7 +3,7 @@ import {
 } from 'galio-framework';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { NowTheme } from '../../constants';
+import { NowTheme } from '../../../constants';
 
 export default function ProfileInfoItem({
     label, value

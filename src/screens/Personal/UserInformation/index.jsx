@@ -11,14 +11,15 @@ import { ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handl
 import ImageView from 'react-native-image-viewing';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-    IconFamily, NowTheme, Rx, ScreenName
-} from '../../constants';
-import { MediaHelpers, ToastHelpers } from '../../helpers';
-import { resetStoreSignOut, setCurrentUser } from '../../redux/Actions';
-import { rxUtil } from '../../utils';
+    CenterLoader, IconCustom, Line
+} from '../../../components/uiComponents';
 import {
-    CenterLoader, IconCustom, Line, UserInfoSection
-} from '../uiComponents';
+    IconFamily, NowTheme, Rx, ScreenName
+} from '../../../constants';
+import { MediaHelpers, ToastHelpers } from '../../../helpers';
+import { resetStoreSignOut, setCurrentUser } from '../../../redux/Actions';
+import { rxUtil } from '../../../utils';
+import UserInfoSection from './UserInfoSection';
 import VerificationStatusPanel from './VerificationStatusPanel';
 
 export default function UserInformation({ navigation }) {

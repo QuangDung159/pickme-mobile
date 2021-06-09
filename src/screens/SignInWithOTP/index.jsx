@@ -1,6 +1,6 @@
 import * as SecureStore from 'expo-secure-store';
 import {
-    Block, Button
+    Block
 } from 'galio-framework';
 import React, { useEffect, useState } from 'react';
 import {
@@ -11,7 +11,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { useDispatch, useSelector } from 'react-redux';
 import { ExpoNotification } from '../../components/businessComponents';
 import {
-    CenterLoader, IconCustom, Input, NoteText
+    CenterLoader, CustomButton, CustomInput, IconCustom, NoteText
 } from '../../components/uiComponents';
 import {
     IconFamily,
@@ -227,27 +227,30 @@ export default function SignInWithOTP({ navigation }) {
                                         >
 
                                             {!otp ? (
-                                                <Input
-                                                    style={{
-                                                        borderRadius: 5,
-                                                        width: NowTheme.SIZES.WIDTH_BASE * 0.77,
-                                                    }}
+                                                <CustomInput
                                                     placeholder="Nhập số điện thoại..."
                                                     value={phoneNumber}
                                                     onChangeText={
                                                         (phoneNumberInput) => setPhoneNumber(phoneNumberInput)
                                                     }
-                                                />
-                                            ) : (
-                                                <Input
-                                                    style={{
-                                                        borderRadius: 5,
+                                                    containerStyle={{
+                                                        marginVertical: 10,
                                                         width: NowTheme.SIZES.WIDTH_BASE * 0.77
                                                     }}
-                                                    keyboardType="number-pad"
+                                                />
+                                            ) : (
+                                                <CustomInput
                                                     value={otp}
-                                                    placeholder="Nhập mã xác thực..."
+                                                    inputStyle={{
+                                                        width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                                                    }}
                                                     onChangeText={(otpInput) => setOtp(otpInput)}
+                                                    keyboardType="number-pad"
+                                                    containerStyle={{
+                                                        marginVertical: 10,
+                                                        width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                                                    }}
+                                                    placeholder="Nhập mã xác thực..."
                                                 />
                                             )}
                                         </Block>
@@ -255,25 +258,23 @@ export default function SignInWithOTP({ navigation }) {
 
                                     <Block center>
                                         {!otp ? (
-                                            <Button
+                                            <CustomButton
                                                 onPress={() => onClickGetOTPWhenChangeDevice()}
-                                                style={[styles.button, {
+                                                type="active"
+                                                label="Yêu cầu mã xác thực"
+                                                buttonStyle={[styles.button, {
                                                     marginVertical: 10
                                                 }]}
-                                                shadowless
-                                            >
-                                                Yêu cầu mã xác thực
-                                            </Button>
+                                            />
                                         ) : (
-                                            <Button
+                                            <CustomButton
                                                 onPress={() => onSubmitOTP()}
-                                                style={[styles.button, {
+                                                type="active"
+                                                label="Xác thực và đăng nhập"
+                                                buttonStyle={[styles.button, {
                                                     marginVertical: 10
                                                 }]}
-                                                shadowless
-                                            >
-                                                Xác thực và đăng nhập
-                                            </Button>
+                                            />
                                         )}
                                     </Block>
                                 </>
@@ -316,41 +317,4 @@ const styles = StyleSheet.create({
     button: {
         width: NowTheme.SIZES.WIDTH_BASE * 0.77
     },
-    centeredView: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 22
-    },
-    modalView: {
-        margin: 20,
-        backgroundColor: 'white',
-        borderRadius: 20,
-        padding: 35,
-        alignItems: 'center',
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 2
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5
-    },
-    openButton: {
-        backgroundColor: '#F194FF',
-        borderRadius: 20,
-        padding: 10,
-        elevation: 2
-    },
-    textStyle: {
-        color: 'white',
-        fontWeight: 'bold',
-        textAlign: 'center'
-    },
-    modalText: {
-        marginBottom: 15,
-        textAlign: 'center',
-        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
-    }
 });

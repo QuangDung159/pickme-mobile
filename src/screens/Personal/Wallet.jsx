@@ -3,13 +3,13 @@ import React, { useEffect, useState } from 'react';
 import { RefreshControl } from 'react-native';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
+import { CenterLoader, IconCustom } from '../../components/uiComponents';
 import {
     IconFamily, NowTheme, Rx, ScreenName
 } from '../../constants';
 import { ToastHelpers } from '../../helpers';
 import { setListCashHistoryStore } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
-import { CenterLoader, IconCustom } from '../uiComponents';
 
 export default function Wallet({ navigation, route }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);

@@ -1,7 +1,7 @@
 import { Block, Text } from 'galio-framework';
 import React from 'react';
-import { NowTheme } from '../../constants';
-import IconCustom from './IconCustom';
+import { IconCustom } from '../../../components/uiComponents';
+import { NowTheme } from '../../../constants';
 
 export default function UserInfoItem({
     value, icon: {

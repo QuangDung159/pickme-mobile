@@ -1,13 +1,14 @@
 import {
-    Block, Text
+    Block
 } from 'galio-framework';
 import React, { useEffect } from 'react';
-import { StyleSheet } from 'react-native';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
-import { BookingList, UserInformation, Wallet } from '../../components/businessComponents';
-import { NowTheme, ScreenName } from '../../constants';
+import { TopTabBar } from '../../components/uiComponents';
+import { ScreenName } from '../../constants';
 import { setPersonTabActiveIndex } from '../../redux/Actions';
+import BookingList from './BookingList';
+import UserInformation from './UserInformation';
+import Wallet from './Wallet';
 
 export default function Personal({ navigation, route }) {
     const personTabActiveIndex = useSelector((state) => state.appConfigReducer.personTabActiveIndex);
@@ -20,7 +21,7 @@ export default function Personal({ navigation, route }) {
             tabLabel: 'Cá nhân',
         },
         {
-            tabLabel: 'Rương kim cương',
+            tabLabel: 'Rương\nkim cương',
         },
         {
             tabLabel: 'Đơn hẹn',
@@ -39,33 +40,6 @@ export default function Personal({ navigation, route }) {
     );
 
     // Render \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
-    const renderTabButton = (tab, index) => {
-        const { tabLabel } = tab;
-        return (
-            <TouchableWithoutFeedback
-                key={tabLabel}
-                onPress={() => dispatch(setPersonTabActiveIndex(index))}
-                containerStyle={{
-                    backgroundColor: !(index === personTabActiveIndex)
-                        ? NowTheme.COLORS.LIST_ITEM_BACKGROUND_1
-                        : NowTheme.COLORS.BASE,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    flex: 1,
-                    height: NowTheme.SIZES.HEIGHT_BASE * 0.07
-                }}
-            >
-                <Text
-                    size={12}
-                    color={(index === personTabActiveIndex) ? NowTheme.COLORS.ACTIVE : NowTheme.COLORS.DEFAULT}
-                    style={styles.titleBold}
-                >
-                    {tabLabel}
-                </Text>
-            </TouchableWithoutFeedback>
-        );
-    };
-
     const renderTabByIndex = () => {
         switch (personTabActiveIndex) {
             case 0: {
@@ -91,28 +65,13 @@ export default function Personal({ navigation, route }) {
 
     return (
         <Block flex>
-            <Block
-                row
-                style={[{
-                    height: NowTheme.SIZES.HEIGHT_BASE * 0.07
-                }]}
-            >
-                {tabs.map((title, index) => renderTabButton(title, index))}
-            </Block>
+            <TopTabBar
+                tabs={tabs}
+                tabActiveIndex={personTabActiveIndex}
+                setTabActiveIndex={(index) => { dispatch(setPersonTabActiveIndex(index)); }}
+            />
             {renderTabByIndex()}
         </Block>
 
     );
 }
-
-const styles = StyleSheet.create({
-    titleBold: {
-        fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
-        fontSize: NowTheme.SIZES.FONT_H4,
-        textAlign: 'center'
-    },
-    button: {
-        width: NowTheme.SIZES.WIDTH_BASE * 0.44,
-        margin: 0
-    },
-});

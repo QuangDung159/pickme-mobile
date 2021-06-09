@@ -1,4 +1,5 @@
 import CenterLoader from './CenterLoader';
+import CustomButton from './CustomButton';
 import CustomInput from './CustomInput';
 import IconCustom from './IconCustom';
 import IndicatorVerticalLine from './IndicatorVerticalLine';
@@ -8,9 +9,6 @@ import StepIndicator from './StepIndicator';
 import Switch from './Switch';
 import Tabs from './Tabs';
 import TopTabBar from './TopTabBar';
-import UserInfoItem from './UserInfoItem';
-import UserInfoSection from './UserInfoSection';
-import CustomButton from './CustomButton';
 
 export {
     IconCustom, Tabs,
@@ -19,8 +17,6 @@ export {
     Line, NoteText,
     IndicatorVerticalLine,
     StepIndicator,
-    UserInfoSection,
-    UserInfoItem,
     TopTabBar,
     CustomInput,
     CustomButton

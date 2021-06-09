@@ -24,7 +24,7 @@ import {
 import { rxUtil } from '../../utils';
 
 export default function SignIn({ navigation }) {
-    const [phoneNumber, setPhoneNumber] = useState('dongvu');
+    const [phoneNumber, setPhoneNumber] = useState('huyvd');
     const [password, setPassword] = useState('0000');
     const [isShowSpinner, setIsShowSpinner] = useState(false);
     const [deviceIdToSend, setDeviceIdToSend] = useState('');
@@ -241,7 +241,7 @@ export default function SignIn({ navigation }) {
                                                 placeholder="Empty or 'test'"
                                                 value={deviceIdToSend}
                                                 onChangeText={
-                                                    (deviceIdInput) => setDeviceIdToSend(deviceIdInput)
+                                                    () => setDeviceIdToSend('test')
                                                 }
                                                 containerStyle={{
                                                     marginVertical: 10,
@@ -257,14 +257,10 @@ export default function SignIn({ navigation }) {
                                             onPress={() => onSubmitLogin()}
                                             type="active"
                                             label="Đăng nhập"
-                                            buttonStyle={
-                                                [
-                                                    styles.button,
-                                                    {
-                                                        marginVertical: 10
-                                                    }
-                                                ]
-                                            }
+                                            buttonStyle={{
+                                                marginVertical: 10,
+                                                width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                                            }}
                                         />
                                     </Block>
                                 </>
@@ -304,44 +300,4 @@ const styles = StyleSheet.create({
         elevation: 1,
         overflow: 'hidden'
     },
-    button: {
-        width: NowTheme.SIZES.WIDTH_BASE * 0.77
-    },
-    centeredView: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 22
-    },
-    modalView: {
-        margin: 20,
-        backgroundColor: 'white',
-        borderRadius: 20,
-        padding: 35,
-        alignItems: 'center',
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 2
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5
-    },
-    openButton: {
-        backgroundColor: '#F194FF',
-        borderRadius: 20,
-        padding: 10,
-        elevation: 2
-    },
-    textStyle: {
-        color: 'white',
-        fontWeight: 'bold',
-        textAlign: 'center'
-    },
-    modalText: {
-        marginBottom: 15,
-        textAlign: 'center',
-        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
-    }
 });
