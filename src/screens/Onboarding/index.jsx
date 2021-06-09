@@ -1,14 +1,14 @@
 import Constants from 'expo-constants';
 import * as SecureStore from 'expo-secure-store';
 import {
-    Block, Button, Text
+    Block, Text
 } from 'galio-framework';
 import React, { useEffect, useState } from 'react';
 import {
     ImageBackground, Platform, StatusBar, StyleSheet
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { CenterLoader } from '../../components/uiComponents';
+import { CenterLoader, CustomButton } from '../../components/uiComponents';
 import {
     Images, NowTheme, Rx, ScreenName, Utils
 } from '../../constants';
@@ -146,36 +146,27 @@ export default function Onboarding({ navigation }) {
                                         PickMe
                                     </Text>
                                 </Block>
-                                <Button
-                                    shadowless
-                                    style={styles.button}
-                                    color={NowTheme.COLORS.PRIMARY}
+                                <CustomButton
                                     onPress={() => {
                                         navigation.navigate(ScreenName.SIGN_IN);
                                     }}
-                                >
-                                    <Text
-                                        style={{ fontFamily: NowTheme.FONT.MONTSERRAT_BOLD, fontSize: 14 }}
-                                        color={NowTheme.COLORS.BASE}
-                                    >
-                                        Đăng nhập
-                                    </Text>
-                                </Button>
-                                <Button
-                                    shadowless
-                                    style={styles.button}
-                                    color={NowTheme.COLORS.PRIMARY}
+                                    type="active"
+                                    label="Đăng nhập"
+                                    buttonStyle={styles.button}
+                                />
+                                <CustomButton
                                     onPress={() => navigation.navigate(ScreenName.SIGN_UP)}
-                                >
-                                    <Text
-                                        style={{ fontFamily: NowTheme.FONT.MONTSERRAT_BOLD, fontSize: 14 }}
-                                        color={NowTheme.COLORS.BASE}
-                                    >
-                                        Đăng kí
-                                    </Text>
-                                </Button>
+                                    type="active"
+                                    label="Đăng kí"
+                                    buttonStyle={styles.button}
+                                />
                             </Block>
-                            <Block middle>
+                            <Block
+                                middle
+                                style={{
+                                    marginTop: 10
+                                }}
+                            >
                                 <Text
                                     color={NowTheme.COLORS.DEFAULT}
                                     size={NowTheme.SIZES.FONT_H4 - 2}
@@ -206,13 +197,11 @@ const styles = StyleSheet.create({
     padded: {
         zIndex: 3,
         position: 'absolute',
-        bottom: NowTheme.SIZES.HEIGHT_BASE * 0.1,
+        bottom: NowTheme.SIZES.HEIGHT_BASE * 0.17,
         alignSelf: 'center',
     },
     button: {
         width: NowTheme.SIZES.WIDTH_BASE * 0.8,
-        shadowRadius: 0,
-        shadowOpacity: 0,
         marginTop: 10
     },
 

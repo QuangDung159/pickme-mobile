@@ -1,6 +1,6 @@
 import * as SecureStore from 'expo-secure-store';
 import {
-    Block, Button, Text
+    Block, Text
 } from 'galio-framework';
 import React, { useState } from 'react';
 import {
@@ -11,8 +11,9 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useDispatch, useSelector } from 'react-redux';
 import { ExpoNotification } from '../../components/businessComponents';
-import { CenterLoader, Input } from '../../components/uiComponents';
+import { CenterLoader, CustomButton, CustomInput } from '../../components/uiComponents';
 import {
+    IconFamily,
     Images, NowTheme, Rx, ScreenName
 } from '../../constants';
 import { ToastHelpers } from '../../helpers';
@@ -23,10 +24,11 @@ import {
 import { rxUtil } from '../../utils';
 
 export default function SignIn({ navigation }) {
-    const [phoneNumber, setPhoneNumber] = useState('huyvd');
+    const [phoneNumber, setPhoneNumber] = useState('dongvu');
     const [password, setPassword] = useState('0000');
     const [isShowSpinner, setIsShowSpinner] = useState(false);
     const [deviceIdToSend, setDeviceIdToSend] = useState('');
+    const [isShowPassword, setIsShowPassword] = useState(false);
 
     const expoToken = useSelector((state) => state.appConfigReducer.expoToken);
     const deviceIdStore = useSelector((state) => state.appConfigReducer.deviceIdStore);
@@ -200,60 +202,70 @@ export default function SignIn({ navigation }) {
                                                 alignItems: 'center'
                                             }}
                                         >
-                                            <Input
-                                                style={{
-                                                    borderRadius: 5,
-                                                    width: NowTheme.SIZES.WIDTH_BASE * 0.77,
-                                                }}
+                                            <CustomInput
                                                 placeholder="Nhập số điện thoại..."
                                                 value={phoneNumber}
                                                 onChangeText={
                                                     (phoneNumberInput) => setPhoneNumber(phoneNumberInput)
                                                 }
-                                            />
-
-                                            <Input
-                                                placeholder="Nhập mật khẩu..."
-                                                style={{
-                                                    borderRadius: 5,
+                                                containerStyle={{
+                                                    marginVertical: 10,
                                                     width: NowTheme.SIZES.WIDTH_BASE * 0.77
                                                 }}
-                                                password
-                                                viewPass
-                                                keyboardType="number-pad"
+                                            />
+
+                                            <CustomInput
                                                 value={password}
-                                                onChangeText={
-                                                    (passwordInput) => setPassword(passwordInput)
-                                                }
+                                                inputStyle={{
+                                                    width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                                                }}
+                                                onChangeText={(passwordInput) => setPassword(passwordInput)}
+                                                keyboardType="number-pad"
+                                                containerStyle={{
+                                                    marginVertical: 10,
+                                                    width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                                                }}
+                                                secureTextEntry={!isShowPassword}
+                                                placeholder="Nhập mật khẩu..."
+                                                rightIcon={{
+                                                    name: 'eye',
+                                                    family: IconFamily.ENTYPO,
+                                                    size: 20,
+                                                    color: NowTheme.COLORS.DEFAULT
+                                                }}
+                                                onPressRightIcon={() => setIsShowPassword(!isShowPassword)}
                                             />
 
                                             {/* for testing */}
-                                            <Input
+                                            <CustomInput
                                                 placeholder="Empty or 'test'"
-                                                style={{
-                                                    borderRadius: 5,
-                                                    width: NowTheme.SIZES.WIDTH_BASE * 0.77
-                                                }}
                                                 value={deviceIdToSend}
                                                 onChangeText={
                                                     (deviceIdInput) => setDeviceIdToSend(deviceIdInput)
                                                 }
+                                                containerStyle={{
+                                                    marginVertical: 10,
+                                                    width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                                                }}
                                             />
-
                                             {renderButtonForgotPassword()}
                                         </Block>
                                     </Block>
 
                                     <Block center>
-                                        <Button
+                                        <CustomButton
                                             onPress={() => onSubmitLogin()}
-                                            style={[styles.button, {
-                                                marginVertical: 10
-                                            }]}
-                                            shadowless
-                                        >
-                                            Đăng nhập
-                                        </Button>
+                                            type="active"
+                                            label="Đăng nhập"
+                                            buttonStyle={
+                                                [
+                                                    styles.button,
+                                                    {
+                                                        marginVertical: 10
+                                                    }
+                                                ]
+                                            }
+                                        />
                                     </Block>
                                 </>
                             )}
