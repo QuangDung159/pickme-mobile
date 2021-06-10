@@ -1,6 +1,6 @@
 import { Picker } from '@react-native-picker/picker';
 import { Block } from 'galio-framework';
-import React from 'react';
+import React, { useState } from 'react';
 import {
     Modal, StyleSheet, Text, View
 } from 'react-native';
@@ -14,16 +14,17 @@ import { rxUtil } from '../../utils';
 
 export default function ReasonCancelBookingModal({
     modalReasonVisible,
-    reason,
-    onChangeReason,
     setModalReasonVisible,
     bookingId,
     navigation
 }) {
     const reasonDropdownArr = [
         { label: 'Bận đột xuất', value: 0 },
-        { label: 'Lý do khác', value: 1 }
+        { label: 'Sai thông tin', value: 1 },
+        { label: 'Lý do khác', value: 2 }
     ];
+
+    const [reason, setReason] = useState(reasonDropdownArr[0]);
 
     const token = useSelector((state) => state.userReducer.token);
 
@@ -54,13 +55,20 @@ export default function ReasonCancelBookingModal({
         );
     };
 
+    const onChangeReason = (reasonValueInput) => {
+        const reasonInput = reasonDropdownArr.find((item) => item.value === reasonValueInput);
+        if (reasonInput) {
+            setReason(reasonInput);
+        }
+    };
+
     const renderReasonDropdown = () => (
         <Picker
             selectedValue={reason.value}
             onValueChange={(itemValue) => onChangeReason(itemValue)}
             fontFamily={NowTheme.FONT.MONTSERRAT_REGULAR}
             style={{
-                width: NowTheme.SIZES.WIDTH_BASE * 0.84
+                width: NowTheme.SIZES.WIDTH_BASE * 0.8
             }}
         >
             {reasonDropdownArr.map((item) => (
@@ -123,7 +131,8 @@ export default function ReasonCancelBookingModal({
                             middle
                             row
                             style={{
-                                width: NowTheme.SIZES.WIDTH_BASE * 0.84
+                                width: NowTheme.SIZES.WIDTH_BASE * 0.8,
+                                marginBottom: 10
                             }}
                             space="between"
                         >
@@ -135,7 +144,7 @@ export default function ReasonCancelBookingModal({
                                 type="default"
                                 label="Xác nhận huỷ"
                                 buttonStyle={{
-                                    width: NowTheme.SIZES.WIDTH_BASE * 0.41
+                                    width: NowTheme.SIZES.WIDTH_BASE * 0.39
                                 }}
                             />
                             <CustomButton
@@ -145,7 +154,7 @@ export default function ReasonCancelBookingModal({
                                 type="active"
                                 label="Cân nhắc lại"
                                 buttonStyle={{
-                                    width: NowTheme.SIZES.WIDTH_BASE * 0.41
+                                    width: NowTheme.SIZES.WIDTH_BASE * 0.39
                                 }}
                             />
                         </Block>
@@ -175,13 +184,11 @@ const styles = StyleSheet.create({
     centeredView: {
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: NowTheme.SIZES.HEIGHT_BASE * 0.3
+        alignSelf: 'center',
     },
     modalView: {
-        margin: 10,
         backgroundColor: 'white',
-        borderRadius: 20,
-        padding: 20,
+        borderRadius: 5,
         alignItems: 'center',
         shadowColor: '#000',
         shadowOffset: {
@@ -190,6 +197,9 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
-        elevation: 5
+        elevation: 5,
+        marginTop: NowTheme.SIZES.WIDTH_BASE * 0.5,
+        width: NowTheme.SIZES.WIDTH_BASE * 0.9,
+        marginBottom: 10
     },
 });

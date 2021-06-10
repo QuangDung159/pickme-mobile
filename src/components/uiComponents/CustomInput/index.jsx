@@ -8,10 +8,9 @@ import IconCustom from '../IconCustom';
 
 CustomInput.propTypes = {
     label: PropTypes.string,
-    inputStyle: PropTypes.object,
-    labelStyle: PropTypes.object,
-    containerStyle: PropTypes.object,
-    onChangeText: PropTypes.func.isRequired,
+    inputStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+    labelStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+    containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
     rightIcon: PropTypes.object,
     onPressRightIcon: PropTypes.func,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])

@@ -1,4 +1,4 @@
-import { Block, Button, Text } from 'galio-framework';
+import { Block, Text } from 'galio-framework';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import {
@@ -6,22 +6,18 @@ import {
 } from 'react-native';
 import { AirbnbRating } from 'react-native-ratings';
 import { useDispatch, useSelector } from 'react-redux';
-import { CenterLoader, CustomInput, Line } from '../../components/uiComponents';
+import {
+    CenterLoader, CustomButton, CustomInput, Line
+} from '../../components/uiComponents';
 import {
     BookingStatus, NowTheme, Rx, ScreenName
 } from '../../constants';
 import BookingProgressFlow from '../../containers/BookingProgressFlow';
 import { ToastHelpers } from '../../helpers';
-import { setPersonTabActiveIndex } from '../../redux/Actions';
+import { setPersonTabActiveIndex, setShowLoaderStore } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
 import CardBooking from '../Personal/BookingList/CardBooking';
 import ReasonCancelBookingModal from './ReasonCancelBookingModal';
-
-const reasonDropdownArr = [
-    { label: 'Bận đột xuất', value: 0 },
-    { label: 'Sai thông tin', value: 1 },
-    { label: 'Lý do khác', value: 2 }
-];
 
 export default function BookingDetail({
     route: {
@@ -32,7 +28,6 @@ export default function BookingDetail({
     },
     navigation
 }) {
-    const [isShowSpinner, setIsShowSpinner] = useState(true);
     const [booking, setBooking] = useState();
     const [refreshing, setRefreshing] = useState(false);
     const [modalRatingVisible, setModalRatingVisible] = useState(false);
@@ -40,12 +35,9 @@ export default function BookingDetail({
     const [modalReasonVisible, setModalReasonVisible] = useState(false);
     const [ratingValue, setRatingValue] = useState(4);
     const [reportDesc, setReportDesc] = useState();
-    const [reason, setReason] = useState({
-        label: reasonDropdownArr[0].label,
-        value: reasonDropdownArr[0].value
-    });
 
     const token = useSelector((state) => state.userReducer.token);
+    const showLoaderStore = useSelector((state) => state.appConfigReducer.showLoaderStore);
     const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
 
     const dispatch = useDispatch();
@@ -91,50 +83,23 @@ export default function BookingDetail({
             (res) => {
                 setBooking(res.data.data);
                 setRefreshing(false);
-                setIsShowSpinner(false);
+                dispatch(setShowLoaderStore(false));
             },
             (res) => {
                 setRefreshing(false);
-                setIsShowSpinner(false);
+                dispatch(setShowLoaderStore(false));
                 ToastHelpers.renderToast(res.data.message, 'error');
             },
             (res) => {
                 setRefreshing(false);
-                setIsShowSpinner(false);
-                ToastHelpers.renderToast(res.data.message, 'error');
-            }
-        );
-    };
-
-    const sendRequestToCancelBooking = () => {
-        setIsShowSpinner(true);
-        rxUtil(
-            `${Rx.BOOKING.CANCEL_BOOKING}/${bookingId}`,
-            'POST',
-            {
-                rejectReason: reason.label
-            },
-            {
-                Authorization: token
-            },
-            (res) => {
-                navigation.navigate(ScreenName.PERSONAL);
-                dispatch(setPersonTabActiveIndex(2));
-                ToastHelpers.renderToast(res.data.message, 'success');
-            },
-            (res) => {
-                setIsShowSpinner(false);
-                ToastHelpers.renderToast(res.data.message, 'error');
-            },
-            (res) => {
-                setIsShowSpinner(false);
+                dispatch(setShowLoaderStore(false));
                 ToastHelpers.renderToast(res.data.message, 'error');
             }
         );
     };
 
     const onClickCompleteBooking = () => {
-        setIsShowSpinner(true);
+        dispatch(setShowLoaderStore(true));
 
         renderAlertRatingReport();
 
@@ -149,16 +114,16 @@ export default function BookingDetail({
                 ToastHelpers.renderToast(res.data.message, 'success');
                 navigation.navigate(ScreenName.PERSONAL);
                 dispatch(setPersonTabActiveIndex(2));
-                setIsShowSpinner(false);
+                dispatch(setShowLoaderStore(false));
             },
             (res) => {
                 ToastHelpers.renderToast();
-                setIsShowSpinner(false);
+                dispatch(setShowLoaderStore(false));
                 ToastHelpers.renderToast(res.data.message, 'error');
             },
             (res) => {
                 ToastHelpers.renderToast(res, 'error');
-                setIsShowSpinner(false);
+                dispatch(setShowLoaderStore(false));
             }
         );
     };
@@ -238,7 +203,7 @@ export default function BookingDetail({
     };
 
     const onCustomerConfirmPayment = () => {
-        setIsShowSpinner(true);
+        dispatch(setShowLoaderStore(true));
 
         rxUtil(
             `${Rx.PAYMENT.CREATE_PAYMENT}/${bookingId}`,
@@ -254,12 +219,12 @@ export default function BookingDetail({
             },
             (res) => {
                 ToastHelpers.renderToast();
-                setIsShowSpinner(false);
+                dispatch(setShowLoaderStore(false));
                 ToastHelpers.renderToast(res.data.message, 'error');
             },
             (res) => {
                 ToastHelpers.renderToast(res.data.message, 'error');
-                setIsShowSpinner(false);
+                dispatch(setShowLoaderStore(false));
             }
         );
     };
@@ -327,94 +292,14 @@ export default function BookingDetail({
                         </Block>
 
                         <Block center>
-                            <Button
+                            <CustomButton
                                 onPress={() => {
                                     sendRating();
                                     setModalRatingVisible(false);
                                 }}
-                                style={{ marginVertical: 10 }}
-                                shadowless
-                            >
-                                Gửi đánh giá
-                            </Button>
-                        </Block>
-                    </View>
-                </View>
-            </ScrollView>
-        </Modal>
-    );
-
-    const onChangeReason = (reasonValueInput) => {
-        const reasonInput = reasonDropdownArr.find((item) => item.value === reasonValueInput);
-        if (reason) {
-            setReason(reasonInput);
-        }
-    };
-
-    const renderReasonCancelBookingModal = () => (
-        <Modal
-            animationType="slide"
-            transparent
-            visible={modalReasonVisible}
-        >
-            <ScrollView
-                showsVerticalScrollIndicator={false}
-            >
-                <View style={styles.centeredView}>
-                    <View style={styles.modalView}>
-                        <Text
-                            size={NowTheme.SIZES.FONT_H2}
-                            style={{
-                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                                marginVertical: 10
-                            }}
-                        >
-                            Vui lòng chọn lý do
-                        </Text>
-                        <ReasonCancelBookingModal
-                            modalReasonVisible={modalReasonVisible}
-                            reason={reason}
-                            onChangeReason={onChangeReason}
-                            setModalReasonVisible={setModalReasonVisible}
-                            bookingId={bookingId}
-                            navigation={navigation}
-                        />
-                        <Block
-                            middle
-                            row
-                            style={{
-                                width: NowTheme.SIZES.WIDTH_BASE * 0.8
-                            }}
-                            space="between"
-                        >
-                            <Button
-                                onPress={() => {
-                                    sendRequestToCancelBooking();
-                                    setModalReasonVisible(false);
-                                }}
-                                style={{
-                                    margin: 0,
-                                    width: NowTheme.SIZES.WIDTH_BASE * 0.39
-                                }}
-                                shadowless
-                                color={
-                                    NowTheme.COLORS.DEFAULT
-                                }
-                            >
-                                Xác nhận huỷ
-                            </Button>
-                            <Button
-                                onPress={() => {
-                                    setModalReasonVisible(false);
-                                }}
-                                style={{
-                                    margin: 0,
-                                    width: NowTheme.SIZES.WIDTH_BASE * 0.39
-                                }}
-                                shadowless
-                            >
-                                Cân nhắc lại
-                            </Button>
+                                type="active"
+                                label="Gửi đánh giá"
+                            />
                         </Block>
                     </View>
                 </View>
@@ -457,16 +342,14 @@ export default function BookingDetail({
                             placeholder="Nhập mô tả..."
                         />
                         <Block center>
-                            <Button
+                            <CustomButton
                                 onPress={() => {
                                     sendRating();
                                     setModalReportVisible(false);
                                 }}
-                                style={{ marginVertical: 10 }}
-                                shadowless
-                            >
-                                Gửi báo cáo
-                            </Button>
+                                type="active"
+                                label="Gửi báo cáo"
+                            />
                         </Block>
                     </View>
                 </View>
@@ -475,56 +358,48 @@ export default function BookingDetail({
     );
 
     const renderCompleteBookingButton = (width) => (
-        <Button
-            onPress={() => {
-                // TODO: call api complete
+        <CustomButton
+            nPress={() => {
                 onClickCompleteBooking();
             }}
-            shadowless
-            style={{
-                margin: 0,
-                width: NowTheme.SIZES.WIDTH_BASE * width
+            buttonStyle={{
+                width: NowTheme.SIZES.WIDTH_BASE * (+width)
             }}
-        >
-            Hoàn tất buổi hẹn
-        </Button>
+            type="active"
+            label="Hoàn tất buổi hẹn"
+        />
     );
 
     const renderCancelBooking = (width) => (
-        <Button
+        <CustomButton
             onPress={() => {
                 setModalReasonVisible(true);
             }}
-            shadowless
-            color={NowTheme.COLORS.DEFAULT}
-            style={{
-                margin: 0,
-                width: NowTheme.SIZES.WIDTH_BASE * width
+            buttonStyle={{
+                width: NowTheme.SIZES.WIDTH_BASE * (+width)
             }}
-        >
-            Huỷ buổi hẹn
-        </Button>
+            type="default"
+            label="Huỷ buổi hẹn"
+        />
     );
 
     const renderConfirmPaymentButton = (width) => (
-        <Button
+        <CustomButton
             onPress={() => {
                 onCustomerConfirmPayment(bookingId);
             }}
-            shadowless
-            style={{
-                margin: 0,
+            buttonStyle={{
                 width: NowTheme.SIZES.WIDTH_BASE * (+width)
             }}
-        >
-            Thanh toán
-        </Button>
+            type="active"
+            label="Thanh toán"
+        />
     );
 
     try {
         return (
             <>
-                {isShowSpinner ? (
+                {showLoaderStore || !booking ? (
                     <CenterLoader />
                 ) : (
                     <ScrollView
@@ -541,7 +416,13 @@ export default function BookingDetail({
                     >
                         {renderRatingModal()}
                         {renderReportModal()}
-                        {renderReasonCancelBookingModal()}
+
+                        <ReasonCancelBookingModal
+                            modalReasonVisible={modalReasonVisible}
+                            setModalReasonVisible={setModalReasonVisible}
+                            bookingId={bookingId}
+                            navigation={navigation}
+                        />
 
                         <Block style={{
                             width: NowTheme.SIZES.WIDTH_BASE * 0.9,
