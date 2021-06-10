@@ -97,9 +97,14 @@ export default function CreateBooking({ route, navigation }) {
                 Authorization: token
             },
             (res) => {
+                const listPackage = res.data.data;
+                if (!listPackage || listPackage.length === 0) return;
+
                 setListPartnerPackage(res.data.data);
                 setPackageActive(res.data.data[0]);
                 setIsShowSpinner(false);
+
+                console.log('res.data.data[0] :>> ', res.data.data[0]);
             },
             (res) => {
                 setIsShowSpinner(false);
@@ -308,7 +313,8 @@ export default function CreateBooking({ route, navigation }) {
             space="between"
             style={{
                 alignSelf: 'center',
-                width: NowTheme.SIZES.WIDTH_BASE * 0.8
+                width: NowTheme.SIZES.WIDTH_BASE * 0.8,
+                marginVertical: 10
             }}
         >
             <ScrollPicker
@@ -421,17 +427,17 @@ export default function CreateBooking({ route, navigation }) {
                         style={{
                             fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
                             color: NowTheme.COLORS.DEFAULT,
-                            fontSize: NowTheme.SIZES.FONT_H3,
+                            fontSize: NowTheme.SIZES.FONT_H2,
                             marginBottom: 10
                         }}
                     >
-                        {packageActive.description}
+                        {`Địa điểm: ${packageActive.address}`}
                     </Text>
                     <Text
                         style={{
                             fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
                             color: NowTheme.COLORS.DEFAULT,
-                            fontSize: NowTheme.SIZES.FONT_H3,
+                            fontSize: NowTheme.SIZES.FONT_H2,
                             marginBottom: 10
                         }}
                     >
@@ -448,7 +454,7 @@ export default function CreateBooking({ route, navigation }) {
                             }}
                             color={NowTheme.COLORS.ACTIVE}
                         >
-                            {packageActive.totalAmount}
+                            {packageActive.estimateAmount}
                             {' '}
                             <IconCustom
                                 name="diamond"
@@ -658,8 +664,12 @@ export default function CreateBooking({ route, navigation }) {
 
                                     setStartTimeStr(startHourString);
                                     setEndTimeStr(endHourString);
-
-                                    setTotal(packageActive.totalAmount);
+                                    setTotal(packageActive.estimateAmount);
+                                    setBooking({
+                                        ...booking,
+                                        noted: packageActive.noted,
+                                        address: packageActive.address
+                                    });
                                 }}
                                 buttonStyle={{
                                     width: NowTheme.SIZES.WIDTH_BASE * 0.39
@@ -679,7 +689,7 @@ export default function CreateBooking({ route, navigation }) {
             space="between"
             row
             style={{
-                marginBottom: 30,
+                marginBottom: 10,
                 width: NowTheme.SIZES.WIDTH_BASE * 0.9,
             }}
         >
@@ -733,15 +743,23 @@ export default function CreateBooking({ route, navigation }) {
     const onChangePackage = (packageIdInput) => {
         const packageChoose = listPartnerPackage.find((item) => item.id === packageIdInput);
 
+        console.log('packageChoose :>> ', packageChoose);
         if (packageChoose) {
             setPackageActive(packageChoose);
         }
     };
 
-    const onChangeAddress = (addressInput) => {
+    const onChangeAddress = (input) => {
         setBooking({
             ...booking,
-            address: addressInput,
+            address: input,
+        });
+    };
+
+    const onChangeNote = (input) => {
+        setBooking({
+            ...booking,
+            noted: input,
         });
     };
 
@@ -755,6 +773,22 @@ export default function CreateBooking({ route, navigation }) {
                 width: NowTheme.SIZES.WIDTH_BASE * 0.9
             }}
             label="Địa điểm:"
+            inputStyle={{
+                height: 80,
+            }}
+        />
+    );
+
+    const renderInputNote = () => (
+        <CustomInput
+            value={booking.noted}
+            multiline
+            onChangeText={(input) => onChangeNote(input)}
+            containerStyle={{
+                marginVertical: 10,
+                width: NowTheme.SIZES.WIDTH_BASE * 0.9
+            }}
+            label="Ghi chú:"
             inputStyle={{
                 height: 80,
             }}
@@ -813,8 +847,8 @@ export default function CreateBooking({ route, navigation }) {
                 )}
 
                 {renderButtonTimePicker()}
-
                 {renderInputAddress()}
+                {renderInputNote()}
             </Block>
         </Block>
     );
