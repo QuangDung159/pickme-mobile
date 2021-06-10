@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { KeyboardAvoidingView, Platform, StyleSheet } from 'react-native';
 import { FlatList, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
-import { CenterLoader, IconCustom, Input } from '../../components/uiComponents';
+import { CenterLoader, CustomInput, IconCustom } from '../../components/uiComponents';
 import {
     GraphQueryString, IconFamily, NowTheme, ScreenName
 } from '../../constants';
@@ -286,18 +286,16 @@ export default function Message({ navigation, route }) {
                 width: NowTheme.SIZES.WIDTH_BASE
             }}
         >
-            <Input
-                style={{
-                    borderWidth: 0,
-                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                    width: NowTheme.SIZES.WIDTH_BASE * 0.85
-                }}
+            <CustomInput
                 placeholder="Nhập tin nhắn..."
                 value={messageFromInput}
                 onChangeText={(input) => onChangeMessageInput(input)}
-                textInputStyle={{
-                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                    fontSize: 16
+                containerStyle={{
+                    marginVertical: 10,
+                    width: NowTheme.SIZES.WIDTH_BASE * 0.9
+                }}
+                inputStyle={{
+                    borderWidth: 0
                 }}
             />
 

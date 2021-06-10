@@ -1,7 +1,7 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
 import { NO_AVATAR_URL } from '@env';
 import {
-    Block, Button as GaButton, Text
+    Block, Text
 } from 'galio-framework';
 import moment from 'moment';
 import PropTypes from 'prop-types';
@@ -13,14 +13,13 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import ImageView from 'react-native-image-viewing';
 import { useSelector } from 'react-redux';
 import { CardImage } from '../../components/businessComponents';
-import {
-    Button, CenterLoader, UserInfoSection
-} from '../../components/uiComponents';
+import { CenterLoader, CustomButton } from '../../components/uiComponents';
 import {
     IconFamily, NowTheme, Rx, ScreenName
 } from '../../constants';
 import { ToastHelpers } from '../../helpers';
 import { rxUtil } from '../../utils';
+import UserInfoSection from '../Personal/UserInformation/UserInfoSection';
 
 export default function Profile({ route, navigation }) {
     const [visible, setVisible] = useState(false);
@@ -339,16 +338,7 @@ export default function Profile({ route, navigation }) {
                                 middle
                                 row
                             >
-                                <GaButton
-                                    round
-                                    onlyIcon
-                                    shadowless
-                                    icon="comment"
-                                    iconFamily="Font-Awesome"
-                                    iconColor={NowTheme.COLORS.BASE}
-                                    iconSize={NowTheme.SIZES.BASE * 1.375}
-                                    color={NowTheme.COLORS.DEFAULT}
-                                    style={styles.social}
+                                <CustomButton
                                     onPress={() => {
                                         navigation.navigate(ScreenName.MESSAGE, {
                                             name: partnerInfo.fullName,
@@ -357,27 +347,44 @@ export default function Profile({ route, navigation }) {
                                             userInfo: partnerInfo
                                         });
                                     }}
-                                />
-
-                                <Button
-                                    style={{
+                                    type="active"
+                                    label="Nhắn tin"
+                                    buttonStyle={{
                                         width: 114,
                                         height: 44,
                                         marginHorizontal: 5,
-                                        elevation: 0
+                                        elevation: 0,
+                                        borderRadius: 20,
+                                        backgroundColor: NowTheme.COLORS.ACTIVE
                                     }}
-                                    textStyle={{ fontSize: 16 }}
-                                    round
-                                    color={NowTheme.COLORS.ACTIVE}
+                                    labelStyle={{
+                                        fontSize: 16,
+                                        color: NowTheme.COLORS.BASE
+                                    }}
+                                />
+
+                                <CustomButton
                                     onPress={() => {
                                         navigation.navigate(ScreenName.CREATE_BOOKING, {
                                             partner: partnerInfo,
                                             from: ScreenName.PROFILE
                                         });
                                     }}
-                                >
-                                    Đặt hẹn
-                                </Button>
+                                    type="active"
+                                    label="Đặt hẹn"
+                                    buttonStyle={{
+                                        width: 114,
+                                        height: 44,
+                                        marginHorizontal: 5,
+                                        elevation: 0,
+                                        borderRadius: 20,
+                                        backgroundColor: NowTheme.COLORS.ACTIVE
+                                    }}
+                                    labelStyle={{
+                                        fontSize: 16,
+                                        color: NowTheme.COLORS.BASE
+                                    }}
+                                />
                             </Block>
                         </Block>
                     </>
