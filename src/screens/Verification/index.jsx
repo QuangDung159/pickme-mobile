@@ -1,12 +1,11 @@
-import { Block, Button, Text } from 'galio-framework';
+import { Block, Text } from 'galio-framework';
 import React, { useEffect, useState } from 'react';
-import { Modal, StyleSheet } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { StyleSheet, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import ImageScalable from 'react-native-scalable-image';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-    CenterLoader, Line
+    CenterLoader, CustomButton, Line
 } from '../../components/uiComponents';
 import {
     DocumentType, NowTheme, Rx, ScreenName, VerificationStatus
@@ -22,7 +21,6 @@ export default function Verification({ navigation }) {
     const [faceUrl, setFaceUrl] = useState('');
     const [frontUrl, setFrontUrl] = useState('');
     const [backUrl, setBackUrl] = useState('');
-    const [modalVisible, setModalVisible] = useState(false);
 
     const token = useSelector((state) => state.userReducer.token);
     const currentUser = useSelector((state) => state.userReducer.currentUser);
@@ -83,46 +81,44 @@ export default function Verification({ navigation }) {
                 alignItems: 'center',
             }}
             >
-                <Block>
-                    <Button
-                        color={NowTheme.COLORS.BLOCK}
-                        fontSize={NowTheme.SIZES.FONT_H3}
-                        style={{
-                            width: NowTheme.SIZES.WIDTH_BASE * 0.9,
-                        }}
-                        onPress={
-                            () => onPickVerificationDoc(docType)
-                        }
-                        textStyle={{
-                            color: NowTheme.COLORS.ACTIVE
-                        }}
-                        shadowless
-                        disabled={isDisabled}
-                    >
-                        {buttonText}
-                    </Button>
-                </Block>
+                <CustomButton
+                    onPress={() => onPickVerificationDoc(docType)}
+                    type="active"
+                    label={buttonText}
+                    buttonStyle={{
+                        width: NowTheme.SIZES.WIDTH_BASE * 0.9,
+                        marginBottom: 10
+                    }}
+                    labelStyle={{
+                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                    }}
+                    disabled={isDisabled}
+                />
             </Block>
         );
     };
 
     const renderDocSection = () => (
-        <>
+        <View
+            style={{
+                marginVertical: 10
+            }}
+        >
             {renderUploadDocForm(DocumentType.FACE_IMAGE, 'Ảnh chụp cá nhân')}
             {renderDocImageByType(DocumentType.FACE_IMAGE, faceUrl)}
             <Block
                 style={styles.docFormContainer}
             >
-                {renderUploadDocForm(DocumentType.DRIVER_FRONT, 'Mặt trước CMND/CCCD/bằng lái xe còn thời hạn')}
+                {renderUploadDocForm(DocumentType.DRIVER_FRONT, 'Mặt trước CMND/CCCD/bằng xe còn thời hạn')}
                 {renderDocImageByType(DocumentType.DRIVER_FRONT, frontUrl)}
             </Block>
             <Block
                 style={styles.docFormContainer}
             >
-                {renderUploadDocForm(DocumentType.DRIVER_BACK, 'Mặt sau CMND/CCCD/bằng lái xe còn thời hạn')}
+                {renderUploadDocForm(DocumentType.DRIVER_BACK, 'Mặt sau CMND/CCCD/bằng lái còn thời hạn')}
                 {renderDocImageByType(DocumentType.DRIVER_BACK, backUrl)}
             </Block>
-        </>
+        </View>
     );
 
     const fillImageFromAPI = (listDocs) => {
@@ -254,26 +250,20 @@ export default function Verification({ navigation }) {
                     space="between"
                     style={{
                         paddingVertical: 10,
-                        marginTop: 10
                     }}
                 >
-                    <Button
-                        shadowless
-                        onPress={() => onSubmitUploadList()}
-                        style={styles.button}
-                    >
-                        Xác nhận
-                    </Button>
-                    <Button
-                        shadowless
-                        color={NowTheme.COLORS.DEFAULT}
-                        style={styles.button}
+                    <CustomButton
                         onPress={() => {
                             navigation.goBack();
                         }}
-                    >
-                        Huỷ bỏ
-                    </Button>
+                        type="default"
+                        label="Huỷ bỏ"
+                    />
+                    <CustomButton
+                        onPress={() => onSubmitUploadList()}
+                        type="active"
+                        label="Xác nhận"
+                    />
                 </Block>
             );
         }
@@ -317,68 +307,6 @@ export default function Verification({ navigation }) {
         );
     };
 
-    const renderModalCompleteUpload = () => (
-        <Modal
-            animationType="slide"
-            transparent
-            visible={modalVisible}
-        >
-            <ScrollView
-                showsVerticalScrollIndicator={false}
-            >
-                <Block style={styles.centeredView}>
-                    <Block style={styles.modalView}>
-                        <Text
-                            size={NowTheme.SIZES.FONT_H2}
-                            color={NowTheme.COLORS.ACTIVE}
-                            style={{
-                                fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
-                                marginVertical: 10,
-                                textAlign: 'center'
-                            }}
-                        >
-                            Cảm ơn bạn đã hoàn thành tải lên
-                        </Text>
-                        <Text
-                            size={NowTheme.SIZES.FONT_H2}
-                            style={{
-                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                                marginVertical: 10,
-                                textAlign: 'center'
-                            }}
-                        >
-                            {/* eslint-disable-next-line max-len */}
-                            Chúng tôi sẽ tiến hành quá trình xác thực tài khoản của bạn dựa trên những hình ảnh bạn tải lên.
-                        </Text>
-                        <Text
-                            size={NowTheme.SIZES.FONT_H2}
-                            style={{
-                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                                marginVertical: 10,
-                                textAlign: 'center'
-                            }}
-                        >
-                            {/* eslint-disable-next-line max-len */}
-                            Quá trình này sẽ mất một khoảng thời gian, chúng tôi sẽ sớm có thông báo về tình trạng tài khoản của bạn.
-                        </Text>
-                        <Block center>
-                            <Button
-                                onPress={() => {
-                                    setModalVisible(false);
-                                    navigation.goBack();
-                                }}
-                                style={{ marginVertical: 10 }}
-                                shadowless
-                            >
-                                Đóng
-                            </Button>
-                        </Block>
-                    </Block>
-                </Block>
-            </ScrollView>
-        </Modal>
-    );
-
     try {
         return (
             <>
@@ -393,39 +321,34 @@ export default function Verification({ navigation }) {
                             alignSelf: 'center'
                         }}
                     >
-                        {renderModalCompleteUpload()}
-                        <Block>
+                        <Block
+                            style={{
+                                marginTop: 10,
+                                backgroundColor: NowTheme.COLORS.BASE,
+                            }}
+                        >
                             <Block
+                                row
                                 style={{
-                                    marginVertical: 10,
-                                    backgroundColor: NowTheme.COLORS.BASE,
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center'
                                 }}
                             >
-                                <Block
-                                    row
-                                    style={{
-                                        justifyContent: 'space-between',
-                                        alignItems: 'center'
-                                    }}
+                                <Text style={{
+                                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                                    marginVertical: 10
+                                }}
                                 >
-                                    <Text style={{
-                                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                                        marginVertical: 10
-                                    }}
-                                    >
-                                        TẢI LÊN CHỨNG TỪ XÁC THỰC
-                                    </Text>
-                                </Block>
-                                <Line
-                                    borderWidth={0.5}
-                                    borderColor={NowTheme.COLORS.ACTIVE}
-                                />
-                                {renderDocSection()}
+                                    TẢI LÊN CHỨNG TỪ XÁC THỰC
+                                </Text>
                             </Block>
+                            <Line
+                                borderWidth={0.5}
+                                borderColor={NowTheme.COLORS.ACTIVE}
+                            />
+                            {renderDocSection()}
                         </Block>
-
                         {renderButtonPanel()}
-
                     </KeyboardAwareScrollView>
                 )}
             </>
