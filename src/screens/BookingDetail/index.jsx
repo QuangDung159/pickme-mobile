@@ -1,4 +1,3 @@
-import { Picker } from '@react-native-picker/picker';
 import { Block, Button, Text } from 'galio-framework';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
@@ -7,8 +6,7 @@ import {
 } from 'react-native';
 import { AirbnbRating } from 'react-native-ratings';
 import { useDispatch, useSelector } from 'react-redux';
-import { CardBooking } from '../../components/businessComponents';
-import { CenterLoader, Input, Line } from '../../components/uiComponents';
+import { CenterLoader, CustomInput, Line } from '../../components/uiComponents';
 import {
     BookingStatus, NowTheme, Rx, ScreenName
 } from '../../constants';
@@ -16,6 +14,8 @@ import BookingProgressFlow from '../../containers/BookingProgressFlow';
 import { ToastHelpers } from '../../helpers';
 import { setPersonTabActiveIndex } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
+import CardBooking from '../Personal/BookingList/CardBooking';
+import ReasonCancelBookingModal from './ReasonCancelBookingModal';
 
 const reasonDropdownArr = [
     { label: 'Bận đột xuất', value: 0 },
@@ -350,23 +350,6 @@ export default function BookingDetail({
         }
     };
 
-    const renderReasonDropdown = () => (
-        <Picker
-            selectedValue={reason.value}
-            onValueChange={(itemValue) => onChangeReason(itemValue)}
-            fontFamily={NowTheme.FONT.MONTSERRAT_REGULAR}
-            style={[
-                styles.inputWith, {
-                    marginTop: -30
-                }
-            ]}
-        >
-            {reasonDropdownArr.map(({ value, label }) => (
-                <Picker.Item value={value} label={label} key={value} />
-            ))}
-        </Picker>
-    );
-
     const renderReasonCancelBookingModal = () => (
         <Modal
             animationType="slide"
@@ -390,7 +373,14 @@ export default function BookingDetail({
                         >
                             Vui lòng chọn lý do
                         </Text>
-                        {renderReasonDropdown()}
+                        <ReasonCancelBookingModal
+                            modalReasonVisible={modalReasonVisible}
+                            reason={reason}
+                            onChangeReason={onChangeReason}
+                            setModalReasonVisible={setModalReasonVisible}
+                            bookingId={bookingId}
+                            navigation={navigation}
+                        />
                         <Block
                             middle
                             row
@@ -454,12 +444,18 @@ export default function BookingDetail({
                         >
                             Vui lòng nhập ý kiến
                         </Text>
-                        <Input
-                            style={[styles.inputWith, {
-                                borderRadius: 5,
-                            }]}
+
+                        <CustomInput
+                            multiline
                             onChangeText={(reportInput) => onChangeReport(reportInput)}
                             value={reportDesc}
+                            inputStyle={[styles.inputWith, {
+                                borderRadius: 5,
+                            }]}
+                            containerStyle={{
+                                marginVertical: 10,
+                                width: NowTheme.SIZES.WIDTH_BASE * 0.9
+                            }}
                             placeholder="Nhập mô tả..."
                         />
                         <Block center>

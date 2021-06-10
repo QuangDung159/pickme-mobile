@@ -5,7 +5,8 @@ import {
     SET_EXPO_TOKEN,
     SET_NAVIGATION,
     SET_PERSON_TAB_ACTIVE_INDEX,
-    SET_PICK_ME_INFO_STORE
+    SET_PICK_ME_INFO_STORE,
+    SET_SHOW_LOADER_STORE
 } from '../ActionTypes';
 
 const initState = {
@@ -15,7 +16,8 @@ const initState = {
     navigationObj: null,
     personTabActiveIndex: 0,
     deviceIdStore: '',
-    pickMeInfoStore: null
+    pickMeInfoStore: null,
+    showLoaderStore: false,
 };
 
 const appConfigReducer = (state = initState, action) => {
@@ -41,6 +43,9 @@ const appConfigReducer = (state = initState, action) => {
         }
         case SET_PICK_ME_INFO_STORE: {
             return { ...state, pickMeInfoStore: payload.pickMeInfoStore };
+        }
+        case SET_SHOW_LOADER_STORE: {
+            return { ...state, showLoaderStore: payload.showLoaderStore };
         }
         default: {
             return state;
