@@ -308,7 +308,7 @@ export default function CreateBooking({ route, navigation }) {
             space="between"
             style={{
                 alignSelf: 'center',
-                width: NowTheme.SIZES.WIDTH_BASE * 0.6
+                width: NowTheme.SIZES.WIDTH_BASE * 0.8
             }}
         >
             <ScrollPicker
@@ -555,7 +555,7 @@ export default function CreateBooking({ route, navigation }) {
                         </Text>
                         <Block
                             style={{
-                                width: NowTheme.SIZES.WIDTH_BASE * 0.75
+                                width: NowTheme.SIZES.WIDTH_BASE * 0.8
                             }}
                         >
                             {renderBusyCalendar()}
@@ -565,7 +565,7 @@ export default function CreateBooking({ route, navigation }) {
                             <CustomButton
                                 onPress={() => setModalVisible(false)}
                                 buttonStyle={{
-                                    width: NowTheme.SIZES.WIDTH_BASE * 0.7,
+                                    width: NowTheme.SIZES.WIDTH_BASE * 0.8,
                                     marginVertical: 10
                                 }}
                                 type="active"
@@ -597,7 +597,7 @@ export default function CreateBooking({ route, navigation }) {
                             <CustomButton
                                 onPress={() => setModalTimePickerVisible(false)}
                                 buttonStyle={{
-                                    width: NowTheme.SIZES.WIDTH_BASE * 0.7,
+                                    width: NowTheme.SIZES.WIDTH_BASE * 0.8,
                                     marginVertical: 10
                                 }}
                                 type="active"
@@ -1003,15 +1003,13 @@ const styles = StyleSheet.create({
         marginVertical: 10
     },
     centeredView: {
-        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 22
+        alignSelf: 'center',
     },
     modalView: {
         backgroundColor: 'white',
         borderRadius: 5,
-        width: NowTheme.SIZES.WIDTH_BASE * 0.9,
         alignItems: 'center',
         shadowColor: '#000',
         shadowOffset: {
@@ -1022,12 +1020,8 @@ const styles = StyleSheet.create({
         shadowRadius: 3.84,
         elevation: 5,
         marginTop: NowTheme.SIZES.WIDTH_BASE * 0.5,
+        width: NowTheme.SIZES.WIDTH_BASE * 0.9,
         marginBottom: 10
-    },
-    modalText: {
-        margin: 15,
-        textAlign: 'center',
-        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
     },
     timePickerText: {
         color: NowTheme.COLORS.ACTIVE,

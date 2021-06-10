@@ -2,7 +2,7 @@ import { Block, Button, Text } from 'galio-framework';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import {
-    Alert, Modal, RefreshControl, ScrollView, StyleSheet
+    Alert, Modal, RefreshControl, ScrollView, StyleSheet, View
 } from 'react-native';
 import { AirbnbRating } from 'react-native-ratings';
 import { useDispatch, useSelector } from 'react-redux';
@@ -297,20 +297,21 @@ export default function BookingDetail({
             <ScrollView
                 showsVerticalScrollIndicator={false}
             >
-                <Block style={styles.centeredView}>
-                    <Block style={styles.modalView}>
+                <View style={styles.centeredView}>
+                    <View style={styles.modalView}>
                         <Text
                             size={NowTheme.SIZES.FONT_H2}
                             style={{
                                 fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                                marginVertical: 10
+                                marginVertical: 10,
+                                width: NowTheme.SIZES.WIDTH_BASE * 0.8
                             }}
                         >
                             Bạn vui lòng góp ý để chúng tôi phục vụ bạn tốt hơn, cảm ơn.
                         </Text>
                         <Block
                             style={{
-                                width: NowTheme.SIZES.WIDTH_BASE * 0.75
+                                width: NowTheme.SIZES.WIDTH_BASE * 0.8
                             }}
                         >
                             <AirbnbRating
@@ -337,8 +338,8 @@ export default function BookingDetail({
                                 Gửi đánh giá
                             </Button>
                         </Block>
-                    </Block>
-                </Block>
+                    </View>
+                </View>
             </ScrollView>
         </Modal>
     );
@@ -355,15 +356,12 @@ export default function BookingDetail({
             animationType="slide"
             transparent
             visible={modalReasonVisible}
-            style={{
-                width: NowTheme.SIZES.WIDTH_BASE * 0.9
-            }}
         >
             <ScrollView
                 showsVerticalScrollIndicator={false}
             >
-                <Block style={styles.centeredView}>
-                    <Block style={styles.modalView}>
+                <View style={styles.centeredView}>
+                    <View style={styles.modalView}>
                         <Text
                             size={NowTheme.SIZES.FONT_H2}
                             style={{
@@ -385,7 +383,7 @@ export default function BookingDetail({
                             middle
                             row
                             style={{
-                                width: NowTheme.SIZES.WIDTH_BASE * 0.9
+                                width: NowTheme.SIZES.WIDTH_BASE * 0.8
                             }}
                             space="between"
                         >
@@ -396,7 +394,7 @@ export default function BookingDetail({
                                 }}
                                 style={{
                                     margin: 0,
-                                    width: NowTheme.SIZES.WIDTH_BASE * 0.44
+                                    width: NowTheme.SIZES.WIDTH_BASE * 0.39
                                 }}
                                 shadowless
                                 color={
@@ -411,15 +409,15 @@ export default function BookingDetail({
                                 }}
                                 style={{
                                     margin: 0,
-                                    width: NowTheme.SIZES.WIDTH_BASE * 0.44
+                                    width: NowTheme.SIZES.WIDTH_BASE * 0.39
                                 }}
                                 shadowless
                             >
                                 Cân nhắc lại
                             </Button>
                         </Block>
-                    </Block>
-                </Block>
+                    </View>
+                </View>
             </ScrollView>
         </Modal>
     );
@@ -433,8 +431,8 @@ export default function BookingDetail({
             <ScrollView
                 showsVerticalScrollIndicator={false}
             >
-                <Block style={styles.centeredView}>
-                    <Block style={styles.modalView}>
+                <View style={styles.centeredView}>
+                    <View style={styles.modalView}>
                         <Text
                             size={NowTheme.SIZES.FONT_H2}
                             style={{
@@ -454,7 +452,7 @@ export default function BookingDetail({
                             }]}
                             containerStyle={{
                                 marginVertical: 10,
-                                width: NowTheme.SIZES.WIDTH_BASE * 0.9
+                                width: NowTheme.SIZES.WIDTH_BASE * 0.8
                             }}
                             placeholder="Nhập mô tả..."
                         />
@@ -470,8 +468,8 @@ export default function BookingDetail({
                                 Gửi báo cáo
                             </Button>
                         </Block>
-                    </Block>
-                </Block>
+                    </View>
+                </View>
             </ScrollView>
         </Modal>
     );
@@ -634,13 +632,11 @@ const styles = StyleSheet.create({
     centeredView: {
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: NowTheme.SIZES.HEIGHT_BASE * 0.3
+        alignSelf: 'center',
     },
     modalView: {
-        margin: 10,
         backgroundColor: 'white',
-        borderRadius: 20,
-        padding: 20,
+        borderRadius: 5,
         alignItems: 'center',
         shadowColor: '#000',
         shadowOffset: {
@@ -649,7 +645,10 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
-        elevation: 5
+        elevation: 5,
+        marginTop: NowTheme.SIZES.WIDTH_BASE * 0.5,
+        width: NowTheme.SIZES.WIDTH_BASE * 0.9,
+        marginBottom: 10
     },
     inputWith: {
         width: NowTheme.SIZES.WIDTH_BASE * 0.9,
