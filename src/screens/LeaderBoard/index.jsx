@@ -1,11 +1,11 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
 import { NO_AVATAR_URL } from '@env';
-import { Block, Text } from 'galio-framework';
+import { Block } from 'galio-framework';
 import React, { useEffect, useState } from 'react';
-import { Image, StyleSheet } from 'react-native';
+import { Image, StyleSheet, Text } from 'react-native';
 import { FlatList, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useSelector } from 'react-redux';
-import { CenterLoader, IconCustom } from '../../components/uiComponents';
+import { CenterLoader, IconCustom, TopTabBar } from '../../components/uiComponents';
 import {
     IconFamily, NowTheme, Rx, ScreenName
 } from '../../constants';
@@ -25,7 +25,7 @@ export default function LeaderBoard({ navigation }) {
                 <IconCustom
                     name="list-alt"
                     family={IconFamily.FONT_AWESOME}
-                    size={16}
+                    size={24}
                     color={NowTheme.COLORS.ACTIVE}
                 />
             ),
@@ -37,7 +37,7 @@ export default function LeaderBoard({ navigation }) {
                 <IconCustom
                     name="diamond"
                     family={IconFamily.SIMPLE_LINE_ICONS}
-                    size={16}
+                    size={24}
                     color={NowTheme.COLORS.ACTIVE}
                 />
             ),
@@ -47,7 +47,9 @@ export default function LeaderBoard({ navigation }) {
 
     useEffect(
         () => {
-            setListLeaderBoard(pickMeInfoStore.booking);
+            if (pickMeInfoStore) {
+                setListLeaderBoard(pickMeInfoStore.booking);
+            }
         }, []
     );
 
@@ -63,14 +65,6 @@ export default function LeaderBoard({ navigation }) {
     );
 
     // handler \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
-    const changeTabIndexActive = (tabIndex) => {
-        setTabActiveIndex(tabIndex);
-        if (tabIndex === 0) {
-            setListLeaderBoard(pickMeInfoStore.booking);
-        } else {
-            setListLeaderBoard(pickMeInfoStore.diamon);
-        }
-    };
 
     // render \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
     const renderLeaderBoardItem = (leaderBoardItem, index) => {
@@ -100,7 +94,13 @@ export default function LeaderBoard({ navigation }) {
                                         ? NowTheme.COLORS.ACTIVE
                                         : NowTheme.COLORS.DEFAULT
                                 }
-                                style={styles.titleBold}
+                                style={{
+                                    color: index === 1 || index === 2
+                                        ? NowTheme.COLORS.ACTIVE
+                                        : NowTheme.COLORS.DEFAULT,
+                                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                                    fontSize: NowTheme.SIZES.FONT_H2
+                                }}
                             >
                                 {index + 1}
                             </Text>
@@ -130,14 +130,17 @@ export default function LeaderBoard({ navigation }) {
                             style={{
                                 marginRight: 10
                             }}
+                            middle
                         >
                             <Block
                                 flex={7}
                             >
                                 <Text
-                                    color={NowTheme.COLORS.ACTIVE}
-                                    size={NowTheme.SIZES.FONT_H3}
-                                    fontFamily={NowTheme.FONT.MONTSERRAT_REGULAR}
+                                    style={{
+                                        color: NowTheme.COLORS.ACTIVE,
+                                        fontSize: NowTheme.SIZES.FONT_H2,
+                                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                                    }}
                                 >
                                     {leaderBoardItem.fullName}
                                 </Text>
@@ -150,9 +153,11 @@ export default function LeaderBoard({ navigation }) {
                                 }}
                             >
                                 <Text
-                                    color={NowTheme.COLORS.ACTIVE}
-                                    size={16}
-                                    fontFamily={NowTheme.FONT.MONTSERRAT_REGULAR}
+                                    style={{
+                                        color: NowTheme.COLORS.ACTIVE,
+                                        fontSize: NowTheme.SIZES.FONT_H1,
+                                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                                    }}
                                 >
                                     {leaderBoardItem.value}
                                     {' '}
@@ -166,39 +171,13 @@ export default function LeaderBoard({ navigation }) {
         } return null;
     };
 
-    const renderTopButton = (tab, index) => {
-        const { tabLabel } = tab;
-        return (
-            <TouchableWithoutFeedback
-                onPress={() => changeTabIndexActive(index)}
-                containerStyle={{
-                    backgroundColor: !(index === tabActiveIndex)
-                        ? NowTheme.COLORS.LIST_ITEM_BACKGROUND_1
-                        : NowTheme.COLORS.BASE,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    flex: 3
-                }}
-                key={tabLabel}
-            >
-                <Text
-                    size={12}
-                    color={(index === tabActiveIndex) ? NowTheme.COLORS.ACTIVE : NowTheme.COLORS.DEFAULT}
-                    style={styles.titleBold}
-                >
-                    {tabLabel}
-                </Text>
-            </TouchableWithoutFeedback>
-        );
-    };
-
     const renderAchieveValueTopPanel = (achieveValue) => (
-        <Block middle row>
+        <Block middle>
             <Text
-                color={NowTheme.COLORS.ACTIVE}
-                size={NowTheme.SIZES.FONT_H2}
                 style={{
-                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
+                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                    color: NowTheme.COLORS.ACTIVE,
+                    fontSize: NowTheme.SIZES.FONT_H1,
                 }}
             >
                 {achieveValue}
@@ -279,10 +258,11 @@ export default function LeaderBoard({ navigation }) {
                     >
                         <Text
                             style={{
-                                fontFamily: NowTheme.FONT.MONTSERRAT_BOLD
+                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                                fontSize: NowTheme.SIZES.FONT_H1,
+                                color: NowTheme.COLORS.ACTIVE
                             }}
-                            size={NowTheme.SIZES.FONT_H2}
-                            color={NowTheme.COLORS.ACTIVE}
+
                         >
                             {fullName}
                         </Text>
@@ -304,15 +284,11 @@ export default function LeaderBoard({ navigation }) {
                         alignItems: 'center',
                     }, styles.shadow]}
                 >
-                    <Block
-                        row
-                        style={[{
-                            marginBottom: 20,
-                            height: NowTheme.SIZES.HEIGHT_BASE * 0.07
-                        }]}
-                    >
-                        {tabs.map((tab, index) => renderTopButton(tab, index))}
-                    </Block>
+                    <TopTabBar
+                        tabs={tabs}
+                        tabActiveIndex={tabActiveIndex}
+                        setTabActiveIndex={(index) => setTabActiveIndex(index)}
+                    />
 
                     {renderTopPanel()}
                 </Block>
@@ -346,13 +322,6 @@ const styles = StyleSheet.create({
         elevation: 3
     },
     leaderBoardItemContainer: {
-        height: NowTheme.SIZES.HEIGHT_BASE * 0.1,
+        height: NowTheme.SIZES.HEIGHT_BASE * 0.08,
     },
-    titleBold: {
-        fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
-        fontSize: NowTheme.SIZES.FONT_H4
-    },
-    centerLoaderContainer: {
-        marginTop: NowTheme.SIZES.HEIGHT_BASE * 0.2
-    }
 });

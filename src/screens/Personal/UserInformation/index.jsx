@@ -178,27 +178,6 @@ export default function UserInformation({ navigation }) {
                         <Block style={{
                             marginTop: 10
                         }}
-<<<<<<< HEAD:src/components/businessComponents/UserInformation.jsx
-                        >
-                            {renderAvatar()}
-                        </Block>
-                    </TouchableWithoutFeedback>
-                    <Block>
-                        <Button
-                            shadowless
-                            style={{
-                                margin: 0,
-                                width: NowTheme.SIZES.WIDTH_BASE * 0.25,
-                            }}
-                            color={NowTheme.COLORS.TRANSPARENT}
-                            textStyle={{
-                                color: NowTheme.COLORS.DEFAULT,
-                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                                fontSize: NowTheme.SIZES.FONT_H3
-                            }}
-                            onPress={() => onClickUpdateAvatar()}
-=======
->>>>>>> develop:src/screens/Personal/UserInformation/index.jsx
                         >
                             {renderAvatar()}
                         </Block>

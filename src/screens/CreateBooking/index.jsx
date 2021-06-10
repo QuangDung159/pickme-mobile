@@ -724,7 +724,6 @@ export default function CreateBooking({ route, navigation }) {
             [
                 {
                     text: 'Tiếp tục đặt',
-                    onPress: (res) => ToastHelpers.renderToast(res.data.message, 'error'),
                     style: 'cancel'
                 },
                 {
