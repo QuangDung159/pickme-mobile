@@ -1,5 +1,5 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
-import { NO_AVATAR_URL, PICKME_INFO_URL } from '@env';
+import { NO_AVATAR_URL } from '@env';
 import { Block, Text } from 'galio-framework';
 import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet } from 'react-native';
