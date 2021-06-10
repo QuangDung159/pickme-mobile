@@ -33,7 +33,6 @@ export default {
     BOOKING: {
         SCHEDULE_BOOKING: '/bookings/ScheduleBooking',
         UPDATE_BOOKING: '/bookings/UpdateBooking',
-        GET_MY_BOOKING_AS_PARTNER: '/bookings/GetMyBookingAsPartner',
         GET_LIST_BOOKING_LOCATION: '/Locations/Locations',
         GET_MY_BOOKING_AS_CUSTOMER: '/bookings/GetMyBookingAsCustomer',
         PARTNER_CONFIRM_BOOKING: '/bookings/PartnerConfirmBooking',

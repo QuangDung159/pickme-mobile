@@ -62,7 +62,7 @@ export default function CardBooking({ booking }) {
                                 <>{`${fullName}`}</>
                             </Text>
                             <Text
-                                size={NowTheme.SIZES.FONT_H5}
+                                size={NowTheme.SIZES.FONT_H4}
                                 style={styles.cardSubTitle}
                                 color={NowTheme.COLORS.ACTIVE}
                             >
@@ -76,14 +76,14 @@ export default function CardBooking({ booking }) {
                         >
                             <Text
                                 style={styles.subInfoCard}
-                                size={NowTheme.SIZES.FONT_H3}
+                                size={NowTheme.SIZES.FONT_H2}
                                 color={NowTheme.COLORS.ACTIVE}
                             >
                                 {`Ngày: ${moment(date).format('DD-MM-YYYY')}`}
                             </Text>
                             <Text
                                 style={styles.subInfoCard}
-                                size={NowTheme.SIZES.FONT_H3}
+                                size={NowTheme.SIZES.FONT_H2}
                                 color={NowTheme.COLORS.ACTIVE}
                             >
                                 {`Từ ${startStr} đến ${endStr}`}

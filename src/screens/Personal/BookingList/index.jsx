@@ -1,7 +1,7 @@
 import { Block, Text } from 'galio-framework';
 import React, { useEffect, useState } from 'react';
 import { FlatList, RefreshControl } from 'react-native';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import { CenterLoader, Line } from '../../../components/uiComponents';
 import { NowTheme, Rx, ScreenName } from '../../../constants';
@@ -83,7 +83,6 @@ export default function BookingList({ navigation }) {
                             onPress={() => {
                                 navigation.navigate(ScreenName.BOOKING_DETAIL, {
                                     bookingId: item.id,
-                                    from: ScreenName.BOOKING_LIST
                                 });
                             }}
                         >
@@ -105,22 +104,31 @@ export default function BookingList({ navigation }) {
                     )}
                 />
             ) : (
-                <Block
-                    style={{
-                        alignItems: 'center',
-                        marginVertical: 15
-                    }}
+                <ScrollView
+                    refreshControl={(
+                        <RefreshControl
+                            refreshing={refreshing}
+                            onRefresh={() => onRefresh()}
+                        />
+                    )}
                 >
-                    <Text
-                        color={NowTheme.COLORS.SWITCH_OFF}
+                    <Block
                         style={{
-                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                            alignItems: 'center',
+                            marginVertical: 15
                         }}
-                        size={NowTheme.SIZES.FONT_H2}
                     >
-                        Bạn không có cuộc hẹn nào sắp tới
-                    </Text>
-                </Block>
+                        <Text
+                            color={NowTheme.COLORS.SWITCH_OFF}
+                            style={{
+                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                            }}
+                            size={NowTheme.SIZES.FONT_H2}
+                        >
+                            Danh sách trống
+                        </Text>
+                    </Block>
+                </ScrollView>
             )}
 
         </>
