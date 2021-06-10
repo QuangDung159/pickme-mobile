@@ -364,30 +364,6 @@ export default function Verification({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-    button: {
-        margin: 0,
-        width: NowTheme.SIZES.WIDTH_BASE * 0.44
-    },
-    centeredView: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: NowTheme.SIZES.HEIGHT_BASE * 0.3
-    },
-    modalView: {
-        margin: 10,
-        backgroundColor: 'white',
-        borderRadius: 20,
-        padding: 20,
-        alignItems: 'center',
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 2
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5
-    },
     docFormContainer: {
         marginTop: 30
     }
