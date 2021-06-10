@@ -1,9 +1,9 @@
-import { Block, Button, Text } from 'galio-framework';
+import { Block, Text } from 'galio-framework';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { NowTheme } from '../../constants';
-import { Line } from '../uiComponents';
+import { CustomButton, Line } from '../uiComponents';
 
 const arrDOW = [
     'C.Nhật',
@@ -63,10 +63,9 @@ export default function CustomCalendar({ selectedDate, onChangeDate }) {
     return (
         <Block
             style={{
-                height: NowTheme.SIZES.HEIGHT_BASE * 0.18
+                height: NowTheme.SIZES.HEIGHT_BASE * 0.13,
             }}
         >
-            {/* render header dow */}
             <Block
                 row
             >
@@ -121,19 +120,18 @@ export default function CustomCalendar({ selectedDate, onChangeDate }) {
                                 middle
                                 key={item.toString()}
                             >
-                                <Button
+                                <CustomButton
                                     onPress={() => { onClickDate(item); }}
-                                    round
-                                    color={buttonColor}
-                                    shadowless
-                                    textStyle={dateTextStyle}
-                                    style={{
+                                    buttonStyle={{
                                         width: 30,
                                         height: 30,
+                                        backgroundColor: buttonColor,
+                                        borderRadius: 15,
+                                        borderWidth: 0
                                     }}
-                                >
-                                    {item.substring(0, 2)}
-                                </Button>
+                                    labelStyle={dateTextStyle}
+                                    label={item.substring(0, 2)}
+                                />
                             </Block>
                         );
                     })}
@@ -163,19 +161,18 @@ export default function CustomCalendar({ selectedDate, onChangeDate }) {
                                 middle
                                 key={item.toString()}
                             >
-                                <Button
+                                <CustomButton
                                     onPress={() => { onClickDate(item); }}
-                                    round
-                                    color={buttonColor}
-                                    shadowless
-                                    textStyle={dateTextStyle}
-                                    style={{
+                                    buttonStyle={{
                                         width: 30,
                                         height: 30,
+                                        backgroundColor: buttonColor,
+                                        borderRadius: 15,
+                                        borderWidth: 0
                                     }}
-                                >
-                                    {item.substring(0, 2)}
-                                </Button>
+                                    labelStyle={dateTextStyle}
+                                    label={item.substring(0, 2)}
+                                />
                             </Block>
                         );
                     })}

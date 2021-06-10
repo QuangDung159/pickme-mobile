@@ -1,12 +1,12 @@
 import * as SecureStore from 'expo-secure-store';
 import {
-    Block, NavBar, Text, theme
+    Block, NavBar, Text
 } from 'galio-framework';
 import React from 'react';
 import { Platform, StyleSheet, TouchableOpacity } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
-import { IconCustom, Input, Tabs } from '../components/uiComponents';
+import { CustomInput, IconCustom, Tabs } from '../components/uiComponents';
 import {
     IconFamily, NowTheme, Rx, ScreenName
 } from '../constants';
@@ -178,20 +178,24 @@ export default function Header({
     };
 
     const renderSearch = () => (
-        <Input
-            right
-            color="black"
-            style={styles.search}
+        <CustomInput
+            value=""
+            inputStyle={{
+                width: NowTheme.SIZES.WIDTH_BASE * 0.9
+            }}
+            keyboardType="number-pad"
+            containerStyle={{
+                marginVertical: 10,
+                width: NowTheme.SIZES.WIDTH_BASE * 0.9
+            }}
             placeholder="Bạn muốn tìm gì?"
-            placeholderTextColor="#8898AA"
-            iconContent={(
-                <IconCustom
-                    size={16}
-                    name="zoom-bold2x"
-                    family={IconFamily.NOW_EXTRA}
-                    color={theme.COLORS.MUTED}
-                />
-            )}
+            rightIcon={{
+                name: 'eye',
+                family: IconFamily.ENTYPO,
+                size: 20,
+                color: NowTheme.COLORS.DEFAULT
+            }}
+            onPressRightIcon={() => console.log('search')}
         />
     );
 

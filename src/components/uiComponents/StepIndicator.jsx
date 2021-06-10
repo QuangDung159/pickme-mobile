@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { NowTheme } from '../../constants';
-import Button from './Button';
+import CustomButton from './CustomButton';
 
 export default function StepIndicator({
     type, buttonText, content
@@ -30,16 +30,15 @@ export default function StepIndicator({
                 middle
                 style={styles.stepIndicatorContainer}
             >
-                <Button
-                    round
-                    shadowless
-                    style={indicatorStyle}
-                    fontFamily={NowTheme.FONT.MONTSERRAT_BOLD}
-                    fontSize={NowTheme.SIZES.FONT_H4}
-                    fontColor={buttonFontColor}
-                >
-                    {buttonText}
-                </Button>
+                <CustomButton
+                    buttonStyle={indicatorStyle}
+                    labelStyle={{
+                        fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
+                        fontSize: NowTheme.SIZES.FONT_H2,
+                        color: buttonFontColor
+                    }}
+                    label={buttonText}
+                />
             </Block>
 
             <Block
@@ -47,10 +46,11 @@ export default function StepIndicator({
                 style={styles.contentContainer}
             >
                 <Text
-                    color={NowTheme.COLORS.DEFAULT}
-                    size={NowTheme.SIZES.FONT_H3}
-                    fontFamily={NowTheme.FONT.MONTSERRAT_REGULAR}
-                    numberOfLines={2}
+                    style={{
+                        color: NowTheme.COLORS.DEFAULT,
+                        fontSize: NowTheme.SIZES.FONT_H3,
+                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
+                    }}
                 >
                     {content}
                 </Text>
@@ -73,9 +73,9 @@ StepIndicator.defaultProps = {
 
 const styles = StyleSheet.create({
     stepIndicatorCurrent: {
-        width: 25,
-        height: 25,
-        borderRadius: NowTheme.SIZES.BASE * 1.5,
+        width: 30,
+        height: 30,
+        borderRadius: 15,
         justifyContent: 'center',
         marginHorizontal: 5,
         backgroundColor: NowTheme.COLORS.BASE,
@@ -83,24 +83,26 @@ const styles = StyleSheet.create({
         borderWidth: 3,
     },
     stepIndicatorNext: {
-        width: 25,
-        height: 25,
-        borderRadius: NowTheme.SIZES.BASE * 1.5,
+        width: 30,
+        height: 30,
+        borderRadius: 15,
         justifyContent: 'center',
         marginHorizontal: 5,
-        backgroundColor: NowTheme.COLORS.BLOCK,
+        backgroundColor: NowTheme.COLORS.INPUT,
+        borderWidth: 0,
     },
     stepIndicatorPrev: {
-        width: 25,
-        height: 25,
-        borderRadius: NowTheme.SIZES.BASE * 1.5,
+        width: 30,
+        height: 30,
+        borderRadius: 15,
         justifyContent: 'center',
         marginHorizontal: 5,
         backgroundColor: NowTheme.COLORS.ACTIVE,
+        borderWidth: 0
     },
     stepIndicatorContainer: {
-        width: 25,
-        height: 25,
+        width: 30,
+        height: 30,
     },
     contentContainer: {
         marginLeft: 10
