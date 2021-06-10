@@ -2,7 +2,7 @@
 import { NO_AVATAR_URL } from '@env';
 import * as SecureStore from 'expo-secure-store';
 import {
-    Block, Button, Text
+    Block, Text
 } from 'galio-framework';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
@@ -11,7 +11,7 @@ import { ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handl
 import ImageView from 'react-native-image-viewing';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-    CenterLoader, IconCustom, Line
+    CenterLoader, CustomButton, Line
 } from '../../../components/uiComponents';
 import {
     IconFamily, NowTheme, Rx, ScreenName
@@ -182,24 +182,18 @@ export default function UserInformation({ navigation }) {
                             {renderAvatar()}
                         </Block>
                     </TouchableWithoutFeedback>
-                    <Block>
-                        <Button
-                            shadowless
-                            style={{
-                                margin: 0,
-                                width: NowTheme.SIZES.WIDTH_BASE * 0.25,
-                            }}
-                            color={NowTheme.COLORS.TRANSPARENT}
-                            textStyle={{
-                                color: NowTheme.COLORS.DEFAULT,
-                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                                fontSize: NowTheme.SIZES.FONT_H3
-                            }}
-                            onPress={() => onClickUpdateAvatar()}
-                        >
-                            Đổi avatar
-                        </Button>
-                    </Block>
+                    <CustomButton
+                        onPress={() => onClickUpdateAvatar()}
+                        labelStyle={{
+                            fontSize: NowTheme.SIZES.FONT_H3,
+                        }}
+                        buttonStyle={{
+                            width: NowTheme.SIZES.WIDTH_BASE * 0.25,
+                            borderWidth: 0,
+                            alignSelf: 'flex-start'
+                        }}
+                        label="Đổi avatar"
+                    />
                 </Block>
             </Block>
         </Block>
@@ -330,25 +324,17 @@ export default function UserInformation({ navigation }) {
                                 marginTop: 10
                             }}
                         >
-                            <Button
-                                color={NowTheme.COLORS.BLOCK}
-                                fontSize={NowTheme.SIZES.FONT_H3}
-                                style={{
-                                    width: NowTheme.SIZES.WIDTH_BASE * 0.9,
-                                    marginVertical: 10
-                                }}
+                            <CustomButton
                                 onPress={
                                     () => navigation.navigate(
                                         ScreenName.UPDATE_INFO_ACCOUNT,
                                     )
                                 }
-                                textStyle={{
-                                    color: NowTheme.COLORS.ACTIVE
+                                labelStyle={{
+                                    fontSize: NowTheme.SIZES.FONT_H3
                                 }}
-                                shadowless
-                            >
-                                Chỉnh sửa thông tin cá nhân
-                            </Button>
+                                label="Chỉnh sửa thông tin cá nhân"
+                            />
                         </Block>
                     </Block>
                 </Block>
@@ -367,39 +353,19 @@ export default function UserInformation({ navigation }) {
     );
 
     const renderButtonLogout = () => (
-        <TouchableWithoutFeedback
+        <CustomButton
             onPress={() => onSignOut(navigation)}
-            containerStyle={{
-                paddingVertical: 10,
-                paddingBottom: 20,
-                width: NowTheme.SIZES.WIDTH_BASE * 0.9,
-                alignSelf: 'center'
+            labelStyle={{
+                fontSize: NowTheme.SIZES.FONT_H3,
             }}
-        >
-            <Block
-                row
-                style={{
-                    alignItems: 'center'
-                }}
-            >
-                <IconCustom
-                    name="sign-out"
-                    size={NowTheme.SIZES.FONT_H3}
-                    color={NowTheme.COLORS.SWITCH_OFF}
-                    family={IconFamily.FONT_AWESOME}
-                />
-                <Text
-                    color={NowTheme.COLORS.SWITCH_OFF}
-                    style={{
-                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                        marginLeft: 10
-                    }}
-                    size={NowTheme.SIZES.FONT_H3}
-                >
-                    Đăng xuất
-                </Text>
-            </Block>
-        </TouchableWithoutFeedback>
+            label="Đăng xuất"
+            leftIcon={{
+                name: 'logout',
+                size: NowTheme.SIZES.FONT_H3,
+                color: NowTheme.COLORS.SWITCH_OFF,
+                family: IconFamily.SIMPLE_LINE_ICONS
+            }}
+        />
     );
 
     try {

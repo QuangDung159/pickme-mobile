@@ -1,9 +1,9 @@
-import { Block, Button, Text } from 'galio-framework';
+import { Block, Text } from 'galio-framework';
 import React, { useEffect, useState } from 'react';
 import { RefreshControl } from 'react-native';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
-import { CenterLoader, IconCustom } from '../../components/uiComponents';
+import { CenterLoader, CustomButton, IconCustom } from '../../components/uiComponents';
 import {
     IconFamily, NowTheme, Rx, ScreenName
 } from '../../constants';
@@ -170,16 +170,18 @@ export default function Wallet({ navigation, route }) {
                     </Block>
                 </Block>
                 <Block>
-                    <Button
-                        onPress={() => navigation.navigate(ScreenName.CASH_IN)}
-                        style={{
-                            width: NowTheme.SIZES.WIDTH_BASE * 0.4,
-                            margin: 0
+                    <CustomButton
+                        onPress={() => navigation.navigate(ScreenName.CASH_OUT)}
+                        labelStyle={{
+                            fontSize: NowTheme.SIZES.FONT_H3,
+                            color: NowTheme.COLORS.ACTIVE
                         }}
-                        shadowless
-                    >
-                        Nạp kim cương
-                    </Button>
+                        buttonStyle={{
+                            width: NowTheme.SIZES.WIDTH_BASE * 0.4,
+                            borderColor: NowTheme.COLORS.ACTIVE
+                        }}
+                        label="Rút kim cương"
+                    />
                 </Block>
             </Block>
         );
