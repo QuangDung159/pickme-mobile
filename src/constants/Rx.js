@@ -12,7 +12,7 @@ export default {
         CURRENT_USER_INFO: '/users/CurrentCustomerInfo',
         UPDATE_AVATAR: '/Users/UpdateAvatar',
         UPDATE_USER_INFO: '/users/UpdateUserInfo',
-        UPLOAD_ISSUE_IMAGE: 'Posts/AddPost',
+        UPLOAD_ISSUE_IMAGE: '/Posts/AddPost',
         REMOVE_ISSUE_IMAGE: '/Posts/RemovePost',
         UPDATE_EXPO_TOKEN: '/Users/UpdateExpoToken',
         GET_OTP_REGISTER: '/users/CustomerRegister',

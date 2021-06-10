@@ -1,14 +1,16 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
 import { PICKME_INFO_URL } from '@env';
 import {
-    Block, Button, Input, Text
+    Block, Text
 } from 'galio-framework';
 import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet } from 'react-native';
 import { ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import ImageView from 'react-native-image-viewing';
 import { useSelector } from 'react-redux';
-import { CenterLoader, IconCustom, NoteText } from '../../components/uiComponents';
+import {
+    CenterLoader, CustomButton, CustomInput, IconCustom, NoteText, TopTabBar
+} from '../../components/uiComponents';
 import {
     IconFamily, NowTheme, Rx, ScreenName
 } from '../../constants';
@@ -33,7 +35,14 @@ export default function Support({ navigation }) {
     const pickMeInfoStore = useSelector((state) => state.appConfigReducer.pickMeInfoStore);
     const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
 
-    const tabs = ['Câu hỏi thường gặp', 'Báo lỗi/hỗ trợ'];
+    const tabs = [
+        {
+            tabLabel: 'Câu hỏi thường gặp'
+        },
+        {
+            tabLabel: 'Báo lỗi/hỗ trợ'
+        }
+    ];
 
     // handler \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
     useEffect(
@@ -90,8 +99,7 @@ export default function Support({ navigation }) {
             (res) => {
                 ToastHelpers.renderToast(res.data.message, 'error');
                 setIsShowSpinner(false);
-            },
-            PICKME_INFO_URL
+            }
         );
     };
 
@@ -145,10 +153,6 @@ export default function Support({ navigation }) {
         );
     };
 
-    const changeTabIndexActive = (tabIndex) => {
-        setTabActiveIndex(tabIndex);
-    };
-
     // render \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
     const renderImageReport = () => (
         <TouchableWithoutFeedback
@@ -194,17 +198,10 @@ export default function Support({ navigation }) {
             space="between"
             style={{
                 width: NowTheme.SIZES.WIDTH_BASE * 0.9,
+                marginVertical: 10
             }}
         >
-            <Button
-                onPress={() => onSubmitBugReport()}
-                shadowless
-                style={styles.button}
-            >
-                Xác nhận
-            </Button>
-
-            <Button
+            <CustomButton
                 onPress={() => {
                     setBugReportForm({
                         title: '',
@@ -213,12 +210,16 @@ export default function Support({ navigation }) {
                     });
                     removeImage();
                 }}
-                shadowless
-                style={styles.button}
-                color={NowTheme.COLORS.DEFAULT}
-            >
-                Huỷ bỏ
-            </Button>
+                buttonStyle={styles.button}
+                type="default"
+                label="Huỷ bỏ"
+            />
+            <CustomButton
+                onPress={() => onSubmitBugReport()}
+                buttonStyle={styles.button}
+                type="active"
+                label="Xác nhận"
+            />
         </Block>
     );
 
@@ -313,97 +314,37 @@ export default function Support({ navigation }) {
     );
 
     const renderInputBugTitle = () => (
-        <Block
-            style={{
-                paddingTop: 10
+        <CustomInput
+            multiline
+            placeholder="Nhập tóm tắt lỗi..."
+            value={bugReportForm.title}
+            onChangeText={(input) => onChangeBugTitle(input)}
+            inputStyle={{
+                height: 60
             }}
-        >
-
-            <Block>
-                <Text
-                    color={NowTheme.COLORS.ACTIVE}
-                    size={16}
-                    style={{
-                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
-                    }}
-                >
-                    Tóm tắt lỗi:
-                </Text>
-
-                <Input
-                    numberOfLines={2}
-                    style={[
-                        styles.input,
-                        {
-                            height: 44
-                        }
-                    ]}
-                    color={NowTheme.COLORS.HEADER}
-                    placeholder="Nhập tóm tắt lỗi..."
-                    value={bugReportForm.title}
-                    onChangeText={(input) => onChangeBugTitle(input)}
-                />
-            </Block>
-        </Block>
+            containerStyle={{
+                marginVertical: 10,
+                width: NowTheme.SIZES.WIDTH_BASE * 0.9
+            }}
+            label="Tóm tắt lỗi:"
+        />
     );
 
     const renderInputBugDescription = () => (
-        <Block
-            style={{
-                paddingTop: 10
+        <CustomInput
+            multiline
+            placeholder="Nhập chi tiết lỗi..."
+            value={bugReportForm.description}
+            onChangeText={(input) => onChangeDescription(input)}
+            inputStyle={{
+                height: 60
             }}
-        >
-
-            <Block>
-                <Text
-                    color={NowTheme.COLORS.ACTIVE}
-                    size={16}
-                    style={{
-                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
-                    }}
-                >
-                    Chi tiết lỗi:
-                </Text>
-
-                <Input
-                    multiline
-                    numberOfLines={2}
-                    style={[
-                        styles.input,
-                        {
-                            height: 60
-                        }
-                    ]}
-                    color={NowTheme.COLORS.HEADER}
-                    placeholder="Nhập chi tiết lỗi..."
-                    value={bugReportForm.description}
-                    onChangeText={(input) => onChangeDescription(input)}
-                />
-            </Block>
-        </Block>
-    );
-
-    const renderTopButton = (title, index) => (
-        <TouchableWithoutFeedback
-            onPress={() => changeTabIndexActive(index)}
             containerStyle={{
-                backgroundColor: !(index === tabActiveIndex)
-                    ? NowTheme.COLORS.LIST_ITEM_BACKGROUND_1
-                    : NowTheme.COLORS.BASE,
-                flex: 3,
-                alignItems: 'center',
-                justifyContent: 'center'
+                marginVertical: 10,
+                width: NowTheme.SIZES.WIDTH_BASE * 0.9
             }}
-            key={title}
-        >
-            <Text
-                color={(index === tabActiveIndex) ? NowTheme.COLORS.ACTIVE : NowTheme.COLORS.DEFAULT}
-                style={styles.titleBold}
-            >
-                {title}
-            </Text>
-        </TouchableWithoutFeedback>
-
+            label="Chi tiết lỗi:"
+        />
     );
 
     return (
@@ -418,14 +359,11 @@ export default function Support({ navigation }) {
             ) : (
                 <>
                     {renderImageView()}
-                    <Block
-                        row
-                        style={[{
-                            height: NowTheme.SIZES.HEIGHT_BASE * 0.07
-                        }]}
-                    >
-                        {tabs.map((title, index) => renderTopButton(title, index))}
-                    </Block>
+                    <TopTabBar
+                        tabs={tabs}
+                        tabActiveIndex={tabActiveIndex}
+                        setTabActiveIndex={(index) => setTabActiveIndex(index)}
+                    />
                     <ScrollView
                         showsVerticalScrollIndicator={false}
                         contentContainerStyle={{
