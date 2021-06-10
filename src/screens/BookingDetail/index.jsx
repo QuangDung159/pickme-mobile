@@ -466,7 +466,7 @@ export default function BookingDetail({
                                 borderWidth={0.5}
                                 borderColor={NowTheme.COLORS.ACTIVE}
                                 style={{
-                                    marginVertical: 10
+                                    marginVertical: 20
                                 }}
                             />
                             <Text
