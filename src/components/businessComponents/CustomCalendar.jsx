@@ -1,4 +1,4 @@
-import { Block, Button, Text } from 'galio-framework';
+import { Block, Text } from 'galio-framework';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
@@ -111,8 +111,7 @@ export default function CustomCalendar({ selectedDate, onChangeDate }) {
                             color: currentDate === item ? NowTheme.COLORS.ACTIVE : NowTheme.COLORS.TEXT,
                             fontFamily: currentDate === item
                                 ? NowTheme.FONT.MONTSERRAT_BOLD
-                                : NowTheme.FONT.MONTSERRAT_REGULAR,
-                            fontSize: NowTheme.SIZES.FONT_H3
+                                : NowTheme.FONT.MONTSERRAT_REGULAR
                         };
 
                         return (

@@ -81,6 +81,7 @@ export default function BookingDetail({
                 Authorization: token
             },
             (res) => {
+                console.log('res.data.data :>> ', res.data.data);
                 setBooking(res.data.data);
                 setRefreshing(false);
                 dispatch(setShowLoaderStore(false));
@@ -440,7 +441,7 @@ export default function BookingDetail({
                                 borderWidth={0.5}
                                 borderColor={NowTheme.COLORS.ACTIVE}
                                 style={{
-                                    marginVertical: 10
+                                    marginTop: 10
                                 }}
                             />
 
@@ -473,7 +474,7 @@ export default function BookingDetail({
                                 size={NowTheme.SIZES.FONT_H3}
                                 style={styles.subTitle}
                             >
-                                Ghi chú, Ghi chú, Ghi chú, Ghi chú, Ghi chú, Ghi chú, Ghi chú
+                                {booking.noted}
                             </Text>
 
                             <Block

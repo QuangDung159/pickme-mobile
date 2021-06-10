@@ -168,7 +168,7 @@ export default function CreateBooking({ route, navigation }) {
             Longtitude: '10.7723912895038',
             Latitude: '106.63063360556724',
             Description: 'locationActive.description',
-            Noted: 'N/A',
+            Noted: booking.noted,
             totalAmount: total !== 0 ? total : calculateTotalAmount(startTimeStr, endTimeStr)
         };
 
