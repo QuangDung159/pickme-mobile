@@ -1,8 +1,7 @@
 /* eslint-disable max-len */
-import { Picker } from '@react-native-picker/picker';
 import * as ImagePicker from 'expo-image-picker';
 import {
-    Block, Button, Text
+    Block, Text
 } from 'galio-framework';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
@@ -16,7 +15,7 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useDispatch, useSelector } from 'react-redux';
 import noAvatar from '../../../assets/images/no-avatar.png';
-import { CenterLoader, Input } from '../../components/uiComponents';
+import { CenterLoader, CustomButton, CustomInput } from '../../components/uiComponents';
 import {
     Images, NowTheme, Rx, ScreenName
 } from '../../constants';
@@ -24,11 +23,8 @@ import { MediaHelpers, ToastHelpers } from '../../helpers';
 import { setToken } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
 
-const defaultDate = '2002-01-01T14:00:00';
-
 export default function CreateAccount(props) {
     const token = useSelector((state) => state.userReducer.token);
-    const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
 
     const dispatch = useDispatch();
 
@@ -37,7 +33,7 @@ export default function CreateAccount(props) {
     const [newUser, setNewUser] = useState({
         hometown: '',
         fullName: '',
-        dob: defaultDate,
+        dob: '',
         description: '',
         address: 'Việt Nam',
         interests: ''
@@ -46,6 +42,8 @@ export default function CreateAccount(props) {
     const [image, setImage] = useState(null);
     const [isShowSpinner, setIsShowSpinner] = useState(false);
     const [isShowDoneMessage, setIsShowDoneMessage] = useState(false);
+
+    const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
 
     useEffect(() => {
         (async () => {
@@ -71,37 +69,6 @@ export default function CreateAccount(props) {
 
     const onClickUploadProfileImage = () => {
         MediaHelpers.pickImage(true, [1, 1], (result) => handleUploadImageProfile(result.uri));
-    };
-
-    const renderListPickerItem = (list) => list.map(({ label, value }) => (
-        <Picker.Item label={label} value={value} key={value} />
-    ));
-
-    const renderDropdownDOBYear = () => {
-        const currentYear = new Date().getFullYear();
-        const DOBStartYear = currentYear - 58;
-        const listDOBYear = [];
-        for (let i = 0; i < 40; i += 1) {
-            listDOBYear.unshift({
-                label: (DOBStartYear + i).toString(),
-                value: (DOBStartYear + i).toString()
-            });
-        }
-
-        return (
-            <Block
-                middle
-            >
-                <Picker
-                    selectedValue={newUser.dob.substr(0, 4)}
-                    onValueChange={(itemValue) => onChangeDOBYear(itemValue)}
-                    fontFamily={NowTheme.FONT.MONTSERRAT_REGULAR}
-                    style={styles.inputWith}
-                >
-                    {renderListPickerItem(listDOBYear)}
-                </Picker>
-            </Block>
-        );
     };
 
     const handleUploadImageProfile = (uri) => {
@@ -130,11 +97,6 @@ export default function CreateAccount(props) {
                 setIsShowSpinner(false);
             }
         );
-    };
-
-    const onChangeDOBYear = (yearInput) => {
-        const user = { ...newUser, dob: `${yearInput}-01-01T14:00:00` };
-        setNewUser(user);
     };
 
     const validate = () => {
@@ -207,6 +169,11 @@ export default function CreateAccount(props) {
         setNewUser(user);
     };
 
+    const onChangeYear = (yearInput) => {
+        const user = { ...newUser, dob: yearInput };
+        setNewUser(user);
+    };
+
     const validateYearsOld = (dob) => {
         const dateString = moment(dob).format('YYYY-MM-DD');
         const years = moment().diff(dateString, 'years');
@@ -219,14 +186,13 @@ export default function CreateAccount(props) {
             ToastHelpers.renderToast('Ảnh không hợp lệ!', 'error');
         } else {
             const {
-                fullName, description, dob, address, interests,
-                hometown
+                fullName, description, dob, address, interests, hometown
             } = newUser;
 
             const data = {
                 fullName,
                 description,
-                dob,
+                dob: `${dob}-01-01T14:00:00`,
                 height: 0,
                 earningExpected: 0,
                 weight: 0,
@@ -285,24 +251,24 @@ export default function CreateAccount(props) {
                         <Block
                             style={styles.stepFormContainer}
                         >
-                            <Input
-                                style={[styles.inputWith, {
-                                    borderRadius: 5,
-                                }]}
-                                onChangeText={(name) => onChangeInputName(name)}
+                            <CustomInput
                                 value={newUser.fullName}
+                                onChangeText={(name) => onChangeInputName(name)}
+                                containerStyle={{
+                                    marginVertical: 10,
+                                    width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                                }}
                                 placeholder="Nhập tên của bạn..."
                             />
                         </Block>
 
                         <Block center>
-                            <Button
+                            <CustomButton
                                 onPress={() => goToStep(2)}
-                                style={styles.inputWith}
-                                shadowless
-                            >
-                                Bước kế tiếp
-                            </Button>
+                                buttonStyle={styles.inputWith}
+                                type="active"
+                                label="Bước kế tiếp"
+                            />
                         </Block>
                     </Block>
                 );
@@ -320,7 +286,7 @@ export default function CreateAccount(props) {
                             >
 
                                 {!newUser.hometown
-                                    ? 'Quê quán của bạn'
+                                    ? 'Quê quán?'
                                     : `${newUser.hometown} là một nơi tuyệt vời nhỉ!`}
                             </Text>
                         </Block>
@@ -328,24 +294,24 @@ export default function CreateAccount(props) {
                         <Block
                             style={styles.stepFormContainer}
                         >
-                            <Input
-                                style={[styles.inputWith, {
-                                    borderRadius: 5,
-                                }]}
-                                onChangeText={(name) => onChangeInputHometown(name)}
+                            <CustomInput
                                 value={newUser.hometown}
+                                onChangeText={(name) => onChangeInputHometown(name)}
+                                containerStyle={{
+                                    marginVertical: 10,
+                                    width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                                }}
                                 placeholder="Nhập quê quán..."
                             />
                         </Block>
 
                         <Block center>
-                            <Button
+                            <CustomButton
                                 onPress={() => goToStep(3)}
-                                style={styles.inputWith}
-                                shadowless
-                            >
-                                Bước kế tiếp
-                            </Button>
+                                buttonStyle={styles.inputWith}
+                                type="active"
+                                label="Bước kế tiếp"
+                            />
                         </Block>
                     </Block>
                 );
@@ -376,25 +342,29 @@ export default function CreateAccount(props) {
                                     justifyContent: 'flex-end'
                                 }}
                             >
-                                <Input
-                                    style={[styles.inputWith, {
-                                        borderRadius: 5,
-                                    }]}
+                                <CustomInput
                                     value={newUser.description}
+                                    multiline
                                     onChangeText={(description) => onChangeInputDescription(description)}
+                                    containerStyle={{
+                                        marginVertical: 10,
+                                        width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                                    }}
+                                    inputStyle={{
+                                        height: 80,
+                                    }}
                                     placeholder="Mô tả về mình đi nào..."
                                 />
                             </Block>
                         </Block>
 
                         <Block center>
-                            <Button
+                            <CustomButton
                                 onPress={() => goToStep(4)}
-                                style={styles.inputWith}
-                                shadowless
-                            >
-                                Bước kế tiếp
-                            </Button>
+                                buttonStyle={styles.inputWith}
+                                type="active"
+                                label="Bước kế tiếp"
+                            />
                         </Block>
                     </Block>
                 );
@@ -422,33 +392,36 @@ export default function CreateAccount(props) {
                                 }
                             ]}
                         >
-                            <Input
-                                placeholderStyle={{
-                                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                                    color: NowTheme.COLORS.MUTED
+                            <CustomInput
+                                containerStyle={{
+                                    marginVertical: 10,
+                                    width: NowTheme.SIZES.WIDTH_BASE * 0.77
                                 }}
-                                style={[styles.inputWith, {
-                                    borderRadius: 5,
-                                    marginBottom: 10,
-                                }]}
                                 onChangeText={(userInterests) => onChangeInputInterests(userInterests)}
                                 value={newUser.interests}
                                 placeholder="Nhập sở thích của bạn..."
                             />
 
-                            {renderDropdownDOBYear()}
+                            <CustomInput
+                                containerStyle={{
+                                    marginVertical: 10,
+                                    width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                                }}
+                                onChangeText={(input) => onChangeYear(input)}
+                                value={newUser.dob}
+                                placeholder="Nhập năm sinh của bạn..."
+                            />
 
                         </Block>
                         <Block
                             center
                         >
-                            <Button
+                            <CustomButton
                                 onPress={() => goToStep(5)}
-                                style={styles.inputWith}
-                                shadowless
-                            >
-                                Bước kế tiếp
-                            </Button>
+                                buttonStyle={styles.inputWith}
+                                type="active"
+                                label="Bước kế tiếp"
+                            />
                         </Block>
                     </Block>
                 );
@@ -506,13 +479,12 @@ export default function CreateAccount(props) {
                                         marginTop: 50,
                                     }}
                                 >
-                                    <Button
+                                    <CustomButton
                                         onPress={() => onSubmitAccountCreation()}
-                                        style={styles.inputWith}
-                                        shadowless
-                                    >
-                                        Hoàn tất
-                                    </Button>
+                                        buttonStyle={styles.inputWith}
+                                        type="active"
+                                        label="Hoàn tất"
+                                    />
                                 </Block>
                             </>
                         )}
@@ -555,16 +527,15 @@ export default function CreateAccount(props) {
                                     marginTop: 50,
                                 }}
                             >
-                                <Button
+                                <CustomButton
                                     onPress={() => {
                                         dispatch(setToken(''));
                                         navigation.navigate(ScreenName.ONBOARDING);
                                     }}
-                                    style={styles.inputWith}
-                                    shadowless
-                                >
-                                    Quay về trang đăng nhập
-                                </Button>
+                                    buttonStyle={styles.inputWith}
+                                    type="active"
+                                    label="Quay về trang đăng nhập"
+                                />
                             </Block>
                         </>
                     </Block>

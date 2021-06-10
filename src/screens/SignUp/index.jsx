@@ -1,5 +1,5 @@
 import {
-    Block, Button, Checkbox, Text
+    Block, Checkbox, Text
 } from 'galio-framework';
 import React, { useState } from 'react';
 import {
@@ -10,8 +10,9 @@ import {
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Toast from 'react-native-toast-message';
 import { useDispatch, useSelector } from 'react-redux';
-import { CenterLoader, Input } from '../../components/uiComponents';
+import { CenterLoader, CustomButton, CustomInput } from '../../components/uiComponents';
 import {
+    IconFamily,
     Images, NowTheme, Rx, ScreenName
 } from '../../constants';
 import { ToastHelpers } from '../../helpers';
@@ -26,6 +27,7 @@ export default function SignUp({ navigation }) {
     const [password, setPassword] = useState('');
     const [onCheckedDisclaimer, setOnCheckedDisclaimer] = useState(false);
     const [isShowSpinner, setIsShowSpinner] = useState(false);
+    const [isShowPassword, setIsShowPassword] = useState(false);
 
     const deviceIdStore = useSelector((state) => state.appConfigReducer.deviceIdStore);
 
@@ -130,12 +132,12 @@ export default function SignUp({ navigation }) {
         },
         () => loginWithSignUpInfo(),
         (res) => {
-            setIsShowSpinner(false);
             ToastHelpers.renderToast(res.data.message, 'error');
+            setIsShowSpinner(false);
         },
         (res) => {
-            setIsShowSpinner(false);
             ToastHelpers.renderToast(res.data.message, 'error');
+            setIsShowSpinner(false);
         });
     };
 
@@ -148,12 +150,18 @@ export default function SignUp({ navigation }) {
                             <Block
                                 style={styles.formInputContainer}
                             >
-                                <Input
-                                    style={styles.input}
-                                    placeholder="Nhập số diện thoại..."
+                                <CustomInput
                                     value={phoneNumber}
-                                    keyboardType="number-pad"
+                                    inputStyle={{
+                                        width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                                    }}
                                     onChangeText={(phoneNumberInput) => setPhoneNumber(phoneNumberInput)}
+                                    keyboardType="number-pad"
+                                    containerStyle={{
+                                        marginVertical: 10,
+                                        width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                                    }}
+                                    placeholder="Nhập số điện thoại..."
                                 />
                             </Block>
 
@@ -184,8 +192,10 @@ export default function SignUp({ navigation }) {
                                             }}
                                         >
                                             <Text
-                                                fontFamily={NowTheme.FONT.MONTSERRAT_REGULAR}
-                                                color={NowTheme.COLORS.DEFAULT}
+                                                style={{
+                                                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                                                    color: NowTheme.COLORS.DEFAULT
+                                                }}
                                             >
                                                 Tôi đồng ý với các Điều khoản và Điều kiện
                                             </Text>
@@ -196,13 +206,12 @@ export default function SignUp({ navigation }) {
                         </Block>
 
                         <Block center>
-                            <Button
+                            <CustomButton
                                 onPress={() => onClickGetOTP()}
-                                style={styles.button}
-                                shadowless
-                            >
-                                Xác nhận
-                            </Button>
+                                buttonStyle={styles.button}
+                                type="active"
+                                label="Xác nhận"
+                            />
                         </Block>
                     </>
                 );
@@ -214,34 +223,52 @@ export default function SignUp({ navigation }) {
                             <Block
                                 style={styles.formInputContainer}
                             >
-                                <Input
-                                    style={styles.input}
-                                    keyboardType="number-pad"
+                                <CustomInput
                                     value={otp}
-                                    placeholder="Nhập mã xác thực..."
+                                    inputStyle={{
+                                        width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                                    }}
                                     onChangeText={(otpInput) => setOtp(otpInput)}
+                                    keyboardType="number-pad"
+                                    containerStyle={{
+                                        marginVertical: 10,
+                                        width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                                    }}
+                                    placeholder="Nhập mã xác thực..."
                                 />
 
-                                <Input
-                                    placeholder="Nhập mật khẩu..."
-                                    style={styles.input}
-                                    keyboardType="number-pad"
-                                    password
-                                    viewPass
+                                <CustomInput
                                     value={password}
+                                    inputStyle={{
+                                        width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                                    }}
                                     onChangeText={(passwordInput) => setPassword(passwordInput)}
+                                    keyboardType="number-pad"
+                                    containerStyle={{
+                                        marginVertical: 10,
+                                        width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                                    }}
+                                    secureTextEntry={!isShowPassword}
+                                    placeholder="Nhập mật khẩu..."
+                                    rightIcon={{
+                                        name: 'eye',
+                                        family: IconFamily.ENTYPO,
+                                        size: 20,
+                                        color: NowTheme.COLORS.DEFAULT
+                                    }}
+                                    onPressRightIcon={() => setIsShowPassword(!isShowPassword)}
                                 />
+
                             </Block>
                         </Block>
 
                         <Block center>
-                            <Button
+                            <CustomButton
                                 onPress={() => onClickSubmitRegister()}
-                                style={styles.button}
-                                shadowless
-                            >
-                                Xác nhận
-                            </Button>
+                                buttonStyle={styles.button}
+                                type="active"
+                                label="Xác nhận"
+                            />
                         </Block>
                     </>
                 );
@@ -282,28 +309,15 @@ export default function SignUp({ navigation }) {
                                 I agree to the terms and conditions
                                 I agree to the terms and conditions
                                 I agree to the terms and conditions
-                                I agree to the terms and conditions
-                                I agree to the terms and conditions
-                                I agree to the terms and conditions
-                                I agree to the terms and conditions
-                                I agree to the terms and conditions
-                                I agree to the terms and conditions
-                                I agree to the terms and conditions
-                                I agree to the terms and conditions
-                                I agree to the terms and conditions
-                                I agree to the terms and conditions
-                                I agree to the terms and conditions
-                                I agree to the terms and conditions
                             </Text>
 
                             <Block center>
-                                <Button
+                                <CustomButton
                                     onPress={() => setModalVisible(!modalVisible)}
-                                    style={styles.button}
-                                    shadowless
-                                >
-                                    Đã hiểu
-                                </Button>
+                                    buttonStyle={styles.button}
+                                    type="active"
+                                    label="Đã hiểu"
+                                />
                             </Block>
                         </View>
                     </View>
@@ -389,10 +403,9 @@ const styles = StyleSheet.create({
         marginTop: 22
     },
     modalView: {
-        margin: 20,
         backgroundColor: 'white',
-        borderRadius: 20,
-        padding: 35,
+        borderRadius: 5,
+        width: NowTheme.SIZES.WIDTH_BASE * 0.85,
         alignItems: 'center',
         shadowColor: '#000',
         shadowOffset: {
@@ -401,10 +414,12 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
-        elevation: 5
+        elevation: 5,
+        marginTop: NowTheme.SIZES.WIDTH_BASE * 0.5,
+        marginBottom: 10
     },
     modalText: {
-        marginBottom: 15,
+        margin: 15,
         textAlign: 'center',
         fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
     },
@@ -414,10 +429,6 @@ const styles = StyleSheet.create({
     },
     stepSessionContainer: {
         height: NowTheme.SIZES.HEIGHT_BASE * 0.3
-    },
-    input: {
-        borderRadius: 5,
-        width: NowTheme.SIZES.WIDTH_BASE * 0.77
     },
     checkbox: {
         borderWidth: 1,
@@ -429,12 +440,13 @@ const styles = StyleSheet.create({
     },
     disclaimerContainer: {
         alignSelf: 'center',
+        alignItems: 'center',
+        height: 40,
     },
     disclaimerAgreeContainer: {
         marginLeft: 10,
     },
     formInputContainer: {
         alignItems: 'center',
-        marginBottom: 10,
     }
 });
