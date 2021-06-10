@@ -63,10 +63,9 @@ export default function CustomCalendar({ selectedDate, onChangeDate }) {
     return (
         <Block
             style={{
-                height: NowTheme.SIZES.HEIGHT_BASE * 0.18
+                height: NowTheme.SIZES.HEIGHT_BASE * 0.13,
             }}
         >
-            {/* render header dow */}
             <Block
                 row
             >

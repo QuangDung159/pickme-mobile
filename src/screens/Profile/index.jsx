@@ -420,17 +420,6 @@ const styles = StyleSheet.create({
         width: NowTheme.SIZES.WIDTH_BASE,
         height: NowTheme.SIZES.HEIGHT_BASE * 0.6
     },
-    nameInfo: {
-        marginTop: 35
-    },
-    social: {
-        width: NowTheme.SIZES.BASE * 3,
-        height: NowTheme.SIZES.BASE * 3,
-        borderRadius: NowTheme.SIZES.BASE * 1.5,
-        justifyContent: 'center',
-        zIndex: 99,
-        marginHorizontal: 5
-    },
     buttonPanelContainer: {
         backgroundColor: 'transparent',
         position: 'absolute',
