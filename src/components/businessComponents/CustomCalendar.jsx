@@ -3,7 +3,7 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { NowTheme } from '../../constants';
-import { Line } from '../uiComponents';
+import { CustomButton, Line } from '../uiComponents';
 
 const arrDOW = [
     'C.Nhật',
@@ -111,7 +111,8 @@ export default function CustomCalendar({ selectedDate, onChangeDate }) {
                             color: currentDate === item ? NowTheme.COLORS.ACTIVE : NowTheme.COLORS.TEXT,
                             fontFamily: currentDate === item
                                 ? NowTheme.FONT.MONTSERRAT_BOLD
-                                : NowTheme.FONT.MONTSERRAT_REGULAR
+                                : NowTheme.FONT.MONTSERRAT_REGULAR,
+                            fontSize: NowTheme.SIZES.FONT_H3
                         };
 
                         return (
@@ -120,19 +121,18 @@ export default function CustomCalendar({ selectedDate, onChangeDate }) {
                                 middle
                                 key={item.toString()}
                             >
-                                <Button
+                                <CustomButton
                                     onPress={() => { onClickDate(item); }}
-                                    round
-                                    color={buttonColor}
-                                    shadowless
-                                    textStyle={dateTextStyle}
-                                    style={{
+                                    buttonStyle={{
                                         width: 30,
                                         height: 30,
+                                        backgroundColor: buttonColor,
+                                        borderRadius: 15,
+                                        borderWidth: 0
                                     }}
-                                >
-                                    {item.substring(0, 2)}
-                                </Button>
+                                    labelStyle={dateTextStyle}
+                                    label={item.substring(0, 2)}
+                                />
                             </Block>
                         );
                     })}
@@ -162,19 +162,18 @@ export default function CustomCalendar({ selectedDate, onChangeDate }) {
                                 middle
                                 key={item.toString()}
                             >
-                                <Button
+                                <CustomButton
                                     onPress={() => { onClickDate(item); }}
-                                    round
-                                    color={buttonColor}
-                                    shadowless
-                                    textStyle={dateTextStyle}
-                                    style={{
+                                    buttonStyle={{
                                         width: 30,
                                         height: 30,
+                                        backgroundColor: buttonColor,
+                                        borderRadius: 15,
+                                        borderWidth: 0
                                     }}
-                                >
-                                    {item.substring(0, 2)}
-                                </Button>
+                                    labelStyle={dateTextStyle}
+                                    label={item.substring(0, 2)}
+                                />
                             </Block>
                         );
                     })}
