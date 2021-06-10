@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Text, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableHighlight } from 'react-native-gesture-handler';
 import { IconFamily, NowTheme } from '../../../constants';
 import IconCustom from '../IconCustom';
 
@@ -45,9 +45,10 @@ export default function CustomButton(
     };
 
     const renderButtonBase = () => (
-        <TouchableOpacity
+        <TouchableHighlight
+            underlayColor="transparent"
             {...props}
-            containerStyle={
+            style={
                 [
                     baseButtonStyle,
                     {
@@ -72,7 +73,7 @@ export default function CustomButton(
             >
                 {label}
             </Text>
-        </TouchableOpacity>
+        </TouchableHighlight>
     );
 
     const renderButtonByType = () => {
@@ -80,9 +81,10 @@ export default function CustomButton(
             const colorByType = type === 'active' ? NowTheme.COLORS.ACTIVE : NowTheme.COLORS.DEFAULT;
 
             return (
-                <TouchableOpacity
+                <TouchableHighlight
+                    underlayColor="transparent"
                     {...props}
-                    containerStyle={
+                    style={
                         [
                             baseButtonStyle,
                             {
@@ -107,7 +109,7 @@ export default function CustomButton(
                     >
                         {label}
                     </Text>
-                </TouchableOpacity>
+                </TouchableHighlight>
             );
         }
 
@@ -123,9 +125,10 @@ export default function CustomButton(
             size, color, name, family
         } = leftIcon;
         return (
-            <TouchableOpacity
+            <TouchableHighlight
+                underlayColor="transparent"
                 {...props}
-                containerStyle={
+                style={
                     [
                         {
                             height: 40,
@@ -166,7 +169,7 @@ export default function CustomButton(
                         {label}
                     </Text>
                 </View>
-            </TouchableOpacity>
+            </TouchableHighlight>
         );
     };
 
