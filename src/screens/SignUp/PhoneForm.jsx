@@ -80,9 +80,7 @@ export default function PhoneForm({
 
                 <View
                     style={styles.disclaimerContainer}
-                    row
-                    width={NowTheme.SIZES.WIDTH_BASE * 0.77}
-                    height={NowTheme.SIZES.HEIGHT_BASE * 0.2}
+
                 >
                     <>
                         <Checkbox
@@ -183,8 +181,8 @@ const styles = StyleSheet.create({
     },
     disclaimerContainer: {
         alignSelf: 'center',
-        alignItems: 'center',
-        height: 40,
+        flexDirection: 'row',
+        width: NowTheme.SIZES.WIDTH_BASE * 0.77,
     },
     disclaimerAgreeContainer: {
         marginLeft: 10,
