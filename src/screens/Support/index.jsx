@@ -4,11 +4,12 @@ import React, { useEffect, useState } from 'react';
 import {
     Image, StyleSheet, Text, View
 } from 'react-native';
-import { ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { FlatList, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import ImageView from 'react-native-image-viewing';
 import { useSelector } from 'react-redux';
 import {
-    CenterLoader, CustomButton, CustomInput, IconCustom, NoteText, TopTabBar
+    CenterLoader,
+    CustomButton, CustomInput, IconCustom, NoteText, TopTabBar
 } from '../../components/uiComponents';
 import {
     IconFamily, NowTheme, Rx, ScreenName
@@ -106,7 +107,7 @@ export default function Support({ navigation }) {
         setIsShowSpinner(true);
         MediaHelpers.uploadImage(
             uri,
-            Rx.USER.UPLOAD_ISSUE_IMAGE,
+            Rx.USER.UPLOAD_USER_IMAGE,
             token,
             (res) => {
                 setIsShowSpinner(false);
@@ -133,7 +134,7 @@ export default function Support({ navigation }) {
 
     const removeImage = () => {
         rxUtil(
-            `${Rx.USER.REMOVE_ISSUE_IMAGE}/${imageId}`,
+            `${Rx.USER.REMOVE_USER_IMAGE}/${imageId}`,
             'POST',
             null,
             {
@@ -219,15 +220,17 @@ export default function Support({ navigation }) {
         </View>
     );
 
-    const renderListQNA = () => {
+    const renderListFAQ = () => {
         if (listFAQ && listFAQ.length !== 0) {
             return (
-                <>
-                    {listFAQ.map((item) => (
+                <FlatList
+                    data={listFAQ}
+                    keyExtractor={(item) => item.id}
+                    renderItem={({ item }) => (
                         <View
                             key={item.answer}
                             style={{
-                                marginBottom: 10
+                                paddingVertical: 10
                             }}
                         >
                             <NoteText
@@ -242,18 +245,37 @@ export default function Support({ navigation }) {
                                 backgroundColor={NowTheme.COLORS.LIST_ITEM_BACKGROUND_2}
                             />
                         </View>
-                    ))}
-                </>
+                    )}
+                    showsVerticalScrollIndicator={false}
+                />
             );
         }
-        return null;
+
+        return (
+            <View
+                style={{
+                    alignItems: 'center',
+                    marginVertical: 15
+                }}
+            >
+                <Text
+                    style={{
+                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                        color: NowTheme.COLORS.SWITCH_OFF,
+                        fontSize: NowTheme.SIZES.FONT_H2
+                    }}
+                >
+                    Danh sách trống
+                </Text>
+            </View>
+        );
     };
 
     const renderTabByIndex = () => {
         if (tabActiveIndex === 0) {
             return (
                 <>
-                    {renderListQNA()}
+                    {renderListFAQ()}
                 </>
             );
         }
@@ -305,11 +327,23 @@ export default function Support({ navigation }) {
 
     const renderBugReportForm = () => (
         <>
-            {renderInputBugTitle()}
-            {renderInputBugDescription()}
-            {renderUploadImageReportButton()}
-            {renderImageReport()}
-            {renderButtonPanel()}
+            {isShowSpinner ? (
+                <CenterLoader />
+            ) : (
+                <View
+                    style={{
+                        width: NowTheme.SIZES.WIDTH_BASE * 0.9,
+                        alignSelf: 'center',
+                        paddingVertical: 10
+                    }}
+                >
+                    {renderInputBugTitle()}
+                    {renderInputBugDescription()}
+                    {renderUploadImageReportButton()}
+                    {renderImageReport()}
+                    {renderButtonPanel()}
+                </View>
+            )}
         </>
     );
 
@@ -348,33 +382,15 @@ export default function Support({ navigation }) {
     );
 
     return (
-        <View
-            style={{
-                alignItems: 'center',
-            }}
-        >
-            {isShowSpinner ? (
-                <CenterLoader />
-            ) : (
-                <>
-                    {renderImageView()}
-                    <TopTabBar
-                        tabs={tabs}
-                        tabActiveIndex={tabActiveIndex}
-                        setTabActiveIndex={(index) => setTabActiveIndex(index)}
-                    />
-                    <ScrollView
-                        showsVerticalScrollIndicator={false}
-                        contentContainerStyle={{
-                            width: NowTheme.SIZES.WIDTH_BASE * 0.9,
-                            paddingVertical: 10
-                        }}
-                    >
-                        {renderTabByIndex()}
-                    </ScrollView>
-                </>
-            )}
-        </View>
+        <>
+            {renderImageView()}
+            <TopTabBar
+                tabs={tabs}
+                tabActiveIndex={tabActiveIndex}
+                setTabActiveIndex={(index) => setTabActiveIndex(index)}
+            />
+            {renderTabByIndex()}
+        </>
     );
 }
 

@@ -41,10 +41,10 @@ export default function CustomInput({
                         borderColor: NowTheme.COLORS.INPUT,
                         borderWidth: 1,
                         borderRadius: 5,
-                        height: 44,
+                        height: 50,
                         paddingHorizontal: 10,
                         fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                        fontSize: NowTheme.SIZES.FONT_H3,
+                        fontSize: NowTheme.SIZES.FONT_H2,
                         color: NowTheme.COLORS.HEADER
                     },
                     inputStyle,
