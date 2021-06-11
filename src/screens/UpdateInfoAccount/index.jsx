@@ -17,7 +17,7 @@ export default function UpdateInfoAccount({ navigation }) {
         },
         {
             tabLabel: 'Đổi mật khẩu',
-        },
+        }
     ];
 
     useEffect(

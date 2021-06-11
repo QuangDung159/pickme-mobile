@@ -1,11 +1,7 @@
-import { Picker } from '@react-native-picker/picker';
-import {
-    Block, Text
-} from 'galio-framework';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react/cjs/react.development';
 import { CenterLoader, CustomButton, CustomInput } from '../../components/uiComponents';
 import { NowTheme, Rx } from '../../constants';
 import { ToastHelpers } from '../../helpers';
@@ -26,10 +22,6 @@ export default function UpdateInfoForm() {
             setNewUser({ ...currentUser, dob: currentUser?.dob?.substr(0, 4) });
         }, []
     );
-
-    const onChangeDOBYear = (yearInput) => {
-        setNewUser({ ...newUser, dob: `${yearInput}-01-01T14:00:00` });
-    };
 
     const onChangeName = (nameInput) => {
         setNewUser({ ...newUser, fullName: nameInput });
@@ -83,31 +75,6 @@ export default function UpdateInfoForm() {
         />
     );
 
-    const renderInputDOB = () => (
-        <Block
-            middle
-            style={{
-                zIndex: 99
-            }}
-        >
-            <Block>
-                <Text
-                    color={NowTheme.COLORS.ACTIVE}
-                    size={16}
-                    style={{
-                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                        width: NowTheme.SIZES.WIDTH_BASE * 0.9,
-                        marginBottom: 10
-                    }}
-                >
-                    Năm sinh:
-                </Text>
-
-                {renderDropdownDOBYear()}
-            </Block>
-        </Block>
-    );
-
     const renderInputDescription = () => (
         <CustomInput
             multiline
@@ -124,12 +91,28 @@ export default function UpdateInfoForm() {
         />
     );
 
+    const onChangeYear = (yearInput) => {
+        setNewUser({ ...newUser, dob: yearInput });
+    };
+
+    const renderInputYear = () => (
+        <CustomInput
+            containerStyle={{
+                marginVertical: 10,
+                width: NowTheme.SIZES.WIDTH_BASE * 0.9
+            }}
+            onChangeText={(input) => onChangeYear(input)}
+            value={newUser?.dob?.substr(0, 4)}
+            label="Năm sinh:"
+        />
+    );
+
     const renderButtonPanel = () => (
-        <Block
-            row
-            space="between"
+        <View
             style={{
-                paddingTop: 10
+                paddingTop: 10,
+                flexDirection: 'row',
+                justifyContent: 'space-between'
             }}
         >
             <CustomButton
@@ -144,42 +127,8 @@ export default function UpdateInfoForm() {
                 type="active"
                 label="Xác nhận"
             />
-        </Block>
+        </View>
     );
-
-    const renderListPickerItem = (list) => list.map(({ value, label }) => (
-        <Picker.Item label={label} value={value} key={value} />
-    ));
-
-    const renderDropdownDOBYear = () => {
-        const currentYear = new Date().getFullYear();
-        const DOBStartYear = currentYear - 58;
-        const listDOBYear = [];
-        for (let i = 0; i < 40; i += 1) {
-            listDOBYear.unshift({
-                label: (DOBStartYear + i).toString(),
-                value: (DOBStartYear + i).toString()
-            });
-        }
-
-        return (
-            <Picker
-                selectedValue={newUser?.dob?.substr(0, 4)}
-                onValueChange={(itemValue) => onChangeDOBYear(itemValue)}
-                itemStyle={{
-                    fontSize: NowTheme.SIZES.FONT_H2,
-                    marginTop: -20,
-                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
-                }}
-                style={{
-                    fontSize: NowTheme.SIZES.FONT_H2,
-                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
-                }}
-            >
-                {renderListPickerItem(listDOBYear)}
-            </Picker>
-        );
-    };
 
     const validate = () => {
         const {
@@ -228,10 +177,7 @@ export default function UpdateInfoForm() {
         const data = {
             fullName,
             description,
-            dob,
-            height: 0,
-            earningExpected: 0,
-            weight: 0,
+            dob: `${dob}-01-01T14:00:00`,
             homeTown,
             interests,
             address,
@@ -286,27 +232,27 @@ export default function UpdateInfoForm() {
                     alignSelf: 'center'
                 }}
             >
-                <Block
+                <View
                     style={{
                         backgroundColor: NowTheme.COLORS.BASE,
                         marginVertical: 10
                     }}
                 >
                     {isShowSpinner ? (
-                        <Block
+                        <View
                             style={{
                                 marginTop: NowTheme.SIZES.HEIGHT_BASE * 0.3
                             }}
                         >
                             <CenterLoader size="small" />
-                        </Block>
+                        </View>
                     ) : (
                         <>
                             {newUser && (
                                 <>
                                     {renderInputName()}
                                     {renderInputHometown()}
-                                    {renderInputDOB()}
+                                    {renderInputYear()}
                                     {renderInputInterests()}
                                     {renderInputDescription()}
                                     {renderButtonPanel()}
@@ -314,7 +260,7 @@ export default function UpdateInfoForm() {
                             )}
                         </>
                     )}
-                </Block>
+                </View>
             </ScrollView>
         </>
     );
