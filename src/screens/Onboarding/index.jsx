@@ -133,7 +133,7 @@ export default function Onboarding({ navigation }) {
                                 <Block
                                     middle
                                     style={{
-                                        paddingBottom: NowTheme.SIZES.HEIGHT_BASE * 0.3
+                                        paddingBottom: NowTheme.SIZES.HEIGHT_BASE * 0.2
                                     }}
                                 >
                                     <Text

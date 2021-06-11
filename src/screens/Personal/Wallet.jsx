@@ -185,7 +185,7 @@ export default function Wallet({ navigation, route }) {
                         color: NowTheme.COLORS.ACTIVE
                     }}
                     buttonStyle={{
-                        width: NowTheme.SIZES.WIDTH_BASE * 0.4,
+                        width: NowTheme.SIZES.WIDTH_BASE * 0.45,
                         borderColor: NowTheme.COLORS.ACTIVE
                     }}
                     label="Nạp kim cương"

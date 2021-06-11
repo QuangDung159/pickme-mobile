@@ -1,8 +1,9 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
 import { NO_AVATAR_URL } from '@env';
-import { Block } from 'galio-framework';
 import React, { useEffect, useState } from 'react';
-import { Image, StyleSheet, Text } from 'react-native';
+import {
+    Image, StyleSheet, Text, View
+} from 'react-native';
 import { FlatList, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useSelector } from 'react-redux';
 import { CenterLoader, IconCustom, TopTabBar } from '../../components/uiComponents';
@@ -73,20 +74,23 @@ export default function LeaderBoard({ navigation }) {
                 <TouchableWithoutFeedback
                     onPress={() => navigation.navigate(ScreenName.PROFILE, { userId: leaderBoardItem.userId })}
                 >
-                    <Block
-                        row
-                        flex
-                        center
+                    <View
                         style={[
                             styles.leaderBoardItemContainer,
                             {
-                                backgroundColor: !(index % 2 === 0) || NowTheme.COLORS.LIST_ITEM_BACKGROUND_1
+                                backgroundColor: !(index % 2 === 0) || NowTheme.COLORS.LIST_ITEM_BACKGROUND_1,
+                                flexDirection: 'row',
+                                alignSelf: 'center',
+                                width: NowTheme.SIZES.WIDTH_BASE
                             }
                         ]}
                     >
-                        <Block
-                            middle
-                            flex={1}
+                        <View
+                            style={{
+                                alignSelf: 'center',
+                                alignItems: 'center',
+                                width: NowTheme.SIZES.WIDTH_BASE * 0.1
+                            }}
                         >
                             <Text
                                 color={
@@ -104,12 +108,14 @@ export default function LeaderBoard({ navigation }) {
                             >
                                 {index + 1}
                             </Text>
-                        </Block>
-                        <Block
-                            middle
-                            flex={2}
+                        </View>
+                        <View
                             style={{
                                 marginRight: 10,
+                                alignSelf: 'center',
+                                alignItems: 'center',
+                                width: NowTheme.SIZES.WIDTH_BASE * 0.15,
+                                paddingVertical: 5
                             }}
                         >
                             <Image
@@ -119,60 +125,57 @@ export default function LeaderBoard({ navigation }) {
                                 style={{
                                     width: 50,
                                     height: 50,
-                                    borderRadius: 25
+                                    borderRadius: 25,
                                 }}
                             />
-                        </Block>
-                        <Block
-                            row
-                            flex={7}
-                            space="between"
+                        </View>
+                        <View
                             style={{
-                                marginRight: 10
+                                marginRight: 10,
+                                alignSelf: 'center',
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
+                                flexDirection: 'row',
                             }}
-                            middle
                         >
-                            <Block
-                                flex={7}
+                            <View
+                                style={{
+                                    width: NowTheme.SIZES.WIDTH_BASE * 0.5
+                                }}
                             >
                                 <Text
                                     style={{
                                         color: NowTheme.COLORS.ACTIVE,
                                         fontSize: NowTheme.SIZES.FONT_H2,
                                         fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                                        paddingVertical: 10
                                     }}
                                 >
                                     {leaderBoardItem.fullName}
                                 </Text>
-                            </Block>
-                            <Block
-                                flex={3}
-                                middle
+                            </View>
+                            <View
                                 style={{
-                                    alignItems: 'flex-end'
+                                    width: NowTheme.SIZES.WIDTH_BASE * 0.2,
                                 }}
                             >
-                                <Text
-                                    style={{
-                                        color: NowTheme.COLORS.ACTIVE,
-                                        fontSize: NowTheme.SIZES.FONT_H1,
-                                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                                    }}
-                                >
-                                    {leaderBoardItem.value}
-                                    {' '}
-                                    {tabs[tabActiveIndex].tabIcon}
-                                </Text>
-                            </Block>
-                        </Block>
-                    </Block>
+                                {renderAchieveValueTopPanel(leaderBoardItem.value)}
+                            </View>
+
+                        </View>
+                    </View>
                 </TouchableWithoutFeedback>
             );
         } return null;
     };
 
     const renderAchieveValueTopPanel = (achieveValue) => (
-        <Block middle>
+        <View
+            style={{
+                alignSelf: 'flex-end',
+                alignItems: 'center',
+            }}
+        >
             <Text
                 style={{
                     fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
@@ -184,7 +187,7 @@ export default function LeaderBoard({ navigation }) {
                 {' '}
                 {tabs[tabActiveIndex].tabIcon}
             </Text>
-        </Block>
+        </View>
     );
 
     const renderTopPanel = () => {
@@ -199,17 +202,17 @@ export default function LeaderBoard({ navigation }) {
         } = topOnePartner;
 
         return (
-            <Block
-                flex
-                middle
+            <View
                 style={{
-                    paddingBottom: 15
+                    alignSelf: 'center',
+                    alignItems: 'center',
+                    paddingTop: 20
                 }}
             >
                 <TouchableWithoutFeedback
                     onPress={() => navigation.navigate(ScreenName.PROFILE, { userId: topOnePartner.userId })}
                 >
-                    <Block
+                    <View
                         style={{
                             padding: 10
                         }}
@@ -223,10 +226,10 @@ export default function LeaderBoard({ navigation }) {
                                 width: NowTheme.SIZES.WIDTH_BASE * 0.25,
                                 height: NowTheme.SIZES.WIDTH_BASE * 0.25,
                                 borderRadius: 75,
-                                zIndex: 99
+                                zIndex: 99,
                             }}
                         />
-                        <Block
+                        <View
                             style={{
                                 position: 'absolute',
                                 zIndex: 10,
@@ -241,24 +244,25 @@ export default function LeaderBoard({ navigation }) {
                                 size={24}
                                 color={NowTheme.COLORS.ACTIVE}
                             />
-                        </Block>
-                    </Block>
+                        </View>
+                    </View>
                 </TouchableWithoutFeedback>
 
-                <Block
+                <View
                     style={{
                         width: NowTheme.SIZES.WIDTH_BASE,
                     }}
                 >
-                    <Block
-                        middle
+                    <View
                         style={{
-                            marginVertical: 10
+                            marginVertical: 10,
+                            alignSelf: 'center',
+                            alignItems: 'center',
                         }}
                     >
                         <Text
                             style={{
-                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                                fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
                                 fontSize: NowTheme.SIZES.FONT_H1,
                                 color: NowTheme.COLORS.ACTIVE
                             }}
@@ -266,21 +270,25 @@ export default function LeaderBoard({ navigation }) {
                         >
                             {fullName}
                         </Text>
-                    </Block>
-                    <Block>
+                    </View>
+                    <View
+                        style={{
+                            alignSelf: 'center'
+                        }}
+                    >
                         {renderAchieveValueTopPanel(value)}
-                    </Block>
-                </Block>
-            </Block>
+                    </View>
+                </View>
+            </View>
         );
     };
 
     try {
         return (
             <>
-                <Block
+                <View
                     style={[{
-                        height: NowTheme.SIZES.HEIGHT_BASE * 0.4,
+                        height: 320,
                         alignItems: 'center',
                     }, styles.shadow]}
                 >
@@ -291,7 +299,7 @@ export default function LeaderBoard({ navigation }) {
                     />
 
                     {renderTopPanel()}
-                </Block>
+                </View>
                 {listLeaderBoard && listLeaderBoard.length !== 0 && (
                     <FlatList
                         data={listLeaderBoard}
@@ -320,8 +328,5 @@ const styles = StyleSheet.create({
         shadowRadius: 6,
         shadowOpacity: 0.2,
         elevation: 3
-    },
-    leaderBoardItemContainer: {
-        height: NowTheme.SIZES.HEIGHT_BASE * 0.08,
     },
 });
