@@ -28,7 +28,7 @@
       "package": "com.dragonc92team.pickmecustomer",
       "googleServicesFile": "./google-services.json",
       "useNextNotificationsApi":true,
-      "versionCode": 26
+      "versionCode": 27
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
