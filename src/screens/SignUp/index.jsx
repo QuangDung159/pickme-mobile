@@ -1,23 +1,21 @@
-import {
-    Block, Checkbox, Text
-} from 'galio-framework';
 import React, { useState } from 'react';
 import {
-    Alert,
-    ImageBackground, Modal, ScrollView,
-    StyleSheet, TouchableWithoutFeedback, View
+    ImageBackground,
+    StyleSheet,
+    Text,
+    View
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import Toast from 'react-native-toast-message';
-import { useDispatch, useSelector } from 'react-redux';
-import { CenterLoader, CustomButton, CustomInput } from '../../components/uiComponents';
+import { useSelector } from 'react-redux';
 import {
-    IconFamily,
-    Images, NowTheme, Rx, ScreenName
+    CenterLoader
+} from '../../components/uiComponents';
+import {
+    Images, NowTheme
 } from '../../constants';
-import { ToastHelpers } from '../../helpers';
-import { setIsSignInOtherDeviceStore, setToken } from '../../redux/Actions';
-import { rxUtil } from '../../utils';
+import ModalDisclaimer from './ModalDisclaimer';
+import OtpForm from './OtpForm';
+import PhoneForm from './PhoneForm';
 
 export default function SignUp({ navigation }) {
     const [modalVisible, setModalVisible] = useState(false);
@@ -25,252 +23,34 @@ export default function SignUp({ navigation }) {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [otp, setOtp] = useState('');
     const [password, setPassword] = useState('');
-    const [onCheckedDisclaimer, setOnCheckedDisclaimer] = useState(false);
-    const [isShowSpinner, setIsShowSpinner] = useState(false);
-    const [isShowPassword, setIsShowPassword] = useState(false);
 
     const deviceIdStore = useSelector((state) => state.appConfigReducer.deviceIdStore);
-
-    const dispatch = useDispatch();
-
-    const loginWithSignUpInfo = () => {
-        const data = {
-            username: phoneNumber,
-            password,
-            deviceId: deviceIdStore !== null ? deviceIdStore : ''
-        };
-
-        rxUtil(
-            Rx.AUTHENTICATION.LOGIN,
-            'POST',
-            data,
-            {},
-            (res) => {
-                onLoginSuccess(res.data.data);
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
-                setIsShowSpinner(false);
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
-                setIsShowSpinner(false);
-            }
-        );
-    };
-
-    const onLoginSuccess = (tokenFromAPI) => {
-        dispatch(setToken(tokenFromAPI));
-        dispatch(setIsSignInOtherDeviceStore(false));
-        navigation.navigate(ScreenName.CREATE_ACCOUNT);
-        Toast.show({
-            type: 'success',
-            text1: 'Tạo tài khoản thành công!'
-        });
-        setIsShowSpinner(false);
-    };
-
-    const onClickGetOTP = () => {
-        if (!phoneNumber) {
-            ToastHelpers.renderToast('Số điện thoại không hợp lệ!', 'error');
-            return;
-        }
-
-        if (!onCheckedDisclaimer) {
-            ToastHelpers.renderToast('Bạn vui lòng đồng ý với các Điều khoản và Điều kiện.', 'error');
-            return;
-        }
-
-        setIsShowSpinner(true);
-        rxUtil(
-            Rx.USER.GET_OTP_REGISTER,
-            'POST',
-            {
-                phoneNum: phoneNumber
-            },
-            null,
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'success');
-                setStep(2);
-
-                // in testing, will remove when prod
-                setOtp(res.data.data.code);
-                setIsShowSpinner(false);
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
-                setIsShowSpinner(false);
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
-                setIsShowSpinner(false);
-            }
-        );
-    };
-
-    const onClickSubmitRegister = () => {
-        if (!otp) {
-            ToastHelpers.renderToast('Mã OTP không hợp lệ!', 'error');
-            return;
-        }
-
-        if (!password) {
-            ToastHelpers.renderToast('Mật khẩu không hợp lệ!', 'error');
-            return;
-        }
-
-        const data = {
-            password,
-            phoneNum: phoneNumber,
-            code: otp,
-            deviceId: deviceIdStore !== null ? deviceIdStore : ''
-        };
-
-        setIsShowSpinner(true);
-        rxUtil(Rx.AUTHENTICATION.SIGN_UP, 'POST', data, {
-            'Content-Type': 'application/json'
-        },
-        () => loginWithSignUpInfo(),
-        (res) => {
-            ToastHelpers.renderToast(res.data.message, 'error');
-            setIsShowSpinner(false);
-        },
-        (res) => {
-            ToastHelpers.renderToast(res.data.message, 'error');
-            setIsShowSpinner(false);
-        });
-    };
+    const showLoaderStore = useSelector((state) => state.appConfigReducer.showLoaderStore);
 
     const renderSignUpViewByStep = () => {
         switch (step) {
             case 1: {
                 return (
-                    <>
-                        <Block style={styles.stepSessionContainer}>
-                            <Block
-                                style={styles.formInputContainer}
-                            >
-                                <CustomInput
-                                    value={phoneNumber}
-                                    inputStyle={{
-                                        width: NowTheme.SIZES.WIDTH_BASE * 0.77
-                                    }}
-                                    onChangeText={(phoneNumberInput) => setPhoneNumber(phoneNumberInput)}
-                                    keyboardType="number-pad"
-                                    containerStyle={{
-                                        marginVertical: 10,
-                                        width: NowTheme.SIZES.WIDTH_BASE * 0.77
-                                    }}
-                                    placeholder="Nhập số điện thoại..."
-                                />
-                            </Block>
-
-                            <Block
-                                style={styles.disclaimerContainer}
-                                row
-                                width={NowTheme.SIZES.WIDTH_BASE * 0.77}
-                                height={NowTheme.SIZES.HEIGHT_BASE * 0.2}
-                            >
-                                <>
-                                    <Checkbox
-                                        checkboxStyle={styles.checkbox}
-                                        color={NowTheme.COLORS.PRIMARY}
-                                        style={styles.checkboxContainer}
-                                        initialValue={onCheckedDisclaimer}
-                                        label=""
-                                        onChange={(checked) => {
-                                            setOnCheckedDisclaimer(checked);
-                                        }}
-                                    />
-                                    <Block
-                                        flex
-                                        style={styles.disclaimerAgreeContainer}
-                                    >
-                                        <TouchableWithoutFeedback
-                                            onPress={() => {
-                                                setModalVisible(true);
-                                            }}
-                                        >
-                                            <Text
-                                                style={{
-                                                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                                                    color: NowTheme.COLORS.DEFAULT
-                                                }}
-                                            >
-                                                Tôi đồng ý với các Điều khoản và Điều kiện
-                                            </Text>
-                                        </TouchableWithoutFeedback>
-                                    </Block>
-                                </>
-                            </Block>
-                        </Block>
-
-                        <Block center>
-                            <CustomButton
-                                onPress={() => onClickGetOTP()}
-                                buttonStyle={styles.button}
-                                type="active"
-                                label="Xác nhận"
-                            />
-                        </Block>
-                    </>
+                    <PhoneForm
+                        phoneNumber={phoneNumber}
+                        setModalVisible={(isVisible) => setModalVisible(isVisible)}
+                        setOtp={(otpCode) => setOtp(otpCode)}
+                        setPhoneNumber={(phoneNum) => setPhoneNumber(phoneNum)}
+                        setStep={(stepIndex) => setStep(stepIndex)}
+                    />
                 );
             }
             case 2: {
                 return (
-                    <>
-                        <Block style={styles.stepSessionContainer}>
-                            <Block
-                                style={styles.formInputContainer}
-                            >
-                                <CustomInput
-                                    value={otp}
-                                    inputStyle={{
-                                        width: NowTheme.SIZES.WIDTH_BASE * 0.77
-                                    }}
-                                    onChangeText={(otpInput) => setOtp(otpInput)}
-                                    keyboardType="number-pad"
-                                    containerStyle={{
-                                        marginVertical: 10,
-                                        width: NowTheme.SIZES.WIDTH_BASE * 0.77
-                                    }}
-                                    placeholder="Nhập mã xác thực..."
-                                />
-
-                                <CustomInput
-                                    value={password}
-                                    inputStyle={{
-                                        width: NowTheme.SIZES.WIDTH_BASE * 0.77
-                                    }}
-                                    onChangeText={(passwordInput) => setPassword(passwordInput)}
-                                    keyboardType="number-pad"
-                                    containerStyle={{
-                                        marginVertical: 10,
-                                        width: NowTheme.SIZES.WIDTH_BASE * 0.77
-                                    }}
-                                    secureTextEntry={!isShowPassword}
-                                    placeholder="Nhập mật khẩu..."
-                                    rightIcon={{
-                                        name: 'eye',
-                                        family: IconFamily.ENTYPO,
-                                        size: 20,
-                                        color: NowTheme.COLORS.DEFAULT
-                                    }}
-                                    onPressRightIcon={() => setIsShowPassword(!isShowPassword)}
-                                />
-
-                            </Block>
-                        </Block>
-
-                        <Block center>
-                            <CustomButton
-                                onPress={() => onClickSubmitRegister()}
-                                buttonStyle={styles.button}
-                                type="active"
-                                label="Xác nhận"
-                            />
-                        </Block>
-                    </>
+                    <OtpForm
+                        deviceIdStore={deviceIdStore}
+                        navigation={navigation}
+                        otp={otp}
+                        password={password}
+                        phoneNumber={phoneNumber}
+                        setOtp={(otpCode) => setOtp(otpCode)}
+                        setPassword={(passwordStr) => setPassword(passwordStr)}
+                    />
                 );
             }
             default: {
@@ -281,74 +61,54 @@ export default function SignUp({ navigation }) {
 
     return (
         <>
-            <Modal
-                animationType="slide"
-                transparent
-                visible={modalVisible}
-                onRequestClose={() => {
-                    Alert.alert('Modal has been closed.');
+            <ModalDisclaimer
+                modalVisible={modalVisible}
+                setModalVisible={(isVisible) => setModalVisible(isVisible)}
+            />
+
+            <View
+                style={{
+                    flex: 1,
+                    alignSelf: 'center',
+                    alignItems: 'center'
                 }}
             >
-                <ScrollView
-                    showsVerticalScrollIndicator={false}
-                >
-                    <View style={styles.centeredView}>
-                        <View style={styles.modalView}>
-                            <Text style={styles.modalText}>
-                                I agree to the terms and conditions
-                                I agree to the terms and conditions
-                                I agree to the terms and conditions
-                                I agree to the terms and conditions
-                                I agree to the terms and conditions
-                                I agree to the terms and conditions
-                                I agree to the terms and conditions
-                                I agree to the terms and conditions
-                                I agree to the terms and conditions
-                                I agree to the terms and conditions
-                                I agree to the terms and conditions
-                                I agree to the terms and conditions
-                                I agree to the terms and conditions
-                                I agree to the terms and conditions
-                            </Text>
-
-                            <Block center>
-                                <CustomButton
-                                    onPress={() => setModalVisible(!modalVisible)}
-                                    buttonStyle={styles.button}
-                                    type="active"
-                                    label="Đã hiểu"
-                                />
-                            </Block>
-                        </View>
-                    </View>
-                </ScrollView>
-            </Modal>
-
-            <Block flex middle>
                 <ImageBackground
                     source={Images.RegisterBackground}
                     style={styles.imageBackgroundContainer}
                     imageStyle={styles.imageBackground}
                 >
                     <KeyboardAwareScrollView>
-                        <Block flex middle>
-                            <Block style={styles.registerContainer}>
-                                <Block
-                                    middle
+                        <View
+                            style={{
+                                flex: 1,
+                                alignSelf: 'center',
+                                alignItems: 'center'
+                            }}
+                        >
+                            <View style={styles.registerContainer}>
+                                <View
                                     style={styles.stepSessionContainer}
                                 >
                                     <Text
-                                        style={styles.title}
-                                        color="#333"
-                                        size={24}
-                                        height={100}
+                                        style={
+                                            [
+                                                styles.title,
+                                                {
+                                                    color: '#333',
+                                                    fontSize: 24,
+                                                    height: 100,
+                                                    marginTop: NowTheme.SIZES.HEIGHT_BASE * 0.1
+                                                }
+                                            ]
+                                        }
                                     >
                                         Đăng kí
                                     </Text>
-                                </Block>
+                                </View>
 
                                 {/* render from this shit */}
-                                {isShowSpinner ? (
+                                {showLoaderStore ? (
                                     <CenterLoader />
                                 ) : (
                                     <>
@@ -356,11 +116,11 @@ export default function SignUp({ navigation }) {
                                     </>
                                 )}
 
-                            </Block>
-                        </Block>
+                            </View>
+                        </View>
                     </KeyboardAwareScrollView>
                 </ImageBackground>
-            </Block>
+            </View>
         </>
     );
 }
@@ -392,61 +152,13 @@ const styles = StyleSheet.create({
         elevation: 1,
         overflow: 'hidden'
     },
-    button: {
-        width: NowTheme.SIZES.WIDTH_BASE * 0.77,
-        marginVertical: 10
-    },
-    centeredView: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 22
-    },
-    modalView: {
-        backgroundColor: 'white',
-        borderRadius: 5,
-        width: NowTheme.SIZES.WIDTH_BASE * 0.85,
-        alignItems: 'center',
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 2
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
-        marginTop: NowTheme.SIZES.WIDTH_BASE * 0.5,
-        marginBottom: 10
-    },
-    modalText: {
-        margin: 15,
-        textAlign: 'center',
-        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
-    },
     title: {
         fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
         textAlign: 'center'
     },
     stepSessionContainer: {
-        height: NowTheme.SIZES.HEIGHT_BASE * 0.3
-    },
-    checkbox: {
-        borderWidth: 1,
-        borderRadius: 2,
-        borderColor: NowTheme.COLORS.BORDER_COLOR
-    },
-    checkboxContainer: {
-        alignItems: 'flex-start',
-    },
-    disclaimerContainer: {
+        height: NowTheme.SIZES.HEIGHT_BASE * 0.3,
         alignSelf: 'center',
-        alignItems: 'center',
-        height: 40,
+        alignItems: 'center'
     },
-    disclaimerAgreeContainer: {
-        marginLeft: 10,
-    },
-    formInputContainer: {
-        alignItems: 'center',
-    }
 });

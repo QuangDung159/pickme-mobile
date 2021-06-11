@@ -1,9 +1,10 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
 import { NO_AVATAR_URL } from '@env';
-import { Block, Text } from 'galio-framework';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Image, StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import {
+    Image, StyleSheet, Text, TouchableWithoutFeedback, View
+} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { NowTheme, Rx, ScreenName } from '../../constants';
 import { ToastHelpers } from '../../helpers';
@@ -31,7 +32,9 @@ export default function NotificationItem({
             {
                 Authorization: token
             },
-            () => onTriggerRead(),
+            () => {
+                onTriggerRead();
+            },
             (res) => ToastHelpers.renderToast(res.data.message, 'error'),
             (res) => ToastHelpers.renderToast(res.data.message, 'error')
         );
@@ -55,12 +58,10 @@ export default function NotificationItem({
     };
 
     const renderAvatar = () => (
-        <Block>
-            <Image
-                style={styles.avatar}
-                source={{ uri: notiItem.url || NO_AVATAR_URL }}
-            />
-        </Block>
+        <Image
+            style={styles.avatar}
+            source={{ uri: notiItem.url || NO_AVATAR_URL }}
+        />
     );
 
     const renderNotiContent = () => {
@@ -72,19 +73,20 @@ export default function NotificationItem({
 
         return (
             <>
-                <Block
-                    flex={1}
-                    middle
+                <View
                     style={{
                         marginRight: 15,
+                        alignSelf: 'center',
+                        alignItems: 'center',
+                        flex: 1
                     }}
                 >
                     {renderAvatar()}
-                </Block>
-                <Block
-                    flex={8}
+                </View>
+                <View
                     style={{
                         justifyContent: 'center',
+                        flex: 8
                     }}
                 >
                     <TouchableWithoutFeedback
@@ -93,21 +95,23 @@ export default function NotificationItem({
                             onClickRead(false, id);
                         }}
                     >
-                        <Block style={{
+                        <View style={{
                             paddingVertical: 5,
                         }}
                         >
                             <Text
-                                color={NowTheme.COLORS.DEFAULT}
-                                size={NowTheme.SIZES.FONT_H4}
-                                fontFamily={NowTheme.FONT.MONTSERRAT_REGULAR}
                                 numberOfLines={2}
+                                style={{
+                                    color: NowTheme.COLORS.DEFAULT,
+                                    fontSize: 16,
+                                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                                }}
                             >
                                 {content}
                             </Text>
-                        </Block>
+                        </View>
                     </TouchableWithoutFeedback>
-                </Block>
+                </View>
             </>
         );
     };
@@ -117,24 +121,24 @@ export default function NotificationItem({
     } = notiItem;
 
     return (
-        <Block style={[
+        <View style={[
             !isRead
                 ? { backgroundColor: NowTheme.COLORS.NOTIFICATION_BACKGROUND }
                 : { }, {
-                height: NowTheme.SIZES.HEIGHT_BASE * 0.1
+                height: NowTheme.SIZES.HEIGHT_BASE * 0.08
             }]}
         >
-            <Block
-                row
-                flex
+            <View
                 style={{
                     height: NowTheme.SIZES.HEIGHT_BASE * 0.1,
                     marginHorizontal: 10,
+                    flexDirection: 'row',
+                    flex: 1
                 }}
             >
                 {renderNotiContent()}
-            </Block>
-        </Block>
+            </View>
+        </View>
     );
 }
 

@@ -1,7 +1,7 @@
-import { Block, theme } from 'galio-framework';
+import { theme } from 'galio-framework';
 import React, { PureComponent } from 'react';
 import {
-    Animated, FlatList, StyleSheet
+    Animated, FlatList, StyleSheet, View
 } from 'react-native';
 import { NowTheme } from '../../constants';
 
@@ -74,7 +74,7 @@ export default class Tabs extends PureComponent {
       ];
 
       return (
-          <Block style={containerStyles}>
+          <View style={containerStyles}>
               <Animated.Text
                   style={[
                       styles.menuTitle,
@@ -85,7 +85,7 @@ export default class Tabs extends PureComponent {
               >
                   {item.title}
               </Animated.Text>
-          </Block>
+          </View>
       );
   }
 
@@ -110,9 +110,9 @@ export default class Tabs extends PureComponent {
 
   render() {
       return (
-          <Block style={styles.container}>
+          <View style={styles.container}>
               {this.renderMenu()}
-          </Block>
+          </View>
       );
   }
 }

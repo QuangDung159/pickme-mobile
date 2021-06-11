@@ -1,13 +1,12 @@
-import { Block, Text } from 'galio-framework';
 import React, { PureComponent } from 'react';
-import { ActivityIndicator } from 'react-native';
+import { ActivityIndicator, View } from 'react-native';
 import { NowTheme } from '../../constants';
 
 export default class CenterLoader extends PureComponent {
     render() {
-        const { size, content } = this.props;
+        const { size } = this.props;
         return (
-            <Block
+            <View
                 style={{
                     zIndex: 1,
                     position: 'absolute',
@@ -16,34 +15,14 @@ export default class CenterLoader extends PureComponent {
                     right: 0,
                     bottom: 0,
                     justifyContent: 'center',
-                    alignItems: 'center',
+                    alignItems: 'center'
                 }}
             >
-                {content && (
-                    <Block
-                        style={{
-                            width: NowTheme.SIZES.WIDTH_BASE * 0.9,
-                            marginBottom: 15
-                        }}
-                    >
-                        <Text
-                            color={NowTheme.COLORS.ACTIVE}
-                            size={NowTheme.SIZES.FONT_H3}
-                            style={{
-                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                                textAlign: 'center',
-                            }}
-                        >
-                            {content}
-                        </Text>
-                    </Block>
-                )}
-
                 <ActivityIndicator
                     size={size}
                     color={NowTheme.COLORS.ACTIVE}
                 />
-            </Block>
+            </View>
         );
     }
 }

@@ -1,11 +1,9 @@
 import * as SecureStore from 'expo-secure-store';
-import {
-    Block
-} from 'galio-framework';
 import React, { useEffect, useState } from 'react';
 import {
     ImageBackground,
-    StyleSheet
+    StyleSheet,
+    View
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { ExpoNotification } from '../../components/businessComponents';
@@ -114,8 +112,8 @@ export default function ForgotPassword({ navigation }) {
 
     const renderFormNewPassword = () => (
         <>
-            <Block style={styles.formContainer}>
-                <Block
+            <View style={styles.formContainer}>
+                <View
                     style={{
                         marginBottom: 10,
                         alignItems: 'center'
@@ -181,24 +179,24 @@ export default function ForgotPassword({ navigation }) {
                         onPressRightIcon={() => setIsShowRePassword(!isShowRePassword)}
                     />
 
-                </Block>
-            </Block>
+                </View>
+            </View>
 
-            <Block center>
+            <View>
                 <CustomButton
                     onPress={() => onSubmitForgotPassword()}
                     buttonStyle={styles.button}
                     type="active"
                     label="Xác nhận"
                 />
-            </Block>
+            </View>
         </>
     );
 
     const renderFormOtp = () => (
         <>
-            <Block style={styles.formContainer}>
-                <Block
+            <View style={styles.formContainer}>
+                <View
                     style={{
                         marginBottom: 10,
                         alignItems: 'center'
@@ -215,22 +213,28 @@ export default function ForgotPassword({ navigation }) {
                             width: NowTheme.SIZES.WIDTH_BASE * 0.77
                         }}
                     />
-                </Block>
-            </Block>
+                </View>
+            </View>
 
-            <Block center>
+            <View>
                 <CustomButton
                     onPress={() => onClickGetOTPWhenForgotPassword()}
                     buttonStyle={styles.button}
                     type="active"
                     label="Nhận mã xác thực"
                 />
-            </Block>
+            </View>
         </>
     );
 
     return (
-        <Block flex middle>
+        <View
+            style={{
+                alignSelf: 'center',
+                alignItems: 'center',
+                flex: 1
+            }}
+        >
             <ExpoNotification navigation={navigation} />
             <ImageBackground
                 source={Images.RegisterBackground}
@@ -238,15 +242,26 @@ export default function ForgotPassword({ navigation }) {
                 imageStyle={styles.imageBackground}
             >
                 <KeyboardAwareScrollView>
-                    <Block flex middle>
-                        <Block style={styles.registerContainer}>
-                            <Block
-                                middle
+                    <View
+                        style={{
+                            alignSelf: 'center',
+                            alignItems: 'center',
+                            flex: 1
+                        }}
+                    >
+                        <View style={styles.registerContainer}>
+                            <View
                                 style={{
-                                    height: NowTheme.SIZES.HEIGHT_BASE * 0.3
+                                    height: NowTheme.SIZES.HEIGHT_BASE * 0.3,
+                                    alignSelf: 'center',
+                                    alignItems: 'center',
                                 }}
                             >
-                                <Block>
+                                <View
+                                    style={{
+                                        marginTop: NowTheme.SIZES.HEIGHT_BASE * 0.1
+                                    }}
+                                >
                                     <NoteText
                                         width={NowTheme.SIZES.WIDTH_BASE * 0.77}
                                         title="Bạn đang yêu cầu lấy lại mật khẩu:"
@@ -267,8 +282,8 @@ export default function ForgotPassword({ navigation }) {
                                         )}
                                         backgroundColor={NowTheme.COLORS.LIST_ITEM_BACKGROUND_1}
                                     />
-                                </Block>
-                            </Block>
+                                </View>
+                            </View>
 
                             {isShowSpinner ? (
                                 <CenterLoader />
@@ -285,11 +300,11 @@ export default function ForgotPassword({ navigation }) {
                                     )}
                                 </>
                             )}
-                        </Block>
-                    </Block>
+                        </View>
+                    </View>
                 </KeyboardAwareScrollView>
             </ImageBackground>
-        </Block>
+        </View>
     );
 }
 
@@ -326,5 +341,46 @@ const styles = StyleSheet.create({
     button: {
         width: NowTheme.SIZES.WIDTH_BASE * 0.77,
         marginVertical: 10
+    },
+    input: {
+        borderRadius: 5,
+        width: NowTheme.SIZES.WIDTH_BASE * 0.77
+    },
+    centeredView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 22
+    },
+    modalView: {
+        margin: 20,
+        backgroundColor: 'white',
+        borderRadius: 20,
+        padding: 35,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5
+    },
+    openButton: {
+        backgroundColor: '#F194FF',
+        borderRadius: 20,
+        padding: 10,
+        elevation: 2
+    },
+    textStyle: {
+        color: 'white',
+        fontWeight: 'bold',
+        textAlign: 'center'
+    },
+    modalText: {
+        marginBottom: 15,
+        textAlign: 'center',
+        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
     }
 });

@@ -1,14 +1,13 @@
-import { Block, Text } from 'galio-framework';
 import React, { useEffect, useState } from 'react';
-import { RefreshControl } from 'react-native';
+import { RefreshControl, Text, View } from 'react-native';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
-import { NotificationItem } from '../../components/businessComponents';
 import { CenterLoader } from '../../components/uiComponents';
 import { NowTheme, Rx, ScreenName } from '../../constants';
 import { ToastHelpers } from '../../helpers';
 import { setListNotification, setNumberNotificationUnread } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
+import NotificationItem from './NotificationItem';
 
 export default function Notification({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
@@ -88,25 +87,56 @@ export default function Notification({ navigation }) {
     );
 
     const renderListNoti = () => (
-        <FlatList
-            refreshControl={(
-                <RefreshControl
-                    refreshing={refreshing}
-                    onRefresh={() => onRefresh()}
+        <>
+            {listNotification && listNotification.length !== 0 ? (
+                <FlatList
+                    refreshControl={(
+                        <RefreshControl
+                            refreshing={refreshing}
+                            onRefresh={() => onRefresh()}
+                        />
+                    )}
+                    contentContainerStyle={{
+                        backgroundColor: NowTheme.COLORS.BASE,
+                    }}
+                    showsVerticalScrollIndicator={false}
+                    data={listNotification}
+                    keyExtractor={(item) => item.id}
+                    renderItem={({ item }) => (
+                        <>
+                            {renderNotiItem(item)}
+                        </>
+                    )}
                 />
+            ) : (
+                <ScrollView
+                    refreshControl={(
+                        <RefreshControl
+                            refreshing={refreshing}
+                            onRefresh={() => onRefresh()}
+                        />
+                    )}
+                >
+                    <View
+                        style={{
+                            alignItems: 'center',
+                            marginVertical: 15
+                        }}
+                    >
+                        <Text
+                            style={{
+                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                                color: NowTheme.COLORS.SWITCH_OFF,
+                                fontSize: NowTheme.SIZES.FONT_H2
+                            }}
+
+                        >
+                            Danh sách trống
+                        </Text>
+                    </View>
+                </ScrollView>
             )}
-            contentContainerStyle={{
-                backgroundColor: NowTheme.COLORS.BASE,
-            }}
-            showsVerticalScrollIndicator={false}
-            data={listNotification}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => (
-                <>
-                    {renderNotiItem(item)}
-                </>
-            )}
-        />
+        </>
     );
 
     try {
@@ -115,40 +145,13 @@ export default function Notification({ navigation }) {
                 {isShowSpinner ? (
                     <CenterLoader />
                 ) : (
-                    <Block
-                        flex
+                    <View
+                        style={{
+                            flex: 1
+                        }}
                     >
-                        {listNotification && listNotification.length !== 0 ? (
-                            renderListNoti()
-                        ) : (
-                            <ScrollView
-                                refreshControl={(
-                                    <RefreshControl
-                                        refreshing={refreshing}
-                                        onRefresh={() => onRefresh()}
-                                    />
-                                )}
-                            >
-                                <Block
-                                    style={{
-                                        alignItems: 'center',
-                                        marginVertical: 15
-                                    }}
-                                >
-                                    <Text
-                                        color={NowTheme.COLORS.SWITCH_OFF}
-                                        style={{
-                                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                                        }}
-                                        size={NowTheme.SIZES.FONT_H2}
-                                    >
-                                        Danh sách trống
-                                    </Text>
-                                </Block>
-                            </ScrollView>
-                        )}
-
-                    </Block>
+                        {renderListNoti()}
+                    </View>
                 )}
             </>
         );

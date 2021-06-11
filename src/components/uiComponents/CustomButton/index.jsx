@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Text, View } from 'react-native';
-import { TouchableHighlight } from 'react-native-gesture-handler';
+import {
+    StyleSheet, Text, TouchableOpacity, View
+} from 'react-native';
 import { IconFamily, NowTheme } from '../../../constants';
 import IconCustom from '../IconCustom';
 
@@ -34,23 +35,13 @@ export default function CustomButton(
         ...props
     }
 ) {
-    const baseButtonStyle = {
-        borderWidth: 1,
-        borderRadius: 5,
-        height: 40,
-        alignSelf: 'center',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: NowTheme.COLORS.TRANSPARENT,
-    };
-
     const renderButtonBase = () => (
-        <TouchableHighlight
+        <TouchableOpacity
             underlayColor="transparent"
             {...props}
             style={
                 [
-                    baseButtonStyle,
+                    styles.baseButtonStyle,
                     {
                         borderColor: NowTheme.COLORS.DEFAULT,
                         width: NowTheme.SIZES.WIDTH_BASE * 0.9,
@@ -73,7 +64,7 @@ export default function CustomButton(
             >
                 {label}
             </Text>
-        </TouchableHighlight>
+        </TouchableOpacity>
     );
 
     const renderButtonByType = () => {
@@ -81,12 +72,12 @@ export default function CustomButton(
             const colorByType = type === 'active' ? NowTheme.COLORS.ACTIVE : NowTheme.COLORS.DEFAULT;
 
             return (
-                <TouchableHighlight
+                <TouchableOpacity
                     underlayColor="transparent"
                     {...props}
                     style={
                         [
-                            baseButtonStyle,
+                            styles.baseButtonStyle,
                             {
                                 width: NowTheme.SIZES.WIDTH_BASE * 0.44,
                                 borderColor: colorByType
@@ -109,7 +100,7 @@ export default function CustomButton(
                     >
                         {label}
                     </Text>
-                </TouchableHighlight>
+                </TouchableOpacity>
             );
         }
 
@@ -125,7 +116,7 @@ export default function CustomButton(
             size, color, name, family
         } = leftIcon;
         return (
-            <TouchableHighlight
+            <TouchableOpacity
                 underlayColor="transparent"
                 {...props}
                 style={
@@ -169,7 +160,7 @@ export default function CustomButton(
                         {label}
                     </Text>
                 </View>
-            </TouchableHighlight>
+            </TouchableOpacity>
         );
     };
 
@@ -187,3 +178,15 @@ export default function CustomButton(
         </>
     );
 }
+
+const styles = StyleSheet.create({
+    baseButtonStyle: {
+        borderWidth: 1,
+        borderRadius: 5,
+        height: 40,
+        alignSelf: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: NowTheme.COLORS.TRANSPARENT,
+    }
+});

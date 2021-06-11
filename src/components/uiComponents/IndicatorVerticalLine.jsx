@@ -1,18 +1,16 @@
-import { Block } from 'galio-framework';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { NowTheme } from '../../constants';
 
 export default function IndicatorVerticalLine({
     active
 }) {
     return (
-        <Block
-            middle
+        <View
             style={styles.stepIndicatorContainer}
         >
-            <Block
+            <View
                 style={{
                     height: 6,
                     borderLeftWidth: 3,
@@ -20,7 +18,7 @@ export default function IndicatorVerticalLine({
                     justifyContent: 'center'
                 }}
             />
-        </Block>
+        </View>
     );
 }
 
@@ -35,5 +33,7 @@ IndicatorVerticalLine.defaultProps = {
 const styles = StyleSheet.create({
     stepIndicatorContainer: {
         width: 30,
+        alignSelf: 'center',
+        alignItems: 'center'
     }
 });

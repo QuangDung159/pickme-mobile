@@ -64,17 +64,21 @@ export default function CashIn(props) {
                                 >
                                     THÔNG TIN CHUYỂN KHOẢN
                                 </Text>
-                                <Block>
-                                    <TouchableWithoutFeedback onPress={() => {
+                                <TouchableWithoutFeedback
+                                    onPress={() => {
                                         navigation.navigate(ScreenName.PERSONAL);
                                         dispatch(setPersonTabActiveIndex(1));
                                     }}
+                                >
+                                    <Text style={{
+                                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                                        fontSize: NowTheme.SIZES.FONT_H4,
+                                        color: NowTheme.COLORS.ACTIVE
+                                    }}
                                     >
-                                        <Text color={NowTheme.COLORS.FACEBOOK}>
-                                            Xem rương
-                                        </Text>
-                                    </TouchableWithoutFeedback>
-                                </Block>
+                                        Xem rương
+                                    </Text>
+                                </TouchableWithoutFeedback>
                             </Block>
                             <Line
                                 borderWidth={0.5}

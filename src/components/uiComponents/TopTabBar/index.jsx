@@ -1,6 +1,5 @@
-import { Block, Text } from 'galio-framework';
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { NowTheme } from '../../../constants';
 
@@ -23,9 +22,15 @@ export default function TopTabBar({ tabs, tabActiveIndex, setTabActiveIndex }) {
                 }}
             >
                 <Text
-                    size={12}
-                    color={(index === tabActiveIndex) ? NowTheme.COLORS.ACTIVE : NowTheme.COLORS.DEFAULT}
-                    style={styles.titleBold}
+                    style={
+                        [
+                            styles.titleBold,
+                            {
+                                fontSize: NowTheme.SIZES.FONT_H4,
+                                color: (index === tabActiveIndex) ? NowTheme.COLORS.ACTIVE : NowTheme.COLORS.DEFAULT
+                            }
+                        ]
+                    }
                 >
                     {tabLabel}
                 </Text>
@@ -34,14 +39,14 @@ export default function TopTabBar({ tabs, tabActiveIndex, setTabActiveIndex }) {
     };
 
     return (
-        <Block
-            row
-            style={[{
-                height: 45
-            }]}
+        <View
+            style={{
+                height: 45,
+                flexDirection: 'row'
+            }}
         >
             {tabs.map((title, index) => renderTabButton(title, index))}
-        </Block>
+        </View>
     );
 }
 

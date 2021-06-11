@@ -1,11 +1,10 @@
 import * as SecureStore from 'expo-secure-store';
-import {
-    Block, Text
-} from 'galio-framework';
 import React, { useState } from 'react';
 import {
     ImageBackground,
-    StyleSheet
+    StyleSheet,
+    Text,
+    View
 } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -24,7 +23,7 @@ import {
 import { rxUtil } from '../../utils';
 
 export default function SignIn({ navigation }) {
-    const [phoneNumber, setPhoneNumber] = useState('huyvd');
+    const [phoneNumber, setPhoneNumber] = useState('dongvu');
     const [password, setPassword] = useState('0000');
     const [isShowSpinner, setIsShowSpinner] = useState(false);
     const [deviceIdToSend, setDeviceIdToSend] = useState('');
@@ -139,27 +138,22 @@ export default function SignIn({ navigation }) {
                 alignSelf: 'center'
             }}
         >
-            <Block
-                row
-                style={{
-                    alignItems: 'center'
-                }}
-            >
+            <View>
                 <Text
-                    color={NowTheme.COLORS.SWITCH_OFF}
                     style={{
                         fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                        color: NowTheme.COLORS.SWITCH_OFF,
+                        fontSize: NowTheme.SIZES.FONT_H4
                     }}
-                    size={NowTheme.SIZES.FONT_H4}
                 >
                     Bạn quên mật khẩu?
                 </Text>
-            </Block>
+            </View>
         </TouchableWithoutFeedback>
     );
 
     return (
-        <Block flex middle>
+        <View>
             <ExpoNotification navigation={navigation} />
             <ImageBackground
                 source={Images.RegisterBackground}
@@ -167,10 +161,13 @@ export default function SignIn({ navigation }) {
                 imageStyle={styles.imageBackground}
             >
                 <KeyboardAwareScrollView>
-                    <Block flex middle>
-                        <Block style={styles.registerContainer}>
-                            <Block
-                                middle
+                    <View
+                        style={{
+                            alignSelf: 'center',
+                        }}
+                    >
+                        <View style={styles.registerContainer}>
+                            <View
                                 style={{
                                     height: NowTheme.SIZES.HEIGHT_BASE * 0.3,
                                 }}
@@ -178,25 +175,26 @@ export default function SignIn({ navigation }) {
                                 <Text
                                     style={{
                                         fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
-                                        textAlign: 'center'
+                                        textAlign: 'center',
+                                        color: '#333',
+                                        fontSize: 24,
+                                        height: 100,
+                                        marginTop: NowTheme.SIZES.HEIGHT_BASE * 0.1
                                     }}
-                                    color="#333"
-                                    size={24}
-                                    height={100}
                                 >
                                     Đăng nhập
                                 </Text>
-                            </Block>
+                            </View>
 
                             {isShowSpinner ? (
                                 <CenterLoader />
                             ) : (
                                 <>
-                                    <Block style={{
+                                    <View style={{
                                         height: NowTheme.SIZES.HEIGHT_BASE * 0.3
                                     }}
                                     >
-                                        <Block
+                                        <View
                                             style={{
                                                 marginBottom: 10,
                                                 alignItems: 'center'
@@ -241,7 +239,7 @@ export default function SignIn({ navigation }) {
                                                 placeholder="Empty or 'test'"
                                                 value={deviceIdToSend}
                                                 onChangeText={
-                                                    () => setDeviceIdToSend('test')
+                                                    (deviceIdInput) => setDeviceIdToSend(deviceIdInput)
                                                 }
                                                 containerStyle={{
                                                     marginVertical: 10,
@@ -249,27 +247,31 @@ export default function SignIn({ navigation }) {
                                                 }}
                                             />
                                             {renderButtonForgotPassword()}
-                                        </Block>
-                                    </Block>
+                                        </View>
+                                    </View>
 
-                                    <Block center>
+                                    <View>
                                         <CustomButton
                                             onPress={() => onSubmitLogin()}
                                             type="active"
                                             label="Đăng nhập"
-                                            buttonStyle={{
-                                                marginVertical: 10,
-                                                width: NowTheme.SIZES.WIDTH_BASE * 0.77
-                                            }}
+                                            buttonStyle={
+                                                [
+                                                    styles.button,
+                                                    {
+                                                        marginVertical: 10
+                                                    }
+                                                ]
+                                            }
                                         />
-                                    </Block>
+                                    </View>
                                 </>
                             )}
-                        </Block>
-                    </Block>
+                        </View>
+                    </View>
                 </KeyboardAwareScrollView>
             </ImageBackground>
-        </Block>
+        </View>
     );
 }
 
@@ -300,4 +302,44 @@ const styles = StyleSheet.create({
         elevation: 1,
         overflow: 'hidden'
     },
+    button: {
+        width: NowTheme.SIZES.WIDTH_BASE * 0.77
+    },
+    centeredView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 22
+    },
+    modalView: {
+        margin: 20,
+        backgroundColor: 'white',
+        borderRadius: 20,
+        padding: 35,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5
+    },
+    openButton: {
+        backgroundColor: '#F194FF',
+        borderRadius: 20,
+        padding: 10,
+        elevation: 2
+    },
+    textStyle: {
+        color: 'white',
+        fontWeight: 'bold',
+        textAlign: 'center'
+    },
+    modalText: {
+        marginBottom: 15,
+        textAlign: 'center',
+        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
+    }
 });

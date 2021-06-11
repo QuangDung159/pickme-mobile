@@ -1,5 +1,5 @@
-import { Block } from 'galio-framework';
 import React, { PureComponent } from 'react';
+import { View } from 'react-native';
 
 export default class Line extends PureComponent {
     render() {
@@ -7,7 +7,7 @@ export default class Line extends PureComponent {
             borderColor, width, borderWidth, style
         } = this.props;
         return (
-            <Block style={[{
+            <View style={[{
                 borderWidth,
                 borderColor,
                 width
