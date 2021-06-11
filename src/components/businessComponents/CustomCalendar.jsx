@@ -2,6 +2,7 @@ import { Block, Text } from 'galio-framework';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
+import { View } from 'react-native';
 import { NowTheme } from '../../constants';
 import { CustomButton, Line } from '../uiComponents';
 
@@ -93,91 +94,91 @@ export default function CustomCalendar({ selectedDate, onChangeDate }) {
                 borderWidth={0.5}
                 borderColor={NowTheme.COLORS.BLOCK}
                 style={{
-                    marginTop: 10
+                    marginVertical: 10
                 }}
             />
             {/* render date */}
-            <Block>
-                <Block
-                    row
-                >
-                    {arrDateLine1.map((item) => {
-                        let buttonColor = NowTheme.COLORS.BASE;
-                        if (item === selectedDateState) {
-                            buttonColor = NowTheme.COLORS.SELECTED_DATE;
-                        }
+            <View
+                style={{
+                    flexDirection: 'row'
+                }}
+            >
+                {arrDateLine1.map((item) => {
+                    let buttonColor = NowTheme.COLORS.BASE;
+                    if (item === selectedDateState) {
+                        buttonColor = NowTheme.COLORS.SELECTED_DATE;
+                    }
 
-                        const dateTextStyle = {
-                            color: currentDate === item ? NowTheme.COLORS.ACTIVE : NowTheme.COLORS.TEXT,
-                            fontFamily: currentDate === item
-                                ? NowTheme.FONT.MONTSERRAT_BOLD
-                                : NowTheme.FONT.MONTSERRAT_REGULAR
-                        };
+                    const dateTextStyle = {
+                        color: currentDate === item ? NowTheme.COLORS.ACTIVE : NowTheme.COLORS.TEXT,
+                        fontFamily: currentDate === item
+                            ? NowTheme.FONT.MONTSERRAT_BOLD
+                            : NowTheme.FONT.MONTSERRAT_REGULAR
+                    };
 
-                        return (
-                            <Block
-                                flex
-                                middle
-                                key={item.toString()}
-                            >
-                                <CustomButton
-                                    onPress={() => { onClickDate(item); }}
-                                    buttonStyle={{
-                                        width: 30,
-                                        height: 30,
-                                        backgroundColor: buttonColor,
-                                        borderRadius: 15,
-                                        borderWidth: 0
-                                    }}
-                                    labelStyle={dateTextStyle}
-                                    label={item.substring(0, 2)}
-                                />
-                            </Block>
-                        );
-                    })}
-                </Block>
-            </Block>
+                    return (
+                        <Block
+                            flex
+                            middle
+                            key={item.toString()}
+                        >
+                            <CustomButton
+                                onPress={() => { onClickDate(item); }}
+                                buttonStyle={{
+                                    width: 30,
+                                    height: 30,
+                                    backgroundColor: buttonColor,
+                                    borderRadius: 15,
+                                    borderWidth: 0
+                                }}
+                                labelStyle={dateTextStyle}
+                                label={item.substring(0, 2)}
+                            />
+                        </Block>
+                    );
+                })}
+            </View>
 
-            <Block>
-                <Block
-                    row
-                >
-                    {arrDateLine2.map((item) => {
-                        let buttonColor = NowTheme.COLORS.BASE;
-                        if (item === selectedDateState) {
-                            buttonColor = NowTheme.COLORS.SELECTED_DATE;
-                        }
+            <View
+                style={{
+                    flexDirection: 'row'
+                }}
+            >
+                {arrDateLine2.map((item) => {
+                    let buttonColor = NowTheme.COLORS.BASE;
+                    if (item === selectedDateState) {
+                        buttonColor = NowTheme.COLORS.SELECTED_DATE;
+                    }
 
-                        const dateTextStyle = {
-                            color: currentDate === item ? NowTheme.COLORS.ACTIVE : NowTheme.COLORS.TEXT,
-                            fontFamily: currentDate === item
-                                ? NowTheme.FONT.MONTSERRAT_BOLD
-                                : NowTheme.FONT.MONTSERRAT_REGULAR
-                        };
+                    const dateTextStyle = {
+                        color: currentDate === item ? NowTheme.COLORS.ACTIVE : NowTheme.COLORS.TEXT,
+                        fontFamily: currentDate === item
+                            ? NowTheme.FONT.MONTSERRAT_BOLD
+                            : NowTheme.FONT.MONTSERRAT_REGULAR
+                    };
 
-                        return (
-                            <Block
-                                flex
-                                middle
-                                key={item.toString()}
-                            >
-                                <CustomButton
-                                    onPress={() => { onClickDate(item); }}
-                                    buttonStyle={{
-                                        width: 30,
-                                        height: 30,
-                                        backgroundColor: buttonColor,
-                                        borderRadius: 15,
-                                        borderWidth: 0
-                                    }}
-                                    labelStyle={dateTextStyle}
-                                    label={item.substring(0, 2)}
-                                />
-                            </Block>
-                        );
-                    })}
-                </Block>
-            </Block>
+                    return (
+                        <Block
+                            flex
+                            middle
+                            key={item.toString()}
+                        >
+                            <CustomButton
+                                onPress={() => { onClickDate(item); }}
+                                buttonStyle={{
+                                    width: 30,
+                                    height: 30,
+                                    backgroundColor: buttonColor,
+                                    borderRadius: 15,
+                                    borderWidth: 0
+                                }}
+                                labelStyle={dateTextStyle}
+                                label={item.substring(0, 2)}
+                            />
+                        </Block>
+                    );
+                })}
+            </View>
         </Block>
     );
 }

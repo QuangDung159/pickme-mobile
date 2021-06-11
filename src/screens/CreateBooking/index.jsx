@@ -829,7 +829,7 @@ export default function CreateBooking({ route, navigation }) {
                         containerStyle={{
                             width: NowTheme.SIZES.WIDTH_BASE * 0.9,
                             alignSelf: 'center',
-                            paddingVertical: 10,
+                            paddingBottom: 10,
                         }}
                         onPress={() => setModalPartnerPackageVisible(true)}
                     >
