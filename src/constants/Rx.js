@@ -61,6 +61,7 @@ export default {
     },
     SYSTEM: {
         CREATE_BUG: '/Systems/CreateBug',
-        PICK_ME_INFO: '/master'
+        PICK_ME_INFO: '/master',
+        UPLOAD_IMAGE_AND_GET_URL: '/Verify/UploadDocument'
     }
 };

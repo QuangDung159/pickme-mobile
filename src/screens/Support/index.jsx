@@ -1,5 +1,4 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
-import { PICKME_INFO_URL } from '@env';
 import React, { useEffect, useState } from 'react';
 import {
     Image, StyleSheet, Text, View
@@ -29,7 +28,6 @@ export default function Support({ navigation }) {
     const [listImageReview, setListImageReview] = useState([]);
     const [image, setImage] = useState();
     const [visible, setVisible] = useState(false);
-    const [imageId, setImageId] = useState('');
 
     const token = useSelector((state) => state.userReducer.token);
     const pickMeInfoStore = useSelector((state) => state.appConfigReducer.pickMeInfoStore);
@@ -88,7 +86,6 @@ export default function Support({ navigation }) {
                     description: '',
                     url: ''
                 });
-                setImageId('');
                 setImage();
                 setIsShowSpinner(false);
             },
@@ -107,12 +104,11 @@ export default function Support({ navigation }) {
         setIsShowSpinner(true);
         MediaHelpers.uploadImage(
             uri,
-            Rx.USER.UPLOAD_USER_IMAGE,
+            Rx.SYSTEM.UPLOAD_IMAGE_AND_GET_URL,
             token,
             (res) => {
                 setIsShowSpinner(false);
                 setImage(uri);
-                setImageId(res.data.data.id);
                 setBugReportForm({ ...bugReportForm, url: res.data.data.url });
             },
             (err) => {
@@ -130,24 +126,6 @@ export default function Support({ navigation }) {
 
     const onClickUploadImageReport = () => {
         MediaHelpers.pickImage(true, [1, 1], (result) => handleOnPickImageReport(result.uri));
-    };
-
-    const removeImage = () => {
-        rxUtil(
-            `${Rx.USER.REMOVE_USER_IMAGE}/${imageId}`,
-            'POST',
-            null,
-            {
-                Authorization: token
-            },
-            () => {
-                setImageId('');
-                setImage();
-            },
-            (res) => ToastHelpers.renderToast(res.data.message, 'error'),
-            (res) => ToastHelpers.renderToast(res.data.message, 'error'),
-            PICKME_INFO_URL
-        );
     };
 
     // render \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
@@ -205,7 +183,6 @@ export default function Support({ navigation }) {
                         description: '',
                         url: ''
                     });
-                    removeImage();
                 }}
                 buttonStyle={styles.button}
                 type="default"
@@ -225,7 +202,7 @@ export default function Support({ navigation }) {
             return (
                 <FlatList
                     data={listFAQ}
-                    keyExtractor={(item) => item.id}
+                    keyExtractor={(item) => item.question.toString()}
                     renderItem={({ item }) => (
                         <View
                             key={item.answer}
@@ -262,7 +239,7 @@ export default function Support({ navigation }) {
                     style={{
                         fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
                         color: NowTheme.COLORS.DEFAULT,
-                        size: NowTheme.SIZES.FONT_H2
+                        fontSize: NowTheme.SIZES.FONT_H2
                     }}
                 >
                     Danh sách trống

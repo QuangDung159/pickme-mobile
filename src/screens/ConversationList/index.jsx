@@ -257,7 +257,7 @@ export default function ConversationList({ navigation }) {
                                 style={{
                                     fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
                                     color: NowTheme.COLORS.DEFAULT,
-                                    size: NowTheme.SIZES.FONT_H2
+                                    fontSize: NowTheme.SIZES.FONT_H2
                                 }}
                             >
                                 Danh sách trống

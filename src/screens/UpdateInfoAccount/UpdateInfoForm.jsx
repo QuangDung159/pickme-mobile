@@ -249,7 +249,7 @@ export default function UpdateInfoForm() {
             'POST',
             data,
             headers,
-            () => {
+            (res) => {
                 const userInfo = {
                     ...currentUser,
                     fullName,
@@ -264,10 +264,7 @@ export default function UpdateInfoForm() {
                 setNewUser(userInfo);
                 setIsShowSpinner(false);
 
-                ToastHelpers.renderToast(
-                    'Cập nhật thông tin thành công!',
-                    'success'
-                );
+                ToastHelpers.renderToast(res.data.message, 'success');
             },
             (res) => {
                 ToastHelpers.renderToast(res.data.message, 'error');
