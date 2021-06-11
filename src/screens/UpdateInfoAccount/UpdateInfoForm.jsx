@@ -23,7 +23,7 @@ export default function UpdateInfoForm() {
 
     useEffect(
         () => {
-            setNewUser(currentUser);
+            setNewUser({ ...currentUser, dob: currentUser?.dob?.substr(0, 4) });
         }, []
     );
 
@@ -134,7 +134,7 @@ export default function UpdateInfoForm() {
         >
             <CustomButton
                 onPress={() => {
-                    setNewUser(currentUser);
+                    setNewUser({ ...currentUser, dob: currentUser?.dob?.substr(0, 4) });
                 }}
                 type="default"
                 label="Huỷ bỏ"

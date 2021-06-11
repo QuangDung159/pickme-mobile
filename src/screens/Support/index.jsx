@@ -261,8 +261,8 @@ export default function Support({ navigation }) {
                 <Text
                     style={{
                         fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                        color: NowTheme.COLORS.SWITCH_OFF,
-                        fontSize: NowTheme.SIZES.FONT_H2
+                        color: NowTheme.COLORS.DEFAULT,
+                        size: NowTheme.SIZES.FONT_H2
                     }}
                 >
                     Danh sách trống

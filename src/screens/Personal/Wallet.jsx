@@ -262,7 +262,7 @@ export default function Wallet({ navigation, route }) {
                     <Text
                         style={{
                             fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                            color: NowTheme.COLORS.SWITCH_OFF,
+                            color: NowTheme.COLORS.DEFAULT,
                             fontSize: NowTheme.SIZES.FONT_H2
                         }}
                     >

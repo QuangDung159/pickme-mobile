@@ -254,11 +254,11 @@ export default function ConversationList({ navigation }) {
                             }}
                         >
                             <Text
-                                color={NowTheme.COLORS.SWITCH_OFF}
                                 style={{
                                     fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                                    color: NowTheme.COLORS.DEFAULT,
+                                    size: NowTheme.SIZES.FONT_H2
                                 }}
-                                size={NowTheme.SIZES.FONT_H2}
                             >
                                 Danh sách trống
                             </Text>

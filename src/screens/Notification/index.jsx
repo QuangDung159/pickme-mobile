@@ -126,10 +126,9 @@ export default function Notification({ navigation }) {
                         <Text
                             style={{
                                 fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                                color: NowTheme.COLORS.SWITCH_OFF,
+                                color: NowTheme.COLORS.DEFAULT,
                                 fontSize: NowTheme.SIZES.FONT_H2
                             }}
-
                         >
                             Danh sách trống
                         </Text>
