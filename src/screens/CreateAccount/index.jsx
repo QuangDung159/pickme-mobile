@@ -198,6 +198,7 @@ export default function CreateAccount(props) {
                 weight: 0,
                 address,
                 interests,
+                email: 'N/a',
                 homeTown: hometown
             };
 
