@@ -234,7 +234,8 @@ export default function UpdateInfoForm() {
             weight: 0,
             homeTown,
             interests,
-            address
+            address,
+            email: 'N/a'
         };
 
         const headers = {

@@ -1,10 +1,10 @@
-import React, { PureComponent } from 'react';
-import { ActivityIndicator, View } from 'react-native';
+import React from 'react';
+import { ActivityIndicator, Text, View } from 'react-native';
 import { NowTheme } from '../../constants';
+import { ToastHelpers } from '../../helpers';
 
-export default class CenterLoader extends PureComponent {
-    render() {
-        const { size } = this.props;
+export default function CenterLoader({ size, content }) {
+    try {
         return (
             <View
                 style={{
@@ -22,7 +22,25 @@ export default class CenterLoader extends PureComponent {
                     size={size}
                     color={NowTheme.COLORS.ACTIVE}
                 />
+                <Text
+                    style={{
+                        color: NowTheme.COLORS.ACTIVE,
+                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                        fontSize: NowTheme.SIZES.FONT_H3,
+                        textAlign: 'center',
+                        padding: 10
+                    }}
+                >
+                    {content}
+                </Text>
             </View>
+        );
+    } catch (exception) {
+        console.log('exception :>> ', exception);
+        return (
+            <>
+                {ToastHelpers.renderToast()}
+            </>
         );
     }
 }

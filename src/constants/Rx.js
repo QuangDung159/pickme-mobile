@@ -11,7 +11,7 @@ export default {
     USER: {
         CURRENT_USER_INFO: '/users/CurrentCustomerInfo',
         UPDATE_AVATAR: '/Users/UpdateAvatar',
-        UPDATE_USER_INFO: '/users/UpdateUserInfo',
+        UPDATE_USER_INFO: '/users/UpdateCustomerInfo',
         UPLOAD_ISSUE_IMAGE: '/Posts/AddPost',
         REMOVE_ISSUE_IMAGE: '/Posts/RemovePost',
         UPDATE_EXPO_TOKEN: '/Users/UpdateExpoToken',

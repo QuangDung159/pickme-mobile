@@ -33,7 +33,6 @@ IndicatorVerticalLine.defaultProps = {
 const styles = StyleSheet.create({
     stepIndicatorContainer: {
         width: 30,
-        alignSelf: 'center',
         alignItems: 'center'
     }
 });
