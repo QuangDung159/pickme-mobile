@@ -80,39 +80,35 @@ export default function PhoneForm({
 
                 <View
                     style={styles.disclaimerContainer}
-
                 >
-                    <>
-                        <Checkbox
-                            checkboxStyle={styles.checkbox}
-                            color={NowTheme.COLORS.PRIMARY}
-                            style={styles.checkboxContainer}
-                            initialValue={onCheckedDisclaimer}
-                            label=""
-                            onChange={(checked) => {
-                                setOnCheckedDisclaimer(checked);
+                    <Checkbox
+                        checkboxStyle={styles.checkbox}
+                        color={NowTheme.COLORS.PRIMARY}
+                        style={styles.checkboxContainer}
+                        initialValue={onCheckedDisclaimer}
+                        label=""
+                        onChange={(checked) => {
+                            setOnCheckedDisclaimer(checked);
+                        }}
+                    />
+                    <View
+                        style={styles.disclaimerAgreeContainer}
+                    >
+                        <TouchableWithoutFeedback
+                            onPress={() => {
+                                setModalVisible(true);
                             }}
-                        />
-                        <View
-                            flex
-                            style={styles.disclaimerAgreeContainer}
                         >
-                            <TouchableWithoutFeedback
-                                onPress={() => {
-                                    setModalVisible(true);
+                            <Text
+                                style={{
+                                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                                    color: NowTheme.COLORS.DEFAULT
                                 }}
                             >
-                                <Text
-                                    style={{
-                                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                                        color: NowTheme.COLORS.DEFAULT
-                                    }}
-                                >
-                                    Tôi đồng ý với các Điều khoản và Điều kiện
-                                </Text>
-                            </TouchableWithoutFeedback>
-                        </View>
-                    </>
+                                Tôi đồng ý với các Điều khoản và Điều kiện
+                            </Text>
+                        </TouchableWithoutFeedback>
+                    </View>
                 </View>
             </View>
 

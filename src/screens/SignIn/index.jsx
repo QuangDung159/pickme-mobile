@@ -239,7 +239,7 @@ export default function SignIn({ navigation }) {
                                                 placeholder="Empty or 'test'"
                                                 value={deviceIdToSend}
                                                 onChangeText={
-                                                    () => setDeviceIdToSend('test')
+                                                    (deviceIdInput) => setDeviceIdToSend(deviceIdInput)
                                                 }
                                                 containerStyle={{
                                                     marginVertical: 10,
