@@ -2,10 +2,10 @@
 import AppLoading from 'expo-app-loading';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
-import { Block, Text } from 'galio-framework';
+import { Text } from 'galio-framework';
 import * as React from 'react';
 import {
-    Image, StyleSheet
+    Image, StyleSheet, View
 } from 'react-native';
 import { MenuProvider } from 'react-native-popup-menu';
 import Toast from 'react-native-toast-message';
@@ -38,16 +38,19 @@ const assetImages = [
 // toast config common
 const toastConfig = {
     success: (internalState) => (
-        <Block
-            middle
-            shadow
-            flex
+        <View
             style={styles.toastContainer}
         >
             <Text
-                style={styles.toastContent}
-                color={NowTheme.COLORS.SUCCESS}
-                size={NowTheme.SIZES.ICON_14}
+                style={
+                    [
+                        styles.toastContent,
+                        {
+                            color: NowTheme.COLORS.SUCCESS,
+                            fontSize: NowTheme.SIZES.FONT_H3
+                        }
+                    ]
+                }
             >
                 <IconCustom
                     name="check"
@@ -58,19 +61,22 @@ const toastConfig = {
                 {'  '}
                 {internalState.text1}
             </Text>
-        </Block>
+        </View>
     ),
     error: (internalState) => (
-        <Block
-            middle
-            shadow
-            flex
+        <View
             style={styles.toastContainer}
         >
             <Text
-                style={styles.toastContent}
-                color={NowTheme.COLORS.ERROR}
-                size={NowTheme.SIZES.ICON_14}
+                style={
+                    [
+                        styles.toastContent,
+                        {
+                            color: NowTheme.COLORS.ERROR,
+                            fontSize: NowTheme.SIZES.FONT_H3
+                        }
+                    ]
+                }
             >
                 <IconCustom
                     name="remove"
@@ -81,10 +87,10 @@ const toastConfig = {
                 {'  '}
                 {internalState.text1}
             </Text>
-        </Block>
+        </View>
     ),
     info: (res) => ToastHelpers.renderToast(res.data.message, 'error'),
-    any_custom_type: () => {}
+    any_custom_type: (res) => ToastHelpers.renderToast(res.data.message, 'error')
 };
 
 export default function App() {
@@ -151,7 +157,10 @@ const styles = StyleSheet.create({
     toastContainer: {
         width: NowTheme.SIZES.WIDTH_BASE * 0.85,
         backgroundColor: NowTheme.COLORS.BASE,
-        borderRadius: 15
+        borderRadius: 30,
+        borderColor: NowTheme.COLORS.DEFAULT,
+        borderWidth: 0.5,
+        marginTop: 20,
     },
     toastContent: {
         fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,

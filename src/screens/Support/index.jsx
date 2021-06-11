@@ -1,10 +1,9 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
 import { PICKME_INFO_URL } from '@env';
-import {
-    Block, Text
-} from 'galio-framework';
 import React, { useEffect, useState } from 'react';
-import { Image, StyleSheet } from 'react-native';
+import {
+    Image, StyleSheet, Text, View
+} from 'react-native';
 import { ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import ImageView from 'react-native-image-viewing';
 import { useSelector } from 'react-redux';
@@ -99,8 +98,7 @@ export default function Support({ navigation }) {
             (res) => {
                 ToastHelpers.renderToast(res.data.message, 'error');
                 setIsShowSpinner(false);
-            },
-            PICKME_INFO_URL
+            }
         );
     };
 
@@ -108,7 +106,7 @@ export default function Support({ navigation }) {
         setIsShowSpinner(true);
         MediaHelpers.uploadImage(
             uri,
-            Rx.USER.UPLOAD_ISSUE_IMAGE,
+            Rx.USER.UPLOAD_PROFILE_IMAGE,
             token,
             (res) => {
                 ToastHelpers.renderToast(
@@ -138,7 +136,7 @@ export default function Support({ navigation }) {
 
     const removeImage = () => {
         rxUtil(
-            `${Rx.USER.REMOVE_ISSUE_IMAGE}/${imageId}`,
+            `${Rx.USER.REMOVE_PROFILE_IMAGE}/${imageId}`,
             'DELETE',
             null,
             {
@@ -194,12 +192,12 @@ export default function Support({ navigation }) {
     };
 
     const renderButtonPanel = () => (
-        <Block
-            row
-            space="between"
+        <View
             style={{
                 width: NowTheme.SIZES.WIDTH_BASE * 0.9,
-                marginVertical: 10
+                marginVertical: 10,
+                flexDirection: 'row',
+                justifyContent: 'space-between'
             }}
         >
             <CustomButton
@@ -221,7 +219,7 @@ export default function Support({ navigation }) {
                 type="active"
                 label="Xác nhận"
             />
-        </Block>
+        </View>
     );
 
     const renderListQNA = () => {
@@ -229,7 +227,7 @@ export default function Support({ navigation }) {
             return (
                 <>
                     {listFAQ.map((item) => (
-                        <Block
+                        <View
                             key={item.answer}
                             style={{
                                 marginBottom: 10
@@ -246,7 +244,7 @@ export default function Support({ navigation }) {
                                 }}
                                 backgroundColor={NowTheme.COLORS.LIST_ITEM_BACKGROUND_2}
                             />
-                        </Block>
+                        </View>
                     ))}
                 </>
             );
@@ -270,17 +268,21 @@ export default function Support({ navigation }) {
     };
 
     const renderUploadImageReportButton = () => (
-        <Block
+        <View
             style={{
                 paddingVertical: 10
             }}
         >
-            <Block row>
+            <View
+                style={{
+                    flexDirection: 'row'
+                }}
+            >
                 <Text
-                    color={NowTheme.COLORS.ACTIVE}
-                    size={16}
                     style={{
-                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
+                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                        color: NowTheme.COLORS.ACTIVE,
+                        fontSize: 16,
                     }}
                 >
                     Ảnh chụp màn hình:
@@ -300,8 +302,8 @@ export default function Support({ navigation }) {
                         size={20}
                     />
                 </TouchableWithoutFeedback>
-            </Block>
-        </Block>
+            </View>
+        </View>
     );
 
     const renderBugReportForm = () => (
@@ -349,8 +351,7 @@ export default function Support({ navigation }) {
     );
 
     return (
-        <Block
-            flex
+        <View
             style={{
                 alignItems: 'center',
             }}
@@ -376,7 +377,7 @@ export default function Support({ navigation }) {
                     </ScrollView>
                 </>
             )}
-        </Block>
+        </View>
     );
 }
 

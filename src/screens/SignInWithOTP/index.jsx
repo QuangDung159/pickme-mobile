@@ -1,11 +1,9 @@
 import * as SecureStore from 'expo-secure-store';
-import {
-    Block
-} from 'galio-framework';
 import React, { useEffect, useState } from 'react';
 import {
     ImageBackground,
-    StyleSheet
+    StyleSheet,
+    View
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useDispatch, useSelector } from 'react-redux';
@@ -171,7 +169,13 @@ export default function SignInWithOTP({ navigation }) {
     };
 
     return (
-        <Block flex middle>
+        <View
+            style={{
+                flex: 1,
+                alignSelf: 'center',
+                alignItems: 'center'
+            }}
+        >
             <ExpoNotification navigation={navigation} />
             <ImageBackground
                 source={Images.RegisterBackground}
@@ -179,47 +183,53 @@ export default function SignInWithOTP({ navigation }) {
                 imageStyle={styles.imageBackground}
             >
                 <KeyboardAwareScrollView>
-                    <Block flex middle>
-                        <Block style={styles.registerContainer}>
-                            <Block
-                                middle
+                    <View
+                        style={{
+                            flex: 1,
+                            alignSelf: 'center',
+                            alignItems: 'center'
+                        }}
+                    >
+                        <View style={styles.registerContainer}>
+                            <View
                                 style={{
-                                    height: NowTheme.SIZES.HEIGHT_BASE * 0.3
+                                    height: NowTheme.SIZES.HEIGHT_BASE * 0.2,
+                                    alignSelf: 'center',
+                                    alignItems: 'center',
+                                    marginTop: NowTheme.SIZES.HEIGHT_BASE * 0.1
                                 }}
                             >
-                                <Block>
-                                    <NoteText
-                                        width={NowTheme.SIZES.WIDTH_BASE * 0.77}
-                                        title="Dường như bạn đang đăng nhập từ một thiết bị khác:"
-                                        content="Bạn vui lòng đăng nhập lại để xác thực thiết bị này."
-                                        contentStyle={{
-                                            fontSize: NowTheme.SIZES.FONT_H4,
-                                            color: NowTheme.COLORS.ACTIVE,
-                                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                                            marginTop: 5
-                                        }}
-                                        iconComponent={(
-                                            <IconCustom
-                                                name="info-circle"
-                                                family={IconFamily.FONT_AWESOME}
-                                                size={18}
-                                                color={NowTheme.COLORS.ACTIVE}
-                                            />
-                                        )}
-                                        backgroundColor={NowTheme.COLORS.LIST_ITEM_BACKGROUND_1}
-                                    />
-                                </Block>
-                            </Block>
+                                <NoteText
+                                    width={NowTheme.SIZES.WIDTH_BASE * 0.77}
+                                    title="Dường như bạn đang đăng nhập từ một thiết bị khác:"
+                                    content="Bạn vui lòng đăng nhập lại để xác thực thiết bị này."
+                                    contentStyle={{
+                                        fontSize: NowTheme.SIZES.FONT_H4,
+                                        color: NowTheme.COLORS.ACTIVE,
+                                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                                        marginTop: 5
+                                    }}
+                                    iconComponent={(
+                                        <IconCustom
+                                            name="info-circle"
+                                            family={IconFamily.FONT_AWESOME}
+                                            size={18}
+                                            color={NowTheme.COLORS.ACTIVE}
+                                        />
+                                    )}
+                                    backgroundColor={NowTheme.COLORS.LIST_ITEM_BACKGROUND_1}
+                                />
+                            </View>
 
                             {isShowSpinner ? (
                                 <CenterLoader />
                             ) : (
                                 <>
-                                    <Block style={{
+                                    <View style={{
                                         height: NowTheme.SIZES.HEIGHT_BASE * 0.3
                                     }}
                                     >
-                                        <Block
+                                        <View
                                             style={{
                                                 marginBottom: 10,
                                                 alignItems: 'center'
@@ -253,10 +263,13 @@ export default function SignInWithOTP({ navigation }) {
                                                     placeholder="Nhập mã xác thực..."
                                                 />
                                             )}
-                                        </Block>
-                                    </Block>
+                                        </View>
+                                    </View>
 
-                                    <Block center>
+                                    <View style={{
+                                        alignSelf: 'center'
+                                    }}
+                                    >
                                         {!otp ? (
                                             <CustomButton
                                                 onPress={() => onClickGetOTPWhenChangeDevice()}
@@ -276,14 +289,14 @@ export default function SignInWithOTP({ navigation }) {
                                                 }]}
                                             />
                                         )}
-                                    </Block>
+                                    </View>
                                 </>
                             )}
-                        </Block>
-                    </Block>
+                        </View>
+                    </View>
                 </KeyboardAwareScrollView>
             </ImageBackground>
-        </Block>
+        </View>
     );
 }
 
@@ -317,4 +330,41 @@ const styles = StyleSheet.create({
     button: {
         width: NowTheme.SIZES.WIDTH_BASE * 0.77
     },
+    centeredView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 22
+    },
+    modalView: {
+        margin: 20,
+        backgroundColor: 'white',
+        borderRadius: 20,
+        padding: 35,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5
+    },
+    openButton: {
+        backgroundColor: '#F194FF',
+        borderRadius: 20,
+        padding: 10,
+        elevation: 2
+    },
+    textStyle: {
+        color: 'white',
+        fontWeight: 'bold',
+        textAlign: 'center'
+    },
+    modalText: {
+        marginBottom: 15,
+        textAlign: 'center',
+        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
+    }
 });

@@ -1,7 +1,6 @@
-import { Block, Text } from 'galio-framework';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { NowTheme } from '../../constants';
 import CustomButton from './CustomButton';
 
@@ -25,9 +24,12 @@ export default function StepIndicator({
         }
     }
     return (
-        <Block row>
-            <Block
-                middle
+        <View
+            style={{
+                flexDirection: 'row'
+            }}
+        >
+            <View
                 style={styles.stepIndicatorContainer}
             >
                 <CustomButton
@@ -39,10 +41,9 @@ export default function StepIndicator({
                     }}
                     label={buttonText}
                 />
-            </Block>
+            </View>
 
-            <Block
-                middle
+            <View
                 style={styles.contentContainer}
             >
                 <Text
@@ -54,8 +55,8 @@ export default function StepIndicator({
                 >
                     {content}
                 </Text>
-            </Block>
-        </Block>
+            </View>
+        </View>
     );
 }
 
@@ -103,8 +104,12 @@ const styles = StyleSheet.create({
     stepIndicatorContainer: {
         width: 30,
         height: 30,
+        alignSelf: 'center',
+        alignItems: 'center'
     },
     contentContainer: {
-        marginLeft: 10
+        marginLeft: 10,
+        alignSelf: 'center',
+        alignItems: 'center'
     }
 });

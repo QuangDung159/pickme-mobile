@@ -1,6 +1,5 @@
-import { Block } from 'galio-framework';
 import React, { PureComponent } from 'react';
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
 import { NowTheme } from '../../constants';
 
 export default class NoteText extends PureComponent {
@@ -12,7 +11,7 @@ export default class NoteText extends PureComponent {
         } = this.props;
 
         return (
-            <Block
+            <View
                 style={{
                     backgroundColor: backgroundColor || NowTheme.COLORS.LIST_ITEM_BACKGROUND_1,
                     width,
@@ -20,13 +19,15 @@ export default class NoteText extends PureComponent {
                     borderRadius: 5,
                 }}
             >
-                <Block
+                <View
                     style={{
                         margin: 10,
                     }}
                 >
-                    <Block
-                        row
+                    <View
+                        style={{
+                            flexDirection: 'row'
+                        }}
                     >
                         {iconComponent}
                         {title && (
@@ -39,7 +40,7 @@ export default class NoteText extends PureComponent {
                                 {title}
                             </Text>
                         )}
-                    </Block>
+                    </View>
                     <Text
                         style={[
                             {
@@ -50,8 +51,8 @@ export default class NoteText extends PureComponent {
                     >
                         {content}
                     </Text>
-                </Block>
-            </Block>
+                </View>
+            </View>
         );
     }
 }

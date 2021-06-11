@@ -1,6 +1,7 @@
 import CenterLoader from './CenterLoader';
 import CustomButton from './CustomButton';
 import CustomInput from './CustomInput';
+import CustomModal from './CustomModal';
 import IconCustom from './IconCustom';
 import IndicatorVerticalLine from './IndicatorVerticalLine';
 import Line from './Line';
@@ -19,5 +20,6 @@ export {
     StepIndicator,
     TopTabBar,
     CustomInput,
-    CustomButton
+    CustomButton,
+    CustomModal
 };

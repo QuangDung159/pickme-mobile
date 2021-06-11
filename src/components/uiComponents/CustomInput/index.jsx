@@ -1,8 +1,7 @@
-import { Block } from 'galio-framework';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Text } from 'react-native';
-import { TextInput, TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { Text, View, TextInput } from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { IconFamily, NowTheme } from '../../../constants';
 import IconCustom from '../IconCustom';
 
@@ -51,7 +50,7 @@ export default function CustomInput({
                     inputStyle,
                 ]
             }
-            value={value && value.toString()}
+            value={value.toString()}
             {...props}
         />
     );
@@ -62,21 +61,27 @@ export default function CustomInput({
                 size, color, name, family
             } = rightIcon;
             return (
-                <Block
-                    row
-                    space="between"
+                <View
+                    style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between'
+                    }}
                 >
-                    <Block flex={9}>
+                    <View
+                        style={{
+                            flex: 9
+                        }}
+                    >
                         {renderTextInputBase()}
-                    </Block>
+                    </View>
 
-                    <Block
-                        flex={1}
+                    <View
                         style={{
                             width: NowTheme.SIZES.WIDTH_BASE * 0.1,
                             justifyContent: 'center',
                             alignItems: 'flex-end',
-                            marginRight: 10
+                            marginRight: 10,
+                            flex: 1
                         }}
                     >
                         <TouchableWithoutFeedback
@@ -91,9 +96,9 @@ export default function CustomInput({
                                 family={family || IconFamily.FONT_AWESOME}
                             />
                         </TouchableWithoutFeedback>
-                    </Block>
+                    </View>
 
-                </Block>
+                </View>
             );
         }
 
@@ -105,7 +110,7 @@ export default function CustomInput({
     };
 
     return (
-        <Block
+        <View
             style={containerStyle}
         >
             {label !== '' && (
@@ -126,6 +131,6 @@ export default function CustomInput({
                 </Text>
             )}
             {renderTextInputByRight()}
-        </Block>
+        </View>
     );
 }

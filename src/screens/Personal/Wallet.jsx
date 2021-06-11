@@ -1,6 +1,5 @@
-import { Block, Text } from 'galio-framework';
 import React, { useEffect, useState } from 'react';
-import { RefreshControl } from 'react-native';
+import { RefreshControl, Text, View } from 'react-native';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import { CenterLoader, CustomButton, IconCustom } from '../../components/uiComponents';
@@ -45,30 +44,27 @@ export default function Wallet({ navigation, route }) {
         const { isIncrease } = item;
 
         return (
-            <Block>
-                <Block
-                    row
-                    center
-                    style={{
-                        height: NowTheme.SIZES.HEIGHT_BASE * 0.1,
-                        width: NowTheme.SIZES.WIDTH_BASE * 0.9,
-                        alignSelf: 'center'
-                    }}
+            <View
+                style={{
+                    height: NowTheme.SIZES.HEIGHT_BASE * 0.1,
+                    width: NowTheme.SIZES.WIDTH_BASE * 0.9,
+                    alignSelf: 'center',
+                    flexDirection: 'row'
+                }}
+            >
+                <View style={{
+                    marginRight: 10
+                }}
                 >
-                    <Block style={{
-                        marginRight: 10
-                    }}
-                    >
-                        <IconCustom
-                            name={isIncrease ? 'chevron-circle-right' : 'chevron-circle-left'}
-                            size={NowTheme.SIZES.FONT_H1}
-                            color={NowTheme.COLORS.DEFAULT}
-                            family={IconFamily.FONT_AWESOME}
-                        />
-                    </Block>
-                    {renderHistoryItemContent(item)}
-                </Block>
-            </Block>
+                    <IconCustom
+                        name={isIncrease ? 'chevron-circle-right' : 'chevron-circle-left'}
+                        size={NowTheme.SIZES.FONT_H1}
+                        color={NowTheme.COLORS.DEFAULT}
+                        family={IconFamily.FONT_AWESOME}
+                    />
+                </View>
+                {renderHistoryItemContent(item)}
+            </View>
         );
     };
 
@@ -79,37 +75,45 @@ export default function Wallet({ navigation, route }) {
         } = historyItem;
 
         return (
-            <Block
-                flex
+            <View
+                style={{
+                    flex: 1
+                }}
             >
-                <Block
-                    row
-                    space="between"
+                <View
+                    style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between'
+                    }}
                 >
-                    <Block
+                    <View
                         style={{
                             width: NowTheme.SIZES.WIDTH_BASE * 0.6
                         }}
                     >
                         <Text
-                            color={NowTheme.COLORS.DEFAULT}
-                            size={NowTheme.SIZES.FONT_H3}
-                            fontFamily={NowTheme.FONT.MONTSERRAT_REGULAR}
+                            style={{
+                                color: NowTheme.COLORS.DEFAULT,
+                                fontSize: NowTheme.SIZES.FONT_H3,
+                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                            }}
                         >
                             {content}
                         </Text>
-                    </Block>
-                    <Block
-                        row
-                        space="between"
-                        center
+                    </View>
+                    <View
+                        style={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            alignSelf: 'center'
+                        }}
                     >
                         <Text
-                            color={NowTheme.COLORS.ACTIVE}
-                            size={16}
                             style={{
                                 fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
-                                marginRight: 5
+                                marginRight: 5,
+                                color: NowTheme.COLORS.ACTIVE,
+                                fontSize: 16,
                             }}
                         >
                             {isIncrease ? `+ ${amountChanged}` : `- ${amountChanged}`}
@@ -120,44 +124,49 @@ export default function Wallet({ navigation, route }) {
                             size={16}
                             color={NowTheme.COLORS.ACTIVE}
                         />
-                    </Block>
-                </Block>
-            </Block>
+                    </View>
+                </View>
+            </View>
         );
     };
 
     const renderWalletAmountPanel = () => {
         const walletAmountFormCashOut = route?.params?.walletAmountFromCashOut || currentUser.walletAmount;
         return (
-            <Block
-                flex
+            <View
                 style={{
-                    alignItems: 'center'
+                    alignItems: 'center',
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    flex: 1
                 }}
-                row
-                space="between"
             >
-                <Block>
+                <View
+                    style={{
+                        alignItems: 'center',
+                        alignSelf: 'center'
+                    }}
+                >
                     <Text
                         style={{
-                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
+                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                            fontSize: NowTheme.SIZES.FONT_H4
                         }}
-                        size={NowTheme.SIZES.FONT_H4}
                     >
                         Số dư trong rương
                     </Text>
-                    <Block
-                        row
+                    <View
                         style={{
-                            alignItems: 'center'
+                            alignItems: 'center',
+                            flexDirection: 'row'
                         }}
                     >
                         <Text
                             style={{
-                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
+                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                                fontSize: NowTheme.SIZES.FONT_H1 + 10,
+                                color: NowTheme.COLORS.ACTIVE,
                             }}
-                            size={NowTheme.SIZES.FONT_H1 + 10}
-                            color={NowTheme.COLORS.ACTIVE}
                         >
                             {walletAmountFormCashOut}
                         </Text>
@@ -167,23 +176,21 @@ export default function Wallet({ navigation, route }) {
                             size={NowTheme.SIZES.FONT_H1}
                             color={NowTheme.COLORS.ACTIVE}
                         />
-                    </Block>
-                </Block>
-                <Block>
-                    <CustomButton
-                        onPress={() => navigation.navigate(ScreenName.CASH_OUT)}
-                        labelStyle={{
-                            fontSize: NowTheme.SIZES.FONT_H3,
-                            color: NowTheme.COLORS.ACTIVE
-                        }}
-                        buttonStyle={{
-                            width: NowTheme.SIZES.WIDTH_BASE * 0.4,
-                            borderColor: NowTheme.COLORS.ACTIVE
-                        }}
-                        label="Rút kim cương"
-                    />
-                </Block>
-            </Block>
+                    </View>
+                </View>
+                <CustomButton
+                    onPress={() => navigation.navigate(ScreenName.CASH_IN)}
+                    labelStyle={{
+                        fontSize: NowTheme.SIZES.FONT_H3,
+                        color: NowTheme.COLORS.ACTIVE
+                    }}
+                    buttonStyle={{
+                        width: NowTheme.SIZES.WIDTH_BASE * 0.4,
+                        borderColor: NowTheme.COLORS.ACTIVE
+                    }}
+                    label="Nạp kim cương"
+                />
+            </View>
         );
     };
 
@@ -216,8 +223,10 @@ export default function Wallet({ navigation, route }) {
     const renderHistory = () => {
         if (listCashHistoryStore && listCashHistoryStore.length !== 0) {
             return (
-                <Block
-                    flex
+                <View
+                    style={{
+                        flex: 1
+                    }}
                 >
                     <FlatList
                         data={listCashHistoryStore}
@@ -231,7 +240,7 @@ export default function Wallet({ navigation, route }) {
                             />
                         )}
                     />
-                </Block>
+                </View>
             );
         }
 
@@ -244,22 +253,22 @@ export default function Wallet({ navigation, route }) {
                     />
                 )}
             >
-                <Block
+                <View
                     style={{
                         alignItems: 'center',
                         marginVertical: 15
                     }}
                 >
                     <Text
-                        color={NowTheme.COLORS.SWITCH_OFF}
                         style={{
                             fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                            color: NowTheme.COLORS.SWITCH_OFF,
+                            fontSize: NowTheme.SIZES.FONT_H2
                         }}
-                        size={NowTheme.SIZES.FONT_H2}
                     >
                         Danh sách trống
                     </Text>
-                </Block>
+                </View>
             </ScrollView>
         );
     };
@@ -267,7 +276,7 @@ export default function Wallet({ navigation, route }) {
     try {
         return (
             <>
-                <Block
+                <View
                     style={{
                         height: NowTheme.SIZES.HEIGHT_BASE * 0.15,
                         width: NowTheme.SIZES.WIDTH_BASE * 0.9,
@@ -276,16 +285,16 @@ export default function Wallet({ navigation, route }) {
                     }}
                 >
                     {renderWalletAmountPanel()}
-                </Block>
+                </View>
                 <>
                     {isShowSpinner ? (
-                        <Block
+                        <View
                             style={{
                                 marginTop: NowTheme.SIZES.HEIGHT_BASE * 0.1
                             }}
                         >
                             <CenterLoader />
-                        </Block>
+                        </View>
                     ) : (
                         <>
                             {renderHistory()}

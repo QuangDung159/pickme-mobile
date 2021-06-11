@@ -19,12 +19,14 @@ import { IconFamily } from '../../constants';
 
 const IconNowExtra = createIconSetFromIcoMoon(nowConfig, 'NowExtra');
 
-export default function IconCustom({
-    name,
-    family,
-    color,
-    size
-}) {
+export default function IconCustom(props) {
+    const {
+        name,
+        family,
+        color,
+        size
+    } = props;
+
     const renderIcon = () => {
         switch (family) {
             case IconFamily.FONT_AWESOME: {

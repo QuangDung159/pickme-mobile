@@ -1,11 +1,13 @@
 import {
-    Block, Icon, Text, theme
+    Icon
 } from 'galio-framework';
 import React, { useEffect, useState } from 'react';
 import {
     FlatList,
     ScrollView, StyleSheet,
-    TouchableOpacity
+    Text,
+    TouchableOpacity,
+    View
 } from 'react-native';
 import { Switch } from '../../components/uiComponents';
 import { NowTheme } from '../../constants';
@@ -56,13 +58,25 @@ export default function Settings({ navigation }) {
         switch (item.type) {
             case 'switch':
                 return (
-                    <Block row middle space="between" style={styles.rows}>
+                    <View
+                        style={
+                            [
+                                styles.rows,
+                                {
+                                    flexDirection: 'row',
+                                    alignSelf: 'center',
+                                    alignItems: 'center',
+                                    justifyContent: 'space-between'
+                                }
+                            ]
+                        }
+                    >
                         <Text
                             style={{
-                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
+                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                                fontSize: NowTheme.SIZES.FONT_H4,
+                                color: '#525F7F'
                             }}
-                            size={NowTheme.SIZES.FONT_H4}
-                            color="#525F7F"
                         >
                             {item.title}
                         </Text>
@@ -70,17 +84,27 @@ export default function Settings({ navigation }) {
                             onValueChange={() => toggleSwitch(item.id)}
                             value={item.status}
                         />
-                    </Block>
+                    </View>
                 );
             case 'button':
                 return (
-                    <Block style={styles.rows}>
+                    <View style={styles.rows}>
                         <TouchableOpacity onPress={() => navigation.navigate(item.id)}>
-                            <Block row middle space="between" style={{ paddingTop: 7 }}>
+                            <View
+                                style={{
+                                    paddingTop: 7,
+                                    flexDirection: 'row',
+                                    alignSelf: 'center',
+                                    alignItems: 'center',
+                                    justifyContent: 'space-between'
+                                }}
+                            >
                                 <Text
-                                    style={{ fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR }}
-                                    size={NowTheme.SIZES.FONT_H4}
-                                    color="#525F7F"
+                                    style={{
+                                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                                        fontSize: NowTheme.SIZES.FONT_H4,
+                                        color: '#525F7F'
+                                    }}
                                 >
                                     {item.title}
                                 </Text>
@@ -89,9 +113,9 @@ export default function Settings({ navigation }) {
                                     family="font-awesome"
                                     style={{ paddingRight: 5 }}
                                 />
-                            </Block>
+                            </View>
                         </TouchableOpacity>
-                    </Block>
+                    </View>
                 );
             default:
                 return null;
@@ -109,40 +133,68 @@ export default function Settings({ navigation }) {
                     keyExtractor={(item) => item.id}
                     renderItem={renderItem}
                     ListHeaderComponent={(
-                        <Block center style={styles.title}>
+                        <View
+                            style={
+                                [
+                                    styles.title,
+                                    {
+                                        alignSelf: 'center'
+                                    }
+                                ]
+                            }
+                        >
                             <Text
-                                style={{ fontFamily: NowTheme.FONT.MONTSERRAT_BOLD, paddingBottom: 5 }}
-                                size={theme.SIZES.BASE}
-                                color={NowTheme.COLORS.TEXT}
+                                style={{
+                                    fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
+                                    paddingBottom: 5,
+                                    fontSize: NowTheme.SIZES.FONT_H2,
+                                    color: NowTheme.COLORS.TEXT,
+                                }}
                             >
                                 Recommended Settings
                             </Text>
                             <Text
-                                style={{ fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR }}
-                                size={12}
-                                color={NowTheme.COLORS.CAPTION}
+                                style={{
+                                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                                    fontSize: 12,
+                                    color: NowTheme.COLORS.ACTIVE,
+                                }}
                             >
                                 These are the most important settings
                             </Text>
-                        </Block>
+                        </View>
                     )}
                 />
-                <Block center style={styles.title}>
+                <View
+                    style={
+                        [
+                            styles.title,
+                            {
+                                alignSelf: 'center'
+                            }
+                        ]
+                    }
+                >
                     <Text
-                        style={{ fontFamily: NowTheme.FONT.MONTSERRAT_BOLD, paddingBottom: 5 }}
-                        size={theme.SIZES.BASE}
-                        color={NowTheme.COLORS.TEXT}
+                        style={{
+                            fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
+                            paddingBottom: 5,
+                            fontSize: NowTheme.SIZES.FONT_H2,
+                            color: NowTheme.COLORS.TEXT,
+                        }}
                     >
                         Payment Settings
                     </Text>
                     <Text
-                        style={{ fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR }}
-                        size={12}
-                        color={NowTheme.COLORS.CAPTION}
+                        style={{
+                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                            fontSize: 12,
+                            color: NowTheme.COLORS.ACTIVE,
+                        }}
                     >
                         These are also important settings
                     </Text>
-                </Block>
+                </View>
 
                 <FlatList
                     data={payment}
@@ -150,22 +202,36 @@ export default function Settings({ navigation }) {
                     renderItem={renderItem}
                 />
 
-                <Block center style={styles.title}>
+                <View
+                    style={
+                        [
+                            styles.title,
+                            {
+                                alignSelf: 'center'
+                            }
+                        ]
+                    }
+                >
                     <Text
-                        style={{ fontFamily: NowTheme.FONT.MONTSERRAT_BOLD, paddingBottom: 5 }}
-                        size={theme.SIZES.BASE}
-                        color={NowTheme.COLORS.TEXT}
+                        style={{
+                            fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
+                            paddingBottom: 5,
+                            fontSize: NowTheme.SIZES.BASE,
+                            color: NowTheme.COLORS.TEXT,
+                        }}
                     >
                         Privacy Settings
                     </Text>
                     <Text
-                        style={{ fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR }}
-                        size={12}
-                        color={NowTheme.COLORS.CAPTION}
+                        style={{
+                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                            fontSize: 12,
+                            color: NowTheme.COLORS.ACTIVE,
+                        }}
                     >
                         Third most important settings
                     </Text>
-                </Block>
+                </View>
                 <FlatList
                     data={privacy}
                     keyExtractor={(item) => item.id}
