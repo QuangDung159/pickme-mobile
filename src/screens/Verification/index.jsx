@@ -310,7 +310,7 @@ export default function Verification({ navigation }) {
     try {
         return (
             <>
-                {!isShowSpinner ? (
+                {isShowSpinner ? (
                     // eslint-disable-next-line max-len
                     <CenterLoader content={`Quá trình tải lên mất nhiều thời gian do\nchất lượng hình ảnh.\nBạn vui lòng đợi nhé ${'<3'}!`} />
                 ) : (
