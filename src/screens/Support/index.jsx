@@ -106,12 +106,9 @@ export default function Support({ navigation }) {
         setIsShowSpinner(true);
         MediaHelpers.uploadImage(
             uri,
-            Rx.USER.UPLOAD_PROFILE_IMAGE,
+            Rx.USER.UPLOAD_ISSUE_IMAGE,
             token,
             (res) => {
-                ToastHelpers.renderToast(
-                    res?.data?.message || 'Tải ảnh lên thành công!', 'success'
-                );
                 setIsShowSpinner(false);
                 setImage(uri);
                 setImageId(res.data.data.id);
@@ -136,8 +133,8 @@ export default function Support({ navigation }) {
 
     const removeImage = () => {
         rxUtil(
-            `${Rx.USER.REMOVE_PROFILE_IMAGE}/${imageId}`,
-            'DELETE',
+            `${Rx.USER.REMOVE_ISSUE_IMAGE}/${imageId}`,
+            'POST',
             null,
             {
                 Authorization: token

@@ -9,30 +9,28 @@ export default function CenterLoader({ size, content }) {
             <View
                 style={{
                     zIndex: 1,
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
+                    width: NowTheme.SIZES.WIDTH_BASE,
+                    height: NowTheme.SIZES.HEIGHT_BASE * 0.8,
                     justifyContent: 'center',
-                    alignItems: 'center'
                 }}
             >
                 <ActivityIndicator
                     size={size}
                     color={NowTheme.COLORS.ACTIVE}
                 />
-                <Text
-                    style={{
-                        color: NowTheme.COLORS.ACTIVE,
-                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                        fontSize: NowTheme.SIZES.FONT_H3,
-                        textAlign: 'center',
-                        padding: 10
-                    }}
-                >
-                    {content}
-                </Text>
+                {content && (
+                    <Text
+                        style={{
+                            color: NowTheme.COLORS.ACTIVE,
+                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                            fontSize: NowTheme.SIZES.FONT_H3,
+                            textAlign: 'center',
+                            padding: 10
+                        }}
+                    >
+                        {content}
+                    </Text>
+                )}
             </View>
         );
     } catch (exception) {
