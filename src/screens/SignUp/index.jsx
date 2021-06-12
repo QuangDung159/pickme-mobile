@@ -17,6 +17,14 @@ import ModalDisclaimer from './ModalDisclaimer';
 import OtpForm from './OtpForm';
 import PhoneForm from './PhoneForm';
 
+const {
+    FONT: {
+        MONTSERRAT_BOLD
+    },
+    SIZES,
+    COLORS
+} = NowTheme;
+
 export default function SignUp({ navigation }) {
     const [modalVisible, setModalVisible] = useState(false);
     const [step, setStep] = useState(1);
@@ -98,7 +106,7 @@ export default function SignUp({ navigation }) {
                                                     color: '#333',
                                                     fontSize: 24,
                                                     height: 100,
-                                                    marginTop: NowTheme.SIZES.HEIGHT_BASE * 0.1
+                                                    marginTop: SIZES.HEIGHT_BASE * 0.1
                                                 }
                                             ]
                                         }
@@ -127,22 +135,22 @@ export default function SignUp({ navigation }) {
 
 const styles = StyleSheet.create({
     imageBackgroundContainer: {
-        width: NowTheme.SIZES.WIDTH_BASE,
-        height: NowTheme.SIZES.HEIGHT_BASE,
+        width: SIZES.WIDTH_BASE,
+        height: SIZES.HEIGHT_BASE,
         padding: 0,
         zIndex: 1
     },
     imageBackground: {
-        width: NowTheme.SIZES.WIDTH_BASE,
-        height: NowTheme.SIZES.HEIGHT_BASE
+        width: SIZES.WIDTH_BASE,
+        height: SIZES.HEIGHT_BASE
     },
     registerContainer: {
         marginTop: 55,
-        width: NowTheme.SIZES.WIDTH_BASE * 0.9,
-        height: NowTheme.SIZES.HEIGHT_BASE < 812 ? NowTheme.SIZES.HEIGHT_BASE * 0.8 : NowTheme.SIZES.HEIGHT_BASE * 0.8,
-        backgroundColor: NowTheme.COLORS.BASE,
+        width: SIZES.WIDTH_BASE * 0.9,
+        height: SIZES.HEIGHT_BASE < 812 ? SIZES.HEIGHT_BASE * 0.8 : SIZES.HEIGHT_BASE * 0.8,
+        backgroundColor: COLORS.BASE,
         borderRadius: 4,
-        shadowColor: NowTheme.COLORS.BLACK,
+        shadowColor: COLORS.BLACK,
         shadowOffset: {
             width: 0,
             height: 4
@@ -153,11 +161,11 @@ const styles = StyleSheet.create({
         overflow: 'hidden'
     },
     title: {
-        fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
+        fontFamily: MONTSERRAT_BOLD,
         textAlign: 'center'
     },
     stepSessionContainer: {
-        height: NowTheme.SIZES.HEIGHT_BASE * 0.3,
+        height: SIZES.HEIGHT_BASE * 0.3,
         alignSelf: 'center',
         alignItems: 'center'
     },

@@ -1,6 +1,5 @@
-import { Block, Text } from 'galio-framework';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import ImageScalable from 'react-native-scalable-image';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,6 +13,13 @@ import { MediaHelpers, ToastHelpers } from '../../helpers';
 import { setCurrentUser, setPersonTabActiveIndex, setVerificationStore } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
 
+const {
+    FONT: {
+        MONTSERRAT_REGULAR,
+    },
+    SIZES,
+    COLORS
+} = NowTheme;
 let count = 0;
 
 export default function Verification({ navigation }) {
@@ -77,7 +83,7 @@ export default function Verification({ navigation }) {
             isDisabled = true;
         }
         return (
-            <Block style={{
+            <View style={{
                 alignItems: 'center',
             }}
             >
@@ -86,15 +92,15 @@ export default function Verification({ navigation }) {
                     type="active"
                     label={buttonText}
                     buttonStyle={{
-                        width: NowTheme.SIZES.WIDTH_BASE * 0.9,
+                        width: SIZES.WIDTH_BASE * 0.9,
                         marginBottom: 10
                     }}
                     labelStyle={{
-                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                        fontFamily: MONTSERRAT_REGULAR,
                     }}
                     disabled={isDisabled}
                 />
-            </Block>
+            </View>
         );
     };
 
@@ -106,18 +112,18 @@ export default function Verification({ navigation }) {
         >
             {renderUploadDocForm(DocumentType.FACE_IMAGE, 'Ảnh chụp cá nhân')}
             {renderDocImageByType(DocumentType.FACE_IMAGE, faceUrl)}
-            <Block
+            <View
                 style={styles.docFormContainer}
             >
                 {renderUploadDocForm(DocumentType.DRIVER_FRONT, 'Mặt trước CMND/CCCD/bằng xe còn thời hạn')}
                 {renderDocImageByType(DocumentType.DRIVER_FRONT, frontUrl)}
-            </Block>
-            <Block
+            </View>
+            <View
                 style={styles.docFormContainer}
             >
                 {renderUploadDocForm(DocumentType.DRIVER_BACK, 'Mặt sau CMND/CCCD/bằng lái còn thời hạn')}
                 {renderDocImageByType(DocumentType.DRIVER_BACK, backUrl)}
-            </Block>
+            </View>
         </View>
     );
 
@@ -245,11 +251,11 @@ export default function Verification({ navigation }) {
     const renderButtonPanel = () => {
         if (currentUser.verifyStatus === VerificationStatus.NONE) {
             return (
-                <Block
-                    row
-                    space="between"
+                <View
                     style={{
                         paddingVertical: 10,
+                        flexDirection: 'row',
+                        justifyContent: 'space-between'
                     }}
                 >
                     <CustomButton
@@ -264,7 +270,7 @@ export default function Verification({ navigation }) {
                         type="active"
                         label="Xác nhận"
                     />
-                </Block>
+                </View>
             );
         }
         return null;
@@ -273,37 +279,39 @@ export default function Verification({ navigation }) {
     const renderDocImageByType = (docType, imageUrl) => {
         if (imageUrl === '') {
             return (
-                <Block
+                <View
                     style={{
                         alignItems: 'center',
                         marginVertical: 15
                     }}
                 >
                     <Text
-                        color={NowTheme.COLORS.SWITCH_OFF}
                         style={{
-                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                            fontFamily: MONTSERRAT_REGULAR,
+                            color: COLORS.SWITCH_OFF,
+                            size: SIZES.FONT_H2
                         }}
-                        size={NowTheme.SIZES.FONT_H2}
                     >
                         Chưa có ảnh
                     </Text>
-                </Block>
+                </View>
             );
         }
 
         return (
-            <Block
-                center
+            <View
+                style={{
+                    alignSelf: 'center'
+                }}
             >
                 <ImageScalable
                     style={{
                         zIndex: 99
                     }}
-                    width={NowTheme.SIZES.WIDTH_BASE * 0.9}
+                    width={SIZES.WIDTH_BASE * 0.9}
                     source={{ uri: imageUrl }}
                 />
-            </Block>
+            </View>
         );
     };
 
@@ -317,37 +325,37 @@ export default function Verification({ navigation }) {
                     <KeyboardAwareScrollView
                         showsVerticalScrollIndicator={false}
                         contentContainerStyle={{
-                            width: NowTheme.SIZES.WIDTH_BASE * 0.9,
+                            width: SIZES.WIDTH_BASE * 0.9,
                             alignSelf: 'center'
                         }}
                     >
-                        <Block
+                        <View
                             style={{
                                 marginTop: 10,
-                                backgroundColor: NowTheme.COLORS.BASE,
+                                backgroundColor: COLORS.BASE,
                             }}
                         >
-                            <Block
-                                row
+                            <View
                                 style={{
                                     justifyContent: 'space-between',
-                                    alignItems: 'center'
+                                    alignItems: 'center',
+                                    flexDirection: 'row'
                                 }}
                             >
                                 <Text style={{
-                                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                                    fontFamily: MONTSERRAT_REGULAR,
                                     marginVertical: 10
                                 }}
                                 >
                                     TẢI LÊN CHỨNG TỪ XÁC THỰC
                                 </Text>
-                            </Block>
+                            </View>
                             <Line
                                 borderWidth={0.5}
-                                borderColor={NowTheme.COLORS.ACTIVE}
+                                borderColor={COLORS.ACTIVE}
                             />
                             {renderDocSection()}
-                        </Block>
+                        </View>
                         {renderButtonPanel()}
                     </KeyboardAwareScrollView>
                 )}

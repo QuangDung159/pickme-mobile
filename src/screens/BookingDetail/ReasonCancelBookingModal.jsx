@@ -1,16 +1,18 @@
 import { Picker } from '@react-native-picker/picker';
-import { Block } from 'galio-framework';
 import React, { useState } from 'react';
-import {
-    Modal, StyleSheet, Text, View
-} from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { CustomButton } from '../../components/uiComponents';
+import { CustomButton, CustomModal } from '../../components/uiComponents';
 import { NowTheme, Rx, ScreenName } from '../../constants';
 import { ToastHelpers } from '../../helpers';
-import { setListBookingStore, setPersonTabActiveIndex, setShowLoaderStore } from '../../redux/Actions';
+import { setPersonTabActiveIndex } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
+
+const {
+    FONT: {
+        MONTSERRAT_REGULAR,
+    }, SIZES
+} = NowTheme;
 
 export default function ReasonCancelBookingModal({
     modalReasonVisible,
@@ -30,31 +32,6 @@ export default function ReasonCancelBookingModal({
 
     const dispatch = useDispatch();
 
-    const fetchListBooking = () => {
-        const pagingStr = '?pageIndex=1&pageSize=100';
-
-        rxUtil(
-            `${Rx.BOOKING.GET_MY_BOOKING_AS_CUSTOMER}${pagingStr}`,
-            'GET',
-            null,
-            {
-                Authorization: token
-            },
-            (res) => {
-                dispatch(setListBookingStore(res.data.data));
-                dispatch(setShowLoaderStore(false));
-            },
-            (res) => {
-                dispatch(setShowLoaderStore(false));
-                ToastHelpers.renderToast(res.data.message, 'error');
-            },
-            (res) => {
-                dispatch(setShowLoaderStore(false));
-                ToastHelpers.renderToast(res.data.message, 'error');
-            }
-        );
-    };
-
     const onChangeReason = (reasonValueInput) => {
         const reasonInput = reasonDropdownArr.find((item) => item.value === reasonValueInput);
         if (reasonInput) {
@@ -66,9 +43,9 @@ export default function ReasonCancelBookingModal({
         <Picker
             selectedValue={reason.value}
             onValueChange={(itemValue) => onChangeReason(itemValue)}
-            fontFamily={NowTheme.FONT.MONTSERRAT_REGULAR}
+            fontFamily={MONTSERRAT_REGULAR}
             style={{
-                width: NowTheme.SIZES.WIDTH_BASE * 0.8
+                width: SIZES.WIDTH_BASE * 0.8
             }}
         >
             {reasonDropdownArr.map((item) => (
@@ -78,7 +55,6 @@ export default function ReasonCancelBookingModal({
     );
 
     const sendRequestToCancelBooking = () => {
-        dispatch(setShowLoaderStore(true));
         rxUtil(
             `${Rx.BOOKING.CANCEL_BOOKING}/${bookingId}`,
             'POST',
@@ -92,76 +68,68 @@ export default function ReasonCancelBookingModal({
                 navigation.navigate(ScreenName.PERSONAL);
                 dispatch(setPersonTabActiveIndex(2));
                 ToastHelpers.renderToast(res.data.message, 'success');
-                fetchListBooking();
             },
             (res) => {
-                dispatch(setShowLoaderStore(false));
                 ToastHelpers.renderToast(res.data.message, 'error');
-                ToastHelpers.renderToast();
             },
             (res) => {
-                dispatch(setShowLoaderStore(false));
                 ToastHelpers.renderToast(res.data.message, 'error');
             }
         );
     };
 
     const renderReasonCancelBookingModal = () => (
-        <Modal
-            animationType="slide"
-            transparent
-            visible={modalReasonVisible}
-        >
-            <ScrollView
-                showsVerticalScrollIndicator={false}
-            >
-                <View style={styles.centeredView}>
-                    <View style={styles.modalView}>
-                        <Text
-                            style={{
-                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                                marginVertical: 10,
-                                fontSize: NowTheme.SIZES.FONT_H2
+        <CustomModal
+            modalVisible={modalReasonVisible}
+            renderContent={() => (
+                <>
+                    <Text
+                        style={{
+                            fontFamily: MONTSERRAT_REGULAR,
+                            marginVertical: 10,
+                            fontSize: SIZES.FONT_H2
+                        }}
+                    >
+                        Vui lòng chọn lý do
+                    </Text>
+                    {renderReasonDropdown()}
+                    <View
+                        middle
+                        row
+                        style={{
+                            width: SIZES.WIDTH_BASE * 0.8,
+                            marginBottom: 10,
+                            alignSelf: 'center',
+                            alignItems: 'center',
+                            flexDirection: 'row'
+                        }}
+                        space="between"
+                    >
+                        <CustomButton
+                            onPress={() => {
+                                sendRequestToCancelBooking();
+                                setModalReasonVisible(false);
                             }}
-                        >
-                            Vui lòng chọn lý do
-                        </Text>
-                        {renderReasonDropdown()}
-                        <Block
-                            middle
-                            row
-                            style={{
-                                width: NowTheme.SIZES.WIDTH_BASE * 0.8,
-                                marginBottom: 10
+                            type="default"
+                            label="Xác nhận huỷ"
+                            buttonStyle={{
+                                width: SIZES.WIDTH_BASE * 0.39
                             }}
-                            space="between"
-                        >
-                            <CustomButton
-                                onPress={() => {
-                                    sendRequestToCancelBooking();
-                                    setModalReasonVisible(false);
-                                }}
-                                type="default"
-                                label="Xác nhận huỷ"
-                                buttonStyle={{
-                                    width: NowTheme.SIZES.WIDTH_BASE * 0.39
-                                }}
-                            />
-                            <CustomButton
-                                onPress={() => {
-                                    setModalReasonVisible(false);
-                                }}
-                                type="active"
-                                label="Cân nhắc lại"
-                                buttonStyle={{
-                                    width: NowTheme.SIZES.WIDTH_BASE * 0.39
-                                }}
-                            />
-                        </Block>
+                        />
+                        <CustomButton
+                            onPress={() => {
+                                setModalReasonVisible(false);
+                            }}
+                            type="active"
+                            label="Cân nhắc lại"
+                            buttonStyle={{
+                                width: SIZES.WIDTH_BASE * 0.39
+                            }}
+                        />
                     </View>
-                </View>
-            </ScrollView>
-        </Modal>
+                </>
+            )}
+        />
     );
 
     try {
@@ -179,27 +147,3 @@ export default function ReasonCancelBookingModal({
         );
     }
 }
-
-const styles = StyleSheet.create({
-    centeredView: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        alignSelf: 'center',
-    },
-    modalView: {
-        backgroundColor: 'white',
-        borderRadius: 5,
-        alignItems: 'center',
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 2
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
-        marginTop: NowTheme.SIZES.WIDTH_BASE * 0.5,
-        width: NowTheme.SIZES.WIDTH_BASE * 0.9,
-        marginBottom: 10
-    },
-});

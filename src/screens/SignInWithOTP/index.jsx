@@ -22,6 +22,14 @@ import {
 } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
 
+const {
+    FONT: {
+        MONTSERRAT_REGULAR,
+    },
+    SIZES,
+    COLORS
+} = NowTheme;
+
 export default function SignInWithOTP({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
     const [otp, setOtp] = useState('');
@@ -193,20 +201,20 @@ export default function SignInWithOTP({ navigation }) {
                         <View style={styles.registerContainer}>
                             <View
                                 style={{
-                                    height: NowTheme.SIZES.HEIGHT_BASE * 0.2,
+                                    height: SIZES.HEIGHT_BASE * 0.2,
                                     alignSelf: 'center',
                                     alignItems: 'center',
-                                    marginTop: NowTheme.SIZES.HEIGHT_BASE * 0.1
+                                    marginTop: SIZES.HEIGHT_BASE * 0.1
                                 }}
                             >
                                 <NoteText
-                                    width={NowTheme.SIZES.WIDTH_BASE * 0.77}
+                                    width={SIZES.WIDTH_BASE * 0.77}
                                     title="Dường như bạn đang đăng nhập từ một thiết bị khác:"
                                     content="Bạn vui lòng đăng nhập lại để xác thực thiết bị này."
                                     contentStyle={{
-                                        fontSize: NowTheme.SIZES.FONT_H4,
-                                        color: NowTheme.COLORS.ACTIVE,
-                                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                                        fontSize: SIZES.FONT_H4,
+                                        color: COLORS.ACTIVE,
+                                        fontFamily: MONTSERRAT_REGULAR,
                                         marginTop: 5
                                     }}
                                     iconComponent={(
@@ -214,10 +222,10 @@ export default function SignInWithOTP({ navigation }) {
                                             name="info-circle"
                                             family={IconFamily.FONT_AWESOME}
                                             size={18}
-                                            color={NowTheme.COLORS.ACTIVE}
+                                            color={COLORS.ACTIVE}
                                         />
                                     )}
-                                    backgroundColor={NowTheme.COLORS.LIST_ITEM_BACKGROUND_1}
+                                    backgroundColor={COLORS.LIST_ITEM_BACKGROUND_1}
                                 />
                             </View>
 
@@ -226,7 +234,7 @@ export default function SignInWithOTP({ navigation }) {
                             ) : (
                                 <>
                                     <View style={{
-                                        height: NowTheme.SIZES.HEIGHT_BASE * 0.3
+                                        height: SIZES.HEIGHT_BASE * 0.2
                                     }}
                                     >
                                         <View
@@ -245,20 +253,20 @@ export default function SignInWithOTP({ navigation }) {
                                                     }
                                                     containerStyle={{
                                                         marginVertical: 10,
-                                                        width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                                                        width: SIZES.WIDTH_BASE * 0.77
                                                     }}
                                                 />
                                             ) : (
                                                 <CustomInput
                                                     value={otp}
                                                     inputStyle={{
-                                                        width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                                                        width: SIZES.WIDTH_BASE * 0.77
                                                     }}
                                                     onChangeText={(otpInput) => setOtp(otpInput)}
                                                     keyboardType="number-pad"
                                                     containerStyle={{
                                                         marginVertical: 10,
-                                                        width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                                                        width: SIZES.WIDTH_BASE * 0.77
                                                     }}
                                                     placeholder="Nhập mã xác thực..."
                                                 />
@@ -302,22 +310,22 @@ export default function SignInWithOTP({ navigation }) {
 
 const styles = StyleSheet.create({
     imageBackgroundContainer: {
-        width: NowTheme.SIZES.WIDTH_BASE,
-        height: NowTheme.SIZES.HEIGHT_BASE,
+        width: SIZES.WIDTH_BASE,
+        height: SIZES.HEIGHT_BASE,
         padding: 0,
         zIndex: 1
     },
     imageBackground: {
-        width: NowTheme.SIZES.WIDTH_BASE,
-        height: NowTheme.SIZES.HEIGHT_BASE
+        width: SIZES.WIDTH_BASE,
+        height: SIZES.HEIGHT_BASE
     },
     registerContainer: {
         marginTop: 55,
-        width: NowTheme.SIZES.WIDTH_BASE * 0.9,
-        height: NowTheme.SIZES.HEIGHT_BASE < 812 ? NowTheme.SIZES.HEIGHT_BASE * 0.8 : NowTheme.SIZES.HEIGHT_BASE * 0.8,
-        backgroundColor: NowTheme.COLORS.BASE,
+        width: SIZES.WIDTH_BASE * 0.9,
+        height: SIZES.HEIGHT_BASE < 812 ? SIZES.HEIGHT_BASE * 0.8 : SIZES.HEIGHT_BASE * 0.8,
+        backgroundColor: COLORS.BASE,
         borderRadius: 4,
-        shadowColor: NowTheme.COLORS.BLACK,
+        shadowColor: COLORS.BLACK,
         shadowOffset: {
             width: 0,
             height: 4
@@ -328,28 +336,7 @@ const styles = StyleSheet.create({
         overflow: 'hidden'
     },
     button: {
-        width: NowTheme.SIZES.WIDTH_BASE * 0.77
-    },
-    centeredView: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 22
-    },
-    modalView: {
-        margin: 20,
-        backgroundColor: 'white',
-        borderRadius: 20,
-        padding: 35,
-        alignItems: 'center',
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 2
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5
+        width: SIZES.WIDTH_BASE * 0.77
     },
     openButton: {
         backgroundColor: '#F194FF',
@@ -362,9 +349,4 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center'
     },
-    modalText: {
-        marginBottom: 15,
-        textAlign: 'center',
-        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
-    }
 });

@@ -2,6 +2,8 @@ import React from 'react';
 import { ActivityIndicator, View } from 'react-native';
 import { NowTheme } from '../../constants';
 
+const { COLORS } = NowTheme;
+
 export default function CenterLoader({ size }) {
     return (
         <View
@@ -18,7 +20,7 @@ export default function CenterLoader({ size }) {
         >
             <ActivityIndicator
                 size={size}
-                color={NowTheme.COLORS.ACTIVE}
+                color={COLORS.ACTIVE}
             />
         </View>
     );

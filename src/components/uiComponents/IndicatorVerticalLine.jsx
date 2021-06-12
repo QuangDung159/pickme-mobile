@@ -3,6 +3,8 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { NowTheme } from '../../constants';
 
+const { COLORS } = NowTheme;
+
 export default function IndicatorVerticalLine({
     active
 }) {
@@ -14,7 +16,7 @@ export default function IndicatorVerticalLine({
                 style={{
                     height: 6,
                     borderLeftWidth: 3,
-                    borderColor: active ? NowTheme.COLORS.ACTIVE : NowTheme.COLORS.INPUT,
+                    borderColor: active ? COLORS.ACTIVE : COLORS.INPUT,
                     justifyContent: 'center'
                 }}
             />

@@ -9,6 +9,8 @@ import { ToastHelpers } from '../../helpers';
 import { setIsSignInOtherDeviceStore, setShowLoaderStore, setToken } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
 
+const { SIZES, COLORS } = NowTheme;
+
 export default function OtpForm({
     otp, setOtp, password,
     setPassword, phoneNumber,
@@ -98,13 +100,13 @@ export default function OtpForm({
                     <CustomInput
                         value={otp}
                         inputStyle={{
-                            width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                            width: SIZES.WIDTH_BASE * 0.77
                         }}
                         onChangeText={(otpInput) => setOtp(otpInput)}
                         keyboardType="number-pad"
                         containerStyle={{
                             marginVertical: 10,
-                            width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                            width: SIZES.WIDTH_BASE * 0.77
                         }}
                         placeholder="Nhập mã xác thực..."
                     />
@@ -112,13 +114,13 @@ export default function OtpForm({
                     <CustomInput
                         value={password}
                         inputStyle={{
-                            width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                            width: SIZES.WIDTH_BASE * 0.77
                         }}
                         onChangeText={(passwordInput) => setPassword(passwordInput)}
                         keyboardType="number-pad"
                         containerStyle={{
                             marginVertical: 10,
-                            width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                            width: SIZES.WIDTH_BASE * 0.77
                         }}
                         secureTextEntry={!isShowPassword}
                         placeholder="Nhập mật khẩu..."
@@ -126,7 +128,7 @@ export default function OtpForm({
                             name: 'eye',
                             family: IconFamily.ENTYPO,
                             size: 20,
-                            color: NowTheme.COLORS.DEFAULT
+                            color: COLORS.DEFAULT
                         }}
                         onPressRightIcon={() => setIsShowPassword(!isShowPassword)}
                     />
@@ -154,11 +156,11 @@ export default function OtpForm({
 
 const styles = StyleSheet.create({
     button: {
-        width: NowTheme.SIZES.WIDTH_BASE * 0.77,
+        width: SIZES.WIDTH_BASE * 0.77,
         marginVertical: 10
     },
     stepSessionContainer: {
-        height: NowTheme.SIZES.HEIGHT_BASE * 0.3
+        height: SIZES.HEIGHT_BASE * 0.3
     },
     formInputContainer: {
         alignItems: 'center',

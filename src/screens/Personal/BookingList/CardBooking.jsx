@@ -1,13 +1,21 @@
-import { Block, Text } from 'galio-framework';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {
-    StyleSheet
+    StyleSheet, Text, View
 } from 'react-native';
 import { IconCustom } from '../../../components/uiComponents';
 import { IconFamily, NowTheme } from '../../../constants';
 import { ToastHelpers } from '../../../helpers';
+
+const {
+    FONT: {
+        MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
+    },
+    SIZES,
+    COLORS
+} = NowTheme;
 
 export default function CardBooking({ booking }) {
     const convertMinutesToStringHours = (minutes) => moment.utc()
@@ -36,101 +44,142 @@ export default function CardBooking({ booking }) {
         const { fullName } = partner;
 
         return (
-            <Block
-                middle
+            <View
                 style={{
-                    backgroundColor: NowTheme.COLORS.BASE,
-                    marginBottom: 10
+                    backgroundColor: COLORS.BASE,
+                    marginVertical: 10,
+                    alignSelf: 'center',
+                    width: SIZES.WIDTH_BASE * 0.9,
                 }}
             >
-                <Block
-                    space="between"
+                <View
                     style={{
-                        width: NowTheme.SIZES.WIDTH_BASE * 0.9
+                        flexDirection: 'row',
+                        width: SIZES.WIDTH_BASE * 0.9,
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        marginBottom: 10,
                     }}
                 >
-                    <Block
-                        row
-                        space="between"
+                    <Text
+                        style={
+                            [
+                                styles.cardTitle,
+                                {
+                                    fontSize: SIZES.FONT_H2,
+                                    color: COLORS.ACTIVE,
+                                }
+                            ]
+                        }
                     >
-                        <Block>
-                            <Text
-                                size={NowTheme.SIZES.FONT_H2}
-                                style={styles.cardTitle}
-                                color={NowTheme.COLORS.ACTIVE}
-                            >
-                                <>{`${fullName}`}</>
-                            </Text>
-                            <Text
-                                size={NowTheme.SIZES.FONT_H4}
-                                style={styles.cardSubTitle}
-                                color={NowTheme.COLORS.ACTIVE}
-                            >
-                                <>{`Mã đơn hẹn: #${idReadAble}`}</>
-                            </Text>
-                        </Block>
-                    </Block>
-                    <Block>
-                        <Block
-                            space="between"
-                        >
-                            <Text
-                                style={styles.subInfoCard}
-                                size={NowTheme.SIZES.FONT_H2}
-                                color={NowTheme.COLORS.ACTIVE}
-                            >
-                                {`Ngày: ${moment(date).format('DD-MM-YYYY')}`}
-                            </Text>
-                            <Text
-                                style={styles.subInfoCard}
-                                size={NowTheme.SIZES.FONT_H2}
-                                color={NowTheme.COLORS.ACTIVE}
-                            >
-                                {`Từ ${startStr} đến ${endStr}`}
-                            </Text>
-                        </Block>
+                        {`${fullName}`}
+                    </Text>
+                    <Text
+                        style={
+                            [
+                                styles.subInfoCard,
+                                {
+                                    fontSize: SIZES.FONT_H4,
+                                    color: COLORS.DEFAULT,
+                                }
+                            ]
+                        }
+                    >
+                        {`Mã đơn hẹn: #${idReadAble}`}
+                    </Text>
+                </View>
+
+                <View
+                    style={{
+                        justifyContent: 'space-between',
+                        flexDirection: 'row',
+                    }}
+                >
+                    <Text
+                        style={
+                            [
+                                styles.subInfoCard,
+                                {
+                                    fontSize: SIZES.FONT_H2,
+                                    color: COLORS.ACTIVE,
+                                }
+                            ]
+                        }
+                    >
+                        {`Ngày: ${moment(date).format('DD-MM-YYYY')}`}
+                    </Text>
+                    <Text
+                        style={
+                            [
+                                styles.subInfoCard,
+                                {
+                                    fontSize: SIZES.FONT_H2,
+                                    color: COLORS.ACTIVE,
+                                }
+                            ]
+                        }
+                    >
+                        {`Từ ${startStr} đến ${endStr}`}
+                    </Text>
+                </View>
+
+                <Text
+                    style={
+                        [
+                            styles.subInfoCard,
+                            {
+                                fontSize: SIZES.FONT_H3,
+                                color: COLORS.DEFAULT,
+                            }
+                        ]
+                    }
+                >
+                    {address || 'N/A'}
+                </Text>
+
+                <View
+                    style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between'
+                    }}
+                >
+                    <Text
+                        style={
+                            [
+                                styles.subInfoCard,
+                                {
+                                    fontSize: SIZES.FONT_H3,
+                                    color: COLORS.DEFAULT,
+                                }
+                            ]
+                        }
+                    >
+                        {`Trạng thái: ${statusValue}`}
+                    </Text>
+                    <View
+                        style={{
+                            flexDirection: 'row'
+                        }}
+                    >
                         <Text
-                            style={styles.subInfoCard}
-                            size={NowTheme.SIZES.FONT_H3}
-                            color={NowTheme.COLORS.DEFAULT}
+                            style={{
+                                fontFamily: MONTSERRAT_BOLD,
+                                marginRight: 5,
+                                fontSize: SIZES.FONT_H2,
+                                color: COLORS.ACTIVE
+                            }}
                         >
-                            {address || 'N/A'}
+                            {totalAmount}
                         </Text>
-                        <Block
-                            row
-                            space="between"
-                        >
-                            <Text
-                                style={styles.subInfoCard}
-                                size={NowTheme.SIZES.FONT_H3}
-                                color={NowTheme.COLORS.DEFAULT}
-                            >
-                                {`Trạng thái: ${statusValue}`}
-                            </Text>
-                            <Block
-                                row
-                            >
-                                <Text
-                                    style={{
-                                        fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
-                                        marginRight: 5
-                                    }}
-                                    size={NowTheme.SIZES.FONT_H2}
-                                    color={NowTheme.COLORS.ACTIVE}
-                                >
-                                    {totalAmount}
-                                </Text>
-                                <IconCustom
-                                    name="diamond"
-                                    family={IconFamily.SIMPLE_LINE_ICONS}
-                                    size={16}
-                                    color={NowTheme.COLORS.ACTIVE}
-                                />
-                            </Block>
-                        </Block>
-                    </Block>
-                </Block>
-            </Block>
+                        <IconCustom
+                            name="diamond"
+                            family={IconFamily.SIMPLE_LINE_ICONS}
+                            size={16}
+                            color={COLORS.ACTIVE}
+                        />
+                    </View>
+                </View>
+            </View>
         );
     } catch (exception) {
         console.log('exception :>> ', exception);
@@ -148,16 +197,16 @@ CardBooking.propTypes = {
 
 const styles = StyleSheet.create({
     cardTitle: {
-        paddingTop: 7,
-        fontFamily: NowTheme.FONT.MONTSERRAT_BOLD
+        fontFamily: MONTSERRAT_BOLD,
+        marginBottom: 10
     },
     subInfoCard: {
-        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+        fontFamily: MONTSERRAT_REGULAR,
         marginBottom: 10
     },
     cardSubTitle: {
-        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+        fontFamily: MONTSERRAT_REGULAR,
         paddingBottom: 15,
-        color: NowTheme.COLORS.ICON_INPUT
+        color: COLORS.ICON_INPUT
     }
 });

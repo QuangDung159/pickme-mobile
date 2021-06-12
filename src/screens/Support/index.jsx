@@ -16,6 +16,15 @@ import {
 import { MediaHelpers, ToastHelpers } from '../../helpers';
 import { rxUtil } from '../../utils';
 
+const {
+    FONT: {
+        MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
+    },
+    SIZES,
+    COLORS
+} = NowTheme;
+
 export default function Support({ navigation }) {
     const [tabActiveIndex, setTabActiveIndex] = useState(0);
     const [listFAQ, setListFAQ] = useState([]);
@@ -170,7 +179,7 @@ export default function Support({ navigation }) {
     const renderButtonPanel = () => (
         <View
             style={{
-                width: NowTheme.SIZES.WIDTH_BASE * 0.9,
+                width: SIZES.WIDTH_BASE * 0.9,
                 marginVertical: 10,
                 flexDirection: 'row',
                 justifyContent: 'space-between'
@@ -211,15 +220,15 @@ export default function Support({ navigation }) {
                             }}
                         >
                             <NoteText
-                                width={NowTheme.SIZES.WIDTH_BASE * 0.9}
+                                width={SIZES.WIDTH_BASE * 0.9}
                                 title={`${item.question}?`}
                                 content={item.answer || 'N/A'}
                                 contentStyle={{
-                                    fontSize: NowTheme.SIZES.FONT_H3,
-                                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                                    fontSize: SIZES.FONT_H3,
+                                    fontFamily: MONTSERRAT_REGULAR,
                                     alignSelf: 'flex-start'
                                 }}
-                                backgroundColor={NowTheme.COLORS.LIST_ITEM_BACKGROUND_2}
+                                backgroundColor={COLORS.LIST_ITEM_BACKGROUND_2}
                             />
                         </View>
                     )}
@@ -237,9 +246,9 @@ export default function Support({ navigation }) {
             >
                 <Text
                     style={{
-                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                        color: NowTheme.COLORS.DEFAULT,
-                        fontSize: NowTheme.SIZES.FONT_H2
+                        fontFamily: MONTSERRAT_REGULAR,
+                        color: COLORS.DEFAULT,
+                        fontSize: SIZES.FONT_H2
                     }}
                 >
                     Danh sách trống
@@ -276,8 +285,8 @@ export default function Support({ navigation }) {
             >
                 <Text
                     style={{
-                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                        color: NowTheme.COLORS.ACTIVE,
+                        fontFamily: MONTSERRAT_REGULAR,
+                        color: COLORS.ACTIVE,
                         fontSize: 16,
                     }}
                 >
@@ -294,7 +303,7 @@ export default function Support({ navigation }) {
                     <IconCustom
                         name="photo-camera"
                         family={IconFamily.MATERIAL_ICONS}
-                        color={NowTheme.COLORS.DEFAULT}
+                        color={COLORS.DEFAULT}
                         size={20}
                     />
                 </TouchableWithoutFeedback>
@@ -309,7 +318,7 @@ export default function Support({ navigation }) {
             ) : (
                 <View
                     style={{
-                        width: NowTheme.SIZES.WIDTH_BASE * 0.9,
+                        width: SIZES.WIDTH_BASE * 0.9,
                         alignSelf: 'center',
                         paddingVertical: 10
                     }}
@@ -335,7 +344,7 @@ export default function Support({ navigation }) {
             }}
             containerStyle={{
                 marginVertical: 10,
-                width: NowTheme.SIZES.WIDTH_BASE * 0.9
+                width: SIZES.WIDTH_BASE * 0.9
             }}
             label="Tóm tắt lỗi:"
         />
@@ -352,7 +361,7 @@ export default function Support({ navigation }) {
             }}
             containerStyle={{
                 marginVertical: 10,
-                width: NowTheme.SIZES.WIDTH_BASE * 0.9
+                width: SIZES.WIDTH_BASE * 0.9
             }}
             label="Chi tiết lỗi:"
         />
@@ -373,7 +382,7 @@ export default function Support({ navigation }) {
 
 const styles = StyleSheet.create({
     shadow: {
-        backgroundColor: NowTheme.COLORS.BASE,
+        backgroundColor: COLORS.BASE,
         shadowColor: 'black',
         shadowOffset: { width: 0, height: 2 },
         shadowRadius: 6,
@@ -381,20 +390,20 @@ const styles = StyleSheet.create({
         elevation: 3
     },
     titleBold: {
-        fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
-        fontSize: NowTheme.SIZES.FONT_H4
+        fontFamily: MONTSERRAT_BOLD,
+        fontSize: SIZES.FONT_H4
     },
     button: {
-        width: NowTheme.SIZES.WIDTH_BASE * 0.44,
+        width: SIZES.WIDTH_BASE * 0.44,
         margin: 0
     },
     input: {
         borderRadius: 5,
-        width: NowTheme.SIZES.WIDTH_BASE * 0.9,
+        width: SIZES.WIDTH_BASE * 0.9,
     },
     imageReport: {
-        width: NowTheme.SIZES.WIDTH_BASE * 0.25,
-        height: NowTheme.SIZES.WIDTH_BASE * 0.25,
+        width: SIZES.WIDTH_BASE * 0.25,
+        height: SIZES.WIDTH_BASE * 0.25,
         marginBottom: 10
     },
 });

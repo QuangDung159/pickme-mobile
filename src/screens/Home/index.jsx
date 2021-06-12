@@ -1,10 +1,9 @@
 /* eslint no-underscore-dangle: ["error", { "allow": ["_isMounted", "_id"] }] */
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
 import { NO_AVATAR_URL, PICKME_INFO_URL } from '@env';
-import { Block, Text } from 'galio-framework';
 import React, { useEffect, useState } from 'react';
 import {
-    FlatList, Image, RefreshControl, StyleSheet
+    FlatList, Image, RefreshControl, StyleSheet, Text, View
 } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import ImageScalable from 'react-native-scalable-image';
@@ -19,6 +18,15 @@ import {
     setListConversation, setNumberMessageUnread, setPickMeInfoStore
 } from '../../redux/Actions';
 import { rxUtil, socketRequestUtil } from '../../utils';
+
+const {
+    FONT: {
+        MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
+    },
+    SIZES,
+    COLORS
+} = NowTheme;
 
 export default function Home({ navigation }) {
     const [refreshing, setRefreshing] = useState(false);
@@ -243,8 +251,10 @@ export default function Home({ navigation }) {
     };
 
     const renderArticles = () => (
-        <Block
-            flex
+        <View
+            style={{
+                flex: 1
+            }}
         >
             <FlatList
                 showsVerticalScrollIndicator={false}
@@ -261,37 +271,36 @@ export default function Home({ navigation }) {
                     paddingBottom: 10
                 }}
                 renderItem={({ item }) => (
-                    <>
-                        <Block
-                            style={{
-                                marginBottom: 10
-                            }}
-                        >
-                            {renderImage(item)}
-                        </Block>
-                    </>
+                    <View
+                        style={{
+                            marginBottom: 10
+                        }}
+                    >
+                        {renderImage(item)}
+                    </View>
                 )}
             />
-        </Block>
+        </View>
     );
 
     const renderImage = (item) => (
         <TouchableWithoutFeedback
             onPress={() => navigation.navigate(ScreenName.PROFILE, { userId: item.id })}
         >
-            <Block style={{
-                backgroundColor: NowTheme.COLORS.BASE,
-                borderWidth: 0,
-            }}
+            <View
+                style={{
+                    backgroundColor: COLORS.BASE,
+                    borderWidth: 0,
+                }}
             >
-                <Block
-                    row
+                <View
                     style={{
                         alignItems: 'center',
-                        marginHorizontal: 10
+                        marginHorizontal: 10,
+                        flexDirection: 'row'
                     }}
                 >
-                    <Block
+                    <View
                         style={{
                             marginRight: 10
                         }}
@@ -304,50 +313,59 @@ export default function Home({ navigation }) {
                                 borderRadius: 25
                             }}
                         />
-                    </Block>
-                    <Block style={{
-                        justifyContent: 'center',
-                        paddingVertical: 10
-                    }}
+                    </View>
+                    <View
+                        style={{
+                            justifyContent: 'center',
+                            paddingVertical: 10
+                        }}
                     >
-                        <Block
-                            row
+                        <View
                             style={{
                                 alignItems: 'center',
                                 justifyContent: 'space-between',
-                                width: NowTheme.SIZES.WIDTH_BASE * 0.8
+                                width: SIZES.WIDTH_BASE * 0.8,
+                                flexDirection: 'row'
                             }}
                         >
                             <Text
-                                size={NowTheme.SIZES.FONT_H2}
-                                bold
-                                color={NowTheme.COLORS.ACTIVE}
+                                style={{
+                                    fontSize: SIZES.FONT_H2,
+                                    color: COLORS.ACTIVE,
+                                    fontFamily: MONTSERRAT_BOLD
+                                }}
                             >
                                 {item.fullName}
                             </Text>
-                        </Block>
-                        <Block>
+                        </View>
+                        <View>
                             <Text
-                                style={styles.subInfoCard}
-                                size={NowTheme.SIZES.FONT_H4}
-                                color={NowTheme.COLORS.DEFAULT}
+                                style={
+                                    [
+                                        styles.subInfoCard,
+                                        {
+                                            fontSize: SIZES.FONT_H4,
+                                            color: COLORS.DEFAULT,
+                                        }
+                                    ]
+                                }
                             >
-                                TP.Hồ Chí Minh
+                                {item.homeTown}
                             </Text>
-                        </Block>
-                    </Block>
-                </Block>
+                        </View>
+                    </View>
+                </View>
 
-                <Block flex style={styles.imageContainer}>
+                <View style={styles.imageContainer}>
                     <ImageScalable
                         style={{
                             zIndex: 99
                         }}
-                        width={NowTheme.SIZES.WIDTH_BASE}
+                        width={SIZES.WIDTH_BASE}
                         source={{ uri: item.imageUrl || NO_AVATAR_URL }}
                     />
-                </Block>
-            </Block>
+                </View>
+            </View>
         </TouchableWithoutFeedback>
     );
 
@@ -355,23 +373,23 @@ export default function Home({ navigation }) {
         return (
             <>
                 {isShowSpinner ? (
-                    <Block
+                    <View
                         middle
                         style={{
-                            height: NowTheme.SIZES.HEIGHT_BASE * 0.8
+                            height: SIZES.HEIGHT_BASE * 0.8
                         }}
                     >
                         <CenterLoader />
-                    </Block>
+                    </View>
                 ) : (
-                    <Block
-                        center
+                    <View
                         style={{
-                            backgroundColor: NowTheme.COLORS.BLOCK,
+                            backgroundColor: COLORS.INPUT,
+                            alignSelf: 'center'
                         }}
                     >
                         {renderArticles()}
-                    </Block>
+                    </View>
                 )}
             </>
         );
@@ -389,8 +407,9 @@ const styles = StyleSheet.create({
     imageContainer: {
         elevation: 1,
         overflow: 'hidden',
+        flex: 1
     },
     subInfoCard: {
-        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+        fontFamily: MONTSERRAT_REGULAR,
     },
 });

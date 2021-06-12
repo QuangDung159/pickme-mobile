@@ -4,11 +4,20 @@ import { StyleSheet, Text, View } from 'react-native';
 import { NowTheme } from '../../constants';
 import CustomButton from './CustomButton';
 
+const {
+    FONT: {
+        MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
+    },
+    SIZES,
+    COLORS
+} = NowTheme;
+
 export default function StepIndicator({
     type, buttonText, content
 }) {
     let indicatorStyle = styles.stepIndicatorCurrent;
-    let buttonFontColor = NowTheme.COLORS.BASE;
+    let buttonFontColor = COLORS.BASE;
     switch (type) {
         case 'next': {
             indicatorStyle = styles.stepIndicatorNext;
@@ -19,7 +28,7 @@ export default function StepIndicator({
             break;
         }
         default: {
-            buttonFontColor = NowTheme.COLORS.ACTIVE;
+            buttonFontColor = COLORS.ACTIVE;
             break;
         }
     }
@@ -35,8 +44,8 @@ export default function StepIndicator({
                 <CustomButton
                     buttonStyle={indicatorStyle}
                     labelStyle={{
-                        fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
-                        fontSize: NowTheme.SIZES.FONT_H2,
+                        fontFamily: MONTSERRAT_BOLD,
+                        fontSize: SIZES.FONT_H2,
                         color: buttonFontColor
                     }}
                     label={buttonText}
@@ -48,9 +57,9 @@ export default function StepIndicator({
             >
                 <Text
                     style={{
-                        color: NowTheme.COLORS.DEFAULT,
-                        fontSize: NowTheme.SIZES.FONT_H3,
-                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
+                        color: COLORS.DEFAULT,
+                        fontSize: SIZES.FONT_H3,
+                        fontFamily: MONTSERRAT_REGULAR
                     }}
                 >
                     {content}
@@ -79,8 +88,8 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         justifyContent: 'center',
         marginHorizontal: 5,
-        backgroundColor: NowTheme.COLORS.BASE,
-        borderColor: NowTheme.COLORS.ACTIVE,
+        backgroundColor: COLORS.BASE,
+        borderColor: COLORS.ACTIVE,
         borderWidth: 3,
     },
     stepIndicatorNext: {
@@ -89,7 +98,7 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         justifyContent: 'center',
         marginHorizontal: 5,
-        backgroundColor: NowTheme.COLORS.INPUT,
+        backgroundColor: COLORS.INPUT,
         borderWidth: 0,
     },
     stepIndicatorPrev: {
@@ -98,7 +107,7 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         justifyContent: 'center',
         marginHorizontal: 5,
-        backgroundColor: NowTheme.COLORS.ACTIVE,
+        backgroundColor: COLORS.ACTIVE,
         borderWidth: 0
     },
     stepIndicatorContainer: {

@@ -8,6 +8,8 @@ import { ToastHelpers } from '../../helpers';
 import { setCurrentUser, setPersonTabActiveIndex } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
 
+const { SIZES, COLORS } = NowTheme;
+
 export default function UpdateInfoForm() {
     const [newUser, setNewUser] = useState({});
     const [isShowSpinner, setIsShowSpinner] = useState(false);
@@ -45,7 +47,7 @@ export default function UpdateInfoForm() {
             onChangeText={(input) => onChangeName(input)}
             containerStyle={{
                 marginVertical: 10,
-                width: NowTheme.SIZES.WIDTH_BASE * 0.9
+                width: SIZES.WIDTH_BASE * 0.9
             }}
             label="Tên hiển thị:"
         />
@@ -57,7 +59,7 @@ export default function UpdateInfoForm() {
             onChangeText={(input) => onChangeHometown(input)}
             containerStyle={{
                 marginVertical: 10,
-                width: NowTheme.SIZES.WIDTH_BASE * 0.9
+                width: SIZES.WIDTH_BASE * 0.9
             }}
             label="Quê quán:"
         />
@@ -69,7 +71,7 @@ export default function UpdateInfoForm() {
             onChangeText={(input) => onChangeInterests(input)}
             containerStyle={{
                 marginVertical: 10,
-                width: NowTheme.SIZES.WIDTH_BASE * 0.9
+                width: SIZES.WIDTH_BASE * 0.9
             }}
             label="Sở thích:"
         />
@@ -85,7 +87,7 @@ export default function UpdateInfoForm() {
             }}
             containerStyle={{
                 marginVertical: 10,
-                width: NowTheme.SIZES.WIDTH_BASE * 0.9
+                width: SIZES.WIDTH_BASE * 0.9
             }}
             label="Mô tả:"
         />
@@ -99,7 +101,7 @@ export default function UpdateInfoForm() {
         <CustomInput
             containerStyle={{
                 marginVertical: 10,
-                width: NowTheme.SIZES.WIDTH_BASE * 0.9
+                width: SIZES.WIDTH_BASE * 0.9
             }}
             onChangeText={(input) => onChangeYear(input)}
             value={newUser?.dob?.substr(0, 4)}
@@ -228,20 +230,20 @@ export default function UpdateInfoForm() {
             <ScrollView
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={{
-                    width: NowTheme.SIZES.WIDTH_BASE * 0.9,
+                    width: SIZES.WIDTH_BASE * 0.9,
                     alignSelf: 'center'
                 }}
             >
                 <View
                     style={{
-                        backgroundColor: NowTheme.COLORS.BASE,
+                        backgroundColor: COLORS.BASE,
                         marginVertical: 10
                     }}
                 >
                     {isShowSpinner ? (
                         <View
                             style={{
-                                marginTop: NowTheme.SIZES.HEIGHT_BASE * 0.3
+                                marginTop: SIZES.HEIGHT_BASE * 0.3
                             }}
                         >
                             <CenterLoader size="small" />

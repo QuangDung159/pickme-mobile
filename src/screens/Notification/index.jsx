@@ -9,6 +9,14 @@ import { setListNotification, setNumberNotificationUnread } from '../../redux/Ac
 import { rxUtil } from '../../utils';
 import NotificationItem from './NotificationItem';
 
+const {
+    FONT: {
+        MONTSERRAT_REGULAR,
+    },
+    SIZES,
+    COLORS
+} = NowTheme;
+
 export default function Notification({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
@@ -97,7 +105,7 @@ export default function Notification({ navigation }) {
                         />
                     )}
                     contentContainerStyle={{
-                        backgroundColor: NowTheme.COLORS.BASE,
+                        backgroundColor: COLORS.BASE,
                     }}
                     showsVerticalScrollIndicator={false}
                     data={listNotification}
@@ -125,9 +133,9 @@ export default function Notification({ navigation }) {
                     >
                         <Text
                             style={{
-                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                                color: NowTheme.COLORS.DEFAULT,
-                                fontSize: NowTheme.SIZES.FONT_H2
+                                fontFamily: MONTSERRAT_REGULAR,
+                                color: COLORS.DEFAULT,
+                                fontSize: SIZES.FONT_H2
                             }}
                         >
                             Danh sách trống

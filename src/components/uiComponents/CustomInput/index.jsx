@@ -1,9 +1,17 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Text, View, TextInput } from 'react-native';
+import { Text, TextInput, View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { IconFamily, NowTheme } from '../../../constants';
 import IconCustom from '../IconCustom';
+
+const {
+    FONT: {
+        MONTSERRAT_REGULAR,
+    },
+    SIZES,
+    COLORS
+} = NowTheme;
 
 CustomInput.propTypes = {
     label: PropTypes.string,
@@ -38,14 +46,14 @@ export default function CustomInput({
             style={
                 [
                     {
-                        borderColor: NowTheme.COLORS.INPUT,
+                        borderColor: COLORS.INPUT,
                         borderWidth: 1,
                         borderRadius: 5,
                         height: 50,
                         paddingHorizontal: 10,
-                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                        fontSize: NowTheme.SIZES.FONT_H2,
-                        color: NowTheme.COLORS.HEADER
+                        fontFamily: MONTSERRAT_REGULAR,
+                        fontSize: SIZES.FONT_H2,
+                        color: COLORS.HEADER
                     },
                     inputStyle,
                 ]
@@ -77,7 +85,7 @@ export default function CustomInput({
 
                     <View
                         style={{
-                            width: NowTheme.SIZES.WIDTH_BASE * 0.1,
+                            width: SIZES.WIDTH_BASE * 0.1,
                             justifyContent: 'center',
                             alignItems: 'flex-end',
                             marginRight: 10,
@@ -91,7 +99,7 @@ export default function CustomInput({
                         >
                             <IconCustom
                                 size={size || 30}
-                                color={color || NowTheme.COLORS.DEFAULT}
+                                color={color || COLORS.DEFAULT}
                                 name={name || 'home'}
                                 family={family || IconFamily.FONT_AWESOME}
                             />
@@ -118,9 +126,9 @@ export default function CustomInput({
                     style={
                         [
                             {
-                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                                fontSize: NowTheme.SIZES.FONT_H3,
-                                color: NowTheme.COLORS.ACTIVE,
+                                fontFamily: MONTSERRAT_REGULAR,
+                                fontSize: SIZES.FONT_H3,
+                                color: COLORS.ACTIVE,
                                 marginBottom: 10
                             },
                             labelStyle

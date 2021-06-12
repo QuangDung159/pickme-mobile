@@ -1,13 +1,12 @@
-import { Block, Text } from 'galio-framework';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import {
-    Alert, Modal, RefreshControl, ScrollView, StyleSheet, View
+    Alert, RefreshControl, ScrollView, StyleSheet, Text, View
 } from 'react-native';
 import { AirbnbRating } from 'react-native-ratings';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-    CenterLoader, CustomButton, CustomInput, Line
+    CenterLoader, CustomButton, CustomInput, CustomModal, Line
 } from '../../components/uiComponents';
 import {
     BookingStatus, NowTheme, Rx, ScreenName
@@ -18,6 +17,15 @@ import { setPersonTabActiveIndex, setShowLoaderStore } from '../../redux/Actions
 import { rxUtil } from '../../utils';
 import CardBooking from '../Personal/BookingList/CardBooking';
 import ReasonCancelBookingModal from './ReasonCancelBookingModal';
+
+const {
+    FONT: {
+        MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
+    },
+    SIZES,
+    COLORS
+} = NowTheme;
 
 export default function BookingDetail({
     route: {
@@ -255,107 +263,101 @@ export default function BookingDetail({
     );
 
     const renderRatingModal = () => (
-        <Modal
-            animationType="slide"
-            transparent
-            visible={modalRatingVisible}
-        >
-            <ScrollView
-                showsVerticalScrollIndicator={false}
-            >
-                <View style={styles.centeredView}>
-                    <View style={styles.modalView}>
-                        <Text
-                            size={NowTheme.SIZES.FONT_H2}
-                            style={{
-                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                                marginVertical: 10,
-                                width: NowTheme.SIZES.WIDTH_BASE * 0.8
+        <CustomModal
+            modalVisible={modalRatingVisible}
+            renderContent={() => (
+                <>
+                    <Text
+                        style={{
+                            fontFamily: MONTSERRAT_REGULAR,
+                            marginVertical: 10,
+                            width: SIZES.WIDTH_BASE * 0.8,
+                            fontSize: SIZES.FONT_H2
+                        }}
+                    >
+                        Bạn vui lòng góp ý để chúng tôi phục vụ bạn tốt hơn, cảm ơn.
+                    </Text>
+                    <View
+                        style={{
+                            width: SIZES.WIDTH_BASE * 0.8
+                        }}
+                    >
+                        <AirbnbRating
+                            count={5}
+                            reviewSize={25}
+                            reviews={['Tệ', 'Không ổn', 'Bình thường', 'Tốt', 'Tuyệt vời <3']}
+                            defaultRating={ratingValue}
+                            size={25}
+                            onFinishRating={(ratingNumber) => {
+                                setRatingValue(ratingNumber);
                             }}
-                        >
-                            Bạn vui lòng góp ý để chúng tôi phục vụ bạn tốt hơn, cảm ơn.
-                        </Text>
-                        <Block
-                            style={{
-                                width: NowTheme.SIZES.WIDTH_BASE * 0.8
-                            }}
-                        >
-                            <AirbnbRating
-                                count={5}
-                                reviewSize={25}
-                                reviews={['Tệ', 'Không ổn', 'Bình thường', 'Tốt', 'Tuyệt vời <3']}
-                                defaultRating={ratingValue}
-                                size={25}
-                                onFinishRating={(ratingNumber) => {
-                                    setRatingValue(ratingNumber);
-                                }}
-                            />
-                        </Block>
-
-                        <Block center>
-                            <CustomButton
-                                onPress={() => {
-                                    sendRating();
-                                    setModalRatingVisible(false);
-                                }}
-                                type="active"
-                                label="Gửi đánh giá"
-                            />
-                        </Block>
+                        />
                     </View>
-                </View>
-            </ScrollView>
-        </Modal>
+
+                    <View
+                        style={{
+                            alignSelf: 'center'
+                        }}
+                    >
+                        <CustomButton
+                            onPress={() => {
+                                sendRating();
+                                setModalRatingVisible(false);
+                            }}
+                            type="active"
+                            label="Gửi đánh giá"
+                        />
+                    </View>
+                </>
+            )}
+        />
     );
 
     const renderReportModal = () => (
-        <Modal
-            animationType="slide"
-            transparent
-            visible={modalReportVisible}
-        >
-            <ScrollView
-                showsVerticalScrollIndicator={false}
-            >
-                <View style={styles.centeredView}>
-                    <View style={styles.modalView}>
-                        <Text
-                            size={NowTheme.SIZES.FONT_H2}
-                            style={{
-                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                                marginVertical: 10
-                            }}
-                        >
-                            Vui lòng nhập ý kiến
-                        </Text>
+        <CustomModal
+            modalVisible={modalReportVisible}
+            renderContent={() => (
+                <>
+                    <Text
+                        style={{
+                            fontFamily: MONTSERRAT_REGULAR,
+                            marginVertical: 10,
+                            fontSize: SIZES.FONT_H2
+                        }}
+                    >
+                        Vui lòng nhập ý kiến
+                    </Text>
 
-                        <CustomInput
-                            multiline
-                            onChangeText={(reportInput) => onChangeReport(reportInput)}
-                            value={reportDesc}
-                            inputStyle={[styles.inputWith, {
-                                borderRadius: 5,
-                            }]}
-                            containerStyle={{
-                                marginVertical: 10,
-                                width: NowTheme.SIZES.WIDTH_BASE * 0.8
+                    <CustomInput
+                        multiline
+                        onChangeText={(reportInput) => onChangeReport(reportInput)}
+                        value={reportDesc}
+                        inputStyle={[styles.inputWith, {
+                            borderRadius: 5,
+                        }]}
+                        containerStyle={{
+                            marginVertical: 10,
+                            width: SIZES.WIDTH_BASE * 0.8
+                        }}
+                        placeholder="Nhập mô tả..."
+                    />
+                    <View
+                        style={{
+                            alignSelf: 'center'
+                        }}
+                    >
+                        <CustomButton
+                            onPress={() => {
+                                sendRating();
+                                setModalReportVisible(false);
                             }}
-                            placeholder="Nhập mô tả..."
+                            type="active"
+                            label="Gửi báo cáo"
                         />
-                        <Block center>
-                            <CustomButton
-                                onPress={() => {
-                                    sendRating();
-                                    setModalReportVisible(false);
-                                }}
-                                type="active"
-                                label="Gửi báo cáo"
-                            />
-                        </Block>
                     </View>
-                </View>
-            </ScrollView>
-        </Modal>
+                </>
+            )}
+        />
     );
 
     const renderCompleteBookingButton = (width) => (
@@ -364,7 +366,7 @@ export default function BookingDetail({
                 onClickCompleteBooking();
             }}
             buttonStyle={{
-                width: NowTheme.SIZES.WIDTH_BASE * (+width)
+                width: SIZES.WIDTH_BASE * (+width)
             }}
             type="active"
             label="Hoàn tất buổi hẹn"
@@ -377,7 +379,7 @@ export default function BookingDetail({
                 setModalReasonVisible(true);
             }}
             buttonStyle={{
-                width: NowTheme.SIZES.WIDTH_BASE * (+width)
+                width: SIZES.WIDTH_BASE * (+width)
             }}
             type="default"
             label="Huỷ buổi hẹn"
@@ -390,7 +392,7 @@ export default function BookingDetail({
                 onCustomerConfirmPayment(bookingId);
             }}
             buttonStyle={{
-                width: NowTheme.SIZES.WIDTH_BASE * (+width)
+                width: SIZES.WIDTH_BASE * (+width)
             }}
             type="active"
             label="Thanh toán"
@@ -425,21 +427,23 @@ export default function BookingDetail({
                             navigation={navigation}
                         />
 
-                        <Block style={{
-                            width: NowTheme.SIZES.WIDTH_BASE * 0.9,
-                            alignSelf: 'center',
-                            marginTop: 10,
-                        }}
-                        >
-                            <Text style={{
-                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                        <View
+                            style={{
+                                width: SIZES.WIDTH_BASE * 0.9,
+                                alignSelf: 'center',
+                                marginTop: 10,
                             }}
+                        >
+                            <Text
+                                style={{
+                                    fontFamily: MONTSERRAT_REGULAR,
+                                }}
                             >
                                 CHI TIẾT ĐƠN HẸN
                             </Text>
                             <Line
                                 borderWidth={0.5}
-                                borderColor={NowTheme.COLORS.ACTIVE}
+                                borderColor={COLORS.ACTIVE}
                                 style={{
                                     marginTop: 10
                                 }}
@@ -450,44 +454,52 @@ export default function BookingDetail({
                                 navigation={navigation}
                             />
 
+                            <Text
+                                style={{
+                                    fontFamily: MONTSERRAT_REGULAR,
+                                }}
+                            >
+                                GHI CHÚ CUỘC HẸN
+                            </Text>
+                            <Line
+                                borderWidth={0.5}
+                                borderColor={COLORS.ACTIVE}
+                                style={{
+                                    marginVertical: 10
+                                }}
+                            />
+                            <Text
+                                style={
+                                    [
+                                        styles.subTitle,
+                                        {
+                                            color: COLORS.DEFAULT,
+                                            fontSize: SIZES.FONT_H3,
+                                            marginBottom: 20
+                                        }
+                                    ]
+                                }
+                            >
+                                {booking.noted}
+                            </Text>
+
                             <BookingProgressFlow
                                 status={booking.status}
                                 partner={booking.partner}
                                 booking={booking}
                             />
 
-                            <Text style={{
-                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                            }}
-                            >
-                                GHI CHÚ CUỘC HẸN
-                            </Text>
-                            <Line
-                                borderWidth={0.5}
-                                borderColor={NowTheme.COLORS.ACTIVE}
+                            <View
                                 style={{
-                                    marginVertical: 20
+                                    width: SIZES.WIDTH_BASE * 0.9,
+                                    alignSelf: 'center',
+                                    flexDirection: 'row',
+                                    justifyContent: 'space-between'
                                 }}
-                            />
-                            <Text
-                                color={NowTheme.COLORS.DEFAULT}
-                                size={NowTheme.SIZES.FONT_H3}
-                                style={styles.subTitle}
-                            >
-                                {booking.noted}
-                            </Text>
-
-                            <Block
-                                center
-                                row
-                                style={{
-                                    width: NowTheme.SIZES.WIDTH_BASE * 0.9
-                                }}
-                                space="between"
                             >
                                 {handleShowButtonByStatus()}
-                            </Block>
-                        </Block>
+                            </View>
+                        </View>
                     </ScrollView>
                 )}
             </>
@@ -504,11 +516,11 @@ export default function BookingDetail({
 
 const styles = StyleSheet.create({
     title: {
-        fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
+        fontFamily: MONTSERRAT_BOLD,
         marginBottom: 20
     },
     subTitle: {
-        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+        fontFamily: MONTSERRAT_REGULAR,
         marginBottom: 10
     },
     centeredView: {
@@ -528,11 +540,11 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 5,
-        marginTop: NowTheme.SIZES.WIDTH_BASE * 0.5,
-        width: NowTheme.SIZES.WIDTH_BASE * 0.9,
+        marginTop: SIZES.WIDTH_BASE * 0.5,
+        width: SIZES.WIDTH_BASE * 0.9,
         marginBottom: 10
     },
     inputWith: {
-        width: NowTheme.SIZES.WIDTH_BASE * 0.9,
+        width: SIZES.WIDTH_BASE * 0.9,
     },
 });

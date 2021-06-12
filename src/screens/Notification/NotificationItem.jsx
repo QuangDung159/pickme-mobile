@@ -11,6 +11,14 @@ import { ToastHelpers } from '../../helpers';
 import { setPersonTabActiveIndex } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
 
+const {
+    FONT: {
+        MONTSERRAT_REGULAR,
+    },
+    SIZES,
+    COLORS
+} = NowTheme;
+
 export default function NotificationItem({
     onTriggerRead,
     notiItem,
@@ -102,9 +110,9 @@ export default function NotificationItem({
                             <Text
                                 numberOfLines={2}
                                 style={{
-                                    color: NowTheme.COLORS.DEFAULT,
+                                    color: COLORS.DEFAULT,
                                     fontSize: 16,
-                                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                                    fontFamily: MONTSERRAT_REGULAR,
                                 }}
                             >
                                 {content}
@@ -123,14 +131,14 @@ export default function NotificationItem({
     return (
         <View style={[
             !isRead
-                ? { backgroundColor: NowTheme.COLORS.NOTIFICATION_BACKGROUND }
+                ? { backgroundColor: COLORS.NOTIFICATION_BACKGROUND }
                 : { }, {
-                height: NowTheme.SIZES.HEIGHT_BASE * 0.08
+                height: SIZES.HEIGHT_BASE * 0.08
             }]}
         >
             <View
                 style={{
-                    height: NowTheme.SIZES.HEIGHT_BASE * 0.1,
+                    height: SIZES.HEIGHT_BASE * 0.1,
                     marginHorizontal: 10,
                     flexDirection: 'row',
                     flex: 1
@@ -151,7 +159,7 @@ NotificationItem.propTypes = {
 const styles = StyleSheet.create({
     avatar: {
         borderRadius: 100,
-        width: NowTheme.SIZES.WIDTH_BASE * 0.1,
-        height: NowTheme.SIZES.WIDTH_BASE * 0.1,
+        width: SIZES.WIDTH_BASE * 0.1,
+        height: SIZES.WIDTH_BASE * 0.1,
     }
 });

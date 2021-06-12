@@ -19,6 +19,14 @@ import {
 } from '../screens';
 
 const Stack = createStackNavigator();
+const {
+    FONT: {
+        MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
+    },
+    SIZES,
+    COLORS
+} = NowTheme;
 
 export const PersonalScreen = () => (
     <Stack.Screen
@@ -33,7 +41,7 @@ export const PersonalScreen = () => (
                     scene={scene}
                 />
             ),
-            cardStyle: { backgroundColor: NowTheme.COLORS.BASE }
+            cardStyle: { backgroundColor: COLORS.BASE }
         }}
     />
 );
@@ -51,7 +59,7 @@ export const UpdateInfoAccountScreen = () => (
                     scene={scene}
                 />
             ),
-            cardStyle: { backgroundColor: NowTheme.COLORS.BASE }
+            cardStyle: { backgroundColor: COLORS.BASE }
         }}
     />
 );
@@ -90,7 +98,7 @@ export const HomeScreen = () => (
                     scene={scene}
                 />
             ),
-            cardStyle: { backgroundColor: NowTheme.COLORS.BASE }
+            cardStyle: { backgroundColor: COLORS.BASE }
         }}
     />
 );
@@ -108,7 +116,7 @@ export const LeaderBoardScreen = () => (
                     scene={scene}
                 />
             ),
-            cardStyle: { backgroundColor: NowTheme.COLORS.BASE }
+            cardStyle: { backgroundColor: COLORS.BASE }
         }}
     />
 );
@@ -126,7 +134,7 @@ export const CreateBookingScreen = () => (
                     scene={scene}
                 />
             ),
-            cardStyle: { backgroundColor: NowTheme.COLORS.BASE }
+            cardStyle: { backgroundColor: COLORS.BASE }
         }}
     />
 );
@@ -144,7 +152,7 @@ export const BookingDetailScreen = () => (
                     scene={scene}
                 />
             ),
-            cardStyle: { backgroundColor: NowTheme.COLORS.BASE }
+            cardStyle: { backgroundColor: COLORS.BASE }
         }}
     />
 );
@@ -162,7 +170,7 @@ export const CashInScreen = () => (
                     scene={scene}
                 />
             ),
-            cardStyle: { backgroundColor: NowTheme.COLORS.BASE }
+            cardStyle: { backgroundColor: COLORS.BASE }
         }}
     />
 );
@@ -181,7 +189,7 @@ export const CreateAccountScreen = () => (
                     showRight={false}
                 />
             ),
-            cardStyle: { backgroundColor: NowTheme.COLORS.BASE }
+            cardStyle: { backgroundColor: COLORS.BASE }
         }}
     />
 );
@@ -202,7 +210,7 @@ export const MessageScreen = () => (
                         userStatus={route.params.userStatus}
                     />
                 ),
-                cardStyle: { backgroundColor: NowTheme.COLORS.BASE }
+                cardStyle: { backgroundColor: COLORS.BASE }
             })
         }
     />
@@ -221,7 +229,7 @@ export const ConversationListScreen = () => (
                     scene={scene}
                 />
             ),
-            cardStyle: { backgroundColor: NowTheme.COLORS.BASE }
+            cardStyle: { backgroundColor: COLORS.BASE }
         }}
     />
 );
@@ -240,7 +248,7 @@ export const NotificationScreen = () => (
                     screenNameProp={ScreenName.NOTIFICATION}
                 />
             ),
-            cardStyle: { backgroundColor: NowTheme.COLORS.BASE }
+            cardStyle: { backgroundColor: COLORS.BASE }
         }}
     />
 );
@@ -258,7 +266,7 @@ export const SettingsScreen = () => (
                     scene={scene}
                 />
             ),
-            cardStyle: { backgroundColor: NowTheme.COLORS.BASE }
+            cardStyle: { backgroundColor: COLORS.BASE }
         }}
     />
 );
@@ -381,7 +389,7 @@ export const SupportScreen = () => (
                     scene={scene}
                 />
             ),
-            cardStyle: { backgroundColor: NowTheme.COLORS.BASE }
+            cardStyle: { backgroundColor: COLORS.BASE }
         }}
     />
 );
@@ -399,7 +407,7 @@ export const VerificationScreen = () => (
                     scene={scene}
                 />
             ),
-            cardStyle: { backgroundColor: NowTheme.COLORS.BASE }
+            cardStyle: { backgroundColor: COLORS.BASE }
         }}
     />
 );

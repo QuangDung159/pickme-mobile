@@ -1,15 +1,14 @@
 /* eslint-disable max-len */
 import * as ImagePicker from 'expo-image-picker';
-import {
-    Block, Text
-} from 'galio-framework';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import {
     Alert,
     Image, ImageBackground,
     Platform,
-    StyleSheet
+    StyleSheet,
+    Text,
+    View
 } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -22,6 +21,14 @@ import {
 import { MediaHelpers, ToastHelpers } from '../../helpers';
 import { setToken } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
+
+const {
+    FONT: {
+        MONTSERRAT_REGULAR,
+    },
+    SIZES,
+    COLORS
+} = NowTheme;
 
 export default function CreateAccount(props) {
     const token = useSelector((state) => state.userReducer.token);
@@ -234,22 +241,28 @@ export default function CreateAccount(props) {
         switch (nextStep) {
             case 1: {
                 return (
-                    <Block style={styles.registerContainer}>
-                        <Block
+                    <View style={styles.registerContainer}>
+                        <View
                             style={styles.stepViewContainer}
                         >
                             <Text
-                                style={styles.stepTitleText}
-                                color="#333"
-                                size={24}
+                                style={
+                                    [
+                                        styles.stepTitleText,
+                                        {
+                                            color: '#333',
+                                            fontSize: SIZES.FONT_H2
+                                        }
+                                    ]
+                                }
                             >
                                 {!newUser.fullName
                                     ? 'Xin hỏi, bạn là...?'
                                     : `Chào bạn, ${newUser.fullName}!`}
                             </Text>
-                        </Block>
+                        </View>
 
-                        <Block
+                        <View
                             style={styles.stepFormContainer}
                         >
                             <CustomInput
@@ -257,42 +270,52 @@ export default function CreateAccount(props) {
                                 onChangeText={(name) => onChangeInputName(name)}
                                 containerStyle={{
                                     marginVertical: 10,
-                                    width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                                    width: SIZES.WIDTH_BASE * 0.77
                                 }}
                                 placeholder="Nhập tên của bạn..."
                             />
-                        </Block>
+                        </View>
 
-                        <Block center>
+                        <View
+                            style={{
+                                alignSelf: 'center'
+                            }}
+                        >
                             <CustomButton
                                 onPress={() => goToStep(2)}
                                 buttonStyle={styles.inputWith}
                                 type="active"
                                 label="Bước kế tiếp"
                             />
-                        </Block>
-                    </Block>
+                        </View>
+                    </View>
                 );
             }
             case 2: {
                 return (
-                    <Block style={styles.registerContainer}>
-                        <Block
+                    <View style={styles.registerContainer}>
+                        <View
                             style={styles.stepViewContainer}
                         >
                             <Text
-                                style={styles.stepTitleText}
-                                color="#333"
-                                size={24}
+                                style={
+                                    [
+                                        styles.stepTitleText,
+                                        {
+                                            color: '#333',
+                                            fontSize: SIZES.FONT_H2
+                                        }
+                                    ]
+                                }
                             >
 
                                 {!newUser.hometown
                                     ? 'Quê quán?'
                                     : `${newUser.hometown} là một nơi tuyệt vời nhỉ!`}
                             </Text>
-                        </Block>
+                        </View>
 
-                        <Block
+                        <View
                             style={styles.stepFormContainer}
                         >
                             <CustomInput
@@ -300,44 +323,54 @@ export default function CreateAccount(props) {
                                 onChangeText={(name) => onChangeInputHometown(name)}
                                 containerStyle={{
                                     marginVertical: 10,
-                                    width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                                    width: SIZES.WIDTH_BASE * 0.77
                                 }}
                                 placeholder="Nhập quê quán..."
                             />
-                        </Block>
+                        </View>
 
-                        <Block center>
+                        <View
+                            style={{
+                                alignSelf: 'center'
+                            }}
+                        >
                             <CustomButton
                                 onPress={() => goToStep(3)}
                                 buttonStyle={styles.inputWith}
                                 type="active"
                                 label="Bước kế tiếp"
                             />
-                        </Block>
-                    </Block>
+                        </View>
+                    </View>
                 );
             }
             case 3: {
                 return (
-                    <Block style={styles.registerContainer}>
-                        <Block
+                    <View style={styles.registerContainer}>
+                        <View
                             style={styles.stepViewContainer}
                         >
                             <Text
-                                style={styles.stepTitleText}
-                                color="#333"
-                                size={24}
+                                style={
+                                    [
+                                        styles.stepTitleText,
+                                        {
+                                            color: '#333',
+                                            fontSize: SIZES.FONT_H2
+                                        }
+                                    ]
+                                }
                             >
                                 {!newUser.description
                                     ? 'Mô tả về bạn'
                                     : `${newUser.description}`}
                             </Text>
-                        </Block>
+                        </View>
 
-                        <Block
+                        <View
                             style={styles.stepFormContainer}
                         >
-                            <Block
+                            <View
                                 style={{
                                     height: 50,
                                     justifyContent: 'flex-end'
@@ -349,54 +382,66 @@ export default function CreateAccount(props) {
                                     onChangeText={(description) => onChangeInputDescription(description)}
                                     containerStyle={{
                                         marginVertical: 10,
-                                        width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                                        width: SIZES.WIDTH_BASE * 0.77
                                     }}
                                     inputStyle={{
                                         height: 80,
                                     }}
                                     placeholder="Mô tả về mình đi nào..."
                                 />
-                            </Block>
-                        </Block>
+                            </View>
+                        </View>
 
-                        <Block center>
+                        <View
+                            style={{
+                                alignSelf: 'center'
+                            }}
+                        >
                             <CustomButton
                                 onPress={() => goToStep(4)}
                                 buttonStyle={styles.inputWith}
                                 type="active"
                                 label="Bước kế tiếp"
                             />
-                        </Block>
-                    </Block>
+                        </View>
+                    </View>
                 );
             }
             case 4: {
                 return (
-                    <Block style={styles.registerContainer}>
-                        <Block
+                    <View style={styles.registerContainer}>
+                        <View
                             style={styles.stepViewContainer}
                         >
                             <Text
-                                style={styles.stepTitleText}
-                                color="#333"
-                                size={24}
+                                style={
+                                    [
+                                        styles.stepTitleText,
+                                        {
+                                            color: '#333',
+                                            fontSize: SIZES.FONT_H2
+                                        }
+                                    ]
+                                }
                             >
                                 Thông tin cơ bản
                             </Text>
-                        </Block>
+                        </View>
 
-                        <Block
-                            style={[
-                                styles.stepFormContainer,
-                                {
-                                    zIndex: 99
-                                }
-                            ]}
+                        <View
+                            style={
+                                [
+                                    styles.stepFormContainer,
+                                    {
+                                        zIndex: 99
+                                    }
+                                ]
+                            }
                         >
                             <CustomInput
                                 containerStyle={{
                                     marginVertical: 10,
-                                    width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                                    width: SIZES.WIDTH_BASE * 0.77
                                 }}
                                 onChangeText={(userInterests) => onChangeInputInterests(userInterests)}
                                 value={newUser.interests}
@@ -406,16 +451,18 @@ export default function CreateAccount(props) {
                             <CustomInput
                                 containerStyle={{
                                     marginVertical: 10,
-                                    width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                                    width: SIZES.WIDTH_BASE * 0.77
                                 }}
                                 onChangeText={(input) => onChangeYear(input)}
                                 value={newUser.dob}
                                 placeholder="Nhập năm sinh của bạn..."
                             />
 
-                        </Block>
-                        <Block
-                            center
+                        </View>
+                        <View
+                            style={{
+                                alignSelf: 'center'
+                            }}
                         >
                             <CustomButton
                                 onPress={() => goToStep(5)}
@@ -423,32 +470,38 @@ export default function CreateAccount(props) {
                                 type="active"
                                 label="Bước kế tiếp"
                             />
-                        </Block>
-                    </Block>
+                        </View>
+                    </View>
                 );
             }
             case 5: {
                 return (
-                    <Block style={styles.registerContainer}>
-                        <Block
+                    <View style={styles.registerContainer}>
+                        <View
                             style={styles.stepViewContainer}
                         >
                             <Text
-                                style={styles.stepTitleText}
-                                color="#333"
-                                size={24}
+                                style={
+                                    [
+                                        styles.stepTitleText,
+                                        {
+                                            color: '#333',
+                                            fontSize: SIZES.FONT_H2
+                                        }
+                                    ]
+                                }
                             >
                                 {isShowDoneMessage
                                     ? 'Đang hoàn tất quá trình tạo tài khoản...'
                                     : 'Hãy chọn một bức ảnh thật đẹp nào!'}
                             </Text>
-                        </Block>
+                        </View>
 
                         {isShowSpinner ? (
                             <CenterLoader />
                         ) : (
                             <>
-                                <Block
+                                <View
                                     style={styles.stepFormContainer}
                                 >
                                     {isShowSpinner
@@ -472,12 +525,12 @@ export default function CreateAccount(props) {
                                                 )}
                                             </TouchableWithoutFeedback>
                                         )}
-                                </Block>
+                                </View>
 
-                                <Block
-                                    center
+                                <View
                                     style={{
                                         marginTop: 50,
+                                        alignSelf: 'center'
                                     }}
                                 >
                                     <CustomButton
@@ -486,46 +539,64 @@ export default function CreateAccount(props) {
                                         type="active"
                                         label="Hoàn tất"
                                     />
-                                </Block>
+                                </View>
                             </>
                         )}
-                    </Block>
+                    </View>
                 );
             }
             case 6: {
                 return (
-                    <Block style={styles.registerContainer}>
-                        <Block
-                            middle
-                            style={styles.finishStepViewContainer}
+                    <View style={styles.registerContainer}>
+                        <View
+                            style={
+                                [
+                                    styles.finishStepViewContainer, {
+                                        alignSelf: 'center',
+                                        alignItems: 'center'
+                                    }
+                                ]
+                            }
                         >
                             <Text
-                                style={styles.stepTitleText}
-                                color="#333"
-                                size={24}
+                                style={
+                                    [
+                                        styles.stepTitleText,
+                                        {
+                                            color: '#333',
+                                            fontSize: SIZES.FONT_H2
+                                        }
+                                    ]
+                                }
                             >
                                 Hoàn tất quá trình tạo tài khoản!
                             </Text>
-                            <Block
+                            <View
                                 style={{
                                     marginTop: 20
                                 }}
                             >
                                 <Text
-                                    style={styles.stepTitleText}
-                                    color="#333"
-                                    size={24}
+                                    style={
+                                        [
+                                            styles.stepTitleText,
+                                            {
+                                                color: '#333',
+                                                fontSize: SIZES.FONT_H2
+                                            }
+                                        ]
+                                    }
                                 >
                                     {`Cảm ơn bạn đã ở đây ${'<3'}!`}
                                 </Text>
-                            </Block>
-                        </Block>
+                            </View>
+                        </View>
 
                         <>
-                            <Block
-                                center
+                            <View
                                 style={{
                                     marginTop: 50,
+                                    alignSelf: 'center'
                                 }}
                             >
                                 <CustomButton
@@ -537,9 +608,9 @@ export default function CreateAccount(props) {
                                     type="active"
                                     label="Quay về trang đăng nhập"
                                 />
-                            </Block>
+                            </View>
                         </>
-                    </Block>
+                    </View>
                 );
             }
             default: {
@@ -551,19 +622,31 @@ export default function CreateAccount(props) {
     try {
         return (
             <>
-                <Block flex middle>
+                <View
+                    style={{
+                        alignSelf: 'center',
+                        alignItems: 'center',
+                        flex: 1
+                    }}
+                >
                     <ImageBackground
                         source={Images.RegisterBackground}
                         style={styles.imageBackgroundContainer}
                         imageStyle={styles.imageBackground}
                     >
                         <KeyboardAwareScrollView>
-                            <Block flex middle>
+                            <View
+                                style={{
+                                    alignSelf: 'center',
+                                    alignItems: 'center',
+                                    flex: 1
+                                }}
+                            >
                                 {renderMainContent(step)}
-                            </Block>
+                            </View>
                         </KeyboardAwareScrollView>
                     </ImageBackground>
-                </Block>
+                </View>
             </>
         );
     } catch (exception) {
@@ -578,22 +661,22 @@ export default function CreateAccount(props) {
 
 const styles = StyleSheet.create({
     imageBackgroundContainer: {
-        width: NowTheme.SIZES.WIDTH_BASE,
-        height: NowTheme.SIZES.HEIGHT_BASE,
+        width: SIZES.WIDTH_BASE,
+        height: SIZES.HEIGHT_BASE,
         padding: 0,
         zIndex: 1
     },
     imageBackground: {
-        width: NowTheme.SIZES.WIDTH_BASE,
-        height: NowTheme.SIZES.HEIGHT_BASE
+        width: SIZES.WIDTH_BASE,
+        height: SIZES.HEIGHT_BASE
     },
     registerContainer: {
         marginTop: 55,
-        width: NowTheme.SIZES.WIDTH_BASE * 0.9,
-        height: NowTheme.SIZES.HEIGHT_BASE < 812 ? NowTheme.SIZES.HEIGHT_BASE * 0.8 : NowTheme.SIZES.HEIGHT_BASE * 0.8,
-        backgroundColor: NowTheme.COLORS.BASE,
+        width: SIZES.WIDTH_BASE * 0.9,
+        height: SIZES.HEIGHT_BASE < 812 ? SIZES.HEIGHT_BASE * 0.8 : SIZES.HEIGHT_BASE * 0.8,
+        backgroundColor: COLORS.BASE,
         borderRadius: 4,
-        shadowColor: NowTheme.COLORS.BLACK,
+        shadowColor: COLORS.BLACK,
         shadowOffset: {
             width: 0,
             height: 4
@@ -604,29 +687,29 @@ const styles = StyleSheet.create({
         overflow: 'hidden'
     },
     stepViewContainer: {
-        height: NowTheme.SIZES.HEIGHT_BASE * 0.25,
+        height: SIZES.HEIGHT_BASE * 0.25,
         marginHorizontal: 20,
         justifyContent: 'center'
     },
     stepTitleText: {
-        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+        fontFamily: MONTSERRAT_REGULAR,
         textAlign: 'center'
     },
     stepFormContainer: {
-        height: NowTheme.SIZES.HEIGHT_BASE * 0.35,
+        height: SIZES.HEIGHT_BASE * 0.35,
         alignItems: 'center'
     },
     dropdownItem: {
         justifyContent: 'flex-start'
     },
     inputWith: {
-        width: NowTheme.SIZES.WIDTH_BASE * 0.77,
+        width: SIZES.WIDTH_BASE * 0.77,
     },
     image: {
-        width: NowTheme.SIZES.HEIGHT_BASE * 0.35, height: NowTheme.SIZES.HEIGHT_BASE * 0.35
+        width: SIZES.HEIGHT_BASE * 0.35, height: SIZES.HEIGHT_BASE * 0.35
     },
     finishStepViewContainer: {
-        height: NowTheme.SIZES.HEIGHT_BASE * 0.6,
+        height: SIZES.HEIGHT_BASE * 0.6,
         marginHorizontal: 20,
         justifyContent: 'center',
     }

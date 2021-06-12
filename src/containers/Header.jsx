@@ -1,9 +1,11 @@
 import * as SecureStore from 'expo-secure-store';
 import {
-    Block, NavBar, Text
+    NavBar
 } from 'galio-framework';
 import React from 'react';
-import { Platform, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+    Platform, StyleSheet, Text, TouchableOpacity, View
+} from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import { CustomInput, IconCustom, Tabs } from '../components/uiComponents';
@@ -15,6 +17,14 @@ import { resetStoreSignOut, setListNotification, setNumberNotificationUnread } f
 import { rxUtil } from '../utils';
 
 const iPhoneX = Platform.OS === 'ios';
+const {
+    FONT: {
+        MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
+    },
+    SIZES,
+    COLORS
+} = NowTheme;
 
 export default function Header({
     back,
@@ -89,7 +99,7 @@ export default function Header({
     };
 
     const renderQnAButton = () => (
-        <Block
+        <View
             style={{
                 position: 'absolute',
                 bottom: 14,
@@ -104,14 +114,14 @@ export default function Header({
                     family={IconFamily.MATERIAL_ICONS}
                     size={26}
                     name="contact-support"
-                    color={NowTheme.COLORS.ACTIVE}
+                    color={COLORS.ACTIVE}
                 />
             </TouchableOpacity>
-        </Block>
+        </View>
     );
 
     const renderSettingButton = () => (
-        <Block
+        <View
             style={{
                 position: 'absolute',
                 bottom: 14,
@@ -126,14 +136,14 @@ export default function Header({
                     name="gear"
                     family={IconFamily.FONT_AWESOME}
                     size={26}
-                    color={NowTheme.COLORS.ACTIVE}
+                    color={COLORS.ACTIVE}
                 />
             </TouchableOpacity>
-        </Block>
+        </View>
     );
 
     const renderReadAllButton = () => (
-        <Block
+        <View
             style={{
                 position: 'absolute',
                 bottom: 14,
@@ -148,10 +158,10 @@ export default function Header({
                     name="mark-email-read"
                     family={IconFamily.MATERIAL_ICONS}
                     size={26}
-                    color={NowTheme.COLORS.ACTIVE}
+                    color={COLORS.ACTIVE}
                 />
             </TouchableOpacity>
-        </Block>
+        </View>
     );
 
     const navbarStyles = [
@@ -181,19 +191,19 @@ export default function Header({
         <CustomInput
             value=""
             inputStyle={{
-                width: NowTheme.SIZES.WIDTH_BASE * 0.9
+                width: SIZES.WIDTH_BASE * 0.9
             }}
             keyboardType="number-pad"
             containerStyle={{
                 marginVertical: 10,
-                width: NowTheme.SIZES.WIDTH_BASE * 0.9
+                width: SIZES.WIDTH_BASE * 0.9
             }}
             placeholder="Bạn muốn tìm gì?"
             rightIcon={{
                 name: 'eye',
                 family: IconFamily.ENTYPO,
                 size: 20,
-                color: NowTheme.COLORS.DEFAULT
+                color: COLORS.DEFAULT
             }}
             onPressRightIcon={() => console.log('search')}
         />
@@ -216,10 +226,14 @@ export default function Header({
     const renderHeader = () => {
         if (search || tabs || options) {
             return (
-                <Block center>
+                <View
+                    style={{
+                        alignSelf: 'center'
+                    }}
+                >
                     {search ? renderSearch() : null}
                     {tabs ? renderTabs() : null}
-                </Block>
+                </View>
             );
         }
 
@@ -254,7 +268,7 @@ export default function Header({
     };
 
     return (
-        <Block style={headerStyles}>
+        <View style={headerStyles}>
             <TouchableWithoutFeedback
                 onPress={() => handleOnPressNavBar()}
                 onLongPress={() => clearAllCache()}
@@ -268,14 +282,14 @@ export default function Header({
                     leftStyle={{ paddingVertical: 12, flex: 0.2 }}
                     titleStyle={[
                         styles.title,
-                        { color: NowTheme.COLORS[white ? 'WHITE' : 'HEADER'] },
+                        { color: COLORS[white ? 'WHITE' : 'HEADER'] },
                         titleColor && { color: titleColor }
                     ]}
                     {...props}
                 />
             </TouchableWithoutFeedback>
             {screenNameProp && screenNameProp === ScreenName.MESSAGE && (
-                <Block
+                <View
                     style={{
                         marginLeft: 7,
                         marginTop: 0,
@@ -284,20 +298,21 @@ export default function Header({
                 >
                     <Text
                         style={{
-                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                            fontFamily: MONTSERRAT_REGULAR,
                             marginTop: iPhoneX ? -16 : -20,
+                            fontSize: SIZES.FONT_H5,
+                            color: COLORS.ACTIVE
                         }}
-                        size={10}
-                        color={NowTheme.COLORS.ACTIVE}
+
                     >
                         Vừa mới truy cập
                     </Text>
-                </Block>
+                </View>
             )}
 
             {renderHeader()}
             {renderRight()}
-        </Block>
+        </View>
     );
 }
 
@@ -313,18 +328,18 @@ const styles = StyleSheet.create({
     title: {
         width: '100%',
         fontSize: 16,
-        fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
+        fontFamily: MONTSERRAT_BOLD,
         marginLeft: -70
     },
     navbar: {
-        paddingTop: iPhoneX ? NowTheme.SIZES.HEIGHT_BASE * 0.05 : null,
+        paddingTop: iPhoneX ? SIZES.HEIGHT_BASE * 0.05 : null,
         zIndex: 5
     },
     navbarHeight: {
-        height: NowTheme.SIZES.HEIGHT_BASE * 0.1,
+        height: SIZES.HEIGHT_BASE * 0.1,
     },
     shadow: {
-        backgroundColor: NowTheme.COLORS.BASE,
+        backgroundColor: COLORS.BASE,
         shadowColor: 'black',
         shadowOffset: { width: 0, height: 2 },
         shadowRadius: 6,
@@ -332,28 +347,28 @@ const styles = StyleSheet.create({
         elevation: 3
     },
     notify: {
-        backgroundColor: NowTheme.COLORS.SUCCESS,
+        backgroundColor: COLORS.SUCCESS,
         borderRadius: 4,
-        height: NowTheme.SIZES.HEIGHT_BASE / 2,
-        width: NowTheme.SIZES.WIDTH_BASE / 2,
+        height: SIZES.HEIGHT_BASE / 2,
+        width: SIZES.WIDTH_BASE / 2,
         position: 'absolute',
         top: 9,
         right: 12
     },
     header: {
-        backgroundColor: NowTheme.COLORS.BASE
+        backgroundColor: COLORS.BASE
     },
     divider: {
         borderRightWidth: 0.3,
-        borderRightColor: NowTheme.COLORS.BLOCK
+        borderRightColor: COLORS.View
     },
     search: {
         height: 48,
-        width: NowTheme.SIZES.WIDTH_BASE - 32,
+        width: SIZES.WIDTH_BASE - 32,
         marginHorizontal: 16,
         borderWidth: 1,
         borderRadius: 30,
-        borderColor: NowTheme.COLORS.BORDER
+        borderColor: COLORS.BORDER
     },
     options: {
         marginBottom: 24,
@@ -361,8 +376,8 @@ const styles = StyleSheet.create({
         elevation: 4
     },
     tab: {
-        backgroundColor: NowTheme.COLORS.TRANSPARENT,
-        width: NowTheme.SIZES.WIDTH_BASE * 0.35,
+        backgroundColor: COLORS.TRANSPARENT,
+        width: SIZES.WIDTH_BASE * 0.35,
         borderRadius: 0,
         borderWidth: 0,
         height: 24,
@@ -371,7 +386,7 @@ const styles = StyleSheet.create({
     tabTitle: {
         lineHeight: 19,
         fontWeight: '400',
-        color: NowTheme.COLORS.HEADER,
-        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
+        color: COLORS.HEADER,
+        fontFamily: MONTSERRAT_REGULAR
     },
 });

@@ -1,14 +1,14 @@
 import * as SecureStore from 'expo-secure-store';
-import {
-    Block
-} from 'galio-framework';
 import React, { useState } from 'react';
+import { View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useSelector } from 'react-redux';
 import { CenterLoader, CustomButton, CustomInput } from '../../components/uiComponents';
 import { IconFamily, NowTheme, Rx } from '../../constants';
 import { ToastHelpers } from '../../helpers';
 import { rxUtil } from '../../utils';
+
+const { SIZES, COLORS } = NowTheme;
 
 export default function ChangePasswordForm() {
     const [currentPassword, setCurrentPassword] = useState('');
@@ -76,7 +76,7 @@ export default function ChangePasswordForm() {
 
     const renderFormNewPassword = () => (
         <>
-            <Block
+            <View
                 style={{
                     marginBottom: 10,
                 }}
@@ -84,13 +84,13 @@ export default function ChangePasswordForm() {
                 <CustomInput
                     value={currentPassword}
                     inputStyle={{
-                        width: NowTheme.SIZES.WIDTH_BASE * 0.9
+                        width: SIZES.WIDTH_BASE * 0.9
                     }}
                     onChangeText={(passwordInput) => setCurrentPassword(passwordInput)}
                     keyboardType="number-pad"
                     containerStyle={{
                         marginVertical: 10,
-                        width: NowTheme.SIZES.WIDTH_BASE * 0.9
+                        width: SIZES.WIDTH_BASE * 0.9
                     }}
                     secureTextEntry={!isShowCurrentPassword}
                     placeholder="Nhập mật khẩu hiện tại..."
@@ -98,7 +98,7 @@ export default function ChangePasswordForm() {
                         name: 'eye',
                         family: IconFamily.ENTYPO,
                         size: 20,
-                        color: NowTheme.COLORS.DEFAULT
+                        color: COLORS.DEFAULT
                     }}
                     onPressRightIcon={() => setIsShowCurrentPassword(!isShowCurrentPassword)}
                 />
@@ -106,13 +106,13 @@ export default function ChangePasswordForm() {
                 <CustomInput
                     value={newPassword}
                     inputStyle={{
-                        width: NowTheme.SIZES.WIDTH_BASE * 0.9
+                        width: SIZES.WIDTH_BASE * 0.9
                     }}
                     onChangeText={(passwordInput) => setNewPassword(passwordInput)}
                     keyboardType="number-pad"
                     containerStyle={{
                         marginVertical: 10,
-                        width: NowTheme.SIZES.WIDTH_BASE * 0.9
+                        width: SIZES.WIDTH_BASE * 0.9
                     }}
                     secureTextEntry={!isShowNewPassword}
                     placeholder="Nhập mật khẩu mới..."
@@ -120,7 +120,7 @@ export default function ChangePasswordForm() {
                         name: 'eye',
                         family: IconFamily.ENTYPO,
                         size: 20,
-                        color: NowTheme.COLORS.DEFAULT
+                        color: COLORS.DEFAULT
                     }}
                     onPressRightIcon={() => setIsShowNewPassword(!isShowNewPassword)}
                 />
@@ -128,13 +128,13 @@ export default function ChangePasswordForm() {
                 <CustomInput
                     value={reNewPassword}
                     inputStyle={{
-                        width: NowTheme.SIZES.WIDTH_BASE * 0.9
+                        width: SIZES.WIDTH_BASE * 0.9
                     }}
                     onChangeText={(passwordInput) => setReNewPassword(passwordInput)}
                     keyboardType="number-pad"
                     containerStyle={{
                         marginVertical: 10,
-                        width: NowTheme.SIZES.WIDTH_BASE * 0.9
+                        width: SIZES.WIDTH_BASE * 0.9
                     }}
                     secureTextEntry={!isShowReNewPassword}
                     placeholder="Nhập lại mật khẩu mới..."
@@ -142,15 +142,17 @@ export default function ChangePasswordForm() {
                         name: 'eye',
                         family: IconFamily.ENTYPO,
                         size: 20,
-                        color: NowTheme.COLORS.DEFAULT
+                        color: COLORS.DEFAULT
                     }}
                     onPressRightIcon={() => setIsShowReNewPassword(!isShowReNewPassword)}
                 />
-            </Block>
+            </View>
 
-            <Block
-                row
-                space="between"
+            <View
+                style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between'
+                }}
             >
 
                 <CustomButton
@@ -167,7 +169,7 @@ export default function ChangePasswordForm() {
                     type="active"
                     label="Xác nhận"
                 />
-            </Block>
+            </View>
         </>
     );
 
@@ -176,30 +178,30 @@ export default function ChangePasswordForm() {
             <ScrollView
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={{
-                    width: NowTheme.SIZES.WIDTH_BASE * 0.9,
+                    width: SIZES.WIDTH_BASE * 0.9,
                     alignSelf: 'center'
                 }}
             >
-                <Block
+                <View
                     style={{
-                        backgroundColor: NowTheme.COLORS.BASE,
+                        backgroundColor: COLORS.BASE,
                         marginVertical: 10
                     }}
                 >
                     {isShowSpinner ? (
-                        <Block
+                        <View
                             style={{
-                                marginTop: NowTheme.SIZES.HEIGHT_BASE * 0.3
+                                marginTop: SIZES.HEIGHT_BASE * 0.3
                             }}
                         >
                             <CenterLoader />
-                        </Block>
+                        </View>
                     ) : (
                         <>
                             {renderFormNewPassword()}
                         </>
                     )}
-                </Block>
+                </View>
             </ScrollView>
 
         );

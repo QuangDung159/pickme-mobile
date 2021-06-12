@@ -17,6 +17,14 @@ import {
 import { ToastHelpers } from '../../helpers';
 import { rxUtil } from '../../utils';
 
+const {
+    FONT: {
+        MONTSERRAT_REGULAR,
+    },
+    SIZES,
+    COLORS
+} = NowTheme;
+
 export default function ForgotPassword({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
     const [otp, setOtp] = useState('');
@@ -122,13 +130,13 @@ export default function ForgotPassword({ navigation }) {
                     <CustomInput
                         value={otp}
                         inputStyle={{
-                            width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                            width: SIZES.WIDTH_BASE * 0.77
                         }}
                         onChangeText={(otpInput) => setOtp(otpInput)}
                         keyboardType="number-pad"
                         containerStyle={{
                             marginVertical: 10,
-                            width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                            width: SIZES.WIDTH_BASE * 0.77
                         }}
                         placeholder="Nhập mã xác thực..."
                     />
@@ -136,13 +144,13 @@ export default function ForgotPassword({ navigation }) {
                     <CustomInput
                         value={password}
                         inputStyle={{
-                            width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                            width: SIZES.WIDTH_BASE * 0.77
                         }}
                         onChangeText={(passwordInput) => setPassword(passwordInput)}
                         keyboardType="number-pad"
                         containerStyle={{
                             marginVertical: 10,
-                            width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                            width: SIZES.WIDTH_BASE * 0.77
                         }}
                         secureTextEntry={!isShowPassword}
                         placeholder="Nhập mật khẩu mới..."
@@ -150,7 +158,7 @@ export default function ForgotPassword({ navigation }) {
                             name: 'eye',
                             family: IconFamily.ENTYPO,
                             size: 20,
-                            color: NowTheme.COLORS.DEFAULT
+                            color: COLORS.DEFAULT
                         }}
                         onPressRightIcon={() => setIsShowPassword(!isShowPassword)}
                     />
@@ -158,7 +166,7 @@ export default function ForgotPassword({ navigation }) {
                     <CustomInput
                         value={rePassword}
                         inputStyle={{
-                            width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                            width: SIZES.WIDTH_BASE * 0.77
                         }}
                         onChangeText={
                             (rePasswordInput) => setRePassword(rePasswordInput)
@@ -166,7 +174,7 @@ export default function ForgotPassword({ navigation }) {
                         keyboardType="number-pad"
                         containerStyle={{
                             marginVertical: 10,
-                            width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                            width: SIZES.WIDTH_BASE * 0.77
                         }}
                         secureTextEntry={!isShowRePassword}
                         placeholder="Nhập lại mật khẩu mới..."
@@ -174,7 +182,7 @@ export default function ForgotPassword({ navigation }) {
                             name: 'eye',
                             family: IconFamily.ENTYPO,
                             size: 20,
-                            color: NowTheme.COLORS.DEFAULT
+                            color: COLORS.DEFAULT
                         }}
                         onPressRightIcon={() => setIsShowRePassword(!isShowRePassword)}
                     />
@@ -210,7 +218,7 @@ export default function ForgotPassword({ navigation }) {
                         }
                         containerStyle={{
                             marginVertical: 10,
-                            width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                            width: SIZES.WIDTH_BASE * 0.77
                         }}
                     />
                 </View>
@@ -252,24 +260,24 @@ export default function ForgotPassword({ navigation }) {
                         <View style={styles.registerContainer}>
                             <View
                                 style={{
-                                    height: NowTheme.SIZES.HEIGHT_BASE * 0.3,
+                                    height: SIZES.HEIGHT_BASE * 0.3,
                                     alignSelf: 'center',
                                     alignItems: 'center',
                                 }}
                             >
                                 <View
                                     style={{
-                                        marginTop: NowTheme.SIZES.HEIGHT_BASE * 0.1
+                                        marginTop: SIZES.HEIGHT_BASE * 0.1
                                     }}
                                 >
                                     <NoteText
-                                        width={NowTheme.SIZES.WIDTH_BASE * 0.77}
+                                        width={SIZES.WIDTH_BASE * 0.77}
                                         title="Bạn đang yêu cầu lấy lại mật khẩu:"
                                         content="Bạn vui lòng nhập số điện thoại đã đăng kí để nhận mã xác thực."
                                         contentStyle={{
-                                            fontSize: NowTheme.SIZES.FONT_H4,
-                                            color: NowTheme.COLORS.ACTIVE,
-                                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                                            fontSize: SIZES.FONT_H4,
+                                            color: COLORS.ACTIVE,
+                                            fontFamily: MONTSERRAT_REGULAR,
                                             marginTop: 5
                                         }}
                                         iconComponent={(
@@ -277,10 +285,10 @@ export default function ForgotPassword({ navigation }) {
                                                 name="info-circle"
                                                 family={IconFamily.FONT_AWESOME}
                                                 size={18}
-                                                color={NowTheme.COLORS.ACTIVE}
+                                                color={COLORS.ACTIVE}
                                             />
                                         )}
-                                        backgroundColor={NowTheme.COLORS.LIST_ITEM_BACKGROUND_1}
+                                        backgroundColor={COLORS.LIST_ITEM_BACKGROUND_1}
                                     />
                                 </View>
                             </View>
@@ -310,22 +318,22 @@ export default function ForgotPassword({ navigation }) {
 
 const styles = StyleSheet.create({
     imageBackgroundContainer: {
-        width: NowTheme.SIZES.WIDTH_BASE,
-        height: NowTheme.SIZES.HEIGHT_BASE,
+        width: SIZES.WIDTH_BASE,
+        height: SIZES.HEIGHT_BASE,
         padding: 0,
         zIndex: 1
     },
     imageBackground: {
-        width: NowTheme.SIZES.WIDTH_BASE,
-        height: NowTheme.SIZES.HEIGHT_BASE
+        width: SIZES.WIDTH_BASE,
+        height: SIZES.HEIGHT_BASE
     },
     registerContainer: {
         marginTop: 55,
-        width: NowTheme.SIZES.WIDTH_BASE * 0.9,
-        height: NowTheme.SIZES.HEIGHT_BASE < 812 ? NowTheme.SIZES.HEIGHT_BASE * 0.8 : NowTheme.SIZES.HEIGHT_BASE * 0.8,
-        backgroundColor: NowTheme.COLORS.BASE,
+        width: SIZES.WIDTH_BASE * 0.9,
+        height: SIZES.HEIGHT_BASE < 812 ? SIZES.HEIGHT_BASE * 0.8 : SIZES.HEIGHT_BASE * 0.8,
+        backgroundColor: COLORS.BASE,
         borderRadius: 4,
-        shadowColor: NowTheme.COLORS.BLACK,
+        shadowColor: COLORS.BLACK,
         shadowOffset: {
             width: 0,
             height: 4
@@ -336,15 +344,15 @@ const styles = StyleSheet.create({
         overflow: 'hidden'
     },
     formContainer: {
-        height: NowTheme.SIZES.HEIGHT_BASE * 0.3
+        height: SIZES.HEIGHT_BASE * 0.3
     },
     button: {
-        width: NowTheme.SIZES.WIDTH_BASE * 0.77,
+        width: SIZES.WIDTH_BASE * 0.77,
         marginVertical: 10
     },
     input: {
         borderRadius: 5,
-        width: NowTheme.SIZES.WIDTH_BASE * 0.77
+        width: SIZES.WIDTH_BASE * 0.77
     },
     centeredView: {
         flex: 1,
@@ -381,6 +389,6 @@ const styles = StyleSheet.create({
     modalText: {
         marginBottom: 15,
         textAlign: 'center',
-        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
+        fontFamily: MONTSERRAT_REGULAR
     }
 });

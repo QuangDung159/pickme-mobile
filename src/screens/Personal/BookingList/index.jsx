@@ -1,6 +1,7 @@
-import { Block, Text } from 'galio-framework';
 import React, { useEffect, useState } from 'react';
-import { FlatList, RefreshControl } from 'react-native';
+import {
+    FlatList, RefreshControl, Text, View
+} from 'react-native';
 import { ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import { CenterLoader, Line } from '../../../components/uiComponents';
@@ -9,6 +10,14 @@ import { ToastHelpers } from '../../../helpers';
 import { setListBookingStore } from '../../../redux/Actions';
 import { rxUtil } from '../../../utils';
 import CardBooking from './CardBooking';
+
+const {
+    FONT: {
+        MONTSERRAT_REGULAR,
+    },
+    SIZES,
+    COLORS
+} = NowTheme;
 
 export default function BookingList({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
@@ -21,14 +30,18 @@ export default function BookingList({ navigation }) {
 
     useEffect(
         () => {
-            if (!listBookingStore || listBookingStore.length === 0) {
-                setIsShowSpinner(true);
-                getListBooking();
-            }
+            const onFocusScreen = navigation.addListener(
+                'focus',
+                () => {
+                    setIsShowSpinner(true);
+                    fetchListBooking();
+                }
+            );
+            return onFocusScreen;
         }, []
     );
 
-    const getListBooking = () => {
+    const fetchListBooking = () => {
         const pagingStr = '?pageIndex=1&pageSize=100';
 
         rxUtil(
@@ -58,7 +71,7 @@ export default function BookingList({ navigation }) {
 
     const onRefresh = () => {
         setRefreshing(true);
-        getListBooking();
+        fetchListBooking();
     };
 
     const renderListBooking = () => (
@@ -91,15 +104,18 @@ export default function BookingList({ navigation }) {
                                 key={item.id}
                                 navigation={navigation}
                             />
-                            <Block
-                                middle
+                            <View
+                                style={{
+                                    alignSelf: 'center',
+                                    alignItems: 'center'
+                                }}
                             >
                                 <Line
-                                    borderColor={NowTheme.COLORS.ACTIVE}
+                                    borderColor={COLORS.DEFAULT}
                                     borderWidth={0.5}
-                                    width={NowTheme.SIZES.WIDTH_BASE}
+                                    width={SIZES.WIDTH_BASE}
                                 />
-                            </Block>
+                            </View>
                         </TouchableWithoutFeedback>
                     )}
                 />
@@ -112,7 +128,7 @@ export default function BookingList({ navigation }) {
                         />
                     )}
                 >
-                    <Block
+                    <View
                         style={{
                             alignItems: 'center',
                             marginVertical: 15
@@ -120,14 +136,14 @@ export default function BookingList({ navigation }) {
                     >
                         <Text
                             style={{
-                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                                color: NowTheme.COLORS.DEFAULT,
-                                fontSize: NowTheme.SIZES.FONT_H2
+                                fontFamily: MONTSERRAT_REGULAR,
+                                color: COLORS.DEFAULT,
+                                fontSize: SIZES.FONT_H2
                             }}
                         >
                             Danh sách trống
                         </Text>
-                    </Block>
+                    </View>
                 </ScrollView>
             )}
 

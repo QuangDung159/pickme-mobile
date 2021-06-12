@@ -1,9 +1,16 @@
-import { theme } from 'galio-framework';
 import React, { PureComponent } from 'react';
 import {
     Animated, FlatList, StyleSheet, View
 } from 'react-native';
 import { NowTheme } from '../../constants';
+
+const {
+    FONT: {
+        MONTSERRAT_REGULAR,
+    },
+    SIZES,
+    COLORS
+} = NowTheme;
 
 export default class Tabs extends PureComponent {
   animatedValue = new Animated.Value(1);
@@ -63,13 +70,13 @@ export default class Tabs extends PureComponent {
 
       const textColor = this.animatedValue.interpolate({
           inputRange: [0, 1],
-          outputRange: [NowTheme.COLORS.TEXT, isActive ? NowTheme.COLORS.BASE : NowTheme.COLORS.SECONDARY],
+          outputRange: [COLORS.TEXT, isActive ? COLORS.BASE : COLORS.SECONDARY],
           extrapolate: 'clamp',
       });
 
       const containerStyles = [
           styles.titleContainer,
-          !isActive && { backgroundColor: NowTheme.COLORS.TABS },
+          !isActive && { backgroundColor: COLORS.TABS },
           isActive && styles.containerShadow
       ];
 
@@ -79,7 +86,7 @@ export default class Tabs extends PureComponent {
                   style={[
                       styles.menuTitle,
                       { color: textColor },
-                      { fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR },
+                      { fontFamily: MONTSERRAT_REGULAR },
                   ]}
                   onPress={() => this.selectMenu(item.id)}
               >
@@ -119,25 +126,25 @@ export default class Tabs extends PureComponent {
 
 const styles = StyleSheet.create({
     container: {
-        width: NowTheme.SIZES.WIDTH_BASE,
-        backgroundColor: theme.COLORS.WHITE,
+        width: SIZES.WIDTH_BASE,
+        backgroundColor: COLORS.BASE,
         zIndex: 2,
     },
     shadow: {
-        shadowColor: theme.COLORS.BLACK,
+        shadowColor: COLORS.BLACK,
         shadowOffset: { width: 0, height: 2 },
         shadowRadius: 8,
         shadowOpacity: 0.2,
         elevation: 4,
     },
     menu: {
-        paddingHorizontal: theme.SIZES.BASE * 2.5,
+        paddingHorizontal: SIZES.BASE * 2.5,
         paddingTop: 8,
         paddingBottom: 16,
     },
     titleContainer: {
         alignItems: 'center',
-        backgroundColor: NowTheme.COLORS.ACTIVE,
+        backgroundColor: COLORS.ACTIVE,
         borderRadius: 21,
         marginRight: 9,
         paddingHorizontal: 10,
@@ -155,6 +162,6 @@ const styles = StyleSheet.create({
         fontSize: 14,
         paddingVertical: 8,
         paddingHorizontal: 12,
-        color: NowTheme.COLORS.MUTED
+        color: COLORS.MUTED
     },
 });
