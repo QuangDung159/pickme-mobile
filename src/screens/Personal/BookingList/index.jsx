@@ -30,14 +30,9 @@ export default function BookingList({ navigation }) {
 
     useEffect(
         () => {
-            const onFocusScreen = navigation.addListener(
-                'focus',
-                () => {
-                    setIsShowSpinner(true);
-                    fetchListBooking();
-                }
-            );
-            return onFocusScreen;
+            if (!listBookingStore || listBookingStore.length === 0) {
+                fetchListBooking();
+            }
         }, []
     );
 
