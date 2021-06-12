@@ -1,9 +1,16 @@
-import {
-    Block, Text
-} from 'galio-framework';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Text, View } from 'react-native';
 import { NowTheme } from '../../../constants';
+
+const {
+    FONT: {
+        MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
+    },
+    SIZES,
+    COLORS
+} = NowTheme;
 
 export default function ProfileInfoItem({
     label, value
@@ -13,30 +20,33 @@ export default function ProfileInfoItem({
         handleValue = 'N/a';
     }
     return (
-        <Block
+        <View
             style={{
-                margin: 5
+                margin: 5,
+                flexDirection: 'row'
             }}
-            row
         >
             <Text
-                style={{ fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR }}
-                size={NowTheme.SIZES.FONT_H2}
-                color={NowTheme.COLORS.DEFAULT}
+                style={{
+                    fontFamily: MONTSERRAT_REGULAR,
+                    fontSize: SIZES.FONT_H2,
+                    color: COLORS.DEFAULT,
+                }}
+
             >
                 {`${label}: `}
             </Text>
 
             <Text
-                size={NowTheme.SIZES.FONT_H2}
-                color={NowTheme.COLORS.ACTIVE}
                 style={{
-                    fontFamily: NowTheme.FONT.MONTSERRAT_BOLD
+                    fontFamily: MONTSERRAT_BOLD,
+                    fontSize: SIZES.FONT_H2,
+                    color: COLORS.ACTIVE,
                 }}
             >
                 {handleValue}
             </Text>
-        </Block>
+        </View>
     );
 }
 

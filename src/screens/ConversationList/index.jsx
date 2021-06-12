@@ -1,7 +1,8 @@
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
-import { Block, Text } from 'galio-framework';
 import React, { useEffect, useState } from 'react';
-import { Image, RefreshControl } from 'react-native';
+import {
+    Image, RefreshControl, Text, View
+} from 'react-native';
 import { FlatList, ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import { Line } from '../../components/uiComponents';
@@ -9,6 +10,15 @@ import { GraphQueryString, NowTheme, ScreenName } from '../../constants';
 import { ToastHelpers } from '../../helpers';
 import { setListConversation, setNumberMessageUnread } from '../../redux/Actions';
 import { socketRequestUtil } from '../../utils';
+
+const {
+    FONT: {
+        MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
+    },
+    SIZES,
+    COLORS
+} = NowTheme;
 
 export default function ConversationList({ navigation }) {
     const [refreshing, setRefreshing] = useState(false);
@@ -156,13 +166,13 @@ export default function ConversationList({ navigation }) {
                     () => onClickConversationItem(params)
                 }
             >
-                <Block
-                    row
+                <View
                     style={{
                         alignItems: 'center',
+                        flexDirection: 'row'
                     }}
                 >
-                    <Block
+                    <View
                         style={{
                             marginHorizontal: 10,
                             paddingVertical: 10
@@ -178,47 +188,50 @@ export default function ConversationList({ navigation }) {
                                 borderRadius: 25
                             }}
                         />
-                    </Block>
-                    <Block>
+                    </View>
+                    <View>
                         <Text
                             style={{
-                                fontFamily: NowTheme.FONT.MONTSERRAT_BOLD
+                                fontFamily: MONTSERRAT_BOLD,
+                                fontSize: SIZES.FONT_H3,
+                                color: COLORS.DEFAULT,
                             }}
-                            size={16}
-                            color={NowTheme.COLORS.DEFAULT}
+
                         >
                             {params.name}
                         </Text>
-                        <Block
+                        <View
                             style={{
-                                width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                                width: SIZES.WIDTH_BASE * 0.77
                             }}
                         >
                             <Text
                                 style={{
                                     fontFamily: conversation.isRead
-                                        ? NowTheme.FONT.MONTSERRAT_REGULAR
-                                        : NowTheme.FONT.MONTSERRAT_BOLD
+                                        ? MONTSERRAT_REGULAR
+                                        : MONTSERRAT_BOLD,
+                                    fontSize: SIZES.FONT_H3,
+                                    color: COLORS.DEFAULT,
 
                                 }}
-                                size={16}
-                                color={NowTheme.COLORS.DEFAULT}
                                 numberOfLines={2}
                             >
                                 {conversation.content}
                             </Text>
-                        </Block>
-                    </Block>
-                </Block>
-                <Block
-                    alignItems="flex-end"
+                        </View>
+                    </View>
+                </View>
+                <View
+                    style={{
+                        alignItems: 'flex-end'
+                    }}
                 >
                     <Line
-                        borderColor={NowTheme.COLORS.ACTIVE}
+                        borderColor={COLORS.ACTIVE}
                         borderWidth={0.5}
-                        width={NowTheme.SIZES.WIDTH_BASE * 0.85}
+                        width={SIZES.WIDTH_BASE * 0.85}
                     />
-                </Block>
+                </View>
             </TouchableWithoutFeedback>
         );
     };
@@ -247,7 +260,7 @@ export default function ConversationList({ navigation }) {
                             />
                         )}
                     >
-                        <Block
+                        <View
                             style={{
                                 alignItems: 'center',
                                 marginVertical: 15
@@ -255,14 +268,14 @@ export default function ConversationList({ navigation }) {
                         >
                             <Text
                                 style={{
-                                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                                    color: NowTheme.COLORS.DEFAULT,
-                                    fontSize: NowTheme.SIZES.FONT_H2
+                                    fontFamily: MONTSERRAT_REGULAR,
+                                    color: COLORS.DEFAULT,
+                                    fontSize: SIZES.FONT_H2
                                 }}
                             >
                                 Danh sách trống
                             </Text>
-                        </Block>
+                        </View>
                     </ScrollView>
                 )}
             </>

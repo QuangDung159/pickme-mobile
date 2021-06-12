@@ -17,6 +17,14 @@ import Main from './src/containers/Main';
 import { ToastHelpers } from './src/helpers';
 import store from './src/redux/Store';
 
+const {
+    FONT: {
+        MONTSERRAT_BOLD
+    },
+    SIZES,
+    COLORS
+} = NowTheme;
+
 // images caching
 function cacheImages(images) {
     return images.map((image) => {
@@ -46,8 +54,8 @@ const toastConfig = {
                     [
                         styles.toastContent,
                         {
-                            color: NowTheme.COLORS.SUCCESS,
-                            fontSize: NowTheme.SIZES.FONT_H3
+                            color: COLORS.SUCCESS,
+                            fontSize: SIZES.FONT_H3
                         }
                     ]
                 }
@@ -56,7 +64,7 @@ const toastConfig = {
                     name="check"
                     family={IconFamily.FONT_AWESOME}
                     size={15}
-                    color={NowTheme.COLORS.SUCCESS}
+                    color={COLORS.SUCCESS}
                 />
                 {'  '}
                 {internalState.text1}
@@ -72,8 +80,8 @@ const toastConfig = {
                     [
                         styles.toastContent,
                         {
-                            color: NowTheme.COLORS.ERROR,
-                            fontSize: NowTheme.SIZES.FONT_H3
+                            color: COLORS.ERROR,
+                            fontSize: SIZES.FONT_H3
                         }
                     ]
                 }
@@ -82,7 +90,7 @@ const toastConfig = {
                     name="remove"
                     family={IconFamily.FONT_AWESOME}
                     size={15}
-                    color={NowTheme.COLORS.ERROR}
+                    color={COLORS.ERROR}
                 />
                 {'  '}
                 {internalState.text1}
@@ -155,15 +163,15 @@ export default function App() {
 
 const styles = StyleSheet.create({
     toastContainer: {
-        width: NowTheme.SIZES.WIDTH_BASE * 0.85,
-        backgroundColor: NowTheme.COLORS.BASE,
+        width: SIZES.WIDTH_BASE * 0.85,
+        backgroundColor: COLORS.BASE,
         borderRadius: 30,
-        borderColor: NowTheme.COLORS.DEFAULT,
+        borderColor: COLORS.DEFAULT,
         borderWidth: 0.5,
         marginTop: 20,
     },
     toastContent: {
-        fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
+        fontFamily: MONTSERRAT_BOLD,
         textAlign: 'center',
         margin: 10
     }

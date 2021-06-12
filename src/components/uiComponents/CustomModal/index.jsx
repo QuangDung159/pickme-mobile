@@ -4,6 +4,8 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { NowTheme } from '../../../constants';
 import { ToastHelpers } from '../../../helpers';
 
+const { SIZES } = NowTheme;
+
 export default function CustomModal({
     modalVisible, renderContent, contentStyle, containerStyle
 }) {
@@ -63,7 +65,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         alignSelf: 'center',
-        marginTop: NowTheme.SIZES.HEIGHT_BASE * 0.2,
+        marginTop: SIZES.HEIGHT_BASE * 0.2,
         margin: 10,
         backgroundColor: 'white',
         borderRadius: 10,
@@ -76,10 +78,10 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 5,
-        width: NowTheme.SIZES.WIDTH_BASE * 0.9
+        width: SIZES.WIDTH_BASE * 0.9
     },
     contentStyle: {
-        width: NowTheme.SIZES.WIDTH_BASE * 0.8,
+        width: SIZES.WIDTH_BASE * 0.8,
         marginVertical: 10,
         alignItems: 'center'
     }

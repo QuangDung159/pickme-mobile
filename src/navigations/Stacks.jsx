@@ -24,6 +24,8 @@ import {
 } from './StackScreens';
 import TabIcon from './TabIcon';
 
+const { COLORS } = NowTheme;
+
 const Stack = createStackNavigator();
 
 const SignUpStack = () => (
@@ -148,8 +150,8 @@ const BottomTabMenuStack = () => {
                 ),
             })}
             tabBarOptions={{
-                activeTintColor: NowTheme.COLORS.ACTIVE,
-                inactiveTintColor: NowTheme.COLORS.DEFAULT,
+                activeTintColor: COLORS.ACTIVE,
+                inactiveTintColor: COLORS.DEFAULT,
                 showLabel: false,
             }}
         >

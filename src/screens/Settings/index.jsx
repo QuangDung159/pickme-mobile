@@ -13,6 +13,15 @@ import { Switch } from '../../components/uiComponents';
 import { NowTheme } from '../../constants';
 import { ToastHelpers } from '../../helpers';
 
+const {
+    FONT: {
+        MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
+    },
+    SIZES,
+    COLORS
+} = NowTheme;
+
 const recommended = [
     {
         title: 'Use FaceID to sign in', id: 'face', type: 'switch', status: true
@@ -73,8 +82,8 @@ export default function Settings({ navigation }) {
                     >
                         <Text
                             style={{
-                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                                fontSize: NowTheme.SIZES.FONT_H4,
+                                fontFamily: MONTSERRAT_REGULAR,
+                                fontSize: SIZES.FONT_H4,
                                 color: '#525F7F'
                             }}
                         >
@@ -101,8 +110,8 @@ export default function Settings({ navigation }) {
                             >
                                 <Text
                                     style={{
-                                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                                        fontSize: NowTheme.SIZES.FONT_H4,
+                                        fontFamily: MONTSERRAT_REGULAR,
+                                        fontSize: SIZES.FONT_H4,
                                         color: '#525F7F'
                                     }}
                                 >
@@ -145,19 +154,19 @@ export default function Settings({ navigation }) {
                         >
                             <Text
                                 style={{
-                                    fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
+                                    fontFamily: MONTSERRAT_BOLD,
                                     paddingBottom: 5,
-                                    fontSize: NowTheme.SIZES.FONT_H2,
-                                    color: NowTheme.COLORS.TEXT,
+                                    fontSize: SIZES.FONT_H2,
+                                    color: COLORS.TEXT,
                                 }}
                             >
                                 Recommended Settings
                             </Text>
                             <Text
                                 style={{
-                                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                                    fontFamily: MONTSERRAT_REGULAR,
                                     fontSize: 12,
-                                    color: NowTheme.COLORS.ACTIVE,
+                                    color: COLORS.ACTIVE,
                                 }}
                             >
                                 These are the most important settings
@@ -177,19 +186,19 @@ export default function Settings({ navigation }) {
                 >
                     <Text
                         style={{
-                            fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
+                            fontFamily: MONTSERRAT_BOLD,
                             paddingBottom: 5,
-                            fontSize: NowTheme.SIZES.FONT_H2,
-                            color: NowTheme.COLORS.TEXT,
+                            fontSize: SIZES.FONT_H2,
+                            color: COLORS.TEXT,
                         }}
                     >
                         Payment Settings
                     </Text>
                     <Text
                         style={{
-                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                            fontFamily: MONTSERRAT_REGULAR,
                             fontSize: 12,
-                            color: NowTheme.COLORS.ACTIVE,
+                            color: COLORS.ACTIVE,
                         }}
                     >
                         These are also important settings
@@ -214,19 +223,19 @@ export default function Settings({ navigation }) {
                 >
                     <Text
                         style={{
-                            fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
+                            fontFamily: MONTSERRAT_BOLD,
                             paddingBottom: 5,
-                            fontSize: NowTheme.SIZES.BASE,
-                            color: NowTheme.COLORS.TEXT,
+                            fontSize: SIZES.BASE,
+                            color: COLORS.TEXT,
                         }}
                     >
                         Privacy Settings
                     </Text>
                     <Text
                         style={{
-                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                            fontFamily: MONTSERRAT_REGULAR,
                             fontSize: 12,
-                            color: NowTheme.COLORS.ACTIVE,
+                            color: COLORS.ACTIVE,
                         }}
                     >
                         Third most important settings

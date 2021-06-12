@@ -2,6 +2,13 @@ import React, { PureComponent } from 'react';
 import { Text, View } from 'react-native';
 import { NowTheme } from '../../constants';
 
+const {
+    FONT: {
+        MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
+    }, COLORS
+} = NowTheme;
+
 export default class NoteText extends PureComponent {
     render() {
         const {
@@ -13,7 +20,7 @@ export default class NoteText extends PureComponent {
         return (
             <View
                 style={{
-                    backgroundColor: backgroundColor || NowTheme.COLORS.LIST_ITEM_BACKGROUND_1,
+                    backgroundColor: backgroundColor || COLORS.LIST_ITEM_BACKGROUND_1,
                     width,
                     alignSelf: 'center',
                     borderRadius: 5,
@@ -33,7 +40,7 @@ export default class NoteText extends PureComponent {
                         {title && (
                             <Text
                                 style={{
-                                    fontFamily: NowTheme.FONT.MONTSERRAT_BOLD
+                                    fontFamily: MONTSERRAT_BOLD
                                 }}
                             >
                                 {iconComponent && ' '}
@@ -44,7 +51,7 @@ export default class NoteText extends PureComponent {
                     <Text
                         style={[
                             {
-                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                                fontFamily: MONTSERRAT_REGULAR,
                                 alignSelf: 'center'
                             },
                             contentStyle]}

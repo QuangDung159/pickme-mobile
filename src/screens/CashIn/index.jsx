@@ -1,13 +1,21 @@
 import Clipboard from 'expo-clipboard';
-import { Block, Text } from 'galio-framework';
 import React, { useEffect } from 'react';
+import { Text, View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useDispatch, useSelector } from 'react-redux';
-import { IconCustom, Line, NoteText } from '../../components/uiComponents';
-import { IconFamily, NowTheme, ScreenName } from '../../constants';
+import { Line, NoteText } from '../../components/uiComponents';
+import { NowTheme, ScreenName } from '../../constants';
 import { ToastHelpers } from '../../helpers';
 import { setPersonTabActiveIndex } from '../../redux/Actions';
+
+const {
+    FONT: {
+        MONTSERRAT_REGULAR,
+    },
+    SIZES,
+    COLORS
+} = NowTheme;
 
 export default function CashIn(props) {
     const { navigation } = props;
@@ -38,29 +46,31 @@ export default function CashIn(props) {
             <KeyboardAwareScrollView
                 showsVerticalScrollIndicator={false}
             >
-                <Block>
-                    <Block
+                <View
+                    style={{
+                        width: SIZES.WIDTH_BASE * 0.9,
+                        alignSelf: 'center',
+                    }}
+                >
+                    <View
                         style={{
                             marginVertical: 10,
-                            backgroundColor: NowTheme.COLORS.BASE,
+                            backgroundColor: COLORS.BASE,
                         }}
                     >
-                        <Block
-                            style={{
-                                marginHorizontal: 10,
-                            }}
-                        >
-                            <Block
-                                row
+                        <View>
+                            <View
                                 style={{
                                     justifyContent: 'space-between',
+                                    flexDirection: 'row',
                                     alignItems: 'center'
                                 }}
                             >
-                                <Text style={{
-                                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                                    marginVertical: 10
-                                }}
+                                <Text
+                                    style={{
+                                        fontFamily: MONTSERRAT_REGULAR,
+                                        marginVertical: 10
+                                    }}
                                 >
                                     THÔNG TIN CHUYỂN KHOẢN
                                 </Text>
@@ -70,57 +80,58 @@ export default function CashIn(props) {
                                         dispatch(setPersonTabActiveIndex(1));
                                     }}
                                 >
-                                    <Text style={{
-                                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                                        fontSize: NowTheme.SIZES.FONT_H4,
-                                        color: NowTheme.COLORS.ACTIVE
-                                    }}
+                                    <Text
+                                        style={{
+                                            fontFamily: MONTSERRAT_REGULAR,
+                                            fontSize: SIZES.FONT_H4,
+                                            color: COLORS.ACTIVE
+                                        }}
                                     >
                                         Xem rương
                                     </Text>
                                 </TouchableWithoutFeedback>
-                            </Block>
+                            </View>
                             <Line
                                 borderWidth={0.5}
-                                borderColor={NowTheme.COLORS.ACTIVE}
+                                borderColor={COLORS.ACTIVE}
                             />
-                        </Block>
+                        </View>
 
-                        <Block
+                        <View
                             style={{
                                 marginTop: 10
                             }}
                         >
                             <NoteText
-                                width={NowTheme.SIZES.WIDTH_BASE * 0.9}
+                                width={SIZES.WIDTH_BASE * 0.9}
                                 title="Số tài khoản: "
                                 // content="0186xxxxxxxxx"
                                 contentStyle={{
                                     fontSize: 22,
-                                    color: NowTheme.COLORS.ACTIVE
+                                    color: COLORS.ACTIVE
                                 }}
-                                backgroundColor={NowTheme.COLORS.LIST_ITEM_BACKGROUND_2}
+                                backgroundColor={COLORS.LIST_ITEM_BACKGROUND_2}
                             />
-                        </Block>
+                        </View>
 
-                        <Block
+                        <View
                             style={{
                                 marginTop: 10
                             }}
                         >
                             <NoteText
-                                width={NowTheme.SIZES.WIDTH_BASE * 0.9}
+                                width={SIZES.WIDTH_BASE * 0.9}
                                 title="Ngân hàng: "
                                 content="Tienphong Bank - TPBank"
                                 contentStyle={{
                                     fontSize: 18,
-                                    color: NowTheme.COLORS.ACTIVE
+                                    color: COLORS.ACTIVE
                                 }}
-                                backgroundColor={NowTheme.COLORS.LIST_ITEM_BACKGROUND_2}
+                                backgroundColor={COLORS.LIST_ITEM_BACKGROUND_2}
                             />
-                        </Block>
+                        </View>
 
-                        <Block
+                        <View
                             style={{
                                 marginTop: 10
                             }}
@@ -129,46 +140,20 @@ export default function CashIn(props) {
                                 onPress={() => copyToClipboard(moneyTransferContent)}
                             >
                                 <NoteText
-                                    width={NowTheme.SIZES.WIDTH_BASE * 0.9}
+                                    width={SIZES.WIDTH_BASE * 0.9}
                                     title="Nội dung chuyển khoản:"
                                     content={moneyTransferContent}
                                     contentStyle={{
                                         fontSize: 18,
-                                        color: NowTheme.COLORS.ACTIVE
+                                        color: COLORS.ACTIVE
                                     }}
-                                    backgroundColor={NowTheme.COLORS.LIST_ITEM_BACKGROUND_2}
+                                    backgroundColor={COLORS.LIST_ITEM_BACKGROUND_2}
                                 />
                             </TouchableWithoutFeedback>
 
-                        </Block>
-
-                        <Block
-                            style={{
-                                marginVertical: 10
-                            }}
-                        >
-                            <NoteText
-                                width={NowTheme.SIZES.WIDTH_BASE * 0.9}
-                                title="Giá trị quy đổi:"
-                                content="1.000 vnd = 1 kim cương"
-                                contentStyle={{
-                                    fontSize: 18,
-                                    color: NowTheme.COLORS.ACTIVE,
-                                    fontFamily: NowTheme.FONT.MONTSERRAT_BOLD
-                                }}
-                                iconComponent={(
-                                    <IconCustom
-                                        name="info-circle"
-                                        family={IconFamily.FONT_AWESOME}
-                                        size={16}
-                                        color={NowTheme.COLORS.ACTIVE}
-                                    />
-                                )}
-                                backgroundColor={NowTheme.COLORS.LIST_ITEM_BACKGROUND_1}
-                            />
-                        </Block>
-                    </Block>
-                </Block>
+                        </View>
+                    </View>
+                </View>
             </KeyboardAwareScrollView>
         );
     } catch (exception) {

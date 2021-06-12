@@ -1,13 +1,10 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
 import { NO_AVATAR_URL } from '@env';
-import {
-    Block, Text
-} from 'galio-framework';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import {
-    ImageBackground, ScrollView, StyleSheet
+    ImageBackground, ScrollView, StyleSheet, Text, View
 } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import ImageView from 'react-native-image-viewing';
@@ -20,6 +17,15 @@ import {
 import { ToastHelpers } from '../../helpers';
 import { rxUtil } from '../../utils';
 import UserInfoSection from '../Personal/UserInformation/UserInfoSection';
+
+const {
+    FONT: {
+        MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
+    },
+    SIZES,
+    COLORS
+} = NowTheme;
 
 export default function Profile({ route, navigation }) {
     const [visible, setVisible] = useState(false);
@@ -109,56 +115,61 @@ export default function Profile({ route, navigation }) {
         } = partnerInfo;
 
         return (
-            <Block style={{
+            <View style={{
                 marginTop: 30,
-                width: NowTheme.SIZES.WIDTH_BASE * 0.9,
+                width: SIZES.WIDTH_BASE * 0.9,
                 alignSelf: 'center'
             }}
             >
-                <Block row center>
+                <View
+                    style={{
+                        flexDirection: 'row',
+                        alignSelf: 'center'
+                    }}
+                >
                     <Text
                         style={{
-                            color: NowTheme.COLORS.ACTIVE,
+                            color: COLORS.ACTIVE,
                             fontWeight: 'bold',
-                            fontSize: NowTheme.SIZES.FONT_H1,
-                            fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
+                            fontSize: SIZES.FONT_H1,
+                            fontFamily: MONTSERRAT_BOLD,
                         }}
                     >
                         {fullName}
                         {' '}
                     </Text>
-                </Block>
+                </View>
 
-                <Block
-                    center
+                <View
                     style={{
-                        width: NowTheme.SIZES.WIDTH_BASE - 40,
+                        width: SIZES.WIDTH_BASE - 40,
                         paddingBottom: 30,
+                        alignSelf: 'center'
                     }}
                 >
                     <Text
                         style={{
-                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                            fontFamily: MONTSERRAT_REGULAR,
                             textAlign: 'center',
+                            fontSize: SIZES.FONT_H2,
+                            color: COLORS.DEFAULT,
                         }}
-                        size={NowTheme.SIZES.FONT_H2}
-                        color={NowTheme.COLORS.DEFAULT}
                     >
                         {'"'}
                         {description}
                         {'"'}
                     </Text>
-                </Block>
+                </View>
 
                 <UserInfoSection
                     listUserInfo={
                         [
                             {
-                                value: earningExpected && `${earningExpected.toString()} kim cương/phút`,
+                                value: earningExpected && `${earningExpected.toString()} thu nhập/phút`,
                                 icon: {
                                     name: 'diamond',
                                     family: IconFamily.SIMPLE_LINE_ICONS,
-                                    color: NowTheme.COLORS.ACTIVE,
+                                    color: COLORS.ACTIVE,
                                     size: 24
                                 }
                             },
@@ -167,7 +178,7 @@ export default function Profile({ route, navigation }) {
                                 icon: {
                                     name: 'list-alt',
                                     family: IconFamily.FONT_AWESOME,
-                                    color: NowTheme.COLORS.ACTIVE,
+                                    color: COLORS.ACTIVE,
                                     size: 24
                                 }
                             },
@@ -176,7 +187,7 @@ export default function Profile({ route, navigation }) {
                                 icon: {
                                     name: 'star-o',
                                     family: IconFamily.FONT_AWESOME,
-                                    color: NowTheme.COLORS.ACTIVE,
+                                    color: COLORS.ACTIVE,
                                     size: 28
                                 }
                             },
@@ -185,7 +196,7 @@ export default function Profile({ route, navigation }) {
                                 icon: {
                                     name: 'human-male-height',
                                     family: IconFamily.MATERIAL_COMMUNITY_ICONS,
-                                    color: NowTheme.COLORS.ACTIVE,
+                                    color: COLORS.ACTIVE,
                                     size: 26
                                 }
                             },
@@ -194,7 +205,7 @@ export default function Profile({ route, navigation }) {
                                 icon: {
                                     name: 'weight',
                                     family: IconFamily.FONT_AWESOME_5,
-                                    color: NowTheme.COLORS.ACTIVE,
+                                    color: COLORS.ACTIVE,
                                     size: 24
                                 }
                             },
@@ -203,7 +214,7 @@ export default function Profile({ route, navigation }) {
                                 icon: {
                                     name: 'birthday-cake',
                                     family: IconFamily.FONT_AWESOME,
-                                    color: NowTheme.COLORS.ACTIVE,
+                                    color: COLORS.ACTIVE,
                                     size: 23
                                 }
                             },
@@ -212,7 +223,7 @@ export default function Profile({ route, navigation }) {
                                 icon: {
                                     name: 'home',
                                     family: IconFamily.FONT_AWESOME,
-                                    color: NowTheme.COLORS.ACTIVE,
+                                    color: COLORS.ACTIVE,
                                     size: 28
                                 }
                             },
@@ -221,26 +232,26 @@ export default function Profile({ route, navigation }) {
                                 icon: {
                                     name: 'badminton',
                                     family: IconFamily.MATERIAL_COMMUNITY_ICONS,
-                                    color: NowTheme.COLORS.ACTIVE,
+                                    color: COLORS.ACTIVE,
                                     size: 24
                                 }
                             },
                         ]
                     }
                 />
-            </Block>
+            </View>
         );
     };
 
     const renderListPostImage = () => (
         <>
             {listImageFullscreen && (
-                <Block>
+                <View>
                     {listImageFullscreen.map((imageItem, index) => (
-                        <Block key={`${imageItem.uri}`}>
+                        <View key={`${imageItem.uri}`}>
                             {index === 0 ? (<></>) : (
-                                <Block style={{
-                                    marginVertical: 20
+                                <View style={{
+                                    marginVertical: 10
                                 }}
                                 >
                                     <TouchableWithoutFeedback
@@ -257,12 +268,12 @@ export default function Profile({ route, navigation }) {
                                             navigation={navigation}
                                         />
                                     </TouchableWithoutFeedback>
-                                </Block>
+                                </View>
                             )}
-                        </Block>
+                        </View>
                     ))}
-                    <Block style={{ height: NowTheme.SIZES.HEIGHT_BASE * 0.13 }} />
-                </Block>
+                    <View style={{ height: SIZES.HEIGHT_BASE * 0.13 }} />
+                </View>
             )}
         </>
     );
@@ -283,12 +294,12 @@ export default function Profile({ route, navigation }) {
                     <CenterLoader />
                 ) : (
                     <>
-                        <Block style={{
+                        <View style={{
                             flex: 1,
                             flexDirection: 'column',
                             justifyContent: 'space-between',
                             zIndex: 1,
-                            backgroundColor: NowTheme.COLORS.BASE
+                            backgroundColor: COLORS.BASE
                         }}
                         >
                             <ImageView
@@ -298,45 +309,50 @@ export default function Profile({ route, navigation }) {
                                 onRequestClose={() => setVisible(false)}
                             />
 
-                            <Block flex={1}>
+                            <View
+                                style={{
+                                    flex: 1
+                                }}
+                            >
                                 <ScrollView
                                     showsVerticalScrollIndicator={false}
                                 >
-                                    <Block>
-                                        <TouchableWithoutFeedback
-                                            onPress={() => {
-                                                setVisible(true);
-                                                setImageIndex(0);
+                                    <TouchableWithoutFeedback
+                                        onPress={() => {
+                                            setVisible(true);
+                                            setImageIndex(0);
+                                        }}
+                                    >
+                                        <View
+                                            style={{
+                                                zIndex: 99
                                             }}
                                         >
-                                            <Block
-                                                style={{
-                                                    zIndex: 99
+                                            <ImageBackground
+                                                source={{
+                                                    uri: partnerInfo.url || NO_AVATAR_URL
                                                 }}
-                                            >
-                                                <ImageBackground
-                                                    source={{
-                                                        uri: partnerInfo.url || NO_AVATAR_URL
-                                                    }}
-                                                    style={[styles.profileContainer]}
-                                                    imageStyle={styles.profileBackground}
-                                                />
-                                            </Block>
-                                            <CenterLoader />
-                                        </TouchableWithoutFeedback>
+                                                style={[styles.profileContainer]}
+                                                imageStyle={styles.profileBackground}
+                                            />
+                                        </View>
+                                        <CenterLoader />
+                                    </TouchableWithoutFeedback>
 
-                                        <Block style={{ marginTop: -(NowTheme.SIZES.HEIGHT_BASE * 0.4) }}>
-                                            {renderSubInfo()}
-                                            {renderListPostImage()}
-                                        </Block>
-                                    </Block>
+                                    <View style={{ marginTop: -(SIZES.HEIGHT_BASE * 0.4) }}>
+                                        {renderSubInfo()}
+                                        {renderListPostImage()}
+                                    </View>
                                 </ScrollView>
-                            </Block>
-                        </Block>
-                        <Block style={styles.buttonPanelContainer}>
-                            <Block
-                                middle
-                                row
+                            </View>
+                        </View>
+                        <View style={styles.buttonPanelContainer}>
+                            <View
+                                style={{
+                                    alignSelf: 'center',
+                                    alignItems: 'center',
+                                    flexDirection: 'row'
+                                }}
                             >
                                 <CustomButton
                                     onPress={() => {
@@ -355,11 +371,11 @@ export default function Profile({ route, navigation }) {
                                         marginHorizontal: 5,
                                         elevation: 0,
                                         borderRadius: 20,
-                                        backgroundColor: NowTheme.COLORS.ACTIVE
+                                        backgroundColor: COLORS.ACTIVE
                                     }}
                                     labelStyle={{
                                         fontSize: 16,
-                                        color: NowTheme.COLORS.BASE
+                                        color: COLORS.BASE
                                     }}
                                 />
 
@@ -378,15 +394,15 @@ export default function Profile({ route, navigation }) {
                                         marginHorizontal: 5,
                                         elevation: 0,
                                         borderRadius: 20,
-                                        backgroundColor: NowTheme.COLORS.ACTIVE
+                                        backgroundColor: COLORS.ACTIVE
                                     }}
                                     labelStyle={{
                                         fontSize: 16,
-                                        color: NowTheme.COLORS.BASE
+                                        color: COLORS.BASE
                                     }}
                                 />
-                            </Block>
-                        </Block>
+                            </View>
+                        </View>
                     </>
                 )}
             </>
@@ -411,23 +427,23 @@ Profile.defaultProps = {
 
 const styles = StyleSheet.create({
     profileContainer: {
-        width: NowTheme.SIZES.WIDTH_BASE,
-        height: NowTheme.SIZES.HEIGHT_BASE,
+        width: SIZES.WIDTH_BASE,
+        height: SIZES.HEIGHT_BASE,
         padding: 0,
         zIndex: 1
     },
     profileBackground: {
-        width: NowTheme.SIZES.WIDTH_BASE,
-        height: NowTheme.SIZES.HEIGHT_BASE * 0.6
+        width: SIZES.WIDTH_BASE,
+        height: SIZES.HEIGHT_BASE * 0.6
     },
     buttonPanelContainer: {
         backgroundColor: 'transparent',
         position: 'absolute',
-        top: NowTheme.SIZES.HEIGHT_BASE * 0.8,
+        top: SIZES.HEIGHT_BASE * 0.83,
         left: 0,
         right: 0,
         height: 80,
         zIndex: 2,
-        width: NowTheme.SIZES.WIDTH_BASE,
+        width: SIZES.WIDTH_BASE,
     },
 });

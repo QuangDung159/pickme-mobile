@@ -72,7 +72,6 @@ const SIZES = {
 const FONT = {
     MONTSERRAT_REGULAR: 'montserrat-regular',
     MONTSERRAT_BOLD: 'montserrat-bold'
-
 };
 
 export default {

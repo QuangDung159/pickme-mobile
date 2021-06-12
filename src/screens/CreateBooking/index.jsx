@@ -1,20 +1,16 @@
 import { Picker } from '@react-native-picker/picker';
-import {
-    Block, Text
-} from 'galio-framework';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import {
-    Alert,
-    Modal, StyleSheet, View
+    Alert, StyleSheet, Text, View
 } from 'react-native';
-import { ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import ScrollPicker from 'react-native-wheel-scroll-picker';
 import { useDispatch, useSelector } from 'react-redux';
 import { CustomCalendar } from '../../components/businessComponents';
 import {
-    CenterLoader, CustomButton, CustomInput, IconCustom, Line
+    CenterLoader, CustomButton, CustomInput, CustomModal, IconCustom, Line
 } from '../../components/uiComponents';
 import {
     DateTimeConst, IconFamily, NowTheme, Rx, ScreenName
@@ -22,6 +18,15 @@ import {
 import { ToastHelpers } from '../../helpers';
 import { setListBookingStore, setPersonTabActiveIndex } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
+
+const {
+    FONT: {
+        MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
+    },
+    SIZES,
+    COLORS
+} = NowTheme;
 
 const hourArr = DateTimeConst.HOUR_ARR;
 const minuteArr = DateTimeConst.MINUTE_ARR;
@@ -308,13 +313,13 @@ export default function CreateBooking({ route, navigation }) {
 
     // render \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
     const renderTimePicker = () => (
-        <Block
-            row
-            space="between"
+        <View
             style={{
                 alignSelf: 'center',
-                width: NowTheme.SIZES.WIDTH_BASE * 0.8,
-                marginVertical: 10
+                width: SIZES.WIDTH_BASE * 0.8,
+                marginVertical: 10,
+                flexDirection: 'row',
+                justifyContent: 'space-between'
             }}
         >
             <ScrollPicker
@@ -325,7 +330,7 @@ export default function CreateBooking({ route, navigation }) {
                 renderItem={(data) => (
                     <Text
                         style={{
-                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
+                            fontFamily: MONTSERRAT_REGULAR
                         }}
                     >
                         {`${data}`}
@@ -352,7 +357,7 @@ export default function CreateBooking({ route, navigation }) {
                 renderItem={(data) => (
                     <Text
                         style={{
-                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
+                            fontFamily: MONTSERRAT_REGULAR
                         }}
                     >
                         {`${data}`}
@@ -370,64 +375,65 @@ export default function CreateBooking({ route, navigation }) {
                 activeItemColor="#222121"
                 itemColor="#B4B4B4"
             />
-        </Block>
+        </View>
     );
 
     const renderPartnerPackage = () => (
-        <Block
-            row
-            space="between"
+        <View
             style={{
-                justifyContent: 'center',
-                width: NowTheme.SIZES.WIDTH_BASE * 0.8
+                width: SIZES.WIDTH_BASE * 0.8,
+                flexDirection: 'row',
+                justifyContent: 'space-between'
             }}
         >
             {listPartnerPackage && packageActive && (
-                <Block
+                <View
                     style={{
-                        width: NowTheme.SIZES.WIDTH_BASE * 0.8,
+                        width: SIZES.WIDTH_BASE * 0.8,
                     }}
                 >
                     <Picker
                         selectedValue={packageActive.id}
                         onValueChange={(itemValue) => onChangePackage(itemValue)}
-                        fontFamily={NowTheme.FONT.MONTSERRAT_REGULAR}
+                        fontFamily={MONTSERRAT_REGULAR}
                     >
                         {listPartnerPackage.map((item) => (
                             <Picker.Item value={item.id} label={item.title} key={item.id} />
                         ))}
                     </Picker>
-                    <Block
-                        row
-                        space="around"
+                    <View
+                        style={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-around'
+                        }}
                     >
                         <Text
                             style={{
-                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                                color: NowTheme.COLORS.ACTIVE,
-                                fontSize: NowTheme.SIZES.FONT_H1,
-                                marginBottom: 10
+                                fontFamily: MONTSERRAT_REGULAR,
+                                color: COLORS.ACTIVE,
+                                fontSize: SIZES.FONT_H1,
+                                marginBottom: 10,
                             }}
                         >
                             {convertMinutesToStringHours(packageActive.startAt)}
                         </Text>
                         <Text
                             style={{
-                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                                color: NowTheme.COLORS.ACTIVE,
-                                fontSize: NowTheme.SIZES.FONT_H1,
+                                fontFamily: MONTSERRAT_REGULAR,
+                                color: COLORS.ACTIVE,
+                                fontSize: SIZES.FONT_H1,
                                 marginBottom: 10
                             }}
                         >
                             {convertMinutesToStringHours(packageActive.endAt)}
                         </Text>
-                    </Block>
+                    </View>
 
                     <Text
                         style={{
-                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                            color: NowTheme.COLORS.DEFAULT,
-                            fontSize: NowTheme.SIZES.FONT_H2,
+                            fontFamily: MONTSERRAT_REGULAR,
+                            color: COLORS.DEFAULT,
+                            fontSize: SIZES.FONT_H2,
                             marginBottom: 10
                         }}
                     >
@@ -435,38 +441,34 @@ export default function CreateBooking({ route, navigation }) {
                     </Text>
                     <Text
                         style={{
-                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                            color: NowTheme.COLORS.DEFAULT,
-                            fontSize: NowTheme.SIZES.FONT_H2,
+                            fontFamily: MONTSERRAT_REGULAR,
+                            color: COLORS.DEFAULT,
+                            fontSize: SIZES.FONT_H2,
                             marginBottom: 10
                         }}
                     >
                         {`Lời nhắn từ đối tác: ${packageActive.noted}`}
                     </Text>
-                    <Block
-                        middle
+                    <View
+                        style={{
+                            alignSelf: 'center',
+                            alignItems: 'center'
+                        }}
                     >
                         <Text
                             style={{
-                                fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
+                                fontFamily: MONTSERRAT_BOLD,
                                 fontSize: 30,
-                                paddingVertical: 10
+                                paddingVertical: 10,
+                                color: COLORS.ACTIVE
                             }}
-                            color={NowTheme.COLORS.ACTIVE}
                         >
-                            {packageActive.estimateAmount}
-                            {' '}
-                            <IconCustom
-                                name="diamond"
-                                family={IconFamily.SIMPLE_LINE_ICONS}
-                                size={20}
-                                color={NowTheme.COLORS.ACTIVE}
-                            />
+                            {`${packageActive.estimateAmount}k`}
                         </Text>
-                    </Block>
-                </Block>
+                    </View>
+                </View>
             )}
-        </Block>
+        </View>
     );
 
     const renderListBusySection = () => {
@@ -476,60 +478,65 @@ export default function CreateBooking({ route, navigation }) {
                 const endStr = convertMinutesToStringHours(item.endAt);
 
                 return (
-                    <Block
+                    <View
                         // eslint-disable-next-line react/no-array-index-key
                         key={sectionIndex}
                         style={{
                             backgroundColor: sectionIndex % 2 === 0
-                                ? NowTheme.COLORS.LIST_ITEM_BACKGROUND_1
-                                : NowTheme.COLORS.LIST_ITEM_BACKGROUND_2,
-                            height: NowTheme.SIZES.HEIGHT_BASE * 0.07,
+                                ? COLORS.LIST_ITEM_BACKGROUND_1
+                                : COLORS.LIST_ITEM_BACKGROUND_2,
+                            height: SIZES.HEIGHT_BASE * 0.07,
                             justifyContent: 'center',
                         }}
                     >
-                        <Block
-                            row
-                            space="between"
+                        <View
                             style={{
                                 marginHorizontal: 10,
-                                alignItems: 'center'
+                                alignItems: 'center',
+                                flexDirection: 'row',
+                                justifyContent: 'space-between'
                             }}
                         >
-                            <Block
-                                row
-                                flex
-                                space="around"
+                            <View
+                                style={{
+                                    flexDirection: 'row',
+                                    justifyContent: 'space-around',
+                                    flex: 1
+                                }}
                             >
                                 <Text
                                     style={{
-                                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
+                                        fontFamily: MONTSERRAT_REGULAR,
+                                        fontSize: 27,
+                                        color: COLORS.ACTIVE,
                                     }}
-                                    size={27}
-                                    color={NowTheme.COLORS.ACTIVE}
+
                                 >
                                     {startStr}
                                 </Text>
                                 <Text
                                     style={{
-                                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
+                                        fontFamily: MONTSERRAT_REGULAR,
+                                        fontSize: 27,
+                                        color: COLORS.ACTIVE
                                     }}
-                                    size={27}
-                                    color={NowTheme.COLORS.ACTIVE}
+
                                 >
                                     -
                                 </Text>
                                 <Text
                                     style={{
-                                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
+                                        fontFamily: MONTSERRAT_REGULAR,
+                                        fontSize: 27,
+                                        color: COLORS.ACTIVE
                                     }}
-                                    size={27}
-                                    color={NowTheme.COLORS.ACTIVE}
+
                                 >
                                     {endStr}
                                 </Text>
-                            </Block>
-                        </Block>
-                    </Block>
+                            </View>
+                        </View>
+                    </View>
                 );
             });
         }
@@ -537,160 +544,138 @@ export default function CreateBooking({ route, navigation }) {
     };
 
     const renderModal = () => (
-        <Modal
-            animationType="slide"
-            transparent
-            visible={modalVisible}
-            onRequestClose={() => {
-                Alert.alert('Modal has been closed.');
-            }}
-        >
-            <ScrollView
-                showsVerticalScrollIndicator={false}
-            >
-                <View style={styles.centeredView}>
-                    <View style={styles.modalView}>
-                        <Text
-                            size={NowTheme.SIZES.FONT_H2}
-                            style={{
-                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+        <CustomModal
+            modalVisible={modalVisible}
+            renderContent={() => (
+                <>
+                    <Text
+                        style={{
+                            fontFamily: MONTSERRAT_REGULAR,
+                            marginVertical: 10,
+                            fontSize: SIZES.FONT_H2
+                        }}
+                    >
+                        Lịch bận của đối tác
+                    </Text>
+                    <View
+                        style={{
+                            width: SIZES.WIDTH_BASE * 0.8
+                        }}
+                    >
+                        {renderBusyCalendar()}
+                    </View>
+
+                    <View
+                        style={{
+                            alignSelf: 'center'
+                        }}
+                    >
+                        <CustomButton
+                            onPress={() => setModalVisible(false)}
+                            buttonStyle={{
+                                width: SIZES.WIDTH_BASE * 0.8,
                                 marginVertical: 10
                             }}
-                        >
-                            Lịch bận của đối tác
-                        </Text>
-                        <Block
-                            style={{
-                                width: NowTheme.SIZES.WIDTH_BASE * 0.8
-                            }}
-                        >
-                            {renderBusyCalendar()}
-                        </Block>
-
-                        <Block center>
-                            <CustomButton
-                                onPress={() => setModalVisible(false)}
-                                buttonStyle={{
-                                    width: NowTheme.SIZES.WIDTH_BASE * 0.8,
-                                    marginVertical: 10
-                                }}
-                                type="active"
-                                label="Đóng"
-                            />
-                        </Block>
+                            type="active"
+                            label="Đóng"
+                        />
                     </View>
-                </View>
-            </ScrollView>
-        </Modal>
+                </>
+            )}
+        />
     );
 
     const renderTimePickerModal = () => (
-        <Modal
-            animationType="slide"
-            transparent
-            visible={modalTimePickerVisible}
-            onRequestClose={() => {
-                Alert.alert('Modal has been closed.');
-            }}
-        >
-            <ScrollView
-                showsVerticalScrollIndicator={false}
-            >
-                <View style={styles.centeredView}>
-                    <View style={styles.modalView}>
-                        {renderTimePicker()}
-                        <Block center>
-                            <CustomButton
-                                onPress={() => setModalTimePickerVisible(false)}
-                                buttonStyle={{
-                                    width: NowTheme.SIZES.WIDTH_BASE * 0.8,
-                                    marginVertical: 10
-                                }}
-                                type="active"
-                                label="Đóng"
-                            />
-                        </Block>
+        <CustomModal
+            modalVisible={modalTimePickerVisible}
+            renderContent={() => (
+                <>
+                    {renderTimePicker()}
+                    <View
+                        style={{
+                            alignSelf: 'center'
+                        }}
+                    >
+                        <CustomButton
+                            onPress={() => setModalTimePickerVisible(false)}
+                            buttonStyle={{
+                                width: SIZES.WIDTH_BASE * 0.8,
+                                marginVertical: 10
+                            }}
+                            type="active"
+                            label="Đóng"
+                        />
                     </View>
-                </View>
-            </ScrollView>
-        </Modal>
+                </>
+            )}
+        />
     );
 
     const renderPartnerPackageModal = () => (
-        <Modal
-            animationType="slide"
-            transparent
-            visible={modalPartnerPackageVisible}
-            onRequestClose={() => {
-                Alert.alert('Modal has been closed.');
-            }}
-        >
-            <ScrollView
-                showsVerticalScrollIndicator={false}
-            >
-                <View style={styles.centeredView}>
-                    <View style={styles.modalView}>
-                        {renderPartnerPackage()}
+        <CustomModal
+            modalVisible={modalPartnerPackageVisible}
+            renderContent={() => (
+                <>
+                    {renderPartnerPackage()}
 
-                        <Block
-                            row
-                            space="between"
-                            style={{
-                                paddingVertical: 10,
-                                width: NowTheme.SIZES.WIDTH_BASE * 0.8
+                    <View
+                        style={{
+                            paddingVertical: 10,
+                            width: SIZES.WIDTH_BASE * 0.8,
+                            flexDirection: 'row',
+                            justifyContent: 'space-between'
+                        }}
+                    >
+
+                        <CustomButton
+                            onPress={() => {
+                                setModalPartnerPackageVisible(false);
                             }}
-                        >
+                            type="default"
+                            label="Huỷ bỏ"
+                            buttonStyle={{
+                                width: SIZES.WIDTH_BASE * 0.39
+                            }}
+                        />
+                        <CustomButton
+                            onPress={() => {
+                                setModalPartnerPackageVisible(false);
+                                const startHourString = convertMinutesToStringHours(
+                                    packageActive.startAt
+                                );
 
-                            <CustomButton
-                                onPress={() => {
-                                    setModalPartnerPackageVisible(false);
-                                }}
-                                type="default"
-                                label="Huỷ bỏ"
-                                buttonStyle={{
-                                    width: NowTheme.SIZES.WIDTH_BASE * 0.39
-                                }}
-                            />
-                            <CustomButton
-                                onPress={() => {
-                                    setModalPartnerPackageVisible(false);
-                                    const startHourString = convertMinutesToStringHours(
-                                        packageActive.startAt
-                                    );
+                                const endHourString = convertMinutesToStringHours(
+                                    packageActive.endAt
+                                );
 
-                                    const endHourString = convertMinutesToStringHours(
-                                        packageActive.endAt
-                                    );
-
-                                    setStartTimeStr(startHourString);
-                                    setEndTimeStr(endHourString);
-                                    setTotal(packageActive.estimateAmount);
-                                    setBooking({
-                                        ...booking,
-                                        noted: packageActive.noted,
-                                        address: packageActive.address
-                                    });
-                                }}
-                                buttonStyle={{
-                                    width: NowTheme.SIZES.WIDTH_BASE * 0.39
-                                }}
-                                type="active"
-                                label="Xác nhận"
-                            />
-                        </Block>
+                                setStartTimeStr(startHourString);
+                                setEndTimeStr(endHourString);
+                                setTotal(packageActive.estimateAmount);
+                                setBooking({
+                                    ...booking,
+                                    noted: packageActive.noted,
+                                    address: packageActive.address
+                                });
+                            }}
+                            buttonStyle={{
+                                width: SIZES.WIDTH_BASE * 0.39
+                            }}
+                            type="active"
+                            label="Xác nhận"
+                        />
                     </View>
-                </View>
-            </ScrollView>
-        </Modal>
+                </>
+            )}
+        />
     );
 
     const renderButtonTimePicker = () => (
-        <Block
-            space="between"
-            row
+        <View
             style={{
                 marginBottom: 10,
-                width: NowTheme.SIZES.WIDTH_BASE * 0.9,
+                width: SIZES.WIDTH_BASE * 0.9,
+                flexDirection: 'row',
+                justifyContent: 'space-between'
             }}
         >
             <CustomButton
@@ -714,7 +699,7 @@ export default function CreateBooking({ route, navigation }) {
             />
 
             {/* {renderIconShowModal()} */}
-        </Block>
+        </View>
     );
 
     const renderAlert = () => (
@@ -769,7 +754,7 @@ export default function CreateBooking({ route, navigation }) {
             onChangeText={(input) => onChangeAddress(input)}
             containerStyle={{
                 marginVertical: 10,
-                width: NowTheme.SIZES.WIDTH_BASE * 0.9
+                width: SIZES.WIDTH_BASE * 0.9
             }}
             label="Địa điểm:"
             inputStyle={{
@@ -785,7 +770,7 @@ export default function CreateBooking({ route, navigation }) {
             onChangeText={(input) => onChangeNote(input)}
             containerStyle={{
                 marginVertical: 10,
-                width: NowTheme.SIZES.WIDTH_BASE * 0.9
+                width: SIZES.WIDTH_BASE * 0.9
             }}
             label="Ghi chú:"
             inputStyle={{
@@ -794,30 +779,31 @@ export default function CreateBooking({ route, navigation }) {
         />
     );
 
-    const renderFormBlock = (partner) => (
-        <Block
+    const renderFormView = (partner) => (
+        <View
             style={{
                 zIndex: 99,
+                flex: 1
             }}
-            flex
         >
-            <Block>
-                <Text style={{
-                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                    marginTop: 10
-                }}
+            <View>
+                <Text
+                    style={{
+                        fontFamily: MONTSERRAT_REGULAR,
+                        marginTop: 10
+                    }}
                 >
                     THÔNG TIN CUỘC HẸN
                 </Text>
                 <Line
                     borderWidth={0.5}
-                    borderColor={NowTheme.COLORS.ACTIVE}
+                    borderColor={COLORS.ACTIVE}
                     style={{
                         marginVertical: 10
                     }}
                 />
 
-                {renderInfoBlock(partner)}
+                {renderInfoView(partner)}
 
                 <CustomCalendar
                     onChangeDate={(date) => { onChangeDateCalendar(date); }}
@@ -827,7 +813,7 @@ export default function CreateBooking({ route, navigation }) {
                 {listPartnerPackage && listPartnerPackage.length !== 0 && (
                     <TouchableWithoutFeedback
                         containerStyle={{
-                            width: NowTheme.SIZES.WIDTH_BASE * 0.9,
+                            width: SIZES.WIDTH_BASE * 0.9,
                             alignSelf: 'center',
                             paddingBottom: 10,
                         }}
@@ -835,9 +821,9 @@ export default function CreateBooking({ route, navigation }) {
                     >
                         <Text
                             style={{
-                                fontSize: NowTheme.SIZES.FONT_H3,
-                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                                color: NowTheme.COLORS.ACTIVE
+                                fontSize: SIZES.FONT_H3,
+                                fontFamily: MONTSERRAT_REGULAR,
+                                color: COLORS.ACTIVE
                             }}
                         >
                             Chọn gói đơn hẹn
@@ -848,11 +834,11 @@ export default function CreateBooking({ route, navigation }) {
                 {renderButtonTimePicker()}
                 {renderInputAddress()}
                 {renderInputNote()}
-            </Block>
-        </Block>
+            </View>
+        </View>
     );
 
-    const renderInfoBlock = (partner) => {
+    const renderInfoView = (partner) => {
         const {
             params: {
                 fullName
@@ -860,72 +846,76 @@ export default function CreateBooking({ route, navigation }) {
         } = route;
 
         return (
-            <Block
-                middle
+            <View
                 style={{
                     marginBottom: 10,
+                    alignSelf: 'center',
+                    alignItems: 'center'
                 }}
             >
                 <Text
-                    color={NowTheme.COLORS.ACTIVE}
-                    size={NowTheme.SIZES.FONT_H1}
-                    style={styles.title}
+                    style={
+                        [
+                            styles.title,
+                            {
+                                color: COLORS.ACTIVE,
+                                fontSize: SIZES.FONT_H1,
+                            }
+                        ]
+                    }
                 >
                     {fullName || partner.fullName}
                 </Text>
-            </Block>
+            </View>
         );
     };
 
     const renderTotal = () => (
-        <Block>
-            <Block>
-                <Text style={{
-                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                    marginTop: 10
-                }}
+        <View>
+            <View>
+                <Text
+                    style={{
+                        fontFamily: MONTSERRAT_REGULAR,
+                        marginTop: 10
+                    }}
                 >
                     XÁC NHẬN ĐẶT
                 </Text>
                 <Line
                     borderWidth={0.5}
-                    borderColor={NowTheme.COLORS.ACTIVE}
+                    borderColor={COLORS.ACTIVE}
                     style={{
                         marginTop: 10
                     }}
                 />
-            </Block>
-            <Block
-                middle
+            </View>
+            <View
+                style={{
+                    alignItems: 'center',
+                    alignSelf: 'center'
+                }}
             >
                 <Text
                     style={{
-                        fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
+                        fontFamily: MONTSERRAT_BOLD,
                         fontSize: 30,
-                        paddingVertical: 10
+                        paddingVertical: 10,
+                        color: COLORS.ACTIVE
                     }}
-                    color={NowTheme.COLORS.ACTIVE}
                 >
-                    {calculateTotalAmount(startTimeStr, endTimeStr)}
-                    {' '}
-                    <IconCustom
-                        name="diamond"
-                        family={IconFamily.SIMPLE_LINE_ICONS}
-                        size={20}
-                        color={NowTheme.COLORS.ACTIVE}
-                    />
+                    {`${calculateTotalAmount(startTimeStr, endTimeStr)}k`}
                 </Text>
-            </Block>
+            </View>
             {renderButtonPanel()}
-        </Block>
+        </View>
     );
 
     const renderButtonPanel = () => (
-        <Block
-            row
-            space="between"
+        <View
             style={{
                 paddingVertical: 10,
+                flexDirection: 'row',
+                justifyContent: 'space-between'
             }}
         >
             <CustomButton
@@ -938,13 +928,16 @@ export default function CreateBooking({ route, navigation }) {
                 type="active"
                 label="Xác nhận"
             />
-        </Block>
+        </View>
     );
 
     // eslint-disable-next-line no-unused-vars
     const renderIconShowModal = () => (
-        <Block
-            middle
+        <View
+            style={{
+                alignSelf: 'center',
+                alignItems: 'center'
+            }}
         >
             <TouchableWithoutFeedback
                 onPress={() => {
@@ -955,36 +948,38 @@ export default function CreateBooking({ route, navigation }) {
                     name="calendar"
                     family={IconFamily.FONT_AWESOME}
                     size={23}
-                    color={NowTheme.COLORS.ACTIVE}
+                    color={COLORS.ACTIVE}
                 />
             </TouchableWithoutFeedback>
-        </Block>
+        </View>
     );
 
     const renderBusyCalendar = () => (
         <>
             {!listBusyBySelectedDate || listBusyBySelectedDate.length === 0 ? (
-                <Block
-                    middle
-                    flex
+                <View
                     style={{
-                        marginBottom: 10
+                        marginBottom: 10,
+                        alignSelf: 'center',
+                        alignItems: 'center',
+                        flex: 1
                     }}
                 >
                     <Text
-                        color={NowTheme.COLORS.SWITCH_OFF}
                         style={{
-                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                            fontFamily: MONTSERRAT_REGULAR,
+                            color: COLORS.SWITCH_OFF,
+                            fontSize: 14
                         }}
-                        size={14}
+
                     >
                         Đối tác rảnh vào ngày này, đặt hẹn nào!
                     </Text>
-                </Block>
+                </View>
             ) : (
-                <Block>
+                <View>
                     {renderListBusySection()}
-                </Block>
+                </View>
             )}
         </>
     );
@@ -1004,7 +999,7 @@ export default function CreateBooking({ route, navigation }) {
                     <>
                         <KeyboardAwareScrollView
                             style={{
-                                width: NowTheme.SIZES.WIDTH_BASE * 0.9,
+                                width: SIZES.WIDTH_BASE * 0.9,
                                 alignSelf: 'center'
                             }}
                             showsVerticalScrollIndicator={false}
@@ -1012,7 +1007,7 @@ export default function CreateBooking({ route, navigation }) {
                             {renderModal()}
                             {renderTimePickerModal()}
                             {renderPartnerPackageModal()}
-                            {renderFormBlock(partner)}
+                            {renderFormView(partner)}
                             {renderTotal()}
                         </KeyboardAwareScrollView>
                     </>
@@ -1032,33 +1027,12 @@ export default function CreateBooking({ route, navigation }) {
 
 const styles = StyleSheet.create({
     title: {
-        fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
+        fontFamily: MONTSERRAT_BOLD,
         marginVertical: 10
     },
-    centeredView: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        alignSelf: 'center',
-    },
-    modalView: {
-        backgroundColor: 'white',
-        borderRadius: 5,
-        alignItems: 'center',
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 2
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
-        marginTop: NowTheme.SIZES.WIDTH_BASE * 0.5,
-        width: NowTheme.SIZES.WIDTH_BASE * 0.9,
-        marginBottom: 10
-    },
     timePickerText: {
-        color: NowTheme.COLORS.ACTIVE,
-        fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
-        fontSize: NowTheme.SIZES.FONT_H2
+        color: COLORS.ACTIVE,
+        fontFamily: MONTSERRAT_BOLD,
+        fontSize: SIZES.FONT_H2
     },
 });

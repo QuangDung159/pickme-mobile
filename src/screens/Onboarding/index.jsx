@@ -1,11 +1,8 @@
 import Constants from 'expo-constants';
 import * as SecureStore from 'expo-secure-store';
-import {
-    Block, Text
-} from 'galio-framework';
 import React, { useEffect, useState } from 'react';
 import {
-    ImageBackground, Platform, StatusBar, StyleSheet
+    ImageBackground, Platform, StatusBar, StyleSheet, Text, View
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { CenterLoader, CustomButton } from '../../components/uiComponents';
@@ -15,6 +12,14 @@ import {
 import { ToastHelpers } from '../../helpers';
 import { setIsSignInOtherDeviceStore, setNavigation, setToken } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
+
+const {
+    FONT: {
+        MONTSERRAT_REGULAR,
+    },
+    SIZES,
+    COLORS
+} = NowTheme;
 
 export default function Onboarding({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
@@ -104,9 +109,12 @@ export default function Onboarding({ navigation }) {
     };
 
     return (
-        <Block flex style={styles.container}>
+        <View style={styles.container}>
             <StatusBar barStyle="light-content" />
-            <Block flex>
+            <View style={{
+                flex: 1
+            }}
+            >
                 <ImageBackground
                     source={Images.Onboarding}
                     style={{
@@ -118,34 +126,37 @@ export default function Onboarding({ navigation }) {
                 {isShowSpinner ? (
                     <CenterLoader />
                 ) : (
-                    <Block space="between" style={styles.padded}>
-                        <Block>
-                            {/* <Block middle>
+                    <View
+                        style={styles.padded}
+                    >
+                        <View>
+                            {/* <View middle>
                             <Image
                                 source={Images.NowLogo}
                                 style={{
                                     width: 115, height: 124, bottom: 200, position: 'absolute'
                                 }}
                             />
-                        </Block> */}
+                        </View> */}
 
-                            <Block>
-                                <Block
-                                    middle
+                            <View>
+                                <View
                                     style={{
-                                        paddingBottom: NowTheme.SIZES.HEIGHT_BASE * 0.2
+                                        paddingBottom: SIZES.HEIGHT_BASE * 0.2,
+                                        alignSelf: 'center',
+                                        alignItems: 'center'
                                     }}
                                 >
                                     <Text
                                         style={{
-                                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                                            fontSize: NowTheme.SIZES.WIDTH_BASE * 0.1
+                                            fontFamily: MONTSERRAT_REGULAR,
+                                            fontSize: SIZES.WIDTH_BASE * 0.1,
+                                            color: COLORS.ACTIVE
                                         }}
-                                        color={NowTheme.COLORS.ACTIVE}
                                     >
                                         PickMe
                                     </Text>
-                                </Block>
+                                </View>
                                 <CustomButton
                                     onPress={() => {
                                         navigation.navigate(ScreenName.SIGN_IN);
@@ -160,48 +171,55 @@ export default function Onboarding({ navigation }) {
                                     label="Đăng kí"
                                     buttonStyle={styles.button}
                                 />
-                            </Block>
-                            <Block
-                                middle
+                            </View>
+                            <View
                                 style={{
-                                    marginTop: 10
+                                    marginTop: 10,
+                                    alignSelf: 'center',
+                                    alignItems: 'center'
                                 }}
                             >
                                 <Text
-                                    color={NowTheme.COLORS.DEFAULT}
-                                    size={NowTheme.SIZES.FONT_H4 - 2}
-                                    style={{ fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR }}
+                                    style={{
+                                        fontFamily: MONTSERRAT_REGULAR,
+                                        color: COLORS.DEFAULT,
+                                        fontSize: SIZES.FONT_H4 - 2,
+                                    }}
                                 >
                                     {`${Constants.manifest.version}`}
                                 </Text>
                                 <Text
-                                    color={NowTheme.COLORS.DEFAULT}
-                                    size={NowTheme.SIZES.FONT_H4 - 2}
-                                    style={{ fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR }}
+                                    style={{
+                                        fontFamily: MONTSERRAT_REGULAR,
+                                        color: COLORS.DEFAULT,
+                                        fontSize: SIZES.FONT_H4 - 2,
+                                    }}
                                 >
                                     {deviceIdStore}
                                 </Text>
-                            </Block>
-                        </Block>
-                    </Block>
+                            </View>
+                        </View>
+                    </View>
                 )}
-            </Block>
-        </Block>
+            </View>
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: Platform.OS === 'android' ? -Utils.HeaderHeight : 0
+        marginTop: Platform.OS === 'android' ? -Utils.HeaderHeight : 0,
+        flex: 1
     },
     padded: {
         zIndex: 3,
         position: 'absolute',
-        bottom: NowTheme.SIZES.HEIGHT_BASE * 0.17,
+        bottom: SIZES.HEIGHT_BASE * 0.17,
         alignSelf: 'center',
+        justifyContent: 'space-between'
     },
     button: {
-        width: NowTheme.SIZES.WIDTH_BASE * 0.8,
+        width: SIZES.WIDTH_BASE * 0.8,
         marginTop: 10
     },
 

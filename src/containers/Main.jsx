@@ -8,13 +8,13 @@ import { getMainDefinition } from '@apollo/client/utilities';
 import { SOCKET_URL } from '@env';
 import { NavigationContainer } from '@react-navigation/native';
 import * as SecureStore from 'expo-secure-store';
-import { Block, GalioProvider } from 'galio-framework';
+import { GalioProvider } from 'galio-framework';
 import React, { useEffect } from 'react';
-import { AppState } from 'react-native';
+import { AppState, View } from 'react-native';
 import uuid from 'react-native-uuid';
 import { useDispatch, useSelector } from 'react-redux';
 import { Listener } from '../components/businessComponents';
-import { NowTheme, Rx } from '../constants';
+import { Rx } from '../constants';
 import { ToastHelpers } from '../helpers';
 import Stacks from '../navigations/Stacks';
 import {
@@ -205,10 +205,14 @@ export default function Main() {
                     <Listener
                         onListenedData={(data) => { handleData(data.listen); }}
                     />
-                    <GalioProvider theme={NowTheme}>
-                        <Block flex>
+                    <GalioProvider>
+                        <View
+                            style={{
+                                flex: 1
+                            }}
+                        >
                             <Stacks />
-                        </Block>
+                        </View>
                     </GalioProvider>
                 </NavigationContainer>
             </ApolloProvider>

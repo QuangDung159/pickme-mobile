@@ -9,6 +9,15 @@ import { ToastHelpers } from '../../helpers';
 import { setShowLoaderStore } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
 
+const {
+    FONT: {
+        MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
+    },
+    SIZES,
+    COLORS
+} = NowTheme;
+
 export default function PhoneForm({
     phoneNumber,
     setPhoneNumber,
@@ -66,13 +75,13 @@ export default function PhoneForm({
                     <CustomInput
                         value={phoneNumber}
                         inputStyle={{
-                            width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                            width: SIZES.WIDTH_BASE * 0.77
                         }}
                         onChangeText={(phoneNumberInput) => setPhoneNumber(phoneNumberInput)}
                         keyboardType="number-pad"
                         containerStyle={{
                             marginVertical: 10,
-                            width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                            width: SIZES.WIDTH_BASE * 0.77
                         }}
                         placeholder="Nhập số điện thoại..."
                     />
@@ -83,7 +92,7 @@ export default function PhoneForm({
                 >
                     <Checkbox
                         checkboxStyle={styles.checkbox}
-                        color={NowTheme.COLORS.PRIMARY}
+                        color={COLORS.PRIMARY}
                         style={styles.checkboxContainer}
                         initialValue={onCheckedDisclaimer}
                         label=""
@@ -101,8 +110,8 @@ export default function PhoneForm({
                         >
                             <Text
                                 style={{
-                                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                                    color: NowTheme.COLORS.DEFAULT
+                                    fontFamily: MONTSERRAT_REGULAR,
+                                    color: COLORS.DEFAULT
                                 }}
                             >
                                 Tôi đồng ý với các Điều khoản và Điều kiện
@@ -131,22 +140,22 @@ export default function PhoneForm({
 
 const styles = StyleSheet.create({
     imageBackgroundContainer: {
-        width: NowTheme.SIZES.WIDTH_BASE,
-        height: NowTheme.SIZES.HEIGHT_BASE,
+        width: SIZES.WIDTH_BASE,
+        height: SIZES.HEIGHT_BASE,
         padding: 0,
         zIndex: 1
     },
     imageBackground: {
-        width: NowTheme.SIZES.WIDTH_BASE,
-        height: NowTheme.SIZES.HEIGHT_BASE
+        width: SIZES.WIDTH_BASE,
+        height: SIZES.HEIGHT_BASE
     },
     registerContainer: {
         marginTop: 55,
-        width: NowTheme.SIZES.WIDTH_BASE * 0.9,
-        height: NowTheme.SIZES.HEIGHT_BASE < 812 ? NowTheme.SIZES.HEIGHT_BASE * 0.8 : NowTheme.SIZES.HEIGHT_BASE * 0.8,
-        backgroundColor: NowTheme.COLORS.BASE,
+        width: SIZES.WIDTH_BASE * 0.9,
+        height: SIZES.HEIGHT_BASE < 812 ? SIZES.HEIGHT_BASE * 0.8 : SIZES.HEIGHT_BASE * 0.8,
+        backgroundColor: COLORS.BASE,
         borderRadius: 4,
-        shadowColor: NowTheme.COLORS.BLACK,
+        shadowColor: COLORS.BLACK,
         shadowOffset: {
             width: 0,
             height: 4
@@ -157,20 +166,20 @@ const styles = StyleSheet.create({
         overflow: 'hidden'
     },
     button: {
-        width: NowTheme.SIZES.WIDTH_BASE * 0.77,
+        width: SIZES.WIDTH_BASE * 0.77,
         marginVertical: 10
     },
     title: {
-        fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
+        fontFamily: MONTSERRAT_BOLD,
         textAlign: 'center'
     },
     stepSessionContainer: {
-        height: NowTheme.SIZES.HEIGHT_BASE * 0.3
+        height: SIZES.HEIGHT_BASE * 0.3
     },
     checkbox: {
         borderWidth: 1,
         borderRadius: 2,
-        borderColor: NowTheme.COLORS.BORDER_COLOR
+        borderColor: COLORS.BORDER_COLOR
     },
     checkboxContainer: {
         alignItems: 'flex-start',
@@ -178,7 +187,7 @@ const styles = StyleSheet.create({
     disclaimerContainer: {
         alignSelf: 'center',
         flexDirection: 'row',
-        width: NowTheme.SIZES.WIDTH_BASE * 0.77,
+        width: SIZES.WIDTH_BASE * 0.77,
     },
     disclaimerAgreeContainer: {
         marginLeft: 10,

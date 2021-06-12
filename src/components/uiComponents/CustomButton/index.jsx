@@ -6,6 +6,15 @@ import {
 import { IconFamily, NowTheme } from '../../../constants';
 import IconCustom from '../IconCustom';
 
+const {
+    FONT: {
+        MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
+    },
+    SIZES,
+    COLORS
+} = NowTheme;
+
 CustomButton.propTypes = {
     label: PropTypes.string,
     labelStyle: PropTypes.object,
@@ -43,8 +52,8 @@ export default function CustomButton(
                 [
                     styles.baseButtonStyle,
                     {
-                        borderColor: NowTheme.COLORS.DEFAULT,
-                        width: NowTheme.SIZES.WIDTH_BASE * 0.9,
+                        borderColor: COLORS.DEFAULT,
+                        width: SIZES.WIDTH_BASE * 0.9,
                     },
                     buttonStyle,
                 ]
@@ -54,9 +63,9 @@ export default function CustomButton(
                 style={
                     [
                         {
-                            fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
-                            fontSize: NowTheme.SIZES.FONT_H2,
-                            color: NowTheme.COLORS.DEFAULT
+                            fontFamily: MONTSERRAT_BOLD,
+                            fontSize: SIZES.FONT_H2,
+                            color: COLORS.DEFAULT
                         },
                         labelStyle
                     ]
@@ -69,7 +78,7 @@ export default function CustomButton(
 
     const renderButtonByType = () => {
         if (type) {
-            const colorByType = type === 'active' ? NowTheme.COLORS.ACTIVE : NowTheme.COLORS.DEFAULT;
+            const colorByType = type === 'active' ? COLORS.ACTIVE : COLORS.DEFAULT;
 
             return (
                 <TouchableOpacity
@@ -79,7 +88,7 @@ export default function CustomButton(
                         [
                             styles.baseButtonStyle,
                             {
-                                width: NowTheme.SIZES.WIDTH_BASE * 0.44,
+                                width: SIZES.WIDTH_BASE * 0.44,
                                 borderColor: colorByType
                             },
                             buttonStyle,
@@ -90,8 +99,8 @@ export default function CustomButton(
                         style={
                             [
                                 {
-                                    fontSize: NowTheme.SIZES.FONT_H3,
-                                    fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
+                                    fontSize: SIZES.FONT_H3,
+                                    fontFamily: MONTSERRAT_BOLD,
                                     color: colorByType
                                 },
                                 labelStyle
@@ -125,8 +134,8 @@ export default function CustomButton(
                             height: 40,
                             alignSelf: 'center',
                             justifyContent: 'center',
-                            backgroundColor: NowTheme.COLORS.TRANSPARENT,
-                            width: NowTheme.SIZES.WIDTH_BASE * 0.9,
+                            backgroundColor: COLORS.TRANSPARENT,
+                            width: SIZES.WIDTH_BASE * 0.9,
                         },
                         buttonStyle,
                     ]
@@ -142,15 +151,15 @@ export default function CustomButton(
                         name={name || 'home'}
                         family={family || IconFamily.FONT_AWESOME}
                         size={size || 24}
-                        color={color || NowTheme.COLORS.DEFAULT}
+                        color={color || COLORS.DEFAULT}
                     />
                     <Text
                         style={
                             [
                                 {
-                                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                                    fontSize: NowTheme.SIZES.FONT_H3,
-                                    color: NowTheme.COLORS.DEFAULT,
+                                    fontFamily: MONTSERRAT_REGULAR,
+                                    fontSize: SIZES.FONT_H3,
+                                    color: COLORS.DEFAULT,
                                     marginLeft: 10
                                 },
                                 labelStyle
@@ -187,6 +196,6 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: NowTheme.COLORS.TRANSPARENT,
+        backgroundColor: COLORS.TRANSPARENT,
     }
 });
