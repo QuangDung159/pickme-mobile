@@ -5,7 +5,10 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { NowTheme } from '../../../constants';
 
-const { FONT, SIZES, COLORS } = NowTheme;
+const { FONT: {
+        MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
+    }, SIZES, COLORS } = NowTheme;
 
 export default function ProfileInfoItem({
     label, value
@@ -22,7 +25,7 @@ export default function ProfileInfoItem({
             row
         >
             <Text
-                style={{ fontFamily: FONT.MONTSERRAT_REGULAR }}
+                style={{ fontFamily: MONTSERRAT_REGULAR }}
                 size={SIZES.FONT_H2}
                 color={COLORS.DEFAULT}
             >
@@ -33,7 +36,7 @@ export default function ProfileInfoItem({
                 size={SIZES.FONT_H2}
                 color={COLORS.ACTIVE}
                 style={{
-                    fontFamily: FONT.MONTSERRAT_BOLD
+                    fontFamily: MONTSERRAT_BOLD
                 }}
             >
                 {handleValue}

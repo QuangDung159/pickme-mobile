@@ -9,7 +9,10 @@ import { ToastHelpers } from '../../helpers';
 import { setShowLoaderStore } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
 
-const { FONT, SIZES, COLORS } = NowTheme;
+const { FONT: {
+        MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
+    }, SIZES, COLORS } = NowTheme;
 
 export default function PhoneForm({
     phoneNumber,
@@ -103,7 +106,7 @@ export default function PhoneForm({
                         >
                             <Text
                                 style={{
-                                    fontFamily: FONT.MONTSERRAT_REGULAR,
+                                    fontFamily: MONTSERRAT_REGULAR,
                                     color: COLORS.DEFAULT
                                 }}
                             >
@@ -163,7 +166,7 @@ const styles = StyleSheet.create({
         marginVertical: 10
     },
     title: {
-        fontFamily: FONT.MONTSERRAT_BOLD,
+        fontFamily: MONTSERRAT_BOLD,
         textAlign: 'center'
     },
     stepSessionContainer: {

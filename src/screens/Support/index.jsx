@@ -16,7 +16,10 @@ import {
 import { MediaHelpers, ToastHelpers } from '../../helpers';
 import { rxUtil } from '../../utils';
 
-const { FONT, SIZES, COLORS } = NowTheme;
+const { FONT: {
+        MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
+    }, SIZES, COLORS } = NowTheme;
 
 export default function Support({ navigation }) {
     const [tabActiveIndex, setTabActiveIndex] = useState(0);
@@ -218,7 +221,7 @@ export default function Support({ navigation }) {
                                 content={item.answer || 'N/A'}
                                 contentStyle={{
                                     fontSize: SIZES.FONT_H3,
-                                    fontFamily: FONT.MONTSERRAT_REGULAR,
+                                    fontFamily: MONTSERRAT_REGULAR,
                                     alignSelf: 'flex-start'
                                 }}
                                 backgroundColor={COLORS.LIST_ITEM_BACKGROUND_2}
@@ -239,7 +242,7 @@ export default function Support({ navigation }) {
             >
                 <Text
                     style={{
-                        fontFamily: FONT.MONTSERRAT_REGULAR,
+                        fontFamily: MONTSERRAT_REGULAR,
                         color: COLORS.DEFAULT,
                         fontSize: SIZES.FONT_H2
                     }}
@@ -278,7 +281,7 @@ export default function Support({ navigation }) {
             >
                 <Text
                     style={{
-                        fontFamily: FONT.MONTSERRAT_REGULAR,
+                        fontFamily: MONTSERRAT_REGULAR,
                         color: COLORS.ACTIVE,
                         fontSize: 16,
                     }}
@@ -383,7 +386,7 @@ const styles = StyleSheet.create({
         elevation: 3
     },
     titleBold: {
-        fontFamily: FONT.MONTSERRAT_BOLD,
+        fontFamily: MONTSERRAT_BOLD,
         fontSize: SIZES.FONT_H4
     },
     button: {

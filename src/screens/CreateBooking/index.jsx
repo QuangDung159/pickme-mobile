@@ -22,7 +22,10 @@ import { ToastHelpers } from '../../helpers';
 import { setListBookingStore, setPersonTabActiveIndex } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
 
-const { FONT, SIZES, COLORS } = NowTheme;
+const { FONT: {
+        MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
+    }, SIZES, COLORS } = NowTheme;
 
 const hourArr = DateTimeConst.HOUR_ARR;
 const minuteArr = DateTimeConst.MINUTE_ARR;
@@ -326,7 +329,7 @@ export default function CreateBooking({ route, navigation }) {
                 renderItem={(data) => (
                     <Text
                         style={{
-                            fontFamily: FONT.MONTSERRAT_REGULAR
+                            fontFamily: MONTSERRAT_REGULAR
                         }}
                     >
                         {`${data}`}
@@ -353,7 +356,7 @@ export default function CreateBooking({ route, navigation }) {
                 renderItem={(data) => (
                     <Text
                         style={{
-                            fontFamily: FONT.MONTSERRAT_REGULAR
+                            fontFamily: MONTSERRAT_REGULAR
                         }}
                     >
                         {`${data}`}
@@ -392,7 +395,7 @@ export default function CreateBooking({ route, navigation }) {
                     <Picker
                         selectedValue={packageActive.id}
                         onValueChange={(itemValue) => onChangePackage(itemValue)}
-                        fontFamily={FONT.MONTSERRAT_REGULAR}
+                        fontFamily={MONTSERRAT_REGULAR}
                     >
                         {listPartnerPackage.map((item) => (
                             <Picker.Item value={item.id} label={item.title} key={item.id} />
@@ -404,7 +407,7 @@ export default function CreateBooking({ route, navigation }) {
                     >
                         <Text
                             style={{
-                                fontFamily: FONT.MONTSERRAT_REGULAR,
+                                fontFamily: MONTSERRAT_REGULAR,
                                 color: COLORS.ACTIVE,
                                 fontSize: SIZES.FONT_H1,
                                 marginBottom: 10
@@ -414,7 +417,7 @@ export default function CreateBooking({ route, navigation }) {
                         </Text>
                         <Text
                             style={{
-                                fontFamily: FONT.MONTSERRAT_REGULAR,
+                                fontFamily: MONTSERRAT_REGULAR,
                                 color: COLORS.ACTIVE,
                                 fontSize: SIZES.FONT_H1,
                                 marginBottom: 10
@@ -426,7 +429,7 @@ export default function CreateBooking({ route, navigation }) {
 
                     <Text
                         style={{
-                            fontFamily: FONT.MONTSERRAT_REGULAR,
+                            fontFamily: MONTSERRAT_REGULAR,
                             color: COLORS.DEFAULT,
                             fontSize: SIZES.FONT_H2,
                             marginBottom: 10
@@ -436,7 +439,7 @@ export default function CreateBooking({ route, navigation }) {
                     </Text>
                     <Text
                         style={{
-                            fontFamily: FONT.MONTSERRAT_REGULAR,
+                            fontFamily: MONTSERRAT_REGULAR,
                             color: COLORS.DEFAULT,
                             fontSize: SIZES.FONT_H2,
                             marginBottom: 10
@@ -449,7 +452,7 @@ export default function CreateBooking({ route, navigation }) {
                     >
                         <Text
                             style={{
-                                fontFamily: FONT.MONTSERRAT_BOLD,
+                                fontFamily: MONTSERRAT_BOLD,
                                 fontSize: 30,
                                 paddingVertical: 10
                             }}
@@ -496,7 +499,7 @@ export default function CreateBooking({ route, navigation }) {
                             >
                                 <Text
                                     style={{
-                                        fontFamily: FONT.MONTSERRAT_REGULAR
+                                        fontFamily: MONTSERRAT_REGULAR
                                     }}
                                     size={27}
                                     color={COLORS.ACTIVE}
@@ -505,7 +508,7 @@ export default function CreateBooking({ route, navigation }) {
                                 </Text>
                                 <Text
                                     style={{
-                                        fontFamily: FONT.MONTSERRAT_REGULAR
+                                        fontFamily: MONTSERRAT_REGULAR
                                     }}
                                     size={27}
                                     color={COLORS.ACTIVE}
@@ -514,7 +517,7 @@ export default function CreateBooking({ route, navigation }) {
                                 </Text>
                                 <Text
                                     style={{
-                                        fontFamily: FONT.MONTSERRAT_REGULAR
+                                        fontFamily: MONTSERRAT_REGULAR
                                     }}
                                     size={27}
                                     color={COLORS.ACTIVE}
@@ -538,7 +541,7 @@ export default function CreateBooking({ route, navigation }) {
                     <Text
                         size={SIZES.FONT_H2}
                         style={{
-                            fontFamily: FONT.MONTSERRAT_REGULAR,
+                            fontFamily: MONTSERRAT_REGULAR,
                             marginVertical: 10
                         }}
                     >
@@ -767,7 +770,7 @@ export default function CreateBooking({ route, navigation }) {
         >
             <Block>
                 <Text style={{
-                    fontFamily: FONT.MONTSERRAT_REGULAR,
+                    fontFamily: MONTSERRAT_REGULAR,
                     marginTop: 10
                 }}
                 >
@@ -800,7 +803,7 @@ export default function CreateBooking({ route, navigation }) {
                         <Text
                             style={{
                                 fontSize: SIZES.FONT_H3,
-                                fontFamily: FONT.MONTSERRAT_REGULAR,
+                                fontFamily: MONTSERRAT_REGULAR,
                                 color: COLORS.ACTIVE
                             }}
                         >
@@ -845,7 +848,7 @@ export default function CreateBooking({ route, navigation }) {
         <Block>
             <Block>
                 <Text style={{
-                    fontFamily: FONT.MONTSERRAT_REGULAR,
+                    fontFamily: MONTSERRAT_REGULAR,
                     marginTop: 10
                 }}
                 >
@@ -864,7 +867,7 @@ export default function CreateBooking({ route, navigation }) {
             >
                 <Text
                     style={{
-                        fontFamily: FONT.MONTSERRAT_BOLD,
+                        fontFamily: MONTSERRAT_BOLD,
                         fontSize: 30,
                         paddingVertical: 10
                     }}
@@ -931,7 +934,7 @@ export default function CreateBooking({ route, navigation }) {
                     <Text
                         color={COLORS.SWITCH_OFF}
                         style={{
-                            fontFamily: FONT.MONTSERRAT_REGULAR,
+                            fontFamily: MONTSERRAT_REGULAR,
                         }}
                         size={14}
                     >
@@ -989,12 +992,12 @@ export default function CreateBooking({ route, navigation }) {
 
 const styles = StyleSheet.create({
     title: {
-        fontFamily: FONT.MONTSERRAT_BOLD,
+        fontFamily: MONTSERRAT_BOLD,
         marginVertical: 10
     },
     timePickerText: {
         color: COLORS.ACTIVE,
-        fontFamily: FONT.MONTSERRAT_BOLD,
+        fontFamily: MONTSERRAT_BOLD,
         fontSize: SIZES.FONT_H2
     },
 });

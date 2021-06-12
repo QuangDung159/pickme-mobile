@@ -22,7 +22,10 @@ import {
 } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
 
-const { FONT, SIZES, COLORS } = NowTheme;
+const { FONT: {
+        MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
+    }, SIZES, COLORS } = NowTheme;
 
 export default function SignInWithOTP({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
@@ -208,7 +211,7 @@ export default function SignInWithOTP({ navigation }) {
                                     contentStyle={{
                                         fontSize: SIZES.FONT_H4,
                                         color: COLORS.ACTIVE,
-                                        fontFamily: FONT.MONTSERRAT_REGULAR,
+                                        fontFamily: MONTSERRAT_REGULAR,
                                         marginTop: 5
                                     }}
                                     iconComponent={(

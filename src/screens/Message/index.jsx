@@ -13,7 +13,10 @@ import { ToastHelpers } from '../../helpers';
 import { setChattingWith, setNumberMessageUnread } from '../../redux/Actions';
 import { socketRequestUtil } from '../../utils';
 
-const { FONT, SIZES, COLORS } = NowTheme;
+const { FONT: {
+        MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
+    }, SIZES, COLORS } = NowTheme;
 
 export default function Message({ navigation, route }) {
     const [listMessageFromAPI, setListMessageFromAPI] = useState([]);
@@ -187,7 +190,7 @@ export default function Message({ navigation, route }) {
                             size={16}
                             style={{
                                 margin: 10,
-                                fontFamily: FONT.MONTSERRAT_REGULAR
+                                fontFamily: MONTSERRAT_REGULAR
                             }}
                         >
                             {message.content}

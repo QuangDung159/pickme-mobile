@@ -3,7 +3,10 @@ import { StyleSheet, Text, View } from 'react-native';
 import { CustomButton, CustomModal } from '../../components/uiComponents';
 import { NowTheme } from '../../constants';
 
-const { FONT, SIZES } = NowTheme;
+const { FONT: {
+        MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
+    }, SIZES } = NowTheme;
 
 export default function ModalDisclaimer({ modalVisible, setModalVisible }) {
     const renderModalDisclaimer = () => (
@@ -56,6 +59,6 @@ const styles = StyleSheet.create({
     modalText: {
         margin: 15,
         textAlign: 'center',
-        fontFamily: FONT.MONTSERRAT_REGULAR
+        fontFamily: MONTSERRAT_REGULAR
     },
 });

@@ -3,7 +3,10 @@ import { StyleSheet, Text, View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { NowTheme } from '../../../constants';
 
-const { FONT, SIZES, COLORS } = NowTheme;
+const { FONT: {
+        MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
+    }, SIZES, COLORS } = NowTheme;
 
 export default function TopTabBar({ tabs, tabActiveIndex, setTabActiveIndex }) {
     const renderTabButton = (tab, index) => {
@@ -54,7 +57,7 @@ export default function TopTabBar({ tabs, tabActiveIndex, setTabActiveIndex }) {
 
 const styles = StyleSheet.create({
     titleBold: {
-        fontFamily: FONT.MONTSERRAT_BOLD,
+        fontFamily: MONTSERRAT_BOLD,
         fontSize: SIZES.FONT_H4,
         textAlign: 'center'
     },

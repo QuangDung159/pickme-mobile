@@ -4,7 +4,10 @@ import { useSelector } from 'react-redux';
 import { IconCustom, NoteText } from '../../../components/uiComponents';
 import { IconFamily, NowTheme, VerificationStatus } from '../../../constants';
 
-const { FONT, SIZES, COLORS } = NowTheme;
+const { FONT: {
+        MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
+    }, SIZES, COLORS } = NowTheme;
 
 export default function VerificationStatusPanel() {
     const currentUser = useSelector((state) => state.userReducer.currentUser);
@@ -19,7 +22,7 @@ export default function VerificationStatusPanel() {
                     contentStyle={{
                         fontSize: SIZES.FONT_H4,
                         color: COLORS.ACTIVE,
-                        fontFamily: FONT.MONTSERRAT_REGULAR,
+                        fontFamily: MONTSERRAT_REGULAR,
                         marginTop: 5
                     }}
                     iconComponent={(
@@ -43,7 +46,7 @@ export default function VerificationStatusPanel() {
                     contentStyle={{
                         fontSize: SIZES.FONT_H4,
                         color: COLORS.ACTIVE,
-                        fontFamily: FONT.MONTSERRAT_REGULAR,
+                        fontFamily: MONTSERRAT_REGULAR,
                         marginTop: 5
                     }}
                     iconComponent={(
@@ -67,7 +70,7 @@ export default function VerificationStatusPanel() {
                     contentStyle={{
                         fontSize: SIZES.FONT_H4,
                         color: COLORS.ACTIVE,
-                        fontFamily: FONT.MONTSERRAT_REGULAR,
+                        fontFamily: MONTSERRAT_REGULAR,
                         marginTop: 5
                     }}
                     iconComponent={(

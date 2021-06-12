@@ -14,7 +14,10 @@ import { MediaHelpers, ToastHelpers } from '../../helpers';
 import { setCurrentUser, setPersonTabActiveIndex, setVerificationStore } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
 
-const { FONT, SIZES, COLORS } = NowTheme;
+const { FONT: {
+        MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
+    }, SIZES, COLORS } = NowTheme;
 let count = 0;
 
 export default function Verification({ navigation }) {
@@ -91,7 +94,7 @@ export default function Verification({ navigation }) {
                         marginBottom: 10
                     }}
                     labelStyle={{
-                        fontFamily: FONT.MONTSERRAT_REGULAR,
+                        fontFamily: MONTSERRAT_REGULAR,
                     }}
                     disabled={isDisabled}
                 />
@@ -283,7 +286,7 @@ export default function Verification({ navigation }) {
                     <Text
                         color={COLORS.SWITCH_OFF}
                         style={{
-                            fontFamily: FONT.MONTSERRAT_REGULAR,
+                            fontFamily: MONTSERRAT_REGULAR,
                         }}
                         size={SIZES.FONT_H2}
                     >
@@ -336,7 +339,7 @@ export default function Verification({ navigation }) {
                                 }}
                             >
                                 <Text style={{
-                                    fontFamily: FONT.MONTSERRAT_REGULAR,
+                                    fontFamily: MONTSERRAT_REGULAR,
                                     marginVertical: 10
                                 }}
                                 >

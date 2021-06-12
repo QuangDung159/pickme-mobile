@@ -17,7 +17,10 @@ import {
 import { ToastHelpers } from '../../helpers';
 import { rxUtil } from '../../utils';
 
-const { FONT, SIZES, COLORS } = NowTheme;
+const { FONT: {
+        MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
+    }, SIZES, COLORS } = NowTheme;
 
 export default function ForgotPassword({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
@@ -271,7 +274,7 @@ export default function ForgotPassword({ navigation }) {
                                         contentStyle={{
                                             fontSize: SIZES.FONT_H4,
                                             color: COLORS.ACTIVE,
-                                            fontFamily: FONT.MONTSERRAT_REGULAR,
+                                            fontFamily: MONTSERRAT_REGULAR,
                                             marginTop: 5
                                         }}
                                         iconComponent={(
@@ -383,6 +386,6 @@ const styles = StyleSheet.create({
     modalText: {
         marginBottom: 15,
         textAlign: 'center',
-        fontFamily: FONT.MONTSERRAT_REGULAR
+        fontFamily: MONTSERRAT_REGULAR
     }
 });

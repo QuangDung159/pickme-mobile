@@ -20,7 +20,10 @@ import {
 } from '../../redux/Actions';
 import { rxUtil, socketRequestUtil } from '../../utils';
 
-const { FONT, SIZES, COLORS } = NowTheme;
+const { FONT: {
+        MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
+    }, SIZES, COLORS } = NowTheme;
 
 export default function Home({ navigation }) {
     const [refreshing, setRefreshing] = useState(false);
@@ -393,6 +396,6 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
     },
     subInfoCard: {
-        fontFamily: FONT.MONTSERRAT_REGULAR,
+        fontFamily: MONTSERRAT_REGULAR,
     },
 });

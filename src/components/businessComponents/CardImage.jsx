@@ -11,7 +11,10 @@ import { useSelector } from 'react-redux';
 import { NowTheme, ScreenName } from '../../constants';
 import { CenterLoader } from '../uiComponents';
 
-const { FONT, SIZES, COLORS } = NowTheme;
+const { FONT: {
+        MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
+    }, SIZES, COLORS } = NowTheme;
 
 export default function CardImage({
     navigation, user, isShowTitle, imageUrl,
@@ -84,7 +87,7 @@ export default function CardImage({
                                 <Text
                                     style={{
                                         fontSize: SIZES.FONT_H2,
-                                        fontFamily: FONT.MONTSERRAT_BOLD,
+                                        fontFamily: MONTSERRAT_BOLD,
                                         color: COLORS.ACTIVE,
                                     }}
                                 >
@@ -137,6 +140,6 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
     },
     subInfoCard: {
-        fontFamily: FONT.MONTSERRAT_REGULAR,
+        fontFamily: MONTSERRAT_REGULAR,
     },
 });

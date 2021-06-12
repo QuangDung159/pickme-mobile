@@ -5,7 +5,10 @@ import {
 } from 'react-native';
 import { NowTheme } from '../../constants';
 
-const { FONT, SIZES, COLORS } = NowTheme;
+const { FONT: {
+        MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
+    }, SIZES, COLORS } = NowTheme;
 
 export default class Tabs extends PureComponent {
   animatedValue = new Animated.Value(1);
@@ -81,7 +84,7 @@ export default class Tabs extends PureComponent {
                   style={[
                       styles.menuTitle,
                       { color: textColor },
-                      { fontFamily: FONT.MONTSERRAT_REGULAR },
+                      { fontFamily: MONTSERRAT_REGULAR },
                   ]}
                   onPress={() => this.selectMenu(item.id)}
               >

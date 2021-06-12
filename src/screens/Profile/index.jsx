@@ -21,7 +21,12 @@ import { ToastHelpers } from '../../helpers';
 import { rxUtil } from '../../utils';
 import UserInfoSection from '../Personal/UserInformation/UserInfoSection';
 
-const { FONT, SIZES, COLORS } = NowTheme;
+const {
+    FONT: {
+        MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
+    }, SIZES, COLORS
+} = NowTheme;
 
 export default function Profile({ route, navigation }) {
     const [visible, setVisible] = useState(false);
@@ -123,7 +128,7 @@ export default function Profile({ route, navigation }) {
                             color: COLORS.ACTIVE,
                             fontWeight: 'bold',
                             fontSize: SIZES.FONT_H1,
-                            fontFamily: FONT.MONTSERRAT_BOLD,
+                            fontFamily: MONTSERRAT_BOLD,
                         }}
                     >
                         {fullName}
@@ -140,7 +145,7 @@ export default function Profile({ route, navigation }) {
                 >
                     <Text
                         style={{
-                            fontFamily: FONT.MONTSERRAT_REGULAR,
+                            fontFamily: MONTSERRAT_REGULAR,
                             textAlign: 'center',
                         }}
                         size={SIZES.FONT_H2}

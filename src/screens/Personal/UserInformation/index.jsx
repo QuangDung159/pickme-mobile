@@ -22,7 +22,10 @@ import { rxUtil } from '../../../utils';
 import UserInfoSection from './UserInfoSection';
 import VerificationStatusPanel from './VerificationStatusPanel';
 
-const { FONT, SIZES, COLORS } = NowTheme;
+const { FONT: {
+        MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
+    }, SIZES, COLORS } = NowTheme;
 
 export default function UserInformation({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
@@ -273,7 +276,7 @@ export default function UserInformation({ navigation }) {
                     style={{
                         color: COLORS.ACTIVE,
                         fontSize: SIZES.FONT_H1,
-                        fontFamily: FONT.MONTSERRAT_BOLD,
+                        fontFamily: MONTSERRAT_BOLD,
                     }}
                 >
                     {currentUser.fullName}
@@ -290,7 +293,7 @@ export default function UserInformation({ navigation }) {
                         <Text
                             center
                             style={{
-                                fontFamily: FONT.MONTSERRAT_REGULAR,
+                                fontFamily: MONTSERRAT_REGULAR,
                             }}
                             size={SIZES.FONT_H2}
                             color={COLORS.DEFAULT}

@@ -16,7 +16,10 @@ const arrDOW = [
     'T.Bảy'
 ];
 const currentDate = moment().format('DD-MM-YYYY');
-const { FONT, SIZES, COLORS } = NowTheme;
+const { FONT: {
+        MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
+    }, SIZES, COLORS } = NowTheme;
 
 export default function CustomCalendar({ selectedDate, onChangeDate }) {
     const [selectedDateState, setSelectedDateState] = useState(moment().format('DD-MM-YYYY'));
@@ -54,7 +57,7 @@ export default function CustomCalendar({ selectedDate, onChangeDate }) {
     const arrDateLine2 = createArrDate(moment().add(7, 'days').format('DD-MM-YYYY'), 7);
 
     const weekendStyle = {
-        fontFamily: FONT.MONTSERRAT_BOLD,
+        fontFamily: MONTSERRAT_BOLD,
         color: COLORS.ACTIVE
     };
 
@@ -81,7 +84,7 @@ export default function CustomCalendar({ selectedDate, onChangeDate }) {
                             size={13}
                             style={[
                                 {
-                                    fontFamily: FONT.MONTSERRAT_REGULAR,
+                                    fontFamily: MONTSERRAT_REGULAR,
                                 },
                                 (item === 'T.Bảy' || item === 'C.Nhật') && weekendStyle,
                             ]}
@@ -113,8 +116,8 @@ export default function CustomCalendar({ selectedDate, onChangeDate }) {
                     const dateTextStyle = {
                         color: currentDate === item ? COLORS.ACTIVE : COLORS.TEXT,
                         fontFamily: currentDate === item
-                            ? FONT.MONTSERRAT_BOLD
-                            : FONT.MONTSERRAT_REGULAR
+                            ? MONTSERRAT_BOLD
+                            : MONTSERRAT_REGULAR
                     };
 
                     return (
@@ -154,8 +157,8 @@ export default function CustomCalendar({ selectedDate, onChangeDate }) {
                     const dateTextStyle = {
                         color: currentDate === item ? COLORS.ACTIVE : COLORS.TEXT,
                         fontFamily: currentDate === item
-                            ? FONT.MONTSERRAT_BOLD
-                            : FONT.MONTSERRAT_REGULAR
+                            ? MONTSERRAT_BOLD
+                            : MONTSERRAT_REGULAR
                     };
 
                     return (

@@ -4,7 +4,10 @@ import { StyleSheet, Text, View } from 'react-native';
 import { NowTheme } from '../../constants';
 import CustomButton from './CustomButton';
 
-const { FONT, SIZES, COLORS } = NowTheme;
+const { FONT: {
+        MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
+    }, SIZES, COLORS } = NowTheme;
 
 export default function StepIndicator({
     type, buttonText, content
@@ -37,7 +40,7 @@ export default function StepIndicator({
                 <CustomButton
                     buttonStyle={indicatorStyle}
                     labelStyle={{
-                        fontFamily: FONT.MONTSERRAT_BOLD,
+                        fontFamily: MONTSERRAT_BOLD,
                         fontSize: SIZES.FONT_H2,
                         color: buttonFontColor
                     }}
@@ -52,7 +55,7 @@ export default function StepIndicator({
                     style={{
                         color: COLORS.DEFAULT,
                         fontSize: SIZES.FONT_H3,
-                        fontFamily: FONT.MONTSERRAT_REGULAR
+                        fontFamily: MONTSERRAT_REGULAR
                     }}
                 >
                     {content}

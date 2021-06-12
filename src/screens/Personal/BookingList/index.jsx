@@ -10,7 +10,10 @@ import { setListBookingStore } from '../../../redux/Actions';
 import { rxUtil } from '../../../utils';
 import CardBooking from './CardBooking';
 
-const { FONT, SIZES, COLORS } = NowTheme;
+const { FONT: {
+        MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
+    }, SIZES, COLORS } = NowTheme;
 
 export default function BookingList({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
@@ -126,7 +129,7 @@ export default function BookingList({ navigation }) {
                     >
                         <Text
                             style={{
-                                fontFamily: FONT.MONTSERRAT_REGULAR,
+                                fontFamily: MONTSERRAT_REGULAR,
                                 color: COLORS.DEFAULT,
                                 fontSize: SIZES.FONT_H2
                             }}

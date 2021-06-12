@@ -19,7 +19,10 @@ import { rxUtil } from '../../utils';
 import CardBooking from '../Personal/BookingList/CardBooking';
 import ReasonCancelBookingModal from './ReasonCancelBookingModal';
 
-const { FONT, SIZES, COLORS } = NowTheme;
+const { FONT: {
+        MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
+    }, SIZES, COLORS } = NowTheme;
 
 export default function BookingDetail({
     route: {
@@ -264,7 +267,7 @@ export default function BookingDetail({
                     <Text
                         size={SIZES.FONT_H2}
                         style={{
-                            fontFamily: FONT.MONTSERRAT_REGULAR,
+                            fontFamily: MONTSERRAT_REGULAR,
                             marginVertical: 10,
                             width: SIZES.WIDTH_BASE * 0.8
                         }}
@@ -311,7 +314,7 @@ export default function BookingDetail({
                     <Text
                         size={SIZES.FONT_H2}
                         style={{
-                            fontFamily: FONT.MONTSERRAT_REGULAR,
+                            fontFamily: MONTSERRAT_REGULAR,
                             marginVertical: 10
                         }}
                     >
@@ -420,7 +423,7 @@ export default function BookingDetail({
                         }}
                         >
                             <Text style={{
-                                fontFamily: FONT.MONTSERRAT_REGULAR,
+                                fontFamily: MONTSERRAT_REGULAR,
                             }}
                             >
                                 CHI TIẾT ĐƠN HẸN
@@ -445,7 +448,7 @@ export default function BookingDetail({
                             />
 
                             <Text style={{
-                                fontFamily: FONT.MONTSERRAT_REGULAR,
+                                fontFamily: MONTSERRAT_REGULAR,
                             }}
                             >
                                 GHI CHÚ CUỘC HẸN
@@ -492,11 +495,11 @@ export default function BookingDetail({
 
 const styles = StyleSheet.create({
     title: {
-        fontFamily: FONT.MONTSERRAT_BOLD,
+        fontFamily: MONTSERRAT_BOLD,
         marginBottom: 20
     },
     subTitle: {
-        fontFamily: FONT.MONTSERRAT_REGULAR,
+        fontFamily: MONTSERRAT_REGULAR,
         marginBottom: 10
     },
     centeredView: {

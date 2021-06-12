@@ -17,7 +17,10 @@ import ModalDisclaimer from './ModalDisclaimer';
 import OtpForm from './OtpForm';
 import PhoneForm from './PhoneForm';
 
-const { FONT, SIZES, COLORS } = NowTheme;
+const { FONT: {
+        MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
+    }, SIZES, COLORS } = NowTheme;
 
 export default function SignUp({ navigation }) {
     const [modalVisible, setModalVisible] = useState(false);
@@ -155,7 +158,7 @@ const styles = StyleSheet.create({
         overflow: 'hidden'
     },
     title: {
-        fontFamily: FONT.MONTSERRAT_BOLD,
+        fontFamily: MONTSERRAT_BOLD,
         textAlign: 'center'
     },
     stepSessionContainer: {

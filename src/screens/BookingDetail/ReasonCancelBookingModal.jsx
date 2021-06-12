@@ -9,7 +9,10 @@ import { ToastHelpers } from '../../helpers';
 import { setPersonTabActiveIndex } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
 
-const { FONT, SIZES } = NowTheme;
+const { FONT: {
+        MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
+    }, SIZES } = NowTheme;
 
 export default function ReasonCancelBookingModal({
     modalReasonVisible,
@@ -40,7 +43,7 @@ export default function ReasonCancelBookingModal({
         <Picker
             selectedValue={reason.value}
             onValueChange={(itemValue) => onChangeReason(itemValue)}
-            fontFamily={FONT.MONTSERRAT_REGULAR}
+            fontFamily={MONTSERRAT_REGULAR}
             style={{
                 width: SIZES.WIDTH_BASE * 0.8
             }}
@@ -82,7 +85,7 @@ export default function ReasonCancelBookingModal({
                 <>
                     <Text
                         style={{
-                            fontFamily: FONT.MONTSERRAT_REGULAR,
+                            fontFamily: MONTSERRAT_REGULAR,
                             marginVertical: 10,
                             fontSize: SIZES.FONT_H2
                         }}

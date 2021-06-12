@@ -22,7 +22,10 @@ import {
 } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
 
-const { FONT, SIZES, COLORS } = NowTheme;
+const { FONT: {
+        MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
+    }, SIZES, COLORS } = NowTheme;
 
 export default function SignIn({ navigation }) {
     const [phoneNumber, setPhoneNumber] = useState('huyvd');
@@ -143,7 +146,7 @@ export default function SignIn({ navigation }) {
             <View>
                 <Text
                     style={{
-                        fontFamily: FONT.MONTSERRAT_REGULAR,
+                        fontFamily: MONTSERRAT_REGULAR,
                         color: COLORS.SWITCH_OFF,
                         fontSize: SIZES.FONT_H4
                     }}
@@ -176,7 +179,7 @@ export default function SignIn({ navigation }) {
                             >
                                 <Text
                                     style={{
-                                        fontFamily: FONT.MONTSERRAT_BOLD,
+                                        fontFamily: MONTSERRAT_BOLD,
                                         textAlign: 'center',
                                         color: '#333',
                                         fontSize: 24,

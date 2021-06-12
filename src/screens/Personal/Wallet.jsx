@@ -10,7 +10,10 @@ import { ToastHelpers } from '../../helpers';
 import { setCurrentUser, setListCashHistoryStore } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
 
-const { FONT, SIZES, COLORS } = NowTheme;
+const { FONT: {
+        MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
+    }, SIZES, COLORS } = NowTheme;
 
 export default function Wallet({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
@@ -96,7 +99,7 @@ export default function Wallet({ navigation }) {
                         style={{
                             color: COLORS.DEFAULT,
                             fontSize: SIZES.FONT_H3,
-                            fontFamily: FONT.MONTSERRAT_REGULAR,
+                            fontFamily: MONTSERRAT_REGULAR,
                         }}
                     >
                         {content}
@@ -109,7 +112,7 @@ export default function Wallet({ navigation }) {
                 >
                     <Text
                         style={{
-                            fontFamily: FONT.MONTSERRAT_BOLD,
+                            fontFamily: MONTSERRAT_BOLD,
                             color: COLORS.ACTIVE,
                             fontSize: SIZES.FONT_H2,
                         }}
@@ -138,7 +141,7 @@ export default function Wallet({ navigation }) {
             >
                 <Text
                     style={{
-                        fontFamily: FONT.MONTSERRAT_REGULAR,
+                        fontFamily: MONTSERRAT_REGULAR,
                         fontSize: SIZES.FONT_H4
                     }}
                 >
@@ -151,7 +154,7 @@ export default function Wallet({ navigation }) {
                 >
                     <Text
                         style={{
-                            fontFamily: FONT.MONTSERRAT_REGULAR,
+                            fontFamily: MONTSERRAT_REGULAR,
                             fontSize: SIZES.FONT_H1 + 10,
                             color: COLORS.ACTIVE,
                         }}
@@ -251,7 +254,7 @@ export default function Wallet({ navigation }) {
                 >
                     <Text
                         style={{
-                            fontFamily: FONT.MONTSERRAT_REGULAR,
+                            fontFamily: MONTSERRAT_REGULAR,
                             color: COLORS.DEFAULT,
                             fontSize: SIZES.FONT_H2
                         }}

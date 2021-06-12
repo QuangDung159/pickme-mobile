@@ -15,7 +15,10 @@ import { resetStoreSignOut, setListNotification, setNumberNotificationUnread } f
 import { rxUtil } from '../utils';
 
 const iPhoneX = Platform.OS === 'ios';
-const { FONT, SIZES, COLORS } = NowTheme;
+const { FONT: {
+        MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
+    }, SIZES, COLORS } = NowTheme;
 
 export default function Header({
     back,
@@ -285,7 +288,7 @@ export default function Header({
                 >
                     <Text
                         style={{
-                            fontFamily: FONT.MONTSERRAT_REGULAR,
+                            fontFamily: MONTSERRAT_REGULAR,
                             marginTop: iPhoneX ? -16 : -20,
                         }}
                         size={10}
@@ -314,7 +317,7 @@ const styles = StyleSheet.create({
     title: {
         width: '100%',
         fontSize: 16,
-        fontFamily: FONT.MONTSERRAT_BOLD,
+        fontFamily: MONTSERRAT_BOLD,
         marginLeft: -70
     },
     navbar: {
@@ -373,6 +376,6 @@ const styles = StyleSheet.create({
         lineHeight: 19,
         fontWeight: '400',
         color: COLORS.HEADER,
-        fontFamily: FONT.MONTSERRAT_REGULAR
+        fontFamily: MONTSERRAT_REGULAR
     },
 });

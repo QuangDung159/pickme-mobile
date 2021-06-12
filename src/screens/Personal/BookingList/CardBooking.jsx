@@ -9,7 +9,10 @@ import { IconCustom } from '../../../components/uiComponents';
 import { IconFamily, NowTheme } from '../../../constants';
 import { ToastHelpers } from '../../../helpers';
 
-const { FONT, SIZES, COLORS } = NowTheme;
+const { FONT: {
+        MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
+    }, SIZES, COLORS } = NowTheme;
 
 export default function CardBooking({ booking }) {
     const convertMinutesToStringHours = (minutes) => moment.utc()
@@ -114,7 +117,7 @@ export default function CardBooking({ booking }) {
                             >
                                 <Text
                                     style={{
-                                        fontFamily: FONT.MONTSERRAT_BOLD,
+                                        fontFamily: MONTSERRAT_BOLD,
                                         marginRight: 5
                                     }}
                                     size={SIZES.FONT_H2}
@@ -151,14 +154,14 @@ CardBooking.propTypes = {
 const styles = StyleSheet.create({
     cardTitle: {
         paddingTop: 7,
-        fontFamily: FONT.MONTSERRAT_BOLD
+        fontFamily: MONTSERRAT_BOLD
     },
     subInfoCard: {
-        fontFamily: FONT.MONTSERRAT_REGULAR,
+        fontFamily: MONTSERRAT_REGULAR,
         marginBottom: 10
     },
     cardSubTitle: {
-        fontFamily: FONT.MONTSERRAT_REGULAR,
+        fontFamily: MONTSERRAT_REGULAR,
         paddingBottom: 15,
         color: COLORS.ICON_INPUT
     }

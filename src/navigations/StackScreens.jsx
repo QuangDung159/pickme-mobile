@@ -19,7 +19,10 @@ import {
 } from '../screens';
 
 const Stack = createStackNavigator();
-const { FONT, SIZES, COLORS } = NowTheme;
+const { FONT: {
+        MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
+    }, SIZES, COLORS } = NowTheme;
 
 export const PersonalScreen = () => (
     <Stack.Screen

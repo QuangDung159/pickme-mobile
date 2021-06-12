@@ -9,7 +9,10 @@ import { NowTheme, ScreenName } from '../../constants';
 import { ToastHelpers } from '../../helpers';
 import { setPersonTabActiveIndex } from '../../redux/Actions';
 
-const { FONT, SIZES, COLORS } = NowTheme;
+const { FONT: {
+        MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
+    }, SIZES, COLORS } = NowTheme;
 
 export default function CashIn(props) {
     const { navigation } = props;
@@ -60,7 +63,7 @@ export default function CashIn(props) {
                                 }}
                             >
                                 <Text style={{
-                                    fontFamily: FONT.MONTSERRAT_REGULAR,
+                                    fontFamily: MONTSERRAT_REGULAR,
                                     marginVertical: 10
                                 }}
                                 >
@@ -73,7 +76,7 @@ export default function CashIn(props) {
                                     }}
                                 >
                                     <Text style={{
-                                        fontFamily: FONT.MONTSERRAT_REGULAR,
+                                        fontFamily: MONTSERRAT_REGULAR,
                                         fontSize: SIZES.FONT_H4,
                                         color: COLORS.ACTIVE
                                     }}
@@ -156,7 +159,7 @@ export default function CashIn(props) {
                                 contentStyle={{
                                     fontSize: 18,
                                     color: COLORS.ACTIVE,
-                                    fontFamily: FONT.MONTSERRAT_BOLD
+                                    fontFamily: MONTSERRAT_BOLD
                                 }}
                                 iconComponent={(
                                     <IconCustom

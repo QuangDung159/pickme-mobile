@@ -5,7 +5,10 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { IconFamily, NowTheme } from '../../../constants';
 import IconCustom from '../IconCustom';
 
-const { FONT, SIZES, COLORS } = NowTheme;
+const { FONT: {
+        MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
+    }, SIZES, COLORS } = NowTheme;
 
 CustomInput.propTypes = {
     label: PropTypes.string,
@@ -45,7 +48,7 @@ export default function CustomInput({
                         borderRadius: 5,
                         height: 50,
                         paddingHorizontal: 10,
-                        fontFamily: FONT.MONTSERRAT_REGULAR,
+                        fontFamily: MONTSERRAT_REGULAR,
                         fontSize: SIZES.FONT_H2,
                         color: COLORS.HEADER
                     },
@@ -120,7 +123,7 @@ export default function CustomInput({
                     style={
                         [
                             {
-                                fontFamily: FONT.MONTSERRAT_REGULAR,
+                                fontFamily: MONTSERRAT_REGULAR,
                                 fontSize: SIZES.FONT_H3,
                                 color: COLORS.ACTIVE,
                                 marginBottom: 10

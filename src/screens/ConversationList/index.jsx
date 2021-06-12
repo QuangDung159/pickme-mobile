@@ -10,7 +10,10 @@ import { ToastHelpers } from '../../helpers';
 import { setListConversation, setNumberMessageUnread } from '../../redux/Actions';
 import { socketRequestUtil } from '../../utils';
 
-const { FONT, SIZES, COLORS } = NowTheme;
+const { FONT: {
+        MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
+    }, SIZES, COLORS } = NowTheme;
 
 export default function ConversationList({ navigation }) {
     const [refreshing, setRefreshing] = useState(false);
@@ -184,7 +187,7 @@ export default function ConversationList({ navigation }) {
                     <Block>
                         <Text
                             style={{
-                                fontFamily: FONT.MONTSERRAT_BOLD
+                                fontFamily: MONTSERRAT_BOLD
                             }}
                             size={16}
                             color={COLORS.DEFAULT}
@@ -199,8 +202,8 @@ export default function ConversationList({ navigation }) {
                             <Text
                                 style={{
                                     fontFamily: conversation.isRead
-                                        ? FONT.MONTSERRAT_REGULAR
-                                        : FONT.MONTSERRAT_BOLD
+                                        ? MONTSERRAT_REGULAR
+                                        : MONTSERRAT_BOLD
 
                                 }}
                                 size={16}
@@ -257,7 +260,7 @@ export default function ConversationList({ navigation }) {
                         >
                             <Text
                                 style={{
-                                    fontFamily: FONT.MONTSERRAT_REGULAR,
+                                    fontFamily: MONTSERRAT_REGULAR,
                                     color: COLORS.DEFAULT,
                                     fontSize: SIZES.FONT_H2
                                 }}

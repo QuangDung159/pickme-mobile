@@ -16,7 +16,10 @@ import { ToastHelpers } from '../../helpers';
 import { setIsSignInOtherDeviceStore, setNavigation, setToken } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
 
-const { FONT, SIZES, COLORS } = NowTheme;
+const { FONT: {
+        MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
+    }, SIZES, COLORS } = NowTheme;
 
 export default function Onboarding({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
@@ -140,7 +143,7 @@ export default function Onboarding({ navigation }) {
                                 >
                                     <Text
                                         style={{
-                                            fontFamily: FONT.MONTSERRAT_REGULAR,
+                                            fontFamily: MONTSERRAT_REGULAR,
                                             fontSize: SIZES.WIDTH_BASE * 0.1
                                         }}
                                         color={COLORS.ACTIVE}
@@ -172,14 +175,14 @@ export default function Onboarding({ navigation }) {
                                 <Text
                                     color={COLORS.DEFAULT}
                                     size={SIZES.FONT_H4 - 2}
-                                    style={{ fontFamily: FONT.MONTSERRAT_REGULAR }}
+                                    style={{ fontFamily: MONTSERRAT_REGULAR }}
                                 >
                                     {`${Constants.manifest.version}`}
                                 </Text>
                                 <Text
                                     color={COLORS.DEFAULT}
                                     size={SIZES.FONT_H4 - 2}
-                                    style={{ fontFamily: FONT.MONTSERRAT_REGULAR }}
+                                    style={{ fontFamily: MONTSERRAT_REGULAR }}
                                 >
                                     {deviceIdStore}
                                 </Text>

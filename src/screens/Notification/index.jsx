@@ -9,7 +9,10 @@ import { setListNotification, setNumberNotificationUnread } from '../../redux/Ac
 import { rxUtil } from '../../utils';
 import NotificationItem from './NotificationItem';
 
-const { FONT, SIZES, COLORS } = NowTheme;
+const { FONT: {
+        MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
+    }, SIZES, COLORS } = NowTheme;
 
 export default function Notification({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
@@ -127,7 +130,7 @@ export default function Notification({ navigation }) {
                     >
                         <Text
                             style={{
-                                fontFamily: FONT.MONTSERRAT_REGULAR,
+                                fontFamily: MONTSERRAT_REGULAR,
                                 color: COLORS.DEFAULT,
                                 fontSize: SIZES.FONT_H2
                             }}

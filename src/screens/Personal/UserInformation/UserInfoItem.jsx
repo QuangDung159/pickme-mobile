@@ -3,7 +3,10 @@ import React from 'react';
 import { IconCustom } from '../../../components/uiComponents';
 import { NowTheme } from '../../../constants';
 
-const { FONT, SIZES, COLORS } = NowTheme;
+const { FONT: {
+        MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
+    }, SIZES, COLORS } = NowTheme;
 
 export default function UserInfoItem({
     value, icon: {
@@ -41,7 +44,7 @@ export default function UserInfoItem({
                     size={SIZES.FONT_H2}
                     color={COLORS.DEFAULT}
                     style={{
-                        fontFamily: FONT.MONTSERRAT_REGULAR
+                        fontFamily: MONTSERRAT_REGULAR
                     }}
                 >
                     {handleValue}

@@ -12,7 +12,10 @@ import {
 } from '../../constants';
 import { ToastHelpers } from '../../helpers';
 
-const { FONT, SIZES, COLORS } = NowTheme;
+const { FONT: {
+        MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
+    }, SIZES, COLORS } = NowTheme;
 
 export default function LeaderBoard({ navigation }) {
     const [tabActiveIndex, setTabActiveIndex] = useState(0);
@@ -104,7 +107,7 @@ export default function LeaderBoard({ navigation }) {
                                     color: index === 1 || index === 2
                                         ? COLORS.ACTIVE
                                         : COLORS.DEFAULT,
-                                    fontFamily: FONT.MONTSERRAT_REGULAR,
+                                    fontFamily: MONTSERRAT_REGULAR,
                                     fontSize: SIZES.FONT_H2
                                 }}
                             >
@@ -149,7 +152,7 @@ export default function LeaderBoard({ navigation }) {
                                     style={{
                                         color: COLORS.ACTIVE,
                                         fontSize: SIZES.FONT_H2,
-                                        fontFamily: FONT.MONTSERRAT_REGULAR,
+                                        fontFamily: MONTSERRAT_REGULAR,
                                         paddingVertical: 10
                                     }}
                                 >
@@ -180,7 +183,7 @@ export default function LeaderBoard({ navigation }) {
         >
             <Text
                 style={{
-                    fontFamily: FONT.MONTSERRAT_REGULAR,
+                    fontFamily: MONTSERRAT_REGULAR,
                     color: COLORS.ACTIVE,
                     fontSize: SIZES.FONT_H1,
                 }}
@@ -264,7 +267,7 @@ export default function LeaderBoard({ navigation }) {
                     >
                         <Text
                             style={{
-                                fontFamily: FONT.MONTSERRAT_BOLD,
+                                fontFamily: MONTSERRAT_BOLD,
                                 fontSize: SIZES.FONT_H1,
                                 color: COLORS.ACTIVE
                             }}

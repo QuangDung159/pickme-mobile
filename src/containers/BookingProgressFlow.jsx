@@ -4,7 +4,10 @@ import React, { useEffect, useState } from 'react';
 import { IndicatorVerticalLine, Line, StepIndicator } from '../components/uiComponents';
 import { BookingStatus, NowTheme } from '../constants';
 
-const { FONT, SIZES, COLORS } = NowTheme;
+const { FONT: {
+        MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
+    }, SIZES, COLORS } = NowTheme;
 
 export default function BookingProgressFlow({
     booking
@@ -163,7 +166,7 @@ export default function BookingProgressFlow({
         }}
         >
             <Text style={{
-                fontFamily: FONT.MONTSERRAT_REGULAR,
+                fontFamily: MONTSERRAT_REGULAR,
             }}
             >
                 SƠ ĐỒ ĐẶT HẸN
@@ -204,7 +207,7 @@ export default function BookingProgressFlow({
                     <Text
                         color={COLORS.SWITCH_OFF}
                         style={{
-                            fontFamily: FONT.MONTSERRAT_REGULAR,
+                            fontFamily: MONTSERRAT_REGULAR,
                         }}
                         size={SIZES.FONT_H2}
                     >

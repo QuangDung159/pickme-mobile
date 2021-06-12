@@ -6,7 +6,12 @@ import {
 import { IconFamily, NowTheme } from '../../../constants';
 import IconCustom from '../IconCustom';
 
-const { FONT, SIZES, COLORS } = NowTheme;
+const {
+    FONT: {
+        MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
+    }, SIZES, COLORS
+} = NowTheme;
 
 CustomButton.propTypes = {
     label: PropTypes.string,
@@ -56,7 +61,7 @@ export default function CustomButton(
                 style={
                     [
                         {
-                            fontFamily: FONT.MONTSERRAT_BOLD,
+                            fontFamily: MONTSERRAT_BOLD,
                             fontSize: SIZES.FONT_H2,
                             color: COLORS.DEFAULT
                         },
@@ -93,7 +98,7 @@ export default function CustomButton(
                             [
                                 {
                                     fontSize: SIZES.FONT_H3,
-                                    fontFamily: FONT.MONTSERRAT_BOLD,
+                                    fontFamily: MONTSERRAT_BOLD,
                                     color: colorByType
                                 },
                                 labelStyle
@@ -150,7 +155,7 @@ export default function CustomButton(
                         style={
                             [
                                 {
-                                    fontFamily: FONT.MONTSERRAT_REGULAR,
+                                    fontFamily: MONTSERRAT_REGULAR,
                                     fontSize: SIZES.FONT_H3,
                                     color: COLORS.DEFAULT,
                                     marginLeft: 10

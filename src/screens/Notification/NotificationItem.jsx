@@ -11,7 +11,10 @@ import { ToastHelpers } from '../../helpers';
 import { setPersonTabActiveIndex } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
 
-const { FONT, SIZES, COLORS } = NowTheme;
+const { FONT: {
+        MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
+    }, SIZES, COLORS } = NowTheme;
 
 export default function NotificationItem({
     onTriggerRead,
@@ -106,7 +109,7 @@ export default function NotificationItem({
                                 style={{
                                     color: COLORS.DEFAULT,
                                     fontSize: 16,
-                                    fontFamily: FONT.MONTSERRAT_REGULAR,
+                                    fontFamily: MONTSERRAT_REGULAR,
                                 }}
                             >
                                 {content}
