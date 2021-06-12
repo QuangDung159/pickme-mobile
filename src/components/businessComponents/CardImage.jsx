@@ -1,9 +1,8 @@
-import { Block } from 'galio-framework';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import {
     Image,
-    StyleSheet, Text, TouchableWithoutFeedback
+    StyleSheet, Text, TouchableWithoutFeedback, View
 } from 'react-native';
 import ImageView from 'react-native-image-viewing';
 import ImageScalable from 'react-native-scalable-image';
@@ -34,10 +33,11 @@ export default function CardImage({
     const images = [{ uri: imageUrl }];
 
     return (
-        <Block style={{
-            backgroundColor: COLORS.BASE,
-            borderWidth: 0,
-        }}
+        <View
+            style={{
+                backgroundColor: COLORS.BASE,
+                borderWidth: 0,
+            }}
         >
             <ImageView
                 images={images}
@@ -46,17 +46,17 @@ export default function CardImage({
                 onRequestClose={() => setVisible(false)}
             />
             {isShowTitle && user !== {} ? (
-                <Block
-                    row
+                <View
                     style={{
                         alignItems: 'center',
-                        marginHorizontal: 10
+                        marginHorizontal: 10,
+                        flexDirection: 'row'
                     }}
                 >
                     <TouchableWithoutFeedback
                         onPress={() => handleOnClickCard(user, currentUser, navigation)}
                     >
-                        <Block
+                        <View
                             style={{
                                 marginRight: 10
                             }}
@@ -69,20 +69,21 @@ export default function CardImage({
                                     borderRadius: 25
                                 }}
                             />
-                        </Block>
+                        </View>
                     </TouchableWithoutFeedback>
 
-                    <Block style={{
-                        justifyContent: 'center',
-                        paddingVertical: 10
-                    }}
+                    <View
+                        style={{
+                            justifyContent: 'center',
+                            paddingVertical: 10
+                        }}
                     >
-                        <Block
-                            row
+                        <View
                             style={{
                                 alignItems: 'center',
                                 justifyContent: 'space-between',
-                                width: SIZES.WIDTH_BASE * 0.8
+                                width: SIZES.WIDTH_BASE * 0.8,
+                                flexDirection: 'row'
                             }}
                         >
                             <TouchableWithoutFeedback
@@ -98,8 +99,8 @@ export default function CardImage({
                                     {user.fullName}
                                 </Text>
                             </TouchableWithoutFeedback>
-                        </Block>
-                        <Block>
+                        </View>
+                        <View>
                             <Text
                                 style={styles.subInfoCard}
                                 size={SIZES.FONT_H4}
@@ -107,12 +108,21 @@ export default function CardImage({
                             >
                                 TP.Hồ Chí Minh
                             </Text>
-                        </Block>
-                    </Block>
-                </Block>
-            ) : (<Block />)}
+                        </View>
+                    </View>
+                </View>
+            ) : (<View />)}
 
-            <Block flex style={styles.imageContainer}>
+            <View
+                style={
+                    [
+                        styles.imageContainer,
+                        {
+                            flex: 1
+                        }
+                    ]
+                }
+            >
                 <TouchableWithoutFeedback
                     onPress={() => {
                         setVisible(true);
@@ -127,8 +137,8 @@ export default function CardImage({
                     />
                 </TouchableWithoutFeedback>
                 <CenterLoader />
-            </Block>
-        </Block>
+            </View>
+        </View>
     );
 }
 

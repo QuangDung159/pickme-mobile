@@ -1,5 +1,5 @@
-import { Block, Text } from 'galio-framework';
 import React from 'react';
+import { Text, View } from 'react-native';
 import { IconCustom } from '../../../components/uiComponents';
 import { NowTheme } from '../../../constants';
 
@@ -22,15 +22,17 @@ export default function UserInfoItem({
     }
 
     return (
-        <Block
-            row
+        <View
             style={{
                 alignSelf: 'center',
-                marginBottom: 10
+                marginBottom: 10,
+                flexDirection: 'row'
             }}
         >
-            <Block
-                flex={1}
+            <View
+                style={{
+                    flex: 1
+                }}
             >
                 <IconCustom
                     name={name}
@@ -38,21 +40,23 @@ export default function UserInfoItem({
                     color={color}
                     size={size}
                 />
-            </Block>
-            <Block
-                row
-                flex={7}
+            </View>
+            <View
+                style={{
+                    flexDirection: 'row',
+                    flex: 7
+                }}
             >
                 <Text
-                    size={SIZES.FONT_H2}
-                    color={COLORS.DEFAULT}
                     style={{
-                        fontFamily: MONTSERRAT_REGULAR
+                        fontFamily: MONTSERRAT_REGULAR,
+                        fontSize: SIZES.FONT_H2,
+                        color: COLORS.DEFAULT
                     }}
                 >
                     {handleValue}
                 </Text>
-            </Block>
-        </Block>
+            </View>
+        </View>
     );
 }

@@ -1,6 +1,7 @@
-import { Block, Text } from 'galio-framework';
 import React, { useEffect, useState } from 'react';
-import { FlatList, RefreshControl } from 'react-native';
+import {
+    FlatList, RefreshControl, Text, View
+} from 'react-native';
 import { ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import { CenterLoader, Line } from '../../../components/uiComponents';
@@ -103,15 +104,18 @@ export default function BookingList({ navigation }) {
                                 key={item.id}
                                 navigation={navigation}
                             />
-                            <Block
-                                middle
+                            <View
+                                style={{
+                                    alignSelf: 'center',
+                                    alignItems: 'center'
+                                }}
                             >
                                 <Line
-                                    borderColor={COLORS.ACTIVE}
+                                    borderColor={COLORS.DEFAULT}
                                     borderWidth={0.5}
                                     width={SIZES.WIDTH_BASE}
                                 />
-                            </Block>
+                            </View>
                         </TouchableWithoutFeedback>
                     )}
                 />
@@ -124,7 +128,7 @@ export default function BookingList({ navigation }) {
                         />
                     )}
                 >
-                    <Block
+                    <View
                         style={{
                             alignItems: 'center',
                             marginVertical: 15
@@ -139,7 +143,7 @@ export default function BookingList({ navigation }) {
                         >
                             Danh sách trống
                         </Text>
-                    </Block>
+                    </View>
                 </ScrollView>
             )}
 

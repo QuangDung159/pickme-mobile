@@ -1,8 +1,9 @@
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
-import { Block, Text } from 'galio-framework';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
-import { KeyboardAvoidingView, Platform, StyleSheet } from 'react-native';
+import {
+    KeyboardAvoidingView, Platform, StyleSheet, Text, View
+} from 'react-native';
 import { FlatList, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import { CenterLoader, CustomInput, IconCustom } from '../../components/uiComponents';
@@ -170,37 +171,37 @@ export default function Message({ navigation, route }) {
         const messageStyle = id !== message.from ? styles.messageRight : styles.messageLeft;
         const flexDirection = id !== message.from ? 'row' : 'row-reverse';
         return (
-            <Block
+            <View
                 style={{
                     marginBottom: 10,
                     flexDirection
                 }}
             >
-                <Block
+                <View
                     style={{
                         marginHorizontal: 5
                     }}
                 />
-                <Block
+                <View
                     style={[{
                         borderRadius: 10,
                         maxWidth: SIZES.WIDTH_BASE * 0.8
                     }, messageStyle]}
                 >
-                    <Block>
+                    <View>
                         <Text
-                            color={COLORS.DEFAULT}
-                            size={16}
                             style={{
                                 margin: 10,
-                                fontFamily: MONTSERRAT_REGULAR
+                                fontFamily: MONTSERRAT_REGULAR,
+                                color: COLORS.DEFAULT,
+                                fontSize: SIZES.FONT_H3
                             }}
                         >
                             {message.content}
                         </Text>
-                    </Block>
-                </Block>
-            </Block>
+                    </View>
+                </View>
+            </View>
         );
     };
 
@@ -286,12 +287,12 @@ export default function Message({ navigation, route }) {
     } = route;
 
     const renderInputMessage = () => (
-        <Block
-            row
-            space="between"
-            center
+        <View
             style={{
-                width: SIZES.WIDTH_BASE
+                width: SIZES.WIDTH_BASE,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignSelf: 'center'
             }}
         >
             <CustomInput
@@ -324,7 +325,7 @@ export default function Message({ navigation, route }) {
                     color={COLORS.ACTIVE}
                 />
             </TouchableWithoutFeedback>
-        </Block>
+        </View>
     );
 
     try {

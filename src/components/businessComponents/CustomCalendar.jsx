@@ -1,8 +1,7 @@
-import { Block, Text } from 'galio-framework';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
-import { View } from 'react-native';
+import { Text, View } from 'react-native';
 import { NowTheme } from '../../constants';
 import { CustomButton, Line } from '../uiComponents';
 
@@ -70,37 +69,44 @@ export default function CustomCalendar({ selectedDate, onChangeDate }) {
     );
 
     return (
-        <Block
+        <View
             style={{
                 height: SIZES.HEIGHT_BASE * 0.13,
             }}
         >
-            <Block
-                row
+            <View
+                style={{
+                    flexDirection: 'row'
+                }}
             >
                 {arrDowByCurrentDate.map((item) => (
-                    <Block
-                        middle
-                        flex
+                    <View
+                        style={{
+                            alignSelf: 'center',
+                            alignItems: 'center',
+                            flex: 1
+                        }}
                         key={item}
                     >
                         <Text
-                            size={13}
-                            style={[
-                                {
-                                    fontFamily: MONTSERRAT_REGULAR,
-                                },
-                                (item === 'T.Bảy' || item === 'C.Nhật') && weekendStyle,
-                            ]}
+                            style={
+                                [
+                                    {
+                                        fontFamily: MONTSERRAT_REGULAR,
+                                        fontSize: SIZES.FONT_H4
+                                    },
+                                    (item === 'T.Bảy' || item === 'C.Nhật') && weekendStyle,
+                                ]
+                            }
                         >
                             {item}
                         </Text>
-                    </Block>
+                    </View>
                 ))}
-            </Block>
+            </View>
             <Line
                 borderWidth={0.5}
-                borderColor={COLORS.BLOCK}
+                borderColor={COLORS.DEFAULT}
                 style={{
                     marginVertical: 10
                 }}
@@ -125,9 +131,12 @@ export default function CustomCalendar({ selectedDate, onChangeDate }) {
                     };
 
                     return (
-                        <Block
-                            flex
-                            middle
+                        <View
+                            style={{
+                                alignSelf: 'center',
+                                alignItems: 'center',
+                                flex: 1
+                            }}
                             key={item.toString()}
                         >
                             <CustomButton
@@ -142,7 +151,7 @@ export default function CustomCalendar({ selectedDate, onChangeDate }) {
                                 labelStyle={dateTextStyle}
                                 label={item.substring(0, 2)}
                             />
-                        </Block>
+                        </View>
                     );
                 })}
             </View>
@@ -166,9 +175,12 @@ export default function CustomCalendar({ selectedDate, onChangeDate }) {
                     };
 
                     return (
-                        <Block
-                            flex
-                            middle
+                        <View
+                            style={{
+                                alignSelf: 'center',
+                                alignItems: 'center',
+                                flex: 1
+                            }}
                             key={item.toString()}
                         >
                             <CustomButton
@@ -183,11 +195,11 @@ export default function CustomCalendar({ selectedDate, onChangeDate }) {
                                 labelStyle={dateTextStyle}
                                 label={item.substring(0, 2)}
                             />
-                        </Block>
+                        </View>
                     );
                 })}
             </View>
-        </Block>
+        </View>
     );
 }
 

@@ -1,7 +1,8 @@
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
-import { Block, Text } from 'galio-framework';
 import React, { useEffect, useState } from 'react';
-import { Image, RefreshControl } from 'react-native';
+import {
+    Image, RefreshControl, Text, View
+} from 'react-native';
 import { FlatList, ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import { Line } from '../../components/uiComponents';
@@ -165,13 +166,13 @@ export default function ConversationList({ navigation }) {
                     () => onClickConversationItem(params)
                 }
             >
-                <Block
-                    row
+                <View
                     style={{
                         alignItems: 'center',
+                        flexDirection: 'row'
                     }}
                 >
-                    <Block
+                    <View
                         style={{
                             marginHorizontal: 10,
                             paddingVertical: 10
@@ -187,18 +188,19 @@ export default function ConversationList({ navigation }) {
                                 borderRadius: 25
                             }}
                         />
-                    </Block>
-                    <Block>
+                    </View>
+                    <View>
                         <Text
                             style={{
-                                fontFamily: MONTSERRAT_BOLD
+                                fontFamily: MONTSERRAT_BOLD,
+                                fontSize: SIZES.FONT_H3,
+                                color: COLORS.DEFAULT,
                             }}
-                            size={16}
-                            color={COLORS.DEFAULT}
+
                         >
                             {params.name}
                         </Text>
-                        <Block
+                        <View
                             style={{
                                 width: SIZES.WIDTH_BASE * 0.77
                             }}
@@ -207,27 +209,29 @@ export default function ConversationList({ navigation }) {
                                 style={{
                                     fontFamily: conversation.isRead
                                         ? MONTSERRAT_REGULAR
-                                        : MONTSERRAT_BOLD
+                                        : MONTSERRAT_BOLD,
+                                    fontSize: SIZES.FONT_H3,
+                                    color: COLORS.DEFAULT,
 
                                 }}
-                                size={16}
-                                color={COLORS.DEFAULT}
                                 numberOfLines={2}
                             >
                                 {conversation.content}
                             </Text>
-                        </Block>
-                    </Block>
-                </Block>
-                <Block
-                    alignItems="flex-end"
+                        </View>
+                    </View>
+                </View>
+                <View
+                    style={{
+                        alignItems: 'flex-end'
+                    }}
                 >
                     <Line
                         borderColor={COLORS.ACTIVE}
                         borderWidth={0.5}
                         width={SIZES.WIDTH_BASE * 0.85}
                     />
-                </Block>
+                </View>
             </TouchableWithoutFeedback>
         );
     };
@@ -256,7 +260,7 @@ export default function ConversationList({ navigation }) {
                             />
                         )}
                     >
-                        <Block
+                        <View
                             style={{
                                 alignItems: 'center',
                                 marginVertical: 15
@@ -271,7 +275,7 @@ export default function ConversationList({ navigation }) {
                             >
                                 Danh sách trống
                             </Text>
-                        </Block>
+                        </View>
                     </ScrollView>
                 )}
             </>

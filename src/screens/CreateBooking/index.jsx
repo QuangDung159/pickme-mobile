@@ -1,11 +1,8 @@
 import { Picker } from '@react-native-picker/picker';
-import {
-    Block, Text
-} from 'galio-framework';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import {
-    Alert, StyleSheet
+    Alert, StyleSheet, Text, View
 } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -316,13 +313,13 @@ export default function CreateBooking({ route, navigation }) {
 
     // render \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
     const renderTimePicker = () => (
-        <Block
-            row
-            space="between"
+        <View
             style={{
                 alignSelf: 'center',
                 width: SIZES.WIDTH_BASE * 0.8,
-                marginVertical: 10
+                marginVertical: 10,
+                flexDirection: 'row',
+                justifyContent: 'space-between'
             }}
         >
             <ScrollPicker
@@ -378,20 +375,19 @@ export default function CreateBooking({ route, navigation }) {
                 activeItemColor="#222121"
                 itemColor="#B4B4B4"
             />
-        </Block>
+        </View>
     );
 
     const renderPartnerPackage = () => (
-        <Block
-            row
-            space="between"
+        <View
             style={{
-                justifyContent: 'center',
-                width: SIZES.WIDTH_BASE * 0.8
+                width: SIZES.WIDTH_BASE * 0.8,
+                flexDirection: 'row',
+                justifyContent: 'space-between'
             }}
         >
             {listPartnerPackage && packageActive && (
-                <Block
+                <View
                     style={{
                         width: SIZES.WIDTH_BASE * 0.8,
                     }}
@@ -405,16 +401,18 @@ export default function CreateBooking({ route, navigation }) {
                             <Picker.Item value={item.id} label={item.title} key={item.id} />
                         ))}
                     </Picker>
-                    <Block
-                        row
-                        space="around"
+                    <View
+                        style={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-around'
+                        }}
                     >
                         <Text
                             style={{
                                 fontFamily: MONTSERRAT_REGULAR,
                                 color: COLORS.ACTIVE,
                                 fontSize: SIZES.FONT_H1,
-                                marginBottom: 10
+                                marginBottom: 10,
                             }}
                         >
                             {convertMinutesToStringHours(packageActive.startAt)}
@@ -429,7 +427,7 @@ export default function CreateBooking({ route, navigation }) {
                         >
                             {convertMinutesToStringHours(packageActive.endAt)}
                         </Text>
-                    </Block>
+                    </View>
 
                     <Text
                         style={{
@@ -451,23 +449,26 @@ export default function CreateBooking({ route, navigation }) {
                     >
                         {`Lời nhắn từ đối tác: ${packageActive.noted}`}
                     </Text>
-                    <Block
-                        middle
+                    <View
+                        style={{
+                            alignSelf: 'center',
+                            alignItems: 'center'
+                        }}
                     >
                         <Text
                             style={{
                                 fontFamily: MONTSERRAT_BOLD,
                                 fontSize: 30,
-                                paddingVertical: 10
+                                paddingVertical: 10,
+                                color: COLORS.ACTIVE
                             }}
-                            color={COLORS.ACTIVE}
                         >
                             {`${packageActive.estimateAmount}k`}
                         </Text>
-                    </Block>
-                </Block>
+                    </View>
+                </View>
             )}
-        </Block>
+        </View>
     );
 
     const renderListBusySection = () => {
@@ -477,7 +478,7 @@ export default function CreateBooking({ route, navigation }) {
                 const endStr = convertMinutesToStringHours(item.endAt);
 
                 return (
-                    <Block
+                    <View
                         // eslint-disable-next-line react/no-array-index-key
                         key={sectionIndex}
                         style={{
@@ -488,49 +489,54 @@ export default function CreateBooking({ route, navigation }) {
                             justifyContent: 'center',
                         }}
                     >
-                        <Block
-                            row
-                            space="between"
+                        <View
                             style={{
                                 marginHorizontal: 10,
-                                alignItems: 'center'
+                                alignItems: 'center',
+                                flexDirection: 'row',
+                                justifyContent: 'space-between'
                             }}
                         >
-                            <Block
-                                row
-                                flex
-                                space="around"
+                            <View
+                                style={{
+                                    flexDirection: 'row',
+                                    justifyContent: 'space-around',
+                                    flex: 1
+                                }}
                             >
                                 <Text
                                     style={{
-                                        fontFamily: MONTSERRAT_REGULAR
+                                        fontFamily: MONTSERRAT_REGULAR,
+                                        fontSize: 27,
+                                        color: COLORS.ACTIVE,
                                     }}
-                                    size={27}
-                                    color={COLORS.ACTIVE}
+
                                 >
                                     {startStr}
                                 </Text>
                                 <Text
                                     style={{
-                                        fontFamily: MONTSERRAT_REGULAR
+                                        fontFamily: MONTSERRAT_REGULAR,
+                                        fontSize: 27,
+                                        color: COLORS.ACTIVE
                                     }}
-                                    size={27}
-                                    color={COLORS.ACTIVE}
+
                                 >
                                     -
                                 </Text>
                                 <Text
                                     style={{
-                                        fontFamily: MONTSERRAT_REGULAR
+                                        fontFamily: MONTSERRAT_REGULAR,
+                                        fontSize: 27,
+                                        color: COLORS.ACTIVE
                                     }}
-                                    size={27}
-                                    color={COLORS.ACTIVE}
+
                                 >
                                     {endStr}
                                 </Text>
-                            </Block>
-                        </Block>
-                    </Block>
+                            </View>
+                        </View>
+                    </View>
                 );
             });
         }
@@ -543,23 +549,27 @@ export default function CreateBooking({ route, navigation }) {
             renderContent={() => (
                 <>
                     <Text
-                        size={SIZES.FONT_H2}
                         style={{
                             fontFamily: MONTSERRAT_REGULAR,
-                            marginVertical: 10
+                            marginVertical: 10,
+                            fontSize: SIZES.FONT_H2
                         }}
                     >
                         Lịch bận của đối tác
                     </Text>
-                    <Block
+                    <View
                         style={{
                             width: SIZES.WIDTH_BASE * 0.8
                         }}
                     >
                         {renderBusyCalendar()}
-                    </Block>
+                    </View>
 
-                    <Block center>
+                    <View
+                        style={{
+                            alignSelf: 'center'
+                        }}
+                    >
                         <CustomButton
                             onPress={() => setModalVisible(false)}
                             buttonStyle={{
@@ -569,7 +579,7 @@ export default function CreateBooking({ route, navigation }) {
                             type="active"
                             label="Đóng"
                         />
-                    </Block>
+                    </View>
                 </>
             )}
         />
@@ -581,7 +591,11 @@ export default function CreateBooking({ route, navigation }) {
             renderContent={() => (
                 <>
                     {renderTimePicker()}
-                    <Block center>
+                    <View
+                        style={{
+                            alignSelf: 'center'
+                        }}
+                    >
                         <CustomButton
                             onPress={() => setModalTimePickerVisible(false)}
                             buttonStyle={{
@@ -591,7 +605,7 @@ export default function CreateBooking({ route, navigation }) {
                             type="active"
                             label="Đóng"
                         />
-                    </Block>
+                    </View>
                 </>
             )}
         />
@@ -604,12 +618,12 @@ export default function CreateBooking({ route, navigation }) {
                 <>
                     {renderPartnerPackage()}
 
-                    <Block
-                        row
-                        space="between"
+                    <View
                         style={{
                             paddingVertical: 10,
-                            width: SIZES.WIDTH_BASE * 0.8
+                            width: SIZES.WIDTH_BASE * 0.8,
+                            flexDirection: 'row',
+                            justifyContent: 'space-between'
                         }}
                     >
 
@@ -649,19 +663,19 @@ export default function CreateBooking({ route, navigation }) {
                             type="active"
                             label="Xác nhận"
                         />
-                    </Block>
+                    </View>
                 </>
             )}
         />
     );
 
     const renderButtonTimePicker = () => (
-        <Block
-            space="between"
-            row
+        <View
             style={{
                 marginBottom: 10,
                 width: SIZES.WIDTH_BASE * 0.9,
+                flexDirection: 'row',
+                justifyContent: 'space-between'
             }}
         >
             <CustomButton
@@ -685,7 +699,7 @@ export default function CreateBooking({ route, navigation }) {
             />
 
             {/* {renderIconShowModal()} */}
-        </Block>
+        </View>
     );
 
     const renderAlert = () => (
@@ -765,18 +779,19 @@ export default function CreateBooking({ route, navigation }) {
         />
     );
 
-    const renderFormBlock = (partner) => (
-        <Block
+    const renderFormView = (partner) => (
+        <View
             style={{
                 zIndex: 99,
+                flex: 1
             }}
-            flex
         >
-            <Block>
-                <Text style={{
-                    fontFamily: MONTSERRAT_REGULAR,
-                    marginTop: 10
-                }}
+            <View>
+                <Text
+                    style={{
+                        fontFamily: MONTSERRAT_REGULAR,
+                        marginTop: 10
+                    }}
                 >
                     THÔNG TIN CUỘC HẸN
                 </Text>
@@ -788,7 +803,7 @@ export default function CreateBooking({ route, navigation }) {
                     }}
                 />
 
-                {renderInfoBlock(partner)}
+                {renderInfoView(partner)}
 
                 <CustomCalendar
                     onChangeDate={(date) => { onChangeDateCalendar(date); }}
@@ -819,11 +834,11 @@ export default function CreateBooking({ route, navigation }) {
                 {renderButtonTimePicker()}
                 {renderInputAddress()}
                 {renderInputNote()}
-            </Block>
-        </Block>
+            </View>
+        </View>
     );
 
-    const renderInfoBlock = (partner) => {
+    const renderInfoView = (partner) => {
         const {
             params: {
                 fullName
@@ -831,30 +846,38 @@ export default function CreateBooking({ route, navigation }) {
         } = route;
 
         return (
-            <Block
-                middle
+            <View
                 style={{
                     marginBottom: 10,
+                    alignSelf: 'center',
+                    alignItems: 'center'
                 }}
             >
                 <Text
-                    color={COLORS.ACTIVE}
-                    size={SIZES.FONT_H1}
-                    style={styles.title}
+                    style={
+                        [
+                            styles.title,
+                            {
+                                color: COLORS.ACTIVE,
+                                fontSize: SIZES.FONT_H1,
+                            }
+                        ]
+                    }
                 >
                     {fullName || partner.fullName}
                 </Text>
-            </Block>
+            </View>
         );
     };
 
     const renderTotal = () => (
-        <Block>
-            <Block>
-                <Text style={{
-                    fontFamily: MONTSERRAT_REGULAR,
-                    marginTop: 10
-                }}
+        <View>
+            <View>
+                <Text
+                    style={{
+                        fontFamily: MONTSERRAT_REGULAR,
+                        marginTop: 10
+                    }}
                 >
                     XÁC NHẬN ĐẶT
                 </Text>
@@ -865,31 +888,34 @@ export default function CreateBooking({ route, navigation }) {
                         marginTop: 10
                     }}
                 />
-            </Block>
-            <Block
-                middle
+            </View>
+            <View
+                style={{
+                    alignItems: 'center',
+                    alignSelf: 'center'
+                }}
             >
                 <Text
                     style={{
                         fontFamily: MONTSERRAT_BOLD,
                         fontSize: 30,
-                        paddingVertical: 10
+                        paddingVertical: 10,
+                        color: COLORS.ACTIVE
                     }}
-                    color={COLORS.ACTIVE}
                 >
                     {`${calculateTotalAmount(startTimeStr, endTimeStr)}k`}
                 </Text>
-            </Block>
+            </View>
             {renderButtonPanel()}
-        </Block>
+        </View>
     );
 
     const renderButtonPanel = () => (
-        <Block
-            row
-            space="between"
+        <View
             style={{
                 paddingVertical: 10,
+                flexDirection: 'row',
+                justifyContent: 'space-between'
             }}
         >
             <CustomButton
@@ -902,13 +928,16 @@ export default function CreateBooking({ route, navigation }) {
                 type="active"
                 label="Xác nhận"
             />
-        </Block>
+        </View>
     );
 
     // eslint-disable-next-line no-unused-vars
     const renderIconShowModal = () => (
-        <Block
-            middle
+        <View
+            style={{
+                alignSelf: 'center',
+                alignItems: 'center'
+            }}
         >
             <TouchableWithoutFeedback
                 onPress={() => {
@@ -922,33 +951,35 @@ export default function CreateBooking({ route, navigation }) {
                     color={COLORS.ACTIVE}
                 />
             </TouchableWithoutFeedback>
-        </Block>
+        </View>
     );
 
     const renderBusyCalendar = () => (
         <>
             {!listBusyBySelectedDate || listBusyBySelectedDate.length === 0 ? (
-                <Block
-                    middle
-                    flex
+                <View
                     style={{
-                        marginBottom: 10
+                        marginBottom: 10,
+                        alignSelf: 'center',
+                        alignItems: 'center',
+                        flex: 1
                     }}
                 >
                     <Text
-                        color={COLORS.SWITCH_OFF}
                         style={{
                             fontFamily: MONTSERRAT_REGULAR,
+                            color: COLORS.SWITCH_OFF,
+                            fontSize: 14
                         }}
-                        size={14}
+
                     >
                         Đối tác rảnh vào ngày này, đặt hẹn nào!
                     </Text>
-                </Block>
+                </View>
             ) : (
-                <Block>
+                <View>
                     {renderListBusySection()}
-                </Block>
+                </View>
             )}
         </>
     );
@@ -976,7 +1007,7 @@ export default function CreateBooking({ route, navigation }) {
                             {renderModal()}
                             {renderTimePickerModal()}
                             {renderPartnerPackageModal()}
-                            {renderFormBlock(partner)}
+                            {renderFormView(partner)}
                             {renderTotal()}
                         </KeyboardAwareScrollView>
                     </>

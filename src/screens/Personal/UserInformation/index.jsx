@@ -1,12 +1,11 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
 import { NO_AVATAR_URL } from '@env';
 import * as SecureStore from 'expo-secure-store';
-import {
-    Block, Text
-} from 'galio-framework';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
-import { Image, RefreshControl, StyleSheet } from 'react-native';
+import {
+    Image, RefreshControl, StyleSheet, Text, View
+} from 'react-native';
 import { ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import ImageView from 'react-native-image-viewing';
 import { useDispatch, useSelector } from 'react-redux';
@@ -165,47 +164,46 @@ export default function UserInformation({ navigation }) {
     };
 
     const renderAvatarPanel = () => (
-        <Block
+        <View
             style={{
                 width: SIZES.WIDTH_BASE * 0.3,
                 marginTop: 5
             }}
         >
-            <Block>
-                <CenterLoader />
-                <Block
-                    style={{
-                        zIndex: 99,
+            <CenterLoader />
+            <View
+                style={{
+                    zIndex: 99,
+                }}
+            >
+                <TouchableWithoutFeedback
+                    onPress={() => {
+                        setVisible(true);
+                        setImageIndex(0);
                     }}
                 >
-                    <TouchableWithoutFeedback
-                        onPress={() => {
-                            setVisible(true);
-                            setImageIndex(0);
-                        }}
-                    >
-                        <Block style={{
+                    <View
+                        style={{
                             marginTop: 10
                         }}
-                        >
-                            {renderAvatar()}
-                        </Block>
-                    </TouchableWithoutFeedback>
-                    <CustomButton
-                        onPress={() => onClickUpdateAvatar()}
-                        labelStyle={{
-                            fontSize: SIZES.FONT_H3,
-                        }}
-                        buttonStyle={{
-                            width: SIZES.WIDTH_BASE * 0.25,
-                            borderWidth: 0,
-                            alignSelf: 'flex-start'
-                        }}
-                        label="Đổi avatar"
-                    />
-                </Block>
-            </Block>
-        </Block>
+                    >
+                        {renderAvatar()}
+                    </View>
+                </TouchableWithoutFeedback>
+                <CustomButton
+                    onPress={() => onClickUpdateAvatar()}
+                    labelStyle={{
+                        fontSize: SIZES.FONT_H3,
+                    }}
+                    buttonStyle={{
+                        width: SIZES.WIDTH_BASE * 0.25,
+                        borderWidth: 0,
+                        alignSelf: 'flex-start'
+                    }}
+                    label="Đổi avatar"
+                />
+            </View>
+        </View>
     );
 
     const renderSubInfoPanel = () => {
@@ -216,7 +214,7 @@ export default function UserInformation({ navigation }) {
             interests
         } = currentUser;
         return (
-            <Block
+            <View
                 style={{
                     width: SIZES.WIDTH_BASE * 0.6,
                     marginVertical: 15,
@@ -264,101 +262,101 @@ export default function UserInformation({ navigation }) {
                         ]
                     }
                 />
-            </Block>
+            </View>
         );
     };
 
     const renderInfoPanel = () => (
-        <Block>
-            <Block
+        <>
+            <View
                 style={{
                     marginTop: 20,
                 }}
             >
                 <Text
-                    center
                     style={{
                         color: COLORS.ACTIVE,
                         fontSize: SIZES.FONT_H1,
                         fontFamily: MONTSERRAT_BOLD,
+                        alignSelf: 'center'
                     }}
                 >
                     {currentUser.fullName}
                 </Text>
-            </Block>
+            </View>
 
-            <Block>
-                <Block>
-                    <Block
-                        style={{
-                            marginBottom: 20
-                        }}
-                    >
-                        <Text
-                            center
-                            style={{
-                                fontFamily: MONTSERRAT_REGULAR,
-                            }}
-                            size={SIZES.FONT_H2}
-                            color={COLORS.DEFAULT}
-                        >
-                            {'"'}
-                            {currentUser.description}
-                            {'"'}
-                        </Text>
-                    </Block>
-
-                    <TouchableWithoutFeedback
-                        onPress={() => {
-                            navigation.navigate(ScreenName.VERIFICATION);
-                        }}
-                    >
-
-                        <Block
-                            style={{
-                                marginVertical: 10
-                            }}
-                        >
-                            <VerificationStatusPanel />
-                        </Block>
-                    </TouchableWithoutFeedback>
-
-                    <Block style={{
-                        marginBottom: 10,
-                        alignItems: 'center'
+            <View
+                style={{
+                    marginBottom: 20,
+                    marginTop: 10
+                }}
+            >
+                <Text
+                    style={{
+                        fontFamily: MONTSERRAT_REGULAR,
+                        fontSize: SIZES.FONT_H2,
+                        color: COLORS.DEFAULT,
+                        alignSelf: 'center'
                     }}
-                    >
-                        <Block
-                            style={{
-                                marginTop: 10
-                            }}
-                        >
-                            <CustomButton
-                                onPress={
-                                    () => navigation.navigate(
-                                        ScreenName.UPDATE_INFO_ACCOUNT,
-                                    )
-                                }
-                                labelStyle={{
-                                    fontSize: SIZES.FONT_H3
-                                }}
-                                label="Chỉnh sửa thông tin cá nhân"
-                            />
-                        </Block>
-                    </Block>
-                </Block>
-            </Block>
+                >
+                    {'"'}
+                    {currentUser.description}
+                    {'"'}
+                </Text>
+            </View>
 
-            <Block
-                middle
+            <TouchableWithoutFeedback
+                onPress={() => {
+                    navigation.navigate(ScreenName.VERIFICATION);
+                }}
+            >
+
+                <View
+                    style={{
+                        marginVertical: 10
+                    }}
+                >
+                    <VerificationStatusPanel />
+                </View>
+            </TouchableWithoutFeedback>
+
+            <View style={{
+                marginBottom: 10,
+                alignItems: 'center'
+            }}
+            >
+                <View
+                    style={{
+                        marginTop: 10
+                    }}
+                >
+                    <CustomButton
+                        onPress={
+                            () => navigation.navigate(
+                                ScreenName.UPDATE_INFO_ACCOUNT,
+                            )
+                        }
+                        labelStyle={{
+                            fontSize: SIZES.FONT_H3
+                        }}
+                        label="Chỉnh sửa thông tin cá nhân"
+                    />
+                </View>
+            </View>
+
+            <View
+                style={{
+                    alignSelf: 'center',
+                    alignItems: 'center'
+                }}
             >
                 <Line
                     borderColor={COLORS.ACTIVE}
                     borderWidth={0.5}
                     width={SIZES.WIDTH_BASE * 0.9}
                 />
-            </Block>
-        </Block>
+            </View>
+        </>
     );
 
     const renderButtonLogout = () => (
@@ -389,45 +387,44 @@ export default function UserInformation({ navigation }) {
                 )}
             >
                 {isShowSpinner ? (
-                    <Block
+                    <View
                         style={{
                             marginTop: SIZES.HEIGHT_BASE * 0.3
                         }}
                     >
                         <CenterLoader />
-                    </Block>
+                    </View>
                 ) : (
                     <>
                         {renderImageView()}
 
-                        <Block
-                            row
+                        <View
                             style={{
                                 width: SIZES.WIDTH_BASE * 0.9,
-                                alignSelf: 'center'
+                                alignSelf: 'center',
+                                flexDirection: 'row'
                             }}
                         >
                             {renderAvatarPanel()}
                             {renderSubInfoPanel()}
-                        </Block>
+                        </View>
 
-                        <Block>
-                            <Block
-                                middle
-                            >
-                                <Line
-                                    borderColor={COLORS.ACTIVE}
-                                    borderWidth={0.5}
-                                    width={SIZES.WIDTH_BASE * 0.9}
-                                />
-                            </Block>
-                        </Block>
+                        <View
+                            style={{
+                                alignSelf: 'center',
+                                alignItems: 'center'
+                            }}
+                        >
+                            <Line
+                                borderColor={COLORS.ACTIVE}
+                                borderWidth={0.5}
+                                width={SIZES.WIDTH_BASE * 0.9}
+                            />
+                        </View>
 
                         {renderInfoPanel(currentUser, navigation)}
 
-                        <Block>
-                            {renderButtonLogout(navigation)}
-                        </Block>
+                        {renderButtonLogout(navigation)}
                     </>
                 )}
             </ScrollView>

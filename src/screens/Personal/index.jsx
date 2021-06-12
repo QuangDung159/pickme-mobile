@@ -1,7 +1,5 @@
-import {
-    Block
-} from 'galio-framework';
 import React, { useEffect } from 'react';
+import { View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { TopTabBar } from '../../components/uiComponents';
 import { ScreenName } from '../../constants';
@@ -64,14 +62,18 @@ export default function Personal({ navigation, route }) {
     };
 
     return (
-        <Block flex>
+        <View
+            style={{
+                flex: 1
+            }}
+        >
             <TopTabBar
                 tabs={tabs}
                 tabActiveIndex={personTabActiveIndex}
                 setTabActiveIndex={(index) => { dispatch(setPersonTabActiveIndex(index)); }}
             />
             {renderTabByIndex()}
-        </Block>
+        </View>
 
     );
 }

@@ -1,5 +1,4 @@
 import { Picker } from '@react-native-picker/picker';
-import { Block } from 'galio-framework';
 import React, { useState } from 'react';
 import { Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -94,12 +93,15 @@ export default function ReasonCancelBookingModal({
                         Vui lòng chọn lý do
                     </Text>
                     {renderReasonDropdown()}
-                    <Block
+                    <View
                         middle
                         row
                         style={{
                             width: SIZES.WIDTH_BASE * 0.8,
-                            marginBottom: 10
+                            marginBottom: 10,
+                            alignSelf: 'center',
+                            alignItems: 'center',
+                            flexDirection: 'row'
                         }}
                         space="between"
                     >
@@ -124,7 +126,7 @@ export default function ReasonCancelBookingModal({
                                 width: SIZES.WIDTH_BASE * 0.39
                             }}
                         />
-                    </Block>
+                    </View>
                 </>
             )}
         />

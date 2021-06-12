@@ -1,4 +1,3 @@
-import { theme } from 'galio-framework';
 import React, { PureComponent } from 'react';
 import {
     Animated, FlatList, StyleSheet, View
@@ -128,18 +127,18 @@ export default class Tabs extends PureComponent {
 const styles = StyleSheet.create({
     container: {
         width: SIZES.WIDTH_BASE,
-        backgroundColor: theme.COLORS.WHITE,
+        backgroundColor: COLORS.BASE,
         zIndex: 2,
     },
     shadow: {
-        shadowColor: theme.COLORS.BLACK,
+        shadowColor: COLORS.BLACK,
         shadowOffset: { width: 0, height: 2 },
         shadowRadius: 8,
         shadowOpacity: 0.2,
         elevation: 4,
     },
     menu: {
-        paddingHorizontal: theme.SIZES.BASE * 2.5,
+        paddingHorizontal: SIZES.BASE * 2.5,
         paddingTop: 8,
         paddingBottom: 16,
     },

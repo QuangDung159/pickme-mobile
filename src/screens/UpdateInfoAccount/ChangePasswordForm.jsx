@@ -1,8 +1,6 @@
 import * as SecureStore from 'expo-secure-store';
-import {
-    Block
-} from 'galio-framework';
 import React, { useState } from 'react';
+import { View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useSelector } from 'react-redux';
 import { CenterLoader, CustomButton, CustomInput } from '../../components/uiComponents';
@@ -78,7 +76,7 @@ export default function ChangePasswordForm() {
 
     const renderFormNewPassword = () => (
         <>
-            <Block
+            <View
                 style={{
                     marginBottom: 10,
                 }}
@@ -148,11 +146,13 @@ export default function ChangePasswordForm() {
                     }}
                     onPressRightIcon={() => setIsShowReNewPassword(!isShowReNewPassword)}
                 />
-            </Block>
+            </View>
 
-            <Block
-                row
-                space="between"
+            <View
+                style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between'
+                }}
             >
 
                 <CustomButton
@@ -169,7 +169,7 @@ export default function ChangePasswordForm() {
                     type="active"
                     label="Xác nhận"
                 />
-            </Block>
+            </View>
         </>
     );
 
@@ -182,26 +182,26 @@ export default function ChangePasswordForm() {
                     alignSelf: 'center'
                 }}
             >
-                <Block
+                <View
                     style={{
                         backgroundColor: COLORS.BASE,
                         marginVertical: 10
                     }}
                 >
                     {isShowSpinner ? (
-                        <Block
+                        <View
                             style={{
                                 marginTop: SIZES.HEIGHT_BASE * 0.3
                             }}
                         >
                             <CenterLoader />
-                        </Block>
+                        </View>
                     ) : (
                         <>
                             {renderFormNewPassword()}
                         </>
                     )}
-                </Block>
+                </View>
             </ScrollView>
 
         );

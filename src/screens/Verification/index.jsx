@@ -1,6 +1,5 @@
-import { Block, Text } from 'galio-framework';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import ImageScalable from 'react-native-scalable-image';
 import { useDispatch, useSelector } from 'react-redux';
@@ -84,7 +83,7 @@ export default function Verification({ navigation }) {
             isDisabled = true;
         }
         return (
-            <Block style={{
+            <View style={{
                 alignItems: 'center',
             }}
             >
@@ -101,7 +100,7 @@ export default function Verification({ navigation }) {
                     }}
                     disabled={isDisabled}
                 />
-            </Block>
+            </View>
         );
     };
 
@@ -113,18 +112,18 @@ export default function Verification({ navigation }) {
         >
             {renderUploadDocForm(DocumentType.FACE_IMAGE, 'Ảnh chụp cá nhân')}
             {renderDocImageByType(DocumentType.FACE_IMAGE, faceUrl)}
-            <Block
+            <View
                 style={styles.docFormContainer}
             >
                 {renderUploadDocForm(DocumentType.DRIVER_FRONT, 'Mặt trước CMND/CCCD/bằng xe còn thời hạn')}
                 {renderDocImageByType(DocumentType.DRIVER_FRONT, frontUrl)}
-            </Block>
-            <Block
+            </View>
+            <View
                 style={styles.docFormContainer}
             >
                 {renderUploadDocForm(DocumentType.DRIVER_BACK, 'Mặt sau CMND/CCCD/bằng lái còn thời hạn')}
                 {renderDocImageByType(DocumentType.DRIVER_BACK, backUrl)}
-            </Block>
+            </View>
         </View>
     );
 
@@ -252,11 +251,11 @@ export default function Verification({ navigation }) {
     const renderButtonPanel = () => {
         if (currentUser.verifyStatus === VerificationStatus.NONE) {
             return (
-                <Block
-                    row
-                    space="between"
+                <View
                     style={{
                         paddingVertical: 10,
+                        flexDirection: 'row',
+                        justifyContent: 'space-between'
                     }}
                 >
                     <CustomButton
@@ -271,7 +270,7 @@ export default function Verification({ navigation }) {
                         type="active"
                         label="Xác nhận"
                     />
-                </Block>
+                </View>
             );
         }
         return null;
@@ -280,28 +279,30 @@ export default function Verification({ navigation }) {
     const renderDocImageByType = (docType, imageUrl) => {
         if (imageUrl === '') {
             return (
-                <Block
+                <View
                     style={{
                         alignItems: 'center',
                         marginVertical: 15
                     }}
                 >
                     <Text
-                        color={COLORS.SWITCH_OFF}
                         style={{
                             fontFamily: MONTSERRAT_REGULAR,
+                            color: COLORS.SWITCH_OFF,
+                            size: SIZES.FONT_H2
                         }}
-                        size={SIZES.FONT_H2}
                     >
                         Chưa có ảnh
                     </Text>
-                </Block>
+                </View>
             );
         }
 
         return (
-            <Block
-                center
+            <View
+                style={{
+                    alignSelf: 'center'
+                }}
             >
                 <ImageScalable
                     style={{
@@ -310,7 +311,7 @@ export default function Verification({ navigation }) {
                     width={SIZES.WIDTH_BASE * 0.9}
                     source={{ uri: imageUrl }}
                 />
-            </Block>
+            </View>
         );
     };
 
@@ -328,17 +329,17 @@ export default function Verification({ navigation }) {
                             alignSelf: 'center'
                         }}
                     >
-                        <Block
+                        <View
                             style={{
                                 marginTop: 10,
                                 backgroundColor: COLORS.BASE,
                             }}
                         >
-                            <Block
-                                row
+                            <View
                                 style={{
                                     justifyContent: 'space-between',
-                                    alignItems: 'center'
+                                    alignItems: 'center',
+                                    flexDirection: 'row'
                                 }}
                             >
                                 <Text style={{
@@ -348,13 +349,13 @@ export default function Verification({ navigation }) {
                                 >
                                     TẢI LÊN CHỨNG TỪ XÁC THỰC
                                 </Text>
-                            </Block>
+                            </View>
                             <Line
                                 borderWidth={0.5}
                                 borderColor={COLORS.ACTIVE}
                             />
                             {renderDocSection()}
-                        </Block>
+                        </View>
                         {renderButtonPanel()}
                     </KeyboardAwareScrollView>
                 )}

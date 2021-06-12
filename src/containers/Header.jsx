@@ -1,9 +1,11 @@
 import * as SecureStore from 'expo-secure-store';
 import {
-    Block, NavBar, Text
+    NavBar
 } from 'galio-framework';
 import React from 'react';
-import { Platform, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+    Platform, StyleSheet, Text, TouchableOpacity, View
+} from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import { CustomInput, IconCustom, Tabs } from '../components/uiComponents';
@@ -97,7 +99,7 @@ export default function Header({
     };
 
     const renderQnAButton = () => (
-        <Block
+        <View
             style={{
                 position: 'absolute',
                 bottom: 14,
@@ -115,11 +117,11 @@ export default function Header({
                     color={COLORS.ACTIVE}
                 />
             </TouchableOpacity>
-        </Block>
+        </View>
     );
 
     const renderSettingButton = () => (
-        <Block
+        <View
             style={{
                 position: 'absolute',
                 bottom: 14,
@@ -137,11 +139,11 @@ export default function Header({
                     color={COLORS.ACTIVE}
                 />
             </TouchableOpacity>
-        </Block>
+        </View>
     );
 
     const renderReadAllButton = () => (
-        <Block
+        <View
             style={{
                 position: 'absolute',
                 bottom: 14,
@@ -159,7 +161,7 @@ export default function Header({
                     color={COLORS.ACTIVE}
                 />
             </TouchableOpacity>
-        </Block>
+        </View>
     );
 
     const navbarStyles = [
@@ -224,10 +226,14 @@ export default function Header({
     const renderHeader = () => {
         if (search || tabs || options) {
             return (
-                <Block center>
+                <View
+                    style={{
+                        alignSelf: 'center'
+                    }}
+                >
                     {search ? renderSearch() : null}
                     {tabs ? renderTabs() : null}
-                </Block>
+                </View>
             );
         }
 
@@ -262,7 +268,7 @@ export default function Header({
     };
 
     return (
-        <Block style={headerStyles}>
+        <View style={headerStyles}>
             <TouchableWithoutFeedback
                 onPress={() => handleOnPressNavBar()}
                 onLongPress={() => clearAllCache()}
@@ -283,7 +289,7 @@ export default function Header({
                 />
             </TouchableWithoutFeedback>
             {screenNameProp && screenNameProp === ScreenName.MESSAGE && (
-                <Block
+                <View
                     style={{
                         marginLeft: 7,
                         marginTop: 0,
@@ -294,18 +300,19 @@ export default function Header({
                         style={{
                             fontFamily: MONTSERRAT_REGULAR,
                             marginTop: iPhoneX ? -16 : -20,
+                            fontSize: SIZES.FONT_H5,
+                            color: COLORS.ACTIVE
                         }}
-                        size={10}
-                        color={COLORS.ACTIVE}
+
                     >
                         Vừa mới truy cập
                     </Text>
-                </Block>
+                </View>
             )}
 
             {renderHeader()}
             {renderRight()}
-        </Block>
+        </View>
     );
 }
 
@@ -353,7 +360,7 @@ const styles = StyleSheet.create({
     },
     divider: {
         borderRightWidth: 0.3,
-        borderRightColor: COLORS.BLOCK
+        borderRightColor: COLORS.View
     },
     search: {
         height: 48,

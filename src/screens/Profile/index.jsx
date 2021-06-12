@@ -1,13 +1,10 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
 import { NO_AVATAR_URL } from '@env';
-import {
-    Block, Text
-} from 'galio-framework';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import {
-    ImageBackground, ScrollView, StyleSheet
+    ImageBackground, ScrollView, StyleSheet, Text, View
 } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import ImageView from 'react-native-image-viewing';
@@ -118,13 +115,18 @@ export default function Profile({ route, navigation }) {
         } = partnerInfo;
 
         return (
-            <Block style={{
+            <View style={{
                 marginTop: 30,
                 width: SIZES.WIDTH_BASE * 0.9,
                 alignSelf: 'center'
             }}
             >
-                <Block row center>
+                <View
+                    style={{
+                        flexDirection: 'row',
+                        alignSelf: 'center'
+                    }}
+                >
                     <Text
                         style={{
                             color: COLORS.ACTIVE,
@@ -136,28 +138,28 @@ export default function Profile({ route, navigation }) {
                         {fullName}
                         {' '}
                     </Text>
-                </Block>
+                </View>
 
-                <Block
-                    center
+                <View
                     style={{
                         width: SIZES.WIDTH_BASE - 40,
                         paddingBottom: 30,
+                        alignSelf: 'center'
                     }}
                 >
                     <Text
                         style={{
                             fontFamily: MONTSERRAT_REGULAR,
                             textAlign: 'center',
+                            fontSize: SIZES.FONT_H2,
+                            color: COLORS.DEFAULT,
                         }}
-                        size={SIZES.FONT_H2}
-                        color={COLORS.DEFAULT}
                     >
                         {'"'}
                         {description}
                         {'"'}
                     </Text>
-                </Block>
+                </View>
 
                 <UserInfoSection
                     listUserInfo={
@@ -237,18 +239,18 @@ export default function Profile({ route, navigation }) {
                         ]
                     }
                 />
-            </Block>
+            </View>
         );
     };
 
     const renderListPostImage = () => (
         <>
             {listImageFullscreen && (
-                <Block>
+                <View>
                     {listImageFullscreen.map((imageItem, index) => (
-                        <Block key={`${imageItem.uri}`}>
+                        <View key={`${imageItem.uri}`}>
                             {index === 0 ? (<></>) : (
-                                <Block style={{
+                                <View style={{
                                     marginVertical: 10
                                 }}
                                 >
@@ -266,12 +268,12 @@ export default function Profile({ route, navigation }) {
                                             navigation={navigation}
                                         />
                                     </TouchableWithoutFeedback>
-                                </Block>
+                                </View>
                             )}
-                        </Block>
+                        </View>
                     ))}
-                    <Block style={{ height: SIZES.HEIGHT_BASE * 0.13 }} />
-                </Block>
+                    <View style={{ height: SIZES.HEIGHT_BASE * 0.13 }} />
+                </View>
             )}
         </>
     );
@@ -292,7 +294,7 @@ export default function Profile({ route, navigation }) {
                     <CenterLoader />
                 ) : (
                     <>
-                        <Block style={{
+                        <View style={{
                             flex: 1,
                             flexDirection: 'column',
                             justifyContent: 'space-between',
@@ -307,7 +309,11 @@ export default function Profile({ route, navigation }) {
                                 onRequestClose={() => setVisible(false)}
                             />
 
-                            <Block flex={1}>
+                            <View
+                                style={{
+                                    flex: 1
+                                }}
+                            >
                                 <ScrollView
                                     showsVerticalScrollIndicator={false}
                                 >
@@ -317,7 +323,7 @@ export default function Profile({ route, navigation }) {
                                             setImageIndex(0);
                                         }}
                                     >
-                                        <Block
+                                        <View
                                             style={{
                                                 zIndex: 99
                                             }}
@@ -329,21 +335,24 @@ export default function Profile({ route, navigation }) {
                                                 style={[styles.profileContainer]}
                                                 imageStyle={styles.profileBackground}
                                             />
-                                        </Block>
+                                        </View>
                                         <CenterLoader />
                                     </TouchableWithoutFeedback>
 
-                                    <Block style={{ marginTop: -(SIZES.HEIGHT_BASE * 0.4) }}>
+                                    <View style={{ marginTop: -(SIZES.HEIGHT_BASE * 0.4) }}>
                                         {renderSubInfo()}
                                         {renderListPostImage()}
-                                    </Block>
+                                    </View>
                                 </ScrollView>
-                            </Block>
-                        </Block>
-                        <Block style={styles.buttonPanelContainer}>
-                            <Block
-                                middle
-                                row
+                            </View>
+                        </View>
+                        <View style={styles.buttonPanelContainer}>
+                            <View
+                                style={{
+                                    alignSelf: 'center',
+                                    alignItems: 'center',
+                                    flexDirection: 'row'
+                                }}
                             >
                                 <CustomButton
                                     onPress={() => {
@@ -392,8 +401,8 @@ export default function Profile({ route, navigation }) {
                                         color: COLORS.BASE
                                     }}
                                 />
-                            </Block>
-                        </Block>
+                            </View>
+                        </View>
                     </>
                 )}
             </>

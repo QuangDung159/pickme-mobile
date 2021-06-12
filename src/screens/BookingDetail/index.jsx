@@ -1,8 +1,7 @@
-import { Block, Text } from 'galio-framework';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import {
-    Alert, RefreshControl, ScrollView, StyleSheet
+    Alert, RefreshControl, ScrollView, StyleSheet, Text, View
 } from 'react-native';
 import { AirbnbRating } from 'react-native-ratings';
 import { useDispatch, useSelector } from 'react-redux';
@@ -269,16 +268,16 @@ export default function BookingDetail({
             renderContent={() => (
                 <>
                     <Text
-                        size={SIZES.FONT_H2}
                         style={{
                             fontFamily: MONTSERRAT_REGULAR,
                             marginVertical: 10,
-                            width: SIZES.WIDTH_BASE * 0.8
+                            width: SIZES.WIDTH_BASE * 0.8,
+                            fontSize: SIZES.FONT_H2
                         }}
                     >
                         Bạn vui lòng góp ý để chúng tôi phục vụ bạn tốt hơn, cảm ơn.
                     </Text>
-                    <Block
+                    <View
                         style={{
                             width: SIZES.WIDTH_BASE * 0.8
                         }}
@@ -293,9 +292,13 @@ export default function BookingDetail({
                                 setRatingValue(ratingNumber);
                             }}
                         />
-                    </Block>
+                    </View>
 
-                    <Block center>
+                    <View
+                        style={{
+                            alignSelf: 'center'
+                        }}
+                    >
                         <CustomButton
                             onPress={() => {
                                 sendRating();
@@ -304,7 +307,7 @@ export default function BookingDetail({
                             type="active"
                             label="Gửi đánh giá"
                         />
-                    </Block>
+                    </View>
                 </>
             )}
         />
@@ -316,10 +319,10 @@ export default function BookingDetail({
             renderContent={() => (
                 <>
                     <Text
-                        size={SIZES.FONT_H2}
                         style={{
                             fontFamily: MONTSERRAT_REGULAR,
-                            marginVertical: 10
+                            marginVertical: 10,
+                            fontSize: SIZES.FONT_H2
                         }}
                     >
                         Vui lòng nhập ý kiến
@@ -338,7 +341,11 @@ export default function BookingDetail({
                         }}
                         placeholder="Nhập mô tả..."
                     />
-                    <Block center>
+                    <View
+                        style={{
+                            alignSelf: 'center'
+                        }}
+                    >
                         <CustomButton
                             onPress={() => {
                                 sendRating();
@@ -347,7 +354,7 @@ export default function BookingDetail({
                             type="active"
                             label="Gửi báo cáo"
                         />
-                    </Block>
+                    </View>
                 </>
             )}
         />
@@ -420,15 +427,17 @@ export default function BookingDetail({
                             navigation={navigation}
                         />
 
-                        <Block style={{
-                            width: SIZES.WIDTH_BASE * 0.9,
-                            alignSelf: 'center',
-                            marginTop: 10,
-                        }}
-                        >
-                            <Text style={{
-                                fontFamily: MONTSERRAT_REGULAR,
+                        <View
+                            style={{
+                                width: SIZES.WIDTH_BASE * 0.9,
+                                alignSelf: 'center',
+                                marginTop: 10,
                             }}
+                        >
+                            <Text
+                                style={{
+                                    fontFamily: MONTSERRAT_REGULAR,
+                                }}
                             >
                                 CHI TIẾT ĐƠN HẸN
                             </Text>
@@ -445,15 +454,10 @@ export default function BookingDetail({
                                 navigation={navigation}
                             />
 
-                            <BookingProgressFlow
-                                status={booking.status}
-                                partner={booking.partner}
-                                booking={booking}
-                            />
-
-                            <Text style={{
-                                fontFamily: MONTSERRAT_REGULAR,
-                            }}
+                            <Text
+                                style={{
+                                    fontFamily: MONTSERRAT_REGULAR,
+                                }}
                             >
                                 GHI CHÚ CUỘC HẸN
                             </Text>
@@ -461,28 +465,41 @@ export default function BookingDetail({
                                 borderWidth={0.5}
                                 borderColor={COLORS.ACTIVE}
                                 style={{
-                                    marginVertical: 20
+                                    marginVertical: 10
                                 }}
                             />
                             <Text
-                                color={COLORS.DEFAULT}
-                                size={SIZES.FONT_H3}
-                                style={styles.subTitle}
+                                style={
+                                    [
+                                        styles.subTitle,
+                                        {
+                                            color: COLORS.DEFAULT,
+                                            fontSize: SIZES.FONT_H3,
+                                            marginBottom: 20
+                                        }
+                                    ]
+                                }
                             >
                                 {booking.noted}
                             </Text>
 
-                            <Block
-                                center
-                                row
+                            <BookingProgressFlow
+                                status={booking.status}
+                                partner={booking.partner}
+                                booking={booking}
+                            />
+
+                            <View
                                 style={{
-                                    width: SIZES.WIDTH_BASE * 0.9
+                                    width: SIZES.WIDTH_BASE * 0.9,
+                                    alignSelf: 'center',
+                                    flexDirection: 'row',
+                                    justifyContent: 'space-between'
                                 }}
-                                space="between"
                             >
                                 {handleShowButtonByStatus()}
-                            </Block>
-                        </Block>
+                            </View>
+                        </View>
                     </ScrollView>
                 )}
             </>

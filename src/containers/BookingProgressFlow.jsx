@@ -1,6 +1,6 @@
-import { Block, Text } from 'galio-framework';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
+import { Text, View } from 'react-native';
 import { IndicatorVerticalLine, Line, StepIndicator } from '../components/uiComponents';
 import { BookingStatus, NowTheme } from '../constants';
 
@@ -164,13 +164,15 @@ export default function BookingProgressFlow({
     };
 
     return (
-        <Block style={{
-            marginBottom: 20,
-        }}
-        >
-            <Text style={{
-                fontFamily: MONTSERRAT_REGULAR,
+        <View
+            style={{
+                marginBottom: 20,
             }}
+        >
+            <Text
+                style={{
+                    fontFamily: MONTSERRAT_REGULAR,
+                }}
             >
                 SƠ ĐỒ ĐẶT HẸN
             </Text>
@@ -183,9 +185,9 @@ export default function BookingProgressFlow({
             />
 
             {status !== BookingStatus.CANCEL ? (
-                <Block>
+                <View>
                     {stepArr.map((item, index) => (
-                        <Block key={item.buttonText}>
+                        <View key={item.buttonText}>
                             <StepIndicator
                                 type={item.type}
                                 buttonText={item.buttonText}
@@ -197,28 +199,28 @@ export default function BookingProgressFlow({
                                     active={item.type === 'prev'}
                                 />
                             )}
-                        </Block>
+                        </View>
                     ))}
-                </Block>
+                </View>
             ) : (
-                <Block
+                <View
                     style={{
                         alignItems: 'center',
                         marginVertical: 15
                     }}
                 >
                     <Text
-                        color={COLORS.SWITCH_OFF}
                         style={{
                             fontFamily: MONTSERRAT_REGULAR,
+                            color: COLORS.SWITCH_OFF,
+                            fontSize: SIZES.FONT_H2
                         }}
-                        size={SIZES.FONT_H2}
                     >
                         Xin lỗi! Đơn hẹn đã bị huỷ
                     </Text>
-                </Block>
+                </View>
             )}
-        </Block>
+        </View>
     );
 }
 
