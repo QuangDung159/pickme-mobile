@@ -154,7 +154,7 @@ export default function Profile({ route, navigation }) {
                     listUserInfo={
                         [
                             {
-                                value: earningExpected && `${earningExpected.toString()} kim cương/phút`,
+                                value: earningExpected && `${earningExpected.toString()} thu nhập/phút`,
                                 icon: {
                                     name: 'diamond',
                                     family: IconFamily.SIMPLE_LINE_ICONS,

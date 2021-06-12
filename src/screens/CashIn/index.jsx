@@ -4,8 +4,8 @@ import React, { useEffect } from 'react';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useDispatch, useSelector } from 'react-redux';
-import { IconCustom, Line, NoteText } from '../../components/uiComponents';
-import { IconFamily, NowTheme, ScreenName } from '../../constants';
+import { Line, NoteText } from '../../components/uiComponents';
+import { NowTheme, ScreenName } from '../../constants';
 import { ToastHelpers } from '../../helpers';
 import { setPersonTabActiveIndex } from '../../redux/Actions';
 
@@ -142,7 +142,7 @@ export default function CashIn(props) {
 
                         </Block>
 
-                        <Block
+                        {/* <Block
                             style={{
                                 marginVertical: 10
                             }}
@@ -166,7 +166,7 @@ export default function CashIn(props) {
                                 )}
                                 backgroundColor={NowTheme.COLORS.LIST_ITEM_BACKGROUND_1}
                             />
-                        </Block>
+                        </Block> */}
                     </Block>
                 </Block>
             </KeyboardAwareScrollView>

@@ -5,16 +5,15 @@ import {
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import {
-    Alert,
-    Modal, StyleSheet, View
+    Alert, StyleSheet
 } from 'react-native';
-import { ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import ScrollPicker from 'react-native-wheel-scroll-picker';
 import { useDispatch, useSelector } from 'react-redux';
 import { CustomCalendar } from '../../components/businessComponents';
 import {
-    CenterLoader, CustomButton, CustomInput, IconCustom, Line
+    CenterLoader, CustomButton, CustomInput, CustomModal, IconCustom, Line
 } from '../../components/uiComponents';
 import {
     DateTimeConst, IconFamily, NowTheme, Rx, ScreenName
@@ -454,14 +453,7 @@ export default function CreateBooking({ route, navigation }) {
                             }}
                             color={NowTheme.COLORS.ACTIVE}
                         >
-                            {packageActive.estimateAmount}
-                            {' '}
-                            <IconCustom
-                                name="diamond"
-                                family={IconFamily.SIMPLE_LINE_ICONS}
-                                size={20}
-                                color={NowTheme.COLORS.ACTIVE}
-                            />
+                            {`${packageActive.estimateAmount}k`}
                         </Text>
                     </Block>
                 </Block>
@@ -537,151 +529,121 @@ export default function CreateBooking({ route, navigation }) {
     };
 
     const renderModal = () => (
-        <Modal
-            animationType="slide"
-            transparent
-            visible={modalVisible}
-            onRequestClose={() => {
-                Alert.alert('Modal has been closed.');
-            }}
-        >
-            <ScrollView
-                showsVerticalScrollIndicator={false}
-            >
-                <View style={styles.centeredView}>
-                    <View style={styles.modalView}>
-                        <Text
-                            size={NowTheme.SIZES.FONT_H2}
-                            style={{
-                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+        <CustomModal
+            modalVisible={modalVisible}
+            renderContent={() => (
+                <>
+                    <Text
+                        size={NowTheme.SIZES.FONT_H2}
+                        style={{
+                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                            marginVertical: 10
+                        }}
+                    >
+                        Lịch bận của đối tác
+                    </Text>
+                    <Block
+                        style={{
+                            width: NowTheme.SIZES.WIDTH_BASE * 0.8
+                        }}
+                    >
+                        {renderBusyCalendar()}
+                    </Block>
+
+                    <Block center>
+                        <CustomButton
+                            onPress={() => setModalVisible(false)}
+                            buttonStyle={{
+                                width: NowTheme.SIZES.WIDTH_BASE * 0.8,
                                 marginVertical: 10
                             }}
-                        >
-                            Lịch bận của đối tác
-                        </Text>
-                        <Block
-                            style={{
-                                width: NowTheme.SIZES.WIDTH_BASE * 0.8
-                            }}
-                        >
-                            {renderBusyCalendar()}
-                        </Block>
-
-                        <Block center>
-                            <CustomButton
-                                onPress={() => setModalVisible(false)}
-                                buttonStyle={{
-                                    width: NowTheme.SIZES.WIDTH_BASE * 0.8,
-                                    marginVertical: 10
-                                }}
-                                type="active"
-                                label="Đóng"
-                            />
-                        </Block>
-                    </View>
-                </View>
-            </ScrollView>
-        </Modal>
+                            type="active"
+                            label="Đóng"
+                        />
+                    </Block>
+                </>
+            )}
+        />
     );
 
     const renderTimePickerModal = () => (
-        <Modal
-            animationType="slide"
-            transparent
-            visible={modalTimePickerVisible}
-            onRequestClose={() => {
-                Alert.alert('Modal has been closed.');
-            }}
-        >
-            <ScrollView
-                showsVerticalScrollIndicator={false}
-            >
-                <View style={styles.centeredView}>
-                    <View style={styles.modalView}>
-                        {renderTimePicker()}
-                        <Block center>
-                            <CustomButton
-                                onPress={() => setModalTimePickerVisible(false)}
-                                buttonStyle={{
-                                    width: NowTheme.SIZES.WIDTH_BASE * 0.8,
-                                    marginVertical: 10
-                                }}
-                                type="active"
-                                label="Đóng"
-                            />
-                        </Block>
-                    </View>
-                </View>
-            </ScrollView>
-        </Modal>
+        <CustomModal
+            modalVisible={modalTimePickerVisible}
+            renderContent={() => (
+                <>
+                    {renderTimePicker()}
+                    <Block center>
+                        <CustomButton
+                            onPress={() => setModalTimePickerVisible(false)}
+                            buttonStyle={{
+                                width: NowTheme.SIZES.WIDTH_BASE * 0.8,
+                                marginVertical: 10
+                            }}
+                            type="active"
+                            label="Đóng"
+                        />
+                    </Block>
+                </>
+            )}
+        />
     );
 
     const renderPartnerPackageModal = () => (
-        <Modal
-            animationType="slide"
-            transparent
-            visible={modalPartnerPackageVisible}
-            onRequestClose={() => {
-                Alert.alert('Modal has been closed.');
-            }}
-        >
-            <ScrollView
-                showsVerticalScrollIndicator={false}
-            >
-                <View style={styles.centeredView}>
-                    <View style={styles.modalView}>
-                        {renderPartnerPackage()}
+        <CustomModal
+            modalVisible={modalPartnerPackageVisible}
+            renderContent={() => (
+                <>
+                    {renderPartnerPackage()}
 
-                        <Block
-                            row
-                            space="between"
-                            style={{
-                                paddingVertical: 10,
-                                width: NowTheme.SIZES.WIDTH_BASE * 0.8
+                    <Block
+                        row
+                        space="between"
+                        style={{
+                            paddingVertical: 10,
+                            width: NowTheme.SIZES.WIDTH_BASE * 0.8
+                        }}
+                    >
+
+                        <CustomButton
+                            onPress={() => {
+                                setModalPartnerPackageVisible(false);
                             }}
-                        >
+                            type="default"
+                            label="Huỷ bỏ"
+                            buttonStyle={{
+                                width: NowTheme.SIZES.WIDTH_BASE * 0.39
+                            }}
+                        />
+                        <CustomButton
+                            onPress={() => {
+                                setModalPartnerPackageVisible(false);
+                                const startHourString = convertMinutesToStringHours(
+                                    packageActive.startAt
+                                );
 
-                            <CustomButton
-                                onPress={() => {
-                                    setModalPartnerPackageVisible(false);
-                                }}
-                                type="default"
-                                label="Huỷ bỏ"
-                                buttonStyle={{
-                                    width: NowTheme.SIZES.WIDTH_BASE * 0.39
-                                }}
-                            />
-                            <CustomButton
-                                onPress={() => {
-                                    setModalPartnerPackageVisible(false);
-                                    const startHourString = convertMinutesToStringHours(
-                                        packageActive.startAt
-                                    );
+                                const endHourString = convertMinutesToStringHours(
+                                    packageActive.endAt
+                                );
 
-                                    const endHourString = convertMinutesToStringHours(
-                                        packageActive.endAt
-                                    );
-
-                                    setStartTimeStr(startHourString);
-                                    setEndTimeStr(endHourString);
-                                    setTotal(packageActive.estimateAmount);
-                                    setBooking({
-                                        ...booking,
-                                        noted: packageActive.noted,
-                                        address: packageActive.address
-                                    });
-                                }}
-                                buttonStyle={{
-                                    width: NowTheme.SIZES.WIDTH_BASE * 0.39
-                                }}
-                                type="active"
-                                label="Xác nhận"
-                            />
-                        </Block>
-                    </View>
-                </View>
-            </ScrollView>
-        </Modal>
+                                setStartTimeStr(startHourString);
+                                setEndTimeStr(endHourString);
+                                setTotal(packageActive.estimateAmount);
+                                setBooking({
+                                    ...booking,
+                                    noted: packageActive.noted,
+                                    address: packageActive.address
+                                });
+                            }}
+                            buttonStyle={{
+                                width: NowTheme.SIZES.WIDTH_BASE * 0.39
+                            }}
+                            type="active"
+                            label="Xác nhận"
+                        />
+                    </Block>
+                </>
+            )}
+        />
     );
 
     const renderButtonTimePicker = () => (
@@ -906,14 +868,7 @@ export default function CreateBooking({ route, navigation }) {
                     }}
                     color={NowTheme.COLORS.ACTIVE}
                 >
-                    {calculateTotalAmount(startTimeStr, endTimeStr)}
-                    {' '}
-                    <IconCustom
-                        name="diamond"
-                        family={IconFamily.SIMPLE_LINE_ICONS}
-                        size={20}
-                        color={NowTheme.COLORS.ACTIVE}
-                    />
+                    {`${calculateTotalAmount(startTimeStr, endTimeStr)}k`}
                 </Text>
             </Block>
             {renderButtonPanel()}
@@ -1034,27 +989,6 @@ const styles = StyleSheet.create({
     title: {
         fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
         marginVertical: 10
-    },
-    centeredView: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        alignSelf: 'center',
-    },
-    modalView: {
-        backgroundColor: 'white',
-        borderRadius: 5,
-        alignItems: 'center',
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 2
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
-        marginTop: NowTheme.SIZES.WIDTH_BASE * 0.5,
-        width: NowTheme.SIZES.WIDTH_BASE * 0.9,
-        marginBottom: 10
     },
     timePickerText: {
         color: NowTheme.COLORS.ACTIVE,

@@ -2,12 +2,12 @@ import { Block, Text } from 'galio-framework';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import {
-    Alert, Modal, RefreshControl, ScrollView, StyleSheet, View
+    Alert, RefreshControl, ScrollView, StyleSheet
 } from 'react-native';
 import { AirbnbRating } from 'react-native-ratings';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-    CenterLoader, CustomButton, CustomInput, Line
+    CenterLoader, CustomButton, CustomInput, CustomModal, Line
 } from '../../components/uiComponents';
 import {
     BookingStatus, NowTheme, Rx, ScreenName
@@ -255,107 +255,93 @@ export default function BookingDetail({
     );
 
     const renderRatingModal = () => (
-        <Modal
-            animationType="slide"
-            transparent
-            visible={modalRatingVisible}
-        >
-            <ScrollView
-                showsVerticalScrollIndicator={false}
-            >
-                <View style={styles.centeredView}>
-                    <View style={styles.modalView}>
-                        <Text
-                            size={NowTheme.SIZES.FONT_H2}
-                            style={{
-                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                                marginVertical: 10,
-                                width: NowTheme.SIZES.WIDTH_BASE * 0.8
+        <CustomModal
+            modalVisible={modalRatingVisible}
+            renderContent={() => (
+                <>
+                    <Text
+                        size={NowTheme.SIZES.FONT_H2}
+                        style={{
+                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                            marginVertical: 10,
+                            width: NowTheme.SIZES.WIDTH_BASE * 0.8
+                        }}
+                    >
+                        Bạn vui lòng góp ý để chúng tôi phục vụ bạn tốt hơn, cảm ơn.
+                    </Text>
+                    <Block
+                        style={{
+                            width: NowTheme.SIZES.WIDTH_BASE * 0.8
+                        }}
+                    >
+                        <AirbnbRating
+                            count={5}
+                            reviewSize={25}
+                            reviews={['Tệ', 'Không ổn', 'Bình thường', 'Tốt', 'Tuyệt vời <3']}
+                            defaultRating={ratingValue}
+                            size={25}
+                            onFinishRating={(ratingNumber) => {
+                                setRatingValue(ratingNumber);
                             }}
-                        >
-                            Bạn vui lòng góp ý để chúng tôi phục vụ bạn tốt hơn, cảm ơn.
-                        </Text>
-                        <Block
-                            style={{
-                                width: NowTheme.SIZES.WIDTH_BASE * 0.8
-                            }}
-                        >
-                            <AirbnbRating
-                                count={5}
-                                reviewSize={25}
-                                reviews={['Tệ', 'Không ổn', 'Bình thường', 'Tốt', 'Tuyệt vời <3']}
-                                defaultRating={ratingValue}
-                                size={25}
-                                onFinishRating={(ratingNumber) => {
-                                    setRatingValue(ratingNumber);
-                                }}
-                            />
-                        </Block>
+                        />
+                    </Block>
 
-                        <Block center>
-                            <CustomButton
-                                onPress={() => {
-                                    sendRating();
-                                    setModalRatingVisible(false);
-                                }}
-                                type="active"
-                                label="Gửi đánh giá"
-                            />
-                        </Block>
-                    </View>
-                </View>
-            </ScrollView>
-        </Modal>
+                    <Block center>
+                        <CustomButton
+                            onPress={() => {
+                                sendRating();
+                                setModalRatingVisible(false);
+                            }}
+                            type="active"
+                            label="Gửi đánh giá"
+                        />
+                    </Block>
+                </>
+            )}
+        />
     );
 
     const renderReportModal = () => (
-        <Modal
-            animationType="slide"
-            transparent
-            visible={modalReportVisible}
-        >
-            <ScrollView
-                showsVerticalScrollIndicator={false}
-            >
-                <View style={styles.centeredView}>
-                    <View style={styles.modalView}>
-                        <Text
-                            size={NowTheme.SIZES.FONT_H2}
-                            style={{
-                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                                marginVertical: 10
-                            }}
-                        >
-                            Vui lòng nhập ý kiến
-                        </Text>
+        <CustomModal
+            modalVisible={modalReportVisible}
+            renderContent={() => (
+                <>
+                    <Text
+                        size={NowTheme.SIZES.FONT_H2}
+                        style={{
+                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                            marginVertical: 10
+                        }}
+                    >
+                        Vui lòng nhập ý kiến
+                    </Text>
 
-                        <CustomInput
-                            multiline
-                            onChangeText={(reportInput) => onChangeReport(reportInput)}
-                            value={reportDesc}
-                            inputStyle={[styles.inputWith, {
-                                borderRadius: 5,
-                            }]}
-                            containerStyle={{
-                                marginVertical: 10,
-                                width: NowTheme.SIZES.WIDTH_BASE * 0.8
+                    <CustomInput
+                        multiline
+                        onChangeText={(reportInput) => onChangeReport(reportInput)}
+                        value={reportDesc}
+                        inputStyle={[styles.inputWith, {
+                            borderRadius: 5,
+                        }]}
+                        containerStyle={{
+                            marginVertical: 10,
+                            width: NowTheme.SIZES.WIDTH_BASE * 0.8
+                        }}
+                        placeholder="Nhập mô tả..."
+                    />
+                    <Block center>
+                        <CustomButton
+                            onPress={() => {
+                                sendRating();
+                                setModalReportVisible(false);
                             }}
-                            placeholder="Nhập mô tả..."
+                            type="active"
+                            label="Gửi báo cáo"
                         />
-                        <Block center>
-                            <CustomButton
-                                onPress={() => {
-                                    sendRating();
-                                    setModalReportVisible(false);
-                                }}
-                                type="active"
-                                label="Gửi báo cáo"
-                            />
-                        </Block>
-                    </View>
-                </View>
-            </ScrollView>
-        </Modal>
+                    </Block>
+                </>
+            )}
+        />
     );
 
     const renderCompleteBookingButton = (width) => (

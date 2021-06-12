@@ -226,7 +226,7 @@ export default function SignInWithOTP({ navigation }) {
                             ) : (
                                 <>
                                     <View style={{
-                                        height: NowTheme.SIZES.HEIGHT_BASE * 0.3
+                                        height: NowTheme.SIZES.HEIGHT_BASE * 0.2
                                     }}
                                     >
                                         <View
@@ -330,27 +330,6 @@ const styles = StyleSheet.create({
     button: {
         width: NowTheme.SIZES.WIDTH_BASE * 0.77
     },
-    centeredView: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 22
-    },
-    modalView: {
-        margin: 20,
-        backgroundColor: 'white',
-        borderRadius: 20,
-        padding: 35,
-        alignItems: 'center',
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 2
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5
-    },
     openButton: {
         backgroundColor: '#F194FF',
         borderRadius: 20,
@@ -362,9 +341,4 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center'
     },
-    modalText: {
-        marginBottom: 15,
-        textAlign: 'center',
-        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
-    }
 });

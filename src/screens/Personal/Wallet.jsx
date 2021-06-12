@@ -7,10 +7,10 @@ import {
     IconFamily, NowTheme, Rx, ScreenName
 } from '../../constants';
 import { ToastHelpers } from '../../helpers';
-import { setListCashHistoryStore } from '../../redux/Actions';
+import { setCurrentUser, setListCashHistoryStore } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
 
-export default function Wallet({ navigation, route }) {
+export default function Wallet({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
 
@@ -46,24 +46,33 @@ export default function Wallet({ navigation, route }) {
         return (
             <View
                 style={{
-                    height: NowTheme.SIZES.HEIGHT_BASE * 0.1,
+                    height: NowTheme.SIZES.HEIGHT_BASE * 0.08,
                     width: NowTheme.SIZES.WIDTH_BASE * 0.9,
                     alignSelf: 'center',
                     flexDirection: 'row'
                 }}
             >
-                <View style={{
-                    marginRight: 10
-                }}
+                <View
+                    style={{
+                        marginRight: 10,
+                        alignItems: 'center',
+                        flexDirection: 'row'
+                    }}
                 >
-                    <IconCustom
-                        name={isIncrease ? 'chevron-circle-right' : 'chevron-circle-left'}
-                        size={NowTheme.SIZES.FONT_H1}
-                        color={NowTheme.COLORS.DEFAULT}
-                        family={IconFamily.FONT_AWESOME}
-                    />
+                    <View
+                        style={{
+                            width: NowTheme.SIZES.WIDTH_BASE * 0.1
+                        }}
+                    >
+                        <IconCustom
+                            name={isIncrease ? 'chevron-circle-right' : 'chevron-circle-left'}
+                            size={NowTheme.SIZES.FONT_H1}
+                            color={NowTheme.COLORS.DEFAULT}
+                            family={IconFamily.FONT_AWESOME}
+                        />
+                    </View>
+                    {renderHistoryItemContent(item)}
                 </View>
-                {renderHistoryItemContent(item)}
             </View>
         );
     };
@@ -77,122 +86,98 @@ export default function Wallet({ navigation, route }) {
         return (
             <View
                 style={{
-                    flex: 1
-                }}
-            >
-                <View
-                    style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between'
-                    }}
-                >
-                    <View
-                        style={{
-                            width: NowTheme.SIZES.WIDTH_BASE * 0.6
-                        }}
-                    >
-                        <Text
-                            style={{
-                                color: NowTheme.COLORS.DEFAULT,
-                                fontSize: NowTheme.SIZES.FONT_H3,
-                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                            }}
-                        >
-                            {content}
-                        </Text>
-                    </View>
-                    <View
-                        style={{
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                            alignSelf: 'center'
-                        }}
-                    >
-                        <Text
-                            style={{
-                                fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
-                                marginRight: 5,
-                                color: NowTheme.COLORS.ACTIVE,
-                                fontSize: 16,
-                            }}
-                        >
-                            {isIncrease ? `+ ${amountChanged}` : `- ${amountChanged}`}
-                        </Text>
-                        <IconCustom
-                            name="diamond"
-                            family={IconFamily.SIMPLE_LINE_ICONS}
-                            size={16}
-                            color={NowTheme.COLORS.ACTIVE}
-                        />
-                    </View>
-                </View>
-            </View>
-        );
-    };
-
-    const renderWalletAmountPanel = () => {
-        const walletAmountFormCashOut = route?.params?.walletAmountFromCashOut || currentUser.walletAmount;
-        return (
-            <View
-                style={{
-                    alignItems: 'center',
                     flexDirection: 'row',
                     justifyContent: 'space-between',
-                    flex: 1
+                    width: NowTheme.SIZES.WIDTH_BASE * 0.8
                 }}
             >
                 <View
                     style={{
-                        alignItems: 'center',
+                        width: NowTheme.SIZES.WIDTH_BASE * 0.4
+                    }}
+                >
+                    <Text
+                        style={{
+                            color: NowTheme.COLORS.DEFAULT,
+                            fontSize: NowTheme.SIZES.FONT_H3,
+                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                        }}
+                    >
+                        {content}
+                    </Text>
+                </View>
+                <View
+                    style={{
                         alignSelf: 'center'
                     }}
                 >
                     <Text
                         style={{
-                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                            fontSize: NowTheme.SIZES.FONT_H4
+                            fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
+                            color: NowTheme.COLORS.ACTIVE,
+                            fontSize: NowTheme.SIZES.FONT_H2,
                         }}
                     >
-                        Số dư trong rương
+                        {isIncrease ? `+ ${amountChanged}k` : `- ${amountChanged}k`}
                     </Text>
-                    <View
-                        style={{
-                            alignItems: 'center',
-                            flexDirection: 'row'
-                        }}
-                    >
-                        <Text
-                            style={{
-                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                                fontSize: NowTheme.SIZES.FONT_H1 + 10,
-                                color: NowTheme.COLORS.ACTIVE,
-                            }}
-                        >
-                            {walletAmountFormCashOut}
-                        </Text>
-                        <IconCustom
-                            name="diamond"
-                            family={IconFamily.SIMPLE_LINE_ICONS}
-                            size={NowTheme.SIZES.FONT_H1}
-                            color={NowTheme.COLORS.ACTIVE}
-                        />
-                    </View>
                 </View>
-                <CustomButton
-                    onPress={() => navigation.navigate(ScreenName.CASH_IN)}
-                    labelStyle={{
-                        fontSize: NowTheme.SIZES.FONT_H3,
-                        color: NowTheme.COLORS.ACTIVE
-                    }}
-                    buttonStyle={{
-                        width: NowTheme.SIZES.WIDTH_BASE * 0.45,
-                        borderColor: NowTheme.COLORS.ACTIVE
-                    }}
-                    label="Nạp kim cương"
-                />
             </View>
         );
     };
+
+    const renderWalletAmountPanel = () => (
+        <View
+            style={{
+                alignItems: 'center',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                flex: 1
+            }}
+        >
+            <View
+                style={{
+                    alignItems: 'center',
+                    alignSelf: 'center'
+                }}
+            >
+                <Text
+                    style={{
+                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                        fontSize: NowTheme.SIZES.FONT_H4
+                    }}
+                >
+                    Số dư trong rương
+                </Text>
+                <View
+                    style={{
+                        alignItems: 'center',
+                    }}
+                >
+                    <Text
+                        style={{
+                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                            fontSize: NowTheme.SIZES.FONT_H1 + 10,
+                            color: NowTheme.COLORS.ACTIVE,
+                        }}
+                    >
+                        {`${currentUser.walletAmount}k`}
+                    </Text>
+                </View>
+            </View>
+            <CustomButton
+                onPress={() => navigation.navigate(ScreenName.CASH_IN)}
+                labelStyle={{
+                    fontSize: NowTheme.SIZES.FONT_H3,
+                    color: NowTheme.COLORS.ACTIVE
+                }}
+                buttonStyle={{
+                    width: NowTheme.SIZES.WIDTH_BASE * 0.45,
+                    borderColor: NowTheme.COLORS.ACTIVE
+                }}
+                label="Nạp tiền"
+            />
+        </View>
+    );
 
     const fetchHistory = () => {
         rxUtil(
@@ -203,7 +188,16 @@ export default function Wallet({ navigation, route }) {
                 Authorization: token
             },
             (res) => {
-                dispatch(setListCashHistoryStore(res.data.data));
+                const history = res.data.data;
+                if (history && history.length !== 0) {
+                    dispatch(setListCashHistoryStore(history));
+                    const latestUpdatedAmount = history[0].updatedWalletAmount;
+
+                    dispatch(setCurrentUser({
+                        ...currentUser,
+                        walletAmount: latestUpdatedAmount
+                    }));
+                }
                 setIsShowSpinner(false);
                 setRefreshing(false);
             },

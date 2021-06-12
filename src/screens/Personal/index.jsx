@@ -21,7 +21,7 @@ export default function Personal({ navigation, route }) {
             tabLabel: 'Cá nhân',
         },
         {
-            tabLabel: 'Rương\nkim cương',
+            tabLabel: 'Ví',
         },
         {
             tabLabel: 'Đơn hẹn',
