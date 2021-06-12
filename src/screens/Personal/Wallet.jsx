@@ -46,33 +46,27 @@ export default function Wallet({ navigation }) {
         return (
             <View
                 style={{
+                    marginRight: 10,
+                    alignItems: 'center',
+                    flexDirection: 'row',
                     height: NowTheme.SIZES.HEIGHT_BASE * 0.08,
                     width: NowTheme.SIZES.WIDTH_BASE * 0.9,
-                    alignSelf: 'center',
-                    flexDirection: 'row'
+                    alignSelf: 'center'
                 }}
             >
                 <View
                     style={{
-                        marginRight: 10,
-                        alignItems: 'center',
-                        flexDirection: 'row'
+                        width: NowTheme.SIZES.WIDTH_BASE * 0.1
                     }}
                 >
-                    <View
-                        style={{
-                            width: NowTheme.SIZES.WIDTH_BASE * 0.1
-                        }}
-                    >
-                        <IconCustom
-                            name={isIncrease ? 'chevron-circle-right' : 'chevron-circle-left'}
-                            size={NowTheme.SIZES.FONT_H1}
-                            color={NowTheme.COLORS.DEFAULT}
-                            family={IconFamily.FONT_AWESOME}
-                        />
-                    </View>
-                    {renderHistoryItemContent(item)}
+                    <IconCustom
+                        name={isIncrease ? 'chevron-circle-right' : 'chevron-circle-left'}
+                        size={NowTheme.SIZES.FONT_H1}
+                        color={NowTheme.COLORS.DEFAULT}
+                        family={IconFamily.FONT_AWESOME}
+                    />
                 </View>
+                {renderHistoryItemContent(item)}
             </View>
         );
     };
@@ -224,7 +218,7 @@ export default function Wallet({ navigation }) {
                 >
                     <FlatList
                         data={listCashHistoryStore}
-                        keyExtractor={(item) => item.navigationId}
+                        keyExtractor={(item) => item.id}
                         renderItem={({ item }) => renderHistoryItem(item)}
                         showsVerticalScrollIndicator={false}
                         refreshControl={(

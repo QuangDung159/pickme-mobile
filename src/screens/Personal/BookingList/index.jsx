@@ -21,14 +21,18 @@ export default function BookingList({ navigation }) {
 
     useEffect(
         () => {
-            if (!listBookingStore || listBookingStore.length === 0) {
-                setIsShowSpinner(true);
-                getListBooking();
-            }
+            const onFocusScreen = navigation.addListener(
+                'focus',
+                () => {
+                    setIsShowSpinner(true);
+                    fetchListBooking();
+                }
+            );
+            return onFocusScreen;
         }, []
     );
 
-    const getListBooking = () => {
+    const fetchListBooking = () => {
         const pagingStr = '?pageIndex=1&pageSize=100';
 
         rxUtil(
@@ -58,7 +62,7 @@ export default function BookingList({ navigation }) {
 
     const onRefresh = () => {
         setRefreshing(true);
-        getListBooking();
+        fetchListBooking();
     };
 
     const renderListBooking = () => (

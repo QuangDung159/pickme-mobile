@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CustomButton, CustomModal } from '../../components/uiComponents';
 import { NowTheme, Rx, ScreenName } from '../../constants';
 import { ToastHelpers } from '../../helpers';
-import { setListBookingStore, setPersonTabActiveIndex, setShowLoaderStore } from '../../redux/Actions';
+import { setPersonTabActiveIndex } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
 
 export default function ReasonCancelBookingModal({
@@ -26,31 +26,6 @@ export default function ReasonCancelBookingModal({
     const token = useSelector((state) => state.userReducer.token);
 
     const dispatch = useDispatch();
-
-    const fetchListBooking = () => {
-        const pagingStr = '?pageIndex=1&pageSize=100';
-
-        rxUtil(
-            `${Rx.BOOKING.GET_MY_BOOKING_AS_CUSTOMER}${pagingStr}`,
-            'GET',
-            null,
-            {
-                Authorization: token
-            },
-            (res) => {
-                dispatch(setListBookingStore(res.data.data));
-                dispatch(setShowLoaderStore(false));
-            },
-            (res) => {
-                dispatch(setShowLoaderStore(false));
-                ToastHelpers.renderToast(res.data.message, 'error');
-            },
-            (res) => {
-                dispatch(setShowLoaderStore(false));
-                ToastHelpers.renderToast(res.data.message, 'error');
-            }
-        );
-    };
 
     const onChangeReason = (reasonValueInput) => {
         const reasonInput = reasonDropdownArr.find((item) => item.value === reasonValueInput);
@@ -75,7 +50,6 @@ export default function ReasonCancelBookingModal({
     );
 
     const sendRequestToCancelBooking = () => {
-        dispatch(setShowLoaderStore(true));
         rxUtil(
             `${Rx.BOOKING.CANCEL_BOOKING}/${bookingId}`,
             'POST',
@@ -89,15 +63,11 @@ export default function ReasonCancelBookingModal({
                 navigation.navigate(ScreenName.PERSONAL);
                 dispatch(setPersonTabActiveIndex(2));
                 ToastHelpers.renderToast(res.data.message, 'success');
-                fetchListBooking();
             },
             (res) => {
-                dispatch(setShowLoaderStore(false));
                 ToastHelpers.renderToast(res.data.message, 'error');
-                ToastHelpers.renderToast();
             },
             (res) => {
-                dispatch(setShowLoaderStore(false));
                 ToastHelpers.renderToast(res.data.message, 'error');
             }
         );
