@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CustomButton, CustomModal } from '../../components/uiComponents';
 import { NowTheme, Rx, ScreenName } from '../../constants';
 import { ToastHelpers } from '../../helpers';
-import { setPersonTabActiveIndex } from '../../redux/Actions';
+import { setPersonTabActiveIndex, setShowLoaderStore } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
 
 const {
@@ -18,7 +18,8 @@ export default function ReasonCancelBookingModal({
     modalReasonVisible,
     setModalReasonVisible,
     bookingId,
-    navigation
+    navigation,
+    fetchListBooking
 }) {
     const reasonDropdownArr = [
         { label: 'Bận đột xuất', value: 0 },
@@ -55,6 +56,7 @@ export default function ReasonCancelBookingModal({
     );
 
     const sendRequestToCancelBooking = () => {
+        dispatch(setShowLoaderStore(true));
         rxUtil(
             `${Rx.BOOKING.CANCEL_BOOKING}/${bookingId}`,
             'POST',
@@ -65,6 +67,7 @@ export default function ReasonCancelBookingModal({
                 Authorization: token
             },
             (res) => {
+                fetchListBooking();
                 navigation.navigate(ScreenName.PERSONAL);
                 dispatch(setPersonTabActiveIndex(2));
                 ToastHelpers.renderToast(res.data.message, 'success');
@@ -101,9 +104,9 @@ export default function ReasonCancelBookingModal({
                             marginBottom: 10,
                             alignSelf: 'center',
                             alignItems: 'center',
-                            flexDirection: 'row'
+                            flexDirection: 'row',
+                            justifyContent: 'space-between'
                         }}
-                        space="between"
                     >
                         <CustomButton
                             onPress={() => {

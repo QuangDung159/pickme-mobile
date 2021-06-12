@@ -15,6 +15,7 @@ import {
 import { ToastHelpers } from '../../helpers';
 import {
     setCurrentUser,
+    setListBookingStore,
     setListConversation, setNumberMessageUnread, setPickMeInfoStore
 } from '../../redux/Actions';
 import { rxUtil, socketRequestUtil } from '../../utils';
@@ -47,7 +48,7 @@ export default function Home({ navigation }) {
     useEffect(
         () => {
             fetchCurrentUserInfo();
-
+            fetchListBooking();
             if (!pickMeInfoStore) fetchPickMeInfo();
 
             getListPartner();
@@ -110,6 +111,34 @@ export default function Home({ navigation }) {
             }
         }, [isSignInOtherDeviceStore]
     );
+
+    const fetchListBooking = () => {
+        const pagingStr = '?pageIndex=1&pageSize=100';
+
+        rxUtil(
+            `${Rx.BOOKING.GET_MY_BOOKING_AS_CUSTOMER}${pagingStr}`,
+            'GET',
+            null,
+            {
+                Authorization: token
+            },
+            (res) => {
+                dispatch(setListBookingStore(res.data.data));
+                setIsShowSpinner(false);
+                setRefreshing(false);
+            },
+            (res) => {
+                setIsShowSpinner(false);
+                setRefreshing(false);
+                ToastHelpers.renderToast(res.data.message, 'error');
+            },
+            (res) => {
+                setIsShowSpinner(false);
+                setRefreshing(false);
+                ToastHelpers.renderToast(res.data.message, 'error');
+            }
+        );
+    };
 
     const fetchPickMeInfo = () => {
         rxUtil(

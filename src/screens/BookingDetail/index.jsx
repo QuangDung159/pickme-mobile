@@ -13,7 +13,7 @@ import {
 } from '../../constants';
 import BookingProgressFlow from '../../containers/BookingProgressFlow';
 import { ToastHelpers } from '../../helpers';
-import { setPersonTabActiveIndex, setShowLoaderStore } from '../../redux/Actions';
+import { setListBookingStore, setPersonTabActiveIndex, setShowLoaderStore } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
 import CardBooking from '../Personal/BookingList/CardBooking';
 import ReasonCancelBookingModal from './ReasonCancelBookingModal';
@@ -80,6 +80,34 @@ export default function BookingDetail({
         fetchBookingDetailInfo();
     };
 
+    const fetchListBooking = () => {
+        const pagingStr = '?pageIndex=1&pageSize=100';
+
+        rxUtil(
+            `${Rx.BOOKING.GET_MY_BOOKING_AS_CUSTOMER}${pagingStr}`,
+            'GET',
+            null,
+            {
+                Authorization: token
+            },
+            (res) => {
+                dispatch(setListBookingStore(res.data.data));
+                dispatch(setShowLoaderStore(false));
+                setRefreshing(false);
+            },
+            (res) => {
+                setRefreshing(false);
+                dispatch(setShowLoaderStore(false));
+                ToastHelpers.renderToast(res.data.message, 'error');
+            },
+            (res) => {
+                setRefreshing(false);
+                dispatch(setShowLoaderStore(false));
+                ToastHelpers.renderToast(res.data.message, 'error');
+            }
+        );
+    };
+
     const fetchBookingDetailInfo = () => {
         rxUtil(
             `${Rx.BOOKING.DETAIL_BOOKING}/${bookingId}`,
@@ -109,7 +137,6 @@ export default function BookingDetail({
 
     const onClickCompleteBooking = () => {
         dispatch(setShowLoaderStore(true));
-
         renderAlertRatingReport();
 
         rxUtil(
@@ -123,7 +150,7 @@ export default function BookingDetail({
                 ToastHelpers.renderToast(res.data.message, 'success');
                 navigation.navigate(ScreenName.PERSONAL);
                 dispatch(setPersonTabActiveIndex(2));
-                dispatch(setShowLoaderStore(false));
+                fetchListBooking();
             },
             (res) => {
                 ToastHelpers.renderToast();
@@ -224,6 +251,7 @@ export default function BookingDetail({
             (res) => {
                 navigation.navigate(ScreenName.PERSONAL);
                 dispatch(setPersonTabActiveIndex(2));
+                fetchListBooking();
                 ToastHelpers.renderToast(res.message || 'Thao tác thành công.', 'success');
             },
             (res) => {
@@ -425,6 +453,7 @@ export default function BookingDetail({
                             setModalReasonVisible={setModalReasonVisible}
                             bookingId={bookingId}
                             navigation={navigation}
+                            fetchListBooking={() => fetchListBooking()}
                         />
 
                         <View

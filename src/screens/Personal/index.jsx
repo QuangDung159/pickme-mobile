@@ -8,7 +8,7 @@ import BookingList from './BookingList';
 import UserInformation from './UserInformation';
 import Wallet from './Wallet';
 
-export default function Personal({ navigation, route }) {
+export default function Personal({ navigation }) {
     const personTabActiveIndex = useSelector((state) => state.appConfigReducer.personTabActiveIndex);
     const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
 
@@ -47,7 +47,7 @@ export default function Personal({ navigation, route }) {
             }
             case 1: {
                 return (
-                    <Wallet navigation={navigation} route={route} />
+                    <Wallet navigation={navigation} />
                 );
             }
             case 2: {
