@@ -11,10 +11,14 @@ import { useSelector } from 'react-redux';
 import { NowTheme, ScreenName } from '../../constants';
 import { CenterLoader } from '../uiComponents';
 
-const { FONT: {
+const {
+    FONT: {
         MONTSERRAT_REGULAR,
         MONTSERRAT_BOLD
-    }, SIZES, COLORS } = NowTheme;
+    },
+    SIZES,
+    COLORS
+} = NowTheme;
 
 export default function CardImage({
     navigation, user, isShowTitle, imageUrl,

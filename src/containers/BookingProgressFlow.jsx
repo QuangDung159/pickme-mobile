@@ -4,10 +4,13 @@ import React, { useEffect, useState } from 'react';
 import { IndicatorVerticalLine, Line, StepIndicator } from '../components/uiComponents';
 import { BookingStatus, NowTheme } from '../constants';
 
-const { FONT: {
+const {
+    FONT: {
         MONTSERRAT_REGULAR,
-        MONTSERRAT_BOLD
-    }, SIZES, COLORS } = NowTheme;
+    },
+    SIZES,
+    COLORS
+} = NowTheme;
 
 export default function BookingProgressFlow({
     booking

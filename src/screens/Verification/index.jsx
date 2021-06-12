@@ -14,10 +14,13 @@ import { MediaHelpers, ToastHelpers } from '../../helpers';
 import { setCurrentUser, setPersonTabActiveIndex, setVerificationStore } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
 
-const { FONT: {
+const {
+    FONT: {
         MONTSERRAT_REGULAR,
-        MONTSERRAT_BOLD
-    }, SIZES, COLORS } = NowTheme;
+    },
+    SIZES,
+    COLORS
+} = NowTheme;
 let count = 0;
 
 export default function Verification({ navigation }) {

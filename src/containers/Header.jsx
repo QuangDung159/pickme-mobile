@@ -15,10 +15,14 @@ import { resetStoreSignOut, setListNotification, setNumberNotificationUnread } f
 import { rxUtil } from '../utils';
 
 const iPhoneX = Platform.OS === 'ios';
-const { FONT: {
+const {
+    FONT: {
         MONTSERRAT_REGULAR,
         MONTSERRAT_BOLD
-    }, SIZES, COLORS } = NowTheme;
+    },
+    SIZES,
+    COLORS
+} = NowTheme;
 
 export default function Header({
     back,

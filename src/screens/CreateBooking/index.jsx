@@ -22,10 +22,14 @@ import { ToastHelpers } from '../../helpers';
 import { setListBookingStore, setPersonTabActiveIndex } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
 
-const { FONT: {
+const {
+    FONT: {
         MONTSERRAT_REGULAR,
         MONTSERRAT_BOLD
-    }, SIZES, COLORS } = NowTheme;
+    },
+    SIZES,
+    COLORS
+} = NowTheme;
 
 const hourArr = DateTimeConst.HOUR_ARR;
 const minuteArr = DateTimeConst.MINUTE_ARR;

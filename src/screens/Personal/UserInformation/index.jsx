@@ -22,10 +22,14 @@ import { rxUtil } from '../../../utils';
 import UserInfoSection from './UserInfoSection';
 import VerificationStatusPanel from './VerificationStatusPanel';
 
-const { FONT: {
+const {
+    FONT: {
         MONTSERRAT_REGULAR,
         MONTSERRAT_BOLD
-    }, SIZES, COLORS } = NowTheme;
+    },
+    SIZES,
+    COLORS
+} = NowTheme;
 
 export default function UserInformation({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);

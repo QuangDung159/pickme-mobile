@@ -2,10 +2,12 @@ import React, { PureComponent } from 'react';
 import { Text, View } from 'react-native';
 import { NowTheme } from '../../constants';
 
-const { FONT: {
+const {
+    FONT: {
         MONTSERRAT_REGULAR,
         MONTSERRAT_BOLD
-    }, COLORS } = NowTheme;
+    }, COLORS
+} = NowTheme;
 
 export default class NoteText extends PureComponent {
     render() {

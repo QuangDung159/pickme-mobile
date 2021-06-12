@@ -20,10 +20,13 @@ import {
 } from '../../redux/Actions';
 import { rxUtil, socketRequestUtil } from '../../utils';
 
-const { FONT: {
+const {
+    FONT: {
         MONTSERRAT_REGULAR,
-        MONTSERRAT_BOLD
-    }, SIZES, COLORS } = NowTheme;
+    },
+    SIZES,
+    COLORS
+} = NowTheme;
 
 export default function Home({ navigation }) {
     const [refreshing, setRefreshing] = useState(false);

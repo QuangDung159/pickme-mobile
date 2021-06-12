@@ -5,10 +5,13 @@ import {
 } from 'react-native';
 import { NowTheme } from '../../constants';
 
-const { FONT: {
+const {
+    FONT: {
         MONTSERRAT_REGULAR,
-        MONTSERRAT_BOLD
-    }, SIZES, COLORS } = NowTheme;
+    },
+    SIZES,
+    COLORS
+} = NowTheme;
 
 export default class Tabs extends PureComponent {
   animatedValue = new Animated.Value(1);

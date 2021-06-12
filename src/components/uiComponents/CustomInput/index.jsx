@@ -5,10 +5,13 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { IconFamily, NowTheme } from '../../../constants';
 import IconCustom from '../IconCustom';
 
-const { FONT: {
+const {
+    FONT: {
         MONTSERRAT_REGULAR,
-        MONTSERRAT_BOLD
-    }, SIZES, COLORS } = NowTheme;
+    },
+    SIZES,
+    COLORS
+} = NowTheme;
 
 CustomInput.propTypes = {
     label: PropTypes.string,

@@ -4,10 +4,13 @@ import { useSelector } from 'react-redux';
 import { IconCustom, NoteText } from '../../../components/uiComponents';
 import { IconFamily, NowTheme, VerificationStatus } from '../../../constants';
 
-const { FONT: {
+const {
+    FONT: {
         MONTSERRAT_REGULAR,
-        MONTSERRAT_BOLD
-    }, SIZES, COLORS } = NowTheme;
+    },
+    SIZES,
+    COLORS
+} = NowTheme;
 
 export default function VerificationStatusPanel() {
     const currentUser = useSelector((state) => state.userReducer.currentUser);

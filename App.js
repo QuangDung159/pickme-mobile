@@ -17,10 +17,13 @@ import Main from './src/containers/Main';
 import { ToastHelpers } from './src/helpers';
 import store from './src/redux/Store';
 
-const { FONT: {
-        MONTSERRAT_REGULAR,
+const {
+    FONT: {
         MONTSERRAT_BOLD
-    }, SIZES, COLORS } = NowTheme;
+    },
+    SIZES,
+    COLORS
+} = NowTheme;
 
 // images caching
 function cacheImages(images) {

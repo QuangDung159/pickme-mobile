@@ -5,10 +5,14 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { NowTheme } from '../../../constants';
 
-const { FONT: {
+const {
+    FONT: {
         MONTSERRAT_REGULAR,
         MONTSERRAT_BOLD
-    }, SIZES, COLORS } = NowTheme;
+    },
+    SIZES,
+    COLORS
+} = NowTheme;
 
 export default function ProfileInfoItem({
     label, value

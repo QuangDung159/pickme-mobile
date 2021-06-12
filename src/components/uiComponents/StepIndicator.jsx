@@ -4,10 +4,14 @@ import { StyleSheet, Text, View } from 'react-native';
 import { NowTheme } from '../../constants';
 import CustomButton from './CustomButton';
 
-const { FONT: {
+const {
+    FONT: {
         MONTSERRAT_REGULAR,
         MONTSERRAT_BOLD
-    }, SIZES, COLORS } = NowTheme;
+    },
+    SIZES,
+    COLORS
+} = NowTheme;
 
 export default function StepIndicator({
     type, buttonText, content

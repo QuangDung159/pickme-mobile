@@ -17,10 +17,13 @@ import ModalDisclaimer from './ModalDisclaimer';
 import OtpForm from './OtpForm';
 import PhoneForm from './PhoneForm';
 
-const { FONT: {
-        MONTSERRAT_REGULAR,
+const {
+    FONT: {
         MONTSERRAT_BOLD
-    }, SIZES, COLORS } = NowTheme;
+    },
+    SIZES,
+    COLORS
+} = NowTheme;
 
 export default function SignUp({ navigation }) {
     const [modalVisible, setModalVisible] = useState(false);

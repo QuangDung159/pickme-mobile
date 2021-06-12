@@ -23,10 +23,13 @@ import { MediaHelpers, ToastHelpers } from '../../helpers';
 import { setToken } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
 
-const { FONT: {
+const {
+    FONT: {
         MONTSERRAT_REGULAR,
-        MONTSERRAT_BOLD
-    }, SIZES, COLORS } = NowTheme;
+    },
+    SIZES,
+    COLORS
+} = NowTheme;
 
 export default function CreateAccount(props) {
     const token = useSelector((state) => state.userReducer.token);

@@ -3,10 +3,13 @@ import { StyleSheet, Text, View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { NowTheme } from '../../../constants';
 
-const { FONT: {
-        MONTSERRAT_REGULAR,
+const {
+    FONT: {
         MONTSERRAT_BOLD
-    }, SIZES, COLORS } = NowTheme;
+    },
+    SIZES,
+    COLORS
+} = NowTheme;
 
 export default function TopTabBar({ tabs, tabActiveIndex, setTabActiveIndex }) {
     const renderTabButton = (tab, index) => {

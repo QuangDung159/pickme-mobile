@@ -25,7 +25,9 @@ const {
     FONT: {
         MONTSERRAT_REGULAR,
         MONTSERRAT_BOLD
-    }, SIZES, COLORS
+    },
+    SIZES,
+    COLORS
 } = NowTheme;
 
 export default function Profile({ route, navigation }) {

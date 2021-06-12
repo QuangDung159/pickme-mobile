@@ -10,10 +10,14 @@ import { ToastHelpers } from '../../helpers';
 import { setCurrentUser, setListCashHistoryStore } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
 
-const { FONT: {
+const {
+    FONT: {
         MONTSERRAT_REGULAR,
         MONTSERRAT_BOLD
-    }, SIZES, COLORS } = NowTheme;
+    },
+    SIZES,
+    COLORS
+} = NowTheme;
 
 export default function Wallet({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);

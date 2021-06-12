@@ -3,10 +3,13 @@ import React from 'react';
 import { IconCustom } from '../../../components/uiComponents';
 import { NowTheme } from '../../../constants';
 
-const { FONT: {
+const {
+    FONT: {
         MONTSERRAT_REGULAR,
-        MONTSERRAT_BOLD
-    }, SIZES, COLORS } = NowTheme;
+    },
+    SIZES,
+    COLORS
+} = NowTheme;
 
 export default function UserInfoItem({
     value, icon: {

@@ -9,10 +9,14 @@ import { IconCustom } from '../../../components/uiComponents';
 import { IconFamily, NowTheme } from '../../../constants';
 import { ToastHelpers } from '../../../helpers';
 
-const { FONT: {
+const {
+    FONT: {
         MONTSERRAT_REGULAR,
         MONTSERRAT_BOLD
-    }, SIZES, COLORS } = NowTheme;
+    },
+    SIZES,
+    COLORS
+} = NowTheme;
 
 export default function CardBooking({ booking }) {
     const convertMinutesToStringHours = (minutes) => moment.utc()

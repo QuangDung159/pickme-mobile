@@ -16,10 +16,14 @@ import {
 import { MediaHelpers, ToastHelpers } from '../../helpers';
 import { rxUtil } from '../../utils';
 
-const { FONT: {
+const {
+    FONT: {
         MONTSERRAT_REGULAR,
         MONTSERRAT_BOLD
-    }, SIZES, COLORS } = NowTheme;
+    },
+    SIZES,
+    COLORS
+} = NowTheme;
 
 export default function Support({ navigation }) {
     const [tabActiveIndex, setTabActiveIndex] = useState(0);

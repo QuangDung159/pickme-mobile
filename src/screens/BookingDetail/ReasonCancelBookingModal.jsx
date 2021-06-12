@@ -9,10 +9,11 @@ import { ToastHelpers } from '../../helpers';
 import { setPersonTabActiveIndex } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
 
-const { FONT: {
+const {
+    FONT: {
         MONTSERRAT_REGULAR,
-        MONTSERRAT_BOLD
-    }, SIZES } = NowTheme;
+    }, SIZES
+} = NowTheme;
 
 export default function ReasonCancelBookingModal({
     modalReasonVisible,

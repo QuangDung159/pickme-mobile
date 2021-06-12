@@ -19,10 +19,14 @@ import { rxUtil } from '../../utils';
 import CardBooking from '../Personal/BookingList/CardBooking';
 import ReasonCancelBookingModal from './ReasonCancelBookingModal';
 
-const { FONT: {
+const {
+    FONT: {
         MONTSERRAT_REGULAR,
         MONTSERRAT_BOLD
-    }, SIZES, COLORS } = NowTheme;
+    },
+    SIZES,
+    COLORS
+} = NowTheme;
 
 export default function BookingDetail({
     route: {

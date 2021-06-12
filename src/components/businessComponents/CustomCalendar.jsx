@@ -16,10 +16,14 @@ const arrDOW = [
     'T.Bảy'
 ];
 const currentDate = moment().format('DD-MM-YYYY');
-const { FONT: {
+const {
+    FONT: {
         MONTSERRAT_REGULAR,
         MONTSERRAT_BOLD
-    }, SIZES, COLORS } = NowTheme;
+    },
+    SIZES,
+    COLORS
+} = NowTheme;
 
 export default function CustomCalendar({ selectedDate, onChangeDate }) {
     const [selectedDateState, setSelectedDateState] = useState(moment().format('DD-MM-YYYY'));
