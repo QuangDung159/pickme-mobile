@@ -23,6 +23,8 @@ import { MediaHelpers, ToastHelpers } from '../../helpers';
 import { setToken } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
 
+const { FONT, SIZES, COLORS } = NowTheme;
+
 export default function CreateAccount(props) {
     const token = useSelector((state) => state.userReducer.token);
 
@@ -257,7 +259,7 @@ export default function CreateAccount(props) {
                                 onChangeText={(name) => onChangeInputName(name)}
                                 containerStyle={{
                                     marginVertical: 10,
-                                    width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                                    width: SIZES.WIDTH_BASE * 0.77
                                 }}
                                 placeholder="Nhập tên của bạn..."
                             />
@@ -300,7 +302,7 @@ export default function CreateAccount(props) {
                                 onChangeText={(name) => onChangeInputHometown(name)}
                                 containerStyle={{
                                     marginVertical: 10,
-                                    width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                                    width: SIZES.WIDTH_BASE * 0.77
                                 }}
                                 placeholder="Nhập quê quán..."
                             />
@@ -349,7 +351,7 @@ export default function CreateAccount(props) {
                                     onChangeText={(description) => onChangeInputDescription(description)}
                                     containerStyle={{
                                         marginVertical: 10,
-                                        width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                                        width: SIZES.WIDTH_BASE * 0.77
                                     }}
                                     inputStyle={{
                                         height: 80,
@@ -396,7 +398,7 @@ export default function CreateAccount(props) {
                             <CustomInput
                                 containerStyle={{
                                     marginVertical: 10,
-                                    width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                                    width: SIZES.WIDTH_BASE * 0.77
                                 }}
                                 onChangeText={(userInterests) => onChangeInputInterests(userInterests)}
                                 value={newUser.interests}
@@ -406,7 +408,7 @@ export default function CreateAccount(props) {
                             <CustomInput
                                 containerStyle={{
                                     marginVertical: 10,
-                                    width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                                    width: SIZES.WIDTH_BASE * 0.77
                                 }}
                                 onChangeText={(input) => onChangeYear(input)}
                                 value={newUser.dob}
@@ -578,22 +580,22 @@ export default function CreateAccount(props) {
 
 const styles = StyleSheet.create({
     imageBackgroundContainer: {
-        width: NowTheme.SIZES.WIDTH_BASE,
-        height: NowTheme.SIZES.HEIGHT_BASE,
+        width: SIZES.WIDTH_BASE,
+        height: SIZES.HEIGHT_BASE,
         padding: 0,
         zIndex: 1
     },
     imageBackground: {
-        width: NowTheme.SIZES.WIDTH_BASE,
-        height: NowTheme.SIZES.HEIGHT_BASE
+        width: SIZES.WIDTH_BASE,
+        height: SIZES.HEIGHT_BASE
     },
     registerContainer: {
         marginTop: 55,
-        width: NowTheme.SIZES.WIDTH_BASE * 0.9,
-        height: NowTheme.SIZES.HEIGHT_BASE < 812 ? NowTheme.SIZES.HEIGHT_BASE * 0.8 : NowTheme.SIZES.HEIGHT_BASE * 0.8,
-        backgroundColor: NowTheme.COLORS.BASE,
+        width: SIZES.WIDTH_BASE * 0.9,
+        height: SIZES.HEIGHT_BASE < 812 ? SIZES.HEIGHT_BASE * 0.8 : SIZES.HEIGHT_BASE * 0.8,
+        backgroundColor: COLORS.BASE,
         borderRadius: 4,
-        shadowColor: NowTheme.COLORS.BLACK,
+        shadowColor: COLORS.BLACK,
         shadowOffset: {
             width: 0,
             height: 4
@@ -604,29 +606,29 @@ const styles = StyleSheet.create({
         overflow: 'hidden'
     },
     stepViewContainer: {
-        height: NowTheme.SIZES.HEIGHT_BASE * 0.25,
+        height: SIZES.HEIGHT_BASE * 0.25,
         marginHorizontal: 20,
         justifyContent: 'center'
     },
     stepTitleText: {
-        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+        fontFamily: FONT.MONTSERRAT_REGULAR,
         textAlign: 'center'
     },
     stepFormContainer: {
-        height: NowTheme.SIZES.HEIGHT_BASE * 0.35,
+        height: SIZES.HEIGHT_BASE * 0.35,
         alignItems: 'center'
     },
     dropdownItem: {
         justifyContent: 'flex-start'
     },
     inputWith: {
-        width: NowTheme.SIZES.WIDTH_BASE * 0.77,
+        width: SIZES.WIDTH_BASE * 0.77,
     },
     image: {
-        width: NowTheme.SIZES.HEIGHT_BASE * 0.35, height: NowTheme.SIZES.HEIGHT_BASE * 0.35
+        width: SIZES.HEIGHT_BASE * 0.35, height: SIZES.HEIGHT_BASE * 0.35
     },
     finishStepViewContainer: {
-        height: NowTheme.SIZES.HEIGHT_BASE * 0.6,
+        height: SIZES.HEIGHT_BASE * 0.6,
         marginHorizontal: 20,
         justifyContent: 'center',
     }

@@ -9,6 +9,8 @@ import { ToastHelpers } from '../../helpers';
 import { setPersonTabActiveIndex } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
 
+const { FONT, SIZES } = NowTheme;
+
 export default function ReasonCancelBookingModal({
     modalReasonVisible,
     setModalReasonVisible,
@@ -38,9 +40,9 @@ export default function ReasonCancelBookingModal({
         <Picker
             selectedValue={reason.value}
             onValueChange={(itemValue) => onChangeReason(itemValue)}
-            fontFamily={NowTheme.FONT.MONTSERRAT_REGULAR}
+            fontFamily={FONT.MONTSERRAT_REGULAR}
             style={{
-                width: NowTheme.SIZES.WIDTH_BASE * 0.8
+                width: SIZES.WIDTH_BASE * 0.8
             }}
         >
             {reasonDropdownArr.map((item) => (
@@ -80,9 +82,9 @@ export default function ReasonCancelBookingModal({
                 <>
                     <Text
                         style={{
-                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                            fontFamily: FONT.MONTSERRAT_REGULAR,
                             marginVertical: 10,
-                            fontSize: NowTheme.SIZES.FONT_H2
+                            fontSize: SIZES.FONT_H2
                         }}
                     >
                         Vui lòng chọn lý do
@@ -92,7 +94,7 @@ export default function ReasonCancelBookingModal({
                         middle
                         row
                         style={{
-                            width: NowTheme.SIZES.WIDTH_BASE * 0.8,
+                            width: SIZES.WIDTH_BASE * 0.8,
                             marginBottom: 10
                         }}
                         space="between"
@@ -105,7 +107,7 @@ export default function ReasonCancelBookingModal({
                             type="default"
                             label="Xác nhận huỷ"
                             buttonStyle={{
-                                width: NowTheme.SIZES.WIDTH_BASE * 0.39
+                                width: SIZES.WIDTH_BASE * 0.39
                             }}
                         />
                         <CustomButton
@@ -115,7 +117,7 @@ export default function ReasonCancelBookingModal({
                             type="active"
                             label="Cân nhắc lại"
                             buttonStyle={{
-                                width: NowTheme.SIZES.WIDTH_BASE * 0.39
+                                width: SIZES.WIDTH_BASE * 0.39
                             }}
                         />
                     </Block>

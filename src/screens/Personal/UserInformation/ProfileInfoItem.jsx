@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { NowTheme } from '../../../constants';
 
+const { FONT, SIZES, COLORS } = NowTheme;
+
 export default function ProfileInfoItem({
     label, value
 }) {
@@ -20,18 +22,18 @@ export default function ProfileInfoItem({
             row
         >
             <Text
-                style={{ fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR }}
-                size={NowTheme.SIZES.FONT_H2}
-                color={NowTheme.COLORS.DEFAULT}
+                style={{ fontFamily: FONT.MONTSERRAT_REGULAR }}
+                size={SIZES.FONT_H2}
+                color={COLORS.DEFAULT}
             >
                 {`${label}: `}
             </Text>
 
             <Text
-                size={NowTheme.SIZES.FONT_H2}
-                color={NowTheme.COLORS.ACTIVE}
+                size={SIZES.FONT_H2}
+                color={COLORS.ACTIVE}
                 style={{
-                    fontFamily: NowTheme.FONT.MONTSERRAT_BOLD
+                    fontFamily: FONT.MONTSERRAT_BOLD
                 }}
             >
                 {handleValue}

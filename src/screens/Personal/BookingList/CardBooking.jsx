@@ -9,6 +9,8 @@ import { IconCustom } from '../../../components/uiComponents';
 import { IconFamily, NowTheme } from '../../../constants';
 import { ToastHelpers } from '../../../helpers';
 
+const { FONT, SIZES, COLORS } = NowTheme;
+
 export default function CardBooking({ booking }) {
     const convertMinutesToStringHours = (minutes) => moment.utc()
         .startOf('day')
@@ -39,14 +41,14 @@ export default function CardBooking({ booking }) {
             <Block
                 middle
                 style={{
-                    backgroundColor: NowTheme.COLORS.BASE,
+                    backgroundColor: COLORS.BASE,
                     marginBottom: 10
                 }}
             >
                 <Block
                     space="between"
                     style={{
-                        width: NowTheme.SIZES.WIDTH_BASE * 0.9
+                        width: SIZES.WIDTH_BASE * 0.9
                     }}
                 >
                     <Block
@@ -55,16 +57,16 @@ export default function CardBooking({ booking }) {
                     >
                         <Block>
                             <Text
-                                size={NowTheme.SIZES.FONT_H2}
+                                size={SIZES.FONT_H2}
                                 style={styles.cardTitle}
-                                color={NowTheme.COLORS.ACTIVE}
+                                color={COLORS.ACTIVE}
                             >
                                 <>{`${fullName}`}</>
                             </Text>
                             <Text
-                                size={NowTheme.SIZES.FONT_H4}
+                                size={SIZES.FONT_H4}
                                 style={styles.cardSubTitle}
-                                color={NowTheme.COLORS.ACTIVE}
+                                color={COLORS.ACTIVE}
                             >
                                 <>{`Mã đơn hẹn: #${idReadAble}`}</>
                             </Text>
@@ -76,23 +78,23 @@ export default function CardBooking({ booking }) {
                         >
                             <Text
                                 style={styles.subInfoCard}
-                                size={NowTheme.SIZES.FONT_H2}
-                                color={NowTheme.COLORS.ACTIVE}
+                                size={SIZES.FONT_H2}
+                                color={COLORS.ACTIVE}
                             >
                                 {`Ngày: ${moment(date).format('DD-MM-YYYY')}`}
                             </Text>
                             <Text
                                 style={styles.subInfoCard}
-                                size={NowTheme.SIZES.FONT_H2}
-                                color={NowTheme.COLORS.ACTIVE}
+                                size={SIZES.FONT_H2}
+                                color={COLORS.ACTIVE}
                             >
                                 {`Từ ${startStr} đến ${endStr}`}
                             </Text>
                         </Block>
                         <Text
                             style={styles.subInfoCard}
-                            size={NowTheme.SIZES.FONT_H3}
-                            color={NowTheme.COLORS.DEFAULT}
+                            size={SIZES.FONT_H3}
+                            color={COLORS.DEFAULT}
                         >
                             {address || 'N/A'}
                         </Text>
@@ -102,8 +104,8 @@ export default function CardBooking({ booking }) {
                         >
                             <Text
                                 style={styles.subInfoCard}
-                                size={NowTheme.SIZES.FONT_H3}
-                                color={NowTheme.COLORS.DEFAULT}
+                                size={SIZES.FONT_H3}
+                                color={COLORS.DEFAULT}
                             >
                                 {`Trạng thái: ${statusValue}`}
                             </Text>
@@ -112,11 +114,11 @@ export default function CardBooking({ booking }) {
                             >
                                 <Text
                                     style={{
-                                        fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
+                                        fontFamily: FONT.MONTSERRAT_BOLD,
                                         marginRight: 5
                                     }}
-                                    size={NowTheme.SIZES.FONT_H2}
-                                    color={NowTheme.COLORS.ACTIVE}
+                                    size={SIZES.FONT_H2}
+                                    color={COLORS.ACTIVE}
                                 >
                                     {totalAmount}
                                 </Text>
@@ -124,7 +126,7 @@ export default function CardBooking({ booking }) {
                                     name="diamond"
                                     family={IconFamily.SIMPLE_LINE_ICONS}
                                     size={16}
-                                    color={NowTheme.COLORS.ACTIVE}
+                                    color={COLORS.ACTIVE}
                                 />
                             </Block>
                         </Block>
@@ -149,15 +151,15 @@ CardBooking.propTypes = {
 const styles = StyleSheet.create({
     cardTitle: {
         paddingTop: 7,
-        fontFamily: NowTheme.FONT.MONTSERRAT_BOLD
+        fontFamily: FONT.MONTSERRAT_BOLD
     },
     subInfoCard: {
-        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+        fontFamily: FONT.MONTSERRAT_REGULAR,
         marginBottom: 10
     },
     cardSubTitle: {
-        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+        fontFamily: FONT.MONTSERRAT_REGULAR,
         paddingBottom: 15,
-        color: NowTheme.COLORS.ICON_INPUT
+        color: COLORS.ICON_INPUT
     }
 });

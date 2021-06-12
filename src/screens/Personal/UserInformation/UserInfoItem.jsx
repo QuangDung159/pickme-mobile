@@ -3,6 +3,8 @@ import React from 'react';
 import { IconCustom } from '../../../components/uiComponents';
 import { NowTheme } from '../../../constants';
 
+const { FONT, SIZES, COLORS } = NowTheme;
+
 export default function UserInfoItem({
     value, icon: {
         name, family, color, size
@@ -36,10 +38,10 @@ export default function UserInfoItem({
                 flex={7}
             >
                 <Text
-                    size={NowTheme.SIZES.FONT_H2}
-                    color={NowTheme.COLORS.DEFAULT}
+                    size={SIZES.FONT_H2}
+                    color={COLORS.DEFAULT}
                     style={{
-                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
+                        fontFamily: FONT.MONTSERRAT_REGULAR
                     }}
                 >
                     {handleValue}

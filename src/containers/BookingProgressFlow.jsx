@@ -4,6 +4,8 @@ import React, { useEffect, useState } from 'react';
 import { IndicatorVerticalLine, Line, StepIndicator } from '../components/uiComponents';
 import { BookingStatus, NowTheme } from '../constants';
 
+const { FONT, SIZES, COLORS } = NowTheme;
+
 export default function BookingProgressFlow({
     booking
 }) {
@@ -161,14 +163,14 @@ export default function BookingProgressFlow({
         }}
         >
             <Text style={{
-                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                fontFamily: FONT.MONTSERRAT_REGULAR,
             }}
             >
                 SƠ ĐỒ ĐẶT HẸN
             </Text>
             <Line
                 borderWidth={0.5}
-                borderColor={NowTheme.COLORS.ACTIVE}
+                borderColor={COLORS.ACTIVE}
                 style={{
                     marginVertical: 10
                 }}
@@ -200,11 +202,11 @@ export default function BookingProgressFlow({
                     }}
                 >
                     <Text
-                        color={NowTheme.COLORS.SWITCH_OFF}
+                        color={COLORS.SWITCH_OFF}
                         style={{
-                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                            fontFamily: FONT.MONTSERRAT_REGULAR,
                         }}
-                        size={NowTheme.SIZES.FONT_H2}
+                        size={SIZES.FONT_H2}
                     >
                         Xin lỗi! Đơn hẹn đã bị huỷ
                     </Text>

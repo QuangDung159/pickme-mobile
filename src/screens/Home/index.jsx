@@ -20,6 +20,8 @@ import {
 } from '../../redux/Actions';
 import { rxUtil, socketRequestUtil } from '../../utils';
 
+const { FONT, SIZES, COLORS } = NowTheme;
+
 export default function Home({ navigation }) {
     const [refreshing, setRefreshing] = useState(false);
     const [isShowSpinner, setIsShowSpinner] = useState(true);
@@ -280,7 +282,7 @@ export default function Home({ navigation }) {
             onPress={() => navigation.navigate(ScreenName.PROFILE, { userId: item.id })}
         >
             <Block style={{
-                backgroundColor: NowTheme.COLORS.BASE,
+                backgroundColor: COLORS.BASE,
                 borderWidth: 0,
             }}
             >
@@ -315,13 +317,13 @@ export default function Home({ navigation }) {
                             style={{
                                 alignItems: 'center',
                                 justifyContent: 'space-between',
-                                width: NowTheme.SIZES.WIDTH_BASE * 0.8
+                                width: SIZES.WIDTH_BASE * 0.8
                             }}
                         >
                             <Text
-                                size={NowTheme.SIZES.FONT_H2}
+                                size={SIZES.FONT_H2}
                                 bold
-                                color={NowTheme.COLORS.ACTIVE}
+                                color={COLORS.ACTIVE}
                             >
                                 {item.fullName}
                             </Text>
@@ -329,8 +331,8 @@ export default function Home({ navigation }) {
                         <Block>
                             <Text
                                 style={styles.subInfoCard}
-                                size={NowTheme.SIZES.FONT_H4}
-                                color={NowTheme.COLORS.DEFAULT}
+                                size={SIZES.FONT_H4}
+                                color={COLORS.DEFAULT}
                             >
                                 TP.Hồ Chí Minh
                             </Text>
@@ -343,7 +345,7 @@ export default function Home({ navigation }) {
                         style={{
                             zIndex: 99
                         }}
-                        width={NowTheme.SIZES.WIDTH_BASE}
+                        width={SIZES.WIDTH_BASE}
                         source={{ uri: item.imageUrl || NO_AVATAR_URL }}
                     />
                 </Block>
@@ -358,7 +360,7 @@ export default function Home({ navigation }) {
                     <Block
                         middle
                         style={{
-                            height: NowTheme.SIZES.HEIGHT_BASE * 0.8
+                            height: SIZES.HEIGHT_BASE * 0.8
                         }}
                     >
                         <CenterLoader />
@@ -367,7 +369,7 @@ export default function Home({ navigation }) {
                     <Block
                         center
                         style={{
-                            backgroundColor: NowTheme.COLORS.BLOCK,
+                            backgroundColor: COLORS.BLOCK,
                         }}
                     >
                         {renderArticles()}
@@ -391,6 +393,6 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
     },
     subInfoCard: {
-        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+        fontFamily: FONT.MONTSERRAT_REGULAR,
     },
 });

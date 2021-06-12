@@ -3,6 +3,8 @@ import { StyleSheet, Text, View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { NowTheme } from '../../../constants';
 
+const { FONT, SIZES, COLORS } = NowTheme;
+
 export default function TopTabBar({ tabs, tabActiveIndex, setTabActiveIndex }) {
     const renderTabButton = (tab, index) => {
         const { tabLabel } = tab;
@@ -13,8 +15,8 @@ export default function TopTabBar({ tabs, tabActiveIndex, setTabActiveIndex }) {
                 onPress={() => setTabActiveIndex(index)}
                 containerStyle={{
                     backgroundColor: !(index === tabActiveIndex)
-                        ? NowTheme.COLORS.LIST_ITEM_BACKGROUND_1
-                        : NowTheme.COLORS.BASE,
+                        ? COLORS.LIST_ITEM_BACKGROUND_1
+                        : COLORS.BASE,
                     alignItems: 'center',
                     justifyContent: 'center',
                     flex: 1,
@@ -26,8 +28,8 @@ export default function TopTabBar({ tabs, tabActiveIndex, setTabActiveIndex }) {
                         [
                             styles.titleBold,
                             {
-                                fontSize: NowTheme.SIZES.FONT_H4,
-                                color: (index === tabActiveIndex) ? NowTheme.COLORS.ACTIVE : NowTheme.COLORS.DEFAULT
+                                fontSize: SIZES.FONT_H4,
+                                color: (index === tabActiveIndex) ? COLORS.ACTIVE : COLORS.DEFAULT
                             }
                         ]
                     }
@@ -52,8 +54,8 @@ export default function TopTabBar({ tabs, tabActiveIndex, setTabActiveIndex }) {
 
 const styles = StyleSheet.create({
     titleBold: {
-        fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
-        fontSize: NowTheme.SIZES.FONT_H4,
+        fontFamily: FONT.MONTSERRAT_BOLD,
+        fontSize: SIZES.FONT_H4,
         textAlign: 'center'
     },
 });

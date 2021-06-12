@@ -13,6 +13,8 @@ import { ToastHelpers } from '../../helpers';
 import { setChattingWith, setNumberMessageUnread } from '../../redux/Actions';
 import { socketRequestUtil } from '../../utils';
 
+const { FONT, SIZES, COLORS } = NowTheme;
+
 export default function Message({ navigation, route }) {
     const [listMessageFromAPI, setListMessageFromAPI] = useState([]);
     const [messageFromInput, setMessageFromInput] = useState('');
@@ -176,16 +178,16 @@ export default function Message({ navigation, route }) {
                 <Block
                     style={[{
                         borderRadius: 10,
-                        maxWidth: NowTheme.SIZES.WIDTH_BASE * 0.8
+                        maxWidth: SIZES.WIDTH_BASE * 0.8
                     }, messageStyle]}
                 >
                     <Block>
                         <Text
-                            color={NowTheme.COLORS.DEFAULT}
+                            color={COLORS.DEFAULT}
                             size={16}
                             style={{
                                 margin: 10,
-                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
+                                fontFamily: FONT.MONTSERRAT_REGULAR
                             }}
                         >
                             {message.content}
@@ -283,7 +285,7 @@ export default function Message({ navigation, route }) {
             space="between"
             center
             style={{
-                width: NowTheme.SIZES.WIDTH_BASE
+                width: SIZES.WIDTH_BASE
             }}
         >
             <CustomInput
@@ -292,7 +294,7 @@ export default function Message({ navigation, route }) {
                 onChangeText={(input) => onChangeMessageInput(input)}
                 containerStyle={{
                     marginVertical: 10,
-                    width: NowTheme.SIZES.WIDTH_BASE * 0.9
+                    width: SIZES.WIDTH_BASE * 0.9
                 }}
                 inputStyle={{
                     borderWidth: 0
@@ -313,7 +315,7 @@ export default function Message({ navigation, route }) {
                     name="send"
                     family={IconFamily.FEATHER}
                     size={30}
-                    color={NowTheme.COLORS.ACTIVE}
+                    color={COLORS.ACTIVE}
                 />
             </TouchableWithoutFeedback>
         </Block>
@@ -329,7 +331,7 @@ export default function Message({ navigation, route }) {
                         {renderListMessage()}
                         <KeyboardAvoidingView
                             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                            keyboardVerticalOffset={NowTheme.SIZES.HEIGHT_BASE * 0.11}
+                            keyboardVerticalOffset={SIZES.HEIGHT_BASE * 0.11}
                         >
                             {renderInputMessage()}
                         </KeyboardAvoidingView>
@@ -350,10 +352,10 @@ export default function Message({ navigation, route }) {
 const styles = StyleSheet.create({
     messageRight: {
         alignItems: 'flex-start',
-        backgroundColor: NowTheme.COLORS.MESSAGE_BACKGROUND_CURRENT
+        backgroundColor: COLORS.MESSAGE_BACKGROUND_CURRENT
     },
     messageLeft: {
         alignItems: 'flex-end',
-        backgroundColor: NowTheme.COLORS.MESSAGE_BACKGROUND_INCOMING
+        backgroundColor: COLORS.MESSAGE_BACKGROUND_INCOMING
     }
 });

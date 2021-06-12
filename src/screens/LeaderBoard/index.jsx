@@ -12,6 +12,8 @@ import {
 } from '../../constants';
 import { ToastHelpers } from '../../helpers';
 
+const { FONT, SIZES, COLORS } = NowTheme;
+
 export default function LeaderBoard({ navigation }) {
     const [tabActiveIndex, setTabActiveIndex] = useState(0);
     const [listLeaderBoard, setListLeaderBoard] = useState([]);
@@ -27,7 +29,7 @@ export default function LeaderBoard({ navigation }) {
                     name="list-alt"
                     family={IconFamily.FONT_AWESOME}
                     size={24}
-                    color={NowTheme.COLORS.ACTIVE}
+                    color={COLORS.ACTIVE}
                 />
             ),
             endpoint: Rx.PARTNER.LEADER_BOARD_BOOKING
@@ -39,7 +41,7 @@ export default function LeaderBoard({ navigation }) {
                     name="diamond"
                     family={IconFamily.SIMPLE_LINE_ICONS}
                     size={24}
-                    color={NowTheme.COLORS.ACTIVE}
+                    color={COLORS.ACTIVE}
                 />
             ),
             endpoint: Rx.PARTNER.LEADER_BOARD_DIAMOND
@@ -78,10 +80,10 @@ export default function LeaderBoard({ navigation }) {
                         style={[
                             styles.leaderBoardItemContainer,
                             {
-                                backgroundColor: !(index % 2 === 0) || NowTheme.COLORS.LIST_ITEM_BACKGROUND_1,
+                                backgroundColor: !(index % 2 === 0) || COLORS.LIST_ITEM_BACKGROUND_1,
                                 flexDirection: 'row',
                                 alignSelf: 'center',
-                                width: NowTheme.SIZES.WIDTH_BASE
+                                width: SIZES.WIDTH_BASE
                             }
                         ]}
                     >
@@ -89,21 +91,21 @@ export default function LeaderBoard({ navigation }) {
                             style={{
                                 alignSelf: 'center',
                                 alignItems: 'center',
-                                width: NowTheme.SIZES.WIDTH_BASE * 0.1
+                                width: SIZES.WIDTH_BASE * 0.1
                             }}
                         >
                             <Text
                                 color={
                                     index === 1 || index === 2
-                                        ? NowTheme.COLORS.ACTIVE
-                                        : NowTheme.COLORS.DEFAULT
+                                        ? COLORS.ACTIVE
+                                        : COLORS.DEFAULT
                                 }
                                 style={{
                                     color: index === 1 || index === 2
-                                        ? NowTheme.COLORS.ACTIVE
-                                        : NowTheme.COLORS.DEFAULT,
-                                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                                    fontSize: NowTheme.SIZES.FONT_H2
+                                        ? COLORS.ACTIVE
+                                        : COLORS.DEFAULT,
+                                    fontFamily: FONT.MONTSERRAT_REGULAR,
+                                    fontSize: SIZES.FONT_H2
                                 }}
                             >
                                 {index + 1}
@@ -114,7 +116,7 @@ export default function LeaderBoard({ navigation }) {
                                 marginRight: 10,
                                 alignSelf: 'center',
                                 alignItems: 'center',
-                                width: NowTheme.SIZES.WIDTH_BASE * 0.15,
+                                width: SIZES.WIDTH_BASE * 0.15,
                                 paddingVertical: 5
                             }}
                         >
@@ -140,14 +142,14 @@ export default function LeaderBoard({ navigation }) {
                         >
                             <View
                                 style={{
-                                    width: NowTheme.SIZES.WIDTH_BASE * 0.5
+                                    width: SIZES.WIDTH_BASE * 0.5
                                 }}
                             >
                                 <Text
                                     style={{
-                                        color: NowTheme.COLORS.ACTIVE,
-                                        fontSize: NowTheme.SIZES.FONT_H2,
-                                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                                        color: COLORS.ACTIVE,
+                                        fontSize: SIZES.FONT_H2,
+                                        fontFamily: FONT.MONTSERRAT_REGULAR,
                                         paddingVertical: 10
                                     }}
                                 >
@@ -156,7 +158,7 @@ export default function LeaderBoard({ navigation }) {
                             </View>
                             <View
                                 style={{
-                                    width: NowTheme.SIZES.WIDTH_BASE * 0.2,
+                                    width: SIZES.WIDTH_BASE * 0.2,
                                 }}
                             >
                                 {renderAchieveValueTopPanel(leaderBoardItem.value)}
@@ -178,9 +180,9 @@ export default function LeaderBoard({ navigation }) {
         >
             <Text
                 style={{
-                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                    color: NowTheme.COLORS.ACTIVE,
-                    fontSize: NowTheme.SIZES.FONT_H1,
+                    fontFamily: FONT.MONTSERRAT_REGULAR,
+                    color: COLORS.ACTIVE,
+                    fontSize: SIZES.FONT_H1,
                 }}
             >
                 {achieveValue}
@@ -223,8 +225,8 @@ export default function LeaderBoard({ navigation }) {
                                 uri: url || NO_AVATAR_URL
                             }}
                             style={{
-                                width: NowTheme.SIZES.WIDTH_BASE * 0.25,
-                                height: NowTheme.SIZES.WIDTH_BASE * 0.25,
+                                width: SIZES.WIDTH_BASE * 0.25,
+                                height: SIZES.WIDTH_BASE * 0.25,
                                 borderRadius: 75,
                                 zIndex: 99,
                             }}
@@ -242,7 +244,7 @@ export default function LeaderBoard({ navigation }) {
                                 name="crown"
                                 family={IconFamily.FONT_AWESOME_5}
                                 size={24}
-                                color={NowTheme.COLORS.ACTIVE}
+                                color={COLORS.ACTIVE}
                             />
                         </View>
                     </View>
@@ -250,7 +252,7 @@ export default function LeaderBoard({ navigation }) {
 
                 <View
                     style={{
-                        width: NowTheme.SIZES.WIDTH_BASE,
+                        width: SIZES.WIDTH_BASE,
                     }}
                 >
                     <View
@@ -262,9 +264,9 @@ export default function LeaderBoard({ navigation }) {
                     >
                         <Text
                             style={{
-                                fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
-                                fontSize: NowTheme.SIZES.FONT_H1,
-                                color: NowTheme.COLORS.ACTIVE
+                                fontFamily: FONT.MONTSERRAT_BOLD,
+                                fontSize: SIZES.FONT_H1,
+                                color: COLORS.ACTIVE
                             }}
 
                         >
@@ -322,7 +324,7 @@ export default function LeaderBoard({ navigation }) {
 
 const styles = StyleSheet.create({
     shadow: {
-        backgroundColor: NowTheme.COLORS.BASE,
+        backgroundColor: COLORS.BASE,
         shadowColor: 'black',
         shadowOffset: { width: 0, height: 2 },
         shadowRadius: 6,

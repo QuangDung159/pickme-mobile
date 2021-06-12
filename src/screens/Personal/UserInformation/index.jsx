@@ -22,6 +22,8 @@ import { rxUtil } from '../../../utils';
 import UserInfoSection from './UserInfoSection';
 import VerificationStatusPanel from './VerificationStatusPanel';
 
+const { FONT, SIZES, COLORS } = NowTheme;
+
 export default function UserInformation({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
     const [visible, setVisible] = useState(false);
@@ -158,7 +160,7 @@ export default function UserInformation({ navigation }) {
     const renderAvatarPanel = () => (
         <Block
             style={{
-                width: NowTheme.SIZES.WIDTH_BASE * 0.3,
+                width: SIZES.WIDTH_BASE * 0.3,
                 marginTop: 5
             }}
         >
@@ -185,10 +187,10 @@ export default function UserInformation({ navigation }) {
                     <CustomButton
                         onPress={() => onClickUpdateAvatar()}
                         labelStyle={{
-                            fontSize: NowTheme.SIZES.FONT_H3,
+                            fontSize: SIZES.FONT_H3,
                         }}
                         buttonStyle={{
-                            width: NowTheme.SIZES.WIDTH_BASE * 0.25,
+                            width: SIZES.WIDTH_BASE * 0.25,
                             borderWidth: 0,
                             alignSelf: 'flex-start'
                         }}
@@ -209,7 +211,7 @@ export default function UserInformation({ navigation }) {
         return (
             <Block
                 style={{
-                    width: NowTheme.SIZES.WIDTH_BASE * 0.6,
+                    width: SIZES.WIDTH_BASE * 0.6,
                     marginVertical: 15,
                 }}
             >
@@ -221,7 +223,7 @@ export default function UserInformation({ navigation }) {
                                 icon: {
                                     name: 'diamond',
                                     family: IconFamily.SIMPLE_LINE_ICONS,
-                                    color: NowTheme.COLORS.ACTIVE,
+                                    color: COLORS.ACTIVE,
                                     size: 24
                                 }
                             },
@@ -230,7 +232,7 @@ export default function UserInformation({ navigation }) {
                                 icon: {
                                     name: 'birthday-cake',
                                     family: IconFamily.FONT_AWESOME,
-                                    color: NowTheme.COLORS.ACTIVE,
+                                    color: COLORS.ACTIVE,
                                     size: 23
                                 }
                             },
@@ -239,7 +241,7 @@ export default function UserInformation({ navigation }) {
                                 icon: {
                                     name: 'home',
                                     family: IconFamily.FONT_AWESOME,
-                                    color: NowTheme.COLORS.ACTIVE,
+                                    color: COLORS.ACTIVE,
                                     size: 28
                                 }
                             },
@@ -248,7 +250,7 @@ export default function UserInformation({ navigation }) {
                                 icon: {
                                     name: 'badminton',
                                     family: IconFamily.MATERIAL_COMMUNITY_ICONS,
-                                    color: NowTheme.COLORS.ACTIVE,
+                                    color: COLORS.ACTIVE,
                                     size: 24
                                 }
                             },
@@ -269,9 +271,9 @@ export default function UserInformation({ navigation }) {
                 <Text
                     center
                     style={{
-                        color: NowTheme.COLORS.ACTIVE,
-                        fontSize: NowTheme.SIZES.FONT_H1,
-                        fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
+                        color: COLORS.ACTIVE,
+                        fontSize: SIZES.FONT_H1,
+                        fontFamily: FONT.MONTSERRAT_BOLD,
                     }}
                 >
                     {currentUser.fullName}
@@ -288,10 +290,10 @@ export default function UserInformation({ navigation }) {
                         <Text
                             center
                             style={{
-                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                                fontFamily: FONT.MONTSERRAT_REGULAR,
                             }}
-                            size={NowTheme.SIZES.FONT_H2}
-                            color={NowTheme.COLORS.DEFAULT}
+                            size={SIZES.FONT_H2}
+                            color={COLORS.DEFAULT}
                         >
                             {'"'}
                             {currentUser.description}
@@ -331,7 +333,7 @@ export default function UserInformation({ navigation }) {
                                     )
                                 }
                                 labelStyle={{
-                                    fontSize: NowTheme.SIZES.FONT_H3
+                                    fontSize: SIZES.FONT_H3
                                 }}
                                 label="Chỉnh sửa thông tin cá nhân"
                             />
@@ -344,9 +346,9 @@ export default function UserInformation({ navigation }) {
                 middle
             >
                 <Line
-                    borderColor={NowTheme.COLORS.ACTIVE}
+                    borderColor={COLORS.ACTIVE}
                     borderWidth={0.5}
-                    width={NowTheme.SIZES.WIDTH_BASE * 0.9}
+                    width={SIZES.WIDTH_BASE * 0.9}
                 />
             </Block>
         </Block>
@@ -356,13 +358,13 @@ export default function UserInformation({ navigation }) {
         <CustomButton
             onPress={() => onSignOut(navigation)}
             labelStyle={{
-                fontSize: NowTheme.SIZES.FONT_H3,
+                fontSize: SIZES.FONT_H3,
             }}
             label="Đăng xuất"
             leftIcon={{
                 name: 'logout',
-                size: NowTheme.SIZES.FONT_H3,
-                color: NowTheme.COLORS.SWITCH_OFF,
+                size: SIZES.FONT_H3,
+                color: COLORS.SWITCH_OFF,
                 family: IconFamily.SIMPLE_LINE_ICONS
             }}
         />
@@ -382,7 +384,7 @@ export default function UserInformation({ navigation }) {
                 {isShowSpinner ? (
                     <Block
                         style={{
-                            marginTop: NowTheme.SIZES.HEIGHT_BASE * 0.3
+                            marginTop: SIZES.HEIGHT_BASE * 0.3
                         }}
                     >
                         <CenterLoader />
@@ -394,7 +396,7 @@ export default function UserInformation({ navigation }) {
                         <Block
                             row
                             style={{
-                                width: NowTheme.SIZES.WIDTH_BASE * 0.9,
+                                width: SIZES.WIDTH_BASE * 0.9,
                                 alignSelf: 'center'
                             }}
                         >
@@ -407,9 +409,9 @@ export default function UserInformation({ navigation }) {
                                 middle
                             >
                                 <Line
-                                    borderColor={NowTheme.COLORS.ACTIVE}
+                                    borderColor={COLORS.ACTIVE}
                                     borderWidth={0.5}
-                                    width={NowTheme.SIZES.WIDTH_BASE * 0.9}
+                                    width={SIZES.WIDTH_BASE * 0.9}
                                 />
                             </Block>
                         </Block>
@@ -443,7 +445,7 @@ const styles = StyleSheet.create({
     },
     avatar: {
         borderRadius: 100,
-        width: NowTheme.SIZES.WIDTH_BASE * 0.25,
-        height: NowTheme.SIZES.WIDTH_BASE * 0.25,
+        width: SIZES.WIDTH_BASE * 0.25,
+        height: SIZES.WIDTH_BASE * 0.25,
     },
 });

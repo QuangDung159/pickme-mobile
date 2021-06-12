@@ -10,6 +10,8 @@ import { setListBookingStore } from '../../../redux/Actions';
 import { rxUtil } from '../../../utils';
 import CardBooking from './CardBooking';
 
+const { FONT, SIZES, COLORS } = NowTheme;
+
 export default function BookingList({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
@@ -99,9 +101,9 @@ export default function BookingList({ navigation }) {
                                 middle
                             >
                                 <Line
-                                    borderColor={NowTheme.COLORS.ACTIVE}
+                                    borderColor={COLORS.ACTIVE}
                                     borderWidth={0.5}
-                                    width={NowTheme.SIZES.WIDTH_BASE}
+                                    width={SIZES.WIDTH_BASE}
                                 />
                             </Block>
                         </TouchableWithoutFeedback>
@@ -124,9 +126,9 @@ export default function BookingList({ navigation }) {
                     >
                         <Text
                             style={{
-                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                                color: NowTheme.COLORS.DEFAULT,
-                                fontSize: NowTheme.SIZES.FONT_H2
+                                fontFamily: FONT.MONTSERRAT_REGULAR,
+                                color: COLORS.DEFAULT,
+                                fontSize: SIZES.FONT_H2
                             }}
                         >
                             Danh sách trống

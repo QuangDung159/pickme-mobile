@@ -14,6 +14,7 @@ import { MediaHelpers, ToastHelpers } from '../../helpers';
 import { setCurrentUser, setPersonTabActiveIndex, setVerificationStore } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
 
+const { FONT, SIZES, COLORS } = NowTheme;
 let count = 0;
 
 export default function Verification({ navigation }) {
@@ -86,11 +87,11 @@ export default function Verification({ navigation }) {
                     type="active"
                     label={buttonText}
                     buttonStyle={{
-                        width: NowTheme.SIZES.WIDTH_BASE * 0.9,
+                        width: SIZES.WIDTH_BASE * 0.9,
                         marginBottom: 10
                     }}
                     labelStyle={{
-                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                        fontFamily: FONT.MONTSERRAT_REGULAR,
                     }}
                     disabled={isDisabled}
                 />
@@ -280,11 +281,11 @@ export default function Verification({ navigation }) {
                     }}
                 >
                     <Text
-                        color={NowTheme.COLORS.SWITCH_OFF}
+                        color={COLORS.SWITCH_OFF}
                         style={{
-                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                            fontFamily: FONT.MONTSERRAT_REGULAR,
                         }}
-                        size={NowTheme.SIZES.FONT_H2}
+                        size={SIZES.FONT_H2}
                     >
                         Chưa có ảnh
                     </Text>
@@ -300,7 +301,7 @@ export default function Verification({ navigation }) {
                     style={{
                         zIndex: 99
                     }}
-                    width={NowTheme.SIZES.WIDTH_BASE * 0.9}
+                    width={SIZES.WIDTH_BASE * 0.9}
                     source={{ uri: imageUrl }}
                 />
             </Block>
@@ -317,14 +318,14 @@ export default function Verification({ navigation }) {
                     <KeyboardAwareScrollView
                         showsVerticalScrollIndicator={false}
                         contentContainerStyle={{
-                            width: NowTheme.SIZES.WIDTH_BASE * 0.9,
+                            width: SIZES.WIDTH_BASE * 0.9,
                             alignSelf: 'center'
                         }}
                     >
                         <Block
                             style={{
                                 marginTop: 10,
-                                backgroundColor: NowTheme.COLORS.BASE,
+                                backgroundColor: COLORS.BASE,
                             }}
                         >
                             <Block
@@ -335,7 +336,7 @@ export default function Verification({ navigation }) {
                                 }}
                             >
                                 <Text style={{
-                                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                                    fontFamily: FONT.MONTSERRAT_REGULAR,
                                     marginVertical: 10
                                 }}
                                 >
@@ -344,7 +345,7 @@ export default function Verification({ navigation }) {
                             </Block>
                             <Line
                                 borderWidth={0.5}
-                                borderColor={NowTheme.COLORS.ACTIVE}
+                                borderColor={COLORS.ACTIVE}
                             />
                             {renderDocSection()}
                         </Block>

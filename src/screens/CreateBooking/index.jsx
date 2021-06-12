@@ -22,6 +22,8 @@ import { ToastHelpers } from '../../helpers';
 import { setListBookingStore, setPersonTabActiveIndex } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
 
+const { FONT, SIZES, COLORS } = NowTheme;
+
 const hourArr = DateTimeConst.HOUR_ARR;
 const minuteArr = DateTimeConst.MINUTE_ARR;
 
@@ -312,7 +314,7 @@ export default function CreateBooking({ route, navigation }) {
             space="between"
             style={{
                 alignSelf: 'center',
-                width: NowTheme.SIZES.WIDTH_BASE * 0.8,
+                width: SIZES.WIDTH_BASE * 0.8,
                 marginVertical: 10
             }}
         >
@@ -324,7 +326,7 @@ export default function CreateBooking({ route, navigation }) {
                 renderItem={(data) => (
                     <Text
                         style={{
-                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
+                            fontFamily: FONT.MONTSERRAT_REGULAR
                         }}
                     >
                         {`${data}`}
@@ -351,7 +353,7 @@ export default function CreateBooking({ route, navigation }) {
                 renderItem={(data) => (
                     <Text
                         style={{
-                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
+                            fontFamily: FONT.MONTSERRAT_REGULAR
                         }}
                     >
                         {`${data}`}
@@ -378,19 +380,19 @@ export default function CreateBooking({ route, navigation }) {
             space="between"
             style={{
                 justifyContent: 'center',
-                width: NowTheme.SIZES.WIDTH_BASE * 0.8
+                width: SIZES.WIDTH_BASE * 0.8
             }}
         >
             {listPartnerPackage && packageActive && (
                 <Block
                     style={{
-                        width: NowTheme.SIZES.WIDTH_BASE * 0.8,
+                        width: SIZES.WIDTH_BASE * 0.8,
                     }}
                 >
                     <Picker
                         selectedValue={packageActive.id}
                         onValueChange={(itemValue) => onChangePackage(itemValue)}
-                        fontFamily={NowTheme.FONT.MONTSERRAT_REGULAR}
+                        fontFamily={FONT.MONTSERRAT_REGULAR}
                     >
                         {listPartnerPackage.map((item) => (
                             <Picker.Item value={item.id} label={item.title} key={item.id} />
@@ -402,9 +404,9 @@ export default function CreateBooking({ route, navigation }) {
                     >
                         <Text
                             style={{
-                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                                color: NowTheme.COLORS.ACTIVE,
-                                fontSize: NowTheme.SIZES.FONT_H1,
+                                fontFamily: FONT.MONTSERRAT_REGULAR,
+                                color: COLORS.ACTIVE,
+                                fontSize: SIZES.FONT_H1,
                                 marginBottom: 10
                             }}
                         >
@@ -412,9 +414,9 @@ export default function CreateBooking({ route, navigation }) {
                         </Text>
                         <Text
                             style={{
-                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                                color: NowTheme.COLORS.ACTIVE,
-                                fontSize: NowTheme.SIZES.FONT_H1,
+                                fontFamily: FONT.MONTSERRAT_REGULAR,
+                                color: COLORS.ACTIVE,
+                                fontSize: SIZES.FONT_H1,
                                 marginBottom: 10
                             }}
                         >
@@ -424,9 +426,9 @@ export default function CreateBooking({ route, navigation }) {
 
                     <Text
                         style={{
-                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                            color: NowTheme.COLORS.DEFAULT,
-                            fontSize: NowTheme.SIZES.FONT_H2,
+                            fontFamily: FONT.MONTSERRAT_REGULAR,
+                            color: COLORS.DEFAULT,
+                            fontSize: SIZES.FONT_H2,
                             marginBottom: 10
                         }}
                     >
@@ -434,9 +436,9 @@ export default function CreateBooking({ route, navigation }) {
                     </Text>
                     <Text
                         style={{
-                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                            color: NowTheme.COLORS.DEFAULT,
-                            fontSize: NowTheme.SIZES.FONT_H2,
+                            fontFamily: FONT.MONTSERRAT_REGULAR,
+                            color: COLORS.DEFAULT,
+                            fontSize: SIZES.FONT_H2,
                             marginBottom: 10
                         }}
                     >
@@ -447,11 +449,11 @@ export default function CreateBooking({ route, navigation }) {
                     >
                         <Text
                             style={{
-                                fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
+                                fontFamily: FONT.MONTSERRAT_BOLD,
                                 fontSize: 30,
                                 paddingVertical: 10
                             }}
-                            color={NowTheme.COLORS.ACTIVE}
+                            color={COLORS.ACTIVE}
                         >
                             {`${packageActive.estimateAmount}k`}
                         </Text>
@@ -473,9 +475,9 @@ export default function CreateBooking({ route, navigation }) {
                         key={sectionIndex}
                         style={{
                             backgroundColor: sectionIndex % 2 === 0
-                                ? NowTheme.COLORS.LIST_ITEM_BACKGROUND_1
-                                : NowTheme.COLORS.LIST_ITEM_BACKGROUND_2,
-                            height: NowTheme.SIZES.HEIGHT_BASE * 0.07,
+                                ? COLORS.LIST_ITEM_BACKGROUND_1
+                                : COLORS.LIST_ITEM_BACKGROUND_2,
+                            height: SIZES.HEIGHT_BASE * 0.07,
                             justifyContent: 'center',
                         }}
                     >
@@ -494,28 +496,28 @@ export default function CreateBooking({ route, navigation }) {
                             >
                                 <Text
                                     style={{
-                                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
+                                        fontFamily: FONT.MONTSERRAT_REGULAR
                                     }}
                                     size={27}
-                                    color={NowTheme.COLORS.ACTIVE}
+                                    color={COLORS.ACTIVE}
                                 >
                                     {startStr}
                                 </Text>
                                 <Text
                                     style={{
-                                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
+                                        fontFamily: FONT.MONTSERRAT_REGULAR
                                     }}
                                     size={27}
-                                    color={NowTheme.COLORS.ACTIVE}
+                                    color={COLORS.ACTIVE}
                                 >
                                     -
                                 </Text>
                                 <Text
                                     style={{
-                                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR
+                                        fontFamily: FONT.MONTSERRAT_REGULAR
                                     }}
                                     size={27}
-                                    color={NowTheme.COLORS.ACTIVE}
+                                    color={COLORS.ACTIVE}
                                 >
                                     {endStr}
                                 </Text>
@@ -534,9 +536,9 @@ export default function CreateBooking({ route, navigation }) {
             renderContent={() => (
                 <>
                     <Text
-                        size={NowTheme.SIZES.FONT_H2}
+                        size={SIZES.FONT_H2}
                         style={{
-                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                            fontFamily: FONT.MONTSERRAT_REGULAR,
                             marginVertical: 10
                         }}
                     >
@@ -544,7 +546,7 @@ export default function CreateBooking({ route, navigation }) {
                     </Text>
                     <Block
                         style={{
-                            width: NowTheme.SIZES.WIDTH_BASE * 0.8
+                            width: SIZES.WIDTH_BASE * 0.8
                         }}
                     >
                         {renderBusyCalendar()}
@@ -554,7 +556,7 @@ export default function CreateBooking({ route, navigation }) {
                         <CustomButton
                             onPress={() => setModalVisible(false)}
                             buttonStyle={{
-                                width: NowTheme.SIZES.WIDTH_BASE * 0.8,
+                                width: SIZES.WIDTH_BASE * 0.8,
                                 marginVertical: 10
                             }}
                             type="active"
@@ -576,7 +578,7 @@ export default function CreateBooking({ route, navigation }) {
                         <CustomButton
                             onPress={() => setModalTimePickerVisible(false)}
                             buttonStyle={{
-                                width: NowTheme.SIZES.WIDTH_BASE * 0.8,
+                                width: SIZES.WIDTH_BASE * 0.8,
                                 marginVertical: 10
                             }}
                             type="active"
@@ -600,7 +602,7 @@ export default function CreateBooking({ route, navigation }) {
                         space="between"
                         style={{
                             paddingVertical: 10,
-                            width: NowTheme.SIZES.WIDTH_BASE * 0.8
+                            width: SIZES.WIDTH_BASE * 0.8
                         }}
                     >
 
@@ -611,7 +613,7 @@ export default function CreateBooking({ route, navigation }) {
                             type="default"
                             label="Huỷ bỏ"
                             buttonStyle={{
-                                width: NowTheme.SIZES.WIDTH_BASE * 0.39
+                                width: SIZES.WIDTH_BASE * 0.39
                             }}
                         />
                         <CustomButton
@@ -635,7 +637,7 @@ export default function CreateBooking({ route, navigation }) {
                                 });
                             }}
                             buttonStyle={{
-                                width: NowTheme.SIZES.WIDTH_BASE * 0.39
+                                width: SIZES.WIDTH_BASE * 0.39
                             }}
                             type="active"
                             label="Xác nhận"
@@ -652,7 +654,7 @@ export default function CreateBooking({ route, navigation }) {
             row
             style={{
                 marginBottom: 10,
-                width: NowTheme.SIZES.WIDTH_BASE * 0.9,
+                width: SIZES.WIDTH_BASE * 0.9,
             }}
         >
             <CustomButton
@@ -731,7 +733,7 @@ export default function CreateBooking({ route, navigation }) {
             onChangeText={(input) => onChangeAddress(input)}
             containerStyle={{
                 marginVertical: 10,
-                width: NowTheme.SIZES.WIDTH_BASE * 0.9
+                width: SIZES.WIDTH_BASE * 0.9
             }}
             label="Địa điểm:"
             inputStyle={{
@@ -747,7 +749,7 @@ export default function CreateBooking({ route, navigation }) {
             onChangeText={(input) => onChangeNote(input)}
             containerStyle={{
                 marginVertical: 10,
-                width: NowTheme.SIZES.WIDTH_BASE * 0.9
+                width: SIZES.WIDTH_BASE * 0.9
             }}
             label="Ghi chú:"
             inputStyle={{
@@ -765,7 +767,7 @@ export default function CreateBooking({ route, navigation }) {
         >
             <Block>
                 <Text style={{
-                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                    fontFamily: FONT.MONTSERRAT_REGULAR,
                     marginTop: 10
                 }}
                 >
@@ -773,7 +775,7 @@ export default function CreateBooking({ route, navigation }) {
                 </Text>
                 <Line
                     borderWidth={0.5}
-                    borderColor={NowTheme.COLORS.ACTIVE}
+                    borderColor={COLORS.ACTIVE}
                     style={{
                         marginVertical: 10
                     }}
@@ -789,7 +791,7 @@ export default function CreateBooking({ route, navigation }) {
                 {listPartnerPackage && listPartnerPackage.length !== 0 && (
                     <TouchableWithoutFeedback
                         containerStyle={{
-                            width: NowTheme.SIZES.WIDTH_BASE * 0.9,
+                            width: SIZES.WIDTH_BASE * 0.9,
                             alignSelf: 'center',
                             paddingBottom: 10,
                         }}
@@ -797,9 +799,9 @@ export default function CreateBooking({ route, navigation }) {
                     >
                         <Text
                             style={{
-                                fontSize: NowTheme.SIZES.FONT_H3,
-                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                                color: NowTheme.COLORS.ACTIVE
+                                fontSize: SIZES.FONT_H3,
+                                fontFamily: FONT.MONTSERRAT_REGULAR,
+                                color: COLORS.ACTIVE
                             }}
                         >
                             Chọn gói đơn hẹn
@@ -829,8 +831,8 @@ export default function CreateBooking({ route, navigation }) {
                 }}
             >
                 <Text
-                    color={NowTheme.COLORS.ACTIVE}
-                    size={NowTheme.SIZES.FONT_H1}
+                    color={COLORS.ACTIVE}
+                    size={SIZES.FONT_H1}
                     style={styles.title}
                 >
                     {fullName || partner.fullName}
@@ -843,7 +845,7 @@ export default function CreateBooking({ route, navigation }) {
         <Block>
             <Block>
                 <Text style={{
-                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                    fontFamily: FONT.MONTSERRAT_REGULAR,
                     marginTop: 10
                 }}
                 >
@@ -851,7 +853,7 @@ export default function CreateBooking({ route, navigation }) {
                 </Text>
                 <Line
                     borderWidth={0.5}
-                    borderColor={NowTheme.COLORS.ACTIVE}
+                    borderColor={COLORS.ACTIVE}
                     style={{
                         marginTop: 10
                     }}
@@ -862,11 +864,11 @@ export default function CreateBooking({ route, navigation }) {
             >
                 <Text
                     style={{
-                        fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
+                        fontFamily: FONT.MONTSERRAT_BOLD,
                         fontSize: 30,
                         paddingVertical: 10
                     }}
-                    color={NowTheme.COLORS.ACTIVE}
+                    color={COLORS.ACTIVE}
                 >
                     {`${calculateTotalAmount(startTimeStr, endTimeStr)}k`}
                 </Text>
@@ -910,7 +912,7 @@ export default function CreateBooking({ route, navigation }) {
                     name="calendar"
                     family={IconFamily.FONT_AWESOME}
                     size={23}
-                    color={NowTheme.COLORS.ACTIVE}
+                    color={COLORS.ACTIVE}
                 />
             </TouchableWithoutFeedback>
         </Block>
@@ -927,9 +929,9 @@ export default function CreateBooking({ route, navigation }) {
                     }}
                 >
                     <Text
-                        color={NowTheme.COLORS.SWITCH_OFF}
+                        color={COLORS.SWITCH_OFF}
                         style={{
-                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                            fontFamily: FONT.MONTSERRAT_REGULAR,
                         }}
                         size={14}
                     >
@@ -959,7 +961,7 @@ export default function CreateBooking({ route, navigation }) {
                     <>
                         <KeyboardAwareScrollView
                             style={{
-                                width: NowTheme.SIZES.WIDTH_BASE * 0.9,
+                                width: SIZES.WIDTH_BASE * 0.9,
                                 alignSelf: 'center'
                             }}
                             showsVerticalScrollIndicator={false}
@@ -987,12 +989,12 @@ export default function CreateBooking({ route, navigation }) {
 
 const styles = StyleSheet.create({
     title: {
-        fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
+        fontFamily: FONT.MONTSERRAT_BOLD,
         marginVertical: 10
     },
     timePickerText: {
-        color: NowTheme.COLORS.ACTIVE,
-        fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
-        fontSize: NowTheme.SIZES.FONT_H2
+        color: COLORS.ACTIVE,
+        fontFamily: FONT.MONTSERRAT_BOLD,
+        fontSize: SIZES.FONT_H2
     },
 });

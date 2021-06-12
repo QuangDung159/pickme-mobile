@@ -19,6 +19,8 @@ import { rxUtil } from '../../utils';
 import CardBooking from '../Personal/BookingList/CardBooking';
 import ReasonCancelBookingModal from './ReasonCancelBookingModal';
 
+const { FONT, SIZES, COLORS } = NowTheme;
+
 export default function BookingDetail({
     route: {
         params: {
@@ -260,18 +262,18 @@ export default function BookingDetail({
             renderContent={() => (
                 <>
                     <Text
-                        size={NowTheme.SIZES.FONT_H2}
+                        size={SIZES.FONT_H2}
                         style={{
-                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                            fontFamily: FONT.MONTSERRAT_REGULAR,
                             marginVertical: 10,
-                            width: NowTheme.SIZES.WIDTH_BASE * 0.8
+                            width: SIZES.WIDTH_BASE * 0.8
                         }}
                     >
                         Bạn vui lòng góp ý để chúng tôi phục vụ bạn tốt hơn, cảm ơn.
                     </Text>
                     <Block
                         style={{
-                            width: NowTheme.SIZES.WIDTH_BASE * 0.8
+                            width: SIZES.WIDTH_BASE * 0.8
                         }}
                     >
                         <AirbnbRating
@@ -307,9 +309,9 @@ export default function BookingDetail({
             renderContent={() => (
                 <>
                     <Text
-                        size={NowTheme.SIZES.FONT_H2}
+                        size={SIZES.FONT_H2}
                         style={{
-                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                            fontFamily: FONT.MONTSERRAT_REGULAR,
                             marginVertical: 10
                         }}
                     >
@@ -325,7 +327,7 @@ export default function BookingDetail({
                         }]}
                         containerStyle={{
                             marginVertical: 10,
-                            width: NowTheme.SIZES.WIDTH_BASE * 0.8
+                            width: SIZES.WIDTH_BASE * 0.8
                         }}
                         placeholder="Nhập mô tả..."
                     />
@@ -350,7 +352,7 @@ export default function BookingDetail({
                 onClickCompleteBooking();
             }}
             buttonStyle={{
-                width: NowTheme.SIZES.WIDTH_BASE * (+width)
+                width: SIZES.WIDTH_BASE * (+width)
             }}
             type="active"
             label="Hoàn tất buổi hẹn"
@@ -363,7 +365,7 @@ export default function BookingDetail({
                 setModalReasonVisible(true);
             }}
             buttonStyle={{
-                width: NowTheme.SIZES.WIDTH_BASE * (+width)
+                width: SIZES.WIDTH_BASE * (+width)
             }}
             type="default"
             label="Huỷ buổi hẹn"
@@ -376,7 +378,7 @@ export default function BookingDetail({
                 onCustomerConfirmPayment(bookingId);
             }}
             buttonStyle={{
-                width: NowTheme.SIZES.WIDTH_BASE * (+width)
+                width: SIZES.WIDTH_BASE * (+width)
             }}
             type="active"
             label="Thanh toán"
@@ -412,20 +414,20 @@ export default function BookingDetail({
                         />
 
                         <Block style={{
-                            width: NowTheme.SIZES.WIDTH_BASE * 0.9,
+                            width: SIZES.WIDTH_BASE * 0.9,
                             alignSelf: 'center',
                             marginTop: 10,
                         }}
                         >
                             <Text style={{
-                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                                fontFamily: FONT.MONTSERRAT_REGULAR,
                             }}
                             >
                                 CHI TIẾT ĐƠN HẸN
                             </Text>
                             <Line
                                 borderWidth={0.5}
-                                borderColor={NowTheme.COLORS.ACTIVE}
+                                borderColor={COLORS.ACTIVE}
                                 style={{
                                     marginTop: 10
                                 }}
@@ -443,21 +445,21 @@ export default function BookingDetail({
                             />
 
                             <Text style={{
-                                fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+                                fontFamily: FONT.MONTSERRAT_REGULAR,
                             }}
                             >
                                 GHI CHÚ CUỘC HẸN
                             </Text>
                             <Line
                                 borderWidth={0.5}
-                                borderColor={NowTheme.COLORS.ACTIVE}
+                                borderColor={COLORS.ACTIVE}
                                 style={{
                                     marginVertical: 20
                                 }}
                             />
                             <Text
-                                color={NowTheme.COLORS.DEFAULT}
-                                size={NowTheme.SIZES.FONT_H3}
+                                color={COLORS.DEFAULT}
+                                size={SIZES.FONT_H3}
                                 style={styles.subTitle}
                             >
                                 {booking.noted}
@@ -467,7 +469,7 @@ export default function BookingDetail({
                                 center
                                 row
                                 style={{
-                                    width: NowTheme.SIZES.WIDTH_BASE * 0.9
+                                    width: SIZES.WIDTH_BASE * 0.9
                                 }}
                                 space="between"
                             >
@@ -490,11 +492,11 @@ export default function BookingDetail({
 
 const styles = StyleSheet.create({
     title: {
-        fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
+        fontFamily: FONT.MONTSERRAT_BOLD,
         marginBottom: 20
     },
     subTitle: {
-        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+        fontFamily: FONT.MONTSERRAT_REGULAR,
         marginBottom: 10
     },
     centeredView: {
@@ -514,11 +516,11 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 5,
-        marginTop: NowTheme.SIZES.WIDTH_BASE * 0.5,
-        width: NowTheme.SIZES.WIDTH_BASE * 0.9,
+        marginTop: SIZES.WIDTH_BASE * 0.5,
+        width: SIZES.WIDTH_BASE * 0.9,
         marginBottom: 10
     },
     inputWith: {
-        width: NowTheme.SIZES.WIDTH_BASE * 0.9,
+        width: SIZES.WIDTH_BASE * 0.9,
     },
 });

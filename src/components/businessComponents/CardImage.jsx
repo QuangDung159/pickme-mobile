@@ -1,15 +1,17 @@
-import { Block, Text } from 'galio-framework';
+import { Block } from 'galio-framework';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import {
     Image,
-    StyleSheet, TouchableWithoutFeedback
+    StyleSheet, Text, TouchableWithoutFeedback
 } from 'react-native';
 import ImageView from 'react-native-image-viewing';
 import ImageScalable from 'react-native-scalable-image';
 import { useSelector } from 'react-redux';
 import { NowTheme, ScreenName } from '../../constants';
 import { CenterLoader } from '../uiComponents';
+
+const { FONT, SIZES, COLORS } = NowTheme;
 
 export default function CardImage({
     navigation, user, isShowTitle, imageUrl,
@@ -26,7 +28,7 @@ export default function CardImage({
 
     return (
         <Block style={{
-            backgroundColor: NowTheme.COLORS.BASE,
+            backgroundColor: COLORS.BASE,
             borderWidth: 0,
         }}
         >
@@ -73,16 +75,18 @@ export default function CardImage({
                             style={{
                                 alignItems: 'center',
                                 justifyContent: 'space-between',
-                                width: NowTheme.SIZES.WIDTH_BASE * 0.8
+                                width: SIZES.WIDTH_BASE * 0.8
                             }}
                         >
                             <TouchableWithoutFeedback
                                 onPress={() => handleOnClickCard(user, currentUser, navigation)}
                             >
                                 <Text
-                                    size={NowTheme.SIZES.FONT_H2}
-                                    bold
-                                    color={NowTheme.COLORS.ACTIVE}
+                                    style={{
+                                        fontSize: SIZES.FONT_H2,
+                                        fontFamily: FONT.MONTSERRAT_BOLD,
+                                        color: COLORS.ACTIVE,
+                                    }}
                                 >
                                     {user.fullName}
                                 </Text>
@@ -91,8 +95,8 @@ export default function CardImage({
                         <Block>
                             <Text
                                 style={styles.subInfoCard}
-                                size={NowTheme.SIZES.FONT_H4}
-                                color={NowTheme.COLORS.DEFAULT}
+                                size={SIZES.FONT_H4}
+                                color={COLORS.DEFAULT}
                             >
                                 TP.Hồ Chí Minh
                             </Text>
@@ -111,7 +115,7 @@ export default function CardImage({
                         style={{
                             zIndex: 99
                         }}
-                        width={NowTheme.SIZES.WIDTH_BASE}
+                        width={SIZES.WIDTH_BASE}
                         source={{ uri: imageUrl }}
                     />
                 </TouchableWithoutFeedback>
@@ -133,6 +137,6 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
     },
     subInfoCard: {
-        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
+        fontFamily: FONT.MONTSERRAT_REGULAR,
     },
 });

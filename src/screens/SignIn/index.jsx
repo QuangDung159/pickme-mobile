@@ -22,6 +22,8 @@ import {
 } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
 
+const { FONT, SIZES, COLORS } = NowTheme;
+
 export default function SignIn({ navigation }) {
     const [phoneNumber, setPhoneNumber] = useState('huyvd');
     const [password, setPassword] = useState('0000');
@@ -134,16 +136,16 @@ export default function SignIn({ navigation }) {
                 navigation.navigate(ScreenName.FORGOT_PASSWORD);
             }}
             containerStyle={{
-                width: NowTheme.SIZES.WIDTH_BASE * 0.77,
+                width: SIZES.WIDTH_BASE * 0.77,
                 alignSelf: 'center'
             }}
         >
             <View>
                 <Text
                     style={{
-                        fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                        color: NowTheme.COLORS.SWITCH_OFF,
-                        fontSize: NowTheme.SIZES.FONT_H4
+                        fontFamily: FONT.MONTSERRAT_REGULAR,
+                        color: COLORS.SWITCH_OFF,
+                        fontSize: SIZES.FONT_H4
                     }}
                 >
                     Bạn quên mật khẩu?
@@ -169,17 +171,17 @@ export default function SignIn({ navigation }) {
                         <View style={styles.registerContainer}>
                             <View
                                 style={{
-                                    height: NowTheme.SIZES.HEIGHT_BASE * 0.2
+                                    height: SIZES.HEIGHT_BASE * 0.2
                                 }}
                             >
                                 <Text
                                     style={{
-                                        fontFamily: NowTheme.FONT.MONTSERRAT_BOLD,
+                                        fontFamily: FONT.MONTSERRAT_BOLD,
                                         textAlign: 'center',
                                         color: '#333',
                                         fontSize: 24,
                                         height: 100,
-                                        marginTop: NowTheme.SIZES.HEIGHT_BASE * 0.1
+                                        marginTop: SIZES.HEIGHT_BASE * 0.1
                                     }}
                                 >
                                     Đăng nhập
@@ -191,7 +193,7 @@ export default function SignIn({ navigation }) {
                             ) : (
                                 <>
                                     <View style={{
-                                        height: NowTheme.SIZES.HEIGHT_BASE * 0.4
+                                        height: SIZES.HEIGHT_BASE * 0.4
                                     }}
                                     >
                                         <View
@@ -208,20 +210,20 @@ export default function SignIn({ navigation }) {
                                                 }
                                                 containerStyle={{
                                                     marginVertical: 10,
-                                                    width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                                                    width: SIZES.WIDTH_BASE * 0.77
                                                 }}
                                             />
 
                                             <CustomInput
                                                 value={password}
                                                 inputStyle={{
-                                                    width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                                                    width: SIZES.WIDTH_BASE * 0.77
                                                 }}
                                                 onChangeText={(passwordInput) => setPassword(passwordInput)}
                                                 keyboardType="number-pad"
                                                 containerStyle={{
                                                     marginVertical: 10,
-                                                    width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                                                    width: SIZES.WIDTH_BASE * 0.77
                                                 }}
                                                 secureTextEntry={!isShowPassword}
                                                 placeholder="Nhập mật khẩu..."
@@ -229,7 +231,7 @@ export default function SignIn({ navigation }) {
                                                     name: 'eye',
                                                     family: IconFamily.ENTYPO,
                                                     size: 20,
-                                                    color: NowTheme.COLORS.DEFAULT
+                                                    color: COLORS.DEFAULT
                                                 }}
                                                 onPressRightIcon={() => setIsShowPassword(!isShowPassword)}
                                             />
@@ -243,7 +245,7 @@ export default function SignIn({ navigation }) {
                                                 }
                                                 containerStyle={{
                                                     marginVertical: 10,
-                                                    width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                                                    width: SIZES.WIDTH_BASE * 0.77
                                                 }}
                                             />
                                             {renderButtonForgotPassword()}
@@ -277,22 +279,22 @@ export default function SignIn({ navigation }) {
 
 const styles = StyleSheet.create({
     imageBackgroundContainer: {
-        width: NowTheme.SIZES.WIDTH_BASE,
-        height: NowTheme.SIZES.HEIGHT_BASE,
+        width: SIZES.WIDTH_BASE,
+        height: SIZES.HEIGHT_BASE,
         padding: 0,
         zIndex: 1
     },
     imageBackground: {
-        width: NowTheme.SIZES.WIDTH_BASE,
-        height: NowTheme.SIZES.HEIGHT_BASE
+        width: SIZES.WIDTH_BASE,
+        height: SIZES.HEIGHT_BASE
     },
     registerContainer: {
         marginTop: 55,
-        width: NowTheme.SIZES.WIDTH_BASE * 0.9,
-        height: NowTheme.SIZES.HEIGHT_BASE < 812 ? NowTheme.SIZES.HEIGHT_BASE * 0.8 : NowTheme.SIZES.HEIGHT_BASE * 0.8,
-        backgroundColor: NowTheme.COLORS.BASE,
+        width: SIZES.WIDTH_BASE * 0.9,
+        height: SIZES.HEIGHT_BASE < 812 ? SIZES.HEIGHT_BASE * 0.8 : SIZES.HEIGHT_BASE * 0.8,
+        backgroundColor: COLORS.BASE,
         borderRadius: 4,
-        shadowColor: NowTheme.COLORS.BLACK,
+        shadowColor: COLORS.BLACK,
         shadowOffset: {
             width: 0,
             height: 4
@@ -303,7 +305,7 @@ const styles = StyleSheet.create({
         overflow: 'hidden'
     },
     button: {
-        width: NowTheme.SIZES.WIDTH_BASE * 0.77
+        width: SIZES.WIDTH_BASE * 0.77
     },
     openButton: {
         backgroundColor: '#F194FF',

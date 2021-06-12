@@ -16,6 +16,8 @@ import { ToastHelpers } from '../../helpers';
 import { setIsSignInOtherDeviceStore, setNavigation, setToken } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
 
+const { FONT, SIZES, COLORS } = NowTheme;
+
 export default function Onboarding({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
 
@@ -133,15 +135,15 @@ export default function Onboarding({ navigation }) {
                                 <Block
                                     middle
                                     style={{
-                                        paddingBottom: NowTheme.SIZES.HEIGHT_BASE * 0.2
+                                        paddingBottom: SIZES.HEIGHT_BASE * 0.2
                                     }}
                                 >
                                     <Text
                                         style={{
-                                            fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                                            fontSize: NowTheme.SIZES.WIDTH_BASE * 0.1
+                                            fontFamily: FONT.MONTSERRAT_REGULAR,
+                                            fontSize: SIZES.WIDTH_BASE * 0.1
                                         }}
-                                        color={NowTheme.COLORS.ACTIVE}
+                                        color={COLORS.ACTIVE}
                                     >
                                         PickMe
                                     </Text>
@@ -168,16 +170,16 @@ export default function Onboarding({ navigation }) {
                                 }}
                             >
                                 <Text
-                                    color={NowTheme.COLORS.DEFAULT}
-                                    size={NowTheme.SIZES.FONT_H4 - 2}
-                                    style={{ fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR }}
+                                    color={COLORS.DEFAULT}
+                                    size={SIZES.FONT_H4 - 2}
+                                    style={{ fontFamily: FONT.MONTSERRAT_REGULAR }}
                                 >
                                     {`${Constants.manifest.version}`}
                                 </Text>
                                 <Text
-                                    color={NowTheme.COLORS.DEFAULT}
-                                    size={NowTheme.SIZES.FONT_H4 - 2}
-                                    style={{ fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR }}
+                                    color={COLORS.DEFAULT}
+                                    size={SIZES.FONT_H4 - 2}
+                                    style={{ fontFamily: FONT.MONTSERRAT_REGULAR }}
                                 >
                                     {deviceIdStore}
                                 </Text>
@@ -197,11 +199,11 @@ const styles = StyleSheet.create({
     padded: {
         zIndex: 3,
         position: 'absolute',
-        bottom: NowTheme.SIZES.HEIGHT_BASE * 0.17,
+        bottom: SIZES.HEIGHT_BASE * 0.17,
         alignSelf: 'center',
     },
     button: {
-        width: NowTheme.SIZES.WIDTH_BASE * 0.8,
+        width: SIZES.WIDTH_BASE * 0.8,
         marginTop: 10
     },
 

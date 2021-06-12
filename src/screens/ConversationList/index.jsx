@@ -10,6 +10,8 @@ import { ToastHelpers } from '../../helpers';
 import { setListConversation, setNumberMessageUnread } from '../../redux/Actions';
 import { socketRequestUtil } from '../../utils';
 
+const { FONT, SIZES, COLORS } = NowTheme;
+
 export default function ConversationList({ navigation }) {
     const [refreshing, setRefreshing] = useState(false);
 
@@ -182,27 +184,27 @@ export default function ConversationList({ navigation }) {
                     <Block>
                         <Text
                             style={{
-                                fontFamily: NowTheme.FONT.MONTSERRAT_BOLD
+                                fontFamily: FONT.MONTSERRAT_BOLD
                             }}
                             size={16}
-                            color={NowTheme.COLORS.DEFAULT}
+                            color={COLORS.DEFAULT}
                         >
                             {params.name}
                         </Text>
                         <Block
                             style={{
-                                width: NowTheme.SIZES.WIDTH_BASE * 0.77
+                                width: SIZES.WIDTH_BASE * 0.77
                             }}
                         >
                             <Text
                                 style={{
                                     fontFamily: conversation.isRead
-                                        ? NowTheme.FONT.MONTSERRAT_REGULAR
-                                        : NowTheme.FONT.MONTSERRAT_BOLD
+                                        ? FONT.MONTSERRAT_REGULAR
+                                        : FONT.MONTSERRAT_BOLD
 
                                 }}
                                 size={16}
-                                color={NowTheme.COLORS.DEFAULT}
+                                color={COLORS.DEFAULT}
                                 numberOfLines={2}
                             >
                                 {conversation.content}
@@ -214,9 +216,9 @@ export default function ConversationList({ navigation }) {
                     alignItems="flex-end"
                 >
                     <Line
-                        borderColor={NowTheme.COLORS.ACTIVE}
+                        borderColor={COLORS.ACTIVE}
                         borderWidth={0.5}
-                        width={NowTheme.SIZES.WIDTH_BASE * 0.85}
+                        width={SIZES.WIDTH_BASE * 0.85}
                     />
                 </Block>
             </TouchableWithoutFeedback>
@@ -255,9 +257,9 @@ export default function ConversationList({ navigation }) {
                         >
                             <Text
                                 style={{
-                                    fontFamily: NowTheme.FONT.MONTSERRAT_REGULAR,
-                                    color: NowTheme.COLORS.DEFAULT,
-                                    fontSize: NowTheme.SIZES.FONT_H2
+                                    fontFamily: FONT.MONTSERRAT_REGULAR,
+                                    color: COLORS.DEFAULT,
+                                    fontSize: SIZES.FONT_H2
                                 }}
                             >
                                 Danh sách trống
