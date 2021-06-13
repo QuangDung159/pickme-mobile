@@ -6,7 +6,7 @@ import { CenterLoader, CustomButton, IconCustom } from '../../components/uiCompo
 import {
     IconFamily, NowTheme, Rx, ScreenName
 } from '../../constants';
-import { ToastHelpers } from '../../helpers';
+import { CommonHelpers, ToastHelpers } from '../../helpers';
 import { setCurrentUser, setListCashHistoryStore } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
 
@@ -86,6 +86,8 @@ export default function Wallet({ navigation }) {
             amountChanged,
         } = historyItem;
 
+        const amountChangedDisplay = CommonHelpers.generateMoneyStr(amountChanged);
+
         return (
             <View
                 style={{
@@ -121,7 +123,7 @@ export default function Wallet({ navigation }) {
                             fontSize: SIZES.FONT_H2,
                         }}
                     >
-                        {isIncrease ? `+ ${amountChanged}k` : `- ${amountChanged}k`}
+                        {isIncrease ? `+ ${amountChangedDisplay}` : `- ${amountChangedDisplay}`}
                     </Text>
                 </View>
             </View>
@@ -149,7 +151,7 @@ export default function Wallet({ navigation }) {
                         fontSize: SIZES.FONT_H4
                     }}
                 >
-                    Số dư trong rương
+                    Số dư trong ví
                 </Text>
                 <View
                     style={{
@@ -163,7 +165,7 @@ export default function Wallet({ navigation }) {
                             color: COLORS.ACTIVE,
                         }}
                     >
-                        {`${currentUser.walletAmount}k`}
+                        {`${currentUser.walletAmountDisplay}k VND`}
                     </Text>
                 </View>
             </View>
@@ -174,7 +176,7 @@ export default function Wallet({ navigation }) {
                     color: COLORS.ACTIVE
                 }}
                 buttonStyle={{
-                    width: SIZES.WIDTH_BASE * 0.45,
+                    width: SIZES.WIDTH_BASE * 0.35,
                     borderColor: COLORS.ACTIVE
                 }}
                 label="Nạp tiền"

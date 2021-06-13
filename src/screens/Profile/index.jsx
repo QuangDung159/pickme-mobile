@@ -14,7 +14,7 @@ import { CenterLoader, CustomButton } from '../../components/uiComponents';
 import {
     IconFamily, NowTheme, Rx, ScreenName
 } from '../../constants';
-import { ToastHelpers } from '../../helpers';
+import { CommonHelpers, ToastHelpers } from '../../helpers';
 import { rxUtil } from '../../utils';
 import UserInfoSection from '../Personal/UserInformation/UserInfoSection';
 
@@ -165,10 +165,11 @@ export default function Profile({ route, navigation }) {
                     listUserInfo={
                         [
                             {
-                                value: earningExpected && `${earningExpected.toString()} thu nhập/phút`,
+                                value: earningExpected
+                                && `${CommonHelpers.generateMoneyStr((earningExpected * 60))}/giờ`,
                                 icon: {
-                                    name: 'diamond',
-                                    family: IconFamily.SIMPLE_LINE_ICONS,
+                                    name: 'money',
+                                    family: IconFamily.FONT_AWESOME,
                                     color: COLORS.ACTIVE,
                                     size: 24
                                 }

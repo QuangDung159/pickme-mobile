@@ -42,13 +42,13 @@ export default function LeaderBoard({ navigation }) {
             endpoint: Rx.PARTNER.LEADER_BOARD_BOOKING
         },
         {
-            tabLabel: 'Kim cương',
+            tabLabel: 'Mức chi trả',
             tabIcon: (
                 <IconCustom
-                    name="diamond"
-                    family={IconFamily.SIMPLE_LINE_ICONS}
+                    name="money"
+                    family={IconFamily.FONT_AWESOME}
                     size={24}
-                    color={COLORS.ACTIVE}
+                    color={NowTheme.COLORS.ACTIVE}
                 />
             ),
             endpoint: Rx.PARTNER.LEADER_BOARD_DIAMOND

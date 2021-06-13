@@ -4,9 +4,8 @@ import React from 'react';
 import {
     StyleSheet, Text, View
 } from 'react-native';
-import { IconCustom } from '../../../components/uiComponents';
-import { IconFamily, NowTheme } from '../../../constants';
-import { ToastHelpers } from '../../../helpers';
+import { NowTheme } from '../../../constants';
+import { CommonHelpers, ToastHelpers } from '../../../helpers';
 
 const {
     FONT: {
@@ -169,14 +168,8 @@ export default function CardBooking({ booking }) {
                                 color: COLORS.ACTIVE
                             }}
                         >
-                            {totalAmount}
+                            {CommonHelpers.generateMoneyStr(totalAmount)}
                         </Text>
-                        <IconCustom
-                            name="diamond"
-                            family={IconFamily.SIMPLE_LINE_ICONS}
-                            size={16}
-                            color={COLORS.ACTIVE}
-                        />
                     </View>
                 </View>
             </View>

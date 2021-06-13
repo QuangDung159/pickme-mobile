@@ -19,7 +19,7 @@ export default function Personal({ navigation }) {
             tabLabel: 'Cá nhân',
         },
         {
-            tabLabel: 'Ví',
+            tabLabel: 'Ví tiền',
         },
         {
             tabLabel: 'Đơn hẹn',

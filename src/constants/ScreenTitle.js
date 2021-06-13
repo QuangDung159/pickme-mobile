@@ -8,7 +8,7 @@ export default {
     REGISTER: 'Đăng kí',
     SETTINGS: 'Cài đặt',
     SIGN_UP: 'Đăng kí',
-    WALLET: 'Ví',
+    WALLET: 'Ví tiền',
     SIGN_IN: 'Đăng nhập',
     NOTIFICATION: 'Thông báo',
     MENU: 'Menu',

@@ -9,6 +9,7 @@ import Rx from './Rx';
 import ScreenName from './ScreenName';
 import ScreenTitle from './ScreenTitle';
 import Utils from './Utils';
+import ValidationMessageTemplate from './ValidationMessageTemplate';
 import VerificationStatus from './VerificationStatus';
 
 export {
@@ -23,5 +24,6 @@ export {
     BookingStatus,
     DateTimeConst,
     VerificationStatus,
-    DocumentType
+    DocumentType,
+    ValidationMessageTemplate
 };

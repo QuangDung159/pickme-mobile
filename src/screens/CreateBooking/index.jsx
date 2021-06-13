@@ -15,7 +15,7 @@ import {
 import {
     DateTimeConst, IconFamily, NowTheme, Rx, ScreenName
 } from '../../constants';
-import { ToastHelpers } from '../../helpers';
+import { CommonHelpers, ToastHelpers } from '../../helpers';
 import { setListBookingStore, setPersonTabActiveIndex } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
 
@@ -463,7 +463,7 @@ export default function CreateBooking({ route, navigation }) {
                                 color: COLORS.ACTIVE
                             }}
                         >
-                            {`${packageActive.estimateAmount}k`}
+                            {CommonHelpers.generateMoneyStr(packageActive.estimateAmount)}
                         </Text>
                     </View>
                 </View>
@@ -903,7 +903,7 @@ export default function CreateBooking({ route, navigation }) {
                         color: COLORS.ACTIVE
                     }}
                 >
-                    {`${calculateTotalAmount(startTimeStr, endTimeStr)}k`}
+                    {CommonHelpers.generateMoneyStr(calculateTotalAmount(startTimeStr, endTimeStr))}
                 </Text>
             </View>
             {renderButtonPanel()}

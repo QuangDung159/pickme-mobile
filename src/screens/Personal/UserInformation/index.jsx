@@ -208,7 +208,7 @@ export default function UserInformation({ navigation }) {
 
     const renderSubInfoPanel = () => {
         const {
-            walletAmount,
+            walletAmountDisplay,
             dob,
             homeTown,
             interests
@@ -224,10 +224,10 @@ export default function UserInformation({ navigation }) {
                     listUserInfo={
                         [
                             {
-                                value: walletAmount && walletAmount.toString(),
+                                value: walletAmountDisplay && `${walletAmountDisplay.toString()}k VND`,
                                 icon: {
-                                    name: 'diamond',
-                                    family: IconFamily.SIMPLE_LINE_ICONS,
+                                    name: 'money',
+                                    family: IconFamily.FONT_AWESOME,
                                     color: COLORS.ACTIVE,
                                     size: 24
                                 }
