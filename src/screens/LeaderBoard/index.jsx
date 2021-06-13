@@ -48,7 +48,7 @@ export default function LeaderBoard({ navigation }) {
                     name="money"
                     family={IconFamily.FONT_AWESOME}
                     size={24}
-                    color={NowTheme.COLORS.ACTIVE}
+                    color={COLORS.ACTIVE}
                 />
             ),
             endpoint: Rx.PARTNER.LEADER_BOARD_DIAMOND
