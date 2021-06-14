@@ -1,9 +1,9 @@
 /* eslint-disable no-undef */
-import { theme } from 'galio-framework';
 import { Platform, StatusBar } from 'react-native';
+import NowTheme from './NowTheme';
 
 const StatusHeight = StatusBar.currentHeight;
-const HeaderHeight = theme.SIZES.BASE * 3.5 + (StatusHeight || 0);
+const HeaderHeight = NowTheme.SIZES.BASE * 3.5 + (StatusHeight || 0);
 const iPhoneX = () => Platform.OS === 'ios' && (height === 812 || width === 812);
 
 const TIME_FORMAT = {

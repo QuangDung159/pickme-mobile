@@ -2,10 +2,9 @@
 import AppLoading from 'expo-app-loading';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
-import { Text } from 'galio-framework';
 import * as React from 'react';
 import {
-    Image, StyleSheet, View
+    Image, StyleSheet, Text, View
 } from 'react-native';
 import { MenuProvider } from 'react-native-popup-menu';
 import Toast from 'react-native-toast-message';

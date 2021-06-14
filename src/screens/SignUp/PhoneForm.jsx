@@ -1,9 +1,7 @@
-import { Checkbox } from 'galio-framework';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { StyleSheet, View } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { CustomButton, CustomInput } from '../../components/uiComponents';
+import { CustomButton, CustomCheckbox, CustomInput } from '../../components/uiComponents';
 import { NowTheme, Rx } from '../../constants';
 import { ToastHelpers } from '../../helpers';
 import { setShowLoaderStore } from '../../redux/Actions';
@@ -11,7 +9,6 @@ import { rxUtil } from '../../utils';
 
 const {
     FONT: {
-        MONTSERRAT_REGULAR,
         MONTSERRAT_BOLD
     },
     SIZES,
@@ -87,38 +84,15 @@ export default function PhoneForm({
                     />
                 </View>
 
-                <View
-                    style={styles.disclaimerContainer}
-                >
-                    <Checkbox
-                        checkboxStyle={styles.checkbox}
-                        color={COLORS.PRIMARY}
-                        style={styles.checkboxContainer}
-                        initialValue={onCheckedDisclaimer}
-                        label=""
-                        onChange={(checked) => {
-                            setOnCheckedDisclaimer(checked);
-                        }}
-                    />
-                    <View
-                        style={styles.disclaimerAgreeContainer}
-                    >
-                        <TouchableWithoutFeedback
-                            onPress={() => {
-                                setModalVisible(true);
-                            }}
-                        >
-                            <Text
-                                style={{
-                                    fontFamily: MONTSERRAT_REGULAR,
-                                    color: COLORS.DEFAULT
-                                }}
-                            >
-                                Tôi đồng ý với các Điều khoản và Điều kiện
-                            </Text>
-                        </TouchableWithoutFeedback>
-                    </View>
-                </View>
+                <CustomCheckbox
+                    label="Tôi đồng ý với các Điều khoản và Điều kiện"
+                    onPressLabel={() => {
+                        setModalVisible(true);
+                    }}
+                    onChange={(checked) => {
+                        setOnCheckedDisclaimer(checked);
+                    }}
+                />
             </View>
 
             <View center>
@@ -175,22 +149,6 @@ const styles = StyleSheet.create({
     },
     stepSessionContainer: {
         height: SIZES.HEIGHT_BASE * 0.3
-    },
-    checkbox: {
-        borderWidth: 1,
-        borderRadius: 2,
-        borderColor: COLORS.BORDER_COLOR
-    },
-    checkboxContainer: {
-        alignItems: 'flex-start',
-    },
-    disclaimerContainer: {
-        alignSelf: 'center',
-        flexDirection: 'row',
-        width: SIZES.WIDTH_BASE * 0.77,
-    },
-    disclaimerAgreeContainer: {
-        marginLeft: 10,
     },
     formInputContainer: {
         alignItems: 'center',

@@ -1,4 +1,3 @@
-import { Checkbox } from 'galio-framework';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import {
@@ -7,7 +6,7 @@ import {
 import { AirbnbRating } from 'react-native-ratings';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-    CenterLoader, CustomButton, CustomInput, CustomModal, Line
+    CenterLoader, CustomButton, CustomCheckbox, CustomInput, CustomModal, Line
 } from '../../components/uiComponents';
 import {
     BookingStatus, NowTheme, Rx, ScreenName
@@ -309,23 +308,19 @@ export default function BookingDetail({
                 marginBottom: 30,
             }}
         >
-            <Checkbox
-                color={COLORS.ACTIVE}
-                initialValue={isRecomendForFriends}
+            <CustomCheckbox
+                label={`Sẽ giới thiệu đối tác với bạn bè ${'<3'}!`}
                 onChange={(checked) => {
                     setIsRecomendForFriends(checked);
                 }}
-            />
-            <Text
-                style={{
-                    fontFamily: MONTSERRAT_REGULAR,
-                    color: COLORS.ACTIVE,
-                    marginLeft: 10,
-                    fontSize: SIZES.FONT_H2
+                labelStyle={{
+                    fontSize: SIZES.FONT_H3,
+                    color: COLORS.ACTIVE
                 }}
-            >
-                {`Sẽ giới thiệu đối tác với bạn bè ${'<3'}!`}
-            </Text>
+                containerStyle={{
+                    width: SIZES.WIDTH_BASE * 0.8
+                }}
+            />
         </View>
     );
 
