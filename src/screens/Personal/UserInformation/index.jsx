@@ -238,7 +238,7 @@ export default function UserInformation({ navigation }) {
                                     name: 'birthday-cake',
                                     family: IconFamily.FONT_AWESOME,
                                     color: COLORS.ACTIVE,
-                                    size: 23
+                                    size: 22
                                 }
                             },
                             {
@@ -247,7 +247,7 @@ export default function UserInformation({ navigation }) {
                                     name: 'home',
                                     family: IconFamily.FONT_AWESOME,
                                     color: COLORS.ACTIVE,
-                                    size: 28
+                                    size: 24
                                 }
                             },
                             {
@@ -256,7 +256,7 @@ export default function UserInformation({ navigation }) {
                                     name: 'badminton',
                                     family: IconFamily.MATERIAL_COMMUNITY_ICONS,
                                     color: COLORS.ACTIVE,
-                                    size: 24
+                                    size: 22
                                 }
                             },
                         ]

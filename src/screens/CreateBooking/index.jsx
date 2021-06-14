@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { Picker } from '@react-native-picker/picker';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
@@ -10,7 +11,7 @@ import ScrollPicker from 'react-native-wheel-scroll-picker';
 import { useDispatch, useSelector } from 'react-redux';
 import { CustomCalendar } from '../../components/businessComponents';
 import {
-    CenterLoader, CustomButton, CustomInput, CustomModal, IconCustom, Line
+    CenterLoader, CustomButton, CustomInput, CustomModal, GooglePlacesInput, IconCustom, Line
 } from '../../components/uiComponents';
 import {
     DateTimeConst, IconFamily, NowTheme, Rx, ScreenName
@@ -170,9 +171,9 @@ export default function CreateBooking({ route, navigation }) {
             EndAt: endString,
             Date: dateString,
             Address: booking.address,
-            Longtitude: '10.7723912895038',
-            Latitude: '106.63063360556724',
-            Description: 'locationActive.description',
+            Longtitude: booking.longtitude,
+            Latitude: booking.latitude,
+            Description: 'description',
             Noted: booking.noted,
             totalAmount: total !== 0 ? total : calculateTotalAmount(startTimeStr, endTimeStr)
         };
@@ -727,16 +728,25 @@ export default function CreateBooking({ route, navigation }) {
     const onChangePackage = (packageIdInput) => {
         const packageChoose = listPartnerPackage.find((item) => item.id === packageIdInput);
 
-        console.log('packageChoose :>> ', packageChoose);
         if (packageChoose) {
             setPackageActive(packageChoose);
         }
     };
 
     const onChangeAddress = (input) => {
+        const {
+            formatted_address, name, geometry: {
+                location: {
+                    lgn, lat
+                }
+            }
+        } = input;
+
         setBooking({
             ...booking,
-            address: input,
+            address: `${name}, ${formatted_address}`,
+            longtitude: lgn,
+            latitude: lat
         });
     };
 
@@ -746,22 +756,6 @@ export default function CreateBooking({ route, navigation }) {
             noted: input,
         });
     };
-
-    const renderInputAddress = () => (
-        <CustomInput
-            value={booking.address}
-            multiline
-            onChangeText={(input) => onChangeAddress(input)}
-            containerStyle={{
-                marginVertical: 10,
-                width: SIZES.WIDTH_BASE * 0.9
-            }}
-            label="Địa điểm:"
-            inputStyle={{
-                height: 80,
-            }}
-        />
-    );
 
     const renderInputNote = () => (
         <CustomInput
@@ -832,7 +826,11 @@ export default function CreateBooking({ route, navigation }) {
                 )}
 
                 {renderButtonTimePicker()}
-                {renderInputAddress()}
+
+                <GooglePlacesInput
+                    onChangeAddress={(detail) => onChangeAddress(detail)}
+                    addressInput={booking.address}
+                />
                 {renderInputNote()}
             </View>
         </View>
@@ -998,6 +996,7 @@ export default function CreateBooking({ route, navigation }) {
                 ) : (
                     <>
                         <KeyboardAwareScrollView
+                            keyboardShouldPersistTaps="handled"
                             style={{
                                 width: SIZES.WIDTH_BASE * 0.9,
                                 alignSelf: 'center'

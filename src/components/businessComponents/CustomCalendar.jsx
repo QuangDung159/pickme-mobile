@@ -72,6 +72,7 @@ export default function CustomCalendar({ selectedDate, onChangeDate }) {
         <View
             style={{
                 height: SIZES.HEIGHT_BASE * 0.13,
+                marginBottom: 10
             }}
         >
             <View
@@ -142,10 +143,10 @@ export default function CustomCalendar({ selectedDate, onChangeDate }) {
                             <CustomButton
                                 onPress={() => { onClickDate(item); }}
                                 buttonStyle={{
-                                    width: 30,
-                                    height: 30,
+                                    width: 34,
+                                    height: 34,
                                     backgroundColor: buttonColor,
-                                    borderRadius: 15,
+                                    borderRadius: 17,
                                     borderWidth: 0
                                 }}
                                 labelStyle={dateTextStyle}
@@ -158,7 +159,8 @@ export default function CustomCalendar({ selectedDate, onChangeDate }) {
 
             <View
                 style={{
-                    flexDirection: 'row'
+                    flexDirection: 'row',
+                    marginTop: 5
                 }}
             >
                 {arrDateLine2.map((item) => {
@@ -186,10 +188,10 @@ export default function CustomCalendar({ selectedDate, onChangeDate }) {
                             <CustomButton
                                 onPress={() => { onClickDate(item); }}
                                 buttonStyle={{
-                                    width: 30,
-                                    height: 30,
+                                    width: 34,
+                                    height: 34,
                                     backgroundColor: buttonColor,
-                                    borderRadius: 15,
+                                    borderRadius: 17,
                                     borderWidth: 0
                                 }}
                                 labelStyle={dateTextStyle}

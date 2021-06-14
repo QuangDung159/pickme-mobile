@@ -26,7 +26,7 @@ export default function UserInfoItem({
             style={{
                 alignSelf: 'center',
                 marginBottom: 10,
-                flexDirection: 'row'
+                flexDirection: 'row',
             }}
         >
             <View

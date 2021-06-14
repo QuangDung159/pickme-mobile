@@ -25,6 +25,8 @@ const {
     COLORS
 } = NowTheme;
 
+console.disableYellowBox = true;
+
 // images caching
 function cacheImages(images) {
     return images.map((image) => {
