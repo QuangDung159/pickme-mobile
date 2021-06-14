@@ -2,6 +2,7 @@ import CenterLoader from './CenterLoader';
 import CustomButton from './CustomButton';
 import CustomInput from './CustomInput';
 import CustomModal from './CustomModal';
+import GooglePlacesInput from './GooglePlacesInput';
 import IconCustom from './IconCustom';
 import IndicatorVerticalLine from './IndicatorVerticalLine';
 import Line from './Line';
@@ -21,5 +22,6 @@ export {
     TopTabBar,
     CustomInput,
     CustomButton,
-    CustomModal
+    CustomModal,
+    GooglePlacesInput
 };

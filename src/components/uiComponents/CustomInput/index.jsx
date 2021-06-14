@@ -52,7 +52,7 @@ export default function CustomInput({
                         height: 50,
                         paddingHorizontal: 10,
                         fontFamily: MONTSERRAT_REGULAR,
-                        fontSize: SIZES.FONT_H2,
+                        fontSize: SIZES.FONT_H3,
                         color: COLORS.HEADER
                     },
                     inputStyle,

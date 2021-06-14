@@ -1,3 +1,4 @@
+import { Checkbox } from 'galio-framework';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import {
@@ -41,8 +42,14 @@ export default function BookingDetail({
     const [modalRatingVisible, setModalRatingVisible] = useState(false);
     const [modalReportVisible, setModalReportVisible] = useState(false);
     const [modalReasonVisible, setModalReasonVisible] = useState(false);
-    const [ratingValue, setRatingValue] = useState(4);
     const [reportDesc, setReportDesc] = useState();
+
+    const [enthusiasm, setEnthusiasm] = useState(5);
+    const [onTime, setOnTime] = useState(5);
+    const [possitive, setPossitive] = useState(5);
+    const [professional, setProfessional] = useState(5);
+    const [isRecomendForFriends, setIsRecomendForFriends] = useState(true);
+    const [ratingDesc, setRatingDesc] = useState('');
 
     const token = useSelector((state) => state.userReducer.token);
     const showLoaderStore = useSelector((state) => state.appConfigReducer.showLoaderStore);
@@ -136,8 +143,6 @@ export default function BookingDetail({
 
     const onClickCompleteBooking = () => {
         dispatch(setShowLoaderStore(true));
-        renderAlertRatingReport();
-
         rxUtil(
             `${Rx.BOOKING.COMPLETE_BOOKING}/${bookingId}`,
             'POST',
@@ -147,9 +152,7 @@ export default function BookingDetail({
             },
             (res) => {
                 ToastHelpers.renderToast(res.data.message, 'success');
-                navigation.navigate(ScreenName.PERSONAL);
-                dispatch(setPersonTabActiveIndex(2));
-                fetchListBooking();
+                renderAlertRatingReport();
             },
             (res) => {
                 ToastHelpers.renderToast();
@@ -157,7 +160,7 @@ export default function BookingDetail({
                 ToastHelpers.renderToast(res.data.message, 'error');
             },
             (res) => {
-                ToastHelpers.renderToast(res, 'error');
+                ToastHelpers.renderToast(res.data.message, 'error');
                 dispatch(setShowLoaderStore(false));
             }
         );
@@ -165,11 +168,16 @@ export default function BookingDetail({
 
     const sendRating = () => {
         rxUtil(
-            `${Rx.BOOKING.BOOKING_RATE}/${bookingId}`,
+            Rx.BOOKING.BOOKING_RATE,
             'POST',
             {
-                score: reportDesc ? 2 : ratingValue,
-                description: reportDesc || 'Rating'
+                bookingId,
+                description: ratingDesc || 'Rating',
+                enthusiasm,
+                professional,
+                onTime,
+                possitive,
+                isRecomendForFriends
             },
             {
                 Authorization: token
@@ -283,10 +291,73 @@ export default function BookingDetail({
                     onPress: () => {
                         setModalReportVisible(true);
                     },
+                },
+                {
+                    text: 'Đóng',
+                    style: 'cancel'
                 }
             ],
-            { cancelable: false }
+            { cancelable: true }
         )
+    );
+
+    const renderIsRecommendSession = () => (
+        <View
+            style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginBottom: 30,
+            }}
+        >
+            <Checkbox
+                color={COLORS.ACTIVE}
+                initialValue={isRecomendForFriends}
+                onChange={(checked) => {
+                    setIsRecomendForFriends(checked);
+                }}
+            />
+            <Text
+                style={{
+                    fontFamily: MONTSERRAT_REGULAR,
+                    color: COLORS.ACTIVE,
+                    marginLeft: 10,
+                    fontSize: SIZES.FONT_H2
+                }}
+            >
+                {`Sẽ giới thiệu đối tác với bạn bè ${'<3'}!`}
+            </Text>
+        </View>
+    );
+
+    const renderRatingItem = (label, ratingValue, setRatingValue) => (
+        <View
+            style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginBottom: 5
+            }}
+        >
+            <Text
+                style={{
+                    color: COLORS.ACTIVE,
+                    fontFamily: MONTSERRAT_REGULAR,
+                    fontSize: SIZES.FONT_H2
+                }}
+            >
+                {label}
+            </Text>
+            <AirbnbRating
+                count={5}
+                reviewSize={25}
+                defaultRating={ratingValue}
+                size={25}
+                onFinishRating={(ratingNumber) => {
+                    setRatingValue(ratingNumber);
+                }}
+                showRating={false}
+            />
+        </View>
     );
 
     const renderRatingModal = () => (
@@ -297,7 +368,6 @@ export default function BookingDetail({
                     <Text
                         style={{
                             fontFamily: MONTSERRAT_REGULAR,
-                            marginVertical: 10,
                             width: SIZES.WIDTH_BASE * 0.8,
                             fontSize: SIZES.FONT_H2
                         }}
@@ -306,20 +376,30 @@ export default function BookingDetail({
                     </Text>
                     <View
                         style={{
-                            width: SIZES.WIDTH_BASE * 0.8
+                            width: SIZES.WIDTH_BASE * 0.8,
+                            marginTop: 20,
+                            marginBottom: 10
                         }}
                     >
-                        <AirbnbRating
-                            count={5}
-                            reviewSize={25}
-                            reviews={['Tệ', 'Không ổn', 'Bình thường', 'Tốt', 'Tuyệt vời <3']}
-                            defaultRating={ratingValue}
-                            size={25}
-                            onFinishRating={(ratingNumber) => {
-                                setRatingValue(ratingNumber);
-                            }}
-                        />
+                        {renderRatingItem('Hăng hái:', enthusiasm, (rating) => setEnthusiasm(rating))}
+                        {renderRatingItem('Đúng giờ:', onTime, (rating) => setOnTime(rating))}
+                        {renderRatingItem('Tích cực:', possitive, (rating) => setPossitive(rating))}
+                        {renderRatingItem('Chuyên nghiệp:', professional, (rating) => setProfessional(rating))}
                     </View>
+                    <CustomInput
+                        value={ratingDesc}
+                        multiline
+                        onChangeText={(input) => setRatingDesc(input)}
+                        containerStyle={{
+                            marginBottom: 20,
+                            width: SIZES.WIDTH_BASE * 0.8
+                        }}
+                        label="Góp ý:"
+                        inputStyle={{
+                            height: 80,
+                        }}
+                    />
+                    {renderIsRecommendSession()}
 
                     <View
                         style={{
@@ -330,6 +410,9 @@ export default function BookingDetail({
                             onPress={() => {
                                 sendRating();
                                 setModalRatingVisible(false);
+                            }}
+                            buttonStyle={{
+                                width: SIZES.WIDTH_BASE * 0.8
                             }}
                             type="active"
                             label="Gửi đánh giá"
@@ -359,12 +442,12 @@ export default function BookingDetail({
                         multiline
                         onChangeText={(reportInput) => onChangeReport(reportInput)}
                         value={reportDesc}
-                        inputStyle={[styles.inputWith, {
-                            borderRadius: 5,
-                        }]}
                         containerStyle={{
                             marginVertical: 10,
                             width: SIZES.WIDTH_BASE * 0.8
+                        }}
+                        inputStyle={{
+                            height: 80
                         }}
                         placeholder="Nhập mô tả..."
                     />
@@ -378,6 +461,9 @@ export default function BookingDetail({
                                 sendRating();
                                 setModalReportVisible(false);
                             }}
+                            buttonStyle={{
+                                width: SIZES.WIDTH_BASE * 0.8
+                            }}
                             type="active"
                             label="Gửi báo cáo"
                         />
@@ -389,7 +475,7 @@ export default function BookingDetail({
 
     const renderCompleteBookingButton = (width) => (
         <CustomButton
-            nPress={() => {
+            onPress={() => {
                 onClickCompleteBooking();
             }}
             buttonStyle={{
@@ -571,8 +657,5 @@ const styles = StyleSheet.create({
         marginTop: SIZES.WIDTH_BASE * 0.5,
         width: SIZES.WIDTH_BASE * 0.9,
         marginBottom: 10
-    },
-    inputWith: {
-        width: SIZES.WIDTH_BASE * 0.9,
     },
 });

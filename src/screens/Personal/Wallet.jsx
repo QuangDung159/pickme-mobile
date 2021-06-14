@@ -229,7 +229,7 @@ export default function Wallet({ navigation }) {
                 >
                     <FlatList
                         data={listCashHistoryStore}
-                        keyExtractor={(item) => item.id}
+                        keyExtractor={(item) => item.navigationId}
                         renderItem={({ item }) => renderHistoryItem(item)}
                         showsVerticalScrollIndicator={false}
                         refreshControl={(
