@@ -1,5 +1,6 @@
 import CenterLoader from './CenterLoader';
 import CustomButton from './CustomButton';
+import CustomCheckbox from './CustomCheckbox';
 import CustomInput from './CustomInput';
 import CustomModal from './CustomModal';
 import GooglePlacesInput from './GooglePlacesInput';
@@ -23,5 +24,6 @@ export {
     CustomInput,
     CustomButton,
     CustomModal,
-    GooglePlacesInput
+    GooglePlacesInput,
+    CustomCheckbox
 };

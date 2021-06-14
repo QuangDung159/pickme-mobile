@@ -1,6 +1,3 @@
-import {
-    Icon
-} from 'galio-framework';
 import React, { useEffect, useState } from 'react';
 import {
     FlatList,
@@ -9,7 +6,7 @@ import {
     TouchableOpacity,
     View
 } from 'react-native';
-import { Switch } from '../../components/uiComponents';
+import { IconCustom, Switch } from '../../components/uiComponents';
 import { NowTheme } from '../../constants';
 import { ToastHelpers } from '../../helpers';
 
@@ -117,7 +114,7 @@ export default function Settings({ navigation }) {
                                 >
                                     {item.title}
                                 </Text>
-                                <Icon
+                                <IconCustom
                                     name="angle-right"
                                     family="font-awesome"
                                     style={{ paddingRight: 5 }}
