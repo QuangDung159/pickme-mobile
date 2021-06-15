@@ -21,7 +21,7 @@ export default function TopTabBar({
             indicatorStyle={
                 [
                     {
-                        backgroundColor: COLORS.ACTIVE
+                        backgroundColor: COLORS.ACTIVE,
                     },
                     indicatorStyle
                 ]
@@ -29,7 +29,7 @@ export default function TopTabBar({
             style={
                 [
                     {
-                        backgroundColor: COLORS.LIST_ITEM_BACKGROUND_1
+                        backgroundColor: COLORS.LIST_ITEM_BACKGROUND_1,
                     },
                     tabButtonStyle
                 ]
@@ -40,7 +40,8 @@ export default function TopTabBar({
                         {
                             color: COLORS.ACTIVE,
                             fontFamily: MONTSERRAT_BOLD,
-                            fontSize: SIZES.FONT_H4
+                            fontSize: SIZES.FONT_H4,
+
                         },
                         labelStyle
                     ]

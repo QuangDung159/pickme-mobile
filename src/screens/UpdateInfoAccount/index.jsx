@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { SceneMap } from 'react-native-tab-view';
 import { useSelector } from 'react-redux';
 import { TopTabBar } from '../../components/uiComponents';
 import { ScreenName } from '../../constants';
@@ -8,17 +9,11 @@ import UpdateInfoForm from './UpdateInfoForm';
 
 export default function UpdateInfoAccount({ navigation }) {
     const [tabActiveIndex, setTabActiveIndex] = useState(0);
-
+    const [routes] = React.useState([
+        { key: 'updateInfoForm', title: 'Thông tin\ncá nhân' },
+        { key: 'changePasswordForm', title: 'Đổi mật khẩu' },
+    ]);
     const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
-
-    const tabs = [
-        {
-            tabLabel: 'Thông tin\ncá nhân',
-        },
-        {
-            tabLabel: 'Đổi mật khẩu',
-        }
-    ];
 
     useEffect(
         () => {
@@ -34,34 +29,27 @@ export default function UpdateInfoAccount({ navigation }) {
     // handler \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
 
     // render \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
-    const renderTabByIndex = () => {
-        switch (tabActiveIndex) {
-            case 0: {
-                return (
-                    <UpdateInfoForm navigation={navigation} />
-                );
-            }
-            case 1: {
-                return (
-                    <ChangePasswordForm navigation={navigation} />
-                );
-            }
-            default: {
-                return null;
-            }
-        }
-    };
+    const renderUpdateInfoFormRoute = () => (
+        <UpdateInfoForm navigation={navigation} />
+    );
+
+    const renderChangePasswordForm = () => (
+        <ChangePasswordForm navigation={navigation} />
+    );
+
+    const renderScene = SceneMap({
+        updateInfoForm: renderUpdateInfoFormRoute,
+        changePasswordForm: renderChangePasswordForm,
+    });
 
     try {
         return (
-            <>
-                <TopTabBar
-                    tabs={tabs}
-                    tabActiveIndex={tabActiveIndex}
-                    setTabActiveIndex={(index) => setTabActiveIndex(index)}
-                />
-                {renderTabByIndex()}
-            </>
+            <TopTabBar
+                routes={routes}
+                renderScene={renderScene}
+                tabActiveIndex={tabActiveIndex}
+                setTabActiveIndex={setTabActiveIndex}
+            />
         );
     } catch (exception) {
         console.log('exception :>> ', exception);
