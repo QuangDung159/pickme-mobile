@@ -326,7 +326,8 @@ export default function Home({ navigation }) {
                     style={{
                         alignItems: 'center',
                         marginHorizontal: 10,
-                        flexDirection: 'row'
+                        flexDirection: 'row',
+                        paddingVertical: 5
                     }}
                 >
                     <View
@@ -346,7 +347,6 @@ export default function Home({ navigation }) {
                     <View
                         style={{
                             justifyContent: 'center',
-                            paddingVertical: 10
                         }}
                     >
                         <View
@@ -367,7 +367,7 @@ export default function Home({ navigation }) {
                                 {item.fullName}
                             </Text>
                         </View>
-                        <View>
+                        {/* <View>
                             <Text
                                 style={
                                     [
@@ -381,7 +381,7 @@ export default function Home({ navigation }) {
                             >
                                 {item.homeTown}
                             </Text>
-                        </View>
+                        </View> */}
                     </View>
                 </View>
 

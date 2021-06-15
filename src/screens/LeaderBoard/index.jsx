@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 import { FlatList, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useSelector } from 'react-redux';
-import { CenterLoader, IconCustom, TopTabBar } from '../../components/uiComponents';
+import { CenterLoader, IconCustom, LeaderBoardTabBar } from '../../components/uiComponents';
 import {
     IconFamily, NowTheme, Rx, ScreenName
 } from '../../constants';
@@ -301,7 +301,7 @@ export default function LeaderBoard({ navigation }) {
                         alignItems: 'center',
                     }, styles.shadow]}
                 >
-                    <TopTabBar
+                    <LeaderBoardTabBar
                         tabs={tabs}
                         tabActiveIndex={tabActiveIndex}
                         setTabActiveIndex={(index) => setTabActiveIndex(index)}

@@ -13,7 +13,6 @@ import { rxUtil } from '../../utils';
 const {
     FONT: {
         MONTSERRAT_REGULAR,
-        MONTSERRAT_BOLD
     },
     SIZES,
     COLORS
@@ -58,9 +57,9 @@ export default function Wallet({ navigation }) {
                     marginRight: 10,
                     alignItems: 'center',
                     flexDirection: 'row',
-                    height: SIZES.HEIGHT_BASE * 0.08,
+                    height: 55,
                     width: SIZES.WIDTH_BASE * 0.9,
-                    alignSelf: 'center'
+                    alignSelf: 'center',
                 }}
             >
                 <View
@@ -70,7 +69,7 @@ export default function Wallet({ navigation }) {
                 >
                     <IconCustom
                         name={isIncrease ? 'chevron-circle-right' : 'chevron-circle-left'}
-                        size={SIZES.FONT_H1}
+                        size={SIZES.FONT_H1 - 5}
                         color={COLORS.DEFAULT}
                         family={IconFamily.FONT_AWESOME}
                     />
@@ -93,7 +92,7 @@ export default function Wallet({ navigation }) {
                 style={{
                     flexDirection: 'row',
                     justifyContent: 'space-between',
-                    width: SIZES.WIDTH_BASE * 0.8
+                    width: SIZES.WIDTH_BASE * 0.8,
                 }}
             >
                 <View
@@ -118,9 +117,9 @@ export default function Wallet({ navigation }) {
                 >
                     <Text
                         style={{
-                            fontFamily: MONTSERRAT_BOLD,
+                            fontFamily: MONTSERRAT_REGULAR,
                             color: COLORS.ACTIVE,
-                            fontSize: SIZES.FONT_H2,
+                            fontSize: SIZES.FONT_H3,
                         }}
                     >
                         {isIncrease ? `+ ${amountChangedDisplay}` : `- ${amountChangedDisplay}`}
@@ -161,7 +160,7 @@ export default function Wallet({ navigation }) {
                     <Text
                         style={{
                             fontFamily: MONTSERRAT_REGULAR,
-                            fontSize: SIZES.FONT_H1 + 10,
+                            fontSize: SIZES.FONT_H1,
                             color: COLORS.ACTIVE,
                         }}
                     >
@@ -277,7 +276,7 @@ export default function Wallet({ navigation }) {
             <>
                 <View
                     style={{
-                        height: SIZES.HEIGHT_BASE * 0.15,
+                        height: 120,
                         width: SIZES.WIDTH_BASE * 0.9,
                         alignSelf: 'center',
                         marginTop: 10

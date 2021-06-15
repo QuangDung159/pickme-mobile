@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { Text } from 'react-native';
+import { TabBar, TabView } from 'react-native-tab-view';
 import { NowTheme } from '../../../constants';
 
 const {
@@ -11,57 +11,69 @@ const {
     COLORS
 } = NowTheme;
 
-export default function TopTabBar({ tabs, tabActiveIndex, setTabActiveIndex }) {
-    const renderTabButton = (tab, index) => {
-        const { tabLabel } = tab;
-
-        return (
-            <TouchableWithoutFeedback
-                key={tabLabel}
-                onPress={() => setTabActiveIndex(index)}
-                containerStyle={{
-                    backgroundColor: !(index === tabActiveIndex)
-                        ? COLORS.LIST_ITEM_BACKGROUND_1
-                        : COLORS.BASE,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    flex: 1,
-                    height: 45
-                }}
-            >
-                <Text
-                    style={
-                        [
-                            styles.titleBold,
-                            {
-                                fontSize: SIZES.FONT_H4,
-                                color: (index === tabActiveIndex) ? COLORS.ACTIVE : COLORS.DEFAULT
-                            }
-                        ]
-                    }
+export default function TopTabBar({
+    tabActiveIndex, setTabActiveIndex, routes, renderScene,
+    tabButtonStyle, labelStyle, indicatorStyle
+}) {
+    const renderTabBar = (props) => (
+        <TabBar
+            {...props}
+            indicatorStyle={
+                [
+                    {
+                        backgroundColor: COLORS.ACTIVE
+                    },
+                    indicatorStyle
+                ]
+            }
+            style={
+                [
+                    {
+                        backgroundColor: COLORS.LIST_ITEM_BACKGROUND_1
+                    },
+                    tabButtonStyle
+                ]
+            }
+            renderLabel={({ route }) => (
+                <Text style={
+                    [
+                        {
+                            color: COLORS.ACTIVE,
+                            fontFamily: MONTSERRAT_BOLD,
+                            fontSize: SIZES.FONT_H4
+                        },
+                        labelStyle
+                    ]
+                }
                 >
-                    {tabLabel}
+                    {route.title}
                 </Text>
-            </TouchableWithoutFeedback>
-        );
-    };
+            )}
+        />
+    );
+
+    const renderTabView = () => (
+        <TabView
+            navigationState={{
+                index: tabActiveIndex || 0,
+                routes
+            }}
+            renderScene={renderScene}
+            onIndexChange={(index) => {
+                if (setTabActiveIndex) setTabActiveIndex(index);
+            }}
+            initialLayout={{ width: SIZES.WIDTH_BASE }}
+            indicatorStyle={{ backgroundColor: 'white' }}
+            tabStyle={{
+                backgroundColor: COLORS.ACTIVE
+            }}
+            renderTabBar={renderTabBar}
+        />
+    );
 
     return (
-        <View
-            style={{
-                height: 45,
-                flexDirection: 'row'
-            }}
-        >
-            {tabs.map((title, index) => renderTabButton(title, index))}
-        </View>
+        <>
+            {renderTabView()}
+        </>
     );
 }
-
-const styles = StyleSheet.create({
-    titleBold: {
-        fontFamily: MONTSERRAT_BOLD,
-        fontSize: SIZES.FONT_H4,
-        textAlign: 'center'
-    },
-});

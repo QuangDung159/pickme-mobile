@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { View } from 'react-native';
+import { SceneMap } from 'react-native-tab-view';
 import { useDispatch, useSelector } from 'react-redux';
 import { TopTabBar } from '../../components/uiComponents';
 import { ScreenName } from '../../constants';
@@ -9,22 +10,16 @@ import UserInformation from './UserInformation';
 import Wallet from './Wallet';
 
 export default function Personal({ navigation }) {
+    const [routes] = React.useState([
+        { key: 'userInformation', title: 'Cá nhân' },
+        { key: 'wallet', title: 'Ví tiền' },
+        { key: 'bookingList', title: 'Đơn hẹn' },
+    ]);
+
     const personTabActiveIndex = useSelector((state) => state.appConfigReducer.personTabActiveIndex);
     const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
 
     const dispatch = useDispatch();
-
-    const tabs = [
-        {
-            tabLabel: 'Cá nhân',
-        },
-        {
-            tabLabel: 'Ví tiền',
-        },
-        {
-            tabLabel: 'Đơn hẹn',
-        }
-    ];
 
     useEffect(
         () => {
@@ -37,30 +32,25 @@ export default function Personal({ navigation }) {
         }, [isSignInOtherDeviceStore]
     );
 
-    // Render \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
-    const renderTabByIndex = () => {
-        switch (personTabActiveIndex) {
-            case 0: {
-                return (
-                    <UserInformation navigation={navigation} />
-                );
-            }
-            case 1: {
-                return (
-                    <Wallet navigation={navigation} />
-                );
-            }
-            case 2: {
-                return (
-                    <BookingList navigation={navigation} />
-                );
-            }
-            default: {
-                return null;
-            }
-        }
-    };
+    const UserInformationRoute = () => (
+        <UserInformation navigation={navigation} />
+    );
 
+    const WalletRoute = () => (
+        <Wallet navigation={navigation} />
+    );
+
+    const BookingListRoute = () => (
+        <BookingList navigation={navigation} />
+    );
+
+    const renderScene = SceneMap({
+        userInformation: UserInformationRoute,
+        wallet: WalletRoute,
+        bookingList: BookingListRoute
+    });
+
+    // Render \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
     return (
         <View
             style={{
@@ -68,11 +58,13 @@ export default function Personal({ navigation }) {
             }}
         >
             <TopTabBar
-                tabs={tabs}
+                routes={routes}
+                renderScene={renderScene}
                 tabActiveIndex={personTabActiveIndex}
-                setTabActiveIndex={(index) => { dispatch(setPersonTabActiveIndex(index)); }}
+                setTabActiveIndex={(index) => {
+                    dispatch(setPersonTabActiveIndex(index));
+                }}
             />
-            {renderTabByIndex()}
         </View>
 
     );

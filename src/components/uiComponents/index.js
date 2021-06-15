@@ -12,6 +12,7 @@ import StepIndicator from './StepIndicator';
 import Switch from './Switch';
 import Tabs from './Tabs';
 import TopTabBar from './TopTabBar';
+import LeaderBoardTabBar from './LeaderBoardTabBar';
 
 export {
     IconCustom, Tabs,
@@ -25,5 +26,6 @@ export {
     CustomButton,
     CustomModal,
     GooglePlacesInput,
-    CustomCheckbox
+    CustomCheckbox,
+    LeaderBoardTabBar
 };
