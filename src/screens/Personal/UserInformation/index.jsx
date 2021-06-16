@@ -167,42 +167,42 @@ export default function UserInformation({ navigation }) {
         <View
             style={{
                 width: SIZES.WIDTH_BASE * 0.3,
-                marginTop: 5
+                marginTop: 5,
             }}
         >
-            <CenterLoader />
-            <View
-                style={{
-                    zIndex: 99,
+            <TouchableWithoutFeedback
+                onPress={() => {
+                    setVisible(true);
+                    setImageIndex(0);
                 }}
             >
-                <TouchableWithoutFeedback
-                    onPress={() => {
-                        setVisible(true);
-                        setImageIndex(0);
+                <View
+                    style={{
+                        marginTop: 10
                     }}
                 >
+                    <CenterLoader />
                     <View
                         style={{
-                            marginTop: 10
+                            zIndex: 99
                         }}
                     >
                         {renderAvatar()}
                     </View>
-                </TouchableWithoutFeedback>
-                <CustomButton
-                    onPress={() => onClickUpdateAvatar()}
-                    labelStyle={{
-                        fontSize: SIZES.FONT_H3,
-                    }}
-                    buttonStyle={{
-                        width: SIZES.WIDTH_BASE * 0.25,
-                        borderWidth: 0,
-                        alignSelf: 'flex-start'
-                    }}
-                    label="Đổi avatar"
-                />
-            </View>
+                </View>
+            </TouchableWithoutFeedback>
+            <CustomButton
+                onPress={() => onClickUpdateAvatar()}
+                labelStyle={{
+                    fontSize: SIZES.FONT_H3,
+                }}
+                buttonStyle={{
+                    width: SIZES.WIDTH_BASE * 0.25,
+                    borderWidth: 0,
+                    alignSelf: 'flex-start'
+                }}
+                label="Đổi avatar"
+            />
         </View>
     );
 
