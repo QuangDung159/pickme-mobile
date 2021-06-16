@@ -284,21 +284,20 @@ export default function Wallet({ navigation }) {
                 >
                     {renderWalletAmountPanel()}
                 </View>
-                <>
-                    {isShowSpinner ? (
-                        <View
-                            style={{
-                                marginTop: SIZES.HEIGHT_BASE * 0.1
-                            }}
-                        >
-                            <CenterLoader />
-                        </View>
-                    ) : (
-                        <>
-                            {renderHistory()}
-                        </>
-                    )}
-                </>
+
+                {isShowSpinner ? (
+                    <View
+                        style={{
+                            marginTop: SIZES.HEIGHT_BASE * 0.1
+                        }}
+                    >
+                        <CenterLoader />
+                    </View>
+                ) : (
+                    <>
+                        {renderHistory()}
+                    </>
+                )}
             </>
         );
     } catch (exception) {
