@@ -31,12 +31,13 @@ export default function BookingList({ navigation }) {
     useEffect(
         () => {
             if (!listBookingStore || listBookingStore.length === 0) {
-                fetchListBooking();
+                setIsShowSpinner(true);
+                getListBooking();
             }
         }, []
     );
 
-    const fetchListBooking = () => {
+    const getListBooking = () => {
         const pagingStr = '?pageIndex=1&pageSize=100';
 
         rxUtil(
@@ -66,7 +67,7 @@ export default function BookingList({ navigation }) {
 
     const onRefresh = () => {
         setRefreshing(true);
-        fetchListBooking();
+        getListBooking();
     };
 
     const renderListBooking = () => (
@@ -74,10 +75,6 @@ export default function BookingList({ navigation }) {
             {listBookingStore && listBookingStore.length !== 0 ? (
                 <FlatList
                     showsVerticalScrollIndicator={false}
-                    contentContainerStyle={{
-                        marginTop: 10,
-                        paddingBottom: 10
-                    }}
                     refreshControl={(
                         <RefreshControl
                             refreshing={refreshing}
@@ -108,7 +105,7 @@ export default function BookingList({ navigation }) {
                                 <Line
                                     borderColor={COLORS.DEFAULT}
                                     borderWidth={0.5}
-                                    width={SIZES.WIDTH_BASE}
+                                    width={SIZES.WIDTH_BASE * 0.9}
                                 />
                             </View>
                         </TouchableWithoutFeedback>
