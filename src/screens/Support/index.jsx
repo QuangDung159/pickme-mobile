@@ -5,6 +5,7 @@ import {
 } from 'react-native';
 import { FlatList, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import ImageView from 'react-native-image-viewing';
+import { SceneMap } from 'react-native-tab-view';
 import { useSelector } from 'react-redux';
 import {
     CenterLoader,
@@ -26,6 +27,11 @@ const {
 } = NowTheme;
 
 export default function Support({ navigation }) {
+    const [routes] = React.useState([
+        { key: 'listFaq', title: 'Câu hỏi\nthường gặp' },
+        { key: 'bugReportForm', title: 'Báo lỗi' },
+    ]);
+
     const [tabActiveIndex, setTabActiveIndex] = useState(0);
     const [listFAQ, setListFAQ] = useState([]);
     const [bugReportForm, setBugReportForm] = useState({
@@ -41,15 +47,6 @@ export default function Support({ navigation }) {
     const token = useSelector((state) => state.userReducer.token);
     const pickMeInfoStore = useSelector((state) => state.appConfigReducer.pickMeInfoStore);
     const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
-
-    const tabs = [
-        {
-            tabLabel: 'Câu hỏi thường gặp'
-        },
-        {
-            tabLabel: 'Báo lỗi/hỗ trợ'
-        }
-    ];
 
     // handler \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
     useEffect(
@@ -138,6 +135,23 @@ export default function Support({ navigation }) {
     };
 
     // render \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+    const ListFaqRoute = () => (
+        <>
+            {renderListFAQ()}
+        </>
+    );
+
+    const BugReportFormRoute = () => (
+        <>
+            {renderBugReportForm()}
+        </>
+    );
+
+    const renderScene = SceneMap({
+        listFaq: ListFaqRoute,
+        bugReportForm: BugReportFormRoute,
+    });
+
     const renderImageReport = () => (
         <TouchableWithoutFeedback
             onPress={() => {
@@ -257,21 +271,6 @@ export default function Support({ navigation }) {
         );
     };
 
-    const renderTabByIndex = () => {
-        if (tabActiveIndex === 0) {
-            return (
-                <>
-                    {renderListFAQ()}
-                </>
-            );
-        }
-        return (
-            <>
-                {renderBugReportForm()}
-            </>
-        );
-    };
-
     const renderUploadImageReportButton = () => (
         <View
             style={{
@@ -371,11 +370,11 @@ export default function Support({ navigation }) {
         <>
             {renderImageView()}
             <TopTabBar
-                tabs={tabs}
+                routes={routes}
+                renderScene={renderScene}
                 tabActiveIndex={tabActiveIndex}
-                setTabActiveIndex={(index) => setTabActiveIndex(index)}
+                setTabActiveIndex={setTabActiveIndex}
             />
-            {renderTabByIndex()}
         </>
     );
 }

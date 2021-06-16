@@ -30,10 +30,18 @@ export default function TopTabBar({
                 [
                     {
                         backgroundColor: COLORS.LIST_ITEM_BACKGROUND_1,
+                        height: 50,
+                        padding: 0,
+                        justifyContent: 'center'
                     },
                     tabButtonStyle
                 ]
             }
+            tabStyle={{
+                alignSelf: 'center',
+                justifyContent: 'center',
+                padding: 0
+            }}
             renderLabel={({ route }) => (
                 <Text style={
                     [
@@ -41,7 +49,7 @@ export default function TopTabBar({
                             color: COLORS.ACTIVE,
                             fontFamily: MONTSERRAT_BOLD,
                             fontSize: SIZES.FONT_H4,
-
+                            textAlign: 'center',
                         },
                         labelStyle
                     ]
@@ -65,9 +73,6 @@ export default function TopTabBar({
             }}
             initialLayout={{ width: SIZES.WIDTH_BASE }}
             indicatorStyle={{ backgroundColor: 'white' }}
-            tabStyle={{
-                backgroundColor: COLORS.ACTIVE
-            }}
             renderTabBar={renderTabBar}
         />
     );
