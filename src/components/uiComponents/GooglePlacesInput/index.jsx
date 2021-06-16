@@ -13,7 +13,7 @@ const {
     COLORS
 } = NowTheme;
 
-export default function GooglePlacesInput({ onChangeAddress, addressInput }) {
+export default function GooglePlacesInput({ onChangeAddress, addressInput, label }) {
     const ref = useRef();
 
     useEffect(() => {
@@ -26,16 +26,19 @@ export default function GooglePlacesInput({ onChangeAddress, addressInput }) {
                 zIndex: 99,
             }}
         >
-            <Text
-                style={{
-                    fontFamily: MONTSERRAT_REGULAR,
-                    fontSize: SIZES.FONT_H3,
-                    color: COLORS.ACTIVE,
-                    marginVertical: 10
-                }}
-            >
-                Địa điểm
-            </Text>
+            {label && (
+                <Text
+                    style={{
+                        fontFamily: MONTSERRAT_REGULAR,
+                        fontSize: SIZES.FONT_H3,
+                        color: COLORS.ACTIVE,
+                        marginVertical: 10
+                    }}
+                >
+                    {label}
+                </Text>
+            )}
+
             <GooglePlacesAutocomplete
                 ref={ref}
                 onPress={(data, details = null) => {
