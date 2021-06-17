@@ -1,3 +1,4 @@
+import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import {
     FlatList, RefreshControl, Text, View
@@ -34,8 +35,52 @@ export default function BookingList({ navigation }) {
                 setIsShowSpinner(true);
                 getListBooking();
             }
+            shortListByDate();
         }, []
     );
+
+    const dateToTimestamp = (dateString) => moment(dateString).unix();
+
+    const compare = (a, b) => {
+        if (dateToTimestamp(a.date) < dateToTimestamp(b.date)) {
+            return 1;
+        }
+        if (dateToTimestamp(a.date) > dateToTimestamp(b.date)) {
+            return -1;
+        }
+        return 0;
+    };
+
+    const shortListByDate = () => {
+        const result = listBookingStore.sort(compare);
+        dispatch(setListBookingStore(result));
+        const arr = groupBookingByDate(result);
+        console.log('arr :>> ', arr);
+    };
+
+    const groupBookingByDate = (listBooking) => {
+        const result = [];
+        let day = listBooking[0].date;
+        let bookingArr = [];
+        listBooking.forEach((item) => {
+            if (item.date === day) {
+                bookingArr.push(item);
+            } else {
+                result.push(
+                    {
+                        day,
+                        list: bookingArr
+                    }
+                );
+
+                day = item.date;
+                bookingArr = [];
+                bookingArr.push(item);
+            }
+        });
+
+        return result;
+    };
 
     const getListBooking = () => {
         const pagingStr = '?pageIndex=1&pageSize=100';
