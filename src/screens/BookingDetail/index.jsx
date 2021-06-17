@@ -15,7 +15,7 @@ import BookingProgressFlow from '../../containers/BookingProgressFlow';
 import { ToastHelpers } from '../../helpers';
 import { setListBookingStore, setPersonTabActiveIndex, setShowLoaderStore } from '../../redux/Actions';
 import { rxUtil } from '../../utils';
-import CardBooking from '../Personal/BookingList/CardBooking';
+import CardBooking from './CardBooking';
 import ReasonCancelBookingModal from './ReasonCancelBookingModal';
 
 const {

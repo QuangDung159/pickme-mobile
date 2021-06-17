@@ -1,20 +1,21 @@
+import groupBy from 'lodash/groupBy';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
-import {
-    FlatList, RefreshControl, Text, View
-} from 'react-native';
+import { RefreshControl, Text, View } from 'react-native';
 import { ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
-import { CenterLoader, Line } from '../../../components/uiComponents';
-import { NowTheme, Rx, ScreenName } from '../../../constants';
+import { CenterLoader } from '../../../components/uiComponents';
+import {
+    BookingStatus, NowTheme, Rx, ScreenName
+} from '../../../constants';
 import { ToastHelpers } from '../../../helpers';
 import { setListBookingStore } from '../../../redux/Actions';
 import { rxUtil } from '../../../utils';
-import CardBooking from './CardBooking';
 
 const {
     FONT: {
         MONTSERRAT_REGULAR,
+        MONTSERRAT_BOLD
     },
     SIZES,
     COLORS
@@ -23,6 +24,7 @@ const {
 export default function BookingList({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
+    const [listBookingByDate, setListBookingByDate] = useState([]);
 
     const token = useSelector((state) => state.userReducer.token);
     const listBookingStore = useSelector((state) => state.userReducer.listBookingStore);
@@ -32,55 +34,14 @@ export default function BookingList({ navigation }) {
     useEffect(
         () => {
             if (!listBookingStore || listBookingStore.length === 0) {
-                setIsShowSpinner(true);
                 getListBooking();
             }
-            shortListByDate();
+            const listBooking = groupBookingByDate(listBookingStore);
+            setListBookingByDate(listBooking);
         }, []
     );
 
-    const dateToTimestamp = (dateString) => moment(dateString).unix();
-
-    const compare = (a, b) => {
-        if (dateToTimestamp(a.date) < dateToTimestamp(b.date)) {
-            return 1;
-        }
-        if (dateToTimestamp(a.date) > dateToTimestamp(b.date)) {
-            return -1;
-        }
-        return 0;
-    };
-
-    const shortListByDate = () => {
-        const result = listBookingStore.sort(compare);
-        dispatch(setListBookingStore(result));
-        const arr = groupBookingByDate(result);
-        console.log('arr :>> ', arr);
-    };
-
-    const groupBookingByDate = (listBooking) => {
-        const result = [];
-        let day = listBooking[0].date;
-        let bookingArr = [];
-        listBooking.forEach((item) => {
-            if (item.date === day) {
-                bookingArr.push(item);
-            } else {
-                result.push(
-                    {
-                        day,
-                        list: bookingArr
-                    }
-                );
-
-                day = item.date;
-                bookingArr = [];
-                bookingArr.push(item);
-            }
-        });
-
-        return result;
-    };
+    const groupBookingByDate = () => groupBy(listBookingStore, (n) => n.date);
 
     const getListBooking = () => {
         const pagingStr = '?pageIndex=1&pageSize=100';
@@ -110,82 +71,196 @@ export default function BookingList({ navigation }) {
         );
     };
 
+    const convertMinutesToStringHours = (minutes) => moment.utc()
+        .startOf('day')
+        .add(minutes, 'minutes')
+        .format('HH:mm');
+
+    const renderBookingInfo = (booking) => {
+        const {
+            partner,
+            startAt,
+            endAt,
+            statusValue,
+            status,
+            id
+        } = booking;
+
+        const startStr = convertMinutesToStringHours(startAt);
+        const endStr = convertMinutesToStringHours(endAt);
+
+        let colorByStatus = COLORS.LIST_ITEM_BACKGROUND_2;
+
+        switch (status) {
+            case BookingStatus.CANCEL: {
+                colorByStatus = COLORS.BORDER_COLOR;
+                break;
+            }
+            case BookingStatus.FINISH_PAYMENT: {
+                colorByStatus = COLORS.LIST_ITEM_BACKGROUND_2;
+                break;
+            }
+            default: {
+                break;
+            }
+        }
+
+        return (
+            <TouchableWithoutFeedback
+                onPress={() => {
+                    navigation.navigate(ScreenName.BOOKING_DETAIL, {
+                        bookingId: id,
+                    });
+                }}
+            >
+                <View
+                    style={{
+                        backgroundColor: colorByStatus,
+                        borderRadius: 5,
+                        marginBottom: 10
+                    }}
+                >
+                    <View
+                        style={{
+                            padding: 5
+                        }}
+                    >
+                        <Text
+                            style={{
+                                fontFamily: MONTSERRAT_BOLD,
+                                fontSize: SIZES.FONT_H3,
+                                color: COLORS.ACTIVE,
+                                marginBottom: 5
+                            }}
+                        >
+                            {partner.fullName}
+                        </Text>
+                        <View
+                            style={{
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
+                                marginBottom: 5
+                            }}
+                        >
+                            <Text style={{
+                                fontFamily: MONTSERRAT_REGULAR,
+                                fontSize: SIZES.FONT_H2,
+                                color: COLORS.ACTIVE
+                            }}
+                            >
+                                {startStr}
+                            </Text>
+                            <Text style={{
+                                fontFamily: MONTSERRAT_REGULAR,
+                                fontSize: SIZES.FONT_H2,
+                                color: COLORS.ACTIVE
+                            }}
+                            >
+                                {endStr}
+                            </Text>
+                        </View>
+
+                        <Text style={{
+                            fontFamily: MONTSERRAT_REGULAR,
+                            fontSize: SIZES.FONT_H4,
+                            color: COLORS.DEFAULT
+                        }}
+                        >
+                            {statusValue}
+                        </Text>
+                    </View>
+                </View>
+            </TouchableWithoutFeedback>
+        );
+    };
+
+    const renderDateSection = (groupBooking, dateString) => {
+        const shortDate = dateString.replace('T00:00:00', '');
+        const dateFragment = shortDate.split('-');
+
+        return (
+            <View
+                style={{
+                    flexDirection: 'row',
+                    width: SIZES.WIDTH_BASE * 0.9,
+                    alignSelf: 'center',
+                }}
+            >
+                <View
+                    style={{
+                        width: SIZES.WIDTH_BASE * 0.25,
+                    }}
+                >
+                    <Text
+                        style={{
+                            fontFamily: MONTSERRAT_BOLD,
+                            fontSize: SIZES.FONT_H1,
+                            color: COLORS.ACTIVE
+                        }}
+                    >
+                        {dateFragment[2]}
+                    </Text>
+                    <Text
+                        style={{
+                            fontFamily: MONTSERRAT_REGULAR,
+                            fontSize: SIZES.FONT_H3,
+                            color: COLORS.DEFAULT
+                        }}
+                    >
+                        Tháng
+                        {' '}
+                        {dateFragment[1]}
+                    </Text>
+                </View>
+                <View
+                    style={{
+                        width: SIZES.WIDTH_BASE * 0.65,
+                    }}
+                >
+                    {groupBooking.map((booking) => (
+                        <View
+                            key={booking.id}
+                        >
+                            {renderBookingInfo(booking)}
+                        </View>
+                    ))}
+                </View>
+            </View>
+        );
+    };
+
     const onRefresh = () => {
         setRefreshing(true);
         getListBooking();
     };
 
-    const renderListBooking = () => (
-        <>
-            {listBookingStore && listBookingStore.length !== 0 ? (
-                <FlatList
-                    showsVerticalScrollIndicator={false}
-                    refreshControl={(
-                        <RefreshControl
-                            refreshing={refreshing}
-                            onRefresh={() => onRefresh()}
-                        />
-                    )}
-                    data={listBookingStore}
-                    keyExtractor={(item) => item.id}
-                    renderItem={({ item }) => (
-                        <TouchableWithoutFeedback
-                            onPress={() => {
-                                navigation.navigate(ScreenName.BOOKING_DETAIL, {
-                                    bookingId: item.id,
-                                });
-                            }}
-                        >
-                            <CardBooking
-                                booking={item}
-                                key={item.id}
-                                navigation={navigation}
-                            />
-                            <View
-                                style={{
-                                    alignSelf: 'center',
-                                    alignItems: 'center'
-                                }}
-                            >
-                                <Line
-                                    borderColor={COLORS.DEFAULT}
-                                    borderWidth={0.5}
-                                    width={SIZES.WIDTH_BASE * 0.9}
-                                />
-                            </View>
-                        </TouchableWithoutFeedback>
-                    )}
-                />
-            ) : (
-                <ScrollView
-                    refreshControl={(
-                        <RefreshControl
-                            refreshing={refreshing}
-                            onRefresh={() => onRefresh()}
-                        />
-                    )}
-                >
-                    <View
-                        style={{
-                            alignItems: 'center',
-                            marginVertical: 15
-                        }}
-                    >
-                        <Text
-                            style={{
-                                fontFamily: MONTSERRAT_REGULAR,
-                                color: COLORS.DEFAULT,
-                                fontSize: SIZES.FONT_H2
-                            }}
-                        >
-                            Danh sách trống
-                        </Text>
-                    </View>
-                </ScrollView>
-            )}
+    const renderListDateSection = () => {
+        if (!listBookingByDate || listBookingByDate.length === 0) return <></>;
 
-        </>
-    );
+        const arrayDate = Object.keys(listBookingByDate).sort();
+
+        return (
+            <ScrollView
+                refreshControl={(
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={() => onRefresh()}
+                    />
+                )}
+                contentContainerStyle={{
+                    marginTop: 10,
+                    paddingBottom: 10
+                }}
+                showsVerticalScrollIndicator={false}
+            >
+                {arrayDate.map((dateString) => (
+                    <View>
+                        {renderDateSection(listBookingByDate[dateString.toString()], dateString)}
+                    </View>
+                ))}
+            </ScrollView>
+        );
+    };
 
     try {
         return (
@@ -193,9 +268,13 @@ export default function BookingList({ navigation }) {
                 {isShowSpinner ? (
                     <CenterLoader />
                 ) : (
-                    <>
-                        {renderListBooking()}
-                    </>
+                    <View
+                        style={{
+                            flex: 1
+                        }}
+                    >
+                        {renderListDateSection()}
+                    </View>
                 )}
 
             </>
