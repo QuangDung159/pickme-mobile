@@ -83,7 +83,8 @@ export default function BookingList({ navigation }) {
             endAt,
             statusValue,
             status,
-            id
+            id,
+            idReadAble
         } = booking;
 
         const startStr = convertMinutesToStringHours(startAt);
@@ -130,10 +131,20 @@ export default function BookingList({ navigation }) {
                                 fontFamily: MONTSERRAT_BOLD,
                                 fontSize: SIZES.FONT_H3,
                                 color: COLORS.ACTIVE,
-                                marginBottom: 5
+
                             }}
                         >
                             {partner.fullName}
+                        </Text>
+                        <Text
+                            style={{
+                                fontFamily: MONTSERRAT_REGULAR,
+                                fontSize: SIZES.FONT_H5,
+                                color: COLORS.DEFAULT,
+                                marginBottom: 5
+                            }}
+                        >
+                            {`Đơn hẹn #${idReadAble}`}
                         </Text>
                         <View
                             style={{
