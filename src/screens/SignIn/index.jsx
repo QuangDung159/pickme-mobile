@@ -20,6 +20,7 @@ import {
     setIsSignInOtherDeviceStore,
     setToken
 } from '../../redux/Actions';
+import { UserServices } from '../../services';
 import { rxUtil } from '../../utils';
 
 const {
@@ -60,32 +61,28 @@ export default function SignIn({ navigation }) {
         );
     };
 
-    const onSubmitLogin = () => {
+    const onSubmitLogin = async () => {
         if (validation()) {
-            const data = {
+            const body = {
                 username: phoneNumber,
                 password,
                 deviceId: deviceIdToSend || deviceIdStore
             };
 
+            // setIsShowSpinner(true);
             setIsShowSpinner(true);
-            rxUtil(
-                Rx.AUTHENTICATION.LOGIN,
-                'POST',
-                data,
-                {},
-                (res) => {
-                    onLoginSuccess(res);
-                },
-                (res) => {
-                    ToastHelpers.renderToast(res.data.message, 'error');
-                    setIsShowSpinner(false);
-                },
-                (res) => {
-                    ToastHelpers.renderToast(res.data.message, 'error');
-                    setIsShowSpinner(false);
-                }
-            );
+            const result = await UserServices.loginAsync(body);
+
+            const {
+                isSuccess, data, status
+            } = result;
+
+            if (isSuccess) {
+                onLoginSuccess(data, status);
+                setIsShowSpinner(false);
+            } else {
+                setIsShowSpinner(false);
+            }
         }
     };
 
@@ -103,14 +100,11 @@ export default function SignIn({ navigation }) {
         return true;
     };
 
-    const onLoginSuccess = (res) => {
-        const tokenFromAPI = res.data.data;
-        const { status } = res;
+    const onLoginSuccess = (data, status) => {
+        const tokenFromAPI = data.data;
 
         SecureStore.setItemAsync('api_token', `${tokenFromAPI}`);
-
         SecureStore.setItemAsync('password', `${password}`);
-
         SecureStore.setItemAsync('phoneNumber', `${phoneNumber}`);
 
         if (status === 200) {
@@ -133,8 +127,6 @@ export default function SignIn({ navigation }) {
                 routes: [{ name: ScreenName.SIGN_IN_WITH_OTP }],
             });
         }
-
-        isShowSpinner(false);
     };
 
     const renderButtonForgotPassword = () => (

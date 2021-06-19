@@ -4,7 +4,7 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import {
-    ImageBackground, ScrollView, StyleSheet, Text, View
+    ImageBackground, SafeAreaView, ScrollView, StyleSheet, Text, View
 } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import ImageView from 'react-native-image-viewing';
@@ -290,7 +290,11 @@ export default function Profile({ route, navigation }) {
 
     try {
         return (
-            <>
+            <SafeAreaView
+                style={{
+                    flex: 1
+                }}
+            >
                 {isShowSpinner ? (
                     <CenterLoader />
                 ) : (
@@ -406,7 +410,7 @@ export default function Profile({ route, navigation }) {
                         </View>
                     </>
                 )}
-            </>
+            </SafeAreaView>
         );
     } catch (exception) {
         console.log('exception :>> ', exception);
