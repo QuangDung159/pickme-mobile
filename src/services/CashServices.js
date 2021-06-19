@@ -1,13 +1,17 @@
-/* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
+import { useSelector } from 'react-redux';
 import { Rx } from '../constants';
 import RxUtil from '../utils/Rx.Util';
 
-const loginAsync = async (body) => {
+const fetchCashHistoryAsync = async (body) => {
+    const token = useSelector((state) => state.userReducer.token);
+
     const result = await RxUtil(
-        Rx.AUTHENTICATION.LOGIN,
-        'POST',
+        Rx.CASH.GET_CASH_HISTORY,
+        'GET',
         body,
-        {}
+        {
+            Authorization: token
+        }
     );
 
     const {
@@ -33,5 +37,5 @@ const loginAsync = async (body) => {
 };
 
 export default {
-    loginAsync,
+    fetchCashHistoryAsync
 };

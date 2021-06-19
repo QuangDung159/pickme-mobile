@@ -109,8 +109,6 @@ export default function CreateBooking({ route, navigation }) {
                 setListPartnerPackage(res.data.data);
                 setPackageActive(res.data.data[0]);
                 setIsShowSpinner(false);
-
-                console.log('res.data.data[0] :>> ', res.data.data[0]);
             },
             (res) => {
                 setIsShowSpinner(false);
@@ -170,10 +168,10 @@ export default function CreateBooking({ route, navigation }) {
             StartAt: startString,
             EndAt: endString,
             Date: dateString,
-            Address: booking.address,
-            Longtitude: booking.longtitude,
-            Latitude: booking.latitude,
-            Description: 'description',
+            Address: booking.address || 'N/a',
+            Longtitude: booking.longtitude || 0,
+            Latitude: booking.latitude || 0,
+            Description: 'N/a',
             Noted: booking.noted,
             totalAmount: total !== 0 ? total : calculateTotalAmount(startTimeStr, endTimeStr)
         };
@@ -750,6 +748,13 @@ export default function CreateBooking({ route, navigation }) {
         });
     };
 
+    const onChangeAddressNormal = (input) => {
+        setBooking({
+            ...booking,
+            address: input
+        });
+    };
+
     const onChangeNote = (input) => {
         setBooking({
             ...booking,
@@ -828,9 +833,25 @@ export default function CreateBooking({ route, navigation }) {
                 {renderButtonTimePicker()}
 
                 <GooglePlacesInput
+                    label="Địa điểm (google API):"
                     onChangeAddress={(detail) => onChangeAddress(detail)}
                     addressInput={booking.address}
                 />
+
+                <CustomInput
+                    value={booking.address}
+                    multiline
+                    onChangeText={onChangeAddressNormal}
+                    containerStyle={{
+                        marginVertical: 10,
+                        width: SIZES.WIDTH_BASE * 0.9
+                    }}
+                    label="Địa điểm:"
+                    inputStyle={{
+                        height: 80,
+                    }}
+                />
+
                 {renderInputNote()}
             </View>
         </View>

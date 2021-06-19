@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { RefreshControl, Text, View } from 'react-native';
 import { ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
-import { CenterLoader } from '../../../components/uiComponents';
+import { CenterLoader, Line } from '../../../components/uiComponents';
 import {
     BookingStatus, NowTheme, Rx, ScreenName
 } from '../../../constants';
@@ -24,7 +24,6 @@ const {
 export default function BookingList({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
-    const [listBookingByDate, setListBookingByDate] = useState([]);
 
     const token = useSelector((state) => state.userReducer.token);
     const listBookingStore = useSelector((state) => state.userReducer.listBookingStore);
@@ -36,8 +35,6 @@ export default function BookingList({ navigation }) {
             if (!listBookingStore || listBookingStore.length === 0) {
                 getListBooking();
             }
-            const listBooking = groupBookingByDate(listBookingStore);
-            setListBookingByDate(listBooking);
         }, []
     );
 
@@ -84,7 +81,8 @@ export default function BookingList({ navigation }) {
             statusValue,
             status,
             id,
-            idReadAble
+            idReadAble,
+            address
         } = booking;
 
         const startStr = convertMinutesToStringHours(startAt);
@@ -123,7 +121,7 @@ export default function BookingList({ navigation }) {
                 >
                     <View
                         style={{
-                            padding: 5
+                            padding: 10
                         }}
                     >
                         <Text
@@ -136,16 +134,34 @@ export default function BookingList({ navigation }) {
                         >
                             {partner.fullName}
                         </Text>
-                        <Text
+
+                        <View
                             style={{
-                                fontFamily: MONTSERRAT_REGULAR,
-                                fontSize: SIZES.FONT_H5,
-                                color: COLORS.DEFAULT,
-                                marginBottom: 5
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                                marginBottom: 5,
                             }}
                         >
-                            {`Đơn hẹn #${idReadAble}`}
-                        </Text>
+                            <Text
+                                style={{
+                                    fontFamily: MONTSERRAT_REGULAR,
+                                    fontSize: SIZES.FONT_H5,
+                                    color: COLORS.DEFAULT,
+                                }}
+                            >
+                                {`Đơn hẹn #${idReadAble}`}
+                            </Text>
+                            <Text style={{
+                                fontFamily: MONTSERRAT_BOLD,
+                                fontSize: SIZES.FONT_H4,
+                                color: COLORS.ACTIVE
+                            }}
+                            >
+                                {statusValue}
+                            </Text>
+                        </View>
+
                         <View
                             style={{
                                 flexDirection: 'row',
@@ -155,7 +171,7 @@ export default function BookingList({ navigation }) {
                         >
                             <Text style={{
                                 fontFamily: MONTSERRAT_REGULAR,
-                                fontSize: SIZES.FONT_H2,
+                                fontSize: SIZES.FONT_H1 - 8,
                                 color: COLORS.ACTIVE
                             }}
                             >
@@ -163,7 +179,7 @@ export default function BookingList({ navigation }) {
                             </Text>
                             <Text style={{
                                 fontFamily: MONTSERRAT_REGULAR,
-                                fontSize: SIZES.FONT_H2,
+                                fontSize: SIZES.FONT_H1 - 8,
                                 color: COLORS.ACTIVE
                             }}
                             >
@@ -174,11 +190,13 @@ export default function BookingList({ navigation }) {
                         <Text style={{
                             fontFamily: MONTSERRAT_REGULAR,
                             fontSize: SIZES.FONT_H4,
-                            color: COLORS.DEFAULT
+                            color: COLORS.DEFAULT,
+                            marginBottom: 5
                         }}
                         >
-                            {statusValue}
+                            {address}
                         </Text>
+
                     </View>
                 </View>
             </TouchableWithoutFeedback>
@@ -199,7 +217,8 @@ export default function BookingList({ navigation }) {
             >
                 <View
                     style={{
-                        width: SIZES.WIDTH_BASE * 0.25,
+                        width: SIZES.WIDTH_BASE * 0.1,
+                        alignItems: 'center'
                     }}
                 >
                     <Text
@@ -211,21 +230,27 @@ export default function BookingList({ navigation }) {
                     >
                         {dateFragment[2]}
                     </Text>
+                    <Line
+                        borderWidth={0.5}
+                        borderColor={COLORS.DEFAULT}
+                        style={{
+                            width: SIZES.WIDTH_BASE * 0.1
+                        }}
+                    />
                     <Text
                         style={{
                             fontFamily: MONTSERRAT_REGULAR,
-                            fontSize: SIZES.FONT_H3,
+                            fontSize: SIZES.FONT_H1,
                             color: COLORS.DEFAULT
                         }}
                     >
-                        Tháng
-                        {' '}
                         {dateFragment[1]}
                     </Text>
                 </View>
                 <View
                     style={{
-                        width: SIZES.WIDTH_BASE * 0.65,
+                        width: SIZES.WIDTH_BASE * 0.8,
+                        paddingLeft: 10
                     }}
                 >
                     {groupBooking.map((booking) => (
@@ -246,7 +271,34 @@ export default function BookingList({ navigation }) {
     };
 
     const renderListDateSection = () => {
-        if (!listBookingByDate || listBookingByDate.length === 0) return <></>;
+        const listBookingByDate = groupBookingByDate(listBookingStore);
+
+        if (JSON.stringify(listBookingByDate) === JSON.stringify({})) {
+            return (
+                <ScrollView
+                    refreshControl={(
+                        <RefreshControl
+                            refreshing={refreshing}
+                            onRefresh={() => onRefresh()}
+                        />
+                    )}
+                    contentContainerStyle={{
+                        alignItems: 'center',
+                        marginTop: 10
+                    }}
+                >
+                    <Text
+                        style={{
+                            fontFamily: MONTSERRAT_REGULAR,
+                            color: COLORS.DEFAULT,
+                            fontSize: SIZES.FONT_H3
+                        }}
+                    >
+                        Danh sách trống
+                    </Text>
+                </ScrollView>
+            );
+        }
 
         const arrayDate = Object.keys(listBookingByDate).sort();
 

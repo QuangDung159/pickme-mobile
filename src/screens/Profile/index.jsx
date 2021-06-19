@@ -118,27 +118,22 @@ export default function Profile({ route, navigation }) {
             <View style={{
                 marginTop: 30,
                 width: SIZES.WIDTH_BASE * 0.9,
-                alignSelf: 'center'
+                alignSelf: 'center',
+                alignItems: 'center'
             }}
             >
-                <View
+                <Text
                     style={{
-                        flexDirection: 'row',
-                        alignSelf: 'center'
+                        color: COLORS.ACTIVE,
+                        fontWeight: 'bold',
+                        fontSize: SIZES.FONT_H1,
+                        fontFamily: MONTSERRAT_BOLD,
+                        marginBottom: 5
                     }}
                 >
-                    <Text
-                        style={{
-                            color: COLORS.ACTIVE,
-                            fontWeight: 'bold',
-                            fontSize: SIZES.FONT_H1,
-                            fontFamily: MONTSERRAT_BOLD,
-                        }}
-                    >
-                        {fullName}
-                        {' '}
-                    </Text>
-                </View>
+                    {fullName}
+                    {' '}
+                </Text>
 
                 <View
                     style={{
@@ -171,7 +166,7 @@ export default function Profile({ route, navigation }) {
                                     name: 'money',
                                     family: IconFamily.FONT_AWESOME,
                                     color: COLORS.ACTIVE,
-                                    size: 24
+                                    size: 22
                                 }
                             },
                             {
@@ -180,7 +175,7 @@ export default function Profile({ route, navigation }) {
                                     name: 'list-alt',
                                     family: IconFamily.FONT_AWESOME,
                                     color: COLORS.ACTIVE,
-                                    size: 24
+                                    size: 22
                                 }
                             },
                             {
@@ -189,7 +184,7 @@ export default function Profile({ route, navigation }) {
                                     name: 'star-o',
                                     family: IconFamily.FONT_AWESOME,
                                     color: COLORS.ACTIVE,
-                                    size: 28
+                                    size: 22
                                 }
                             },
                             {
@@ -198,7 +193,7 @@ export default function Profile({ route, navigation }) {
                                     name: 'human-male-height',
                                     family: IconFamily.MATERIAL_COMMUNITY_ICONS,
                                     color: COLORS.ACTIVE,
-                                    size: 26
+                                    size: 22
                                 }
                             },
                             {
@@ -207,7 +202,7 @@ export default function Profile({ route, navigation }) {
                                     name: 'weight',
                                     family: IconFamily.FONT_AWESOME_5,
                                     color: COLORS.ACTIVE,
-                                    size: 24
+                                    size: 22
                                 }
                             },
                             {
@@ -216,7 +211,7 @@ export default function Profile({ route, navigation }) {
                                     name: 'birthday-cake',
                                     family: IconFamily.FONT_AWESOME,
                                     color: COLORS.ACTIVE,
-                                    size: 23
+                                    size: 22
                                 }
                             },
                             {
@@ -225,7 +220,7 @@ export default function Profile({ route, navigation }) {
                                     name: 'home',
                                     family: IconFamily.FONT_AWESOME,
                                     color: COLORS.ACTIVE,
-                                    size: 28
+                                    size: 22
                                 }
                             },
                             {
@@ -234,7 +229,7 @@ export default function Profile({ route, navigation }) {
                                     name: 'badminton',
                                     family: IconFamily.MATERIAL_COMMUNITY_ICONS,
                                     color: COLORS.ACTIVE,
-                                    size: 24
+                                    size: 22
                                 }
                             },
                         ]
@@ -300,8 +295,6 @@ export default function Profile({ route, navigation }) {
                 ) : (
                     <>
                         <View style={{
-                            flex: 1,
-                            flexDirection: 'column',
                             justifyContent: 'space-between',
                             zIndex: 1,
                             backgroundColor: COLORS.BASE
@@ -314,11 +307,7 @@ export default function Profile({ route, navigation }) {
                                 onRequestClose={() => setVisible(false)}
                             />
 
-                            <View
-                                style={{
-                                    flex: 1
-                                }}
-                            >
+                            <View>
                                 <ScrollView
                                     showsVerticalScrollIndicator={false}
                                 >
