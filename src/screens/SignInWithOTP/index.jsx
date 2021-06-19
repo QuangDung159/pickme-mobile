@@ -20,6 +20,7 @@ import {
     setIsSignInOtherDeviceStore,
     setToken
 } from '../../redux/Actions';
+import { UserServices } from '../../services';
 import { rxUtil } from '../../utils';
 
 const {
@@ -72,31 +73,24 @@ export default function SignInWithOTP({ navigation }) {
         );
     };
 
-    const onLogin = () => {
-        const data = {
+    const onLogin = async () => {
+        const body = {
             username: phoneNumber,
             password,
             deviceId: deviceIdStore
         };
 
         setIsShowSpinner(true);
-        rxUtil(
-            Rx.AUTHENTICATION.LOGIN,
-            'POST',
-            data,
-            {},
-            (res) => {
-                onLoginSuccess(res.data.data);
-            },
-            (res) => {
-                setIsShowSpinner(false);
-                ToastHelpers.renderToast(res.data.message, 'error');
-            },
-            (res) => {
-                setIsShowSpinner(false);
-                ToastHelpers.renderToast(res.data.message, 'error');
-            }
-        );
+        const result = await UserServices.loginAsync(body);
+        const {
+            isSuccess, data
+        } = result;
+
+        if (isSuccess) {
+            onLoginSuccess(data);
+        } else {
+            setIsShowSpinner(false);
+        }
     };
 
     const onSubmitOTP = async () => {

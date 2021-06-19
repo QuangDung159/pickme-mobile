@@ -20,6 +20,7 @@ import {
     setDeviceIdStore,
     setDeviceTimezone, setIsSignInOtherDeviceStore, setListNotification, setMessageListened, setNumberNotificationUnread
 } from '../redux/Actions';
+import { UserServices } from '../services';
 import { rxUtil } from '../utils';
 
 export default function Main() {
@@ -151,26 +152,22 @@ export default function Main() {
         const password = await SecureStore.getItemAsync('password');
 
         if (phoneNumber && password) {
-            const data = {
+            const body = {
                 username: phoneNumber,
                 password,
                 deviceId: deviceIdStore
             };
 
-            rxUtil(
-                Rx.AUTHENTICATION.LOGIN,
-                'POST',
-                data,
-                {},
-                (res) => {
-                    const { status } = res;
-                    if (status === 201) {
-                        dispatch(setIsSignInOtherDeviceStore(true));
-                    }
-                },
-                (res) => ToastHelpers.renderToast(res.data.message, 'error'),
-                (res) => ToastHelpers.renderToast(res.data.message, 'error')
-            );
+            const result = await UserServices.loginAsync(body);
+            const {
+                isSuccess, status
+            } = result;
+
+            if (isSuccess) {
+                if (status === 201) {
+                    dispatch(setIsSignInOtherDeviceStore(true));
+                }
+            }
         }
     };
 

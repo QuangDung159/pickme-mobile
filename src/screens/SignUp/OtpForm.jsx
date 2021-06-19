@@ -7,6 +7,7 @@ import {
 } from '../../constants';
 import { ToastHelpers } from '../../helpers';
 import { setIsSignInOtherDeviceStore, setShowLoaderStore, setToken } from '../../redux/Actions';
+import { UserServices } from '../../services';
 import { rxUtil } from '../../utils';
 
 const { SIZES, COLORS } = NowTheme;
@@ -27,31 +28,23 @@ export default function OtpForm({
         navigation.navigate(ScreenName.CREATE_ACCOUNT);
     };
 
-    const loginWithSignUpInfo = () => {
-        const data = {
+    const loginWithSignUpInfo = async () => {
+        const body = {
             username: phoneNumber,
             password,
             deviceId: deviceIdStore !== null ? deviceIdStore : ''
         };
 
-        rxUtil(
-            Rx.AUTHENTICATION.LOGIN,
-            'POST',
-            data,
-            {},
-            (res) => {
-                onLoginSuccess(res.data.data);
-                ToastHelpers.renderToast(res.data.message, 'success');
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
-                dispatch(setShowLoaderStore(false));
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
-                dispatch(setShowLoaderStore(false));
-            }
-        );
+        const result = await UserServices.loginAsync(body);
+        const {
+            isSuccess, data
+        } = result;
+
+        if (isSuccess) {
+            onLoginSuccess(data);
+        } else {
+            dispatch(setShowLoaderStore(false));
+        }
     };
 
     const onClickSubmitRegister = () => {

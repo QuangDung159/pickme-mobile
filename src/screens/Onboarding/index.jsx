@@ -7,11 +7,10 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { CenterLoader, CustomButton } from '../../components/uiComponents';
 import {
-    Images, NowTheme, Rx, ScreenName, Utils
+    Images, NowTheme, ScreenName, Utils
 } from '../../constants';
-import { ToastHelpers } from '../../helpers';
 import { setIsSignInOtherDeviceStore, setNavigation, setToken } from '../../redux/Actions';
-import { rxUtil } from '../../utils';
+import { UserServices } from '../../services';
 
 const {
     FONT: {
@@ -57,43 +56,34 @@ export default function Onboarding({ navigation }) {
         const phoneNumber = await SecureStore.getItemAsync('phoneNumber');
         const password = await SecureStore.getItemAsync('password');
         if (phoneNumber && password) {
-            const data = {
+            const body = {
                 username: phoneNumber,
                 password,
                 deviceId: deviceIdStore
             };
 
             setIsShowSpinner(true);
-            rxUtil(
-                Rx.AUTHENTICATION.LOGIN,
-                'POST',
-                data,
-                {},
-                (res) => {
-                    const { status } = res;
+            const result = await UserServices.loginAsync(body);
+            const {
+                isSuccess, status
+            } = result;
 
-                    if (status === 200) {
-                        getTokenFromLocal();
-                        dispatch(setIsSignInOtherDeviceStore(false));
-                    }
-
-                    if (status === 201) {
-                        // re otp
-                        navigation.reset({
-                            index: 0,
-                            routes: [{ name: ScreenName.SIGN_IN_WITH_OTP }],
-                        });
-                    }
-                },
-                (res) => {
-                    setIsShowSpinner(false);
-                    ToastHelpers.renderToast(res.data.message, 'error');
-                },
-                (res) => {
-                    setIsShowSpinner(false);
-                    ToastHelpers.renderToast(res.data.message, 'error');
+            if (isSuccess) {
+                if (status === 200) {
+                    getTokenFromLocal();
+                    dispatch(setIsSignInOtherDeviceStore(false));
                 }
-            );
+
+                if (status === 201) {
+                    // re otp
+                    navigation.reset({
+                        index: 0,
+                        routes: [{ name: ScreenName.SIGN_IN_WITH_OTP }],
+                    });
+                }
+            } else {
+                setIsShowSpinner(false);
+            }
         }
     };
 

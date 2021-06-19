@@ -69,7 +69,6 @@ export default function SignIn({ navigation }) {
                 deviceId: deviceIdToSend || deviceIdStore
             };
 
-            // setIsShowSpinner(true);
             setIsShowSpinner(true);
             const result = await UserServices.loginAsync(body);
 
