@@ -4,12 +4,12 @@ import {
     CenterLoader, CustomButton, CustomInput, CustomModal, GooglePlacesInput, IconCustom, Line
 } from '@components/uiComponents';
 import {
-    DateTimeConst, IconFamily, NowTheme, Rx, ScreenName
+    DateTimeConst, IconFamily, NowTheme, ScreenName
 } from '@constants/index';
 import { CommonHelpers, ToastHelpers } from '@helpers/index';
 import { Picker } from '@react-native-picker/picker';
 import { setListBookingStore, setPersonTabActiveIndex } from '@redux/Actions';
-import { rxUtil } from '@utils/index';
+import BookingServices from '@services/BookingServices';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import {
@@ -64,7 +64,6 @@ export default function CreateBooking({ route, navigation }) {
 
     const [total, setTotal] = useState(0);
 
-    const token = useSelector((state) => state.userReducer.token);
     const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
 
     const dispatch = useDispatch();
@@ -95,34 +94,21 @@ export default function CreateBooking({ route, navigation }) {
                 }
             }
         } = route;
-        rxUtil(
-            `${Rx.BOOKING.GET_PARTNER_PACKAGE}/${id}`,
-            'GET',
-            null,
-            {
-                Authorization: token
-            },
-            (res) => {
-                const listPackage = res.data.data;
-                if (!listPackage || listPackage.length === 0) return;
+        const result = await BookingServices.fetchListPartnerPackageAsync(id);
+        const { data } = result;
 
-                setListPartnerPackage(res.data.data);
-                setPackageActive(res.data.data[0]);
-                setIsShowSpinner(false);
-            },
-            (res) => {
-                setIsShowSpinner(false);
-                ToastHelpers.renderToast(res.data.message, 'error');
-            },
-            (res) => {
-                setIsShowSpinner(false);
-                ToastHelpers.renderToast(res.data.message, 'error');
-            }
-        );
+        if (data) {
+            const listPackage = data.data;
+            if (!listPackage || listPackage.length === 0) return;
+
+            setListPartnerPackage(data.data);
+            setPackageActive(data.data[0]);
+        }
+        setIsShowSpinner(false);
     };
 
     // handler \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
-    const getCalendarPartner = () => {
+    const getCalendarPartner = async () => {
         const {
             params: {
                 partner
@@ -130,30 +116,16 @@ export default function CreateBooking({ route, navigation }) {
         } = route;
 
         setIsShowSpinner(true);
+        const result = await BookingServices.fetchPartnerBusyCalendarAsync(partner.id);
+        const { data } = result;
 
-        rxUtil(
-            `${Rx.CALENDAR.PARTNER_CALENDAR}/${partner.id}`,
-            'GET',
-            null,
-            {
-                Authorization: token
-            },
-            (res) => {
-                setBusyCalendar(res.data.data);
-                setIsShowSpinner(false);
-            },
-            (res) => {
-                setIsShowSpinner(false);
-                ToastHelpers.renderToast(res.data.message, 'error');
-            },
-            (res) => {
-                setIsShowSpinner(false);
-                ToastHelpers.renderToast(res.data.message, 'error');
-            }
-        );
+        if (data) {
+            setBusyCalendar(data.data);
+        }
+        setIsShowSpinner(false);
     };
 
-    const onSubmitBooking = () => {
+    const onSubmitBooking = async () => {
         const {
             params: {
                 partner
@@ -177,55 +149,28 @@ export default function CreateBooking({ route, navigation }) {
         };
 
         setIsShowSpinner(true);
+        const result = await BookingServices.submitScheduleBookingAsync(partner.id, bookingToSubmit);
+        const { data } = result;
 
-        rxUtil(
-            `${Rx.BOOKING.SCHEDULE_BOOKING}/${partner.id}`,
-            'POST',
-            bookingToSubmit,
-            {
-                Authorization: token
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'success');
-                navigation.reset({
-                    index: 0,
-                    routes: [{ name: ScreenName.PERSONAL }],
-                });
-                getListBooking();
-                dispatch(setPersonTabActiveIndex(2));
-            },
-            (res) => {
-                setIsShowSpinner(false);
-                ToastHelpers.renderToast();
-                ToastHelpers.renderToast(res.data.message, 'error');
-            },
-            (res) => {
-                setIsShowSpinner(false);
-                ToastHelpers.renderToast(res.data.message, 'error');
-            }
-        );
+        if (data) {
+            ToastHelpers.renderToast(data.message, 'success');
+            navigation.reset({
+                index: 0,
+                routes: [{ name: ScreenName.PERSONAL }],
+            });
+            getListBooking();
+            dispatch(setPersonTabActiveIndex(2));
+        }
+        setIsShowSpinner(false);
     };
 
-    const getListBooking = () => {
-        const pagingStr = '?pageIndex=1&pageSize=100';
+    const getListBooking = async () => {
+        const result = await BookingServices.fetchListBookingAsync();
+        const { data } = result;
 
-        rxUtil(
-            `${Rx.BOOKING.GET_MY_BOOKING_AS_CUSTOMER}${pagingStr}`,
-            'GET',
-            null,
-            {
-                Authorization: token
-            },
-            (res) => {
-                dispatch(setListBookingStore(res.data.data));
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
-            }
-        );
+        if (data) {
+            dispatch(setListBookingStore(data.data));
+        }
     };
 
     const convertStringHoursToMinutes = (hoursStr) => {

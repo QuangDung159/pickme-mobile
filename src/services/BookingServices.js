@@ -20,6 +20,64 @@ const fetchPartnerInfoAsync = async (partnerId) => {
     return CommonHelpers.handleResByStatus(result);
 };
 
+const fetchBookingDetailAsync = async (bookingId) => {
+    const result = await RxUtil(
+        `${Rx.BOOKING.DETAIL_BOOKING}/${bookingId}`,
+        'GET'
+    );
+    return CommonHelpers.handleResByStatus(result);
+};
+
+const submitCompleteBookingAsync = async (bookingId) => {
+    const result = await RxUtil(
+        `${Rx.BOOKING.COMPLETE_BOOKING}/${bookingId}`,
+        'POST'
+    );
+    return CommonHelpers.handleResByStatus(result);
+};
+
+const submitRatingAsync = async (body) => {
+    const result = await RxUtil(
+        Rx.BOOKING.BOOKING_RATE,
+        'POST',
+        body
+    );
+    return CommonHelpers.handleResByStatus(result);
+};
+
+const submitConfirmPaymentAsync = async (bookingId) => {
+    const result = await RxUtil(
+        `${Rx.PAYMENT.CREATE_PAYMENT}/${bookingId}`,
+        'POST'
+    );
+    return CommonHelpers.handleResByStatus(result);
+};
+
+const fetchListPartnerPackageAsync = async (partnerId) => {
+    const result = await RxUtil(
+        `${Rx.BOOKING.GET_PARTNER_PACKAGE}/${partnerId}`,
+        'GET'
+    );
+    return CommonHelpers.handleResByStatus(result);
+};
+
+const fetchPartnerBusyCalendarAsync = async (partnerId) => {
+    const result = await RxUtil(
+        `${Rx.CALENDAR.PARTNER_CALENDAR}/${partnerId}`,
+        'GET'
+    );
+    return CommonHelpers.handleResByStatus(result);
+};
+
+const submitScheduleBookingAsync = async (partnerId, body) => {
+    const result = await RxUtil(
+        `${Rx.BOOKING.SCHEDULE_BOOKING}/${partnerId}`,
+        'POST',
+        body
+    );
+    return CommonHelpers.handleResByStatus(result);
+};
+
 const cancelBooking = () => {
 
 };
@@ -27,5 +85,12 @@ const cancelBooking = () => {
 export default {
     fetchListBookingAsync,
     cancelBooking,
-    fetchPartnerInfoAsync
+    fetchPartnerInfoAsync,
+    fetchBookingDetailAsync,
+    submitCompleteBookingAsync,
+    submitRatingAsync,
+    submitConfirmPaymentAsync,
+    fetchListPartnerPackageAsync,
+    fetchPartnerBusyCalendarAsync,
+    submitScheduleBookingAsync
 };
