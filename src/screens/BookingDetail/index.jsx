@@ -12,7 +12,7 @@ import { rxUtil } from '@utils/index';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import {
-    Alert, RefreshControl, ScrollView, StyleSheet, Text, View
+    Alert, RefreshControl, SafeAreaView, ScrollView, StyleSheet, Text, View
 } from 'react-native';
 import { AirbnbRating } from 'react-native-ratings';
 import { useDispatch, useSelector } from 'react-redux';
@@ -496,33 +496,36 @@ export default function BookingDetail({
 
     try {
         return (
-            <>
-                {showLoaderStore || !booking ? (
-                    <CenterLoader />
-                ) : (
-                    <ScrollView
-                        showsVerticalScrollIndicator={false}
-                        refreshControl={(
-                            <RefreshControl
-                                refreshing={refreshing}
-                                onRefresh={() => onRefresh()}
-                            />
-                        )}
-                        contentContainerStyle={{
-                            paddingBottom: 10
-                        }}
-                    >
-                        {renderRatingModal()}
-                        {renderReportModal()}
-
-                        <ReasonCancelBookingModal
-                            modalReasonVisible={modalReasonVisible}
-                            setModalReasonVisible={setModalReasonVisible}
-                            bookingId={bookingId}
-                            navigation={navigation}
-                            fetchListBooking={() => fetchListBooking()}
+            <SafeAreaView
+                style={{
+                    flex: 1
+                }}
+            >
+                <CenterLoader isShow={showLoaderStore || !booking} />
+                <ScrollView
+                    showsVerticalScrollIndicator={false}
+                    refreshControl={(
+                        <RefreshControl
+                            refreshing={refreshing}
+                            onRefresh={() => onRefresh()}
                         />
+                    )}
+                    contentContainerStyle={{
+                        paddingBottom: 10
+                    }}
+                >
+                    {renderRatingModal()}
+                    {renderReportModal()}
 
+                    <ReasonCancelBookingModal
+                        modalReasonVisible={modalReasonVisible}
+                        setModalReasonVisible={setModalReasonVisible}
+                        bookingId={bookingId}
+                        navigation={navigation}
+                        fetchListBooking={() => fetchListBooking()}
+                    />
+
+                    {booking && (
                         <View
                             style={{
                                 width: SIZES.WIDTH_BASE * 0.9,
@@ -596,9 +599,9 @@ export default function BookingDetail({
                                 {handleShowButtonByStatus()}
                             </View>
                         </View>
-                    </ScrollView>
-                )}
-            </>
+                    )}
+                </ScrollView>
+            </SafeAreaView>
         );
     } catch (exception) {
         console.log('exception :>> ', exception);

@@ -298,22 +298,19 @@ export default function Support({ navigation }) {
     );
 
     const renderBugReportForm = () => (
-        <SafeAreaView>
-            <CenterLoader isShow={isShowSpinner} />
-            <View
-                style={{
-                    width: SIZES.WIDTH_BASE * 0.9,
-                    alignSelf: 'center',
-                    paddingVertical: 10
-                }}
-            >
-                {renderInputBugTitle()}
-                {renderInputBugDescription()}
-                {renderUploadImageReportButton()}
-                {renderImageReport()}
-                {renderButtonPanel()}
-            </View>
-        </SafeAreaView>
+        <View
+            style={{
+                width: SIZES.WIDTH_BASE * 0.9,
+                alignSelf: 'center',
+                paddingVertical: 10
+            }}
+        >
+            {renderInputBugTitle()}
+            {renderInputBugDescription()}
+            {renderUploadImageReportButton()}
+            {renderImageReport()}
+            {renderButtonPanel()}
+        </View>
     );
 
     const renderInputBugTitle = () => (
@@ -351,15 +348,20 @@ export default function Support({ navigation }) {
     );
 
     return (
-        <>
+        <SafeAreaView
+            style={{
+                flex: 1
+            }}
+        >
             {renderImageView()}
+            <CenterLoader isShow={isShowSpinner} />
             <TopTabBar
                 routes={routes}
                 renderScene={renderScene}
                 tabActiveIndex={tabActiveIndex}
                 setTabActiveIndex={setTabActiveIndex}
             />
-        </>
+        </SafeAreaView>
     );
 }
 
