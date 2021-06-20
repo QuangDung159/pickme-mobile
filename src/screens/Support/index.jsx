@@ -7,10 +7,10 @@ import {
     IconFamily, NowTheme, Rx, ScreenName
 } from '@constants/index';
 import { MediaHelpers, ToastHelpers } from '@helpers/index';
-import { rxUtil } from '@utils/index';
+import SystemServices from '@services/SystemServices';
 import React, { useEffect, useState } from 'react';
 import {
-    Image, StyleSheet, Text, View
+    Image, SafeAreaView, StyleSheet, Text, View
 } from 'react-native';
 import { FlatList, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import ImageView from 'react-native-image-viewing';
@@ -76,34 +76,21 @@ export default function Support({ navigation }) {
         setBugReportForm({ ...bugReportForm, title: titleInput });
     };
 
-    const onSubmitBugReport = () => {
+    const onSubmitBugReport = async () => {
         setIsShowSpinner(true);
-        rxUtil(
-            Rx.SYSTEM.CREATE_BUG,
-            'POST',
-            bugReportForm,
-            {
-                Authorization: token
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'success');
-                setBugReportForm({
-                    title: '',
-                    description: '',
-                    url: ''
-                });
-                setImage();
-                setIsShowSpinner(false);
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
-                setIsShowSpinner(false);
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
-                setIsShowSpinner(false);
-            }
-        );
+        const result = await SystemServices.submitBugReportAsync(bugReportForm);
+        const { data } = result;
+
+        if (data) {
+            ToastHelpers.renderToast(data.message, 'success');
+            setBugReportForm({
+                title: '',
+                description: '',
+                url: ''
+            });
+            setImage();
+        }
+        setIsShowSpinner(false);
     };
 
     const handleOnPickImageReport = (uri) => {
@@ -311,25 +298,22 @@ export default function Support({ navigation }) {
     );
 
     const renderBugReportForm = () => (
-        <>
-            {isShowSpinner ? (
-                <CenterLoader />
-            ) : (
-                <View
-                    style={{
-                        width: SIZES.WIDTH_BASE * 0.9,
-                        alignSelf: 'center',
-                        paddingVertical: 10
-                    }}
-                >
-                    {renderInputBugTitle()}
-                    {renderInputBugDescription()}
-                    {renderUploadImageReportButton()}
-                    {renderImageReport()}
-                    {renderButtonPanel()}
-                </View>
-            )}
-        </>
+        <SafeAreaView>
+            <CenterLoader isShow={isShowSpinner} />
+            <View
+                style={{
+                    width: SIZES.WIDTH_BASE * 0.9,
+                    alignSelf: 'center',
+                    paddingVertical: 10
+                }}
+            >
+                {renderInputBugTitle()}
+                {renderInputBugDescription()}
+                {renderUploadImageReportButton()}
+                {renderImageReport()}
+                {renderButtonPanel()}
+            </View>
+        </SafeAreaView>
     );
 
     const renderInputBugTitle = () => (

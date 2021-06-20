@@ -5,6 +5,7 @@ import CustomInput from './CustomInput';
 import CustomModal from './CustomModal';
 import GooglePlacesInput from './GooglePlacesInput';
 import IconCustom from './IconCustom';
+import ImageLoader from './ImageLoader';
 import IndicatorVerticalLine from './IndicatorVerticalLine';
 import Line from './Line';
 import NoteText from './NoteText';
@@ -26,4 +27,5 @@ export {
     CustomModal,
     GooglePlacesInput,
     CustomCheckbox,
+    ImageLoader
 };
