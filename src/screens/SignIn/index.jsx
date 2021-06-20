@@ -2,15 +2,14 @@ import { ExpoNotification } from '@components/businessComponents';
 import { CenterLoader, CustomButton, CustomInput } from '@components/uiComponents';
 import {
     IconFamily,
-    Images, NowTheme, Rx, ScreenName
+    Images, NowTheme, ScreenName
 } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
 import {
     setIsSignInOtherDeviceStore,
     setToken
 } from '@redux/Actions';
-import { UserServices } from '@services/index';
-import { rxUtil } from '@utils/index';
+import { SystemServices, UserServices } from '@services/index';
 import * as SecureStore from 'expo-secure-store';
 import React, { useState } from 'react';
 import {
@@ -45,20 +44,10 @@ export default function SignIn({ navigation }) {
     const dispatch = useDispatch();
 
     // handler \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
-    const updateExpoTokenToServer = (bearerToken) => {
-        rxUtil(
-            Rx.USER.UPDATE_EXPO_TOKEN,
-            'POST',
-            {
-                token: expoToken
-            },
-            {
-                Authorization: bearerToken,
-            },
-            () => {},
-            (res) => ToastHelpers.renderToast(res.data.message, 'error'),
-            (res) => ToastHelpers.renderToast(res.data.message, 'error')
-        );
+    const updateExpoTokenToServer = async () => {
+        await SystemServices.submitUpdateExpoTokenAsync({
+            token: expoToken
+        });
     };
 
     const onSubmitLogin = async () => {
@@ -107,7 +96,6 @@ export default function SignIn({ navigation }) {
         SecureStore.setItemAsync('phoneNumber', `${phoneNumber}`);
 
         if (status === 200) {
-            const bearerToken = `Bearer ${tokenFromAPI}`;
             dispatch(setToken(tokenFromAPI));
 
             navigation.reset({
@@ -115,7 +103,7 @@ export default function SignIn({ navigation }) {
                 routes: [{ name: ScreenName.APP }],
             });
 
-            updateExpoTokenToServer(bearerToken);
+            updateExpoTokenToServer();
             dispatch(setIsSignInOtherDeviceStore(false));
         }
 

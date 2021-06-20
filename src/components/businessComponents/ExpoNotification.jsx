@@ -1,5 +1,4 @@
-import { Rx, ScreenName } from '@constants/index';
-import { ToastHelpers } from '@helpers/index';
+import { ScreenName } from '@constants/index';
 import {
     setCurrentUser,
     setExpoToken,
@@ -9,8 +8,7 @@ import {
     setNumberNotificationUnread,
     setPersonTabActiveIndex
 } from '@redux/Actions';
-import { BookingServices, CashServices } from '@services/index';
-import { rxUtil } from '@utils/index';
+import { BookingServices, CashServices, NotificationServices } from '@services/index';
 import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
 import { useEffect, useRef } from 'react';
@@ -106,23 +104,14 @@ export default function ExpoNotification() {
         }
     };
 
-    const onClickRead = (notiId = null, navigationId, navigationType) => {
-        const endpoint = `${Rx.NOTIFICATION.TRIGGER_READ}/${notiId}`;
+    const onClickRead = async (notiId = null, navigationId, navigationType) => {
+        const result = await NotificationServices.triggerReadNotificationAsync(notiId);
+        const { data } = result;
 
-        rxUtil(
-            endpoint,
-            'POST',
-            null,
-            {
-                Authorization: token
-            },
-            () => {
-                handleNavigation(navigationId, navigationType);
-                getListNotiFromAPI();
-            },
-            (res) => ToastHelpers.renderToast(res.data.message, 'error'),
-            (res) => ToastHelpers.renderToast(res.data.message, 'error')
-        );
+        if (data) {
+            handleNavigation(navigationId, navigationType);
+            getListNotiFromAPI();
+        }
     };
 
     const countNumberNotificationUnread = (listNotiFromAPI) => {
@@ -136,22 +125,14 @@ export default function ExpoNotification() {
         dispatch(setNumberNotificationUnread(count));
     };
 
-    const getListNotiFromAPI = () => {
-        rxUtil(
-            Rx.NOTIFICATION.GET_MY_NOTIFICATION,
-            'GET',
-            null,
-            {
-                Authorization: token
-            },
-            (res) => {
-                // set store
-                dispatch(setListNotification(res.data.data));
-                countNumberNotificationUnread(res.data.data);
-            },
-            (res) => ToastHelpers.renderToast(res.data.message, 'error'),
-            (res) => ToastHelpers.renderToast(res.data.message, 'error')
-        );
+    const getListNotiFromAPI = async () => {
+        const result = await NotificationServices.fetchListNotificationAsync();
+        const { data } = result;
+
+        if (data) {
+            dispatch(setListNotification(data.data));
+            countNumberNotificationUnread(data.data);
+        }
     };
 
     const getListBooking = async () => {

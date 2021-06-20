@@ -1,10 +1,9 @@
 import { CustomInput, IconCustom, Tabs } from '@components/uiComponents';
 import {
-    IconFamily, NowTheme, Rx, ScreenName
+    IconFamily, NowTheme, ScreenName
 } from '@constants/index';
-import { ToastHelpers } from '@helpers/index';
 import { resetStoreSignOut, setListNotification, setNumberNotificationUnread } from '@redux/Actions';
-import { rxUtil } from '@utils/index';
+import NotificationServices from '@services/NotificationServices';
 import * as SecureStore from 'expo-secure-store';
 import {
     NavBar
@@ -48,9 +47,7 @@ export default function Header({
         transparent ? { backgroundColor: 'rgba(0,0,0,0)' } : null
     ];
 
-    const token = useSelector((state) => state.userReducer.token);
     const chattingWith = useSelector((state) => state.messageReducer.chattingWith);
-
     const dispatch = useDispatch();
 
     const countNumberNotificationUnread = (listNotiFromAPI) => {
@@ -64,38 +61,24 @@ export default function Header({
         dispatch(setNumberNotificationUnread(count));
     };
 
-    const getListNotiFromAPI = () => {
-        rxUtil(
-            Rx.NOTIFICATION.GET_MY_NOTIFICATION,
-            'GET',
-            null,
-            {
-                Authorization: token
-            },
-            (res) => {
-                // set store
-                dispatch(setListNotification(res.data.data));
-                countNumberNotificationUnread(res.data.data);
-            },
-            (res) => ToastHelpers.renderToast(res.data.message, 'error'),
-            (res) => ToastHelpers.renderToast(res.data.message, 'error')
-        );
+    const getListNotiFromAPI = async () => {
+        const result = await NotificationServices.fetchListNotificationAsync();
+        const { data } = result;
+
+        if (data) {
+            // set store
+            dispatch(setListNotification(data.data));
+            countNumberNotificationUnread(data.data);
+        }
     };
 
-    const triggerReadAllNotification = () => {
-        rxUtil(
-            Rx.NOTIFICATION.TRIGGER_READ_ALL,
-            'POST',
-            null,
-            {
-                Authorization: token
-            },
-            () => {
-                getListNotiFromAPI();
-            },
-            (res) => ToastHelpers.renderToast(res.data.message, 'error'),
-            (res) => ToastHelpers.renderToast(res.data.message, 'error')
-        );
+    const triggerReadAllNotification = async () => {
+        const result = await NotificationServices.triggerReadAllNotificationAsync();
+        const { data } = result;
+
+        if (data) {
+            getListNotiFromAPI();
+        }
     };
 
     const renderQnAButton = () => (

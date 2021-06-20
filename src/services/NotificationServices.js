@@ -10,6 +10,24 @@ const fetchListNotificationAsync = async () => {
     return CommonHelpers.handleResByStatus(result);
 };
 
+const triggerReadNotificationAsync = async (notificationId) => {
+    const result = await RxUtil(
+        `${Rx.NOTIFICATION.TRIGGER_READ}/${notificationId}`,
+        'POST'
+    );
+    return CommonHelpers.handleResByStatus(result);
+};
+
+const triggerReadAllNotificationAsync = async () => {
+    const result = await RxUtil(
+        Rx.NOTIFICATION.TRIGGER_READ_ALL,
+        'POST'
+    );
+    return CommonHelpers.handleResByStatus(result);
+};
+
 export default {
-    fetchListNotificationAsync
+    fetchListNotificationAsync,
+    triggerReadNotificationAsync,
+    triggerReadAllNotificationAsync
 };

@@ -78,13 +78,26 @@ const submitScheduleBookingAsync = async (partnerId, body) => {
     return CommonHelpers.handleResByStatus(result);
 };
 
-const cancelBooking = () => {
+const submitCancelBookingAsync = async (bookingId, body) => {
+    const result = await RxUtil(
+        `${Rx.BOOKING.CANCEL_BOOKING}/${bookingId}`,
+        'POST',
+        body
+    );
+    return CommonHelpers.handleResByStatus(result);
+};
 
+const fetchListPartnerAsync = async () => {
+    const result = await RxUtil(
+        Rx.PARTNER.GET_LIST_PARTNER,
+        'GET'
+    );
+    return CommonHelpers.handleResByStatus(result);
 };
 
 export default {
     fetchListBookingAsync,
-    cancelBooking,
+    submitCancelBookingAsync,
     fetchPartnerInfoAsync,
     fetchBookingDetailAsync,
     submitCompleteBookingAsync,
@@ -92,5 +105,6 @@ export default {
     submitConfirmPaymentAsync,
     fetchListPartnerPackageAsync,
     fetchPartnerBusyCalendarAsync,
-    submitScheduleBookingAsync
+    submitScheduleBookingAsync,
+    fetchListPartnerAsync
 };

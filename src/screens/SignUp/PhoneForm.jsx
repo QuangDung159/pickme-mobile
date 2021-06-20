@@ -1,8 +1,8 @@
 import { CustomButton, CustomCheckbox, CustomInput } from '@components/uiComponents';
-import { NowTheme, Rx } from '@constants/index';
+import { NowTheme } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
 import { setShowLoaderStore } from '@redux/Actions';
-import { rxUtil } from '@utils/index';
+import UserServices from '@services/UserServices';
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useDispatch } from 'react-redux';
@@ -25,7 +25,7 @@ export default function PhoneForm({
 
     const dispatch = useDispatch();
 
-    const onClickGetOTP = () => {
+    const onClickGetOTP = async () => {
         if (!phoneNumber) {
             ToastHelpers.renderToast('Số điện thoại không hợp lệ!', 'error');
             return;
@@ -37,30 +37,19 @@ export default function PhoneForm({
         }
 
         dispatch(setShowLoaderStore(true));
-        rxUtil(
-            Rx.USER.GET_OTP_REGISTER,
-            'POST',
-            {
-                phoneNum: phoneNumber
-            },
-            null,
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'success');
-                setStep(2);
+        const result = await UserServices.fetchOtpSignUpAsync({
+            phoneNum: phoneNumber
+        });
+        const { data } = result;
 
-                // in testing, will remove when prod
-                setOtp(res.data.data.code);
-                dispatch(setShowLoaderStore(false));
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
-                dispatch(setShowLoaderStore(false));
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
-                dispatch(setShowLoaderStore(false));
-            }
-        );
+        if (data) {
+            ToastHelpers.renderToast(data.message, 'success');
+            setStep(2);
+
+            // in testing, will remove when prod
+            setOtp(data.data.code);
+        }
+        dispatch(setShowLoaderStore(false));
     };
 
     const renderPhoneForm = () => (

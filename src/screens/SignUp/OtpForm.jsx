@@ -1,11 +1,10 @@
 import { CustomButton, CustomInput } from '@components/uiComponents';
 import {
-    IconFamily, NowTheme, Rx, ScreenName
+    IconFamily, NowTheme, ScreenName
 } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
 import { setIsSignInOtherDeviceStore, setShowLoaderStore, setToken } from '@redux/Actions';
 import { UserServices } from '@services/index';
-import { rxUtil } from '@utils/index';
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useDispatch } from 'react-redux';
@@ -42,12 +41,11 @@ export default function OtpForm({
 
         if (isSuccess) {
             onLoginSuccess(data);
-        } else {
-            dispatch(setShowLoaderStore(false));
         }
+        dispatch(setShowLoaderStore(false));
     };
 
-    const onClickSubmitRegister = () => {
+    const onClickSubmitRegister = async () => {
         if (!otp) {
             ToastHelpers.renderToast('Mã OTP không hợp lệ!', 'error');
             return;
@@ -58,7 +56,7 @@ export default function OtpForm({
             return;
         }
 
-        const data = {
+        const body = {
             password,
             phoneNum: phoneNumber,
             code: otp,
@@ -66,22 +64,13 @@ export default function OtpForm({
         };
 
         dispatch(setShowLoaderStore(true));
-        rxUtil(
-            Rx.AUTHENTICATION.SIGN_UP,
-            'POST',
-            data, {
-                'Content-Type': 'application/json'
-            },
-            () => loginWithSignUpInfo(),
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
-                dispatch(setShowLoaderStore(false));
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
-                dispatch(setShowLoaderStore(false));
-            }
-        );
+        const result = await UserServices.submitSignUpAsync(body);
+        const { data } = result;
+
+        if (data) {
+            await loginWithSignUpInfo();
+        }
+        dispatch(setShowLoaderStore(false));
     };
 
     const renderOtpForm = () => (

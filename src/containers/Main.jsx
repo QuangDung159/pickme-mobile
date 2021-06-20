@@ -5,23 +5,20 @@ import {
 } from '@apollo/client';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import { getMainDefinition } from '@apollo/client/utilities';
+import { Listener } from '@components/businessComponents';
 import { SOCKET_URL } from '@env';
+import Stacks from '@navigations/Stacks';
 import { NavigationContainer } from '@react-navigation/native';
+import {
+    setDeviceIdStore,
+    setDeviceTimezone, setIsSignInOtherDeviceStore, setListNotification, setMessageListened, setNumberNotificationUnread
+} from '@redux/Actions';
+import { NotificationServices, UserServices } from '@services/index';
 import * as SecureStore from 'expo-secure-store';
 import React, { useEffect } from 'react';
 import { AppState, View } from 'react-native';
 import uuid from 'react-native-uuid';
 import { useDispatch, useSelector } from 'react-redux';
-import { Listener } from '@components/businessComponents';
-import { Rx } from '@constants/index';
-import { ToastHelpers } from '@helpers/index';
-import Stacks from '@navigations/Stacks';
-import {
-    setDeviceIdStore,
-    setDeviceTimezone, setIsSignInOtherDeviceStore, setListNotification, setMessageListened, setNumberNotificationUnread
-} from '@redux/Actions';
-import { UserServices } from '@services/index';
-import { rxUtil } from '@utils/index';
 
 export default function Main() {
     const listNotification = useSelector((state) => state.notificationReducer.listNotification);
@@ -47,24 +44,16 @@ export default function Main() {
         }, [deviceIdStore]
     );
 
-    const getListNotificationAPI = () => {
-        rxUtil(
-            Rx.NOTIFICATION.GET_MY_NOTIFICATION,
-            'GET',
-            null,
-            {
-                Authorization: token
-            },
-            (res) => {
-                // set store
-                if (listNotification.length === 0) {
-                    dispatch(setListNotification(res.data.data));
-                    countNumberNotificationUnread(res.data.data);
-                }
-            },
-            (res) => ToastHelpers.renderToast(res.data.message, 'error'),
-            (res) => ToastHelpers.renderToast(res.data.message, 'error')
-        );
+    const getListNotificationAPI = async () => {
+        const result = await NotificationServices.fetchListNotificationAsync();
+        const { data } = result;
+
+        if (data) {
+            if (listNotification.length === 0) {
+                dispatch(setListNotification(data.data));
+                countNumberNotificationUnread(data.data);
+            }
+        }
     };
 
     const countNumberNotificationUnread = (listNotiFromAPI) => {

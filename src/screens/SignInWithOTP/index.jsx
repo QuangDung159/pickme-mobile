@@ -4,15 +4,14 @@ import {
 } from '@components/uiComponents';
 import {
     IconFamily,
-    Images, NowTheme, Rx, ScreenName
+    Images, NowTheme, ScreenName
 } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
 import {
     setIsSignInOtherDeviceStore,
     setToken
 } from '@redux/Actions';
-import { UserServices } from '@services/index';
-import { rxUtil } from '@utils/index';
+import { SystemServices, UserServices } from '@services/index';
 import * as SecureStore from 'expo-secure-store';
 import React, { useEffect, useState } from 'react';
 import {
@@ -57,20 +56,10 @@ export default function SignInWithOTP({ navigation }) {
     };
 
     // handler \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
-    const updateExpoTokenToServer = (bearerToken) => {
-        rxUtil(
-            Rx.USER.UPDATE_EXPO_TOKEN,
-            'POST',
-            {
-                token: expoToken
-            },
-            {
-                Authorization: bearerToken,
-            },
-            () => {},
-            (res) => ToastHelpers.renderToast(res.data.message, 'error'),
-            (res) => ToastHelpers.renderToast(res.data.message, 'error')
-        );
+    const updateExpoTokenToServer = async () => {
+        await SystemServices.submitUpdateExpoTokenAsync({
+            token: expoToken
+        });
     };
 
     const onLogin = async () => {
@@ -95,7 +84,7 @@ export default function SignInWithOTP({ navigation }) {
 
     const onSubmitOTP = async () => {
         setIsShowSpinner(true);
-        const data = {
+        const body = {
             phoneNum: phoneNumber,
             password,
             deviceId: deviceIdStore,
@@ -107,55 +96,32 @@ export default function SignInWithOTP({ navigation }) {
             data.deviceId = deviceIdLocal;
         }
 
-        rxUtil(
-            Rx.USER.SUBMIT_CHANGE_DEVICE_CONFIRM,
-            'POST',
-            data,
-            null,
-            () => {
-                onLogin();
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
-                setIsShowSpinner(false);
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
-                setIsShowSpinner(false);
-            }
-        );
-        return true;
+        const result = await SystemServices.submitChangeDeviceConfirmAsync(body);
+        const { data } = result;
+
+        if (data) {
+            await onLogin();
+        }
+        setIsShowSpinner(false);
     };
 
-    const onClickGetOTPWhenChangeDevice = () => {
+    const onClickGetOTPWhenChangeDevice = async () => {
         setIsShowSpinner(true);
-        rxUtil(
-            Rx.USER.GENERATE_OTP_WHEN_CHANGE_DEVICE,
-            'POST',
-            {
-                phoneNum: phoneNumber
-            },
-            null,
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'success');
+        const result = await SystemServices.fetchOtpChangeDeviceAsync({
+            phoneNum: phoneNumber
+        });
+        const { data } = result;
 
-                // in testing, will remove when prod
-                setOtp(res.data.data.code);
-                setIsShowSpinner(false);
-            },
-            (res) => {
-                setIsShowSpinner(false);
-                ToastHelpers.renderToast(res.data.message, 'error');
-            },
-            (res) => {
-                setIsShowSpinner(false);
-                ToastHelpers.renderToast(res.data.message, 'error');
-            }
-        );
+        if (data) {
+            ToastHelpers.renderToast(data.message, 'success');
+
+            // in testing, will remove when prod
+            setOtp(data.data.code);
+        }
+        setIsShowSpinner(false);
     };
 
     const onLoginSuccess = (tokenFromAPI) => {
-        const bearerToken = `Bearer ${tokenFromAPI}`;
         dispatch(setToken(tokenFromAPI));
 
         navigation.reset({
@@ -163,7 +129,7 @@ export default function SignInWithOTP({ navigation }) {
             routes: [{ name: ScreenName.APP }],
         });
 
-        updateExpoTokenToServer(bearerToken);
+        updateExpoTokenToServer();
         SecureStore.setItemAsync('api_token', `Bearer ${tokenFromAPI}`);
 
         dispatch(setIsSignInOtherDeviceStore(false));

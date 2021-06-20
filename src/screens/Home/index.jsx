@@ -2,9 +2,9 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
 import { CenterLoader } from '@components/uiComponents';
 import {
-    GraphQueryString, NowTheme, Rx, ScreenName
+    GraphQueryString, NowTheme, ScreenName
 } from '@constants/index';
-import { NO_AVATAR_URL, PICKME_INFO_URL } from '@env';
+import { NO_AVATAR_URL } from '@env';
 import { ToastHelpers } from '@helpers/index';
 import {
     setCurrentUser,
@@ -12,7 +12,7 @@ import {
     setListConversation, setNumberMessageUnread, setPickMeInfoStore
 } from '@redux/Actions';
 import { BookingServices, UserServices } from '@services/index';
-import { rxUtil, socketRequestUtil } from '@utils/index';
+import { socketRequestUtil } from '@utils/index';
 import React, { useEffect, useState } from 'react';
 import {
     FlatList, Image, RefreshControl, SafeAreaView, StyleSheet, Text, View
@@ -118,36 +118,16 @@ export default function Home({ navigation }) {
         const { data } = result;
         if (data) {
             dispatch(setListBookingStore(data.data));
-            setIsShowSpinner(false);
-            setRefreshing(false);
-        } else {
-            setIsShowSpinner(false);
-            setRefreshing(false);
         }
     };
 
-    const fetchPickMeInfo = () => {
-        rxUtil(
-            Rx.SYSTEM.PICK_ME_INFO,
-            'GET',
-            null,
-            {
-                Authorization: token
-            },
-            (res) => {
-                dispatch(setPickMeInfoStore(res.data));
-                setIsShowSpinner(false);
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
-                setIsShowSpinner(false);
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
-                setIsShowSpinner(false);
-            },
-            PICKME_INFO_URL
-        );
+    const fetchPickMeInfo = async () => {
+        const result = await UserServices.fetchLeaderBoardAsync();
+        const { data } = result;
+
+        if (data) {
+            dispatch(setPickMeInfoStore(data));
+        }
     };
 
     const fetchCurrentUserInfo = async () => {
@@ -157,7 +137,6 @@ export default function Home({ navigation }) {
         if (data) {
             dispatch(setCurrentUser(data.data));
         }
-        setIsShowSpinner(false);
     };
 
     const getConversationByMessage = (message, listConversationSource) => {
@@ -202,31 +181,15 @@ export default function Home({ navigation }) {
         dispatch(setNumberMessageUnread(count));
     };
 
-    const getListPartner = () => {
-        rxUtil(
-            Rx.PARTNER.GET_LIST_PARTNER,
-            'GET',
-            null,
-            {
-                Authorization: token
-                // Authorization: lockedToken
-            },
-            (res) => {
-                setRefreshing(false);
-                setIsShowSpinner(false);
-                setListPartnerHome(res.data.data);
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
-                setRefreshing(false);
-                setIsShowSpinner(false);
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
-                setRefreshing(false);
-                setIsShowSpinner(false);
-            }
-        );
+    const getListPartner = async () => {
+        const result = BookingServices.fetchListPartnerAsync();
+        const { data } = result;
+
+        if (data) {
+            setListPartnerHome(data.data);
+        }
+        setRefreshing(false);
+        setIsShowSpinner(false);
     };
 
     const setIntervalToUpdateLastActiveOfUserStatus = () => {

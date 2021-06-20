@@ -6,7 +6,7 @@ import {
 } from '@constants/index';
 import { MediaHelpers, ToastHelpers } from '@helpers/index';
 import { setToken } from '@redux/Actions';
-import { rxUtil } from '@utils/index';
+import UserServices from '@services/UserServices';
 import * as ImagePicker from 'expo-image-picker';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
@@ -188,7 +188,7 @@ export default function CreateAccount(props) {
         return !(years < 16);
     };
 
-    const onSubmitAccountCreation = () => {
+    const onSubmitAccountCreation = async () => {
         if (!image) {
             ToastHelpers.renderToast('Ảnh không hợp lệ!', 'error');
         } else {
@@ -196,7 +196,7 @@ export default function CreateAccount(props) {
                 fullName, description, dob, address, interests, hometown
             } = newUser;
 
-            const data = {
+            const body = {
                 fullName,
                 description,
                 dob: `${dob}-01-01T14:00:00`,
@@ -209,31 +209,15 @@ export default function CreateAccount(props) {
                 homeTown: hometown
             };
 
-            const headers = {
-                Authorization: token
-            };
-
             setIsShowDoneMessage(true);
             setIsShowSpinner(true);
+            const result = await UserServices.submitUpdateInfoAsync(body);
+            const { data } = result;
 
-            rxUtil(
-                Rx.USER.UPDATE_USER_INFO,
-                'POST',
-                data,
-                headers,
-                () => {
-                    setIsShowSpinner(false);
-                    goToStep(6);
-                },
-                (res) => {
-                    setIsShowSpinner(false);
-                    ToastHelpers.renderToast(res.data.message, 'error');
-                },
-                (res) => {
-                    setIsShowSpinner(false);
-                    ToastHelpers.renderToast(res.data.message, 'error');
-                }
-            );
+            if (data) {
+                goToStep(6);
+            }
+            setIsShowSpinner(false);
         }
     };
 

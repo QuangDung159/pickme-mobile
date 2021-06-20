@@ -1,15 +1,14 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
-import { NowTheme, Rx, ScreenName } from '@constants/index';
+import { NowTheme, ScreenName } from '@constants/index';
 import { NO_AVATAR_URL } from '@env';
-import { ToastHelpers } from '@helpers/index';
 import { setPersonTabActiveIndex } from '@redux/Actions';
-import { rxUtil } from '@utils/index';
+import NotificationServices from '@services/NotificationServices';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {
     Image, StyleSheet, Text, TouchableWithoutFeedback, View
 } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 const {
     FONT: {
@@ -24,28 +23,20 @@ export default function NotificationItem({
     notiItem,
     navigation,
 }) {
-    const token = useSelector((state) => state.userReducer.token);
-
     const dispatch = useDispatch();
 
-    const onClickRead = (isReadAll, notiId = null) => {
-        const endpoint = isReadAll
-            ? Rx.NOTIFICATION.TRIGGER_READ_ALL
-            : `${Rx.NOTIFICATION.TRIGGER_READ}/${notiId}`;
+    const onClickRead = async (isReadAll, notiId = null) => {
+        let result;
+        if (isReadAll) {
+            result = await NotificationServices.triggerReadAllNotificationAsync();
+        } else {
+            result = await NotificationServices.triggerReadNotificationAsync(notiId);
+        }
+        const { data } = result;
 
-        rxUtil(
-            endpoint,
-            'POST',
-            null,
-            {
-                Authorization: token
-            },
-            () => {
-                onTriggerRead();
-            },
-            (res) => ToastHelpers.renderToast(res.data.message, 'error'),
-            (res) => ToastHelpers.renderToast(res.data.message, 'error')
-        );
+        if (data) {
+            onTriggerRead();
+        }
     };
 
     const handleNavigation = (navigationId, navigationType) => {
