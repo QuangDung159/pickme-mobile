@@ -1,26 +1,6 @@
 import { Rx } from '@constants/index';
+import { CommonHelpers } from '@helpers/index';
 import RxUtil from '@utils/Rx.Util';
-
-const handelResByStatus = (response) => {
-    const {
-        status,
-        data
-    } = response;
-
-    if (status === 200 || status === 201) {
-        return {
-            isSuccess: true,
-            data,
-            status
-        };
-    }
-
-    return {
-        isSuccess: false,
-        data,
-        status
-    };
-};
 
 const fetchListBookingAsync = async (pageIndex = 1, pageSize = 100) => {
     const pagingStr = `?pageIndex=${pageIndex}&pageSize=${pageSize}`;
@@ -29,7 +9,7 @@ const fetchListBookingAsync = async (pageIndex = 1, pageSize = 100) => {
         'GET',
         null
     );
-    return handelResByStatus(result);
+    return CommonHelpers.handleResByStatus(result);
 };
 
 const fetchPartnerInfoAsync = async (partnerId) => {
@@ -37,7 +17,7 @@ const fetchPartnerInfoAsync = async (partnerId) => {
         `${Rx.PARTNER.PARTNER_DETAIL}/${partnerId}`,
         'GET'
     );
-    return handelResByStatus(result);
+    return CommonHelpers.handleResByStatus(result);
 };
 
 const cancelBooking = () => {

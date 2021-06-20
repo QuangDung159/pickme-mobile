@@ -1,27 +1,6 @@
-/* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
 import { Rx } from '@constants/index';
+import { CommonHelpers } from '@helpers/index';
 import RxUtil from '@utils/Rx.Util';
-
-const handelResByStatus = (response) => {
-    const {
-        status,
-        data
-    } = response;
-
-    if (status === 200 || status === 201) {
-        return {
-            isSuccess: true,
-            data,
-            status
-        };
-    }
-
-    return {
-        isSuccess: false,
-        data,
-        status
-    };
-};
 
 const loginAsync = async (body) => {
     const result = await RxUtil(
@@ -29,7 +8,7 @@ const loginAsync = async (body) => {
         'POST',
         body
     );
-    return handelResByStatus(result);
+    return CommonHelpers.handleResByStatus(result);
 };
 
 const fetchCurrentUserInfoAsync = async () => {
@@ -37,7 +16,7 @@ const fetchCurrentUserInfoAsync = async () => {
         Rx.USER.CURRENT_USER_INFO,
         'GET',
     );
-    return handelResByStatus(result);
+    return CommonHelpers.handleResByStatus(result);
 };
 
 const fetchVerificationAsync = async () => {
@@ -45,7 +24,7 @@ const fetchVerificationAsync = async () => {
         Rx.USER.GET_VERIFICATION_DETAIL,
         'GET'
     );
-    return handelResByStatus(result);
+    return CommonHelpers.handleResByStatus(result);
 };
 
 const submitVerificationAsync = async () => {
@@ -53,7 +32,7 @@ const submitVerificationAsync = async () => {
         Rx.USER.SUBMIT_VERIFICATION,
         'POST'
     );
-    return handelResByStatus(result);
+    return CommonHelpers.handleResByStatus(result);
 };
 
 const submitChangePasswordAsync = async (body) => {
@@ -62,7 +41,7 @@ const submitChangePasswordAsync = async (body) => {
         'POST',
         body
     );
-    return handelResByStatus(result);
+    return CommonHelpers.handleResByStatus(result);
 };
 
 const submitUpdateInfoAsync = async (body) => {
@@ -71,7 +50,7 @@ const submitUpdateInfoAsync = async (body) => {
         'POST',
         body
     );
-    return handelResByStatus(result);
+    return CommonHelpers.handleResByStatus(result);
 };
 
 export default {
