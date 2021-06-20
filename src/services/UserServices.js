@@ -6,8 +6,7 @@ const loginAsync = async (body) => {
     const result = await RxUtil(
         Rx.AUTHENTICATION.LOGIN,
         'POST',
-        body,
-        {}
+        body
     );
 
     const {

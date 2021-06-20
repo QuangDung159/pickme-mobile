@@ -1,6 +1,8 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
 import { API_URL } from '@env';
 import axios from 'axios';
+import * as SecureStore from 'expo-secure-store';
+import { Rx } from '../constants';
 import { ToastHelpers } from '../helpers';
 import slackUtil from './slackUtil';
 
@@ -18,10 +20,18 @@ export default async (
     endpoint,
     method,
     body,
-    headers,
     domain = API_URL
 ) => {
+    const apiTokenLocal = await SecureStore.getItemAsync('api_token');
     const url = `${domain}${endpoint}`;
+
+    let headers = {};
+    if (endpoint !== Rx.AUTHENTICATION.LOGIN) {
+        headers = {
+            Authorization: apiTokenLocal
+        };
+    }
+
     try {
         const res = await axios({
             url,

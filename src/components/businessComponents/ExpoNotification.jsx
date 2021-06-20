@@ -17,6 +17,7 @@ import {
     setNumberNotificationUnread,
     setPersonTabActiveIndex
 } from '../../redux/Actions';
+import { CashServices } from '../../services';
 import { rxUtil } from '../../utils';
 
 Notifications.setNotificationHandler({
@@ -87,29 +88,22 @@ export default function ExpoNotification() {
         }, [navigationObj]
     );
 
-    const fetchHistory = () => {
-        rxUtil(
-            Rx.CASH.GET_CASH_HISTORY,
-            'GET',
-            null,
-            {
-                Authorization: token
-            },
-            (res) => {
-                const history = res.data.data;
-                if (history && history.length !== 0) {
-                    dispatch(setListCashHistoryStore(history));
-                    const latestUpdatedAmount = history[0].updatedWalletAmount;
+    const fetchHistory = async () => {
+        const result = await CashServices.fetchCashHistoryAsync();
+        const { data } = result;
 
-                    dispatch(setCurrentUser({
-                        ...currentUser,
-                        walletAmount: latestUpdatedAmount
-                    }));
-                }
-            },
-            (res) => ToastHelpers.renderToast(res.data.message, 'error'),
-            (res) => ToastHelpers.renderToast(res.data.message, 'error')
-        );
+        if (data) {
+            const history = data.data;
+            if (history && history.length !== 0) {
+                dispatch(setListCashHistoryStore(history));
+                const latestUpdatedAmount = history[0].updatedWalletAmount;
+
+                dispatch(setCurrentUser({
+                    ...currentUser,
+                    walletAmount: latestUpdatedAmount
+                }));
+            }
+        }
     };
 
     const onClickRead = (notiId = null, navigationId, navigationType) => {

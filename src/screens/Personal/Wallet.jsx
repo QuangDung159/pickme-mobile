@@ -4,11 +4,11 @@ import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import { CenterLoader, CustomButton, IconCustom } from '../../components/uiComponents';
 import {
-    IconFamily, NowTheme, Rx, ScreenName
+    IconFamily, NowTheme, ScreenName
 } from '../../constants';
 import { CommonHelpers, ToastHelpers } from '../../helpers';
 import { setCurrentUser, setListCashHistoryStore } from '../../redux/Actions';
-import { rxUtil } from '../../utils';
+import { CashServices } from '../../services';
 
 const {
     FONT: {
@@ -183,39 +183,27 @@ export default function Wallet({ navigation }) {
         </View>
     );
 
-    const fetchHistory = () => {
-        rxUtil(
-            Rx.CASH.GET_CASH_HISTORY,
-            'GET',
-            null,
-            {
-                Authorization: token
-            },
-            (res) => {
-                const history = res.data.data;
-                if (history && history.length !== 0) {
-                    dispatch(setListCashHistoryStore(history));
-                    const latestUpdatedAmount = history[0].updatedWalletAmount;
+    const fetchHistory = async () => {
+        const result = await CashServices.fetchCashHistoryAsync();
+        const { data } = result;
 
-                    dispatch(setCurrentUser({
-                        ...currentUser,
-                        walletAmount: latestUpdatedAmount
-                    }));
-                }
-                setIsShowSpinner(false);
-                setRefreshing(false);
-            },
-            (res) => {
-                setIsShowSpinner(false);
-                setRefreshing(false);
-                ToastHelpers.renderToast(res.data.message, 'error');
-            },
-            (res) => {
-                setIsShowSpinner(false);
-                setRefreshing(false);
-                ToastHelpers.renderToast(res.data.message, 'error');
+        if (data) {
+            const history = data.data;
+            if (history && history.length !== 0) {
+                dispatch(setListCashHistoryStore(history));
+                const latestUpdatedAmount = history[0].updatedWalletAmount;
+
+                dispatch(setCurrentUser({
+                    ...currentUser,
+                    walletAmount: latestUpdatedAmount
+                }));
             }
-        );
+            setIsShowSpinner(false);
+            setRefreshing(false);
+        } else {
+            setIsShowSpinner(false);
+            setRefreshing(false);
+        }
     };
 
     const renderHistory = () => {
