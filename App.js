@@ -9,12 +9,12 @@ import {
 import { MenuProvider } from 'react-native-popup-menu';
 import Toast from 'react-native-toast-message';
 import { Provider } from 'react-redux';
-import { ExpoNotification } from './src/components/businessComponents';
-import { IconCustom } from './src/components/uiComponents';
-import { IconFamily, Images, NowTheme } from './src/constants';
-import Main from './src/containers/Main';
-import { ToastHelpers } from './src/helpers';
-import store from './src/redux/Store';
+import { ExpoNotification } from '@components/businessComponents';
+import { IconCustom } from '@components/uiComponents';
+import { IconFamily, Images, NowTheme } from '@constants';
+import Main from '@containers/Main';
+import { ToastHelpers } from '@helpers';
+import store from '@redux/Store';
 
 const {
     FONT: {

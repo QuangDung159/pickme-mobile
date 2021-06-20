@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
-import { NowTheme, ScreenName, ScreenTitle } from '../constants';
-import Header from '../containers/Header';
+import { NowTheme, ScreenName, ScreenTitle } from '@constants';
+import Header from '@containers/Header';
 // screens
 import {
     BookingDetail,
@@ -16,7 +16,7 @@ import {
     Profile, Settings, SignIn, SignInWithOTP, SignUp,
     Support, UpdateInfoAccount,
     Verification
-} from '../screens';
+} from '@screens';
 
 const Stack = createStackNavigator();
 const {
