@@ -2,7 +2,7 @@ import { CustomButton, CustomCheckbox, CustomInput } from '@components/uiCompone
 import { NowTheme } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
 import { setShowLoaderStore } from '@redux/Actions';
-import UserServices from '@services/UserServices';
+import { UserServices } from '@services/index';
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useDispatch } from 'react-redux';

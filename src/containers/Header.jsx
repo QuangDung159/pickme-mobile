@@ -3,7 +3,7 @@ import {
     IconFamily, NowTheme, ScreenName
 } from '@constants/index';
 import { resetStoreSignOut, setListNotification, setNumberNotificationUnread } from '@redux/Actions';
-import NotificationServices from '@services/NotificationServices';
+import { NotificationServices } from '@services/index';
 import * as SecureStore from 'expo-secure-store';
 import {
     NavBar

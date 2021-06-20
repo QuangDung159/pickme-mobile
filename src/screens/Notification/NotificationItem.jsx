@@ -2,7 +2,7 @@
 import { NowTheme, ScreenName } from '@constants/index';
 import { NO_AVATAR_URL } from '@env';
 import { setPersonTabActiveIndex } from '@redux/Actions';
-import NotificationServices from '@services/NotificationServices';
+import { NotificationServices } from '@services/index';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {

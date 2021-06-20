@@ -6,7 +6,7 @@ import {
 } from '@constants/index';
 import { MediaHelpers, ToastHelpers } from '@helpers/index';
 import { setToken } from '@redux/Actions';
-import UserServices from '@services/UserServices';
+import { UserServices } from '@services/index';
 import * as ImagePicker from 'expo-image-picker';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';

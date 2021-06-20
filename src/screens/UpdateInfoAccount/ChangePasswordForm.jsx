@@ -1,7 +1,7 @@
 import { CenterLoader, CustomButton, CustomInput } from '@components/uiComponents';
 import { IconFamily, NowTheme } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
-import UserServices from '@services/UserServices';
+import { UserServices } from '@services/index';
 import * as SecureStore from 'expo-secure-store';
 import React, { useState } from 'react';
 import { View } from 'react-native';

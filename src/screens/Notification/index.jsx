@@ -2,7 +2,7 @@ import { CenterLoader } from '@components/uiComponents';
 import { NowTheme, ScreenName } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
 import { setListNotification, setNumberNotificationUnread } from '@redux/Actions';
-import NotificationServices from '@services/NotificationServices';
+import { NotificationServices } from '@services/index';
 import React, { useEffect, useState } from 'react';
 import { RefreshControl, Text, View } from 'react-native';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';

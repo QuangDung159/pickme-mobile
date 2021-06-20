@@ -7,7 +7,7 @@ import {
     IconFamily, NowTheme, Rx, ScreenName
 } from '@constants/index';
 import { MediaHelpers, ToastHelpers } from '@helpers/index';
-import SystemServices from '@services/SystemServices';
+import { SystemServices } from '@services/index';
 import React, { useEffect, useState } from 'react';
 import {
     Image, SafeAreaView, StyleSheet, Text, View

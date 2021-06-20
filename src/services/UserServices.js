@@ -2,7 +2,7 @@
 import { Rx } from '@constants/index';
 import { PICKME_INFO_URL } from '@env';
 import { CommonHelpers } from '@helpers/index';
-import RxUtil from '@utils/Rx.Util';
+import { RxUtil } from '@utils/index';
 
 const loginAsync = async (body) => {
     const result = await RxUtil(

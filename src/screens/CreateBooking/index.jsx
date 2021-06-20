@@ -9,7 +9,7 @@ import {
 import { CommonHelpers, ToastHelpers } from '@helpers/index';
 import { Picker } from '@react-native-picker/picker';
 import { setListBookingStore, setPersonTabActiveIndex } from '@redux/Actions';
-import BookingServices from '@services/BookingServices';
+import { BookingServices } from '@services/index';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import {

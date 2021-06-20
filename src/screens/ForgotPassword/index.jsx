@@ -7,7 +7,7 @@ import {
     Images, NowTheme, ScreenName
 } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
-import UserServices from '@services/UserServices';
+import { UserServices } from '@services/index';
 import * as SecureStore from 'expo-secure-store';
 import React, { useEffect, useState } from 'react';
 import {

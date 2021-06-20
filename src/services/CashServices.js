@@ -1,6 +1,6 @@
 import { Rx } from '@constants/index';
 import { CommonHelpers } from '@helpers/index';
-import RxUtil from '@utils/Rx.Util';
+import { RxUtil } from '@utils/index';
 
 const fetchCashHistoryAsync = async (body) => {
     const result = await RxUtil(

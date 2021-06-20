@@ -1,6 +1,6 @@
 import BookingServices from './BookingServices';
 import CashServices from './CashServices';
-import NotificationServices from './NotificationServices';
+import { NotificationServices } from './index';
 import SystemServices from './SystemServices';
 import UserServices from './UserServices';
 
