@@ -1,4 +1,12 @@
 /* eslint-disable max-len */
+import noAvatar from '@assets/images/no-avatar.png';
+import { CenterLoader, CustomButton, CustomInput } from '@components/uiComponents';
+import {
+    Images, NowTheme, Rx, ScreenName
+} from '@constants';
+import { MediaHelpers, ToastHelpers } from '@helpers';
+import { setToken } from '@redux/Actions';
+import { rxUtil } from '@utils';
 import * as ImagePicker from 'expo-image-picker';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
@@ -13,14 +21,6 @@ import {
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useDispatch, useSelector } from 'react-redux';
-import noAvatar from '../../../assets/images/no-avatar.png';
-import { CenterLoader, CustomButton, CustomInput } from '../../components/uiComponents';
-import {
-    Images, NowTheme, Rx, ScreenName
-} from '../../constants';
-import { MediaHelpers, ToastHelpers } from '../../helpers';
-import { setToken } from '../../redux/Actions';
-import { rxUtil } from '../../utils';
 
 const {
     FONT: {

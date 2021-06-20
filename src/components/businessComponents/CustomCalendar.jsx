@@ -1,9 +1,9 @@
+import { CustomButton, Line } from '@components/uiComponents';
+import { NowTheme } from '@constants/index';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
-import { NowTheme } from '../../constants';
-import { CustomButton, Line } from '../uiComponents';
 
 const arrDOW = [
     'C.Nhật',

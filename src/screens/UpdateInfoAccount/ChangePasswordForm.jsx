@@ -1,12 +1,12 @@
+import { CenterLoader, CustomButton, CustomInput } from '@components/uiComponents';
+import { IconFamily, NowTheme, Rx } from '@constants';
+import { ToastHelpers } from '@helpers';
+import { rxUtil } from '@utils';
 import * as SecureStore from 'expo-secure-store';
 import React, { useState } from 'react';
 import { View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useSelector } from 'react-redux';
-import { CenterLoader, CustomButton, CustomInput } from '../../components/uiComponents';
-import { IconFamily, NowTheme, Rx } from '../../constants';
-import { ToastHelpers } from '../../helpers';
-import { rxUtil } from '../../utils';
 
 const { SIZES, COLORS } = NowTheme;
 

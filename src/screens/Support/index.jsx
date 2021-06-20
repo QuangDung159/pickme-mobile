@@ -1,4 +1,13 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
+import {
+    CenterLoader,
+    CustomButton, CustomInput, IconCustom, NoteText, TopTabBar
+} from '@components/uiComponents';
+import {
+    IconFamily, NowTheme, Rx, ScreenName
+} from '@constants';
+import { MediaHelpers, ToastHelpers } from '@helpers';
+import { rxUtil } from '@utils';
 import React, { useEffect, useState } from 'react';
 import {
     Image, StyleSheet, Text, View
@@ -7,15 +16,6 @@ import { FlatList, TouchableWithoutFeedback } from 'react-native-gesture-handler
 import ImageView from 'react-native-image-viewing';
 import { SceneMap } from 'react-native-tab-view';
 import { useSelector } from 'react-redux';
-import {
-    CenterLoader,
-    CustomButton, CustomInput, IconCustom, NoteText, TopTabBar
-} from '../../components/uiComponents';
-import {
-    IconFamily, NowTheme, Rx, ScreenName
-} from '../../constants';
-import { MediaHelpers, ToastHelpers } from '../../helpers';
-import { rxUtil } from '../../utils';
 
 const {
     FONT: {

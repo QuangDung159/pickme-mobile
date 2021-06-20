@@ -1,3 +1,16 @@
+import { ExpoNotification } from '@components/businessComponents';
+import { CenterLoader, CustomButton, CustomInput } from '@components/uiComponents';
+import {
+    IconFamily,
+    Images, NowTheme, Rx, ScreenName
+} from '@constants';
+import { ToastHelpers } from '@helpers';
+import {
+    setIsSignInOtherDeviceStore,
+    setToken
+} from '@redux/Actions';
+import { UserServices } from '@services';
+import { rxUtil } from '@utils';
 import * as SecureStore from 'expo-secure-store';
 import React, { useState } from 'react';
 import {
@@ -9,19 +22,6 @@ import {
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useDispatch, useSelector } from 'react-redux';
-import { ExpoNotification } from '../../components/businessComponents';
-import { CenterLoader, CustomButton, CustomInput } from '../../components/uiComponents';
-import {
-    IconFamily,
-    Images, NowTheme, Rx, ScreenName
-} from '../../constants';
-import { ToastHelpers } from '../../helpers';
-import {
-    setIsSignInOtherDeviceStore,
-    setToken
-} from '../../redux/Actions';
-import { UserServices } from '../../services';
-import { rxUtil } from '../../utils';
 
 const {
     FONT: {

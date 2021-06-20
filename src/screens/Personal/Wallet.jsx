@@ -1,14 +1,14 @@
+import { CenterLoader, CustomButton, IconCustom } from '@components/uiComponents';
+import {
+    IconFamily, NowTheme, ScreenName
+} from '@constants';
+import { CommonHelpers, ToastHelpers } from '@helpers';
+import { setCurrentUser, setListCashHistoryStore } from '@redux/Actions';
+import { CashServices } from '@services';
 import React, { useEffect, useState } from 'react';
 import { RefreshControl, Text, View } from 'react-native';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
-import { CenterLoader, CustomButton, IconCustom } from '../../components/uiComponents';
-import {
-    IconFamily, NowTheme, ScreenName
-} from '../../constants';
-import { CommonHelpers, ToastHelpers } from '../../helpers';
-import { setCurrentUser, setListCashHistoryStore } from '../../redux/Actions';
-import { CashServices } from '../../services';
 
 const {
     FONT: {

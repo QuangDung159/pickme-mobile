@@ -11,9 +11,9 @@ import Toast from 'react-native-toast-message';
 import { Provider } from 'react-redux';
 import { ExpoNotification } from '@components/businessComponents';
 import { IconCustom } from '@components/uiComponents';
-import { IconFamily, Images, NowTheme } from '@constants';
+import { IconFamily, Images, NowTheme } from '@constants/index';
 import Main from '@containers/Main';
-import { ToastHelpers } from '@helpers';
+import { ToastHelpers } from '@helpers/index';
 import store from '@redux/Store';
 
 const {

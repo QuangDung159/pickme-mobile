@@ -1,10 +1,10 @@
+import IconCustom from '@components/uiComponents/IconCustom';
+import { IconFamily, NowTheme } from '@constants/index';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {
     StyleSheet, Text, TouchableOpacity, View
 } from 'react-native';
-import { IconFamily, NowTheme } from '../../../constants';
-import IconCustom from '../IconCustom';
 
 const {
     FONT: {

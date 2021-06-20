@@ -1,12 +1,12 @@
+import { CenterLoader } from '@components/uiComponents';
+import { NowTheme, Rx, ScreenName } from '@constants';
+import { ToastHelpers } from '@helpers';
+import { setListNotification, setNumberNotificationUnread } from '@redux/Actions';
+import { rxUtil } from '@utils';
 import React, { useEffect, useState } from 'react';
 import { RefreshControl, Text, View } from 'react-native';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
-import { CenterLoader } from '../../components/uiComponents';
-import { NowTheme, Rx, ScreenName } from '../../constants';
-import { ToastHelpers } from '../../helpers';
-import { setListNotification, setNumberNotificationUnread } from '../../redux/Actions';
-import { rxUtil } from '../../utils';
 import NotificationItem from './NotificationItem';
 
 const {

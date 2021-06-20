@@ -1,7 +1,7 @@
+import { rxUtil } from '@utils';
 import * as ImagePicker from 'expo-image-picker';
 import FormData from 'form-data';
 import uuid from 'react-native-uuid';
-import { rxUtil } from '../utils';
 
 const uploadImage = (uri, uploadUrl, token, successCallBack, errorCallBack, catchCallBack, imgTitle = 'image') => {
     const myuuid = uuid.v4();

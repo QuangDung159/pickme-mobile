@@ -1,6 +1,6 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
-import { Rx } from '../constants';
-import RxUtil from '../utils/Rx.Util';
+import { Rx } from '@constants';
+import RxUtil from '@utils/Rx.Util';
 
 const handelResByStatus = (response) => {
     const {

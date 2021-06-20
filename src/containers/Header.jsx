@@ -1,3 +1,10 @@
+import { CustomInput, IconCustom, Tabs } from '@components/uiComponents';
+import {
+    IconFamily, NowTheme, Rx, ScreenName
+} from '@constants/index';
+import { ToastHelpers } from '@helpers/index';
+import { resetStoreSignOut, setListNotification, setNumberNotificationUnread } from '@redux/Actions';
+import { rxUtil } from '@utils/index';
 import * as SecureStore from 'expo-secure-store';
 import {
     NavBar
@@ -8,13 +15,6 @@ import {
 } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
-import { CustomInput, IconCustom, Tabs } from '../components/uiComponents';
-import {
-    IconFamily, NowTheme, Rx, ScreenName
-} from '../constants';
-import { ToastHelpers } from '../helpers';
-import { resetStoreSignOut, setListNotification, setNumberNotificationUnread } from '../redux/Actions';
-import { rxUtil } from '../utils';
 
 const iPhoneX = Platform.OS === 'ios';
 const {

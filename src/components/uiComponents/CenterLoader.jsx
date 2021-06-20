@@ -1,6 +1,6 @@
+import { NowTheme } from '@constants/index';
 import React from 'react';
 import { ActivityIndicator, View } from 'react-native';
-import { NowTheme } from '../../constants';
 
 const { COLORS } = NowTheme;
 

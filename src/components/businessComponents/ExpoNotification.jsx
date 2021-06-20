@@ -1,13 +1,5 @@
-import Constants from 'expo-constants';
-import * as Notifications from 'expo-notifications';
-import { useEffect, useRef } from 'react';
-import {
-    Alert,
-    Platform
-} from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import { Rx, ScreenName } from '../../constants';
-import { ToastHelpers } from '../../helpers';
+import { Rx, ScreenName } from '@constants/index';
+import { ToastHelpers } from '@helpers/index';
 import {
     setCurrentUser,
     setExpoToken,
@@ -16,9 +8,17 @@ import {
     setListNotification,
     setNumberNotificationUnread,
     setPersonTabActiveIndex
-} from '../../redux/Actions';
-import { CashServices } from '../../services';
-import { rxUtil } from '../../utils';
+} from '@redux/Actions';
+import { CashServices } from '@services/index';
+import { rxUtil } from '@utils/index';
+import Constants from 'expo-constants';
+import * as Notifications from 'expo-notifications';
+import { useEffect, useRef } from 'react';
+import {
+    Alert,
+    Platform
+} from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 
 Notifications.setNotificationHandler({
     handleNotification: async () => ({

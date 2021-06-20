@@ -1,15 +1,15 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
+import { NowTheme, Rx, ScreenName } from '@constants';
 import { NO_AVATAR_URL } from '@env';
+import { ToastHelpers } from '@helpers';
+import { setPersonTabActiveIndex } from '@redux/Actions';
+import { rxUtil } from '@utils';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {
     Image, StyleSheet, Text, TouchableWithoutFeedback, View
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { NowTheme, Rx, ScreenName } from '../../constants';
-import { ToastHelpers } from '../../helpers';
-import { setPersonTabActiveIndex } from '../../redux/Actions';
-import { rxUtil } from '../../utils';
 
 const {
     FONT: {

@@ -1,12 +1,12 @@
+import { CenterLoader, CustomButton, CustomInput } from '@components/uiComponents';
+import { NowTheme, Rx } from '@constants';
+import { ToastHelpers } from '@helpers';
+import { setCurrentUser, setPersonTabActiveIndex } from '@redux/Actions';
+import { rxUtil } from '@utils';
 import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
-import { CenterLoader, CustomButton, CustomInput } from '../../components/uiComponents';
-import { NowTheme, Rx } from '../../constants';
-import { ToastHelpers } from '../../helpers';
-import { setCurrentUser, setPersonTabActiveIndex } from '../../redux/Actions';
-import { rxUtil } from '../../utils';
 
 const { SIZES, COLORS } = NowTheme;
 

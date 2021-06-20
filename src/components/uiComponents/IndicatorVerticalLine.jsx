@@ -1,7 +1,7 @@
+import { NowTheme } from '@constants/index';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { NowTheme } from '../../constants';
 
 const { COLORS } = NowTheme;
 

@@ -1,8 +1,8 @@
+import { NowTheme } from '@constants/index';
 import React, { PureComponent } from 'react';
 import {
     Animated, FlatList, StyleSheet, View
 } from 'react-native';
-import { NowTheme } from '../../constants';
 
 const {
     FONT: {

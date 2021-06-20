@@ -1,17 +1,17 @@
+import {
+    CenterLoader, CustomButton, Line
+} from '@components/uiComponents';
+import {
+    DocumentType, NowTheme, Rx, ScreenName, VerificationStatus
+} from '@constants';
+import { MediaHelpers, ToastHelpers } from '@helpers';
+import { setCurrentUser, setPersonTabActiveIndex, setVerificationStore } from '@redux/Actions';
+import { rxUtil } from '@utils';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import ImageScalable from 'react-native-scalable-image';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-    CenterLoader, CustomButton, Line
-} from '../../components/uiComponents';
-import {
-    DocumentType, NowTheme, Rx, ScreenName, VerificationStatus
-} from '../../constants';
-import { MediaHelpers, ToastHelpers } from '../../helpers';
-import { setCurrentUser, setPersonTabActiveIndex, setVerificationStore } from '../../redux/Actions';
-import { rxUtil } from '../../utils';
 
 const {
     FONT: {

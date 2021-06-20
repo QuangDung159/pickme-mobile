@@ -1,5 +1,15 @@
 /* eslint-disable camelcase */
+import { CustomCalendar } from '@components/businessComponents';
+import {
+    CenterLoader, CustomButton, CustomInput, CustomModal, GooglePlacesInput, IconCustom, Line
+} from '@components/uiComponents';
+import {
+    DateTimeConst, IconFamily, NowTheme, Rx, ScreenName
+} from '@constants';
+import { CommonHelpers, ToastHelpers } from '@helpers';
 import { Picker } from '@react-native-picker/picker';
+import { setListBookingStore, setPersonTabActiveIndex } from '@redux/Actions';
+import { rxUtil } from '@utils';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import {
@@ -9,16 +19,6 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import ScrollPicker from 'react-native-wheel-scroll-picker';
 import { useDispatch, useSelector } from 'react-redux';
-import { CustomCalendar } from '../../components/businessComponents';
-import {
-    CenterLoader, CustomButton, CustomInput, CustomModal, GooglePlacesInput, IconCustom, Line
-} from '../../components/uiComponents';
-import {
-    DateTimeConst, IconFamily, NowTheme, Rx, ScreenName
-} from '../../constants';
-import { CommonHelpers, ToastHelpers } from '../../helpers';
-import { setListBookingStore, setPersonTabActiveIndex } from '../../redux/Actions';
-import { rxUtil } from '../../utils';
 
 const {
     FONT: {

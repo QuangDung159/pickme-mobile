@@ -1,16 +1,16 @@
+import { CenterLoader, Line } from '@components/uiComponents';
+import {
+    BookingStatus, NowTheme, ScreenName
+} from '@constants';
+import { ToastHelpers } from '@helpers';
+import { setListBookingStore } from '@redux/Actions';
+import { BookingServices } from '@services';
 import groupBy from 'lodash/groupBy';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { RefreshControl, Text, View } from 'react-native';
 import { ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
-import { CenterLoader, Line } from '../../../components/uiComponents';
-import {
-    BookingStatus, NowTheme, ScreenName
-} from '../../../constants';
-import { ToastHelpers } from '../../../helpers';
-import { setListBookingStore } from '../../../redux/Actions';
-import { BookingServices } from '../../../services';
 
 const {
     FONT: {

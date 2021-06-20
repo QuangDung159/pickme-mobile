@@ -1,5 +1,12 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
+import { CardImage } from '@components/businessComponents';
+import { CenterLoader, CustomButton } from '@components/uiComponents';
+import {
+    IconFamily, NowTheme, Rx, ScreenName
+} from '@constants';
 import { NO_AVATAR_URL } from '@env';
+import { CommonHelpers, ToastHelpers } from '@helpers';
+import { rxUtil } from '@utils';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
@@ -9,13 +16,6 @@ import {
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import ImageView from 'react-native-image-viewing';
 import { useSelector } from 'react-redux';
-import { CardImage } from '../../components/businessComponents';
-import { CenterLoader, CustomButton } from '../../components/uiComponents';
-import {
-    IconFamily, NowTheme, Rx, ScreenName
-} from '../../constants';
-import { CommonHelpers, ToastHelpers } from '../../helpers';
-import { rxUtil } from '../../utils';
 import UserInfoSection from '../Personal/UserInformation/UserInfoSection';
 
 const {

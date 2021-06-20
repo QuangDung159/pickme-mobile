@@ -1,12 +1,12 @@
+import { CustomButton, CustomModal } from '@components/uiComponents';
+import { NowTheme, Rx, ScreenName } from '@constants';
+import { ToastHelpers } from '@helpers';
 import { Picker } from '@react-native-picker/picker';
+import { setPersonTabActiveIndex, setShowLoaderStore } from '@redux/Actions';
+import { rxUtil } from '@utils';
 import React, { useState } from 'react';
 import { Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { CustomButton, CustomModal } from '../../components/uiComponents';
-import { NowTheme, Rx, ScreenName } from '../../constants';
-import { ToastHelpers } from '../../helpers';
-import { setPersonTabActiveIndex, setShowLoaderStore } from '../../redux/Actions';
-import { rxUtil } from '../../utils';
 
 const {
     FONT: {

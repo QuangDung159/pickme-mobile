@@ -1,15 +1,15 @@
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
+import { Line } from '@components/uiComponents';
+import { GraphQueryString, NowTheme, ScreenName } from '@constants';
+import { ToastHelpers } from '@helpers';
+import { setListConversation, setNumberMessageUnread } from '@redux/Actions';
+import { socketRequestUtil } from '@utils';
 import React, { useEffect, useState } from 'react';
 import {
     Image, RefreshControl, Text, View
 } from 'react-native';
 import { FlatList, ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
-import { Line } from '../../components/uiComponents';
-import { GraphQueryString, NowTheme, ScreenName } from '../../constants';
-import { ToastHelpers } from '../../helpers';
-import { setListConversation, setNumberMessageUnread } from '../../redux/Actions';
-import { socketRequestUtil } from '../../utils';
 
 const {
     FONT: {

@@ -1,3 +1,9 @@
+import { CenterLoader, CustomButton } from '@components/uiComponents';
+import {
+    Images, NowTheme, ScreenName, Utils
+} from '@constants';
+import { setIsSignInOtherDeviceStore, setNavigation, setToken } from '@redux/Actions';
+import { UserServices } from '@services';
 import Constants from 'expo-constants';
 import * as SecureStore from 'expo-secure-store';
 import React, { useEffect, useState } from 'react';
@@ -5,12 +11,6 @@ import {
     ImageBackground, Platform, StatusBar, StyleSheet, Text, View
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { CenterLoader, CustomButton } from '../../components/uiComponents';
-import {
-    Images, NowTheme, ScreenName, Utils
-} from '../../constants';
-import { setIsSignInOtherDeviceStore, setNavigation, setToken } from '../../redux/Actions';
-import { UserServices } from '../../services';
 
 const {
     FONT: {

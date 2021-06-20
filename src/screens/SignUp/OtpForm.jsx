@@ -1,14 +1,14 @@
+import { CustomButton, CustomInput } from '@components/uiComponents';
+import {
+    IconFamily, NowTheme, Rx, ScreenName
+} from '@constants';
+import { ToastHelpers } from '@helpers';
+import { setIsSignInOtherDeviceStore, setShowLoaderStore, setToken } from '@redux/Actions';
+import { UserServices } from '@services';
+import { rxUtil } from '@utils';
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { CustomButton, CustomInput } from '../../components/uiComponents';
-import {
-    IconFamily, NowTheme, Rx, ScreenName
-} from '../../constants';
-import { ToastHelpers } from '../../helpers';
-import { setIsSignInOtherDeviceStore, setShowLoaderStore, setToken } from '../../redux/Actions';
-import { UserServices } from '../../services';
-import { rxUtil } from '../../utils';
 
 const { SIZES, COLORS } = NowTheme;
 

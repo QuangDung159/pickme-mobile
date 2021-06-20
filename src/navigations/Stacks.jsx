@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { NowTheme, ScreenName } from '../constants';
+import { NowTheme, ScreenName } from '@constants/index';
 import {
     BookingDetailScreen,
     CashInScreen,

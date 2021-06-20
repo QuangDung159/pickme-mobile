@@ -1,10 +1,10 @@
+import { TopTabBar } from '@components/uiComponents';
+import { ScreenName } from '@constants';
+import { setPersonTabActiveIndex } from '@redux/Actions';
 import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import { SceneMap } from 'react-native-tab-view';
 import { useDispatch, useSelector } from 'react-redux';
-import { TopTabBar } from '../../components/uiComponents';
-import { ScreenName } from '../../constants';
-import { setPersonTabActiveIndex } from '../../redux/Actions';
 import BookingList from './BookingList';
 import UserInformation from './UserInformation';
 import Wallet from './Wallet';

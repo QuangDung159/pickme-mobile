@@ -1,3 +1,9 @@
+import {
+    CenterLoader
+} from '@components/uiComponents';
+import {
+    Images, NowTheme
+} from '@constants';
 import React, { useState } from 'react';
 import {
     ImageBackground,
@@ -7,12 +13,6 @@ import {
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useSelector } from 'react-redux';
-import {
-    CenterLoader
-} from '../../components/uiComponents';
-import {
-    Images, NowTheme
-} from '../../constants';
 import ModalDisclaimer from './ModalDisclaimer';
 import OtpForm from './OtpForm';
 import PhoneForm from './PhoneForm';

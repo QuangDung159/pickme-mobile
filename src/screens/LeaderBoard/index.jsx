@@ -1,12 +1,12 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
+import { IconCustom, TopTabBar } from '@components/uiComponents';
+import {
+    IconFamily, NowTheme, Rx, ScreenName
+} from '@constants';
+import { ToastHelpers } from '@helpers';
 import React, { useEffect, useState } from 'react';
 import { SceneMap } from 'react-native-tab-view';
 import { useSelector } from 'react-redux';
-import { IconCustom, TopTabBar } from '../../components/uiComponents';
-import {
-    IconFamily, NowTheme, Rx, ScreenName
-} from '../../constants';
-import { ToastHelpers } from '../../helpers';
 import LeaderBoadViewByType from './LeaderBoadViewByType';
 
 const {

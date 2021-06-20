@@ -12,16 +12,16 @@ import React, { useEffect } from 'react';
 import { AppState, View } from 'react-native';
 import uuid from 'react-native-uuid';
 import { useDispatch, useSelector } from 'react-redux';
-import { Listener } from '../components/businessComponents';
-import { Rx } from '../constants';
-import { ToastHelpers } from '../helpers';
-import Stacks from '../navigations/Stacks';
+import { Listener } from '@components/businessComponents';
+import { Rx } from '@constants/index';
+import { ToastHelpers } from '@helpers/index';
+import Stacks from '@navigations/Stacks';
 import {
     setDeviceIdStore,
     setDeviceTimezone, setIsSignInOtherDeviceStore, setListNotification, setMessageListened, setNumberNotificationUnread
-} from '../redux/Actions';
-import { UserServices } from '../services';
-import { rxUtil } from '../utils';
+} from '@redux/Actions';
+import { UserServices } from '@services';
+import { rxUtil } from '@utils';
 
 export default function Main() {
     const listNotification = useSelector((state) => state.notificationReducer.listNotification);

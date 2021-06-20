@@ -7,15 +7,15 @@ import { AirbnbRating } from 'react-native-ratings';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     CenterLoader, CustomButton, CustomCheckbox, CustomInput, CustomModal, Line
-} from '../../components/uiComponents';
+} from '@components/uiComponents';
 import {
     BookingStatus, NowTheme, Rx, ScreenName
-} from '../../constants';
-import BookingProgressFlow from '../../containers/BookingProgressFlow';
-import { ToastHelpers } from '../../helpers';
-import { setListBookingStore, setPersonTabActiveIndex, setShowLoaderStore } from '../../redux/Actions';
-import { BookingServices } from '../../services';
-import { rxUtil } from '../../utils';
+} from '@constants';
+import BookingProgressFlow from '@containers/BookingProgressFlow';
+import { ToastHelpers } from '@helpers';
+import { setListBookingStore, setPersonTabActiveIndex, setShowLoaderStore } from '@redux/Actions';
+import { BookingServices } from '@services';
+import { rxUtil } from '@utils';
 import CardBooking from './CardBooking';
 import ReasonCancelBookingModal from './ReasonCancelBookingModal';
 

@@ -1,4 +1,11 @@
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
+import { CenterLoader, CustomInput, IconCustom } from '@components/uiComponents';
+import {
+    GraphQueryString, IconFamily, NowTheme, ScreenName
+} from '@constants';
+import { ToastHelpers } from '@helpers';
+import { setChattingWith, setNumberMessageUnread } from '@redux/Actions';
+import { socketRequestUtil } from '@utils';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import {
@@ -6,13 +13,6 @@ import {
 } from 'react-native';
 import { FlatList, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
-import { CenterLoader, CustomInput, IconCustom } from '../../components/uiComponents';
-import {
-    GraphQueryString, IconFamily, NowTheme, ScreenName
-} from '../../constants';
-import { ToastHelpers } from '../../helpers';
-import { setChattingWith, setNumberMessageUnread } from '../../redux/Actions';
-import { socketRequestUtil } from '../../utils';
 
 const {
     FONT: {

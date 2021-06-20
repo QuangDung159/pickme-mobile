@@ -1,6 +1,6 @@
+import { NowTheme } from '@constants/index';
 import React, { PureComponent } from 'react';
 import { Text, View } from 'react-native';
-import { NowTheme } from '../../constants';
 
 const {
     FONT: {

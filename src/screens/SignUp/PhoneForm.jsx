@@ -1,11 +1,11 @@
+import { CustomButton, CustomCheckbox, CustomInput } from '@components/uiComponents';
+import { NowTheme, Rx } from '@constants';
+import { ToastHelpers } from '@helpers';
+import { setShowLoaderStore } from '@redux/Actions';
+import { rxUtil } from '@utils';
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { CustomButton, CustomCheckbox, CustomInput } from '../../components/uiComponents';
-import { NowTheme, Rx } from '../../constants';
-import { ToastHelpers } from '../../helpers';
-import { setShowLoaderStore } from '../../redux/Actions';
-import { rxUtil } from '../../utils';
 
 const {
     FONT: {
