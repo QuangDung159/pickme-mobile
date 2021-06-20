@@ -9,7 +9,7 @@ import {
     setNumberNotificationUnread,
     setPersonTabActiveIndex
 } from '@redux/Actions';
-import { CashServices } from '@services/index';
+import { BookingServices, CashServices } from '@services/index';
 import { rxUtil } from '@utils/index';
 import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
@@ -154,22 +154,13 @@ export default function ExpoNotification() {
         );
     };
 
-    const getListBooking = () => {
-        const pagingStr = '?pageIndex=1&pageSize=100';
+    const getListBooking = async () => {
+        const result = await BookingServices.fetchListBookingAsync();
+        const { data } = result;
 
-        rxUtil(
-            `${Rx.BOOKING.GET_MY_BOOKING_AS_CUSTOMER}${pagingStr}`,
-            'GET',
-            null,
-            {
-                Authorization: token
-            },
-            (res) => {
-                dispatch(setListBookingStore(res.data.data));
-            },
-            (res) => ToastHelpers.renderToast(res.data.message, 'error'),
-            (res) => ToastHelpers.renderToast(res.data.message, 'error')
-        );
+        if (data) {
+            dispatch(setListBookingStore(data.data));
+        }
     };
 
     const handleNavigation = (navigationId, navigationType) => {

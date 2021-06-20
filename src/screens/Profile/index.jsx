@@ -2,11 +2,11 @@
 import { CardImage } from '@components/businessComponents';
 import { CenterLoader, CustomButton } from '@components/uiComponents';
 import {
-    IconFamily, NowTheme, Rx, ScreenName
+    IconFamily, NowTheme, ScreenName
 } from '@constants/index';
 import { NO_AVATAR_URL } from '@env';
 import { CommonHelpers, ToastHelpers } from '@helpers/index';
-import { rxUtil } from '@utils/index';
+import { BookingServices } from '@services/index';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
@@ -34,7 +34,6 @@ export default function Profile({ route, navigation }) {
     const [imageIndex, setImageIndex] = useState(0);
     const [listImageFullscreen, setListImageFullscreen] = useState([]);
 
-    const token = useSelector((state) => state.userReducer.token);
     const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
 
     useEffect(
@@ -54,52 +53,36 @@ export default function Profile({ route, navigation }) {
         }, [isSignInOtherDeviceStore]
     );
 
-    const getPartnerInfo = () => {
+    const getPartnerInfo = async () => {
         const {
             params: {
                 userId
             }
         } = route;
 
-        rxUtil(
-            `${Rx.PARTNER.PARTNER_DETAIL}/${userId}`,
-            'GET',
-            null,
-            {
-                Authorization: token
-            },
-            (res) => {
-                setIsShowSpinner(false);
-                const {
-                    data, data: {
-                        posts
-                    }
-                } = res.data;
-                setPartnerInfo(data);
+        const result = await BookingServices.fetchPartnerInfoAsync(userId);
+        const { data } = result;
 
-                const listImage = [
-                    {
-                        uri: data.url,
-                    }
-                ];
+        if (data) {
+            setIsShowSpinner(false);
+            setPartnerInfo(data.data);
+            const { posts } = data.data;
 
-                posts.forEach((post) => {
-                    listImage.push({
-                        uri: post.url
-                    });
+            const listImage = [
+                {
+                    uri: data.url,
+                }
+            ];
+
+            posts.forEach((post) => {
+                listImage.push({
+                    uri: post.url
                 });
+            });
 
-                setListImageFullscreen(listImage);
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
-                setIsShowSpinner(false);
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
-                setIsShowSpinner(false);
-            }
-        );
+            setListImageFullscreen(listImage);
+        }
+        setIsShowSpinner(false);
     };
 
     const renderSubInfo = () => {

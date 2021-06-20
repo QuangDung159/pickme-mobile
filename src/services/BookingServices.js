@@ -32,11 +32,20 @@ const fetchListBookingAsync = async (pageIndex = 1, pageSize = 100) => {
     return handelResByStatus(result);
 };
 
+const fetchPartnerInfoAsync = async (partnerId) => {
+    const result = await RxUtil(
+        `${Rx.PARTNER.PARTNER_DETAIL}/${partnerId}`,
+        'GET'
+    );
+    return handelResByStatus(result);
+};
+
 const cancelBooking = () => {
 
 };
 
 export default {
     fetchListBookingAsync,
-    cancelBooking
+    cancelBooking,
+    fetchPartnerInfoAsync
 };

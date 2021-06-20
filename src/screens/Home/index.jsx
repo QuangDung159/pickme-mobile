@@ -11,10 +11,11 @@ import {
     setListBookingStore,
     setListConversation, setNumberMessageUnread, setPickMeInfoStore
 } from '@redux/Actions';
+import { BookingServices, UserServices } from '@services/index';
 import { rxUtil, socketRequestUtil } from '@utils/index';
 import React, { useEffect, useState } from 'react';
 import {
-    FlatList, Image, RefreshControl, StyleSheet, Text, View
+    FlatList, Image, RefreshControl, SafeAreaView, StyleSheet, Text, View
 } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import ImageScalable from 'react-native-scalable-image';
@@ -112,32 +113,17 @@ export default function Home({ navigation }) {
         }, [isSignInOtherDeviceStore]
     );
 
-    const fetchListBooking = () => {
-        const pagingStr = '?pageIndex=1&pageSize=100';
-
-        rxUtil(
-            `${Rx.BOOKING.GET_MY_BOOKING_AS_CUSTOMER}${pagingStr}`,
-            'GET',
-            null,
-            {
-                Authorization: token
-            },
-            (res) => {
-                dispatch(setListBookingStore(res.data.data));
-                setIsShowSpinner(false);
-                setRefreshing(false);
-            },
-            (res) => {
-                setIsShowSpinner(false);
-                setRefreshing(false);
-                ToastHelpers.renderToast(res.data.message, 'error');
-            },
-            (res) => {
-                setIsShowSpinner(false);
-                setRefreshing(false);
-                ToastHelpers.renderToast(res.data.message, 'error');
-            }
-        );
+    const fetchListBooking = async () => {
+        const result = await BookingServices.fetchListBookingAsync();
+        const { data } = result;
+        if (data) {
+            dispatch(setListBookingStore(data.data));
+            setIsShowSpinner(false);
+            setRefreshing(false);
+        } else {
+            setIsShowSpinner(false);
+            setRefreshing(false);
+        }
     };
 
     const fetchPickMeInfo = () => {
@@ -164,26 +150,14 @@ export default function Home({ navigation }) {
         );
     };
 
-    const fetchCurrentUserInfo = () => {
-        rxUtil(
-            Rx.USER.CURRENT_USER_INFO,
-            'GET',
-            null,
-            {
-                Authorization: token
-            },
-            (res) => {
-                dispatch(setCurrentUser(res.data.data));
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
-                setIsShowSpinner(false);
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
-                setIsShowSpinner(false);
-            }
-        );
+    const fetchCurrentUserInfo = async () => {
+        const result = await UserServices.fetchCurrentUserInfoAsync();
+        const { data } = result;
+
+        if (data) {
+            dispatch(setCurrentUser(data.data));
+        }
+        setIsShowSpinner(false);
     };
 
     const getConversationByMessage = (message, listConversationSource) => {
@@ -401,7 +375,7 @@ export default function Home({ navigation }) {
 
     try {
         return (
-            <>
+            <SafeAreaView>
                 {isShowSpinner ? (
                     <View
                         middle
@@ -421,7 +395,7 @@ export default function Home({ navigation }) {
                         {renderArticles()}
                     </View>
                 )}
-            </>
+            </SafeAreaView>
         );
     } catch (exception) {
         console.log('exception :>> ', exception);

@@ -1,12 +1,11 @@
 import { CenterLoader, CustomButton, CustomInput } from '@components/uiComponents';
-import { IconFamily, NowTheme, Rx } from '@constants/index';
+import { IconFamily, NowTheme } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
-import { rxUtil } from '@utils/index';
+import UserServices from '@services/UserServices';
 import * as SecureStore from 'expo-secure-store';
 import React, { useState } from 'react';
 import { View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { useSelector } from 'react-redux';
 
 const { SIZES, COLORS } = NowTheme;
 
@@ -20,8 +19,6 @@ export default function ChangePasswordForm() {
     const [isShowNewPassword, setIsShowNewPassword] = useState('');
 
     const [isShowSpinner, setIsShowSpinner] = useState(false);
-
-    const token = useSelector((state) => state.userReducer.token);
 
     const validateChangePasswordForm = async () => {
         const password = await SecureStore.getItemAsync('password');
@@ -39,39 +36,27 @@ export default function ChangePasswordForm() {
         return true;
     };
 
-    const onSubmitChangePassword = () => {
+    const onSubmitChangePassword = async () => {
         if (!validateChangePasswordForm) return;
 
         setIsShowSpinner(true);
-        rxUtil(
-            Rx.USER.SUBMIT_CHANGE_PASSWORD,
-            'POST',
-            {
-                currentPassword,
-                newPassword,
-                confirmPassword: reNewPassword
-            },
-            {
-                Authorization: token
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'success');
-                SecureStore.setItemAsync('password', newPassword);
 
-                setNewPassword('');
-                setCurrentPassword('');
-                setReNewPassword('');
-                setIsShowSpinner(false);
-            },
-            (res) => {
-                setIsShowSpinner(false);
-                ToastHelpers.renderToast(res.data.message, 'error');
-            },
-            (res) => {
-                setIsShowSpinner(false);
-                ToastHelpers.renderToast(res.data.message, 'error');
-            }
-        );
+        const result = await UserServices.submitChangePasswordAsync({
+            currentPassword,
+            newPassword,
+            confirmPassword: reNewPassword
+        });
+
+        const { data } = result;
+        if (data) {
+            SecureStore.setItemAsync('password', newPassword);
+            setNewPassword('');
+            setCurrentPassword('');
+            setReNewPassword('');
+            ToastHelpers.renderToast(data.message, 'success');
+        }
+
+        setIsShowSpinner(false);
     };
 
     const renderFormNewPassword = () => (

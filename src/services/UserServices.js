@@ -40,7 +40,45 @@ const fetchCurrentUserInfoAsync = async () => {
     return handelResByStatus(result);
 };
 
+const fetchVerificationAsync = async () => {
+    const result = await RxUtil(
+        Rx.USER.GET_VERIFICATION_DETAIL,
+        'GET'
+    );
+    return handelResByStatus(result);
+};
+
+const submitVerificationAsync = async () => {
+    const result = await RxUtil(
+        Rx.USER.SUBMIT_VERIFICATION,
+        'POST'
+    );
+    return handelResByStatus(result);
+};
+
+const submitChangePasswordAsync = async (body) => {
+    const result = await RxUtil(
+        Rx.USER.SUBMIT_CHANGE_PASSWORD,
+        'POST',
+        body
+    );
+    return handelResByStatus(result);
+};
+
+const submitUpdateInfoAsync = async (body) => {
+    const result = await RxUtil(
+        Rx.USER.UPDATE_USER_INFO,
+        'POST',
+        body
+    );
+    return handelResByStatus(result);
+};
+
 export default {
     loginAsync,
-    fetchCurrentUserInfoAsync
+    fetchCurrentUserInfoAsync,
+    fetchVerificationAsync,
+    submitVerificationAsync,
+    submitChangePasswordAsync,
+    submitUpdateInfoAsync
 };

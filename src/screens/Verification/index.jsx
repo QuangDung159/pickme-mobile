@@ -6,7 +6,7 @@ import {
 } from '@constants/index';
 import { MediaHelpers, ToastHelpers } from '@helpers/index';
 import { setCurrentUser, setPersonTabActiveIndex, setVerificationStore } from '@redux/Actions';
-import { rxUtil } from '@utils/index';
+import { UserServices } from '@services/index';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -35,10 +35,6 @@ export default function Verification({ navigation }) {
 
     const dispatch = useDispatch();
 
-    const headers = {
-        Authorization: token
-    };
-
     useEffect(
         () => {
             if (!verificationStore?.verificationDocuments || verificationStore.verificationDocuments.length === 0) {
@@ -60,20 +56,15 @@ export default function Verification({ navigation }) {
         }, [isSignInOtherDeviceStore]
     );
 
-    const fetchVerification = () => {
-        rxUtil(
-            Rx.USER.GET_VERIFICATION_DETAIL,
-            'GET',
-            null,
-            headers,
-            (res) => {
-                dispatch(setVerificationStore(res.data.data));
-                const listDocUrl = res.data.data.verificationDocuments;
-                fillImageFromAPI(listDocUrl);
-            },
-            (res) => ToastHelpers.renderToast(res.data.message, 'error'),
-            (res) => ToastHelpers.renderToast(res.data.message, 'error')
-        );
+    const fetchVerification = async () => {
+        const result = await UserServices.fetchVerificationAsync();
+        const { data } = result;
+
+        if (data) {
+            dispatch(setVerificationStore(data.data));
+            const listDocUrl = data.data.verificationDocuments;
+            fillImageFromAPI(listDocUrl);
+        }
     };
 
     const renderUploadDocForm = (docType, buttonText) => {
@@ -183,21 +174,16 @@ export default function Verification({ navigation }) {
         }
     };
 
-    const submitVerificationRequest = () => {
-        rxUtil(
-            Rx.USER.SUBMIT_VERIFICATION,
-            'POST',
-            null,
-            headers,
-            () => {
-                dispatch(setCurrentUser({
-                    ...currentUser,
-                    verifyStatus: VerificationStatus.IN_PROCESS
-                }));
-            },
-            (res) => ToastHelpers.renderToast(res.data.message, 'error'),
-            (res) => ToastHelpers.renderToast(res.data.message, 'error')
-        );
+    const submitVerificationRequest = async () => {
+        const result = await UserServices.submitVerificationAsync();
+        const { data } = result;
+
+        if (data) {
+            dispatch(setCurrentUser({
+                ...currentUser,
+                verifyStatus: VerificationStatus.IN_PROCESS
+            }));
+        }
     };
 
     const uploadDoc = (docType, imageLocalUrl) => {
@@ -216,18 +202,15 @@ export default function Verification({ navigation }) {
         );
     };
 
-    const onGetCurrentUserData = () => {
-        rxUtil(
-            Rx.USER.CURRENT_USER_INFO, 'GET', '', headers,
-            (res) => {
-                dispatch(setCurrentUser(res.data.data));
-                navigation.navigate(ScreenName.PERSONAL);
-                dispatch(setPersonTabActiveIndex(0));
-            },
-            () => {},
-            (res) => ToastHelpers.renderToast(res.data.message, 'error'),
-            (res) => ToastHelpers.renderToast(res.data.message, 'error')
-        );
+    const onGetCurrentUserData = async () => {
+        const result = await UserServices.fetchCurrentUserInfoAsync();
+        const { data } = result;
+
+        if (data) {
+            dispatch(setCurrentUser(data.data));
+            navigation.navigate(ScreenName.PERSONAL);
+            dispatch(setPersonTabActiveIndex(0));
+        }
     };
 
     const onSubmitUploadList = () => {
