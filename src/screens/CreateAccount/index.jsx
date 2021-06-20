@@ -31,8 +31,6 @@ const {
 } = NowTheme;
 
 export default function CreateAccount(props) {
-    const token = useSelector((state) => state.userReducer.token);
-
     const dispatch = useDispatch();
 
     const { navigation } = props;
@@ -84,7 +82,6 @@ export default function CreateAccount(props) {
         MediaHelpers.uploadImage(
             uri,
             Rx.USER.UPDATE_AVATAR,
-            token,
             (res) => {
                 ToastHelpers.renderToast(
                     res?.data?.message || 'Tải ảnh lên thành công!', 'success'
@@ -99,10 +96,6 @@ export default function CreateAccount(props) {
                 );
                 setIsShowSpinner(false);
             },
-            () => {
-                ToastHelpers.renderToast('Tải ảnh lên thất bại! Vui lòng thử lại.', 'error');
-                setIsShowSpinner(false);
-            }
         );
     };
 

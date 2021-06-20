@@ -1,11 +1,11 @@
-import { rxUtil } from '@utils/index';
+import RxUtil from '@utils/Rx.Util';
 import * as ImagePicker from 'expo-image-picker';
+import * as SecureStore from 'expo-secure-store';
 import FormData from 'form-data';
-import uuid from 'react-native-uuid';
 
-const uploadImage = (uri, uploadUrl, token, successCallBack, errorCallBack, catchCallBack, imgTitle = 'image') => {
-    const myuuid = uuid.v4();
-    const filename = `${uri.split('/').pop()}.${myuuid}`;
+const uploadImage = async (uri, uploadUrl, onSuccess, onFail, imgTitle = 'image') => {
+    const apiTokenLocal = await SecureStore.getItemAsync('api_token');
+    const filename = `${uri.split('/').pop()}`;
 
     // Infer the type of the image
     const match = /\.(\w+)$/.exec(filename);
@@ -19,30 +19,24 @@ const uploadImage = (uri, uploadUrl, token, successCallBack, errorCallBack, catc
 
     const headers = {
         'content-type': 'multipart/form-data',
-        Authorization: token
+        Authorization: apiTokenLocal
     };
 
-    rxUtil(
+    const result = await RxUtil(
         uploadUrl,
         'POST',
         formData,
-        headers,
-        successCallBack,
-        errorCallBack,
-        catchCallBack
+        undefined,
+        headers
     );
-};
 
-const removeImage = (removeUrl, headers, successCallBack, failCallBack, catchCallBack) => {
-    rxUtil(
-        removeUrl,
-        'DELETE',
-        null,
-        headers,
-        successCallBack,
-        failCallBack,
-        catchCallBack
-    );
+    const { data } = result;
+
+    if (data) {
+        onSuccess(data);
+    } else {
+        onFail(data);
+    }
 };
 
 const pickImage = async (allowCrop, uploadAspect, callBack, quality = 0) => {
@@ -58,7 +52,8 @@ const pickImage = async (allowCrop, uploadAspect, callBack, quality = 0) => {
     }
 };
 
-const uploadImageDocument = (uri, uploadUrl, docType, token, successCallBack, errorCallBack, catchCallBack) => {
+const uploadImageDocument = async (uri, uploadUrl, onSuccess, onFail, docType) => {
+    const apiTokenLocal = await SecureStore.getItemAsync('api_token');
     const filename = uri.split('/').pop();
 
     // Infer the type of the image
@@ -73,23 +68,28 @@ const uploadImageDocument = (uri, uploadUrl, docType, token, successCallBack, er
 
     const headers = {
         'content-type': 'multipart/form-data',
-        Authorization: token
+        Authorization: apiTokenLocal
     };
 
-    rxUtil(
+    const result = await RxUtil(
         uploadUrl,
         'POST',
         formData,
-        headers,
-        successCallBack,
-        errorCallBack,
-        catchCallBack
+        undefined,
+        headers
     );
+
+    const { data } = result;
+
+    if (data) {
+        onSuccess(data);
+    } else {
+        onFail(data);
+    }
 };
 
 export default {
     uploadImage,
     pickImage,
-    removeImage,
     uploadImageDocument
 };

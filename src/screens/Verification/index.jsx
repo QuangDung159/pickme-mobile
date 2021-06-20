@@ -28,7 +28,6 @@ export default function Verification({ navigation }) {
     const [frontUrl, setFrontUrl] = useState('');
     const [backUrl, setBackUrl] = useState('');
 
-    const token = useSelector((state) => state.userReducer.token);
     const currentUser = useSelector((state) => state.userReducer.currentUser);
     const verificationStore = useSelector((state) => state.userReducer.verificationStore);
     const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
@@ -190,15 +189,15 @@ export default function Verification({ navigation }) {
         MediaHelpers.uploadImageDocument(
             imageLocalUrl,
             Rx.USER.UPLOAD_VERIFICATION_DOC,
-            docType,
-            token,
             () => {
                 count += 1;
                 if (count === 3) {
                     submitVerificationRequest();
                     count = 0;
                 }
-            }
+            },
+            () => {},
+            docType,
         );
     };
 

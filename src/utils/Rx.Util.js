@@ -1,7 +1,7 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
 import { Rx } from '@constants/index';
 import { API_URL } from '@env';
-import { ToastHelpers } from '@helpers/index';
+import ToastHelpers from '@helpers/ToastHelpers';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 import slackUtil from './slackUtil';
@@ -30,13 +30,14 @@ export default async (
     endpoint,
     method,
     body = null,
-    domain = API_URL
+    domain = API_URL,
+    headers = {}
 ) => {
     const apiTokenLocal = await SecureStore.getItemAsync('api_token');
     const url = `${domain}${endpoint}`;
 
-    let headers = {};
     if (endpoint !== Rx.AUTHENTICATION.LOGIN) {
+        // eslint-disable-next-line no-param-reassign
         headers = {
             Authorization: apiTokenLocal
         };
@@ -51,7 +52,6 @@ export default async (
         });
 
         logMessage(res, endpoint, headers, body);
-
         return res;
     } catch (err) {
         const {

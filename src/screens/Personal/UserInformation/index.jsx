@@ -37,7 +37,6 @@ export default function UserInformation({ navigation }) {
     const [image, setImage] = useState('');
     const [refreshing, setRefreshing] = useState(false);
 
-    const token = useSelector((state) => state.userReducer.token);
     const currentUser = useSelector((state) => state.userReducer.currentUser);
 
     const dispatch = useDispatch();
@@ -58,7 +57,6 @@ export default function UserInformation({ navigation }) {
         MediaHelpers.uploadImage(
             uri,
             Rx.USER.UPDATE_AVATAR,
-            token,
             (res) => {
                 ToastHelpers.renderToast(
                     res.data.message || 'Tải ảnh lên thành công!', 'success'
@@ -73,9 +71,6 @@ export default function UserInformation({ navigation }) {
             (res) => {
                 ToastHelpers.renderToast(res.data.message, 'error');
                 setIsShowSpinner(false);
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
             }
         );
     };

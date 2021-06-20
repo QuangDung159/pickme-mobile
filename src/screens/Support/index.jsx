@@ -44,7 +44,6 @@ export default function Support({ navigation }) {
     const [image, setImage] = useState();
     const [visible, setVisible] = useState(false);
 
-    const token = useSelector((state) => state.userReducer.token);
     const pickMeInfoStore = useSelector((state) => state.appConfigReducer.pickMeInfoStore);
     const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
 
@@ -98,7 +97,6 @@ export default function Support({ navigation }) {
         MediaHelpers.uploadImage(
             uri,
             Rx.SYSTEM.UPLOAD_IMAGE_AND_GET_URL,
-            token,
             (res) => {
                 setIsShowSpinner(false);
                 setImage(uri);
@@ -110,10 +108,6 @@ export default function Support({ navigation }) {
                 );
                 setIsShowSpinner(false);
             },
-            () => {
-                ToastHelpers.renderToast('Tải ảnh lên thất bại! Vui lòng thử lại.', 'error');
-                setIsShowSpinner(false);
-            }
         );
     };
 
