@@ -6,11 +6,11 @@ import { ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handl
 import { useDispatch, useSelector } from 'react-redux';
 import { CenterLoader, Line } from '../../../components/uiComponents';
 import {
-    BookingStatus, NowTheme, Rx, ScreenName
+    BookingStatus, NowTheme, ScreenName
 } from '../../../constants';
 import { ToastHelpers } from '../../../helpers';
 import { setListBookingStore } from '../../../redux/Actions';
-import { rxUtil } from '../../../utils';
+import { BookingServices } from '../../../services';
 
 const {
     FONT: {
@@ -25,47 +25,31 @@ export default function BookingList({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
 
-    const token = useSelector((state) => state.userReducer.token);
     const listBookingStore = useSelector((state) => state.userReducer.listBookingStore);
-
     const dispatch = useDispatch();
 
     useEffect(
         () => {
             if (!listBookingStore || listBookingStore.length === 0) {
-                getListBooking();
+                fetchListBooking();
             }
         }, []
     );
 
     const groupBookingByDate = () => groupBy(listBookingStore, (n) => n.date);
 
-    const getListBooking = () => {
-        const pagingStr = '?pageIndex=1&pageSize=100';
+    const fetchListBooking = async () => {
+        const result = await BookingServices.fetchListBookingAsync();
+        const { data } = result;
 
-        rxUtil(
-            `${Rx.BOOKING.GET_MY_BOOKING_AS_CUSTOMER}${pagingStr}`,
-            'GET',
-            null,
-            {
-                Authorization: token
-            },
-            (res) => {
-                dispatch(setListBookingStore(res.data.data));
-                setIsShowSpinner(false);
-                setRefreshing(false);
-            },
-            (res) => {
-                setIsShowSpinner(false);
-                setRefreshing(false);
-                ToastHelpers.renderToast(res.data.message, 'error');
-            },
-            (res) => {
-                setIsShowSpinner(false);
-                setRefreshing(false);
-                ToastHelpers.renderToast(res.data.message, 'error');
-            }
-        );
+        if (data) {
+            dispatch(setListBookingStore(data.data));
+            setIsShowSpinner(false);
+            setRefreshing(false);
+        } else {
+            setIsShowSpinner(false);
+            setRefreshing(false);
+        }
     };
 
     const convertMinutesToStringHours = (minutes) => moment.utc()
@@ -267,7 +251,7 @@ export default function BookingList({ navigation }) {
 
     const onRefresh = () => {
         setRefreshing(true);
-        getListBooking();
+        fetchListBooking();
     };
 
     const renderListDateSection = () => {

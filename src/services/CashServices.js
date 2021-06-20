@@ -1,31 +1,34 @@
 import { Rx } from '../constants';
 import RxUtil from '../utils/Rx.Util';
 
-const fetchCashHistoryAsync = async (body) => {
-    const result = await RxUtil(
-        Rx.CASH.GET_CASH_HISTORY,
-        'GET',
-        body
-    );
-
+const handelResByStatus = (response) => {
     const {
         status,
         data
-    } = result;
-
-    console.log('result :>> ', result);
+    } = response;
 
     if (status === 200 || status === 201) {
         return {
+            isSuccess: true,
             data,
             status
         };
     }
 
     return {
-        data: null,
+        isSuccess: false,
+        data,
         status
     };
+};
+
+const fetchCashHistoryAsync = async (body) => {
+    const result = await RxUtil(
+        Rx.CASH.GET_CASH_HISTORY,
+        'GET',
+        body
+    );
+    return handelResByStatus(result);
 };
 
 export default {

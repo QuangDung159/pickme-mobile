@@ -17,7 +17,7 @@ import {
 } from '../../../constants';
 import { MediaHelpers, ToastHelpers } from '../../../helpers';
 import { resetStoreSignOut, setCurrentUser } from '../../../redux/Actions';
-import { rxUtil } from '../../../utils';
+import { UserServices } from '../../../services';
 import UserInfoSection from './UserInfoSection';
 import VerificationStatusPanel from './VerificationStatusPanel';
 
@@ -100,30 +100,18 @@ export default function UserInformation({ navigation }) {
             .then(console.log('password was cleaned!'));
     };
 
-    const fetchCurrentUserInfo = () => {
-        rxUtil(
-            Rx.USER.CURRENT_USER_INFO,
-            'GET',
-            null,
-            {
-                Authorization: token
-            },
-            (res) => {
-                dispatch(setCurrentUser(res.data.data));
-                setIsShowSpinner(false);
-                setRefreshing(false);
-            },
-            (res) => {
-                setIsShowSpinner(false);
-                ToastHelpers.renderToast(res.data.message, 'error');
-                setRefreshing(false);
-            },
-            (res) => {
-                setIsShowSpinner(false);
-                ToastHelpers.renderToast(res.data.message, 'error');
-                setRefreshing(false);
-            }
-        );
+    const fetchCurrentUserInfo = async () => {
+        const result = await UserServices.fetchCurrentUserInfoAsync();
+        const { data } = result;
+
+        if (data) {
+            dispatch(setCurrentUser(data.data));
+            setIsShowSpinner(false);
+            setRefreshing(false);
+        } else {
+            setIsShowSpinner(false);
+            setRefreshing(false);
+        }
     };
 
     const onRefresh = () => {

@@ -2,19 +2,11 @@
 import { Rx } from '../constants';
 import RxUtil from '../utils/Rx.Util';
 
-const loginAsync = async (body) => {
-    const result = await RxUtil(
-        Rx.AUTHENTICATION.LOGIN,
-        'POST',
-        body
-    );
-
+const handelResByStatus = (response) => {
     const {
         status,
         data
-    } = result;
-
-    console.log('result :>> ', result);
+    } = response;
 
     if (status === 200 || status === 201) {
         return {
@@ -31,6 +23,24 @@ const loginAsync = async (body) => {
     };
 };
 
+const loginAsync = async (body) => {
+    const result = await RxUtil(
+        Rx.AUTHENTICATION.LOGIN,
+        'POST',
+        body
+    );
+    return handelResByStatus(result);
+};
+
+const fetchCurrentUserInfoAsync = async () => {
+    const result = await RxUtil(
+        Rx.USER.CURRENT_USER_INFO,
+        'GET',
+    );
+    return handelResByStatus(result);
+};
+
 export default {
     loginAsync,
+    fetchCurrentUserInfoAsync
 };

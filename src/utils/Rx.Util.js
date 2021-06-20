@@ -6,20 +6,30 @@ import { Rx } from '../constants';
 import { ToastHelpers } from '../helpers';
 import slackUtil from './slackUtil';
 
-const generateLogData = (endpoint, data, headers, res) => {
+const generateLogData = (endpoint, body, headers, res) => {
     const objectStr = JSON.stringify({
         headers,
-        data,
+        body,
         res
     });
 
+    logMessage(res, endpoint, headers, body);
+
     return `${res.status} ${endpoint}:\n ${objectStr}`;
+};
+
+const logMessage = (res, endpoint, headers, body) => {
+    console.log(`${res.status} ${endpoint}`, {
+        headers,
+        body,
+        res
+    });
 };
 
 export default async (
     endpoint,
     method,
-    body,
+    body = null,
     domain = API_URL
 ) => {
     const apiTokenLocal = await SecureStore.getItemAsync('api_token');
@@ -40,6 +50,8 @@ export default async (
             headers
         });
 
+        logMessage(res, endpoint, headers, body);
+
         return res;
     } catch (err) {
         const {
@@ -48,12 +60,6 @@ export default async (
 
         const logInfo = generateLogData(endpoint, data, headers, response);
         slackUtil('catch', logInfo);
-
-        console.log(`${response.status} ${endpoint}`, {
-            headers,
-            data,
-            response
-        });
 
         // check token expired
         if (!response.headers?.tokenexpired) {

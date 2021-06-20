@@ -24,8 +24,6 @@ export default function Wallet({ navigation }) {
 
     const currentUser = useSelector((state) => state.userReducer.currentUser);
     const listCashHistoryStore = useSelector((state) => state.userReducer.listCashHistoryStore);
-    const token = useSelector((state) => state.userReducer.token);
-
     const dispatch = useDispatch();
 
     useEffect(

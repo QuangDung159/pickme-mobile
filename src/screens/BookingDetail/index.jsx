@@ -14,6 +14,7 @@ import {
 import BookingProgressFlow from '../../containers/BookingProgressFlow';
 import { ToastHelpers } from '../../helpers';
 import { setListBookingStore, setPersonTabActiveIndex, setShowLoaderStore } from '../../redux/Actions';
+import { BookingServices } from '../../services';
 import { rxUtil } from '../../utils';
 import CardBooking from './CardBooking';
 import ReasonCancelBookingModal from './ReasonCancelBookingModal';
@@ -86,32 +87,18 @@ export default function BookingDetail({
         fetchBookingDetailInfo();
     };
 
-    const fetchListBooking = () => {
-        const pagingStr = '?pageIndex=1&pageSize=100';
+    const fetchListBooking = async () => {
+        const result = await BookingServices.fetchListBookingAsync();
+        const { data } = result;
 
-        rxUtil(
-            `${Rx.BOOKING.GET_MY_BOOKING_AS_CUSTOMER}${pagingStr}`,
-            'GET',
-            null,
-            {
-                Authorization: token
-            },
-            (res) => {
-                dispatch(setListBookingStore(res.data.data));
-                dispatch(setShowLoaderStore(false));
-                setRefreshing(false);
-            },
-            (res) => {
-                setRefreshing(false);
-                dispatch(setShowLoaderStore(false));
-                ToastHelpers.renderToast(res.data.message, 'error');
-            },
-            (res) => {
-                setRefreshing(false);
-                dispatch(setShowLoaderStore(false));
-                ToastHelpers.renderToast(res.data.message, 'error');
-            }
-        );
+        if (data) {
+            dispatch(setListBookingStore(data.data));
+            dispatch(setShowLoaderStore(false));
+            setRefreshing(false);
+        } else {
+            setRefreshing(false);
+            dispatch(setShowLoaderStore(false));
+        }
     };
 
     const fetchBookingDetailInfo = () => {
