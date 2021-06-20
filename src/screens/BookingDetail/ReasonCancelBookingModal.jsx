@@ -1,9 +1,9 @@
 import { CustomButton, CustomModal } from '@components/uiComponents';
-import { NowTheme, Rx, ScreenName } from '@constants';
-import { ToastHelpers } from '@helpers';
+import { NowTheme, Rx, ScreenName } from '@constants/index';
+import { ToastHelpers } from '@helpers/index';
 import { Picker } from '@react-native-picker/picker';
 import { setPersonTabActiveIndex, setShowLoaderStore } from '@redux/Actions';
-import { rxUtil } from '@utils';
+import { rxUtil } from '@utils/index';
 import React, { useState } from 'react';
 import { Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';

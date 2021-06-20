@@ -1,3 +1,14 @@
+import {
+    CenterLoader, CustomButton, CustomCheckbox, CustomInput, CustomModal, Line
+} from '@components/uiComponents';
+import {
+    BookingStatus, NowTheme, Rx, ScreenName
+} from '@constants/index';
+import BookingProgressFlow from '@containers/BookingProgressFlow';
+import { ToastHelpers } from '@helpers/index';
+import { setListBookingStore, setPersonTabActiveIndex, setShowLoaderStore } from '@redux/Actions';
+import { BookingServices } from '@services/index';
+import { rxUtil } from '@utils/index';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import {
@@ -5,17 +16,6 @@ import {
 } from 'react-native';
 import { AirbnbRating } from 'react-native-ratings';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-    CenterLoader, CustomButton, CustomCheckbox, CustomInput, CustomModal, Line
-} from '@components/uiComponents';
-import {
-    BookingStatus, NowTheme, Rx, ScreenName
-} from '@constants';
-import BookingProgressFlow from '@containers/BookingProgressFlow';
-import { ToastHelpers } from '@helpers';
-import { setListBookingStore, setPersonTabActiveIndex, setShowLoaderStore } from '@redux/Actions';
-import { BookingServices } from '@services';
-import { rxUtil } from '@utils';
 import CardBooking from './CardBooking';
 import ReasonCancelBookingModal from './ReasonCancelBookingModal';
 

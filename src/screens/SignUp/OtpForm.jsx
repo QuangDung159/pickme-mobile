@@ -1,11 +1,11 @@
 import { CustomButton, CustomInput } from '@components/uiComponents';
 import {
     IconFamily, NowTheme, Rx, ScreenName
-} from '@constants';
-import { ToastHelpers } from '@helpers';
+} from '@constants/index';
+import { ToastHelpers } from '@helpers/index';
 import { setIsSignInOtherDeviceStore, setShowLoaderStore, setToken } from '@redux/Actions';
-import { UserServices } from '@services';
-import { rxUtil } from '@utils';
+import { UserServices } from '@services/index';
+import { rxUtil } from '@utils/index';
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useDispatch } from 'react-redux';

@@ -1,5 +1,5 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
-import { Rx } from '@constants';
+import { Rx } from '@constants/index';
 import RxUtil from '@utils/Rx.Util';
 
 const handelResByStatus = (response) => {

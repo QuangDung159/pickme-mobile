@@ -5,14 +5,14 @@ import {
 import {
     IconFamily,
     Images, NowTheme, Rx, ScreenName
-} from '@constants';
-import { ToastHelpers } from '@helpers';
+} from '@constants/index';
+import { ToastHelpers } from '@helpers/index';
 import {
     setIsSignInOtherDeviceStore,
     setToken
 } from '@redux/Actions';
-import { UserServices } from '@services';
-import { rxUtil } from '@utils';
+import { UserServices } from '@services/index';
+import { rxUtil } from '@utils/index';
 import * as SecureStore from 'expo-secure-store';
 import React, { useEffect, useState } from 'react';
 import {

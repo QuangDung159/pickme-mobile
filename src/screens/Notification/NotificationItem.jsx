@@ -1,9 +1,9 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
-import { NowTheme, Rx, ScreenName } from '@constants';
+import { NowTheme, Rx, ScreenName } from '@constants/index';
 import { NO_AVATAR_URL } from '@env';
-import { ToastHelpers } from '@helpers';
+import { ToastHelpers } from '@helpers/index';
 import { setPersonTabActiveIndex } from '@redux/Actions';
-import { rxUtil } from '@utils';
+import { rxUtil } from '@utils/index';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {

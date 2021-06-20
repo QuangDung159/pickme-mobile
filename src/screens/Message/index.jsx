@@ -2,10 +2,10 @@
 import { CenterLoader, CustomInput, IconCustom } from '@components/uiComponents';
 import {
     GraphQueryString, IconFamily, NowTheme, ScreenName
-} from '@constants';
-import { ToastHelpers } from '@helpers';
+} from '@constants/index';
+import { ToastHelpers } from '@helpers/index';
 import { setChattingWith, setNumberMessageUnread } from '@redux/Actions';
-import { socketRequestUtil } from '@utils';
+import { socketRequestUtil } from '@utils/index';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import {

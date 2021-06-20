@@ -1,7 +1,7 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
-import { Rx } from '@constants';
+import { Rx } from '@constants/index';
 import { API_URL } from '@env';
-import { ToastHelpers } from '@helpers';
+import { ToastHelpers } from '@helpers/index';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 import slackUtil from './slackUtil';

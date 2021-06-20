@@ -3,10 +3,10 @@ import {
 } from '@components/uiComponents';
 import {
     DocumentType, NowTheme, Rx, ScreenName, VerificationStatus
-} from '@constants';
-import { MediaHelpers, ToastHelpers } from '@helpers';
+} from '@constants/index';
+import { MediaHelpers, ToastHelpers } from '@helpers/index';
 import { setCurrentUser, setPersonTabActiveIndex, setVerificationStore } from '@redux/Actions';
-import { rxUtil } from '@utils';
+import { rxUtil } from '@utils/index';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';

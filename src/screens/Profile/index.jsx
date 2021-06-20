@@ -3,10 +3,10 @@ import { CardImage } from '@components/businessComponents';
 import { CenterLoader, CustomButton } from '@components/uiComponents';
 import {
     IconFamily, NowTheme, Rx, ScreenName
-} from '@constants';
+} from '@constants/index';
 import { NO_AVATAR_URL } from '@env';
-import { CommonHelpers, ToastHelpers } from '@helpers';
-import { rxUtil } from '@utils';
+import { CommonHelpers, ToastHelpers } from '@helpers/index';
+import { rxUtil } from '@utils/index';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';

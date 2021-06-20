@@ -5,11 +5,11 @@ import {
 } from '@components/uiComponents';
 import {
     DateTimeConst, IconFamily, NowTheme, Rx, ScreenName
-} from '@constants';
-import { CommonHelpers, ToastHelpers } from '@helpers';
+} from '@constants/index';
+import { CommonHelpers, ToastHelpers } from '@helpers/index';
 import { Picker } from '@react-native-picker/picker';
 import { setListBookingStore, setPersonTabActiveIndex } from '@redux/Actions';
-import { rxUtil } from '@utils';
+import { rxUtil } from '@utils/index';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import {

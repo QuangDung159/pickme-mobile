@@ -1,9 +1,9 @@
 import { CenterLoader, CustomButton } from '@components/uiComponents';
 import {
     Images, NowTheme, ScreenName, Utils
-} from '@constants';
+} from '@constants/index';
 import { setIsSignInOtherDeviceStore, setNavigation, setToken } from '@redux/Actions';
-import { UserServices } from '@services';
+import { UserServices } from '@services/index';
 import Constants from 'expo-constants';
 import * as SecureStore from 'expo-secure-store';
 import React, { useEffect, useState } from 'react';

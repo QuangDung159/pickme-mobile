@@ -5,9 +5,9 @@ import {
 } from '@components/uiComponents';
 import {
     IconFamily, NowTheme, Rx, ScreenName
-} from '@constants';
-import { MediaHelpers, ToastHelpers } from '@helpers';
-import { rxUtil } from '@utils';
+} from '@constants/index';
+import { MediaHelpers, ToastHelpers } from '@helpers/index';
+import { rxUtil } from '@utils/index';
 import React, { useEffect, useState } from 'react';
 import {
     Image, StyleSheet, Text, View

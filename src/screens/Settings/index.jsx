@@ -1,6 +1,6 @@
 import { IconCustom, Switch } from '@components/uiComponents';
-import { NowTheme } from '@constants';
-import { ToastHelpers } from '@helpers';
+import { NowTheme } from '@constants/index';
+import { ToastHelpers } from '@helpers/index';
 import React, { useEffect, useState } from 'react';
 import {
     FlatList,

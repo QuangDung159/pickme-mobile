@@ -20,8 +20,8 @@ import {
     setDeviceIdStore,
     setDeviceTimezone, setIsSignInOtherDeviceStore, setListNotification, setMessageListened, setNumberNotificationUnread
 } from '@redux/Actions';
-import { UserServices } from '@services';
-import { rxUtil } from '@utils';
+import { UserServices } from '@services/index';
+import { rxUtil } from '@utils/index';
 
 export default function Main() {
     const listNotification = useSelector((state) => state.notificationReducer.listNotification);

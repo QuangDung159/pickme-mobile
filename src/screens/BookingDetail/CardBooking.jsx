@@ -4,8 +4,8 @@ import React from 'react';
 import {
     StyleSheet, Text, View
 } from 'react-native';
-import { NowTheme } from '@constants';
-import { CommonHelpers, ToastHelpers } from '@helpers';
+import { NowTheme } from '@constants/index';
+import { CommonHelpers, ToastHelpers } from '@helpers/index';
 
 const {
     FONT: {

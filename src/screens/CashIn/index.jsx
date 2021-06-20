@@ -1,6 +1,6 @@
 import { Line, NoteText } from '@components/uiComponents';
-import { NowTheme, ScreenName } from '@constants';
-import { ToastHelpers } from '@helpers';
+import { NowTheme, ScreenName } from '@constants/index';
+import { ToastHelpers } from '@helpers/index';
 import { setPersonTabActiveIndex } from '@redux/Actions';
 import Clipboard from 'expo-clipboard';
 import React, { useEffect } from 'react';

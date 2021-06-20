@@ -3,10 +3,10 @@ import noAvatar from '@assets/images/no-avatar.png';
 import { CenterLoader, CustomButton, CustomInput } from '@components/uiComponents';
 import {
     Images, NowTheme, Rx, ScreenName
-} from '@constants';
-import { MediaHelpers, ToastHelpers } from '@helpers';
+} from '@constants/index';
+import { MediaHelpers, ToastHelpers } from '@helpers/index';
 import { setToken } from '@redux/Actions';
-import { rxUtil } from '@utils';
+import { rxUtil } from '@utils/index';
 import * as ImagePicker from 'expo-image-picker';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';

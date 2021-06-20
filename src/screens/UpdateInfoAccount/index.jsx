@@ -1,6 +1,6 @@
 import { TopTabBar } from '@components/uiComponents';
-import { ScreenName } from '@constants';
-import { ToastHelpers } from '@helpers';
+import { ScreenName } from '@constants/index';
+import { ToastHelpers } from '@helpers/index';
 import React, { useEffect, useState } from 'react';
 import { SceneMap } from 'react-native-tab-view';
 import { useSelector } from 'react-redux';

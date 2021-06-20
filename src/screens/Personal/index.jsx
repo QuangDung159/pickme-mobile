@@ -1,5 +1,5 @@
 import { TopTabBar } from '@components/uiComponents';
-import { ScreenName } from '@constants';
+import { ScreenName } from '@constants/index';
 import { setPersonTabActiveIndex } from '@redux/Actions';
 import React, { useEffect } from 'react';
 import { View } from 'react-native';

@@ -3,7 +3,7 @@ import {
 } from '@components/uiComponents';
 import {
     Images, NowTheme
-} from '@constants';
+} from '@constants/index';
 import React, { useState } from 'react';
 import {
     ImageBackground,

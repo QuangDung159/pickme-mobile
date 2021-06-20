@@ -1,4 +1,4 @@
-import { rxUtil } from '@utils';
+import { rxUtil } from '@utils/index';
 import * as ImagePicker from 'expo-image-picker';
 import FormData from 'form-data';
 import uuid from 'react-native-uuid';

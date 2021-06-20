@@ -1,5 +1,5 @@
 import { CustomButton, CustomModal } from '@components/uiComponents';
-import { NowTheme } from '@constants';
+import { NowTheme } from '@constants/index';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 

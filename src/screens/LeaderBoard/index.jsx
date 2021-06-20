@@ -2,8 +2,8 @@
 import { IconCustom, TopTabBar } from '@components/uiComponents';
 import {
     IconFamily, NowTheme, Rx, ScreenName
-} from '@constants';
-import { ToastHelpers } from '@helpers';
+} from '@constants/index';
+import { ToastHelpers } from '@helpers/index';
 import React, { useEffect, useState } from 'react';
 import { SceneMap } from 'react-native-tab-view';
 import { useSelector } from 'react-redux';
