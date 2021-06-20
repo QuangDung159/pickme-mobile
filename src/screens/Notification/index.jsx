@@ -1,8 +1,8 @@
 import { CenterLoader } from '@components/uiComponents';
-import { NowTheme, Rx, ScreenName } from '@constants/index';
+import { NowTheme, ScreenName } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
 import { setListNotification, setNumberNotificationUnread } from '@redux/Actions';
-import { rxUtil } from '@utils/index';
+import NotificationServices from '@services/NotificationServices';
 import React, { useEffect, useState } from 'react';
 import { RefreshControl, Text, View } from 'react-native';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
@@ -24,7 +24,6 @@ export default function Notification({ navigation }) {
     const listNotification = useSelector(
         (state) => state.notificationReducer.listNotification
     );
-    const token = useSelector((state) => state.userReducer.token);
     const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
 
     const dispatch = useDispatch();
@@ -56,33 +55,16 @@ export default function Notification({ navigation }) {
         dispatch(setNumberNotificationUnread(count));
     };
 
-    const getListNotiFromAPI = () => {
-        rxUtil(
-            Rx.NOTIFICATION.GET_MY_NOTIFICATION,
-            'GET',
-            null,
-            {
-                Authorization: token
-            },
-            (res) => {
-                setIsShowSpinner(false);
-                setRefreshing(false);
+    const getListNotiFromAPI = async () => {
+        const result = await NotificationServices.fetchListNotificationAsync();
+        const { data } = result;
 
-                // set store
-                dispatch(setListNotification(res.data.data));
-                countNumberNotificationUnread(res.data.data);
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
-                setIsShowSpinner(false);
-                setRefreshing(false);
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
-                setIsShowSpinner(false);
-                setRefreshing(false);
-            }
-        );
+        if (data) {
+            dispatch(setListNotification(data.data));
+            countNumberNotificationUnread(data.data);
+        }
+        setIsShowSpinner(false);
+        setRefreshing(false);
     };
 
     const renderNotiItem = (notiItem) => (
