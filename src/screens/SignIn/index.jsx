@@ -89,7 +89,6 @@ export default function SignIn({ navigation }) {
     const onLoginSuccess = (data, status) => {
         const tokenFromAPI = data.data;
 
-        SecureStore.setItemAsync('api_token', `Bearer ${tokenFromAPI}`);
         SecureStore.setItemAsync('password', `${password}`);
         SecureStore.setItemAsync('phoneNumber', `${phoneNumber}`);
 
