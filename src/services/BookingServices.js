@@ -17,7 +17,7 @@ const fetchListBookingAsync = async (pageIndex = 1, pageSize = 100) => {
 
     const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
     if (handledResult) {
-        result = await rxFetchListBookingAsync();
+        result = await rxFetchListBookingAsync(pageIndex, pageSize);
     }
 
     return CommonHelpers.handleResByStatus(result);
@@ -36,7 +36,7 @@ const fetchPartnerInfoAsync = async (partnerId) => {
 
     const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
     if (handledResult) {
-        result = await rxFetchPartnerInfoAsync();
+        result = await rxFetchPartnerInfoAsync(partnerId);
     }
 
     return CommonHelpers.handleResByStatus(result);
@@ -55,7 +55,7 @@ const fetchBookingDetailAsync = async (bookingId) => {
 
     const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
     if (handledResult) {
-        result = await rxFetchBookingDetailAsync();
+        result = await rxFetchBookingDetailAsync(bookingId);
     }
 
     return CommonHelpers.handleResByStatus(result);
@@ -74,7 +74,7 @@ const submitCompleteBookingAsync = async (bookingId) => {
 
     const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
     if (handledResult) {
-        result = await rxSubmitCompleteBookingAsync();
+        result = await rxSubmitCompleteBookingAsync(bookingId);
     }
 
     return CommonHelpers.handleResByStatus(result);
@@ -94,7 +94,7 @@ const submitRatingAsync = async (body) => {
 
     const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
     if (handledResult) {
-        result = await rxSubmitRatingAsync();
+        result = await rxSubmitRatingAsync(body);
     }
 
     return CommonHelpers.handleResByStatus(result);
@@ -113,7 +113,7 @@ const submitConfirmPaymentAsync = async (bookingId) => {
 
     const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
     if (handledResult) {
-        result = await rxSubmitConfirmPaymentAsync();
+        result = await rxSubmitConfirmPaymentAsync(bookingId);
     }
 
     return CommonHelpers.handleResByStatus(result);
@@ -132,7 +132,7 @@ const fetchListPartnerPackageAsync = async (partnerId) => {
 
     const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
     if (handledResult) {
-        result = await rxFetchListPartnerPackageAsync();
+        result = await rxFetchListPartnerPackageAsync(partnerId);
     }
 
     return CommonHelpers.handleResByStatus(result);
@@ -151,7 +151,7 @@ const fetchPartnerBusyCalendarAsync = async (partnerId) => {
 
     const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
     if (handledResult) {
-        result = await rxFetchPartnerBusyCalendarAsync();
+        result = await rxFetchPartnerBusyCalendarAsync(partnerId);
     }
 
     return CommonHelpers.handleResByStatus(result);
@@ -171,7 +171,7 @@ const submitScheduleBookingAsync = async (partnerId, body) => {
 
     const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
     if (handledResult) {
-        result = await rxSubmitScheduleBookingAsync();
+        result = await rxSubmitScheduleBookingAsync(partnerId, body);
     }
 
     return CommonHelpers.handleResByStatus(result);
@@ -191,7 +191,7 @@ const submitCancelBookingAsync = async (bookingId, body) => {
 
     const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
     if (handledResult) {
-        result = await rxSubmitCancelBookingAsync();
+        result = await rxSubmitCancelBookingAsync(bookingId, body);
     }
 
     return CommonHelpers.handleResByStatus(result);
