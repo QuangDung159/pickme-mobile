@@ -7,6 +7,22 @@
         "whitelist": null,
         "safe": false,
         "allowUndefined": true
-      }]
-    ]
-  }
+      }],
+      ["module-resolver", {
+            "alias": {
+                "@assets": "./assets",
+                "@components": "./src/components",
+                "@constants": "./src/constants",
+                "@containers": "./src/containers",
+                "@helpers": "./src/helpers",
+                "@navigations": "./src/navigations",
+                "@redux": "./src/redux",
+                "@screens": "./src/screens",
+                "@services": "./src/services",
+                "@utils": "./src/utils",
+                "@middlewares": "./src/middlewares"
+            }
+        }
+      ]
+  ]
+}

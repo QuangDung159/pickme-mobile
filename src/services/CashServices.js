@@ -1,39 +1,26 @@
-import { useSelector } from 'react-redux';
-import { Rx } from '../constants';
-import RxUtil from '../utils/Rx.Util';
+import { Rx } from '@constants/index';
+import { CommonHelpers } from '@helpers/index';
+import Middlewares from '@middlewares/index';
+import { RxUtil } from '@utils/index';
 
-const fetchCashHistoryAsync = async (body) => {
-    const token = useSelector((state) => state.userReducer.token);
-
+const rxFetchCashHistoryAsync = async (body) => {
     const result = await RxUtil(
         Rx.CASH.GET_CASH_HISTORY,
         'GET',
-        body,
-        {
-            Authorization: token
-        }
+        body
     );
+    return result;
+};
 
-    const {
-        status,
-        data
-    } = result;
+const fetchCashHistoryAsync = async (body) => {
+    let result = await rxFetchCashHistoryAsync(body);
 
-    console.log('result :>> ', result);
-
-    if (status === 200 || status === 201) {
-        return {
-            isSuccess: true,
-            data,
-            status
-        };
+    const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
+    if (handledResult) {
+        result = await rxFetchCashHistoryAsync(body);
     }
 
-    return {
-        isSuccess: false,
-        data,
-        status
-    };
+    return CommonHelpers.handleResByStatus(result);
 };
 
 export default {

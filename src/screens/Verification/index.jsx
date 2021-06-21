@@ -1,17 +1,17 @@
+import {
+    CenterLoader, CustomButton, Line
+} from '@components/uiComponents';
+import {
+    DocumentType, NowTheme, Rx, ScreenName, VerificationStatus
+} from '@constants/index';
+import { MediaHelpers, ToastHelpers } from '@helpers/index';
+import { setCurrentUser, setPersonTabActiveIndex, setVerificationStore } from '@redux/Actions';
+import { UserServices } from '@services/index';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import ImageScalable from 'react-native-scalable-image';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-    CenterLoader, CustomButton, Line
-} from '../../components/uiComponents';
-import {
-    DocumentType, NowTheme, Rx, ScreenName, VerificationStatus
-} from '../../constants';
-import { MediaHelpers, ToastHelpers } from '../../helpers';
-import { setCurrentUser, setPersonTabActiveIndex, setVerificationStore } from '../../redux/Actions';
-import { rxUtil } from '../../utils';
 
 const {
     FONT: {
@@ -28,16 +28,11 @@ export default function Verification({ navigation }) {
     const [frontUrl, setFrontUrl] = useState('');
     const [backUrl, setBackUrl] = useState('');
 
-    const token = useSelector((state) => state.userReducer.token);
     const currentUser = useSelector((state) => state.userReducer.currentUser);
     const verificationStore = useSelector((state) => state.userReducer.verificationStore);
     const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
 
     const dispatch = useDispatch();
-
-    const headers = {
-        Authorization: token
-    };
 
     useEffect(
         () => {
@@ -60,20 +55,15 @@ export default function Verification({ navigation }) {
         }, [isSignInOtherDeviceStore]
     );
 
-    const fetchVerification = () => {
-        rxUtil(
-            Rx.USER.GET_VERIFICATION_DETAIL,
-            'GET',
-            null,
-            headers,
-            (res) => {
-                dispatch(setVerificationStore(res.data.data));
-                const listDocUrl = res.data.data.verificationDocuments;
-                fillImageFromAPI(listDocUrl);
-            },
-            (res) => ToastHelpers.renderToast(res.data.message, 'error'),
-            (res) => ToastHelpers.renderToast(res.data.message, 'error')
-        );
+    const fetchVerification = async () => {
+        const result = await UserServices.fetchVerificationAsync();
+        const { data } = result;
+
+        if (data) {
+            dispatch(setVerificationStore(data.data));
+            const listDocUrl = data.data.verificationDocuments;
+            fillImageFromAPI(listDocUrl);
+        }
     };
 
     const renderUploadDocForm = (docType, buttonText) => {
@@ -97,6 +87,7 @@ export default function Verification({ navigation }) {
                     }}
                     labelStyle={{
                         fontFamily: MONTSERRAT_REGULAR,
+                        fontSize: SIZES.FONT_H4
                     }}
                     disabled={isDisabled}
                 />
@@ -183,51 +174,43 @@ export default function Verification({ navigation }) {
         }
     };
 
-    const submitVerificationRequest = () => {
-        rxUtil(
-            Rx.USER.SUBMIT_VERIFICATION,
-            'POST',
-            null,
-            headers,
-            () => {
-                dispatch(setCurrentUser({
-                    ...currentUser,
-                    verifyStatus: VerificationStatus.IN_PROCESS
-                }));
-            },
-            (res) => ToastHelpers.renderToast(res.data.message, 'error'),
-            (res) => ToastHelpers.renderToast(res.data.message, 'error')
-        );
+    const submitVerificationRequest = async () => {
+        const result = await UserServices.submitVerificationAsync();
+        const { data } = result;
+
+        if (data) {
+            dispatch(setCurrentUser({
+                ...currentUser,
+                verifyStatus: VerificationStatus.IN_PROCESS
+            }));
+        }
     };
 
     const uploadDoc = (docType, imageLocalUrl) => {
         MediaHelpers.uploadImageDocument(
             imageLocalUrl,
             Rx.USER.UPLOAD_VERIFICATION_DOC,
-            docType,
-            token,
             () => {
                 count += 1;
                 if (count === 3) {
                     submitVerificationRequest();
                     count = 0;
                 }
-            }
+            },
+            () => {},
+            docType,
         );
     };
 
-    const onGetCurrentUserData = () => {
-        rxUtil(
-            Rx.USER.CURRENT_USER_INFO, 'GET', '', headers,
-            (res) => {
-                dispatch(setCurrentUser(res.data.data));
-                navigation.navigate(ScreenName.PERSONAL);
-                dispatch(setPersonTabActiveIndex(0));
-            },
-            () => {},
-            (res) => ToastHelpers.renderToast(res.data.message, 'error'),
-            (res) => ToastHelpers.renderToast(res.data.message, 'error')
-        );
+    const onGetCurrentUserData = async () => {
+        const result = await UserServices.fetchCurrentUserInfoAsync();
+        const { data } = result;
+
+        if (data) {
+            dispatch(setCurrentUser(data.data));
+            navigation.navigate(ScreenName.PERSONAL);
+            dispatch(setPersonTabActiveIndex(0));
+        }
     };
 
     const onSubmitUploadList = () => {
@@ -289,7 +272,7 @@ export default function Verification({ navigation }) {
                         style={{
                             fontFamily: MONTSERRAT_REGULAR,
                             color: COLORS.SWITCH_OFF,
-                            size: SIZES.FONT_H2
+                            fontSize: SIZES.FONT_H3
                         }}
                     >
                         Chưa có ảnh
@@ -318,47 +301,44 @@ export default function Verification({ navigation }) {
     try {
         return (
             <>
-                {isShowSpinner ? (
-                    // eslint-disable-next-line max-len
-                    <CenterLoader content={`Quá trình tải lên mất nhiều thời gian do\nchất lượng hình ảnh.\nBạn vui lòng đợi nhé ${'<3'}!`} />
-                ) : (
-                    <KeyboardAwareScrollView
-                        showsVerticalScrollIndicator={false}
-                        contentContainerStyle={{
-                            width: SIZES.WIDTH_BASE * 0.9,
-                            alignSelf: 'center'
+                {/* eslint-disable-next-line max-len */}
+                <CenterLoader isShow={isShowSpinner} content={`Quá trình tải lên mất nhiều thời gian do\nchất lượng hình ảnh.\nBạn vui lòng đợi nhé ${'<3'}!`} />
+                <KeyboardAwareScrollView
+                    showsVerticalScrollIndicator={false}
+                    contentContainerStyle={{
+                        width: SIZES.WIDTH_BASE * 0.9,
+                        alignSelf: 'center'
+                    }}
+                >
+                    <View
+                        style={{
+                            marginTop: 10,
+                            backgroundColor: COLORS.BASE,
                         }}
                     >
                         <View
                             style={{
-                                marginTop: 10,
-                                backgroundColor: COLORS.BASE,
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                                flexDirection: 'row'
                             }}
                         >
-                            <View
-                                style={{
-                                    justifyContent: 'space-between',
-                                    alignItems: 'center',
-                                    flexDirection: 'row'
-                                }}
+                            <Text style={{
+                                fontFamily: MONTSERRAT_REGULAR,
+                                marginVertical: 10
+                            }}
                             >
-                                <Text style={{
-                                    fontFamily: MONTSERRAT_REGULAR,
-                                    marginVertical: 10
-                                }}
-                                >
-                                    TẢI LÊN CHỨNG TỪ XÁC THỰC
-                                </Text>
-                            </View>
-                            <Line
-                                borderWidth={0.5}
-                                borderColor={COLORS.ACTIVE}
-                            />
-                            {renderDocSection()}
+                                TẢI LÊN CHỨNG TỪ XÁC THỰC
+                            </Text>
                         </View>
-                        {renderButtonPanel()}
-                    </KeyboardAwareScrollView>
-                )}
+                        <Line
+                            borderWidth={0.5}
+                            borderColor={COLORS.ACTIVE}
+                        />
+                        {renderDocSection()}
+                    </View>
+                    {renderButtonPanel()}
+                </KeyboardAwareScrollView>
             </>
         );
     } catch (exception) {

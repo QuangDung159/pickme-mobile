@@ -1,4 +1,13 @@
 /* eslint-disable max-len */
+import noAvatar from '@assets/images/no-avatar.png';
+import { CenterLoader, CustomButton, CustomInput } from '@components/uiComponents';
+import ImageLoader from '@components/uiComponents/ImageLoader';
+import {
+    Images, NowTheme, Rx, ScreenName
+} from '@constants/index';
+import { MediaHelpers, ToastHelpers } from '@helpers/index';
+import { setToken } from '@redux/Actions';
+import { UserServices } from '@services/index';
 import * as ImagePicker from 'expo-image-picker';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
@@ -13,14 +22,6 @@ import {
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useDispatch, useSelector } from 'react-redux';
-import noAvatar from '../../../assets/images/no-avatar.png';
-import { CenterLoader, CustomButton, CustomInput } from '../../components/uiComponents';
-import {
-    Images, NowTheme, Rx, ScreenName
-} from '../../constants';
-import { MediaHelpers, ToastHelpers } from '../../helpers';
-import { setToken } from '../../redux/Actions';
-import { rxUtil } from '../../utils';
 
 const {
     FONT: {
@@ -31,8 +32,6 @@ const {
 } = NowTheme;
 
 export default function CreateAccount(props) {
-    const token = useSelector((state) => state.userReducer.token);
-
     const dispatch = useDispatch();
 
     const { navigation } = props;
@@ -84,7 +83,6 @@ export default function CreateAccount(props) {
         MediaHelpers.uploadImage(
             uri,
             Rx.USER.UPDATE_AVATAR,
-            token,
             (res) => {
                 ToastHelpers.renderToast(
                     res?.data?.message || 'Tải ảnh lên thành công!', 'success'
@@ -99,10 +97,6 @@ export default function CreateAccount(props) {
                 );
                 setIsShowSpinner(false);
             },
-            () => {
-                ToastHelpers.renderToast('Tải ảnh lên thất bại! Vui lòng thử lại.', 'error');
-                setIsShowSpinner(false);
-            }
         );
     };
 
@@ -188,7 +182,7 @@ export default function CreateAccount(props) {
         return !(years < 16);
     };
 
-    const onSubmitAccountCreation = () => {
+    const onSubmitAccountCreation = async () => {
         if (!image) {
             ToastHelpers.renderToast('Ảnh không hợp lệ!', 'error');
         } else {
@@ -196,7 +190,7 @@ export default function CreateAccount(props) {
                 fullName, description, dob, address, interests, hometown
             } = newUser;
 
-            const data = {
+            const body = {
                 fullName,
                 description,
                 dob: `${dob}-01-01T14:00:00`,
@@ -209,31 +203,15 @@ export default function CreateAccount(props) {
                 homeTown: hometown
             };
 
-            const headers = {
-                Authorization: token
-            };
-
             setIsShowDoneMessage(true);
             setIsShowSpinner(true);
+            const result = await UserServices.submitUpdateInfoAsync(body);
+            const { data } = result;
 
-            rxUtil(
-                Rx.USER.UPDATE_USER_INFO,
-                'POST',
-                data,
-                headers,
-                () => {
-                    setIsShowSpinner(false);
-                    goToStep(6);
-                },
-                (res) => {
-                    setIsShowSpinner(false);
-                    ToastHelpers.renderToast(res.data.message, 'error');
-                },
-                (res) => {
-                    setIsShowSpinner(false);
-                    ToastHelpers.renderToast(res.data.message, 'error');
-                }
-            );
+            if (data) {
+                goToStep(6);
+            }
+            setIsShowSpinner(false);
         }
     };
 
@@ -497,51 +475,47 @@ export default function CreateAccount(props) {
                             </Text>
                         </View>
 
-                        {isShowSpinner ? (
-                            <CenterLoader />
-                        ) : (
-                            <>
-                                <View
-                                    style={styles.stepFormContainer}
-                                >
-                                    {isShowSpinner
-                                        ? (
-                                            <CenterLoader />
-                                        )
-                                        : (
-                                            <TouchableWithoutFeedback
-                                                onPress={() => onClickUploadProfileImage()}
-                                            >
-                                                {image ? (
-                                                    <Image
-                                                        source={{ uri: image }}
-                                                        style={styles.image}
-                                                    />
-                                                ) : (
-                                                    <Image
-                                                        source={noAvatar}
-                                                        style={styles.image}
-                                                    />
-                                                )}
-                                            </TouchableWithoutFeedback>
-                                        )}
-                                </View>
+                        <CenterLoader isShow={isShowSpinner} />
 
-                                <View
-                                    style={{
-                                        marginTop: 50,
-                                        alignSelf: 'center'
-                                    }}
-                                >
-                                    <CustomButton
-                                        onPress={() => onSubmitAccountCreation()}
-                                        buttonStyle={styles.inputWith}
-                                        type="active"
-                                        label="Hoàn tất"
-                                    />
-                                </View>
-                            </>
-                        )}
+                        <View
+                            style={styles.stepFormContainer}
+                        >
+                            {isShowSpinner
+                                ? (
+                                    <ImageLoader />
+                                )
+                                : (
+                                    <TouchableWithoutFeedback
+                                        onPress={() => onClickUploadProfileImage()}
+                                    >
+                                        {image ? (
+                                            <Image
+                                                source={{ uri: image }}
+                                                style={styles.image}
+                                            />
+                                        ) : (
+                                            <Image
+                                                source={noAvatar}
+                                                style={styles.image}
+                                            />
+                                        )}
+                                    </TouchableWithoutFeedback>
+                                )}
+                        </View>
+
+                        <View
+                            style={{
+                                marginTop: 50,
+                                alignSelf: 'center'
+                            }}
+                        >
+                            <CustomButton
+                                onPress={() => onSubmitAccountCreation()}
+                                buttonStyle={styles.inputWith}
+                                type="active"
+                                label="Hoàn tất"
+                            />
+                        </View>
                     </View>
                 );
             }

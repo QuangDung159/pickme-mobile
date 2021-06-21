@@ -1,12 +1,11 @@
+import { CenterLoader, CustomButton, CustomInput } from '@components/uiComponents';
+import { IconFamily, NowTheme } from '@constants/index';
+import { ToastHelpers } from '@helpers/index';
+import { UserServices } from '@services/index';
 import * as SecureStore from 'expo-secure-store';
 import React, { useState } from 'react';
 import { View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { useSelector } from 'react-redux';
-import { CenterLoader, CustomButton, CustomInput } from '../../components/uiComponents';
-import { IconFamily, NowTheme, Rx } from '../../constants';
-import { ToastHelpers } from '../../helpers';
-import { rxUtil } from '../../utils';
 
 const { SIZES, COLORS } = NowTheme;
 
@@ -20,8 +19,6 @@ export default function ChangePasswordForm() {
     const [isShowNewPassword, setIsShowNewPassword] = useState('');
 
     const [isShowSpinner, setIsShowSpinner] = useState(false);
-
-    const token = useSelector((state) => state.userReducer.token);
 
     const validateChangePasswordForm = async () => {
         const password = await SecureStore.getItemAsync('password');
@@ -39,39 +36,27 @@ export default function ChangePasswordForm() {
         return true;
     };
 
-    const onSubmitChangePassword = () => {
+    const onSubmitChangePassword = async () => {
         if (!validateChangePasswordForm) return;
 
         setIsShowSpinner(true);
-        rxUtil(
-            Rx.USER.SUBMIT_CHANGE_PASSWORD,
-            'POST',
-            {
-                currentPassword,
-                newPassword,
-                confirmPassword: reNewPassword
-            },
-            {
-                Authorization: token
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'success');
-                SecureStore.setItemAsync('password', newPassword);
 
-                setNewPassword('');
-                setCurrentPassword('');
-                setReNewPassword('');
-                setIsShowSpinner(false);
-            },
-            (res) => {
-                setIsShowSpinner(false);
-                ToastHelpers.renderToast(res.data.message, 'error');
-            },
-            (res) => {
-                setIsShowSpinner(false);
-                ToastHelpers.renderToast(res.data.message, 'error');
-            }
-        );
+        const result = await UserServices.submitChangePasswordAsync({
+            currentPassword,
+            newPassword,
+            confirmPassword: reNewPassword
+        });
+
+        const { data } = result;
+        if (data) {
+            SecureStore.setItemAsync('password', newPassword);
+            setNewPassword('');
+            setCurrentPassword('');
+            setReNewPassword('');
+            ToastHelpers.renderToast(data.message, 'success');
+        }
+
+        setIsShowSpinner(false);
     };
 
     const renderFormNewPassword = () => (
@@ -179,28 +164,21 @@ export default function ChangePasswordForm() {
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={{
                     width: SIZES.WIDTH_BASE * 0.9,
-                    alignSelf: 'center'
+                    alignSelf: 'center',
+                    alignItems: 'center'
                 }}
             >
+                <CenterLoader isShow={isShowSpinner} />
                 <View
                     style={{
                         backgroundColor: COLORS.BASE,
                         marginVertical: 10
                     }}
                 >
-                    {isShowSpinner ? (
-                        <View
-                            style={{
-                                marginTop: SIZES.HEIGHT_BASE * 0.3
-                            }}
-                        >
-                            <CenterLoader />
-                        </View>
-                    ) : (
-                        <>
-                            {renderFormNewPassword()}
-                        </>
-                    )}
+                    <>
+
+                        {renderFormNewPassword()}
+                    </>
                 </View>
             </ScrollView>
 

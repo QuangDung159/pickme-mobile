@@ -1,8 +1,8 @@
+import { IndicatorVerticalLine, Line, StepIndicator } from '@components/uiComponents';
+import { BookingStatus, NowTheme } from '@constants/index';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
-import { IndicatorVerticalLine, Line, StepIndicator } from '../components/uiComponents';
-import { BookingStatus, NowTheme } from '../constants';
 
 const {
     FONT: {

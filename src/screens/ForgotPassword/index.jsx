@@ -1,3 +1,13 @@
+import { ExpoNotification } from '@components/businessComponents';
+import {
+    CenterLoader, CustomButton, CustomInput, IconCustom, NoteText
+} from '@components/uiComponents';
+import {
+    IconFamily,
+    Images, NowTheme, ScreenName
+} from '@constants/index';
+import { ToastHelpers } from '@helpers/index';
+import { UserServices } from '@services/index';
 import * as SecureStore from 'expo-secure-store';
 import React, { useEffect, useState } from 'react';
 import {
@@ -6,16 +16,6 @@ import {
     View
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { ExpoNotification } from '../../components/businessComponents';
-import {
-    CenterLoader, CustomButton, CustomInput, IconCustom, NoteText
-} from '../../components/uiComponents';
-import {
-    IconFamily,
-    Images, NowTheme, Rx, ScreenName
-} from '../../constants';
-import { ToastHelpers } from '../../helpers';
-import { rxUtil } from '../../utils';
 
 const {
     FONT: {
@@ -48,11 +48,11 @@ export default function ForgotPassword({ navigation }) {
     };
 
     // handler \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
-    const onSubmitForgotPassword = () => {
+    const onSubmitForgotPassword = async () => {
         if (!isPasswordMatch()) return;
 
         setIsShowSpinner(true);
-        const data = {
+        const body = {
             phoneNum: phoneNumber,
             password,
             deviceId,
@@ -60,24 +60,14 @@ export default function ForgotPassword({ navigation }) {
         };
 
         toggleSpinner(true);
-        rxUtil(
-            Rx.USER.SUBMIT_FORGOT_PASSWORD_CONFIRM,
-            'POST',
-            data,
-            null,
-            (res) => {
-                navigation.navigate(ScreenName.SIGN_IN);
-                ToastHelpers.renderToast(res.data.message, 'success');
-            },
-            (res) => {
-                toggleSpinner(false);
-                ToastHelpers.renderToast(res.data.message, 'error');
-            },
-            (res) => {
-                toggleSpinner(false);
-                ToastHelpers.renderToast(res.data.message, 'error');
-            }
-        );
+        const result = await UserServices.submitForgotPasswordAsync(body);
+        const { data } = result;
+
+        if (data) {
+            navigation.navigate(ScreenName.SIGN_IN);
+            ToastHelpers.renderToast(data.message, 'success');
+        }
+        toggleSpinner(false);
     };
 
     const isPasswordMatch = () => {
@@ -88,30 +78,20 @@ export default function ForgotPassword({ navigation }) {
         return true;
     };
 
-    const onClickGetOTPWhenForgotPassword = () => {
+    const onClickGetOTPWhenForgotPassword = async () => {
         setIsShowSpinner(true);
-        rxUtil(
-            Rx.USER.GENERATE_OTP_WHEN_FORGOT_PASSWORD,
-            'POST',
-            {
-                phoneNum: phoneNumber
-            },
-            null,
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'success');
-                setIsShowSpinner(false);
-                // for testing
-                setOtp(res.data.data.code);
-            },
-            (res) => {
-                setIsShowSpinner(false);
-                ToastHelpers.renderToast(res.data.message, 'error');
-            },
-            (res) => {
-                setIsShowSpinner(false);
-                ToastHelpers.renderToast(res.data.message, 'error');
-            }
-        );
+        const result = await UserServices.submitGetOtpForgotPasswordAsync({
+            phoneNum: phoneNumber
+        });
+        const { data } = result;
+
+        if (data) {
+            ToastHelpers.renderToast(data.message, 'success');
+
+            // for testing
+            setOtp(data.data.code);
+        }
+        setIsShowSpinner(false);
     };
 
     const toggleSpinner = (isShowSpinnerToggled) => {
@@ -243,6 +223,7 @@ export default function ForgotPassword({ navigation }) {
                 flex: 1
             }}
         >
+            <CenterLoader isShow={isShowSpinner} />
             <ExpoNotification navigation={navigation} />
             <ImageBackground
                 source={Images.RegisterBackground}
@@ -293,19 +274,13 @@ export default function ForgotPassword({ navigation }) {
                                 </View>
                             </View>
 
-                            {isShowSpinner ? (
-                                <CenterLoader />
+                            {otp === '' ? (
+                                <>
+                                    {renderFormOtp()}
+                                </>
                             ) : (
                                 <>
-                                    {otp === '' ? (
-                                        <>
-                                            {renderFormOtp()}
-                                        </>
-                                    ) : (
-                                        <>
-                                            {renderFormNewPassword()}
-                                        </>
-                                    )}
+                                    {renderFormNewPassword()}
                                 </>
                             )}
                         </View>

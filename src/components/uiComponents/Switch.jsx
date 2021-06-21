@@ -1,6 +1,6 @@
+import { NowTheme } from '@constants/index';
 import React, { PureComponent } from 'react';
 import { Platform, Switch } from 'react-native';
-import { NowTheme } from '../../constants';
 
 const { COLORS } = NowTheme;
 

@@ -1,3 +1,5 @@
+import { CenterLoader } from '@components/uiComponents';
+import { NowTheme, ScreenName } from '@constants/index';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import {
@@ -7,8 +9,6 @@ import {
 import ImageView from 'react-native-image-viewing';
 import ImageScalable from 'react-native-scalable-image';
 import { useSelector } from 'react-redux';
-import { NowTheme, ScreenName } from '../../constants';
-import { CenterLoader } from '../uiComponents';
 
 const {
     FONT: {

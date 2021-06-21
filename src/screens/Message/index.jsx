@@ -1,4 +1,11 @@
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
+import { CenterLoader, CustomInput, IconCustom } from '@components/uiComponents';
+import {
+    GraphQueryString, IconFamily, NowTheme, ScreenName
+} from '@constants/index';
+import { ToastHelpers } from '@helpers/index';
+import { setChattingWith, setNumberMessageUnread } from '@redux/Actions';
+import { socketRequestUtil } from '@utils/index';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import {
@@ -6,13 +13,6 @@ import {
 } from 'react-native';
 import { FlatList, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
-import { CenterLoader, CustomInput, IconCustom } from '../../components/uiComponents';
-import {
-    GraphQueryString, IconFamily, NowTheme, ScreenName
-} from '../../constants';
-import { ToastHelpers } from '../../helpers';
-import { setChattingWith, setNumberMessageUnread } from '../../redux/Actions';
-import { socketRequestUtil } from '../../utils';
 
 const {
     FONT: {
@@ -331,19 +331,14 @@ export default function Message({ navigation, route }) {
     try {
         return (
             <>
-                {isShowLoader ? (
-                    <CenterLoader />
-                ) : (
-                    <>
-                        {renderListMessage()}
-                        <KeyboardAvoidingView
-                            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                            keyboardVerticalOffset={SIZES.HEIGHT_BASE * 0.11}
-                        >
-                            {renderInputMessage()}
-                        </KeyboardAvoidingView>
-                    </>
-                )}
+                <CenterLoader isShow={isShowLoader} />
+                {renderListMessage()}
+                <KeyboardAvoidingView
+                    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                    keyboardVerticalOffset={SIZES.HEIGHT_BASE * 0.11}
+                >
+                    {renderInputMessage()}
+                </KeyboardAvoidingView>
             </>
         );
     } catch (exception) {

@@ -1,7 +1,7 @@
+import { NowTheme } from '@constants/index';
 import React from 'react';
 import { Text } from 'react-native';
 import { TabBar, TabView } from 'react-native-tab-view';
-import { NowTheme } from '../../../constants';
 
 const {
     FONT: {

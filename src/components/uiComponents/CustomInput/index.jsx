@@ -1,8 +1,8 @@
+import { IconFamily, NowTheme } from '@constants/index';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Text, TextInput, View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
-import { IconFamily, NowTheme } from '../../../constants';
 import IconCustom from '../IconCustom';
 
 const {

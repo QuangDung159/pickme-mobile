@@ -1,11 +1,11 @@
 import Toast from 'react-native-toast-message';
 
-const renderToast = (content = 'Lỗi hệ thống, vui lòng thử lại!', type = 'error') => {
+const renderToast = (content, type = 'error') => {
     Toast.show({
         type,
         visibilityTime: 2000,
         autoHide: true,
-        text1: content,
+        text1: content || 'Lỗi hệ thống, vui lòng thử lại!',
     });
 };
 

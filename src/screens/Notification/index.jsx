@@ -1,12 +1,14 @@
+import { CenterLoader } from '@components/uiComponents';
+import { NowTheme, ScreenName } from '@constants/index';
+import { ToastHelpers } from '@helpers/index';
+import { setListNotification, setNumberNotificationUnread } from '@redux/Actions';
+import { NotificationServices } from '@services/index';
 import React, { useEffect, useState } from 'react';
-import { RefreshControl, Text, View } from 'react-native';
+import {
+    RefreshControl, SafeAreaView, Text, View
+} from 'react-native';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
-import { CenterLoader } from '../../components/uiComponents';
-import { NowTheme, Rx, ScreenName } from '../../constants';
-import { ToastHelpers } from '../../helpers';
-import { setListNotification, setNumberNotificationUnread } from '../../redux/Actions';
-import { rxUtil } from '../../utils';
 import NotificationItem from './NotificationItem';
 
 const {
@@ -24,7 +26,6 @@ export default function Notification({ navigation }) {
     const listNotification = useSelector(
         (state) => state.notificationReducer.listNotification
     );
-    const token = useSelector((state) => state.userReducer.token);
     const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
 
     const dispatch = useDispatch();
@@ -56,33 +57,16 @@ export default function Notification({ navigation }) {
         dispatch(setNumberNotificationUnread(count));
     };
 
-    const getListNotiFromAPI = () => {
-        rxUtil(
-            Rx.NOTIFICATION.GET_MY_NOTIFICATION,
-            'GET',
-            null,
-            {
-                Authorization: token
-            },
-            (res) => {
-                setIsShowSpinner(false);
-                setRefreshing(false);
+    const getListNotiFromAPI = async () => {
+        const result = await NotificationServices.fetchListNotificationAsync();
+        const { data } = result;
 
-                // set store
-                dispatch(setListNotification(res.data.data));
-                countNumberNotificationUnread(res.data.data);
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
-                setIsShowSpinner(false);
-                setRefreshing(false);
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
-                setIsShowSpinner(false);
-                setRefreshing(false);
-            }
-        );
+        if (data) {
+            dispatch(setListNotification(data.data));
+            countNumberNotificationUnread(data.data);
+        }
+        setIsShowSpinner(false);
+        setRefreshing(false);
     };
 
     const renderNotiItem = (notiItem) => (
@@ -148,19 +132,14 @@ export default function Notification({ navigation }) {
 
     try {
         return (
-            <>
-                {isShowSpinner ? (
-                    <CenterLoader />
-                ) : (
-                    <View
-                        style={{
-                            flex: 1
-                        }}
-                    >
-                        {renderListNoti()}
-                    </View>
-                )}
-            </>
+            <SafeAreaView
+                style={{
+                    flex: 1
+                }}
+            >
+                <CenterLoader isShow={isShowSpinner} />
+                {renderListNoti()}
+            </SafeAreaView>
         );
     } catch (exception) {
         console.log('exception :>> ', exception);

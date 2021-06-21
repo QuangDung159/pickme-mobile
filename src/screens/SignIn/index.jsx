@@ -1,3 +1,15 @@
+import { ExpoNotification } from '@components/businessComponents';
+import { CenterLoader, CustomButton, CustomInput } from '@components/uiComponents';
+import {
+    IconFamily,
+    Images, NowTheme, ScreenName
+} from '@constants/index';
+import { ToastHelpers } from '@helpers/index';
+import {
+    setIsSignInOtherDeviceStore,
+    setToken
+} from '@redux/Actions';
+import { SystemServices, UserServices } from '@services/index';
 import * as SecureStore from 'expo-secure-store';
 import React, { useState } from 'react';
 import {
@@ -9,19 +21,6 @@ import {
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useDispatch, useSelector } from 'react-redux';
-import { ExpoNotification } from '../../components/businessComponents';
-import { CenterLoader, CustomButton, CustomInput } from '../../components/uiComponents';
-import {
-    IconFamily,
-    Images, NowTheme, Rx, ScreenName
-} from '../../constants';
-import { ToastHelpers } from '../../helpers';
-import {
-    setIsSignInOtherDeviceStore,
-    setToken
-} from '../../redux/Actions';
-import { UserServices } from '../../services';
-import { rxUtil } from '../../utils';
 
 const {
     FONT: {
@@ -34,51 +33,40 @@ const {
 
 export default function SignIn({ navigation }) {
     const [phoneNumber, setPhoneNumber] = useState('huyvd');
-    const [password, setPassword] = useState('0000');
+    const [password, setPassword] = useState('00000');
     const [isShowSpinner, setIsShowSpinner] = useState(false);
     const [deviceIdToSend, setDeviceIdToSend] = useState('');
     const [isShowPassword, setIsShowPassword] = useState(false);
 
     const expoToken = useSelector((state) => state.appConfigReducer.expoToken);
-    const deviceIdStore = useSelector((state) => state.appConfigReducer.deviceIdStore);
 
     const dispatch = useDispatch();
 
     // handler \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
-    const updateExpoTokenToServer = (bearerToken) => {
-        rxUtil(
-            Rx.USER.UPDATE_EXPO_TOKEN,
-            'POST',
-            {
-                token: expoToken
-            },
-            {
-                Authorization: bearerToken,
-            },
-            () => {},
-            (res) => ToastHelpers.renderToast(res.data.message, 'error'),
-            (res) => ToastHelpers.renderToast(res.data.message, 'error')
-        );
+    const updateExpoTokenToServer = async () => {
+        await SystemServices.submitUpdateExpoTokenAsync({
+            token: expoToken
+        });
     };
 
     const onSubmitLogin = async () => {
+        const deviceId = await SecureStore.getItemAsync('deviceId');
         if (validation()) {
             const body = {
                 username: phoneNumber,
                 password,
-                deviceId: deviceIdToSend || deviceIdStore
+                deviceId
             };
 
             setIsShowSpinner(true);
             const result = await UserServices.loginAsync(body);
 
             const {
-                isSuccess, data, status
+                data, status
             } = result;
 
-            if (isSuccess) {
+            if (data) {
                 onLoginSuccess(data, status);
-                setIsShowSpinner(false);
             } else {
                 setIsShowSpinner(false);
             }
@@ -102,12 +90,10 @@ export default function SignIn({ navigation }) {
     const onLoginSuccess = (data, status) => {
         const tokenFromAPI = data.data;
 
-        SecureStore.setItemAsync('api_token', `${tokenFromAPI}`);
         SecureStore.setItemAsync('password', `${password}`);
         SecureStore.setItemAsync('phoneNumber', `${phoneNumber}`);
 
         if (status === 200) {
-            const bearerToken = `Bearer ${tokenFromAPI}`;
             dispatch(setToken(tokenFromAPI));
 
             navigation.reset({
@@ -115,7 +101,7 @@ export default function SignIn({ navigation }) {
                 routes: [{ name: ScreenName.APP }],
             });
 
-            updateExpoTokenToServer(bearerToken);
+            updateExpoTokenToServer();
             dispatch(setIsSignInOtherDeviceStore(false));
         }
 
@@ -154,6 +140,7 @@ export default function SignIn({ navigation }) {
 
     return (
         <View>
+            <CenterLoader isShow={isShowSpinner} />
             <ExpoNotification navigation={navigation} />
             <ImageBackground
                 source={Images.RegisterBackground}
@@ -186,87 +173,83 @@ export default function SignIn({ navigation }) {
                                 </Text>
                             </View>
 
-                            {isShowSpinner ? (
-                                <CenterLoader />
-                            ) : (
-                                <>
-                                    <View style={{
-                                        height: SIZES.HEIGHT_BASE * 0.4
-                                    }}
+                            <>
+                                <View style={{
+                                    height: SIZES.HEIGHT_BASE * 0.4
+                                }}
+                                >
+                                    <View
+                                        style={{
+                                            marginBottom: 10,
+                                            alignItems: 'center'
+                                        }}
                                     >
-                                        <View
-                                            style={{
-                                                marginBottom: 10,
-                                                alignItems: 'center'
-                                            }}
-                                        >
-                                            <CustomInput
-                                                placeholder="Nhập số điện thoại..."
-                                                value={phoneNumber}
-                                                onChangeText={
-                                                    (phoneNumberInput) => setPhoneNumber(phoneNumberInput)
-                                                }
-                                                containerStyle={{
-                                                    marginVertical: 10,
-                                                    width: SIZES.WIDTH_BASE * 0.77
-                                                }}
-                                            />
-
-                                            <CustomInput
-                                                value={password}
-                                                inputStyle={{
-                                                    width: SIZES.WIDTH_BASE * 0.77
-                                                }}
-                                                onChangeText={(passwordInput) => setPassword(passwordInput)}
-                                                keyboardType="number-pad"
-                                                containerStyle={{
-                                                    marginVertical: 10,
-                                                    width: SIZES.WIDTH_BASE * 0.77
-                                                }}
-                                                secureTextEntry={!isShowPassword}
-                                                placeholder="Nhập mật khẩu..."
-                                                rightIcon={{
-                                                    name: 'eye',
-                                                    family: IconFamily.ENTYPO,
-                                                    size: 20,
-                                                    color: COLORS.DEFAULT
-                                                }}
-                                                onPressRightIcon={() => setIsShowPassword(!isShowPassword)}
-                                            />
-
-                                            {/* for testing */}
-                                            <CustomInput
-                                                placeholder="Empty or 'test'"
-                                                value={deviceIdToSend}
-                                                onChangeText={
-                                                    (deviceIdInput) => setDeviceIdToSend(deviceIdInput)
-                                                }
-                                                containerStyle={{
-                                                    marginVertical: 10,
-                                                    width: SIZES.WIDTH_BASE * 0.77
-                                                }}
-                                            />
-                                            {renderButtonForgotPassword()}
-                                        </View>
-                                    </View>
-
-                                    <View>
-                                        <CustomButton
-                                            onPress={() => onSubmitLogin()}
-                                            type="active"
-                                            label="Đăng nhập"
-                                            buttonStyle={
-                                                [
-                                                    styles.button,
-                                                    {
-                                                        marginVertical: 10
-                                                    }
-                                                ]
+                                        <CustomInput
+                                            placeholder="Nhập số điện thoại..."
+                                            value={phoneNumber}
+                                            onChangeText={
+                                                (phoneNumberInput) => setPhoneNumber(phoneNumberInput)
                                             }
+                                            containerStyle={{
+                                                marginVertical: 10,
+                                                width: SIZES.WIDTH_BASE * 0.77
+                                            }}
                                         />
+
+                                        <CustomInput
+                                            value={password}
+                                            inputStyle={{
+                                                width: SIZES.WIDTH_BASE * 0.77
+                                            }}
+                                            onChangeText={(passwordInput) => setPassword(passwordInput)}
+                                            keyboardType="number-pad"
+                                            containerStyle={{
+                                                marginVertical: 10,
+                                                width: SIZES.WIDTH_BASE * 0.77
+                                            }}
+                                            secureTextEntry={!isShowPassword}
+                                            placeholder="Nhập mật khẩu..."
+                                            rightIcon={{
+                                                name: 'eye',
+                                                family: IconFamily.ENTYPO,
+                                                size: 20,
+                                                color: COLORS.DEFAULT
+                                            }}
+                                            onPressRightIcon={() => setIsShowPassword(!isShowPassword)}
+                                        />
+
+                                        {/* for testing */}
+                                        <CustomInput
+                                            placeholder="Empty or 'test'"
+                                            value={deviceIdToSend}
+                                            onChangeText={
+                                                (deviceIdInput) => setDeviceIdToSend(deviceIdInput)
+                                            }
+                                            containerStyle={{
+                                                marginVertical: 10,
+                                                width: SIZES.WIDTH_BASE * 0.77
+                                            }}
+                                        />
+                                        {renderButtonForgotPassword()}
                                     </View>
-                                </>
-                            )}
+                                </View>
+
+                                <View>
+                                    <CustomButton
+                                        onPress={() => onSubmitLogin()}
+                                        type="active"
+                                        label="Đăng nhập"
+                                        buttonStyle={
+                                            [
+                                                styles.button,
+                                                {
+                                                    marginVertical: 10
+                                                }
+                                            ]
+                                        }
+                                    />
+                                </View>
+                            </>
                         </View>
                     </View>
                 </KeyboardAwareScrollView>

@@ -1,8 +1,8 @@
+import { NowTheme } from '@constants/index';
+import { ToastHelpers } from '@helpers/index';
 import React from 'react';
 import { Modal, StyleSheet, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { NowTheme } from '../../../constants';
-import { ToastHelpers } from '../../../helpers';
 
 const { SIZES } = NowTheme;
 

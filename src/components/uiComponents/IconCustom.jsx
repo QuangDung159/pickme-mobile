@@ -1,7 +1,7 @@
+import nowConfig from '@assets/configs/now.json';
+import { IconFamily } from '@constants/index';
 import {
-    createIconSetFromIcoMoon,
-    AntDesign,
-    Entypo,
+    AntDesign, createIconSetFromIcoMoon, Entypo,
     EvilIcons,
     Feather,
     FontAwesome,
@@ -13,9 +13,6 @@ import {
     SimpleLineIcons
 } from '@expo/vector-icons';
 import React from 'react';
-
-import nowConfig from '../../../assets/configs/now.json';
-import { IconFamily } from '../../constants';
 
 const IconNowExtra = createIconSetFromIcoMoon(nowConfig, 'NowExtra');
 

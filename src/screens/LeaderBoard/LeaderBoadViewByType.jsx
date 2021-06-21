@@ -1,4 +1,6 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
+import { IconCustom } from '@components/uiComponents';
+import { IconFamily, NowTheme, ScreenName } from '@constants/index';
 import { NO_AVATAR_URL } from '@env';
 import React from 'react';
 import {
@@ -6,8 +8,6 @@ import {
 } from 'react-native';
 import { FlatList, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useSelector } from 'react-redux';
-import { IconCustom } from '../../components/uiComponents';
-import { IconFamily, NowTheme, ScreenName } from '../../constants';
 
 const {
     FONT: {

@@ -1,13 +1,4 @@
-import Constants from 'expo-constants';
-import * as Notifications from 'expo-notifications';
-import { useEffect, useRef } from 'react';
-import {
-    Alert,
-    Platform
-} from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import { Rx, ScreenName } from '../../constants';
-import { ToastHelpers } from '../../helpers';
+import { ScreenName } from '@constants/index';
 import {
     setCurrentUser,
     setExpoToken,
@@ -16,8 +7,16 @@ import {
     setListNotification,
     setNumberNotificationUnread,
     setPersonTabActiveIndex
-} from '../../redux/Actions';
-import { rxUtil } from '../../utils';
+} from '@redux/Actions';
+import { BookingServices, CashServices, NotificationServices } from '@services/index';
+import Constants from 'expo-constants';
+import * as Notifications from 'expo-notifications';
+import { useEffect, useRef } from 'react';
+import {
+    Alert,
+    Platform
+} from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
@@ -87,48 +86,32 @@ export default function ExpoNotification() {
         }, [navigationObj]
     );
 
-    const fetchHistory = () => {
-        rxUtil(
-            Rx.CASH.GET_CASH_HISTORY,
-            'GET',
-            null,
-            {
-                Authorization: token
-            },
-            (res) => {
-                const history = res.data.data;
-                if (history && history.length !== 0) {
-                    dispatch(setListCashHistoryStore(history));
-                    const latestUpdatedAmount = history[0].updatedWalletAmount;
+    const fetchHistory = async () => {
+        const result = await CashServices.fetchCashHistoryAsync();
+        const { data } = result;
 
-                    dispatch(setCurrentUser({
-                        ...currentUser,
-                        walletAmount: latestUpdatedAmount
-                    }));
-                }
-            },
-            (res) => ToastHelpers.renderToast(res.data.message, 'error'),
-            (res) => ToastHelpers.renderToast(res.data.message, 'error')
-        );
+        if (data) {
+            const history = data.data;
+            if (history && history.length !== 0) {
+                dispatch(setListCashHistoryStore(history));
+                const latestUpdatedAmount = history[0].updatedWalletAmount;
+
+                dispatch(setCurrentUser({
+                    ...currentUser,
+                    walletAmount: latestUpdatedAmount
+                }));
+            }
+        }
     };
 
-    const onClickRead = (notiId = null, navigationId, navigationType) => {
-        const endpoint = `${Rx.NOTIFICATION.TRIGGER_READ}/${notiId}`;
+    const onClickRead = async (notiId = null, navigationId, navigationType) => {
+        const result = await NotificationServices.triggerReadNotificationAsync(notiId);
+        const { data } = result;
 
-        rxUtil(
-            endpoint,
-            'POST',
-            null,
-            {
-                Authorization: token
-            },
-            () => {
-                handleNavigation(navigationId, navigationType);
-                getListNotiFromAPI();
-            },
-            (res) => ToastHelpers.renderToast(res.data.message, 'error'),
-            (res) => ToastHelpers.renderToast(res.data.message, 'error')
-        );
+        if (data) {
+            handleNavigation(navigationId, navigationType);
+            getListNotiFromAPI();
+        }
     };
 
     const countNumberNotificationUnread = (listNotiFromAPI) => {
@@ -142,40 +125,23 @@ export default function ExpoNotification() {
         dispatch(setNumberNotificationUnread(count));
     };
 
-    const getListNotiFromAPI = () => {
-        rxUtil(
-            Rx.NOTIFICATION.GET_MY_NOTIFICATION,
-            'GET',
-            null,
-            {
-                Authorization: token
-            },
-            (res) => {
-                // set store
-                dispatch(setListNotification(res.data.data));
-                countNumberNotificationUnread(res.data.data);
-            },
-            (res) => ToastHelpers.renderToast(res.data.message, 'error'),
-            (res) => ToastHelpers.renderToast(res.data.message, 'error')
-        );
+    const getListNotiFromAPI = async () => {
+        const result = await NotificationServices.fetchListNotificationAsync();
+        const { data } = result;
+
+        if (data) {
+            dispatch(setListNotification(data.data));
+            countNumberNotificationUnread(data.data);
+        }
     };
 
-    const getListBooking = () => {
-        const pagingStr = '?pageIndex=1&pageSize=100';
+    const getListBooking = async () => {
+        const result = await BookingServices.fetchListBookingAsync();
+        const { data } = result;
 
-        rxUtil(
-            `${Rx.BOOKING.GET_MY_BOOKING_AS_CUSTOMER}${pagingStr}`,
-            'GET',
-            null,
-            {
-                Authorization: token
-            },
-            (res) => {
-                dispatch(setListBookingStore(res.data.data));
-            },
-            (res) => ToastHelpers.renderToast(res.data.message, 'error'),
-            (res) => ToastHelpers.renderToast(res.data.message, 'error')
-        );
+        if (data) {
+            dispatch(setListBookingStore(data.data));
+        }
     };
 
     const handleNavigation = (navigationId, navigationType) => {
