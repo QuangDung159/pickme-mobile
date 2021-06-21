@@ -14,36 +14,30 @@ const loginAsync = async (body) => {
     );
 
     await SecureStore.setItemAsync('api_token', result.data.data);
-    console.log('token :>> ', await SecureStore.getItemAsync('api_token'));
     return CommonHelpers.handleResByStatus(result);
+};
+
+const rxFetchCurrentUserInfoAsync = async () => {
+    const result = await RxUtil(
+        Rx.USER.CURRENT_USER_INFO,
+        'GET',
+    );
+    return result;
 };
 
 const fetchCurrentUserInfoAsync = async () => {
     // set expired token to test
     // eslint-disable-next-line max-len
-    await SecureStore.setItemAsync('api_token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6Imh1eXZkIiwidXNlcklkIjoiOTBiNjQxMjktY2UwMS00ZWQ1LTg3YTEtZTQzYWUxZDMwNGJkIiwiZnVsbE5hbWUiOiJodXkgxJHhurlwIHRyYWkiLCJkZXNjcmlwdGlvbiI6Im5ow6Aga28gY8OzIGfDrCBuZ2_DoGkgxJFp4buBdSBraeG7h24iLCJhZGRyZXNzIjoiMDEgaGFvbmcgZGlldSAyIHF1YW4gdGh1IGR1YyIsInVybCI6Imh0dHBzOi8vem5ld3MtcGhvdG8uemFkbi52bi93NjYwL1VwbG9hZGVkL2NxeHJjYWp3cC8yMDEzXzEwXzA3L2NhbmguanBnIiwidXNlclR5cGUiOiJDdXN0b21lciIsImlzVGVzdCI6IkZhbHNlIiwiaXNMb2NrZWQiOiJGYWxzZSIsImV4cCI6MTYyMzkzNjU3N30.w1UW5WoK0a2dU6jUuoUe5Ik_x3t1_EIEp5ij_12kIPI');
+    // await SecureStore.setItemAsync('api_token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6Imh1eXZkIiwidXNlcklkIjoiOTBiNjQxMjktY2UwMS00ZWQ1LTg3YTEtZTQzYWUxZDMwNGJkIiwiZnVsbE5hbWUiOiJodXkgxJHhurlwIHRyYWkiLCJkZXNjcmlwdGlvbiI6Im5ow6Aga28gY8OzIGfDrCBuZ2_DoGkgxJFp4buBdSBraeG7h24iLCJhZGRyZXNzIjoiMDEgaGFvbmcgZGlldSAyIHF1YW4gdGh1IGR1YyIsInVybCI6Imh0dHBzOi8vem5ld3MtcGhvdG8uemFkbi52bi93NjYwL1VwbG9hZGVkL2NxeHJjYWp3cC8yMDEzXzEwXzA3L2NhbmguanBnIiwidXNlclR5cGUiOiJDdXN0b21lciIsImlzVGVzdCI6IkZhbHNlIiwiaXNMb2NrZWQiOiJGYWxzZSIsImV4cCI6MTYyMzkzNjU3N30.w1UW5WoK0a2dU6jUuoUe5Ik_x3t1_EIEp5ij_12kIPI');
 
-    const test = await SecureStore.getItemAsync('api_token');
-    console.log('token :>> ', test);
+    let result = await rxFetchCurrentUserInfoAsync();
 
-    const result = await RxUtil(
-        Rx.USER.CURRENT_USER_INFO,
-        'GET',
-    );
-    const response = CommonHelpers.handleResByStatus(result);
+    const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
+    if (handledResult) {
+        result = await rxFetchCurrentUserInfoAsync();
+    }
 
-    Middlewares.handleTokenStatusMiddleware(response, async () => {
-        const phoneNumber = await SecureStore.getItemAsync('phoneNumber');
-        const password = await SecureStore.getItemAsync('password');
-
-        const res = await loginAsync({
-            username: phoneNumber,
-            password,
-            deviceId: 'test'
-        });
-        return CommonHelpers.handleResByStatus(res);
-    });
-    return response;
+    return CommonHelpers.handleResByStatus(result);
 };
 
 const fetchVerificationAsync = async () => {
