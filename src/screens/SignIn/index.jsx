@@ -55,7 +55,7 @@ export default function SignIn({ navigation }) {
             const body = {
                 username: phoneNumber,
                 password,
-                deviceId
+                deviceId: deviceIdToSend || deviceId
             };
 
             setIsShowSpinner(true);

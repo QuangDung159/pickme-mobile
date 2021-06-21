@@ -10,7 +10,6 @@ import { SOCKET_URL } from '@env';
 import Stacks from '@navigations/Stacks';
 import { NavigationContainer } from '@react-navigation/native';
 import {
-    setDeviceIdStore,
     setDeviceTimezone, setListNotification, setMessageListened, setNumberNotificationUnread
 } from '@redux/Actions';
 import { NotificationServices } from '@services/index';
@@ -25,7 +24,6 @@ export default function Main() {
 
     const dispatch = useDispatch();
     const token = useSelector((state) => state.userReducer.token);
-    const deviceIdStore = useSelector((state) => state.appConfigReducer.deviceIdStore);
 
     useEffect(
         () => {
@@ -36,7 +34,7 @@ export default function Main() {
     useEffect(
         () => {
             generateNewDeviceId();
-        }, [deviceIdStore]
+        }, []
     );
 
     const getListNotificationAPI = async () => {
@@ -106,13 +104,8 @@ export default function Main() {
         if (!deviceId) {
             const myuuid = uuid.v4();
 
-            // store deviceId to redux storage
-            dispatch(setDeviceIdStore(myuuid));
-
             // store deviceId to device storage
             await SecureStore.setItemAsync('deviceId', myuuid);
-        } else {
-            dispatch(setDeviceIdStore(deviceId));
         }
     };
 
