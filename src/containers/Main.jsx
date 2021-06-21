@@ -11,12 +11,12 @@ import Stacks from '@navigations/Stacks';
 import { NavigationContainer } from '@react-navigation/native';
 import {
     setDeviceIdStore,
-    setDeviceTimezone, setIsSignInOtherDeviceStore, setListNotification, setMessageListened, setNumberNotificationUnread
+    setDeviceTimezone, setListNotification, setMessageListened, setNumberNotificationUnread
 } from '@redux/Actions';
-import { NotificationServices, UserServices } from '@services/index';
+import { NotificationServices } from '@services/index';
 import * as SecureStore from 'expo-secure-store';
 import React, { useEffect } from 'react';
-import { AppState, View } from 'react-native';
+import { View } from 'react-native';
 import uuid from 'react-native-uuid';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -30,11 +30,6 @@ export default function Main() {
     useEffect(
         () => {
             dispatch(setDeviceTimezone());
-
-            AppState.addEventListener('change', handleAppStateChange);
-            return () => {
-                AppState.removeEventListener('change', handleAppStateChange);
-            };
         }, []
     );
 
@@ -115,49 +110,9 @@ export default function Main() {
             dispatch(setDeviceIdStore(myuuid));
 
             // store deviceId to device storage
-            storeDeviceId(myuuid);
+            await SecureStore.setItemAsync('deviceId', myuuid);
         } else {
             dispatch(setDeviceIdStore(deviceId));
-        }
-    };
-
-    const storeDeviceId = async (deviceId) => {
-        try {
-            SecureStore.setItemAsync('deviceId', `${deviceId}`)
-                .then(console.log('deviceId :>> ', deviceId));
-        } catch (e) {
-            console.log('error', e);
-        }
-    };
-
-    const handleAppStateChange = (nextAppState) => {
-        if (nextAppState === 'active') {
-            onLogin();
-        }
-    };
-
-    const onLogin = async () => {
-        const phoneNumber = await SecureStore.getItemAsync('phoneNumber');
-        const password = await SecureStore.getItemAsync('password');
-        const deviceId = await SecureStore.getItemAsync('deviceId');
-
-        if (phoneNumber && password) {
-            const body = {
-                username: phoneNumber,
-                password,
-                deviceId
-            };
-
-            const result = await UserServices.loginAsync(body);
-            const {
-                isSuccess, status
-            } = result;
-
-            if (isSuccess) {
-                if (status === 201) {
-                    dispatch(setIsSignInOtherDeviceStore(true));
-                }
-            }
         }
     };
 

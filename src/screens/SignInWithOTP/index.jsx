@@ -72,15 +72,12 @@ export default function SignInWithOTP({ navigation }) {
 
         setIsShowSpinner(true);
         const result = await UserServices.loginAsync(body);
-        const {
-            isSuccess, data
-        } = result;
+        const { data } = result;
 
-        if (isSuccess) {
+        if (data) {
             onLoginSuccess(data);
-        } else {
-            setIsShowSpinner(false);
         }
+        setIsShowSpinner(false);
     };
 
     const onSubmitOTP = async () => {

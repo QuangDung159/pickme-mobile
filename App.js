@@ -106,18 +106,18 @@ export default function App() {
     const [isLoadingComplete, setIsLoadingComplete] = React.useState(false);
     const [fontLoaded, setFontLoaded] = React.useState(false);
 
-    React.useEffect(() => {
-        // with empty dependency
-        // componentDidMount
-        async function loadFont() {
-            Font.loadAsync({
-                'montserrat-regular': require('./assets/fonts/Montserrat-Regular.ttf'),
-                'montserrat-bold': require('./assets/fonts/Montserrat-Bold.ttf')
-            });
-            setFontLoaded(true);
-        }
-        loadFont();
-    }, []);
+    React.useEffect(
+        () => {
+            async function loadFont() {
+                Font.loadAsync({
+                    'montserrat-regular': require('./assets/fonts/Montserrat-Regular.ttf'),
+                    'montserrat-bold': require('./assets/fonts/Montserrat-Bold.ttf')
+                });
+                setFontLoaded(true);
+            }
+            loadFont();
+        }, []
+    );
 
     const loadResourcesAsync = async () => {
         await Font.loadAsync({

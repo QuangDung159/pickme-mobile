@@ -38,10 +38,10 @@ export default function OtpForm({
 
         const result = await UserServices.loginAsync(body);
         const {
-            isSuccess, data
+            data
         } = result;
 
-        if (isSuccess) {
+        if (data) {
             onLoginSuccess(data);
         }
         dispatch(setShowLoaderStore(false));

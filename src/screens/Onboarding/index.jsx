@@ -67,10 +67,10 @@ export default function Onboarding({ navigation }) {
             setIsShowSpinner(true);
             const result = await UserServices.loginAsync(body);
             const {
-                isSuccess, status
+                data, status
             } = result;
 
-            if (isSuccess) {
+            if (data) {
                 if (status === 200) {
                     getTokenFromLocal();
                     dispatch(setIsSignInOtherDeviceStore(false));
