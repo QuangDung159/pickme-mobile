@@ -10,15 +10,13 @@ const handleResByStatus = (response) => {
 
     if (status === 200 || status === 201) {
         return {
-            isSuccess: true,
             data,
             status
         };
     }
 
     return {
-        isSuccess: false,
-        data,
+        data: null,
         status
     };
 };
