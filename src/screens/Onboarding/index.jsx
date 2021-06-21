@@ -22,9 +22,9 @@ const {
 
 export default function Onboarding({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
+    const [deviceIdDisplay, setDeviceIdDisplay] = useState('');
 
     const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
-    const deviceIdStore = useSelector((state) => state.appConfigReducer.deviceIdStore);
 
     const dispatch = useDispatch();
 
@@ -38,6 +38,10 @@ export default function Onboarding({ navigation }) {
         () => {
             dispatch(setNavigation(navigation));
             onLogin();
+
+            SecureStore.getItemAsync('deviceId').then((deviceIdLocal) => {
+                setDeviceIdDisplay(deviceIdLocal);
+            });
         }, []
     );
 
@@ -67,10 +71,10 @@ export default function Onboarding({ navigation }) {
             setIsShowSpinner(true);
             const result = await UserServices.loginAsync(body);
             const {
-                isSuccess, status
+                data, status
             } = result;
 
-            if (isSuccess) {
+            if (data) {
                 if (status === 200) {
                     getTokenFromLocal();
                     dispatch(setIsSignInOtherDeviceStore(false));
@@ -185,7 +189,7 @@ export default function Onboarding({ navigation }) {
                                     fontSize: SIZES.FONT_H4 - 2,
                                 }}
                             >
-                                {deviceIdStore}
+                                {deviceIdDisplay}
                             </Text>
                         </View>
                     </View>

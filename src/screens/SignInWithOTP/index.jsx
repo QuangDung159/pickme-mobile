@@ -37,7 +37,6 @@ export default function SignInWithOTP({ navigation }) {
     const [password, setPassword] = useState('');
 
     const expoToken = useSelector((state) => state.appConfigReducer.expoToken);
-    const deviceIdStore = useSelector((state) => state.appConfigReducer.deviceIdStore);
 
     const dispatch = useDispatch();
 
@@ -72,15 +71,12 @@ export default function SignInWithOTP({ navigation }) {
 
         setIsShowSpinner(true);
         const result = await UserServices.loginAsync(body);
-        const {
-            isSuccess, data
-        } = result;
+        const { data } = result;
 
-        if (isSuccess) {
+        if (data) {
             onLoginSuccess(data);
-        } else {
-            setIsShowSpinner(false);
         }
+        setIsShowSpinner(false);
     };
 
     const onSubmitOTP = async () => {
@@ -92,11 +88,6 @@ export default function SignInWithOTP({ navigation }) {
             deviceId,
             code: otp
         };
-
-        if (!deviceIdStore) {
-            const deviceIdLocal = await SecureStore.getItemAsync('deviceId');
-            data.deviceId = deviceIdLocal;
-        }
 
         const result = await SystemServices.submitChangeDeviceConfirmAsync(body);
         const { data } = result;
