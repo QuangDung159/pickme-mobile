@@ -18,11 +18,12 @@ const handleTokenStatusMiddleware = async (response) => {
     if (response.status === 401) {
         const phoneNumber = await SecureStore.getItemAsync('phoneNumber');
         const password = await SecureStore.getItemAsync('password');
+        const deviceId = await SecureStore.getItemAsync('deviceId');
 
         const res = await loginRefreshTokenAsync({
             username: phoneNumber,
             password,
-            deviceId: 'test'
+            deviceId
         });
         return res;
     }

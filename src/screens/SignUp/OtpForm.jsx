@@ -5,6 +5,7 @@ import {
 import { ToastHelpers } from '@helpers/index';
 import { setIsSignInOtherDeviceStore, setShowLoaderStore, setToken } from '@redux/Actions';
 import { UserServices } from '@services/index';
+import * as SecureStore from 'expo-secure-store';
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useDispatch } from 'react-redux';
@@ -14,7 +15,7 @@ const { SIZES, COLORS } = NowTheme;
 export default function OtpForm({
     otp, setOtp, password,
     setPassword, phoneNumber,
-    deviceIdStore, navigation
+    navigation
 }) {
     const [isShowPassword, setIsShowPassword] = useState(false);
 
@@ -28,10 +29,11 @@ export default function OtpForm({
     };
 
     const loginWithSignUpInfo = async () => {
+        const deviceId = await SecureStore.getItemAsync('deviceId');
         const body = {
             username: phoneNumber,
             password,
-            deviceId: deviceIdStore !== null ? deviceIdStore : ''
+            deviceId
         };
 
         const result = await UserServices.loginAsync(body);
@@ -56,11 +58,13 @@ export default function OtpForm({
             return;
         }
 
+        const deviceId = await SecureStore.getItemAsync('deviceId');
+
         const body = {
             password,
             phoneNum: phoneNumber,
             code: otp,
-            deviceId: deviceIdStore !== null ? deviceIdStore : ''
+            deviceId
         };
 
         dispatch(setShowLoaderStore(true));

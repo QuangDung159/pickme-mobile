@@ -139,12 +139,13 @@ export default function Main() {
     const onLogin = async () => {
         const phoneNumber = await SecureStore.getItemAsync('phoneNumber');
         const password = await SecureStore.getItemAsync('password');
+        const deviceId = await SecureStore.getItemAsync('deviceId');
 
         if (phoneNumber && password) {
             const body = {
                 username: phoneNumber,
                 password,
-                deviceId: deviceIdStore
+                deviceId
             };
 
             const result = await UserServices.loginAsync(body);

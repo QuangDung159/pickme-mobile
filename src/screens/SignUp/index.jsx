@@ -32,7 +32,6 @@ export default function SignUp({ navigation }) {
     const [otp, setOtp] = useState('');
     const [password, setPassword] = useState('');
 
-    const deviceIdStore = useSelector((state) => state.appConfigReducer.deviceIdStore);
     const showLoaderStore = useSelector((state) => state.appConfigReducer.showLoaderStore);
 
     const renderSignUpViewByStep = () => {
@@ -51,7 +50,6 @@ export default function SignUp({ navigation }) {
             case 2: {
                 return (
                     <OtpForm
-                        deviceIdStore={deviceIdStore}
                         navigation={navigation}
                         otp={otp}
                         password={password}

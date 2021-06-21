@@ -63,10 +63,11 @@ export default function SignInWithOTP({ navigation }) {
     };
 
     const onLogin = async () => {
+        const deviceId = await SecureStore.getItemAsync('deviceId');
         const body = {
             username: phoneNumber,
             password,
-            deviceId: deviceIdStore
+            deviceId
         };
 
         setIsShowSpinner(true);
@@ -84,10 +85,11 @@ export default function SignInWithOTP({ navigation }) {
 
     const onSubmitOTP = async () => {
         setIsShowSpinner(true);
+        const deviceId = await SecureStore.getItemAsync('deviceId');
         const body = {
             phoneNum: phoneNumber,
             password,
-            deviceId: deviceIdStore,
+            deviceId,
             code: otp
         };
 

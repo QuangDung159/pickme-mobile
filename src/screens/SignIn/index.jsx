@@ -39,7 +39,6 @@ export default function SignIn({ navigation }) {
     const [isShowPassword, setIsShowPassword] = useState(false);
 
     const expoToken = useSelector((state) => state.appConfigReducer.expoToken);
-    const deviceIdStore = useSelector((state) => state.appConfigReducer.deviceIdStore);
 
     const dispatch = useDispatch();
 
@@ -51,11 +50,12 @@ export default function SignIn({ navigation }) {
     };
 
     const onSubmitLogin = async () => {
+        const deviceId = await SecureStore.getItemAsync('deviceId');
         if (validation()) {
             const body = {
                 username: phoneNumber,
                 password,
-                deviceId: deviceIdToSend || deviceIdStore
+                deviceId
             };
 
             setIsShowSpinner(true);
