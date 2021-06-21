@@ -693,13 +693,6 @@ export default function CreateBooking({ route, navigation }) {
         });
     };
 
-    const onChangeAddressNormal = (input) => {
-        setBooking({
-            ...booking,
-            address: input
-        });
-    };
-
     const onChangeNote = (input) => {
         setBooking({
             ...booking,
@@ -781,20 +774,6 @@ export default function CreateBooking({ route, navigation }) {
                     label="Địa điểm (google API):"
                     onChangeAddress={(detail) => onChangeAddress(detail)}
                     addressInput={booking.address}
-                />
-
-                <CustomInput
-                    value={booking.address}
-                    multiline
-                    onChangeText={onChangeAddressNormal}
-                    containerStyle={{
-                        marginVertical: 10,
-                        width: SIZES.WIDTH_BASE * 0.9
-                    }}
-                    label="Địa điểm:"
-                    inputStyle={{
-                        height: 80,
-                    }}
                 />
 
                 {renderInputNote()}

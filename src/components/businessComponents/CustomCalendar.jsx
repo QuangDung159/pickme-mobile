@@ -57,7 +57,7 @@ export default function CustomCalendar({ selectedDate, onChangeDate }) {
     };
 
     const arrDateLine1 = createArrDate(moment().format('DD-MM-YYYY'), 7);
-    const arrDateLine2 = createArrDate(moment().add(7, 'days').format('DD-MM-YYYY'), 7);
+    // const arrDateLine2 = createArrDate(moment().add(7, 'days').format('DD-MM-YYYY'), 7);
 
     const weekendStyle = {
         fontFamily: MONTSERRAT_BOLD,
@@ -71,7 +71,7 @@ export default function CustomCalendar({ selectedDate, onChangeDate }) {
     return (
         <View
             style={{
-                height: SIZES.HEIGHT_BASE * 0.13,
+                height: SIZES.HEIGHT_BASE * 0.1,
                 marginBottom: 10
             }}
         >
@@ -157,7 +157,7 @@ export default function CustomCalendar({ selectedDate, onChangeDate }) {
                 })}
             </View>
 
-            <View
+            {/* <View
                 style={{
                     flexDirection: 'row',
                     marginTop: 5
@@ -200,7 +200,7 @@ export default function CustomCalendar({ selectedDate, onChangeDate }) {
                         </View>
                     );
                 })}
-            </View>
+            </View> */}
         </View>
     );
 }
