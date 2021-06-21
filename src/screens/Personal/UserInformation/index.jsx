@@ -1,5 +1,14 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
+import {
+    CenterLoader, CustomButton, ImageLoader, Line
+} from '@components/uiComponents';
+import {
+    IconFamily, NowTheme, Rx, ScreenName
+} from '@constants/index';
 import { NO_AVATAR_URL } from '@env';
+import { MediaHelpers, ToastHelpers } from '@helpers/index';
+import { resetStoreSignOut, setCurrentUser } from '@redux/Actions';
+import { UserServices } from '@services/index';
 import * as SecureStore from 'expo-secure-store';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
@@ -9,15 +18,6 @@ import {
 import { ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import ImageView from 'react-native-image-viewing';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-    CenterLoader, CustomButton, Line
-} from '../../../components/uiComponents';
-import {
-    IconFamily, NowTheme, Rx, ScreenName
-} from '../../../constants';
-import { MediaHelpers, ToastHelpers } from '../../../helpers';
-import { resetStoreSignOut, setCurrentUser } from '../../../redux/Actions';
-import { UserServices } from '../../../services';
 import UserInfoSection from './UserInfoSection';
 import VerificationStatusPanel from './VerificationStatusPanel';
 
@@ -164,7 +164,7 @@ export default function UserInformation({ navigation }) {
                         marginTop: 10
                     }}
                 >
-                    <CenterLoader />
+                    <ImageLoader />
                     <View
                         style={{
                             zIndex: 99
@@ -369,47 +369,37 @@ export default function UserInformation({ navigation }) {
                     />
                 )}
             >
-                {isShowSpinner ? (
-                    <View
-                        style={{
-                            marginTop: SIZES.HEIGHT_BASE * 0.3
-                        }}
-                    >
-                        <CenterLoader />
-                    </View>
-                ) : (
-                    <>
-                        {renderImageView()}
+                <CenterLoader isShow={isShowSpinner} />
 
-                        <View
-                            style={{
-                                width: SIZES.WIDTH_BASE * 0.9,
-                                alignSelf: 'center',
-                                flexDirection: 'row'
-                            }}
-                        >
-                            {renderAvatarPanel()}
-                            {renderSubInfoPanel()}
-                        </View>
+                {renderImageView()}
 
-                        <View
-                            style={{
-                                alignSelf: 'center',
-                                alignItems: 'center'
-                            }}
-                        >
-                            <Line
-                                borderColor={COLORS.ACTIVE}
-                                borderWidth={0.5}
-                                width={SIZES.WIDTH_BASE * 0.9}
-                            />
-                        </View>
+                <View
+                    style={{
+                        width: SIZES.WIDTH_BASE * 0.9,
+                        alignSelf: 'center',
+                        flexDirection: 'row'
+                    }}
+                >
+                    {renderAvatarPanel()}
+                    {renderSubInfoPanel()}
+                </View>
 
-                        {renderInfoPanel(currentUser, navigation)}
+                <View
+                    style={{
+                        alignSelf: 'center',
+                        alignItems: 'center'
+                    }}
+                >
+                    <Line
+                        borderColor={COLORS.ACTIVE}
+                        borderWidth={0.5}
+                        width={SIZES.WIDTH_BASE * 0.9}
+                    />
+                </View>
 
-                        {renderButtonLogout(navigation)}
-                    </>
-                )}
+                {renderInfoPanel(currentUser, navigation)}
+
+                {renderButtonLogout(navigation)}
             </ScrollView>
         );
     } catch (exception) {

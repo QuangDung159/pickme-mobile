@@ -4,7 +4,9 @@ import { ToastHelpers } from '@helpers/index';
 import { setListNotification, setNumberNotificationUnread } from '@redux/Actions';
 import { NotificationServices } from '@services/index';
 import React, { useEffect, useState } from 'react';
-import { RefreshControl, Text, View } from 'react-native';
+import {
+    RefreshControl, SafeAreaView, Text, View
+} from 'react-native';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import NotificationItem from './NotificationItem';
@@ -130,19 +132,14 @@ export default function Notification({ navigation }) {
 
     try {
         return (
-            <>
-                {isShowSpinner ? (
-                    <CenterLoader />
-                ) : (
-                    <View
-                        style={{
-                            flex: 1
-                        }}
-                    >
-                        {renderListNoti()}
-                    </View>
-                )}
-            </>
+            <SafeAreaView
+                style={{
+                    flex: 1
+                }}
+            >
+                <CenterLoader isShow={isShowSpinner} />
+                {renderListNoti()}
+            </SafeAreaView>
         );
     } catch (exception) {
         console.log('exception :>> ', exception);

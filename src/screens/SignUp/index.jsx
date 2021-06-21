@@ -81,6 +81,7 @@ export default function SignUp({ navigation }) {
                     alignItems: 'center'
                 }}
             >
+                <CenterLoader isShow={showLoaderStore} />
                 <ImageBackground
                     source={Images.RegisterBackground}
                     style={styles.imageBackgroundContainer}
@@ -116,14 +117,7 @@ export default function SignUp({ navigation }) {
                                 </View>
 
                                 {/* render from this shit */}
-                                {showLoaderStore ? (
-                                    <CenterLoader />
-                                ) : (
-                                    <>
-                                        {renderSignUpViewByStep()}
-                                    </>
-                                )}
-
+                                {renderSignUpViewByStep()}
                             </View>
                         </View>
                     </KeyboardAwareScrollView>

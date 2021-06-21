@@ -23,7 +23,7 @@ export default function CenterLoader({ size, isShow = false }) {
                         size={size || 'small'}
                         color={COLORS.ACTIVE}
                         style={{
-                            marginTop: -SIZES.HEIGHT_BASE * 0.3
+                            marginTop: -SIZES.HEIGHT_BASE * 0.2
                         }}
                     />
                 </View>

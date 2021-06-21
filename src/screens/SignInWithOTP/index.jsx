@@ -143,6 +143,7 @@ export default function SignInWithOTP({ navigation }) {
                 alignItems: 'center'
             }}
         >
+            <CenterLoader isShow={isShowSpinner} />
             <ExpoNotification navigation={navigation} />
             <ImageBackground
                 source={Images.RegisterBackground}
@@ -188,77 +189,71 @@ export default function SignInWithOTP({ navigation }) {
                                 />
                             </View>
 
-                            {isShowSpinner ? (
-                                <CenterLoader />
-                            ) : (
-                                <>
-                                    <View style={{
-                                        height: SIZES.HEIGHT_BASE * 0.2
+                            <View style={{
+                                height: SIZES.HEIGHT_BASE * 0.2
+                            }}
+                            >
+                                <View
+                                    style={{
+                                        marginBottom: 10,
+                                        alignItems: 'center'
                                     }}
-                                    >
-                                        <View
-                                            style={{
-                                                marginBottom: 10,
-                                                alignItems: 'center'
+                                >
+
+                                    {!otp ? (
+                                        <CustomInput
+                                            placeholder="Nhập số điện thoại..."
+                                            value={phoneNumber}
+                                            onChangeText={
+                                                (phoneNumberInput) => setPhoneNumber(phoneNumberInput)
+                                            }
+                                            containerStyle={{
+                                                marginVertical: 10,
+                                                width: SIZES.WIDTH_BASE * 0.77
                                             }}
-                                        >
+                                        />
+                                    ) : (
+                                        <CustomInput
+                                            value={otp}
+                                            inputStyle={{
+                                                width: SIZES.WIDTH_BASE * 0.77
+                                            }}
+                                            onChangeText={(otpInput) => setOtp(otpInput)}
+                                            keyboardType="number-pad"
+                                            containerStyle={{
+                                                marginVertical: 10,
+                                                width: SIZES.WIDTH_BASE * 0.77
+                                            }}
+                                            placeholder="Nhập mã xác thực..."
+                                        />
+                                    )}
+                                </View>
+                            </View>
 
-                                            {!otp ? (
-                                                <CustomInput
-                                                    placeholder="Nhập số điện thoại..."
-                                                    value={phoneNumber}
-                                                    onChangeText={
-                                                        (phoneNumberInput) => setPhoneNumber(phoneNumberInput)
-                                                    }
-                                                    containerStyle={{
-                                                        marginVertical: 10,
-                                                        width: SIZES.WIDTH_BASE * 0.77
-                                                    }}
-                                                />
-                                            ) : (
-                                                <CustomInput
-                                                    value={otp}
-                                                    inputStyle={{
-                                                        width: SIZES.WIDTH_BASE * 0.77
-                                                    }}
-                                                    onChangeText={(otpInput) => setOtp(otpInput)}
-                                                    keyboardType="number-pad"
-                                                    containerStyle={{
-                                                        marginVertical: 10,
-                                                        width: SIZES.WIDTH_BASE * 0.77
-                                                    }}
-                                                    placeholder="Nhập mã xác thực..."
-                                                />
-                                            )}
-                                        </View>
-                                    </View>
-
-                                    <View style={{
-                                        alignSelf: 'center'
-                                    }}
-                                    >
-                                        {!otp ? (
-                                            <CustomButton
-                                                onPress={() => onClickGetOTPWhenChangeDevice()}
-                                                type="active"
-                                                label="Yêu cầu mã xác thực"
-                                                buttonStyle={[styles.button, {
-                                                    marginVertical: 10
-                                                }]}
-                                            />
-                                        ) : (
-                                            <CustomButton
-                                                onPress={() => onSubmitOTP()}
-                                                type="active"
-                                                label="Xác thực và đăng nhập"
-                                                buttonStyle={[styles.button, {
-                                                    marginVertical: 10
-                                                }]}
-                                            />
-                                        )}
-                                    </View>
-                                </>
-                            )}
+                            <View style={{
+                                alignSelf: 'center'
+                            }}
+                            >
+                                {!otp ? (
+                                    <CustomButton
+                                        onPress={() => onClickGetOTPWhenChangeDevice()}
+                                        type="active"
+                                        label="Yêu cầu mã xác thực"
+                                        buttonStyle={[styles.button, {
+                                            marginVertical: 10
+                                        }]}
+                                    />
+                                ) : (
+                                    <CustomButton
+                                        onPress={() => onSubmitOTP()}
+                                        type="active"
+                                        label="Xác thực và đăng nhập"
+                                        buttonStyle={[styles.button, {
+                                            marginVertical: 10
+                                        }]}
+                                    />
+                                )}
+                            </View>
                         </View>
                     </View>
                 </KeyboardAwareScrollView>

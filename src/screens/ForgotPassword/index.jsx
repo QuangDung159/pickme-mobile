@@ -223,6 +223,7 @@ export default function ForgotPassword({ navigation }) {
                 flex: 1
             }}
         >
+            <CenterLoader isShow={isShowSpinner} />
             <ExpoNotification navigation={navigation} />
             <ImageBackground
                 source={Images.RegisterBackground}
@@ -273,19 +274,13 @@ export default function ForgotPassword({ navigation }) {
                                 </View>
                             </View>
 
-                            {isShowSpinner ? (
-                                <CenterLoader />
+                            {otp === '' ? (
+                                <>
+                                    {renderFormOtp()}
+                                </>
                             ) : (
                                 <>
-                                    {otp === '' ? (
-                                        <>
-                                            {renderFormOtp()}
-                                        </>
-                                    ) : (
-                                        <>
-                                            {renderFormNewPassword()}
-                                        </>
-                                    )}
+                                    {renderFormNewPassword()}
                                 </>
                             )}
                         </View>

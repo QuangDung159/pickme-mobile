@@ -87,6 +87,7 @@ export default function Verification({ navigation }) {
                     }}
                     labelStyle={{
                         fontFamily: MONTSERRAT_REGULAR,
+                        fontSize: SIZES.FONT_H4
                     }}
                     disabled={isDisabled}
                 />
@@ -271,7 +272,7 @@ export default function Verification({ navigation }) {
                         style={{
                             fontFamily: MONTSERRAT_REGULAR,
                             color: COLORS.SWITCH_OFF,
-                            size: SIZES.FONT_H2
+                            fontSize: SIZES.FONT_H3
                         }}
                     >
                         Chưa có ảnh
@@ -300,47 +301,44 @@ export default function Verification({ navigation }) {
     try {
         return (
             <>
-                {isShowSpinner ? (
-                    // eslint-disable-next-line max-len
-                    <CenterLoader content={`Quá trình tải lên mất nhiều thời gian do\nchất lượng hình ảnh.\nBạn vui lòng đợi nhé ${'<3'}!`} />
-                ) : (
-                    <KeyboardAwareScrollView
-                        showsVerticalScrollIndicator={false}
-                        contentContainerStyle={{
-                            width: SIZES.WIDTH_BASE * 0.9,
-                            alignSelf: 'center'
+                {/* eslint-disable-next-line max-len */}
+                <CenterLoader isShow={isShowSpinner} content={`Quá trình tải lên mất nhiều thời gian do\nchất lượng hình ảnh.\nBạn vui lòng đợi nhé ${'<3'}!`} />
+                <KeyboardAwareScrollView
+                    showsVerticalScrollIndicator={false}
+                    contentContainerStyle={{
+                        width: SIZES.WIDTH_BASE * 0.9,
+                        alignSelf: 'center'
+                    }}
+                >
+                    <View
+                        style={{
+                            marginTop: 10,
+                            backgroundColor: COLORS.BASE,
                         }}
                     >
                         <View
                             style={{
-                                marginTop: 10,
-                                backgroundColor: COLORS.BASE,
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                                flexDirection: 'row'
                             }}
                         >
-                            <View
-                                style={{
-                                    justifyContent: 'space-between',
-                                    alignItems: 'center',
-                                    flexDirection: 'row'
-                                }}
+                            <Text style={{
+                                fontFamily: MONTSERRAT_REGULAR,
+                                marginVertical: 10
+                            }}
                             >
-                                <Text style={{
-                                    fontFamily: MONTSERRAT_REGULAR,
-                                    marginVertical: 10
-                                }}
-                                >
-                                    TẢI LÊN CHỨNG TỪ XÁC THỰC
-                                </Text>
-                            </View>
-                            <Line
-                                borderWidth={0.5}
-                                borderColor={COLORS.ACTIVE}
-                            />
-                            {renderDocSection()}
+                                TẢI LÊN CHỨNG TỪ XÁC THỰC
+                            </Text>
                         </View>
-                        {renderButtonPanel()}
-                    </KeyboardAwareScrollView>
-                )}
+                        <Line
+                            borderWidth={0.5}
+                            borderColor={COLORS.ACTIVE}
+                        />
+                        {renderDocSection()}
+                    </View>
+                    {renderButtonPanel()}
+                </KeyboardAwareScrollView>
             </>
         );
     } catch (exception) {

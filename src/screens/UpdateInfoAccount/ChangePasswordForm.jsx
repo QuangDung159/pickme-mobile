@@ -164,28 +164,21 @@ export default function ChangePasswordForm() {
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={{
                     width: SIZES.WIDTH_BASE * 0.9,
-                    alignSelf: 'center'
+                    alignSelf: 'center',
+                    alignItems: 'center'
                 }}
             >
+                <CenterLoader isShow={isShowSpinner} />
                 <View
                     style={{
                         backgroundColor: COLORS.BASE,
                         marginVertical: 10
                     }}
                 >
-                    {isShowSpinner ? (
-                        <View
-                            style={{
-                                marginTop: SIZES.HEIGHT_BASE * 0.3
-                            }}
-                        >
-                            <CenterLoader />
-                        </View>
-                    ) : (
-                        <>
-                            {renderFormNewPassword()}
-                        </>
-                    )}
+                    <>
+
+                        {renderFormNewPassword()}
+                    </>
                 </View>
             </ScrollView>
 

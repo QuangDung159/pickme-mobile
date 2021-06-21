@@ -331,19 +331,14 @@ export default function Message({ navigation, route }) {
     try {
         return (
             <>
-                {isShowLoader ? (
-                    <CenterLoader />
-                ) : (
-                    <>
-                        {renderListMessage()}
-                        <KeyboardAvoidingView
-                            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                            keyboardVerticalOffset={SIZES.HEIGHT_BASE * 0.11}
-                        >
-                            {renderInputMessage()}
-                        </KeyboardAvoidingView>
-                    </>
-                )}
+                <CenterLoader isShow={isShowLoader} />
+                {renderListMessage()}
+                <KeyboardAvoidingView
+                    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                    keyboardVerticalOffset={SIZES.HEIGHT_BASE * 0.11}
+                >
+                    {renderInputMessage()}
+                </KeyboardAvoidingView>
             </>
         );
     } catch (exception) {

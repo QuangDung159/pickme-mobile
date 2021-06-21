@@ -311,20 +311,14 @@ export default function BookingList({ navigation }) {
 
     try {
         return (
-            <>
-                {isShowSpinner ? (
-                    <CenterLoader />
-                ) : (
-                    <View
-                        style={{
-                            flex: 1
-                        }}
-                    >
-                        {renderListDateSection()}
-                    </View>
-                )}
-
-            </>
+            <View
+                style={{
+                    flex: 1
+                }}
+            >
+                <CenterLoader isShow={isShowSpinner} />
+                {renderListDateSection()}
+            </View>
         );
     } catch (exception) {
         console.log('exception :>> ', exception);

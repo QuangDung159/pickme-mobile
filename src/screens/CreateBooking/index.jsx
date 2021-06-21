@@ -13,7 +13,7 @@ import { BookingServices } from '@services/index';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import {
-    Alert, StyleSheet, Text, View
+    Alert, SafeAreaView, StyleSheet, Text, View
 } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -154,12 +154,12 @@ export default function CreateBooking({ route, navigation }) {
 
         if (data) {
             ToastHelpers.renderToast(data.message, 'success');
+            getListBooking();
+            dispatch(setPersonTabActiveIndex(2));
             navigation.reset({
                 index: 0,
                 routes: [{ name: ScreenName.PERSONAL }],
             });
-            getListBooking();
-            dispatch(setPersonTabActiveIndex(2));
         }
         setIsShowSpinner(false);
     };
@@ -956,29 +956,23 @@ export default function CreateBooking({ route, navigation }) {
 
     try {
         return (
-            <>
-                {isShowSpinner ? (
-                    <CenterLoader />
-                ) : (
-                    <>
-                        <KeyboardAwareScrollView
-                            keyboardShouldPersistTaps="handled"
-                            style={{
-                                width: SIZES.WIDTH_BASE * 0.9,
-                                alignSelf: 'center'
-                            }}
-                            showsVerticalScrollIndicator={false}
-                        >
-                            {renderModal()}
-                            {renderTimePickerModal()}
-                            {renderPartnerPackageModal()}
-                            {renderFormView(partner)}
-                            {renderTotal()}
-                        </KeyboardAwareScrollView>
-                    </>
-                )}
-
-            </>
+            <SafeAreaView>
+                <CenterLoader isShow={isShowSpinner} />
+                <KeyboardAwareScrollView
+                    keyboardShouldPersistTaps="always"
+                    style={{
+                        width: SIZES.WIDTH_BASE * 0.9,
+                        alignSelf: 'center'
+                    }}
+                    showsVerticalScrollIndicator={false}
+                >
+                    {renderModal()}
+                    {renderTimePickerModal()}
+                    {renderPartnerPackageModal()}
+                    {renderFormView(partner)}
+                    {renderTotal()}
+                </KeyboardAwareScrollView>
+            </SafeAreaView>
         );
     } catch (exception) {
         console.log('exception :>> ', exception);

@@ -260,6 +260,7 @@ export default function Wallet({ navigation }) {
     try {
         return (
             <>
+                <CenterLoader isShow={isShowSpinner} />
                 <View
                     style={{
                         height: 120,
@@ -270,19 +271,7 @@ export default function Wallet({ navigation }) {
                     {renderWalletAmountPanel()}
                 </View>
 
-                {isShowSpinner ? (
-                    <View
-                        style={{
-                            marginTop: SIZES.HEIGHT_BASE * 0.1
-                        }}
-                    >
-                        <CenterLoader />
-                    </View>
-                ) : (
-                    <>
-                        {renderHistory()}
-                    </>
-                )}
+                {renderHistory()}
             </>
         );
     } catch (exception) {

@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 import noAvatar from '@assets/images/no-avatar.png';
 import { CenterLoader, CustomButton, CustomInput } from '@components/uiComponents';
+import ImageLoader from '@components/uiComponents/ImageLoader';
 import {
     Images, NowTheme, Rx, ScreenName
 } from '@constants/index';
@@ -474,51 +475,47 @@ export default function CreateAccount(props) {
                             </Text>
                         </View>
 
-                        {isShowSpinner ? (
-                            <CenterLoader />
-                        ) : (
-                            <>
-                                <View
-                                    style={styles.stepFormContainer}
-                                >
-                                    {isShowSpinner
-                                        ? (
-                                            <CenterLoader />
-                                        )
-                                        : (
-                                            <TouchableWithoutFeedback
-                                                onPress={() => onClickUploadProfileImage()}
-                                            >
-                                                {image ? (
-                                                    <Image
-                                                        source={{ uri: image }}
-                                                        style={styles.image}
-                                                    />
-                                                ) : (
-                                                    <Image
-                                                        source={noAvatar}
-                                                        style={styles.image}
-                                                    />
-                                                )}
-                                            </TouchableWithoutFeedback>
-                                        )}
-                                </View>
+                        <CenterLoader isShow={isShowSpinner} />
 
-                                <View
-                                    style={{
-                                        marginTop: 50,
-                                        alignSelf: 'center'
-                                    }}
-                                >
-                                    <CustomButton
-                                        onPress={() => onSubmitAccountCreation()}
-                                        buttonStyle={styles.inputWith}
-                                        type="active"
-                                        label="Hoàn tất"
-                                    />
-                                </View>
-                            </>
-                        )}
+                        <View
+                            style={styles.stepFormContainer}
+                        >
+                            {isShowSpinner
+                                ? (
+                                    <ImageLoader />
+                                )
+                                : (
+                                    <TouchableWithoutFeedback
+                                        onPress={() => onClickUploadProfileImage()}
+                                    >
+                                        {image ? (
+                                            <Image
+                                                source={{ uri: image }}
+                                                style={styles.image}
+                                            />
+                                        ) : (
+                                            <Image
+                                                source={noAvatar}
+                                                style={styles.image}
+                                            />
+                                        )}
+                                    </TouchableWithoutFeedback>
+                                )}
+                        </View>
+
+                        <View
+                            style={{
+                                marginTop: 50,
+                                alignSelf: 'center'
+                            }}
+                        >
+                            <CustomButton
+                                onPress={() => onSubmitAccountCreation()}
+                                buttonStyle={styles.inputWith}
+                                type="active"
+                                label="Hoàn tất"
+                            />
+                        </View>
                     </View>
                 );
             }

@@ -113,14 +113,12 @@ export default function Onboarding({ navigation }) {
                         resizeMode: 'cover',
                     }}
                 />
-                {isShowSpinner ? (
-                    <CenterLoader />
-                ) : (
-                    <View
-                        style={styles.padded}
-                    >
-                        <View>
-                            {/* <View middle>
+                <CenterLoader isShow={isShowSpinner} />
+                <View
+                    style={styles.padded}
+                >
+                    <View>
+                        {/* <View middle>
                             <Image
                                 source={Images.NowLogo}
                                 style={{
@@ -129,42 +127,10 @@ export default function Onboarding({ navigation }) {
                             />
                         </View> */}
 
-                            <View>
-                                <View
-                                    style={{
-                                        paddingBottom: SIZES.HEIGHT_BASE * 0.2,
-                                        alignSelf: 'center',
-                                        alignItems: 'center'
-                                    }}
-                                >
-                                    <Text
-                                        style={{
-                                            fontFamily: MONTSERRAT_REGULAR,
-                                            fontSize: SIZES.WIDTH_BASE * 0.1,
-                                            color: COLORS.ACTIVE
-                                        }}
-                                    >
-                                        PickMe
-                                    </Text>
-                                </View>
-                                <CustomButton
-                                    onPress={() => {
-                                        navigation.navigate(ScreenName.SIGN_IN);
-                                    }}
-                                    type="active"
-                                    label="Đăng nhập"
-                                    buttonStyle={styles.button}
-                                />
-                                <CustomButton
-                                    onPress={() => navigation.navigate(ScreenName.SIGN_UP)}
-                                    type="active"
-                                    label="Đăng kí"
-                                    buttonStyle={styles.button}
-                                />
-                            </View>
+                        <View>
                             <View
                                 style={{
-                                    marginTop: 10,
+                                    paddingBottom: SIZES.HEIGHT_BASE * 0.2,
                                     alignSelf: 'center',
                                     alignItems: 'center'
                                 }}
@@ -172,25 +138,56 @@ export default function Onboarding({ navigation }) {
                                 <Text
                                     style={{
                                         fontFamily: MONTSERRAT_REGULAR,
-                                        color: COLORS.DEFAULT,
-                                        fontSize: SIZES.FONT_H4 - 2,
+                                        fontSize: SIZES.WIDTH_BASE * 0.1,
+                                        color: COLORS.ACTIVE
                                     }}
                                 >
-                                    {`${Constants.manifest.version}`}
-                                </Text>
-                                <Text
-                                    style={{
-                                        fontFamily: MONTSERRAT_REGULAR,
-                                        color: COLORS.DEFAULT,
-                                        fontSize: SIZES.FONT_H4 - 2,
-                                    }}
-                                >
-                                    {deviceIdStore}
+                                    PickMe
                                 </Text>
                             </View>
+                            <CustomButton
+                                onPress={() => {
+                                    navigation.navigate(ScreenName.SIGN_IN);
+                                }}
+                                type="active"
+                                label="Đăng nhập"
+                                buttonStyle={styles.button}
+                            />
+                            <CustomButton
+                                onPress={() => navigation.navigate(ScreenName.SIGN_UP)}
+                                type="active"
+                                label="Đăng kí"
+                                buttonStyle={styles.button}
+                            />
+                        </View>
+                        <View
+                            style={{
+                                marginTop: 10,
+                                alignSelf: 'center',
+                                alignItems: 'center'
+                            }}
+                        >
+                            <Text
+                                style={{
+                                    fontFamily: MONTSERRAT_REGULAR,
+                                    color: COLORS.DEFAULT,
+                                    fontSize: SIZES.FONT_H4 - 2,
+                                }}
+                            >
+                                {`${Constants.manifest.version}`}
+                            </Text>
+                            <Text
+                                style={{
+                                    fontFamily: MONTSERRAT_REGULAR,
+                                    color: COLORS.DEFAULT,
+                                    fontSize: SIZES.FONT_H4 - 2,
+                                }}
+                            >
+                                {deviceIdStore}
+                            </Text>
                         </View>
                     </View>
-                )}
+                </View>
             </View>
         </View>
     );
