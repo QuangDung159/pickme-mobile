@@ -1,7 +1,6 @@
 import Toast from 'react-native-toast-message';
 
 const renderToast = (content, type = 'error') => {
-    console.log('content :>> ', content);
     Toast.show({
         type,
         visibilityTime: 2000,

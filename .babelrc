@@ -19,7 +19,8 @@
                 "@redux": "./src/redux",
                 "@screens": "./src/screens",
                 "@services": "./src/services",
-                "@utils": "./src/utils"
+                "@utils": "./src/utils",
+                "@middlewares": "./src/middlewares"
             }
         }
       ]
