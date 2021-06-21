@@ -10,12 +10,12 @@ const loginRefreshTokenAsync = async (body) => {
         body
     );
 
-    await SecureStore.setItemAsync('api_token', result.data.data);
+    await SecureStore.setItemAsync('api_token', result.data.data.token);
     return CommonHelpers.handleResByStatus(result);
 };
 
 const handleTokenStatusMiddleware = async (response) => {
-    if (response.status === 401) {
+    if (response.status === 401 && response.headers.tokenexpired) {
         const phoneNumber = await SecureStore.getItemAsync('phoneNumber');
         const password = await SecureStore.getItemAsync('password');
         const deviceId = await SecureStore.getItemAsync('deviceId');

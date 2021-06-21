@@ -6,7 +6,7 @@ export default {
     },
     AUTHENTICATION: {
         SIGN_UP: '/users/CustomerRegisterConfirm',
-        LOGIN: '/users/CustomerLogin',
+        LOGIN: '/users/CustomerLoginV2',
     },
     USER: {
         CURRENT_USER_INFO: '/users/CurrentCustomerInfo',
