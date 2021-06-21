@@ -40,83 +40,167 @@ const fetchCurrentUserInfoAsync = async () => {
     return CommonHelpers.handleResByStatus(result);
 };
 
-const fetchVerificationAsync = async () => {
+const rxFetchVerificationAsync = async () => {
     const result = await RxUtil(
         Rx.USER.GET_VERIFICATION_DETAIL,
         'GET'
     );
+    return result;
+};
+
+const fetchVerificationAsync = async () => {
+    let result = await rxFetchVerificationAsync();
+
+    const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
+    if (handledResult) {
+        result = await rxFetchVerificationAsync();
+    }
+
     return CommonHelpers.handleResByStatus(result);
 };
 
-const submitVerificationAsync = async () => {
+const rxSubmitVerificationAsync = async () => {
     const result = await RxUtil(
         Rx.USER.SUBMIT_VERIFICATION,
         'POST'
     );
+    return result;
+};
+
+const submitVerificationAsync = async () => {
+    let result = await rxSubmitVerificationAsync();
+
+    const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
+    if (handledResult) {
+        result = await rxSubmitVerificationAsync();
+    }
     return CommonHelpers.handleResByStatus(result);
 };
 
-const submitChangePasswordAsync = async (body) => {
+const rxSubmitChangePasswordAsync = async (body) => {
     const result = await RxUtil(
         Rx.USER.SUBMIT_CHANGE_PASSWORD,
         'POST',
         body
     );
+    return result;
+};
+
+const submitChangePasswordAsync = async (body) => {
+    let result = await rxSubmitChangePasswordAsync(body);
+    const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
+    if (handledResult) {
+        result = await rxSubmitChangePasswordAsync(body);
+    }
     return CommonHelpers.handleResByStatus(result);
 };
 
-const submitUpdateInfoAsync = async (body) => {
+const rxSubmitUpdateInfoAsync = async (body) => {
     const result = await RxUtil(
         Rx.USER.UPDATE_USER_INFO,
         'POST',
         body
     );
+    return result;
+};
+
+const submitUpdateInfoAsync = async (body) => {
+    let result = await rxSubmitUpdateInfoAsync(body);
+    const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
+    if (handledResult) {
+        result = await rxSubmitUpdateInfoAsync(body);
+    }
     return CommonHelpers.handleResByStatus(result);
 };
 
-const submitForgotPasswordAsync = async (body) => {
+const rxSubmitForgotPasswordAsync = async (body) => {
     const result = await RxUtil(
         Rx.USER.SUBMIT_FORGOT_PASSWORD_CONFIRM,
         'POST',
         body
     );
+    return result;
+};
+
+const submitForgotPasswordAsync = async (body) => {
+    let result = await rxSubmitForgotPasswordAsync(body);
+    const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
+    if (handledResult) {
+        result = await rxSubmitForgotPasswordAsync(body);
+    }
     return CommonHelpers.handleResByStatus(result);
 };
 
-const submitGetOtpForgotPasswordAsync = async (body) => {
+const rxSubmitGetOtpForgotPasswordAsync = async (body) => {
     const result = await RxUtil(
         Rx.USER.GENERATE_OTP_WHEN_FORGOT_PASSWORD,
         'POST',
         body
     );
+    return result;
+};
+
+const submitGetOtpForgotPasswordAsync = async (body) => {
+    let result = await rxSubmitGetOtpForgotPasswordAsync(body);
+    const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
+    if (handledResult) {
+        result = await rxSubmitGetOtpForgotPasswordAsync(body);
+    }
     return CommonHelpers.handleResByStatus(result);
 };
 
-const fetchLeaderBoardAsync = async () => {
+const rxFetchLeaderBoardAsync = async () => {
     const result = await RxUtil(
         Rx.SYSTEM.PICK_ME_INFO,
         'GET',
         null,
         PICKME_INFO_URL
     );
+    return result;
+};
+
+const fetchLeaderBoardAsync = async () => {
+    let result = await rxFetchLeaderBoardAsync();
+    const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
+    if (handledResult) {
+        result = await rxFetchLeaderBoardAsync();
+    }
     return CommonHelpers.handleResByStatus(result);
 };
 
-const submitSignUpAsync = async (body) => {
+const rxSubmitSignUpAsync = async (body) => {
     const result = await RxUtil(
         Rx.AUTHENTICATION.SIGN_UP,
         'POST',
         body
     );
+    return result;
+};
+
+const submitSignUpAsync = async (body) => {
+    let result = await rxSubmitSignUpAsync(body);
+    const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
+    if (handledResult) {
+        result = await rxSubmitSignUpAsync(body);
+    }
     return CommonHelpers.handleResByStatus(result);
 };
 
-const fetchOtpSignUpAsync = async (body) => {
+const rxFetchOtpSignUpAsync = async (body) => {
     const result = await RxUtil(
         Rx.USER.GET_OTP_REGISTER,
         'POST',
         body
     );
+    return result;
+};
+
+const fetchOtpSignUpAsync = async (body) => {
+    let result = await rxFetchOtpSignUpAsync(body);
+    const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
+    if (handledResult) {
+        result = await rxFetchOtpSignUpAsync(body);
+    }
     return CommonHelpers.handleResByStatus(result);
 };
 
