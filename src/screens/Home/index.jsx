@@ -182,7 +182,7 @@ export default function Home({ navigation }) {
     };
 
     const getListPartner = async () => {
-        const result = BookingServices.fetchListPartnerAsync();
+        const result = await BookingServices.fetchListPartnerAsync();
         const { data } = result;
 
         if (data) {
@@ -218,36 +218,30 @@ export default function Home({ navigation }) {
     };
 
     const renderArticles = () => (
-        <View
-            style={{
-                flex: 1
+        <FlatList
+            showsVerticalScrollIndicator={false}
+            data={listPartnerHome}
+            refreshControl={(
+                <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={() => onRefresh()}
+                />
+            )}
+            keyExtractor={(item) => item.id}
+            contentContainerStyle={{
+                marginVertical: 10,
+                paddingBottom: 10
             }}
-        >
-            <FlatList
-                showsVerticalScrollIndicator={false}
-                data={listPartnerHome}
-                refreshControl={(
-                    <RefreshControl
-                        refreshing={refreshing}
-                        onRefresh={() => onRefresh()}
-                    />
-                )}
-                keyExtractor={(item) => item.id}
-                contentContainerStyle={{
-                    marginVertical: 10,
-                    paddingBottom: 10
-                }}
-                renderItem={({ item }) => (
-                    <View
-                        style={{
-                            marginBottom: 10
-                        }}
-                    >
-                        {renderImage(item)}
-                    </View>
-                )}
-            />
-        </View>
+            renderItem={({ item }) => (
+                <View
+                    style={{
+                        marginBottom: 10
+                    }}
+                >
+                    {renderImage(item)}
+                </View>
+            )}
+        />
     );
 
     const renderImage = (item) => (
@@ -338,26 +332,20 @@ export default function Home({ navigation }) {
 
     try {
         return (
-            <SafeAreaView>
-                {isShowSpinner ? (
-                    <View
-                        middle
-                        style={{
-                            height: SIZES.HEIGHT_BASE * 0.8
-                        }}
-                    >
-                        <CenterLoader />
-                    </View>
-                ) : (
-                    <View
-                        style={{
-                            backgroundColor: COLORS.INPUT,
-                            alignSelf: 'center'
-                        }}
-                    >
-                        {renderArticles()}
-                    </View>
-                )}
+            <SafeAreaView
+                style={{
+                    flex: 1
+                }}
+            >
+                <CenterLoader isShow={isShowSpinner} />
+                <View
+                    style={{
+                        backgroundColor: COLORS.INPUT,
+                        alignSelf: 'center'
+                    }}
+                >
+                    {renderArticles()}
+                </View>
             </SafeAreaView>
         );
     } catch (exception) {

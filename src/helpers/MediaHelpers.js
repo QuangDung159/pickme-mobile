@@ -1,4 +1,4 @@
-import RxUtil from '@utils/Rx.Util';
+import { RxUtil } from '@utils/index';
 import * as ImagePicker from 'expo-image-picker';
 import * as SecureStore from 'expo-secure-store';
 import FormData from 'form-data';
