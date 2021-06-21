@@ -1,6 +1,8 @@
 /* eslint-disable import/prefer-default-export */
-import rxUtil from './rxUtil';
-import socketRequestUtil from './socketRequestUtil';
+import RxUtil from './Rx.Util';
 import slackUtil from './slackUtil';
+import socketRequestUtil from './socketRequestUtil';
 
-export { rxUtil, socketRequestUtil, slackUtil };
+export {
+    socketRequestUtil, slackUtil, RxUtil
+};

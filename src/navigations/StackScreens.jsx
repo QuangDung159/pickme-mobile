@@ -1,8 +1,7 @@
 /* eslint-disable no-unused-vars */
+import { NowTheme, ScreenName, ScreenTitle } from '@constants/index';
+import Header from '@containers/Header';
 import { createStackNavigator } from '@react-navigation/stack';
-import React from 'react';
-import { NowTheme, ScreenName, ScreenTitle } from '../constants';
-import Header from '../containers/Header';
 // screens
 import {
     BookingDetail,
@@ -16,15 +15,11 @@ import {
     Profile, Settings, SignIn, SignInWithOTP, SignUp,
     Support, UpdateInfoAccount,
     Verification
-} from '../screens';
+} from '@screens/index';
+import React from 'react';
 
 const Stack = createStackNavigator();
 const {
-    FONT: {
-        MONTSERRAT_REGULAR,
-        MONTSERRAT_BOLD
-    },
-    SIZES,
     COLORS
 } = NowTheme;
 

@@ -1,3 +1,9 @@
+import {
+    CenterLoader
+} from '@components/uiComponents';
+import {
+    Images, NowTheme
+} from '@constants/index';
 import React, { useState } from 'react';
 import {
     ImageBackground,
@@ -7,12 +13,6 @@ import {
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useSelector } from 'react-redux';
-import {
-    CenterLoader
-} from '../../components/uiComponents';
-import {
-    Images, NowTheme
-} from '../../constants';
 import ModalDisclaimer from './ModalDisclaimer';
 import OtpForm from './OtpForm';
 import PhoneForm from './PhoneForm';
@@ -32,7 +32,6 @@ export default function SignUp({ navigation }) {
     const [otp, setOtp] = useState('');
     const [password, setPassword] = useState('');
 
-    const deviceIdStore = useSelector((state) => state.appConfigReducer.deviceIdStore);
     const showLoaderStore = useSelector((state) => state.appConfigReducer.showLoaderStore);
 
     const renderSignUpViewByStep = () => {
@@ -51,7 +50,6 @@ export default function SignUp({ navigation }) {
             case 2: {
                 return (
                     <OtpForm
-                        deviceIdStore={deviceIdStore}
                         navigation={navigation}
                         otp={otp}
                         password={password}
@@ -81,6 +79,7 @@ export default function SignUp({ navigation }) {
                     alignItems: 'center'
                 }}
             >
+                <CenterLoader isShow={showLoaderStore} />
                 <ImageBackground
                     source={Images.RegisterBackground}
                     style={styles.imageBackgroundContainer}
@@ -116,14 +115,7 @@ export default function SignUp({ navigation }) {
                                 </View>
 
                                 {/* render from this shit */}
-                                {showLoaderStore ? (
-                                    <CenterLoader />
-                                ) : (
-                                    <>
-                                        {renderSignUpViewByStep()}
-                                    </>
-                                )}
-
+                                {renderSignUpViewByStep()}
                             </View>
                         </View>
                     </KeyboardAwareScrollView>

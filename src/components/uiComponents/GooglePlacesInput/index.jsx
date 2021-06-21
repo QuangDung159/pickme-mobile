@@ -1,9 +1,9 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
+import { NowTheme } from '@constants/index';
 import { MAP_API_KEY } from '@env';
 import React, { useEffect, useRef } from 'react';
 import { Text, View } from 'react-native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-import { NowTheme } from '../../../constants';
 
 const {
     FONT: {

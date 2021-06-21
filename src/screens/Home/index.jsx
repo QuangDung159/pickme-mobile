@@ -1,24 +1,25 @@
 /* eslint no-underscore-dangle: ["error", { "allow": ["_isMounted", "_id"] }] */
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
-import { NO_AVATAR_URL, PICKME_INFO_URL } from '@env';
-import React, { useEffect, useState } from 'react';
+import { CenterLoader } from '@components/uiComponents';
 import {
-    FlatList, Image, RefreshControl, StyleSheet, Text, View
-} from 'react-native';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
-import ImageScalable from 'react-native-scalable-image';
-import { useDispatch, useSelector } from 'react-redux';
-import { CenterLoader } from '../../components/uiComponents';
-import {
-    GraphQueryString, NowTheme, Rx, ScreenName
-} from '../../constants';
-import { ToastHelpers } from '../../helpers';
+    GraphQueryString, NowTheme, ScreenName
+} from '@constants/index';
+import { NO_AVATAR_URL } from '@env';
+import { ToastHelpers } from '@helpers/index';
 import {
     setCurrentUser,
     setListBookingStore,
     setListConversation, setNumberMessageUnread, setPickMeInfoStore
-} from '../../redux/Actions';
-import { rxUtil, socketRequestUtil } from '../../utils';
+} from '@redux/Actions';
+import { BookingServices, UserServices } from '@services/index';
+import { socketRequestUtil } from '@utils/index';
+import React, { useEffect, useState } from 'react';
+import {
+    FlatList, Image, RefreshControl, SafeAreaView, StyleSheet, Text, View
+} from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import ImageScalable from 'react-native-scalable-image';
+import { useDispatch, useSelector } from 'react-redux';
 
 const {
     FONT: {
@@ -28,11 +29,6 @@ const {
     SIZES,
     COLORS
 } = NowTheme;
-
-// eslint-disable-next-line max-len
-const testToken = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6Imh1eXZkIiwidXNlcklkIjoiOTBiNjQxMjktY2UwMS00ZWQ1LTg3YTEtZTQzYWUxZDMwNGJkIiwiZnVsbE5hbWUiOiJodXkgxJHhurlwIHRyYWkiLCJkZXNjcmlwdGlvbiI6Im5ow6Aga28gY8OzIGfDrCBuZ2_DoGkgxJFp4buBdSBraeG7h24iLCJhZGRyZXNzIjoiMDEgaGFvbmcgZGlldSAyIHF1YW4gdGh1IGR1YyIsInVybCI6Imh0dHBzOi8vem5ld3MtcGhvdG8uemFkbi52bi93NjYwL1VwbG9hZGVkL2NxeHJjYWp3cC8yMDEzXzEwXzA3L2NhbmguanBnIiwidXNlclR5cGUiOiJDdXN0b21lciIsImlzVGVzdCI6IkZhbHNlIiwiaXNMb2NrZWQiOiJGYWxzZSIsImV4cCI6MTYyMzkzNjU3N30.w1UW5WoK0a2dU6jUuoUe5Ik_x3t1_EIEp5ij_12kIPI';
-// eslint-disable-next-line max-len
-const lockedToken = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImR1bmdscTEiLCJ1c2VySWQiOiI5MGI2NDEyOS1jZTAxLTRlZDUtODdhMS1lNDNhZTFkMjM0YmIiLCJmdWxsTmFtZSI6IkzGsCDEkeG6uXAgdHJhaSB0ZXN0IGNjb3VudCIsImRlc2NyaXB0aW9uIjoibmjDoCBrbyBjw7MgZ8OsIG5nb8OgaSDEkWnhu4F1IGtp4buHbiIsImFkZHJlc3MiOiJWaW5ob21lIGNpdHkiLCJ1cmwiOiJodHRwczovL2JhbWJvb2FpcndheS52bi9wdWJsaWMvdXBsb2Fkcy9kYXRhL2ltYWdlcy9uZXdzL25odW5nLWNhbmgtZGVwLW51Yy10aWVuZy1oYXAtZGFuLWtoYWNoLWR1LWxpY2gtby1xdXktbmhvbi0yLmpwZyIsInVzZXJUeXBlIjoiQ3VzdG9tZXIiLCJpc1Rlc3QiOiJUcnVlIiwiaXNMb2NrZWQiOiJUcnVlIiwiZXhwIjoxNjU1NTU5MjQ5fQ.8g5bChYXAIOUMTQqBhkjTKUgTEp3v_6YMhwpYFQBivY';
 
 export default function Home({ navigation }) {
     const [refreshing, setRefreshing] = useState(false);
@@ -117,78 +113,30 @@ export default function Home({ navigation }) {
         }, [isSignInOtherDeviceStore]
     );
 
-    const fetchListBooking = () => {
-        const pagingStr = '?pageIndex=1&pageSize=100';
-
-        rxUtil(
-            `${Rx.BOOKING.GET_MY_BOOKING_AS_CUSTOMER}${pagingStr}`,
-            'GET',
-            null,
-            {
-                Authorization: token
-            },
-            (res) => {
-                dispatch(setListBookingStore(res.data.data));
-                setIsShowSpinner(false);
-                setRefreshing(false);
-            },
-            (res) => {
-                setIsShowSpinner(false);
-                setRefreshing(false);
-                ToastHelpers.renderToast(res.data.message, 'error');
-            },
-            (res) => {
-                setIsShowSpinner(false);
-                setRefreshing(false);
-                ToastHelpers.renderToast(res.data.message, 'error');
-            }
-        );
+    const fetchListBooking = async () => {
+        const result = await BookingServices.fetchListBookingAsync();
+        const { data } = result;
+        if (data) {
+            dispatch(setListBookingStore(data.data));
+        }
     };
 
-    const fetchPickMeInfo = () => {
-        rxUtil(
-            Rx.SYSTEM.PICK_ME_INFO,
-            'GET',
-            null,
-            {
-                Authorization: token
-            },
-            (res) => {
-                dispatch(setPickMeInfoStore(res.data));
-                setIsShowSpinner(false);
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
-                setIsShowSpinner(false);
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
-                setIsShowSpinner(false);
-            },
-            PICKME_INFO_URL
-        );
+    const fetchPickMeInfo = async () => {
+        const result = await UserServices.fetchLeaderBoardAsync();
+        const { data } = result;
+
+        if (data) {
+            dispatch(setPickMeInfoStore(data));
+        }
     };
 
-    const fetchCurrentUserInfo = () => {
-        rxUtil(
-            Rx.USER.CURRENT_USER_INFO,
-            'GET',
-            null,
-            {
-                Authorization: token
-            },
-            (res) => {
-                dispatch(setCurrentUser(res.data.data));
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
-                setIsShowSpinner(false);
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
-                setIsShowSpinner(false);
-            }
-        );
+    const fetchCurrentUserInfo = async () => {
+        const result = await UserServices.fetchCurrentUserInfoAsync();
+        const { data } = result;
+
+        if (data) {
+            dispatch(setCurrentUser(data.data));
+        }
     };
 
     const getConversationByMessage = (message, listConversationSource) => {
@@ -233,31 +181,15 @@ export default function Home({ navigation }) {
         dispatch(setNumberMessageUnread(count));
     };
 
-    const getListPartner = () => {
-        rxUtil(
-            Rx.PARTNER.GET_LIST_PARTNER,
-            'GET',
-            null,
-            {
-                Authorization: token
-                // Authorization: lockedToken
-            },
-            (res) => {
-                setRefreshing(false);
-                setIsShowSpinner(false);
-                setListPartnerHome(res.data.data);
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
-                setRefreshing(false);
-                setIsShowSpinner(false);
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
-                setRefreshing(false);
-                setIsShowSpinner(false);
-            }
-        );
+    const getListPartner = async () => {
+        const result = await BookingServices.fetchListPartnerAsync();
+        const { data } = result;
+
+        if (data) {
+            setListPartnerHome(data.data);
+        }
+        setRefreshing(false);
+        setIsShowSpinner(false);
     };
 
     const setIntervalToUpdateLastActiveOfUserStatus = () => {
@@ -286,36 +218,30 @@ export default function Home({ navigation }) {
     };
 
     const renderArticles = () => (
-        <View
-            style={{
-                flex: 1
+        <FlatList
+            showsVerticalScrollIndicator={false}
+            data={listPartnerHome}
+            refreshControl={(
+                <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={() => onRefresh()}
+                />
+            )}
+            keyExtractor={(item) => item.id}
+            contentContainerStyle={{
+                marginVertical: 10,
+                paddingBottom: 10
             }}
-        >
-            <FlatList
-                showsVerticalScrollIndicator={false}
-                data={listPartnerHome}
-                refreshControl={(
-                    <RefreshControl
-                        refreshing={refreshing}
-                        onRefresh={() => onRefresh()}
-                    />
-                )}
-                keyExtractor={(item) => item.id}
-                contentContainerStyle={{
-                    marginVertical: 10,
-                    paddingBottom: 10
-                }}
-                renderItem={({ item }) => (
-                    <View
-                        style={{
-                            marginBottom: 10
-                        }}
-                    >
-                        {renderImage(item)}
-                    </View>
-                )}
-            />
-        </View>
+            renderItem={({ item }) => (
+                <View
+                    style={{
+                        marginBottom: 10
+                    }}
+                >
+                    {renderImage(item)}
+                </View>
+            )}
+        />
     );
 
     const renderImage = (item) => (
@@ -406,27 +332,21 @@ export default function Home({ navigation }) {
 
     try {
         return (
-            <>
-                {isShowSpinner ? (
-                    <View
-                        middle
-                        style={{
-                            height: SIZES.HEIGHT_BASE * 0.8
-                        }}
-                    >
-                        <CenterLoader />
-                    </View>
-                ) : (
-                    <View
-                        style={{
-                            backgroundColor: COLORS.INPUT,
-                            alignSelf: 'center'
-                        }}
-                    >
-                        {renderArticles()}
-                    </View>
-                )}
-            </>
+            <SafeAreaView
+                style={{
+                    flex: 1
+                }}
+            >
+                <CenterLoader isShow={isShowSpinner} />
+                <View
+                    style={{
+                        backgroundColor: COLORS.INPUT,
+                        alignSelf: 'center'
+                    }}
+                >
+                    {renderArticles()}
+                </View>
+            </SafeAreaView>
         );
     } catch (exception) {
         console.log('exception :>> ', exception);

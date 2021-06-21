@@ -1,13 +1,13 @@
+import { Line, NoteText } from '@components/uiComponents';
+import { NowTheme, ScreenName } from '@constants/index';
+import { ToastHelpers } from '@helpers/index';
+import { setPersonTabActiveIndex } from '@redux/Actions';
 import Clipboard from 'expo-clipboard';
 import React, { useEffect } from 'react';
 import { Text, View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useDispatch, useSelector } from 'react-redux';
-import { Line, NoteText } from '../../components/uiComponents';
-import { NowTheme, ScreenName } from '../../constants';
-import { ToastHelpers } from '../../helpers';
-import { setPersonTabActiveIndex } from '../../redux/Actions';
 
 const {
     FONT: {

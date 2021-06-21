@@ -1,21 +1,21 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
+import {
+    CenterLoader,
+    CustomButton, CustomInput, IconCustom, NoteText, TopTabBar
+} from '@components/uiComponents';
+import {
+    IconFamily, NowTheme, Rx, ScreenName
+} from '@constants/index';
+import { MediaHelpers, ToastHelpers } from '@helpers/index';
+import { SystemServices } from '@services/index';
 import React, { useEffect, useState } from 'react';
 import {
-    Image, StyleSheet, Text, View
+    Image, SafeAreaView, StyleSheet, Text, View
 } from 'react-native';
 import { FlatList, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import ImageView from 'react-native-image-viewing';
 import { SceneMap } from 'react-native-tab-view';
 import { useSelector } from 'react-redux';
-import {
-    CenterLoader,
-    CustomButton, CustomInput, IconCustom, NoteText, TopTabBar
-} from '../../components/uiComponents';
-import {
-    IconFamily, NowTheme, Rx, ScreenName
-} from '../../constants';
-import { MediaHelpers, ToastHelpers } from '../../helpers';
-import { rxUtil } from '../../utils';
 
 const {
     FONT: {
@@ -44,7 +44,6 @@ export default function Support({ navigation }) {
     const [image, setImage] = useState();
     const [visible, setVisible] = useState(false);
 
-    const token = useSelector((state) => state.userReducer.token);
     const pickMeInfoStore = useSelector((state) => state.appConfigReducer.pickMeInfoStore);
     const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
 
@@ -76,34 +75,21 @@ export default function Support({ navigation }) {
         setBugReportForm({ ...bugReportForm, title: titleInput });
     };
 
-    const onSubmitBugReport = () => {
+    const onSubmitBugReport = async () => {
         setIsShowSpinner(true);
-        rxUtil(
-            Rx.SYSTEM.CREATE_BUG,
-            'POST',
-            bugReportForm,
-            {
-                Authorization: token
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'success');
-                setBugReportForm({
-                    title: '',
-                    description: '',
-                    url: ''
-                });
-                setImage();
-                setIsShowSpinner(false);
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
-                setIsShowSpinner(false);
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
-                setIsShowSpinner(false);
-            }
-        );
+        const result = await SystemServices.submitBugReportAsync(bugReportForm);
+        const { data } = result;
+
+        if (data) {
+            ToastHelpers.renderToast(data.message, 'success');
+            setBugReportForm({
+                title: '',
+                description: '',
+                url: ''
+            });
+            setImage();
+        }
+        setIsShowSpinner(false);
     };
 
     const handleOnPickImageReport = (uri) => {
@@ -111,7 +97,6 @@ export default function Support({ navigation }) {
         MediaHelpers.uploadImage(
             uri,
             Rx.SYSTEM.UPLOAD_IMAGE_AND_GET_URL,
-            token,
             (res) => {
                 setIsShowSpinner(false);
                 setImage(uri);
@@ -123,10 +108,6 @@ export default function Support({ navigation }) {
                 );
                 setIsShowSpinner(false);
             },
-            () => {
-                ToastHelpers.renderToast('Tải ảnh lên thất bại! Vui lòng thử lại.', 'error');
-                setIsShowSpinner(false);
-            }
         );
     };
 
@@ -311,25 +292,19 @@ export default function Support({ navigation }) {
     );
 
     const renderBugReportForm = () => (
-        <>
-            {isShowSpinner ? (
-                <CenterLoader />
-            ) : (
-                <View
-                    style={{
-                        width: SIZES.WIDTH_BASE * 0.9,
-                        alignSelf: 'center',
-                        paddingVertical: 10
-                    }}
-                >
-                    {renderInputBugTitle()}
-                    {renderInputBugDescription()}
-                    {renderUploadImageReportButton()}
-                    {renderImageReport()}
-                    {renderButtonPanel()}
-                </View>
-            )}
-        </>
+        <View
+            style={{
+                width: SIZES.WIDTH_BASE * 0.9,
+                alignSelf: 'center',
+                paddingVertical: 10
+            }}
+        >
+            {renderInputBugTitle()}
+            {renderInputBugDescription()}
+            {renderUploadImageReportButton()}
+            {renderImageReport()}
+            {renderButtonPanel()}
+        </View>
     );
 
     const renderInputBugTitle = () => (
@@ -367,15 +342,20 @@ export default function Support({ navigation }) {
     );
 
     return (
-        <>
+        <SafeAreaView
+            style={{
+                flex: 1
+            }}
+        >
             {renderImageView()}
+            <CenterLoader isShow={isShowSpinner} />
             <TopTabBar
                 routes={routes}
                 renderScene={renderScene}
                 tabActiveIndex={tabActiveIndex}
                 setTabActiveIndex={setTabActiveIndex}
             />
-        </>
+        </SafeAreaView>
     );
 }
 

@@ -1,12 +1,12 @@
+import { CustomButton, CustomModal } from '@components/uiComponents';
+import { NowTheme, ScreenName } from '@constants/index';
+import { ToastHelpers } from '@helpers/index';
 import { Picker } from '@react-native-picker/picker';
+import { setPersonTabActiveIndex, setShowLoaderStore } from '@redux/Actions';
+import { BookingServices } from '@services/index';
 import React, { useState } from 'react';
 import { Text, View } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import { CustomButton, CustomModal } from '../../components/uiComponents';
-import { NowTheme, Rx, ScreenName } from '../../constants';
-import { ToastHelpers } from '../../helpers';
-import { setPersonTabActiveIndex, setShowLoaderStore } from '../../redux/Actions';
-import { rxUtil } from '../../utils';
+import { useDispatch } from 'react-redux';
 
 const {
     FONT: {
@@ -28,9 +28,6 @@ export default function ReasonCancelBookingModal({
     ];
 
     const [reason, setReason] = useState(reasonDropdownArr[0]);
-
-    const token = useSelector((state) => state.userReducer.token);
-
     const dispatch = useDispatch();
 
     const onChangeReason = (reasonValueInput) => {
@@ -55,30 +52,20 @@ export default function ReasonCancelBookingModal({
         </Picker>
     );
 
-    const sendRequestToCancelBooking = () => {
+    const sendRequestToCancelBooking = async () => {
         dispatch(setShowLoaderStore(true));
-        rxUtil(
-            `${Rx.BOOKING.CANCEL_BOOKING}/${bookingId}`,
-            'POST',
-            {
-                rejectReason: reason.label
-            },
-            {
-                Authorization: token
-            },
-            (res) => {
-                fetchListBooking();
-                navigation.navigate(ScreenName.PERSONAL);
-                dispatch(setPersonTabActiveIndex(2));
-                ToastHelpers.renderToast(res.data.message, 'success');
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
-            }
-        );
+        const result = await BookingServices.submitCancelBookingAsync(bookingId, {
+            rejectReason: reason.label
+        });
+        const { data } = result;
+
+        if (data) {
+            await fetchListBooking();
+            navigation.navigate(ScreenName.PERSONAL);
+            dispatch(setPersonTabActiveIndex(2));
+            ToastHelpers.renderToast(data.message, 'success');
+        }
+        dispatch(setShowLoaderStore(false));
     };
 
     const renderReasonCancelBookingModal = () => (

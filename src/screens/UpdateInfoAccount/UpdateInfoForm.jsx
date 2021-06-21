@@ -1,12 +1,12 @@
+import { CenterLoader, CustomButton, CustomInput } from '@components/uiComponents';
+import { NowTheme } from '@constants/index';
+import { ToastHelpers } from '@helpers/index';
+import { setCurrentUser, setPersonTabActiveIndex } from '@redux/Actions';
+import { UserServices } from '@services/index';
 import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
-import { CenterLoader, CustomButton, CustomInput } from '../../components/uiComponents';
-import { NowTheme, Rx } from '../../constants';
-import { ToastHelpers } from '../../helpers';
-import { setCurrentUser, setPersonTabActiveIndex } from '../../redux/Actions';
-import { rxUtil } from '../../utils';
 
 const { SIZES, COLORS } = NowTheme;
 
@@ -14,7 +14,6 @@ export default function UpdateInfoForm() {
     const [newUser, setNewUser] = useState({});
     const [isShowSpinner, setIsShowSpinner] = useState(false);
 
-    const token = useSelector((state) => state.userReducer.token);
     const currentUser = useSelector((state) => state.userReducer.currentUser);
 
     const dispatch = useDispatch();
@@ -162,7 +161,7 @@ export default function UpdateInfoForm() {
         return true;
     };
 
-    const onSubmitUpdateInfo = () => {
+    const onSubmitUpdateInfo = async () => {
         const {
             fullName,
             description,
@@ -176,7 +175,7 @@ export default function UpdateInfoForm() {
             return;
         }
 
-        const data = {
+        const body = {
             fullName,
             description,
             dob: `${dob}-01-01T14:00:00`,
@@ -186,43 +185,26 @@ export default function UpdateInfoForm() {
             email: 'N/a'
         };
 
-        const headers = {
-            Authorization: token
-        };
-
         setIsShowSpinner(true);
 
-        rxUtil(
-            Rx.USER.UPDATE_USER_INFO,
-            'POST',
-            data,
-            headers,
-            (res) => {
-                const userInfo = {
-                    ...currentUser,
-                    fullName,
-                    dob,
-                    homeTown,
-                    interests
-                };
+        const result = await UserServices.submitUpdateInfoAsync(body);
+        const { data } = result;
 
-                dispatch(setCurrentUser(userInfo));
-                dispatch(setPersonTabActiveIndex(0));
+        if (data) {
+            const userInfo = {
+                ...currentUser,
+                fullName,
+                dob,
+                homeTown,
+                interests
+            };
 
-                setNewUser(userInfo);
-                setIsShowSpinner(false);
-
-                ToastHelpers.renderToast(res.data.message, 'success');
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
-                setIsShowSpinner(false);
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
-                setIsShowSpinner(false);
-            }
-        );
+            dispatch(setCurrentUser(userInfo));
+            dispatch(setPersonTabActiveIndex(0));
+            setNewUser(userInfo);
+            ToastHelpers.renderToast(data.message, 'success');
+        }
+        setIsShowSpinner(false);
     };
 
     return (
@@ -231,35 +213,25 @@ export default function UpdateInfoForm() {
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={{
                     width: SIZES.WIDTH_BASE * 0.9,
-                    alignSelf: 'center'
+                    alignSelf: 'center',
+                    alignItems: 'center'
                 }}
             >
+                <CenterLoader isShow={isShowSpinner} />
                 <View
                     style={{
                         backgroundColor: COLORS.BASE,
                         marginVertical: 10
                     }}
                 >
-                    {isShowSpinner ? (
-                        <View
-                            style={{
-                                marginTop: SIZES.HEIGHT_BASE * 0.3
-                            }}
-                        >
-                            <CenterLoader size="small" />
-                        </View>
-                    ) : (
+                    {newUser && (
                         <>
-                            {newUser && (
-                                <>
-                                    {renderInputName()}
-                                    {renderInputHometown()}
-                                    {renderInputYear()}
-                                    {renderInputInterests()}
-                                    {renderInputDescription()}
-                                    {renderButtonPanel()}
-                                </>
-                            )}
+                            {renderInputName()}
+                            {renderInputHometown()}
+                            {renderInputYear()}
+                            {renderInputInterests()}
+                            {renderInputDescription()}
+                            {renderButtonPanel()}
                         </>
                     )}
                 </View>

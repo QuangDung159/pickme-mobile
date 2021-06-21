@@ -1,3 +1,9 @@
+import { CenterLoader, CustomButton } from '@components/uiComponents';
+import {
+    Images, NowTheme, ScreenName, Utils
+} from '@constants/index';
+import { setIsSignInOtherDeviceStore, setNavigation, setToken } from '@redux/Actions';
+import { UserServices } from '@services/index';
 import Constants from 'expo-constants';
 import * as SecureStore from 'expo-secure-store';
 import React, { useEffect, useState } from 'react';
@@ -5,12 +11,6 @@ import {
     ImageBackground, Platform, StatusBar, StyleSheet, Text, View
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { CenterLoader, CustomButton } from '../../components/uiComponents';
-import {
-    Images, NowTheme, ScreenName, Utils
-} from '../../constants';
-import { setIsSignInOtherDeviceStore, setNavigation, setToken } from '../../redux/Actions';
-import { UserServices } from '../../services';
 
 const {
     FONT: {
@@ -55,11 +55,13 @@ export default function Onboarding({ navigation }) {
     const onLogin = async () => {
         const phoneNumber = await SecureStore.getItemAsync('phoneNumber');
         const password = await SecureStore.getItemAsync('password');
+        const deviceId = await SecureStore.getItemAsync('deviceId');
+
         if (phoneNumber && password) {
             const body = {
                 username: phoneNumber,
                 password,
-                deviceId: deviceIdStore
+                deviceId
             };
 
             setIsShowSpinner(true);
@@ -113,14 +115,12 @@ export default function Onboarding({ navigation }) {
                         resizeMode: 'cover',
                     }}
                 />
-                {isShowSpinner ? (
-                    <CenterLoader />
-                ) : (
-                    <View
-                        style={styles.padded}
-                    >
-                        <View>
-                            {/* <View middle>
+                <CenterLoader isShow={isShowSpinner} />
+                <View
+                    style={styles.padded}
+                >
+                    <View>
+                        {/* <View middle>
                             <Image
                                 source={Images.NowLogo}
                                 style={{
@@ -129,42 +129,10 @@ export default function Onboarding({ navigation }) {
                             />
                         </View> */}
 
-                            <View>
-                                <View
-                                    style={{
-                                        paddingBottom: SIZES.HEIGHT_BASE * 0.2,
-                                        alignSelf: 'center',
-                                        alignItems: 'center'
-                                    }}
-                                >
-                                    <Text
-                                        style={{
-                                            fontFamily: MONTSERRAT_REGULAR,
-                                            fontSize: SIZES.WIDTH_BASE * 0.1,
-                                            color: COLORS.ACTIVE
-                                        }}
-                                    >
-                                        PickMe
-                                    </Text>
-                                </View>
-                                <CustomButton
-                                    onPress={() => {
-                                        navigation.navigate(ScreenName.SIGN_IN);
-                                    }}
-                                    type="active"
-                                    label="Đăng nhập"
-                                    buttonStyle={styles.button}
-                                />
-                                <CustomButton
-                                    onPress={() => navigation.navigate(ScreenName.SIGN_UP)}
-                                    type="active"
-                                    label="Đăng kí"
-                                    buttonStyle={styles.button}
-                                />
-                            </View>
+                        <View>
                             <View
                                 style={{
-                                    marginTop: 10,
+                                    paddingBottom: SIZES.HEIGHT_BASE * 0.2,
                                     alignSelf: 'center',
                                     alignItems: 'center'
                                 }}
@@ -172,25 +140,56 @@ export default function Onboarding({ navigation }) {
                                 <Text
                                     style={{
                                         fontFamily: MONTSERRAT_REGULAR,
-                                        color: COLORS.DEFAULT,
-                                        fontSize: SIZES.FONT_H4 - 2,
+                                        fontSize: SIZES.WIDTH_BASE * 0.1,
+                                        color: COLORS.ACTIVE
                                     }}
                                 >
-                                    {`${Constants.manifest.version}`}
-                                </Text>
-                                <Text
-                                    style={{
-                                        fontFamily: MONTSERRAT_REGULAR,
-                                        color: COLORS.DEFAULT,
-                                        fontSize: SIZES.FONT_H4 - 2,
-                                    }}
-                                >
-                                    {deviceIdStore}
+                                    PickMe
                                 </Text>
                             </View>
+                            <CustomButton
+                                onPress={() => {
+                                    navigation.navigate(ScreenName.SIGN_IN);
+                                }}
+                                type="active"
+                                label="Đăng nhập"
+                                buttonStyle={styles.button}
+                            />
+                            <CustomButton
+                                onPress={() => navigation.navigate(ScreenName.SIGN_UP)}
+                                type="active"
+                                label="Đăng kí"
+                                buttonStyle={styles.button}
+                            />
+                        </View>
+                        <View
+                            style={{
+                                marginTop: 10,
+                                alignSelf: 'center',
+                                alignItems: 'center'
+                            }}
+                        >
+                            <Text
+                                style={{
+                                    fontFamily: MONTSERRAT_REGULAR,
+                                    color: COLORS.DEFAULT,
+                                    fontSize: SIZES.FONT_H4 - 2,
+                                }}
+                            >
+                                {`${Constants.manifest.version}`}
+                            </Text>
+                            <Text
+                                style={{
+                                    fontFamily: MONTSERRAT_REGULAR,
+                                    color: COLORS.DEFAULT,
+                                    fontSize: SIZES.FONT_H4 - 2,
+                                }}
+                            >
+                                {deviceIdStore}
+                            </Text>
                         </View>
                     </View>
-                )}
+                </View>
             </View>
         </View>
     );

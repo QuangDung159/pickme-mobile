@@ -1,9 +1,10 @@
+import { TopTabBar } from '@components/uiComponents';
+import { ScreenName } from '@constants/index';
+import { ToastHelpers } from '@helpers/index';
 import React, { useEffect, useState } from 'react';
+import { SafeAreaView } from 'react-native';
 import { SceneMap } from 'react-native-tab-view';
 import { useSelector } from 'react-redux';
-import { TopTabBar } from '../../components/uiComponents';
-import { ScreenName } from '../../constants';
-import { ToastHelpers } from '../../helpers';
 import ChangePasswordForm from './ChangePasswordForm';
 import UpdateInfoForm from './UpdateInfoForm';
 
@@ -44,12 +45,18 @@ export default function UpdateInfoAccount({ navigation }) {
 
     try {
         return (
-            <TopTabBar
-                routes={routes}
-                renderScene={renderScene}
-                tabActiveIndex={tabActiveIndex}
-                setTabActiveIndex={setTabActiveIndex}
-            />
+            <SafeAreaView
+                style={{
+                    flex: 1
+                }}
+            >
+                <TopTabBar
+                    routes={routes}
+                    renderScene={renderScene}
+                    tabActiveIndex={tabActiveIndex}
+                    setTabActiveIndex={setTabActiveIndex}
+                />
+            </SafeAreaView>
         );
     } catch (exception) {
         console.log('exception :>> ', exception);

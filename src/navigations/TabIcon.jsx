@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
-import { IconCustom } from '../components/uiComponents';
-import { IconFamily, ScreenName } from '../constants';
+import { IconCustom } from '@components/uiComponents';
+import { IconFamily, ScreenName } from '@constants/index';
 
 export default class TabIcon extends PureComponent {
     constructor(props) {

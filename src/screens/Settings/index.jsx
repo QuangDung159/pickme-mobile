@@ -1,3 +1,6 @@
+import { IconCustom, Switch } from '@components/uiComponents';
+import { NowTheme } from '@constants/index';
+import { ToastHelpers } from '@helpers/index';
 import React, { useEffect, useState } from 'react';
 import {
     FlatList,
@@ -6,9 +9,6 @@ import {
     TouchableOpacity,
     View
 } from 'react-native';
-import { IconCustom, Switch } from '../../components/uiComponents';
-import { NowTheme } from '../../constants';
-import { ToastHelpers } from '../../helpers';
 
 const {
     FONT: {

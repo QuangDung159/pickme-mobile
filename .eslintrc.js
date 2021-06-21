@@ -4,6 +4,9 @@ module.exports = {
     env: {
         jest: true,
     },
+    settings: {
+        'import/resolver': { 'babel-module': {} }
+    },
     rules: {
         'no-use-before-define': 'off',
         'react/jsx-filename-extension': 'off',

@@ -1,20 +1,20 @@
+import {
+    CenterLoader, CustomButton, CustomCheckbox, CustomInput, CustomModal, Line
+} from '@components/uiComponents';
+import {
+    BookingStatus, NowTheme, ScreenName
+} from '@constants/index';
+import BookingProgressFlow from '@containers/BookingProgressFlow';
+import { ToastHelpers } from '@helpers/index';
+import { setListBookingStore, setPersonTabActiveIndex, setShowLoaderStore } from '@redux/Actions';
+import { BookingServices } from '@services/index';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import {
-    Alert, RefreshControl, ScrollView, StyleSheet, Text, View
+    Alert, RefreshControl, SafeAreaView, ScrollView, StyleSheet, Text, View
 } from 'react-native';
 import { AirbnbRating } from 'react-native-ratings';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-    CenterLoader, CustomButton, CustomCheckbox, CustomInput, CustomModal, Line
-} from '../../components/uiComponents';
-import {
-    BookingStatus, NowTheme, Rx, ScreenName
-} from '../../constants';
-import BookingProgressFlow from '../../containers/BookingProgressFlow';
-import { ToastHelpers } from '../../helpers';
-import { setListBookingStore, setPersonTabActiveIndex, setShowLoaderStore } from '../../redux/Actions';
-import { rxUtil } from '../../utils';
 import CardBooking from './CardBooking';
 import ReasonCancelBookingModal from './ReasonCancelBookingModal';
 
@@ -50,7 +50,6 @@ export default function BookingDetail({
     const [isRecomendForFriends, setIsRecomendForFriends] = useState(true);
     const [ratingDesc, setRatingDesc] = useState('');
 
-    const token = useSelector((state) => state.userReducer.token);
     const showLoaderStore = useSelector((state) => state.appConfigReducer.showLoaderStore);
     const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
 
@@ -86,105 +85,60 @@ export default function BookingDetail({
         fetchBookingDetailInfo();
     };
 
-    const fetchListBooking = () => {
-        const pagingStr = '?pageIndex=1&pageSize=100';
+    const fetchListBooking = async () => {
+        const result = await BookingServices.fetchListBookingAsync();
+        const { data } = result;
 
-        rxUtil(
-            `${Rx.BOOKING.GET_MY_BOOKING_AS_CUSTOMER}${pagingStr}`,
-            'GET',
-            null,
-            {
-                Authorization: token
-            },
-            (res) => {
-                dispatch(setListBookingStore(res.data.data));
-                dispatch(setShowLoaderStore(false));
-                setRefreshing(false);
-            },
-            (res) => {
-                setRefreshing(false);
-                dispatch(setShowLoaderStore(false));
-                ToastHelpers.renderToast(res.data.message, 'error');
-            },
-            (res) => {
-                setRefreshing(false);
-                dispatch(setShowLoaderStore(false));
-                ToastHelpers.renderToast(res.data.message, 'error');
-            }
-        );
+        if (data) {
+            dispatch(setListBookingStore(data.data));
+            dispatch(setShowLoaderStore(false));
+            setRefreshing(false);
+        } else {
+            setRefreshing(false);
+            dispatch(setShowLoaderStore(false));
+        }
     };
 
-    const fetchBookingDetailInfo = () => {
-        rxUtil(
-            `${Rx.BOOKING.DETAIL_BOOKING}/${bookingId}`,
-            'GET',
-            null,
-            {
-                Authorization: token
-            },
-            (res) => {
-                setBooking(res.data.data);
-                setRefreshing(false);
-                dispatch(setShowLoaderStore(false));
-            },
-            (res) => {
-                setRefreshing(false);
-                dispatch(setShowLoaderStore(false));
-                ToastHelpers.renderToast(res.data.message, 'error');
-            },
-            (res) => {
-                setRefreshing(false);
-                dispatch(setShowLoaderStore(false));
-                ToastHelpers.renderToast(res.data.message, 'error');
-            }
-        );
-    };
-
-    const onClickCompleteBooking = () => {
+    const fetchBookingDetailInfo = async () => {
         dispatch(setShowLoaderStore(true));
-        rxUtil(
-            `${Rx.BOOKING.COMPLETE_BOOKING}/${bookingId}`,
-            'POST',
-            null,
-            {
-                Authorization: token
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'success');
-                renderAlertRatingReport();
-            },
-            (res) => {
-                ToastHelpers.renderToast();
-                dispatch(setShowLoaderStore(false));
-                ToastHelpers.renderToast(res.data.message, 'error');
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
-                dispatch(setShowLoaderStore(false));
-            }
-        );
+        const result = await BookingServices.fetchBookingDetailAsync(bookingId);
+        const { data } = result;
+
+        if (data) {
+            setBooking(data.data);
+        }
+
+        setRefreshing(false);
+        dispatch(setShowLoaderStore(false));
     };
 
-    const sendRating = () => {
-        rxUtil(
-            Rx.BOOKING.BOOKING_RATE,
-            'POST',
-            {
-                bookingId,
-                description: ratingDesc || 'Rating',
-                enthusiasm,
-                professional,
-                onTime,
-                possitive,
-                isRecomendForFriends
-            },
-            {
-                Authorization: token
-            },
-            (res) => ToastHelpers.renderToast(res.data.message, 'success'),
-            (res) => ToastHelpers.renderToast(res.data.message, 'error'),
-            (res) => ToastHelpers.renderToast(res.data.message, 'error')
-        );
+    const onClickCompleteBooking = async () => {
+        dispatch(setShowLoaderStore(true));
+        const result = await BookingServices.submitCompleteBookingAsync(bookingId);
+        const { data } = result;
+
+        if (data) {
+            renderAlertRatingReport();
+        }
+
+        dispatch(setShowLoaderStore(false));
+    };
+
+    const sendRating = async () => {
+        const result = await BookingServices.submitRatingAsync({
+            bookingId,
+            description: ratingDesc || 'Rating',
+            enthusiasm,
+            professional,
+            onTime,
+            possitive,
+            isRecomendForFriends
+        });
+
+        const { data } = result;
+        if (data) {
+            ToastHelpers.renderToast(data.message, 'success');
+        }
     };
 
     const onChangeReport = (reportInput) => {
@@ -244,32 +198,18 @@ export default function BookingDetail({
         return null;
     };
 
-    const onCustomerConfirmPayment = () => {
+    const onCustomerConfirmPayment = async () => {
         dispatch(setShowLoaderStore(true));
+        const result = await BookingServices.submitConfirmPaymentAsync(bookingId);
+        const { data } = result;
 
-        rxUtil(
-            `${Rx.PAYMENT.CREATE_PAYMENT}/${bookingId}`,
-            'POST',
-            null,
-            {
-                Authorization: token
-            },
-            (res) => {
-                navigation.navigate(ScreenName.PERSONAL);
-                dispatch(setPersonTabActiveIndex(2));
-                fetchListBooking();
-                ToastHelpers.renderToast(res.message || 'Thao tác thành công.', 'success');
-            },
-            (res) => {
-                ToastHelpers.renderToast();
-                dispatch(setShowLoaderStore(false));
-                ToastHelpers.renderToast(res.data.message, 'error');
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
-                dispatch(setShowLoaderStore(false));
-            }
-        );
+        if (data) {
+            navigation.navigate(ScreenName.PERSONAL);
+            dispatch(setPersonTabActiveIndex(2));
+            fetchListBooking();
+            ToastHelpers.renderToast(data.message || 'Thao tác thành công.', 'success');
+        }
+        dispatch(setShowLoaderStore(false));
     };
 
     // render \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
@@ -509,33 +449,36 @@ export default function BookingDetail({
 
     try {
         return (
-            <>
-                {showLoaderStore || !booking ? (
-                    <CenterLoader />
-                ) : (
-                    <ScrollView
-                        showsVerticalScrollIndicator={false}
-                        refreshControl={(
-                            <RefreshControl
-                                refreshing={refreshing}
-                                onRefresh={() => onRefresh()}
-                            />
-                        )}
-                        contentContainerStyle={{
-                            paddingBottom: 10
-                        }}
-                    >
-                        {renderRatingModal()}
-                        {renderReportModal()}
-
-                        <ReasonCancelBookingModal
-                            modalReasonVisible={modalReasonVisible}
-                            setModalReasonVisible={setModalReasonVisible}
-                            bookingId={bookingId}
-                            navigation={navigation}
-                            fetchListBooking={() => fetchListBooking()}
+            <SafeAreaView
+                style={{
+                    flex: 1
+                }}
+            >
+                <CenterLoader isShow={showLoaderStore || !booking} />
+                <ScrollView
+                    showsVerticalScrollIndicator={false}
+                    refreshControl={(
+                        <RefreshControl
+                            refreshing={refreshing}
+                            onRefresh={() => onRefresh()}
                         />
+                    )}
+                    contentContainerStyle={{
+                        paddingBottom: 10
+                    }}
+                >
+                    {renderRatingModal()}
+                    {renderReportModal()}
 
+                    <ReasonCancelBookingModal
+                        modalReasonVisible={modalReasonVisible}
+                        setModalReasonVisible={setModalReasonVisible}
+                        bookingId={bookingId}
+                        navigation={navigation}
+                        fetchListBooking={() => fetchListBooking()}
+                    />
+
+                    {booking && (
                         <View
                             style={{
                                 width: SIZES.WIDTH_BASE * 0.9,
@@ -609,9 +552,9 @@ export default function BookingDetail({
                                 {handleShowButtonByStatus()}
                             </View>
                         </View>
-                    </ScrollView>
-                )}
-            </>
+                    )}
+                </ScrollView>
+            </SafeAreaView>
         );
     } catch (exception) {
         console.log('exception :>> ', exception);

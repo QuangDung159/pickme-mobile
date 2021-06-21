@@ -1,14 +1,14 @@
+import { CenterLoader, CustomButton, IconCustom } from '@components/uiComponents';
+import {
+    IconFamily, NowTheme, ScreenName
+} from '@constants/index';
+import { CommonHelpers, ToastHelpers } from '@helpers/index';
+import { setCurrentUser, setListCashHistoryStore } from '@redux/Actions';
+import { CashServices } from '@services/index';
 import React, { useEffect, useState } from 'react';
 import { RefreshControl, Text, View } from 'react-native';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
-import { CenterLoader, CustomButton, IconCustom } from '../../components/uiComponents';
-import {
-    IconFamily, NowTheme, Rx, ScreenName
-} from '../../constants';
-import { CommonHelpers, ToastHelpers } from '../../helpers';
-import { setCurrentUser, setListCashHistoryStore } from '../../redux/Actions';
-import { rxUtil } from '../../utils';
 
 const {
     FONT: {
@@ -24,8 +24,6 @@ export default function Wallet({ navigation }) {
 
     const currentUser = useSelector((state) => state.userReducer.currentUser);
     const listCashHistoryStore = useSelector((state) => state.userReducer.listCashHistoryStore);
-    const token = useSelector((state) => state.userReducer.token);
-
     const dispatch = useDispatch();
 
     useEffect(
@@ -183,39 +181,27 @@ export default function Wallet({ navigation }) {
         </View>
     );
 
-    const fetchHistory = () => {
-        rxUtil(
-            Rx.CASH.GET_CASH_HISTORY,
-            'GET',
-            null,
-            {
-                Authorization: token
-            },
-            (res) => {
-                const history = res.data.data;
-                if (history && history.length !== 0) {
-                    dispatch(setListCashHistoryStore(history));
-                    const latestUpdatedAmount = history[0].updatedWalletAmount;
+    const fetchHistory = async () => {
+        const result = await CashServices.fetchCashHistoryAsync();
+        const { data } = result;
 
-                    dispatch(setCurrentUser({
-                        ...currentUser,
-                        walletAmount: latestUpdatedAmount
-                    }));
-                }
-                setIsShowSpinner(false);
-                setRefreshing(false);
-            },
-            (res) => {
-                setIsShowSpinner(false);
-                setRefreshing(false);
-                ToastHelpers.renderToast(res.data.message, 'error');
-            },
-            (res) => {
-                setIsShowSpinner(false);
-                setRefreshing(false);
-                ToastHelpers.renderToast(res.data.message, 'error');
+        if (data) {
+            const history = data.data;
+            if (history && history.length !== 0) {
+                dispatch(setListCashHistoryStore(history));
+                const latestUpdatedAmount = history[0].updatedWalletAmount;
+
+                dispatch(setCurrentUser({
+                    ...currentUser,
+                    walletAmount: latestUpdatedAmount
+                }));
             }
-        );
+            setIsShowSpinner(false);
+            setRefreshing(false);
+        } else {
+            setIsShowSpinner(false);
+            setRefreshing(false);
+        }
     };
 
     const renderHistory = () => {
@@ -274,6 +260,7 @@ export default function Wallet({ navigation }) {
     try {
         return (
             <>
+                <CenterLoader isShow={isShowSpinner} />
                 <View
                     style={{
                         height: 120,
@@ -284,19 +271,7 @@ export default function Wallet({ navigation }) {
                     {renderWalletAmountPanel()}
                 </View>
 
-                {isShowSpinner ? (
-                    <View
-                        style={{
-                            marginTop: SIZES.HEIGHT_BASE * 0.1
-                        }}
-                    >
-                        <CenterLoader />
-                    </View>
-                ) : (
-                    <>
-                        {renderHistory()}
-                    </>
-                )}
+                {renderHistory()}
             </>
         );
     } catch (exception) {

@@ -1,24 +1,24 @@
 /* eslint-disable camelcase */
+import { CustomCalendar } from '@components/businessComponents';
+import {
+    CenterLoader, CustomButton, CustomInput, CustomModal, GooglePlacesInput, IconCustom, Line
+} from '@components/uiComponents';
+import {
+    DateTimeConst, IconFamily, NowTheme, ScreenName
+} from '@constants/index';
+import { CommonHelpers, ToastHelpers } from '@helpers/index';
 import { Picker } from '@react-native-picker/picker';
+import { setListBookingStore, setPersonTabActiveIndex } from '@redux/Actions';
+import { BookingServices } from '@services/index';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import {
-    Alert, StyleSheet, Text, View
+    Alert, SafeAreaView, StyleSheet, Text, View
 } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import ScrollPicker from 'react-native-wheel-scroll-picker';
 import { useDispatch, useSelector } from 'react-redux';
-import { CustomCalendar } from '../../components/businessComponents';
-import {
-    CenterLoader, CustomButton, CustomInput, CustomModal, GooglePlacesInput, IconCustom, Line
-} from '../../components/uiComponents';
-import {
-    DateTimeConst, IconFamily, NowTheme, Rx, ScreenName
-} from '../../constants';
-import { CommonHelpers, ToastHelpers } from '../../helpers';
-import { setListBookingStore, setPersonTabActiveIndex } from '../../redux/Actions';
-import { rxUtil } from '../../utils';
 
 const {
     FONT: {
@@ -64,7 +64,6 @@ export default function CreateBooking({ route, navigation }) {
 
     const [total, setTotal] = useState(0);
 
-    const token = useSelector((state) => state.userReducer.token);
     const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
 
     const dispatch = useDispatch();
@@ -95,34 +94,21 @@ export default function CreateBooking({ route, navigation }) {
                 }
             }
         } = route;
-        rxUtil(
-            `${Rx.BOOKING.GET_PARTNER_PACKAGE}/${id}`,
-            'GET',
-            null,
-            {
-                Authorization: token
-            },
-            (res) => {
-                const listPackage = res.data.data;
-                if (!listPackage || listPackage.length === 0) return;
+        const result = await BookingServices.fetchListPartnerPackageAsync(id);
+        const { data } = result;
 
-                setListPartnerPackage(res.data.data);
-                setPackageActive(res.data.data[0]);
-                setIsShowSpinner(false);
-            },
-            (res) => {
-                setIsShowSpinner(false);
-                ToastHelpers.renderToast(res.data.message, 'error');
-            },
-            (res) => {
-                setIsShowSpinner(false);
-                ToastHelpers.renderToast(res.data.message, 'error');
-            }
-        );
+        if (data) {
+            const listPackage = data.data;
+            if (!listPackage || listPackage.length === 0) return;
+
+            setListPartnerPackage(data.data);
+            setPackageActive(data.data[0]);
+        }
+        setIsShowSpinner(false);
     };
 
     // handler \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
-    const getCalendarPartner = () => {
+    const getCalendarPartner = async () => {
         const {
             params: {
                 partner
@@ -130,30 +116,16 @@ export default function CreateBooking({ route, navigation }) {
         } = route;
 
         setIsShowSpinner(true);
+        const result = await BookingServices.fetchPartnerBusyCalendarAsync(partner.id);
+        const { data } = result;
 
-        rxUtil(
-            `${Rx.CALENDAR.PARTNER_CALENDAR}/${partner.id}`,
-            'GET',
-            null,
-            {
-                Authorization: token
-            },
-            (res) => {
-                setBusyCalendar(res.data.data);
-                setIsShowSpinner(false);
-            },
-            (res) => {
-                setIsShowSpinner(false);
-                ToastHelpers.renderToast(res.data.message, 'error');
-            },
-            (res) => {
-                setIsShowSpinner(false);
-                ToastHelpers.renderToast(res.data.message, 'error');
-            }
-        );
+        if (data) {
+            setBusyCalendar(data.data);
+        }
+        setIsShowSpinner(false);
     };
 
-    const onSubmitBooking = () => {
+    const onSubmitBooking = async () => {
         const {
             params: {
                 partner
@@ -177,55 +149,28 @@ export default function CreateBooking({ route, navigation }) {
         };
 
         setIsShowSpinner(true);
+        const result = await BookingServices.submitScheduleBookingAsync(partner.id, bookingToSubmit);
+        const { data } = result;
 
-        rxUtil(
-            `${Rx.BOOKING.SCHEDULE_BOOKING}/${partner.id}`,
-            'POST',
-            bookingToSubmit,
-            {
-                Authorization: token
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'success');
-                navigation.reset({
-                    index: 0,
-                    routes: [{ name: ScreenName.PERSONAL }],
-                });
-                getListBooking();
-                dispatch(setPersonTabActiveIndex(2));
-            },
-            (res) => {
-                setIsShowSpinner(false);
-                ToastHelpers.renderToast();
-                ToastHelpers.renderToast(res.data.message, 'error');
-            },
-            (res) => {
-                setIsShowSpinner(false);
-                ToastHelpers.renderToast(res.data.message, 'error');
-            }
-        );
+        if (data) {
+            ToastHelpers.renderToast(data.message, 'success');
+            getListBooking();
+            dispatch(setPersonTabActiveIndex(2));
+            navigation.reset({
+                index: 0,
+                routes: [{ name: ScreenName.PERSONAL }],
+            });
+        }
+        setIsShowSpinner(false);
     };
 
-    const getListBooking = () => {
-        const pagingStr = '?pageIndex=1&pageSize=100';
+    const getListBooking = async () => {
+        const result = await BookingServices.fetchListBookingAsync();
+        const { data } = result;
 
-        rxUtil(
-            `${Rx.BOOKING.GET_MY_BOOKING_AS_CUSTOMER}${pagingStr}`,
-            'GET',
-            null,
-            {
-                Authorization: token
-            },
-            (res) => {
-                dispatch(setListBookingStore(res.data.data));
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
-            },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
-            }
-        );
+        if (data) {
+            dispatch(setListBookingStore(data.data));
+        }
     };
 
     const convertStringHoursToMinutes = (hoursStr) => {
@@ -748,13 +693,6 @@ export default function CreateBooking({ route, navigation }) {
         });
     };
 
-    const onChangeAddressNormal = (input) => {
-        setBooking({
-            ...booking,
-            address: input
-        });
-    };
-
     const onChangeNote = (input) => {
         setBooking({
             ...booking,
@@ -836,20 +774,6 @@ export default function CreateBooking({ route, navigation }) {
                     label="Địa điểm (google API):"
                     onChangeAddress={(detail) => onChangeAddress(detail)}
                     addressInput={booking.address}
-                />
-
-                <CustomInput
-                    value={booking.address}
-                    multiline
-                    onChangeText={onChangeAddressNormal}
-                    containerStyle={{
-                        marginVertical: 10,
-                        width: SIZES.WIDTH_BASE * 0.9
-                    }}
-                    label="Địa điểm:"
-                    inputStyle={{
-                        height: 80,
-                    }}
                 />
 
                 {renderInputNote()}
@@ -1011,29 +935,23 @@ export default function CreateBooking({ route, navigation }) {
 
     try {
         return (
-            <>
-                {isShowSpinner ? (
-                    <CenterLoader />
-                ) : (
-                    <>
-                        <KeyboardAwareScrollView
-                            keyboardShouldPersistTaps="handled"
-                            style={{
-                                width: SIZES.WIDTH_BASE * 0.9,
-                                alignSelf: 'center'
-                            }}
-                            showsVerticalScrollIndicator={false}
-                        >
-                            {renderModal()}
-                            {renderTimePickerModal()}
-                            {renderPartnerPackageModal()}
-                            {renderFormView(partner)}
-                            {renderTotal()}
-                        </KeyboardAwareScrollView>
-                    </>
-                )}
-
-            </>
+            <SafeAreaView>
+                <CenterLoader isShow={isShowSpinner} />
+                <KeyboardAwareScrollView
+                    keyboardShouldPersistTaps="always"
+                    style={{
+                        width: SIZES.WIDTH_BASE * 0.9,
+                        alignSelf: 'center'
+                    }}
+                    showsVerticalScrollIndicator={false}
+                >
+                    {renderModal()}
+                    {renderTimePickerModal()}
+                    {renderPartnerPackageModal()}
+                    {renderFormView(partner)}
+                    {renderTotal()}
+                </KeyboardAwareScrollView>
+            </SafeAreaView>
         );
     } catch (exception) {
         console.log('exception :>> ', exception);
