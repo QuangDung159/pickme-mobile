@@ -2,7 +2,9 @@
 import { Rx } from '@constants/index';
 import { PICKME_INFO_URL } from '@env';
 import { CommonHelpers } from '@helpers/index';
+import Middlewares from '@middlewares/index';
 import { RxUtil } from '@utils/index';
+import * as SecureStore from 'expo-secure-store';
 
 const loginAsync = async (body) => {
     const result = await RxUtil(
@@ -18,7 +20,20 @@ const fetchCurrentUserInfoAsync = async () => {
         Rx.USER.CURRENT_USER_INFO,
         'GET',
     );
-    return CommonHelpers.handleResByStatus(result);
+    const response = CommonHelpers.handleResByStatus(result);
+
+    Middlewares.handleTokenStatusMiddleware(response, async () => {
+        const phoneNumber = await SecureStore.getItemAsync('phoneNumber');
+        const password = await SecureStore.getItemAsync('password');
+
+        const res = await loginAsync({
+            username: phoneNumber,
+            password,
+            deviceId: 'test'
+        });
+        return CommonHelpers.handleResByStatus(res);
+    });
+    return response;
 };
 
 const fetchVerificationAsync = async () => {
