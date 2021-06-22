@@ -34,7 +34,7 @@ export default {
         SCHEDULE_BOOKING: '/bookings/ScheduleBooking',
         UPDATE_BOOKING: '/bookings/UpdateBooking',
         GET_LIST_BOOKING_LOCATION: '/Locations/Locations',
-        GET_MY_BOOKING_AS_CUSTOMER: '/bookings/GetMyBookingAsCustomer',
+        GET_LIST_BOOKING: '/bookings/GetMyBookingAsCustomer',
         PARTNER_CONFIRM_BOOKING: '/bookings/PartnerConfirmBooking',
         CANCEL_BOOKING: '/bookings/CancelBooking',
         COMPLETE_BOOKING: '/bookings/CompleteBooking',
