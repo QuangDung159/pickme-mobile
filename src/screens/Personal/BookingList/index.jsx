@@ -32,9 +32,14 @@ export default function BookingList({ navigation }) {
 
     useEffect(
         () => {
-            if (!listBookingStore || listBookingStore.length === 0) {
-                fetchListBooking();
-            }
+            const eventTriggerGetListBooking = navigation.addListener('focus', () => {
+                if (!listBookingStore || listBookingStore.length === 0) {
+                    setIsShowSpinner(true);
+                    fetchListBooking();
+                }
+            });
+
+            return eventTriggerGetListBooking;
         }, []
     );
 

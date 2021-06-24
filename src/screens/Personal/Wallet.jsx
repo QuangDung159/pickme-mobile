@@ -28,13 +28,11 @@ export default function Wallet({ navigation }) {
 
     useEffect(
         () => {
-            if (!listCashHistoryStore || listCashHistoryStore.length === 0) {
-                setIsShowSpinner(true);
-                fetchHistory();
-            }
-
             const eventTriggerGetListHistory = navigation.addListener('focus', () => {
-                fetchHistory();
+                if (!listCashHistoryStore || listCashHistoryStore.length === 0) {
+                    setIsShowSpinner(true);
+                    fetchHistory();
+                }
             });
 
             return eventTriggerGetListHistory;
@@ -196,12 +194,9 @@ export default function Wallet({ navigation }) {
                     walletAmount: latestUpdatedAmount
                 }));
             }
-            setIsShowSpinner(false);
-            setRefreshing(false);
-        } else {
-            setIsShowSpinner(false);
-            setRefreshing(false);
         }
+        setIsShowSpinner(false);
+        setRefreshing(false);
     };
 
     const renderHistory = () => {
