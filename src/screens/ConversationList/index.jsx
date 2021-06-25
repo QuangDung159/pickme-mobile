@@ -4,6 +4,7 @@ import { GraphQueryString, NowTheme, ScreenName } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
 import { setListConversation, setNumberMessageUnread } from '@redux/Actions';
 import { socketRequestUtil } from '@utils/index';
+import * as SecureStore from 'expo-secure-store';
 import React, { useEffect, useState } from 'react';
 import {
     Image, RefreshControl, Text, View
@@ -20,11 +21,15 @@ const {
     COLORS
 } = NowTheme;
 
+let token = null;
+const getTokenFromLocal = async () => {
+    token = await SecureStore.getItemAsync('api_token');
+};
+
 export default function ConversationList({ navigation }) {
     const [refreshing, setRefreshing] = useState(false);
 
     const messageListened = useSelector((state) => state.messageReducer.messageListened);
-    const token = useSelector((state) => state.userReducer.token);
     const currentUser = useSelector((state) => state.userReducer.currentUser);
     const listConversation = useSelector((state) => state.messageReducer.listConversation);
     const numberMessageUnread = useSelector((state) => state.messageReducer.numberMessageUnread);
@@ -35,6 +40,8 @@ export default function ConversationList({ navigation }) {
 
     useEffect(
         () => {
+            getTokenFromLocal();
+
             const onFocusScreen = navigation.addListener(
                 'focus',
                 () => {

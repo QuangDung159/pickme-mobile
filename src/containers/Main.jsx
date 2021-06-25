@@ -25,7 +25,6 @@ const getTokenFromLocal = async () => {
 
 export default function Main() {
     const dispatch = useDispatch();
-    // const token = useSelector((state) => state.userReducer.token);
 
     useEffect(
         () => {

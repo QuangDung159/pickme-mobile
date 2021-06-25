@@ -6,6 +6,7 @@ import {
 import { ToastHelpers } from '@helpers/index';
 import { setChattingWith, setNumberMessageUnread } from '@redux/Actions';
 import { socketRequestUtil } from '@utils/index';
+import * as SecureStore from 'expo-secure-store';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import {
@@ -13,6 +14,11 @@ import {
 } from 'react-native';
 import { FlatList, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
+
+let token = null;
+const getTokenFromLocal = async () => {
+    token = await SecureStore.getItemAsync('api_token');
+};
 
 const {
     FONT: {
@@ -28,7 +34,6 @@ export default function Message({ navigation, route }) {
     const [nextPageIndex, setNextPageIndex] = useState(2);
     const [isShowLoader, setIsShowLoader] = useState(false);
 
-    const token = useSelector((state) => state.userReducer.token);
     const currentUser = useSelector((state) => state.userReducer.currentUser);
     const messageListened = useSelector((state) => state.messageReducer.messageListened);
     const chattingWith = useSelector((state) => state.messageReducer.chattingWith);
@@ -46,7 +51,7 @@ export default function Message({ navigation, route }) {
             } = route;
 
             setIsShowLoader(true);
-
+            getTokenFromLocal();
             fetchListMessage(toUserId, 1, 12,
                 (data) => {
                     dispatch(setChattingWith(toUserId));

@@ -13,6 +13,7 @@ import {
 } from '@redux/Actions';
 import { BookingServices, NotificationServices, UserServices } from '@services/index';
 import { socketRequestUtil } from '@utils/index';
+import * as SecureStore from 'expo-secure-store';
 import React, { useEffect, useState } from 'react';
 import {
     FlatList, Image, RefreshControl, SafeAreaView, StyleSheet, Text, View
@@ -30,13 +31,17 @@ const {
     COLORS
 } = NowTheme;
 
+let token = null;
+const getTokenFromLocal = async () => {
+    token = await SecureStore.getItemAsync('api_token');
+};
+
 export default function Home({ navigation }) {
     const [refreshing, setRefreshing] = useState(false);
     const [isShowSpinner, setIsShowSpinner] = useState(true);
     const [listPartnerHome, setListPartnerHome] = useState([]);
     const [listConversationGetAtHome, setListConversationGetAtHome] = useState([]);
 
-    const token = useSelector((state) => state.userReducer.token);
     const pickMeInfoStore = useSelector((state) => state.appConfigReducer.pickMeInfoStore);
     const currentUser = useSelector((state) => state.userReducer.currentUser);
     const messageListened = useSelector((state) => state.messageReducer.messageListened);
@@ -48,9 +53,11 @@ export default function Home({ navigation }) {
 
     useEffect(
         () => {
+            getTokenFromLocal();
             fetchCurrentUserInfo();
             fetchListNotification();
             fetchListBooking();
+
             if (!pickMeInfoStore) fetchPickMeInfo();
 
             getListPartner();

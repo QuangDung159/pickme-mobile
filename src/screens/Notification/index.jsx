@@ -32,7 +32,6 @@ export default function Notification({ navigation }) {
 
     useEffect(
         () => {
-            console.log('listNotification :>> ', listNotification);
             if (isSignInOtherDeviceStore) {
                 navigation.reset({
                     index: 0,
