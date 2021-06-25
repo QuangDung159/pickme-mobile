@@ -1,5 +1,6 @@
 /* eslint no-underscore-dangle: ["error", { "allow": ["_isMounted", "_id"] }] */
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
+import ExpoNotification from '@components/businessComponents/ExpoNotification';
 import { CenterLoader } from '@components/uiComponents';
 import {
     GraphQueryString, NowTheme, ScreenName
@@ -337,6 +338,7 @@ export default function Home({ navigation }) {
                     flex: 1
                 }}
             >
+                <ExpoNotification />
                 <CenterLoader isShow={isShowSpinner} />
                 <View
                     style={{
@@ -347,6 +349,7 @@ export default function Home({ navigation }) {
                     {renderArticles()}
                 </View>
             </SafeAreaView>
+
         );
     } catch (exception) {
         console.log('exception :>> ', exception);
