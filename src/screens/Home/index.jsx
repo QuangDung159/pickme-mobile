@@ -9,9 +9,9 @@ import { ToastHelpers } from '@helpers/index';
 import {
     setCurrentUser,
     setListBookingStore,
-    setListConversation, setNumberMessageUnread, setPickMeInfoStore
+    setListConversation, setListNotification, setNumberMessageUnread, setNumberNotificationUnread, setPickMeInfoStore
 } from '@redux/Actions';
-import { BookingServices, UserServices } from '@services/index';
+import { BookingServices, NotificationServices, UserServices } from '@services/index';
 import { socketRequestUtil } from '@utils/index';
 import React, { useEffect, useState } from 'react';
 import {
@@ -49,6 +49,7 @@ export default function Home({ navigation }) {
     useEffect(
         () => {
             fetchCurrentUserInfo();
+            fetchListNotification();
             fetchListBooking();
             if (!pickMeInfoStore) fetchPickMeInfo();
 
@@ -137,6 +138,27 @@ export default function Home({ navigation }) {
         if (data) {
             dispatch(setCurrentUser(data.data));
         }
+    };
+
+    const fetchListNotification = async () => {
+        const result = await NotificationServices.fetchListNotificationAsync();
+        const { data } = result;
+
+        if (data) {
+            dispatch(setListNotification(data.data));
+            countNumberNotificationUnread(data.data);
+        }
+    };
+
+    const countNumberNotificationUnread = (listNotiFromAPI) => {
+        let count = 0;
+        listNotiFromAPI.forEach((item) => {
+            if (!item.isRead) {
+                count += 1;
+            }
+        });
+
+        dispatch(setNumberNotificationUnread(count));
     };
 
     const getConversationByMessage = (message, listConversationSource) => {

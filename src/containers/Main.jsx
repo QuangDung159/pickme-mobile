@@ -10,23 +10,26 @@ import { SOCKET_URL } from '@env';
 import Stacks from '@navigations/Stacks';
 import { NavigationContainer } from '@react-navigation/native';
 import {
-    setDeviceTimezone, setListNotification, setMessageListened, setNumberNotificationUnread
+    setDeviceTimezone, setMessageListened
 } from '@redux/Actions';
-import { NotificationServices } from '@services/index';
 import * as SecureStore from 'expo-secure-store';
 import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import uuid from 'react-native-uuid';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+
+let token = null;
+const getTokenFromLocal = async () => {
+    token = await SecureStore.getItemAsync('api_token');
+};
 
 export default function Main() {
-    const listNotification = useSelector((state) => state.notificationReducer.listNotification);
-
     const dispatch = useDispatch();
-    const token = useSelector((state) => state.userReducer.token);
+    // const token = useSelector((state) => state.userReducer.token);
 
     useEffect(
         () => {
+            getTokenFromLocal();
             dispatch(setDeviceTimezone());
         }, []
     );
@@ -36,29 +39,6 @@ export default function Main() {
             generateNewDeviceId();
         }, []
     );
-
-    const getListNotificationAPI = async () => {
-        const result = await NotificationServices.fetchListNotificationAsync();
-        const { data } = result;
-
-        if (data) {
-            if (listNotification.length === 0) {
-                dispatch(setListNotification(data.data));
-                countNumberNotificationUnread(data.data);
-            }
-        }
-    };
-
-    const countNumberNotificationUnread = (listNotiFromAPI) => {
-        let count = 0;
-        listNotiFromAPI.forEach((item) => {
-            if (!item.isRead) {
-                count += 1;
-            }
-        });
-
-        dispatch(setNumberNotificationUnread(count));
-    };
 
     // apollo
     // Instantiate required constructor fields
@@ -108,14 +88,6 @@ export default function Main() {
             await SecureStore.setItemAsync('deviceId', myuuid);
         }
     };
-
-    useEffect(
-        () => {
-            if (token && token !== 'Bearer ') {
-                getListNotificationAPI();
-            }
-        }, [token]
-    );
 
     const handleNotification = () => {};
 
