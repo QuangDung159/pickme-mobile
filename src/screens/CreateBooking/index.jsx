@@ -938,7 +938,7 @@ export default function CreateBooking({ route, navigation }) {
             <SafeAreaView>
                 <CenterLoader isShow={isShowSpinner} />
                 <KeyboardAwareScrollView
-                    keyboardShouldPersistTaps="always"
+                    keyboardShouldPersistTaps="handled"
                     style={{
                         width: SIZES.WIDTH_BASE * 0.9,
                         alignSelf: 'center'
