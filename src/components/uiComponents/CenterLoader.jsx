@@ -29,6 +29,5 @@ export default function CenterLoader({ size, isShow = false }) {
                 </View>
             )}
         </>
-
     );
 }
