@@ -5,7 +5,7 @@ import {
 } from '@apollo/client';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import { getMainDefinition } from '@apollo/client/utilities';
-import { Listener } from '@components/businessComponents';
+import { ExpoNotification, Listener } from '@components/businessComponents';
 import { SOCKET_URL } from '@env';
 import Stacks from '@navigations/Stacks';
 import { NavigationContainer } from '@react-navigation/native';
@@ -144,6 +144,7 @@ export default function Main() {
                             flex: 1
                         }}
                     >
+                        <ExpoNotification />
                         <Stacks />
                     </View>
                 </NavigationContainer>

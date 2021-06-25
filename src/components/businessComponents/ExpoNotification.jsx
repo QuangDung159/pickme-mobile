@@ -1,7 +1,10 @@
+import { setListNotification, setNumberNotificationUnread } from '@redux/Actions';
+import NotificationServices from '@services/NotificationServices';
 import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
 import React, { useEffect, useRef } from 'react';
 import { Alert, Platform } from 'react-native';
+import { useDispatch } from 'react-redux';
 
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
@@ -15,11 +18,15 @@ export default function ExpoNotification() {
     const notificationListener = useRef();
     const responseListener = useRef();
 
+    const dispatch = useDispatch();
+
     useEffect(() => {
         registerForPushNotificationsAsync();
 
         notificationListener.current = Notifications.addNotificationReceivedListener((notificationReceived) => {
-            console.log('notificationReceived :>> ', notificationReceived.request.content.data);
+            if (notificationReceived) {
+                fetchListNotification();
+            }
         });
 
         responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
@@ -32,13 +39,33 @@ export default function ExpoNotification() {
         };
     }, []);
 
+    const fetchListNotification = async () => {
+        const result = await NotificationServices.fetchListNotificationAsync();
+        const { data } = result;
+
+        if (data) {
+            dispatch(setListNotification(data.data));
+            countNumberNotificationUnread(data.data);
+        }
+    };
+
+    const countNumberNotificationUnread = (listNotiFromAPI) => {
+        let count = 0;
+        listNotiFromAPI.forEach((item) => {
+            if (!item.isRead) {
+                count += 1;
+            }
+        });
+
+        dispatch(setNumberNotificationUnread(count));
+    };
+
     return (
         <></>
     );
 }
 
 async function registerForPushNotificationsAsync() {
-    let token;
     if (Constants.isDevice) {
         const { status: existingStatus } = await Notifications.getPermissionsAsync();
         let finalStatus = existingStatus;
@@ -50,8 +77,6 @@ async function registerForPushNotificationsAsync() {
             Alert.alert('Failed to get push token for push notification!');
             return;
         }
-        token = (await Notifications.getExpoPushTokenAsync()).data;
-        console.log(token);
     } else {
         // Alert.alert('Must use physical device for Push Notifications');
     }
