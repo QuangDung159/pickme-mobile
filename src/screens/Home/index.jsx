@@ -53,7 +53,8 @@ export default function Home({ navigation }) {
 
     useEffect(
         () => {
-            getTokenFromLocal();
+            if (token) getTokenFromLocal();
+
             fetchCurrentUserInfo();
             fetchListNotification();
             fetchListBooking();
@@ -184,19 +185,21 @@ export default function Home({ navigation }) {
     };
 
     const getListConversationFromSocket = (pageIndex, pageSize, onFetchData) => {
-        const data = {
-            query: GraphQueryString.GET_LIST_CONVERSATION,
-            variables: { pageIndex, pageSize }
-        };
+        if (token) {
+            const data = {
+                query: GraphQueryString.GET_LIST_CONVERSATION,
+                variables: { pageIndex, pageSize }
+            };
 
-        socketRequestUtil(
-            'POST',
-            data,
-            token,
-            (res) => {
-                onFetchData(res);
-            }
-        );
+            socketRequestUtil(
+                'POST',
+                data,
+                token,
+                (res) => {
+                    onFetchData(res);
+                }
+            );
+        }
     };
 
     const countNumberOfUnreadConversation = (listConversation) => {
