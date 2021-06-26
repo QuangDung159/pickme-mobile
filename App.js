@@ -1,4 +1,5 @@
 /* eslint-disable global-require */
+import { ExpoNotification } from '@components/businessComponents';
 import { IconCustom } from '@components/uiComponents';
 import { IconFamily, Images, NowTheme } from '@constants/index';
 import Main from '@containers/Main';
@@ -153,6 +154,7 @@ export default function App() {
     return (
         <MenuProvider>
             <Provider store={store}>
+                <ExpoNotification />
                 <Main />
                 <Toast config={toastConfig} ref={(ref) => Toast.setRef(ref)} />
             </Provider>

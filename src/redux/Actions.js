@@ -8,6 +8,7 @@ import {
     SET_LIST_CONVERSATION, SET_LIST_NOTIFICATION,
     SET_MESSAGE_LISTENED,
     SET_NAVIGATION,
+    SET_NOTIFICATION_RECEIVED_REDUX,
     SET_NUMBER_MESSAGE_UNREAD,
     SET_NUMBER_NOTIFICATION_UNREAD,
     SET_PERSON_TAB_ACTIVE_INDEX,
@@ -164,5 +165,12 @@ export const setShowLoaderStore = (showLoaderStore) => ({
     type: SET_SHOW_LOADER_STORE,
     payload: {
         showLoaderStore
+    }
+});
+
+export const setNotificationReceivedRedux = (notificationReceivedRedux) => ({
+    type: SET_NOTIFICATION_RECEIVED_REDUX,
+    payload: {
+        notificationReceivedRedux
     }
 });

@@ -1,4 +1,13 @@
-import { setExpoToken, setListNotification, setNumberNotificationUnread } from '@redux/Actions';
+import {
+    setExpoToken,
+    setListBookingStore,
+    setListCashHistoryStore,
+    setListNotification,
+    setNotificationReceivedRedux,
+    setNumberNotificationUnread
+} from '@redux/Actions';
+import BookingServices from '@services/BookingServices';
+import CashServices from '@services/CashServices';
 import NotificationServices from '@services/NotificationServices';
 import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
@@ -23,14 +32,23 @@ export default function ExpoNotification() {
     useEffect(() => {
         registerForPushNotificationsAsync();
 
+        // handle received
         notificationListener.current = Notifications.addNotificationReceivedListener((notificationReceived) => {
-            if (notificationReceived) {
-                fetchListNotification();
-            }
+            console.log('notificationReceived :>> ', notificationReceived);
+            fetchListNotification();
+
+            const notificationType = notificationReceived.request.content.data.Type;
+            if (notificationType) handleNotificationByType(notificationType);
         });
 
+        // handle click pop-up
         responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
-            console.log(response);
+            const notificationBody = response.notification.request.content.data;
+            console.log('notificationBody :>> ', notificationBody);
+            dispatch(setNotificationReceivedRedux(notificationBody));
+
+            const notificationType = notificationBody?.Type;
+            if (notificationType) handleNotificationByType(notificationType);
         });
 
         return () => {
@@ -86,6 +104,49 @@ export default function ExpoNotification() {
         });
 
         dispatch(setNumberNotificationUnread(count));
+    };
+
+    const handleNotificationByType = (notificationType) => {
+        switch (notificationType) {
+            case 2: {
+                fetchListBooking();
+                break;
+            }
+            case 3: {
+                fetchListHistory();
+                break;
+            }
+            case 4:
+            {
+                fetchListHistory();
+                break;
+            }
+            case 5: {
+                fetchListBooking();
+                break;
+            }
+            default: {
+                break;
+            }
+        }
+    };
+
+    const fetchListBooking = async () => {
+        const result = await BookingServices.fetchListBookingAsync();
+        const { data } = result;
+
+        if (data) {
+            dispatch(setListBookingStore(data.data));
+        }
+    };
+
+    const fetchListHistory = async () => {
+        const result = await CashServices.fetchCashHistoryAsync();
+        const { data } = result;
+
+        if (data) {
+            dispatch(setListCashHistoryStore(data.data));
+        }
     };
 
     return (

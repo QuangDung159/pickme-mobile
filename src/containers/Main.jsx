@@ -5,18 +5,19 @@ import {
 } from '@apollo/client';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import { getMainDefinition } from '@apollo/client/utilities';
-import { ExpoNotification, Listener } from '@components/businessComponents';
+import { Listener } from '@components/businessComponents';
+import ScreenName from '@constants/ScreenName';
 import { SOCKET_URL } from '@env';
 import Stacks from '@navigations/Stacks';
 import { NavigationContainer } from '@react-navigation/native';
 import {
-    setDeviceTimezone, setMessageListened
+    setDeviceTimezone, setMessageListened, setNotificationReceivedRedux, setPersonTabActiveIndex
 } from '@redux/Actions';
 import * as SecureStore from 'expo-secure-store';
 import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import uuid from 'react-native-uuid';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 let token = null;
 const getTokenFromLocal = async () => {
@@ -24,6 +25,8 @@ const getTokenFromLocal = async () => {
 };
 
 export default function Main() {
+    const notificationReceivedRedux = useSelector((state) => state.notificationReducer.notificationReceivedRedux);
+    const navigationObj = useSelector((state) => state.appConfigReducer.navigationObj);
     const dispatch = useDispatch();
 
     useEffect(
@@ -37,6 +40,14 @@ export default function Main() {
         () => {
             generateNewDeviceId();
         }, []
+    );
+
+    useEffect(
+        () => {
+            if (notificationReceivedRedux) {
+                handleNotificationByType(notificationReceivedRedux.Type);
+            }
+        }, [notificationReceivedRedux]
     );
 
     // apollo
@@ -103,6 +114,32 @@ export default function Main() {
         }
     };
 
+    const handleNotificationByType = (notificationType) => {
+        switch (notificationType) {
+            case 2: {
+                dispatch(setPersonTabActiveIndex(2));
+                break;
+            }
+            case 3: {
+                dispatch(setPersonTabActiveIndex(1));
+                break;
+            }
+            case 4: {
+                dispatch(setPersonTabActiveIndex(1));
+                break;
+            }
+            case 5: {
+                dispatch(setPersonTabActiveIndex(2));
+                break;
+            }
+            default: {
+                break;
+            }
+        }
+        navigationObj.navigate(ScreenName.PERSONAL);
+        dispatch(setNotificationReceivedRedux(null));
+    };
+
     try {
         return (
             <ApolloProvider client={client}>
@@ -115,7 +152,6 @@ export default function Main() {
                             flex: 1
                         }}
                     >
-                        <ExpoNotification />
                         <Stacks />
                     </View>
                 </NavigationContainer>
