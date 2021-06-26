@@ -109,13 +109,13 @@ export default function Profile({ route, navigation }) {
                     style={{
                         color: COLORS.ACTIVE,
                         fontWeight: 'bold',
-                        fontSize: SIZES.FONT_H1,
+                        fontSize: SIZES.FONT_H1 - 5,
                         fontFamily: MONTSERRAT_BOLD,
-                        marginBottom: 5
+                        marginBottom: 10,
+                        textAlign: 'center'
                     }}
                 >
                     {fullName}
-                    {' '}
                 </Text>
 
                 <View

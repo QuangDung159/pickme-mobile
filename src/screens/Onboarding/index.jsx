@@ -2,7 +2,7 @@ import { CenterLoader, CustomButton } from '@components/uiComponents';
 import {
     Images, NowTheme, ScreenName, Utils
 } from '@constants/index';
-import { setIsSignInOtherDeviceStore, setNavigation, setToken } from '@redux/Actions';
+import { setIsSignInOtherDeviceStore, setNavigation } from '@redux/Actions';
 import { UserServices } from '@services/index';
 import Constants from 'expo-constants';
 import * as SecureStore from 'expo-secure-store';
@@ -27,12 +27,6 @@ export default function Onboarding({ navigation }) {
     const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
 
     const dispatch = useDispatch();
-
-    useEffect(
-        () => {
-            dispatch(setToken(''));
-        }, [dispatch]
-    );
 
     useEffect(
         () => {
@@ -76,6 +70,10 @@ export default function Onboarding({ navigation }) {
 
             if (data) {
                 if (status === 200) {
+                    navigation.reset({
+                        index: 0,
+                        routes: [{ name: ScreenName.APP }],
+                    });
                     dispatch(setIsSignInOtherDeviceStore(false));
                 }
 
