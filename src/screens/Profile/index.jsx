@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import ImageView from 'react-native-image-viewing';
+import uuid from 'react-native-uuid';
 import { useSelector } from 'react-redux';
 import UserInfoSection from '../Personal/UserInformation/UserInfoSection';
 
@@ -32,7 +33,7 @@ export default function Profile({ route, navigation }) {
     const [partnerInfo, setPartnerInfo] = useState({});
     const [isShowSpinner, setIsShowSpinner] = useState(true);
     const [imageIndex, setImageIndex] = useState(0);
-    const [listImageFullscreen, setListImageFullscreen] = useState([]);
+    const [listImageFullscreen, setListImageFullscreen] = useState();
 
     const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
 
@@ -70,13 +71,15 @@ export default function Profile({ route, navigation }) {
 
             const listImage = [
                 {
-                    uri: data.url,
+                    uri: data.data.url,
+                    id: uuid.v4()
                 }
             ];
 
             posts.forEach((post) => {
                 listImage.push({
-                    uri: post.url
+                    uri: post.url,
+                    id: uuid.v4()
                 });
             });
 
@@ -227,7 +230,7 @@ export default function Profile({ route, navigation }) {
             {listImageFullscreen && (
                 <View>
                     {listImageFullscreen.map((imageItem, index) => (
-                        <View key={`${imageItem.uri}`}>
+                        <View key={imageItem.id}>
                             {index === 0 ? (<></>) : (
                                 <View style={{
                                     marginVertical: 10
@@ -240,7 +243,6 @@ export default function Profile({ route, navigation }) {
                                         }}
                                     >
                                         <CardImage
-                                            key={imageItem.imageId}
                                             imageUrl={imageItem.uri}
                                             user={partnerInfo}
                                             isShowTitle={false}
