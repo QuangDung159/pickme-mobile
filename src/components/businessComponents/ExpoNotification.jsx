@@ -55,8 +55,6 @@ export default function ExpoNotification() {
             token = (await Notifications.getExpoPushTokenAsync()).data;
             dispatch(setExpoToken(token));
             console.log(token);
-        } else {
-            // Alert.alert('Must use physical device for Push Notifications');
         }
 
         if (Platform.OS === 'android') {

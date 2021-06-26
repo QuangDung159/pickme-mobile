@@ -1,4 +1,9 @@
 /* eslint-disable global-require */
+import { IconCustom } from '@components/uiComponents';
+import { IconFamily, Images, NowTheme } from '@constants/index';
+import Main from '@containers/Main';
+import { ToastHelpers } from '@helpers/index';
+import store from '@redux/Store';
 import AppLoading from 'expo-app-loading';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
@@ -9,12 +14,6 @@ import {
 import { MenuProvider } from 'react-native-popup-menu';
 import Toast from 'react-native-toast-message';
 import { Provider } from 'react-redux';
-import { ExpoNotification } from '@components/businessComponents';
-import { IconCustom } from '@components/uiComponents';
-import { IconFamily, Images, NowTheme } from '@constants/index';
-import Main from '@containers/Main';
-import { ToastHelpers } from '@helpers/index';
-import store from '@redux/Store';
 
 const {
     FONT: {
