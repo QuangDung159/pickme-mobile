@@ -28,14 +28,10 @@ export default function Wallet({ navigation }) {
 
     useEffect(
         () => {
-            const eventTriggerGetListHistory = navigation.addListener('focus', () => {
-                if (!listCashHistoryStore || listCashHistoryStore.length === 0) {
-                    setIsShowSpinner(true);
-                    fetchHistory();
-                }
-            });
-
-            return eventTriggerGetListHistory;
+            if (!listCashHistoryStore || listCashHistoryStore.length === 0) {
+                setIsShowSpinner(true);
+                fetchHistory();
+            }
         }, []
     );
 

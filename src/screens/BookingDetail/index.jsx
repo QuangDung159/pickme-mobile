@@ -454,106 +454,109 @@ export default function BookingDetail({
                     flex: 1
                 }}
             >
-                <CenterLoader isShow={showLoaderStore || !booking} />
-                <ScrollView
-                    showsVerticalScrollIndicator={false}
-                    refreshControl={(
-                        <RefreshControl
-                            refreshing={refreshing}
-                            onRefresh={() => onRefresh()}
+                {showLoaderStore ? (
+                    <CenterLoader />
+                ) : (
+                    <ScrollView
+                        showsVerticalScrollIndicator={false}
+                        refreshControl={(
+                            <RefreshControl
+                                refreshing={refreshing}
+                                onRefresh={() => onRefresh()}
+                            />
+                        )}
+                        contentContainerStyle={{
+                            paddingBottom: 10
+                        }}
+                    >
+                        {renderRatingModal()}
+                        {renderReportModal()}
+
+                        <ReasonCancelBookingModal
+                            modalReasonVisible={modalReasonVisible}
+                            setModalReasonVisible={setModalReasonVisible}
+                            bookingId={bookingId}
+                            navigation={navigation}
+                            fetchListBooking={() => fetchListBooking()}
                         />
-                    )}
-                    contentContainerStyle={{
-                        paddingBottom: 10
-                    }}
-                >
-                    {renderRatingModal()}
-                    {renderReportModal()}
 
-                    <ReasonCancelBookingModal
-                        modalReasonVisible={modalReasonVisible}
-                        setModalReasonVisible={setModalReasonVisible}
-                        bookingId={bookingId}
-                        navigation={navigation}
-                        fetchListBooking={() => fetchListBooking()}
-                    />
-
-                    {booking && (
-                        <View
-                            style={{
-                                width: SIZES.WIDTH_BASE * 0.9,
-                                alignSelf: 'center',
-                                marginTop: 10,
-                            }}
-                        >
-                            <Text
-                                style={{
-                                    fontFamily: MONTSERRAT_REGULAR,
-                                }}
-                            >
-                                CHI TIẾT ĐƠN HẸN
-                            </Text>
-                            <Line
-                                borderWidth={0.5}
-                                borderColor={COLORS.ACTIVE}
-                                style={{
-                                    marginTop: 10
-                                }}
-                            />
-
-                            <CardBooking
-                                booking={booking}
-                                navigation={navigation}
-                            />
-
-                            <Text
-                                style={{
-                                    fontFamily: MONTSERRAT_REGULAR,
-                                }}
-                            >
-                                GHI CHÚ CUỘC HẸN
-                            </Text>
-                            <Line
-                                borderWidth={0.5}
-                                borderColor={COLORS.ACTIVE}
-                                style={{
-                                    marginVertical: 10
-                                }}
-                            />
-                            <Text
-                                style={
-                                    [
-                                        styles.subTitle,
-                                        {
-                                            color: COLORS.DEFAULT,
-                                            fontSize: SIZES.FONT_H3,
-                                            marginBottom: 20
-                                        }
-                                    ]
-                                }
-                            >
-                                {booking.noted}
-                            </Text>
-
-                            <BookingProgressFlow
-                                status={booking.status}
-                                partner={booking.partner}
-                                booking={booking}
-                            />
-
+                        {booking && (
                             <View
                                 style={{
                                     width: SIZES.WIDTH_BASE * 0.9,
                                     alignSelf: 'center',
-                                    flexDirection: 'row',
-                                    justifyContent: 'space-between'
+                                    marginTop: 10,
                                 }}
                             >
-                                {handleShowButtonByStatus()}
+                                <Text
+                                    style={{
+                                        fontFamily: MONTSERRAT_REGULAR,
+                                    }}
+                                >
+                                    CHI TIẾT ĐƠN HẸN
+                                </Text>
+                                <Line
+                                    borderWidth={0.5}
+                                    borderColor={COLORS.ACTIVE}
+                                    style={{
+                                        marginTop: 10
+                                    }}
+                                />
+
+                                <CardBooking
+                                    booking={booking}
+                                    navigation={navigation}
+                                />
+
+                                <Text
+                                    style={{
+                                        fontFamily: MONTSERRAT_REGULAR,
+                                    }}
+                                >
+                                    GHI CHÚ CUỘC HẸN
+                                </Text>
+                                <Line
+                                    borderWidth={0.5}
+                                    borderColor={COLORS.ACTIVE}
+                                    style={{
+                                        marginVertical: 10
+                                    }}
+                                />
+                                <Text
+                                    style={
+                                        [
+                                            styles.subTitle,
+                                            {
+                                                color: COLORS.DEFAULT,
+                                                fontSize: SIZES.FONT_H3,
+                                                marginBottom: 20
+                                            }
+                                        ]
+                                    }
+                                >
+                                    {booking.noted}
+                                </Text>
+
+                                <BookingProgressFlow
+                                    status={booking.status}
+                                    partner={booking.partner}
+                                    booking={booking}
+                                />
+
+                                <View
+                                    style={{
+                                        width: SIZES.WIDTH_BASE * 0.9,
+                                        alignSelf: 'center',
+                                        flexDirection: 'row',
+                                        justifyContent: 'space-between'
+                                    }}
+                                >
+                                    {handleShowButtonByStatus()}
+                                </View>
                             </View>
-                        </View>
-                    )}
-                </ScrollView>
+                        )}
+                    </ScrollView>
+                )}
             </SafeAreaView>
         );
     } catch (exception) {
