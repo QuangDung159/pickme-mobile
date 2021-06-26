@@ -936,21 +936,24 @@ export default function CreateBooking({ route, navigation }) {
     try {
         return (
             <SafeAreaView>
-                <CenterLoader isShow={isShowSpinner} />
-                <KeyboardAwareScrollView
-                    keyboardShouldPersistTaps="handled"
-                    style={{
-                        width: SIZES.WIDTH_BASE * 0.9,
-                        alignSelf: 'center'
-                    }}
-                    showsVerticalScrollIndicator={false}
-                >
-                    {renderModal()}
-                    {renderTimePickerModal()}
-                    {renderPartnerPackageModal()}
-                    {renderFormView(partner)}
-                    {renderTotal()}
-                </KeyboardAwareScrollView>
+                {isShowSpinner ? (
+                    <CenterLoader />
+                ) : (
+                    <KeyboardAwareScrollView
+                        keyboardShouldPersistTaps="handled"
+                        style={{
+                            width: SIZES.WIDTH_BASE * 0.9,
+                            alignSelf: 'center'
+                        }}
+                        showsVerticalScrollIndicator={false}
+                    >
+                        {renderModal()}
+                        {renderTimePickerModal()}
+                        {renderPartnerPackageModal()}
+                        {renderFormView(partner)}
+                        {renderTotal()}
+                    </KeyboardAwareScrollView>
+                )}
             </SafeAreaView>
         );
     } catch (exception) {

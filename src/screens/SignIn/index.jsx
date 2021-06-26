@@ -1,4 +1,3 @@
-import { ExpoNotification } from '@components/businessComponents';
 import { CenterLoader, CustomButton, CustomInput } from '@components/uiComponents';
 import {
     IconFamily,
@@ -140,8 +139,6 @@ export default function SignIn({ navigation }) {
 
     return (
         <View>
-
-            <ExpoNotification navigation={navigation} />
             <ImageBackground
                 source={Images.RegisterBackground}
                 style={styles.imageBackgroundContainer}
