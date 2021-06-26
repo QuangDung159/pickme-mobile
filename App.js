@@ -155,7 +155,6 @@ export default function App() {
         <MenuProvider>
             <Provider store={store}>
                 <Main />
-                <ExpoNotification />
                 <Toast config={toastConfig} ref={(ref) => Toast.setRef(ref)} />
             </Provider>
         </MenuProvider>
