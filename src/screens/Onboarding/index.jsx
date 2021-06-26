@@ -76,7 +76,6 @@ export default function Onboarding({ navigation }) {
 
             if (data) {
                 if (status === 200) {
-                    getTokenFromLocal();
                     dispatch(setIsSignInOtherDeviceStore(false));
                 }
 
@@ -90,17 +89,6 @@ export default function Onboarding({ navigation }) {
             } else {
                 setIsShowSpinner(false);
             }
-        }
-    };
-
-    const getTokenFromLocal = async () => {
-        const apiTokenLocal = await SecureStore.getItemAsync('api_token');
-        dispatch(setToken(apiTokenLocal));
-        if (apiTokenLocal) {
-            navigation.reset({
-                index: 0,
-                routes: [{ name: ScreenName.APP }],
-            });
         }
     };
 

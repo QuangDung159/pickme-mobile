@@ -51,7 +51,7 @@ export default function Message({ navigation, route }) {
             } = route;
 
             setIsShowLoader(true);
-            getTokenFromLocal();
+
             fetchListMessage(toUserId, 1, 12,
                 (data) => {
                     dispatch(setChattingWith(toUserId));
@@ -114,6 +114,12 @@ export default function Message({ navigation, route }) {
                 });
             }
         }, [isSignInOtherDeviceStore]
+    );
+
+    useEffect(
+        () => {
+            if (!token) getTokenFromLocal();
+        }, [token]
     );
 
     const calculateNumberOfNumberMessageUnread = (listMessage) => {

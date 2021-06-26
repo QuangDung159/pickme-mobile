@@ -53,8 +53,6 @@ export default function Home({ navigation }) {
 
     useEffect(
         () => {
-            if (token) getTokenFromLocal();
-
             fetchCurrentUserInfo();
             fetchListNotification();
             fetchListBooking();
@@ -62,7 +60,6 @@ export default function Home({ navigation }) {
             if (!pickMeInfoStore) fetchPickMeInfo();
 
             getListPartner();
-            const intervalUpdateLatest = setIntervalToUpdateLastActiveOfUserStatus();
 
             getListConversationFromSocket(
                 1, 20,
@@ -72,11 +69,18 @@ export default function Home({ navigation }) {
                     countNumberOfUnreadConversation(data.data.data.getRecently);
                 }
             );
+        }, []
+    );
 
+    useEffect(
+        () => {
+            if (!token) getTokenFromLocal();
+
+            const intervalUpdateLatest = setIntervalToUpdateLastActiveOfUserStatus();
             return () => {
                 clearInterval(intervalUpdateLatest);
             };
-        }, []
+        }, [token]
     );
 
     useEffect(
@@ -226,10 +230,6 @@ export default function Home({ navigation }) {
 
     const setIntervalToUpdateLastActiveOfUserStatus = () => {
         const intervalUpdateLastActive = setInterval(() => {
-            if (token === 'Bearer ') {
-                clearInterval(intervalUpdateLastActive);
-            }
-
             const data = {
                 query: GraphQueryString.UPDATE_LAST_ACTIVE,
                 variables: { url: currentUser.url }
@@ -369,16 +369,18 @@ export default function Home({ navigation }) {
                     flex: 1
                 }}
             >
-
-                <CenterLoader isShow={isShowSpinner} />
-                <View
-                    style={{
-                        backgroundColor: COLORS.INPUT,
-                        alignSelf: 'center'
-                    }}
-                >
-                    {renderArticles()}
-                </View>
+                {isShowSpinner ? (
+                    <CenterLoader />
+                ) : (
+                    <View
+                        style={{
+                            backgroundColor: COLORS.INPUT,
+                            alignSelf: 'center'
+                        }}
+                    >
+                        {renderArticles()}
+                    </View>
+                )}
             </SafeAreaView>
 
         );
