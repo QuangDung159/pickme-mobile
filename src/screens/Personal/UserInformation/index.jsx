@@ -360,47 +360,52 @@ export default function UserInformation({ navigation }) {
 
     try {
         return (
-            <ScrollView
-                showsVerticalScrollIndicator={false}
-                refreshControl={(
-                    <RefreshControl
-                        refreshing={refreshing}
-                        onRefresh={() => onRefresh()}
-                    />
+            <>
+                {isShowSpinner ? (
+                    <CenterLoader />
+                ) : (
+                    <ScrollView
+                        showsVerticalScrollIndicator={false}
+                        refreshControl={(
+                            <RefreshControl
+                                refreshing={refreshing}
+                                onRefresh={() => onRefresh()}
+                            />
+                        )}
+                    >
+
+                        {renderImageView()}
+
+                        <View
+                            style={{
+                                width: SIZES.WIDTH_BASE * 0.9,
+                                alignSelf: 'center',
+                                flexDirection: 'row'
+                            }}
+                        >
+                            {renderAvatarPanel()}
+                            {renderSubInfoPanel()}
+                        </View>
+
+                        <View
+                            style={{
+                                alignSelf: 'center',
+                                alignItems: 'center'
+                            }}
+                        >
+                            <Line
+                                borderColor={COLORS.ACTIVE}
+                                borderWidth={0.5}
+                                width={SIZES.WIDTH_BASE * 0.9}
+                            />
+                        </View>
+
+                        {renderInfoPanel(currentUser, navigation)}
+
+                        {renderButtonLogout(navigation)}
+                    </ScrollView>
                 )}
-            >
-                <CenterLoader isShow={isShowSpinner} />
-
-                {renderImageView()}
-
-                <View
-                    style={{
-                        width: SIZES.WIDTH_BASE * 0.9,
-                        alignSelf: 'center',
-                        flexDirection: 'row'
-                    }}
-                >
-                    {renderAvatarPanel()}
-                    {renderSubInfoPanel()}
-                </View>
-
-                <View
-                    style={{
-                        alignSelf: 'center',
-                        alignItems: 'center'
-                    }}
-                >
-                    <Line
-                        borderColor={COLORS.ACTIVE}
-                        borderWidth={0.5}
-                        width={SIZES.WIDTH_BASE * 0.9}
-                    />
-                </View>
-
-                {renderInfoPanel(currentUser, navigation)}
-
-                {renderButtonLogout(navigation)}
-            </ScrollView>
+            </>
         );
     } catch (exception) {
         console.log('exception :>> ', exception);

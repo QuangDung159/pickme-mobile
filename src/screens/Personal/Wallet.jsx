@@ -255,18 +255,23 @@ export default function Wallet({ navigation }) {
     try {
         return (
             <>
-                <CenterLoader isShow={isShowSpinner} />
-                <View
-                    style={{
-                        height: 120,
-                        width: SIZES.WIDTH_BASE * 0.9,
-                        alignSelf: 'center',
-                    }}
-                >
-                    {renderWalletAmountPanel()}
-                </View>
+                {isShowSpinner ? (
+                    <CenterLoader />
+                ) : (
+                    <>
+                        <View
+                            style={{
+                                height: 120,
+                                width: SIZES.WIDTH_BASE * 0.9,
+                                alignSelf: 'center',
+                            }}
+                        >
+                            {renderWalletAmountPanel()}
+                        </View>
 
-                {renderHistory()}
+                        {renderHistory()}
+                    </>
+                )}
             </>
         );
     } catch (exception) {

@@ -9,7 +9,7 @@ import groupBy from 'lodash/groupBy';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import {
-    RefreshControl, SafeAreaView, Text, View
+    RefreshControl, Text, View
 } from 'react-native';
 import { ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
@@ -318,14 +318,16 @@ export default function BookingList({ navigation }) {
 
     try {
         return (
-            <SafeAreaView
-                style={{
-                    flex: 1
-                }}
-            >
-                <CenterLoader isShow={isShowSpinner} />
-                {renderListDateSection()}
-            </SafeAreaView>
+            <>
+                {isShowSpinner ? (
+                    <CenterLoader />
+                ) : (
+                    <>
+                        {renderListDateSection()}
+                    </>
+                )}
+            </>
+
         );
     } catch (exception) {
         console.log('exception :>> ', exception);
