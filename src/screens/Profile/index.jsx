@@ -275,110 +275,115 @@ export default function Profile({ route, navigation }) {
                     flex: 1
                 }}
             >
-                <CenterLoader isShow={isShowSpinner} />
-                <View style={{
-                    justifyContent: 'space-between',
-                    zIndex: 1,
-                    backgroundColor: COLORS.BASE
-                }}
-                >
-                    <ImageView
-                        images={listImageFullscreen}
-                        imageIndex={imageIndex}
-                        visible={visible}
-                        onRequestClose={() => setVisible(false)}
-                    />
-
-                    <View>
-                        <ScrollView
-                            showsVerticalScrollIndicator={false}
+                {isShowSpinner ? (
+                    <CenterLoader />
+                ) : (
+                    <>
+                        <View style={{
+                            justifyContent: 'space-between',
+                            zIndex: 1,
+                            backgroundColor: COLORS.BASE
+                        }}
                         >
-                            <TouchableWithoutFeedback
-                                onPress={() => {
-                                    setVisible(true);
-                                    setImageIndex(0);
+                            <ImageView
+                                images={listImageFullscreen}
+                                imageIndex={imageIndex}
+                                visible={visible}
+                                onRequestClose={() => setVisible(false)}
+                            />
+
+                            <View>
+                                <ScrollView
+                                    showsVerticalScrollIndicator={false}
+                                >
+                                    <TouchableWithoutFeedback
+                                        onPress={() => {
+                                            setVisible(true);
+                                            setImageIndex(0);
+                                        }}
+                                    >
+                                        <View
+                                            style={{
+                                                zIndex: 99
+                                            }}
+                                        >
+                                            <ImageBackground
+                                                source={{
+                                                    uri: partnerInfo.url || NO_AVATAR_URL
+                                                }}
+                                                style={[styles.profileContainer]}
+                                                imageStyle={styles.profileBackground}
+                                            />
+                                        </View>
+                                        <ImageLoader />
+                                    </TouchableWithoutFeedback>
+
+                                    <View style={{ marginTop: -(SIZES.HEIGHT_BASE * 0.4) }}>
+                                        {renderSubInfo()}
+                                        {renderListPostImage()}
+                                    </View>
+                                </ScrollView>
+                            </View>
+                        </View>
+                        <View style={styles.buttonPanelContainer}>
+                            <View
+                                style={{
+                                    alignSelf: 'center',
+                                    alignItems: 'center',
+                                    flexDirection: 'row'
                                 }}
                             >
-                                <View
-                                    style={{
-                                        zIndex: 99
+                                <CustomButton
+                                    onPress={() => {
+                                        navigation.navigate(ScreenName.MESSAGE, {
+                                            name: partnerInfo.fullName,
+                                            userStatus: 'Vừa mới truy cập',
+                                            toUserId: userId,
+                                            userInfo: partnerInfo
+                                        });
                                     }}
-                                >
-                                    <ImageBackground
-                                        source={{
-                                            uri: partnerInfo.url || NO_AVATAR_URL
-                                        }}
-                                        style={[styles.profileContainer]}
-                                        imageStyle={styles.profileBackground}
-                                    />
-                                </View>
-                                <ImageLoader />
-                            </TouchableWithoutFeedback>
+                                    type="active"
+                                    label="Nhắn tin"
+                                    buttonStyle={{
+                                        width: 114,
+                                        height: 44,
+                                        marginHorizontal: 5,
+                                        elevation: 0,
+                                        borderRadius: 20,
+                                        backgroundColor: COLORS.ACTIVE
+                                    }}
+                                    labelStyle={{
+                                        fontSize: 16,
+                                        color: COLORS.BASE
+                                    }}
+                                />
 
-                            <View style={{ marginTop: -(SIZES.HEIGHT_BASE * 0.4) }}>
-                                {renderSubInfo()}
-                                {renderListPostImage()}
+                                <CustomButton
+                                    onPress={() => {
+                                        navigation.navigate(ScreenName.CREATE_BOOKING, {
+                                            partner: partnerInfo,
+                                            from: ScreenName.PROFILE
+                                        });
+                                    }}
+                                    type="active"
+                                    label="Đặt hẹn"
+                                    buttonStyle={{
+                                        width: 114,
+                                        height: 44,
+                                        marginHorizontal: 5,
+                                        elevation: 0,
+                                        borderRadius: 20,
+                                        backgroundColor: COLORS.ACTIVE
+                                    }}
+                                    labelStyle={{
+                                        fontSize: 16,
+                                        color: COLORS.BASE
+                                    }}
+                                />
                             </View>
-                        </ScrollView>
-                    </View>
-                </View>
-                <View style={styles.buttonPanelContainer}>
-                    <View
-                        style={{
-                            alignSelf: 'center',
-                            alignItems: 'center',
-                            flexDirection: 'row'
-                        }}
-                    >
-                        <CustomButton
-                            onPress={() => {
-                                navigation.navigate(ScreenName.MESSAGE, {
-                                    name: partnerInfo.fullName,
-                                    userStatus: 'Vừa mới truy cập',
-                                    toUserId: userId,
-                                    userInfo: partnerInfo
-                                });
-                            }}
-                            type="active"
-                            label="Nhắn tin"
-                            buttonStyle={{
-                                width: 114,
-                                height: 44,
-                                marginHorizontal: 5,
-                                elevation: 0,
-                                borderRadius: 20,
-                                backgroundColor: COLORS.ACTIVE
-                            }}
-                            labelStyle={{
-                                fontSize: 16,
-                                color: COLORS.BASE
-                            }}
-                        />
-
-                        <CustomButton
-                            onPress={() => {
-                                navigation.navigate(ScreenName.CREATE_BOOKING, {
-                                    partner: partnerInfo,
-                                    from: ScreenName.PROFILE
-                                });
-                            }}
-                            type="active"
-                            label="Đặt hẹn"
-                            buttonStyle={{
-                                width: 114,
-                                height: 44,
-                                marginHorizontal: 5,
-                                elevation: 0,
-                                borderRadius: 20,
-                                backgroundColor: COLORS.ACTIVE
-                            }}
-                            labelStyle={{
-                                fontSize: 16,
-                                color: COLORS.BASE
-                            }}
-                        />
-                    </View>
-                </View>
+                        </View>
+                    </>
+                )}
             </SafeAreaView>
         );
     } catch (exception) {

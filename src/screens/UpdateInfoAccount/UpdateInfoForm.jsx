@@ -209,33 +209,36 @@ export default function UpdateInfoForm() {
 
     return (
         <>
-            <ScrollView
-                showsVerticalScrollIndicator={false}
-                contentContainerStyle={{
-                    width: SIZES.WIDTH_BASE * 0.9,
-                    alignSelf: 'center',
-                    alignItems: 'center'
-                }}
-            >
-                <CenterLoader isShow={isShowSpinner} />
-                <View
-                    style={{
-                        backgroundColor: COLORS.BASE,
-                        marginVertical: 10
+            {isShowSpinner ? (
+                <CenterLoader />
+            ) : (
+                <ScrollView
+                    showsVerticalScrollIndicator={false}
+                    contentContainerStyle={{
+                        width: SIZES.WIDTH_BASE * 0.9,
+                        alignSelf: 'center',
+                        alignItems: 'center'
                     }}
                 >
-                    {newUser && (
-                        <>
-                            {renderInputName()}
-                            {renderInputHometown()}
-                            {renderInputYear()}
-                            {renderInputInterests()}
-                            {renderInputDescription()}
-                            {renderButtonPanel()}
-                        </>
-                    )}
-                </View>
-            </ScrollView>
+                    <View
+                        style={{
+                            backgroundColor: COLORS.BASE,
+                            marginVertical: 10
+                        }}
+                    >
+                        {newUser && (
+                            <>
+                                {renderInputName()}
+                                {renderInputHometown()}
+                                {renderInputYear()}
+                                {renderInputInterests()}
+                                {renderInputDescription()}
+                                {renderButtonPanel()}
+                            </>
+                        )}
+                    </View>
+                </ScrollView>
+            )}
         </>
     );
 }

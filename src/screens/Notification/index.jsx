@@ -137,8 +137,13 @@ export default function Notification({ navigation }) {
                     flex: 1
                 }}
             >
-                <CenterLoader isShow={isShowSpinner} />
-                {renderListNoti()}
+                {isShowSpinner ? (
+                    <CenterLoader />
+                ) : (
+                    <>
+                        {renderListNoti()}
+                    </>
+                )}
             </SafeAreaView>
         );
     } catch (exception) {

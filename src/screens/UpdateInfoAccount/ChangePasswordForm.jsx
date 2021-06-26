@@ -160,28 +160,32 @@ export default function ChangePasswordForm() {
 
     try {
         return (
-            <ScrollView
-                showsVerticalScrollIndicator={false}
-                contentContainerStyle={{
-                    width: SIZES.WIDTH_BASE * 0.9,
-                    alignSelf: 'center',
-                    alignItems: 'center'
-                }}
-            >
-                <CenterLoader isShow={isShowSpinner} />
-                <View
-                    style={{
-                        backgroundColor: COLORS.BASE,
-                        marginVertical: 10
-                    }}
-                >
-                    <>
+            <>
+                {isShowSpinner ? (
+                    <CenterLoader />
+                ) : (
+                    <ScrollView
+                        showsVerticalScrollIndicator={false}
+                        contentContainerStyle={{
+                            width: SIZES.WIDTH_BASE * 0.9,
+                            alignSelf: 'center',
+                            alignItems: 'center'
+                        }}
+                    >
+                        <View
+                            style={{
+                                backgroundColor: COLORS.BASE,
+                                marginVertical: 10
+                            }}
+                        >
+                            <>
 
-                        {renderFormNewPassword()}
-                    </>
-                </View>
-            </ScrollView>
-
+                                {renderFormNewPassword()}
+                            </>
+                        </View>
+                    </ScrollView>
+                )}
+            </>
         );
     } catch (exception) {
         console.log('exception :>> ', exception);

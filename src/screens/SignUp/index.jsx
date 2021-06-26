@@ -79,46 +79,50 @@ export default function SignUp({ navigation }) {
                     alignItems: 'center'
                 }}
             >
-                <CenterLoader isShow={showLoaderStore} />
                 <ImageBackground
                     source={Images.RegisterBackground}
                     style={styles.imageBackgroundContainer}
                     imageStyle={styles.imageBackground}
                 >
-                    <KeyboardAwareScrollView>
-                        <View
-                            style={{
-                                flex: 1,
-                                alignSelf: 'center',
-                                alignItems: 'center'
-                            }}
-                        >
-                            <View style={styles.registerContainer}>
-                                <View
-                                    style={styles.stepSessionContainer}
-                                >
-                                    <Text
-                                        style={
-                                            [
-                                                styles.title,
-                                                {
-                                                    color: '#333',
-                                                    fontSize: 24,
-                                                    height: 100,
-                                                    marginTop: SIZES.HEIGHT_BASE * 0.1
-                                                }
-                                            ]
-                                        }
+                    {showLoaderStore ? (
+                        <CenterLoader />
+                    ) : (
+                        <KeyboardAwareScrollView>
+                            <View
+                                style={{
+                                    flex: 1,
+                                    alignSelf: 'center',
+                                    alignItems: 'center'
+                                }}
+                            >
+                                <View style={styles.registerContainer}>
+                                    <View
+                                        style={styles.stepSessionContainer}
                                     >
-                                        Đăng kí
-                                    </Text>
-                                </View>
+                                        <Text
+                                            style={
+                                                [
+                                                    styles.title,
+                                                    {
+                                                        color: '#333',
+                                                        fontSize: 24,
+                                                        height: 100,
+                                                        marginTop: SIZES.HEIGHT_BASE * 0.1
+                                                    }
+                                                ]
+                                            }
+                                        >
+                                            Đăng kí
+                                        </Text>
+                                    </View>
 
-                                {/* render from this shit */}
-                                {renderSignUpViewByStep()}
+                                    {/* render from this shit */}
+                                    {renderSignUpViewByStep()}
+                                </View>
                             </View>
-                        </View>
-                    </KeyboardAwareScrollView>
+                        </KeyboardAwareScrollView>
+                    )}
+
                 </ImageBackground>
             </View>
         </>

@@ -292,19 +292,25 @@ export default function Support({ navigation }) {
     );
 
     const renderBugReportForm = () => (
-        <View
-            style={{
-                width: SIZES.WIDTH_BASE * 0.9,
-                alignSelf: 'center',
-                paddingVertical: 10
-            }}
-        >
-            {renderInputBugTitle()}
-            {renderInputBugDescription()}
-            {renderUploadImageReportButton()}
-            {renderImageReport()}
-            {renderButtonPanel()}
-        </View>
+        <>
+            {isShowSpinner ? (
+                <CenterLoader />
+            ) : (
+                <View
+                    style={{
+                        width: SIZES.WIDTH_BASE * 0.9,
+                        alignSelf: 'center',
+                        paddingVertical: 10
+                    }}
+                >
+                    {renderInputBugTitle()}
+                    {renderInputBugDescription()}
+                    {renderUploadImageReportButton()}
+                    {renderImageReport()}
+                    {renderButtonPanel()}
+                </View>
+            )}
+        </>
     );
 
     const renderInputBugTitle = () => (
@@ -348,7 +354,6 @@ export default function Support({ navigation }) {
             }}
         >
             {renderImageView()}
-            <CenterLoader isShow={isShowSpinner} />
             <TopTabBar
                 routes={routes}
                 renderScene={renderScene}
