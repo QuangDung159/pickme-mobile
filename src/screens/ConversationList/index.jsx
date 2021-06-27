@@ -1,5 +1,5 @@
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
-import { Line } from '@components/uiComponents';
+import { CenterLoader, Line } from '@components/uiComponents';
 import { GraphQueryString, NowTheme, ScreenName } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
 import { setListConversation, setNumberMessageUnread } from '@redux/Actions';
@@ -28,6 +28,7 @@ const getTokenFromLocal = async () => {
 
 export default function ConversationList({ navigation }) {
     const [refreshing, setRefreshing] = useState(false);
+    const [isShowSpinner, setIsShowSpinner] = useState(false);
 
     const messageListened = useSelector((state) => state.messageReducer.messageListened);
     const currentUser = useSelector((state) => state.userReducer.currentUser);
@@ -45,6 +46,7 @@ export default function ConversationList({ navigation }) {
             const onFocusScreen = navigation.addListener(
                 'focus',
                 () => {
+                    setIsShowSpinner(true);
                     getListConversationFromSocket(
                         1, 20,
                         (data) => {
@@ -119,9 +121,16 @@ export default function ConversationList({ navigation }) {
             (res) => {
                 onFetchData(res);
                 setRefreshing(false);
+                setIsShowSpinner(false);
             },
-            () => setRefreshing(false),
-            () => setRefreshing(false)
+            () => {
+                setRefreshing(false);
+                setIsShowSpinner(false);
+            },
+            () => {
+                setRefreshing(false);
+                setIsShowSpinner(false);
+            }
         );
     };
 
@@ -248,44 +257,50 @@ export default function ConversationList({ navigation }) {
     try {
         return (
             <>
-                {listConversation && listConversation.length !== 0 ? (
-                    <FlatList
-                        data={listConversation}
-                        renderItem={({ item, index }) => renderConversationItem(item, index)}
-                        keyExtractor={(item) => item.id}
-                        refreshControl={(
-                            <RefreshControl
-                                refreshing={refreshing}
-                                onRefresh={() => onRefresh()}
-                            />
-                        )}
-                    />
+                {isShowSpinner ? (
+                    <CenterLoader />
                 ) : (
-                    <ScrollView
-                        refreshControl={(
-                            <RefreshControl
-                                refreshing={refreshing}
-                                onRefresh={() => onRefresh()}
+                    <>
+                        {listConversation && listConversation.length !== 0 ? (
+                            <FlatList
+                                data={listConversation}
+                                renderItem={({ item, index }) => renderConversationItem(item, index)}
+                                keyExtractor={(item) => item.id}
+                                refreshControl={(
+                                    <RefreshControl
+                                        refreshing={refreshing}
+                                        onRefresh={() => onRefresh()}
+                                    />
+                                )}
                             />
-                        )}
-                    >
-                        <View
-                            style={{
-                                alignItems: 'center',
-                                marginVertical: 15
-                            }}
-                        >
-                            <Text
-                                style={{
-                                    fontFamily: MONTSERRAT_REGULAR,
-                                    color: COLORS.DEFAULT,
-                                    fontSize: SIZES.FONT_H2
-                                }}
+                        ) : (
+                            <ScrollView
+                                refreshControl={(
+                                    <RefreshControl
+                                        refreshing={refreshing}
+                                        onRefresh={() => onRefresh()}
+                                    />
+                                )}
                             >
-                                Danh sách trống
-                            </Text>
-                        </View>
-                    </ScrollView>
+                                <View
+                                    style={{
+                                        alignItems: 'center',
+                                        marginVertical: 15
+                                    }}
+                                >
+                                    <Text
+                                        style={{
+                                            fontFamily: MONTSERRAT_REGULAR,
+                                            color: COLORS.DEFAULT,
+                                            fontSize: SIZES.FONT_H2
+                                        }}
+                                    >
+                                        Danh sách trống
+                                    </Text>
+                                </View>
+                            </ScrollView>
+                        )}
+                    </>
                 )}
             </>
         );

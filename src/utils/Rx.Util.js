@@ -42,6 +42,14 @@ export default async (
         };
     }
 
+    if (!apiTokenLocal && endpoint !== Rx.AUTHENTICATION.LOGIN) {
+        return {
+            data: {
+                data: null
+            }
+        };
+    }
+
     try {
         const res = await axios({
             url,

@@ -5,8 +5,8 @@ import {
 } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
 import {
-    setIsSignInOtherDeviceStore,
-    setToken
+    setCurrentUser,
+    setIsSignInOtherDeviceStore
 } from '@redux/Actions';
 import { SystemServices, UserServices } from '@services/index';
 import * as SecureStore from 'expo-secure-store';
@@ -87,14 +87,94 @@ export default function SignIn({ navigation }) {
     };
 
     const onLoginSuccess = (data, status) => {
-        const tokenFromAPI = data.data;
-
         SecureStore.setItemAsync('password', `${password}`);
         SecureStore.setItemAsync('phoneNumber', `${phoneNumber}`);
 
-        if (status === 200) {
-            dispatch(setToken(tokenFromAPI));
+        const {
+            accessFailedCount,
+            address,
+            bankNum,
+            description,
+            deviceId,
+            dob,
+            earningExpected,
+            email,
+            expoNotificationToken,
+            fullName,
+            height,
+            homeTown,
+            id,
+            imageUrl,
+            interests,
+            isCashInAble,
+            isCashOutAble,
+            isCusomCalendar,
+            isDeactive,
+            isEmailConfirmed,
+            isLocked,
+            isTest,
+            isVerified,
+            latitude,
+            longtitude,
+            ownerName,
+            token,
+            url,
+            userName,
+            userType,
+            userTypeValue,
+            verifyNote,
+            verifyStatus,
+            verifyStatusValue,
+            walletAmount,
+            walletAmountDisplay,
+            weight,
+            posts
+        } = data.data;
 
+        const currentUserInfo = {
+            accessFailedCount,
+            address,
+            bankNum,
+            description,
+            deviceId,
+            dob,
+            earningExpected,
+            email,
+            expoNotificationToken,
+            fullName,
+            height,
+            homeTown,
+            id,
+            imageUrl,
+            interests,
+            isCashInAble,
+            isCashOutAble,
+            isCusomCalendar,
+            isDeactive,
+            isEmailConfirmed,
+            isLocked,
+            isTest,
+            isVerified,
+            latitude,
+            longtitude,
+            ownerName,
+            token,
+            url,
+            userName,
+            userType,
+            userTypeValue,
+            verifyNote,
+            verifyStatus,
+            verifyStatusValue,
+            walletAmount,
+            walletAmountDisplay,
+            weight,
+            posts
+        };
+
+        dispatch(setCurrentUser(currentUserInfo));
+
+        if (status === 200) {
             navigation.reset({
                 index: 0,
                 routes: [{ name: ScreenName.APP }],

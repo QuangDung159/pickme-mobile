@@ -7,7 +7,7 @@ import { setListBookingStore } from '@redux/Actions';
 import { BookingServices } from '@services/index';
 import groupBy from 'lodash/groupBy';
 import moment from 'moment';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     RefreshControl, Text, View
 } from 'react-native';
@@ -29,6 +29,14 @@ export default function BookingList({ navigation }) {
 
     const listBookingStore = useSelector((state) => state.userReducer.listBookingStore);
     const dispatch = useDispatch();
+
+    useEffect(
+        () => {
+            if (!listBookingStore || listBookingStore.length === 0) {
+                fetchListBooking();
+            }
+        }, []
+    );
 
     const groupBookingByDate = () => groupBy(listBookingStore, (n) => n.date);
 

@@ -11,7 +11,7 @@ import { resetStoreSignOut, setCurrentUser } from '@redux/Actions';
 import { UserServices } from '@services/index';
 import * as SecureStore from 'expo-secure-store';
 import moment from 'moment';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
     Image, RefreshControl, StyleSheet, Text, View
 } from 'react-native';
@@ -42,15 +42,6 @@ export default function UserInformation({ navigation }) {
     const dispatch = useDispatch();
 
     // Render \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
-    useEffect(
-        () => {
-            if (JSON.stringify(currentUser) === JSON.stringify({})) {
-                setIsShowSpinner(true);
-                fetchCurrentUserInfo();
-            }
-        }, []
-    );
-
     const handleOnPickAvatar = (uri) => {
         setIsShowSpinner(true);
 
@@ -101,12 +92,9 @@ export default function UserInformation({ navigation }) {
 
         if (data) {
             dispatch(setCurrentUser(data.data));
-            setIsShowSpinner(false);
-            setRefreshing(false);
-        } else {
-            setIsShowSpinner(false);
-            setRefreshing(false);
         }
+        setIsShowSpinner(false);
+        setRefreshing(false);
     };
 
     const onRefresh = () => {
