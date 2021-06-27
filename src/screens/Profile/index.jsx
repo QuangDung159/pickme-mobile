@@ -233,7 +233,7 @@ export default function Profile({ route, navigation }) {
                         <View key={imageItem.id}>
                             {index === 0 ? (<></>) : (
                                 <View style={{
-                                    marginVertical: 10
+                                    marginBottom: 5
                                 }}
                                 >
                                     <TouchableWithoutFeedback
@@ -253,7 +253,7 @@ export default function Profile({ route, navigation }) {
                             )}
                         </View>
                     ))}
-                    <View style={{ height: SIZES.HEIGHT_BASE * 0.13 }} />
+                    <View style={{ height: SIZES.HEIGHT_BASE * 0.1 }} />
                 </View>
             )}
         </>
@@ -350,11 +350,11 @@ export default function Profile({ route, navigation }) {
                                         marginHorizontal: 5,
                                         elevation: 0,
                                         borderRadius: 20,
-                                        backgroundColor: COLORS.ACTIVE
+                                        backgroundColor: COLORS.BASE
                                     }}
                                     labelStyle={{
                                         fontSize: 16,
-                                        color: COLORS.BASE
+                                        color: COLORS.DEFAULT
                                     }}
                                 />
 
@@ -373,11 +373,11 @@ export default function Profile({ route, navigation }) {
                                         marginHorizontal: 5,
                                         elevation: 0,
                                         borderRadius: 20,
-                                        backgroundColor: COLORS.ACTIVE
+                                        backgroundColor: COLORS.BASE
                                     }}
                                     labelStyle={{
                                         fontSize: 16,
-                                        color: COLORS.BASE
+                                        color: COLORS.DEFAULT
                                     }}
                                 />
                             </View>
@@ -418,7 +418,7 @@ const styles = StyleSheet.create({
     buttonPanelContainer: {
         backgroundColor: 'transparent',
         position: 'absolute',
-        top: SIZES.HEIGHT_BASE * 0.83,
+        top: SIZES.HEIGHT_BASE * 0.74,
         left: 0,
         right: 0,
         height: 80,

@@ -66,16 +66,13 @@ export const ProfileScreen = () => (
         options={{
             header: ({ navigation, scene }) => (
                 <Header
-                    title=""
-                    back
-                    white
-                    transparent
+                    title={ScreenTitle.PROFILE}
+                    options
                     navigation={navigation}
                     scene={scene}
-                    showRight={false}
                 />
             ),
-            headerTransparent: true
+            cardStyle: { backgroundColor: COLORS.BASE }
         }}
     />
 );

@@ -21,7 +21,7 @@ export default function TopTabBar({
             indicatorStyle={
                 [
                     {
-                        backgroundColor: COLORS.ACTIVE,
+                        backgroundColor: COLORS.DEFAULT,
                     },
                     indicatorStyle
                 ]
@@ -29,7 +29,7 @@ export default function TopTabBar({
             style={
                 [
                     {
-                        backgroundColor: COLORS.LIST_ITEM_BACKGROUND_1,
+                        backgroundColor: COLORS.BLOCK,
                         height: 50,
                         padding: 0,
                         justifyContent: 'center'
@@ -40,7 +40,7 @@ export default function TopTabBar({
             tabStyle={{
                 alignSelf: 'center',
                 justifyContent: 'center',
-                padding: 0
+                padding: 0,
             }}
             renderLabel={({ route }) => (
                 <Text style={

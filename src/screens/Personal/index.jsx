@@ -54,7 +54,7 @@ export default function Personal({ navigation }) {
     return (
         <SafeAreaView
             style={{
-                flex: 1
+                flex: 1,
             }}
         >
             <TopTabBar

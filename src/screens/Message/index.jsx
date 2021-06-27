@@ -6,7 +6,6 @@ import {
 import { ToastHelpers } from '@helpers/index';
 import { setChattingWith, setNumberMessageUnread } from '@redux/Actions';
 import { socketRequestUtil } from '@utils/index';
-import * as SecureStore from 'expo-secure-store';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import {
@@ -14,11 +13,6 @@ import {
 } from 'react-native';
 import { FlatList, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
-
-let token = null;
-const getTokenFromLocal = async () => {
-    token = await SecureStore.getItemAsync('api_token');
-};
 
 const {
     FONT: {
@@ -116,12 +110,6 @@ export default function Message({ navigation, route }) {
         }, [isSignInOtherDeviceStore]
     );
 
-    useEffect(
-        () => {
-            if (!token) getTokenFromLocal();
-        }, [token]
-    );
-
     const calculateNumberOfNumberMessageUnread = (listMessage) => {
         const {
             params: {
@@ -144,6 +132,7 @@ export default function Message({ navigation, route }) {
 
     // trigger read all message in backend
     const triggerReadAllMessage = (chattingWithUserId) => {
+        const { token } = currentUser;
         const data = {
             query: GraphQueryString.READ_ALL_MESSAGE,
             variables: { from: chattingWithUserId }
@@ -157,6 +146,7 @@ export default function Message({ navigation, route }) {
     };
 
     const fetchListMessage = (to, pageIndex, pageSize, onSuccess) => {
+        const { token } = currentUser;
         const data = {
             query: GraphQueryString.GET_LIST_MESSAGE,
             variables: {
@@ -194,17 +184,22 @@ export default function Message({ navigation, route }) {
                     }}
                 />
                 <View
-                    style={[{
-                        borderRadius: 10,
-                        maxWidth: SIZES.WIDTH_BASE * 0.8
-                    }, messageStyle]}
+                    style={
+                        [
+                            {
+                                borderRadius: 10,
+                                maxWidth: SIZES.WIDTH_BASE * 0.8
+                            },
+                            messageStyle
+                        ]
+                    }
                 >
                     <View>
                         <Text
                             style={{
                                 margin: 10,
                                 fontFamily: MONTSERRAT_REGULAR,
-                                color: COLORS.DEFAULT,
+                                color: id !== message.from ? COLORS.DEFAULT : COLORS.BASE,
                                 fontSize: SIZES.FONT_H3
                             }}
                         >
@@ -265,6 +260,7 @@ export default function Message({ navigation, route }) {
     };
 
     const triggerSendMessage = () => {
+        const { token } = currentUser;
         const data = {
             query: GraphQueryString.SEND_MESSAGE,
             variables: {
@@ -303,7 +299,10 @@ export default function Message({ navigation, route }) {
                 width: SIZES.WIDTH_BASE,
                 flexDirection: 'row',
                 justifyContent: 'space-between',
-                alignSelf: 'center'
+                alignSelf: 'center',
+                alignItems: 'center',
+                backgroundColor: COLORS.BLOCK,
+                height: 50
             }}
         >
             <CustomInput
@@ -326,7 +325,7 @@ export default function Message({ navigation, route }) {
                     }
                 }}
                 style={{
-                    marginRight: 10
+                    marginRight: 10,
                 }}
             >
                 <IconCustom
@@ -349,7 +348,7 @@ export default function Message({ navigation, route }) {
                         {renderListMessage()}
                         <KeyboardAvoidingView
                             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                            keyboardVerticalOffset={SIZES.HEIGHT_BASE * 0.11}
+                            keyboardVerticalOffset={90}
                         >
                             {renderInputMessage()}
                         </KeyboardAvoidingView>
@@ -370,10 +369,10 @@ export default function Message({ navigation, route }) {
 const styles = StyleSheet.create({
     messageRight: {
         alignItems: 'flex-start',
-        backgroundColor: COLORS.MESSAGE_BACKGROUND_CURRENT
+        backgroundColor: COLORS.BLOCK
     },
     messageLeft: {
         alignItems: 'flex-end',
-        backgroundColor: COLORS.MESSAGE_BACKGROUND_INCOMING
+        backgroundColor: COLORS.MESSAGE_1
     }
 });

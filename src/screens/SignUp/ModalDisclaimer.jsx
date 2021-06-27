@@ -6,7 +6,8 @@ import { StyleSheet, Text, View } from 'react-native';
 const {
     FONT: {
         MONTSERRAT_REGULAR,
-    }, SIZES
+    }, SIZES,
+    COLORS
 } = NowTheme;
 
 export default function ModalDisclaimer({ modalVisible, setModalVisible }) {
@@ -60,6 +61,7 @@ const styles = StyleSheet.create({
     modalText: {
         margin: 15,
         textAlign: 'center',
-        fontFamily: MONTSERRAT_REGULAR
+        fontFamily: MONTSERRAT_REGULAR,
+        color: COLORS.DEFAULT
     },
 });

@@ -260,17 +260,18 @@ export default function Home({ navigation }) {
                 <RefreshControl
                     refreshing={refreshing}
                     onRefresh={() => onRefresh()}
+                    tintColor={COLORS.ACTIVE}
                 />
             )}
             keyExtractor={(item) => item.id}
             contentContainerStyle={{
-                marginVertical: 10,
-                paddingBottom: 10
+                marginVertical: 5,
+                paddingBottom: 5
             }}
             renderItem={({ item }) => (
                 <View
                     style={{
-                        marginBottom: 10
+                        marginBottom: 5,
                     }}
                 >
                     {renderImage(item)}
@@ -285,7 +286,7 @@ export default function Home({ navigation }) {
         >
             <View
                 style={{
-                    backgroundColor: COLORS.BASE,
+                    backgroundColor: COLORS.BLOCK,
                     borderWidth: 0,
                 }}
             >
@@ -377,7 +378,7 @@ export default function Home({ navigation }) {
                 ) : (
                     <View
                         style={{
-                            backgroundColor: COLORS.INPUT,
+                            backgroundColor: COLORS.BASE,
                             alignSelf: 'center'
                         }}
                     >

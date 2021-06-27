@@ -53,12 +53,13 @@ export default function CustomInput({
                         paddingHorizontal: 10,
                         fontFamily: MONTSERRAT_REGULAR,
                         fontSize: SIZES.FONT_H3,
-                        color: COLORS.HEADER
+                        color: COLORS.DEFAULT
                     },
                     inputStyle,
                 ]
             }
             value={value.toString()}
+            placeholderTextColor={COLORS.DEFAULT}
             {...props}
         />
     );

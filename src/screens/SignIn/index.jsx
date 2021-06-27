@@ -207,7 +207,7 @@ export default function SignIn({ navigation }) {
                 <Text
                     style={{
                         fontFamily: MONTSERRAT_REGULAR,
-                        color: COLORS.SWITCH_OFF,
+                        color: COLORS.DEFAULT,
                         fontSize: SIZES.FONT_H4
                     }}
                 >
@@ -243,7 +243,7 @@ export default function SignIn({ navigation }) {
                                         style={{
                                             fontFamily: MONTSERRAT_BOLD,
                                             textAlign: 'center',
-                                            color: '#333',
+                                            color: COLORS.DEFAULT,
                                             fontSize: 24,
                                             height: 100,
                                             marginTop: SIZES.HEIGHT_BASE * 0.1

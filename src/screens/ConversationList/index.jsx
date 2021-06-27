@@ -1,10 +1,9 @@
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
-import { CenterLoader, Line } from '@components/uiComponents';
+import { CenterLoader } from '@components/uiComponents';
 import { GraphQueryString, NowTheme, ScreenName } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
 import { setListConversation, setNumberMessageUnread } from '@redux/Actions';
 import { socketRequestUtil } from '@utils/index';
-import * as SecureStore from 'expo-secure-store';
 import React, { useEffect, useState } from 'react';
 import {
     Image, RefreshControl, Text, View
@@ -21,11 +20,6 @@ const {
     COLORS
 } = NowTheme;
 
-let token = null;
-const getTokenFromLocal = async () => {
-    token = await SecureStore.getItemAsync('api_token');
-};
-
 export default function ConversationList({ navigation }) {
     const [refreshing, setRefreshing] = useState(false);
     const [isShowSpinner, setIsShowSpinner] = useState(false);
@@ -41,26 +35,6 @@ export default function ConversationList({ navigation }) {
 
     useEffect(
         () => {
-            if (!token) getTokenFromLocal();
-
-            const onFocusScreen = navigation.addListener(
-                'focus',
-                () => {
-                    setIsShowSpinner(true);
-                    getListConversationFromSocket(
-                        1, 20,
-                        (data) => {
-                            dispatch(setListConversation(data.data.data.getRecently));
-                        }
-                    );
-                }
-            );
-            return onFocusScreen;
-        }, [token]
-    );
-
-    useEffect(
-        () => {
             if (isSignInOtherDeviceStore) {
                 navigation.reset({
                     index: 0,
@@ -72,15 +46,13 @@ export default function ConversationList({ navigation }) {
 
     useEffect(
         () => {
-            if (token) {
-                getListConversationFromSocket(
-                    1, 20,
-                    (data) => {
-                        dispatch(setListConversation(data.data.data.getRecently));
-                        countNumberOfUnreadConversation(data.data.data.getRecently);
-                    }
-                );
-            }
+            getListConversationFromSocket(
+                1, 20,
+                (data) => {
+                    dispatch(setListConversation(data.data.data.getRecently));
+                    countNumberOfUnreadConversation(data.data.data.getRecently);
+                }
+            );
         }, [messageListened]
     );
 
@@ -109,6 +81,7 @@ export default function ConversationList({ navigation }) {
     };
 
     const getListConversationFromSocket = (pageIndex, pageSize, onFetchData) => {
+        const { token } = currentUser;
         const data = {
             query: GraphQueryString.GET_LIST_CONVERSATION,
             variables: { pageIndex, pageSize }
@@ -183,6 +156,10 @@ export default function ConversationList({ navigation }) {
                 onPress={
                     () => onClickConversationItem(params)
                 }
+                containerStyle={{
+                    backgroundColor: COLORS.BLOCK,
+                    marginTop: 5
+                }}
             >
                 <View
                     style={{
@@ -239,17 +216,6 @@ export default function ConversationList({ navigation }) {
                         </View>
                     </View>
                 </View>
-                <View
-                    style={{
-                        alignItems: 'flex-end'
-                    }}
-                >
-                    <Line
-                        borderColor={COLORS.ACTIVE}
-                        borderWidth={0.5}
-                        width={SIZES.WIDTH_BASE * 0.85}
-                    />
-                </View>
             </TouchableWithoutFeedback>
         );
     };
@@ -270,6 +236,7 @@ export default function ConversationList({ navigation }) {
                                     <RefreshControl
                                         refreshing={refreshing}
                                         onRefresh={() => onRefresh()}
+                                        tintColor={COLORS.ACTIVE}
                                     />
                                 )}
                             />
@@ -279,6 +246,7 @@ export default function ConversationList({ navigation }) {
                                     <RefreshControl
                                         refreshing={refreshing}
                                         onRefresh={() => onRefresh()}
+                                        tintColor={COLORS.ACTIVE}
                                     />
                                 )}
                             >
@@ -292,7 +260,7 @@ export default function ConversationList({ navigation }) {
                                         style={{
                                             fontFamily: MONTSERRAT_REGULAR,
                                             color: COLORS.DEFAULT,
-                                            fontSize: SIZES.FONT_H2
+                                            fontSize: SIZES.FONT_H3
                                         }}
                                     >
                                         Danh sách trống

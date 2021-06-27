@@ -1,12 +1,16 @@
 import {
-    CenterLoader, CustomButton, CustomCheckbox, CustomInput, CustomModal, Line
+    CenterLoader, CustomButton, CustomCheckbox, CustomInput, CustomModal
 } from '@components/uiComponents';
 import {
     BookingStatus, NowTheme, ScreenName
 } from '@constants/index';
 import BookingProgressFlow from '@containers/BookingProgressFlow';
 import { ToastHelpers } from '@helpers/index';
-import { setListBookingStore, setPersonTabActiveIndex, setShowLoaderStore } from '@redux/Actions';
+import {
+    setListBookingStore,
+    setPersonTabActiveIndex,
+    setShowLoaderStore
+} from '@redux/Actions';
 import { BookingServices } from '@services/index';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
@@ -58,9 +62,12 @@ export default function BookingDetail({
     // handler \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
     useEffect(
         () => {
+            dispatch(setShowLoaderStore(true));
             fetchBookingDetailInfo();
+
             const eventTriggerGetBookingDetail = navigation.addListener('focus', () => {
                 if (from === ScreenName.CREATE_BOOKING) {
+                    dispatch(setShowLoaderStore(true));
                     fetchBookingDetailInfo();
                 }
             });
@@ -100,7 +107,6 @@ export default function BookingDetail({
     };
 
     const fetchBookingDetailInfo = async () => {
-        dispatch(setShowLoaderStore(true));
         const result = await BookingServices.fetchBookingDetailAsync(bookingId);
         const { data } = result;
 
@@ -463,6 +469,7 @@ export default function BookingDetail({
                             <RefreshControl
                                 refreshing={refreshing}
                                 onRefresh={() => onRefresh()}
+                                tintColor={COLORS.ACTIVE}
                             />
                         )}
                         contentContainerStyle={{
@@ -483,65 +490,64 @@ export default function BookingDetail({
                         {booking && (
                             <View
                                 style={{
-                                    width: SIZES.WIDTH_BASE * 0.9,
                                     alignSelf: 'center',
-                                    marginTop: 10,
+                                    marginTop: 5,
                                 }}
                             >
-                                <Text
+                                <View
                                     style={{
-                                        fontFamily: MONTSERRAT_REGULAR,
+                                        backgroundColor: COLORS.BLOCK,
+                                        width: SIZES.WIDTH_BASE
                                     }}
                                 >
-                                    CHI TIẾT ĐƠN HẸN
-                                </Text>
-                                <Line
-                                    borderWidth={0.5}
-                                    borderColor={COLORS.ACTIVE}
-                                    style={{
-                                        marginTop: 10
-                                    }}
-                                />
+                                    <CardBooking
+                                        booking={booking}
+                                        navigation={navigation}
+                                    />
+                                </View>
 
-                                <CardBooking
-                                    booking={booking}
-                                    navigation={navigation}
-                                />
-
-                                <Text
+                                <View
                                     style={{
-                                        fontFamily: MONTSERRAT_REGULAR,
+                                        backgroundColor: COLORS.BLOCK,
+                                        marginTop: 5,
+                                        alignContent: 'center'
                                     }}
                                 >
-                                    GHI CHÚ CUỘC HẸN
-                                </Text>
-                                <Line
-                                    borderWidth={0.5}
-                                    borderColor={COLORS.ACTIVE}
-                                    style={{
-                                        marginVertical: 10
-                                    }}
-                                />
-                                <Text
-                                    style={
-                                        [
-                                            styles.subTitle,
-                                            {
-                                                color: COLORS.DEFAULT,
-                                                fontSize: SIZES.FONT_H3,
-                                                marginBottom: 20
+                                    <View
+                                        style={{
+                                            width: SIZES.WIDTH_BASE * 0.9,
+                                            alignSelf: 'center',
+                                        }}
+                                    >
+                                        <Text
+                                            style={
+                                                [
+                                                    styles.subTitle,
+                                                    {
+                                                        color: COLORS.DEFAULT,
+                                                        fontSize: SIZES.FONT_H3,
+                                                        marginVertical: 20
+                                                    }
+                                                ]
                                             }
-                                        ]
-                                    }
-                                >
-                                    {booking.noted}
-                                </Text>
+                                        >
+                                            {booking.noted}
+                                        </Text>
+                                    </View>
+                                </View>
 
-                                <BookingProgressFlow
-                                    status={booking.status}
-                                    partner={booking.partner}
-                                    booking={booking}
-                                />
+                                <View
+                                    style={{
+                                        backgroundColor: COLORS.BLOCK,
+                                        marginTop: 5,
+                                    }}
+                                >
+                                    <BookingProgressFlow
+                                        status={booking.status}
+                                        partner={booking.partner}
+                                        booking={booking}
+                                    />
+                                </View>
 
                                 <View
                                     style={{
@@ -576,27 +582,5 @@ const styles = StyleSheet.create({
     },
     subTitle: {
         fontFamily: MONTSERRAT_REGULAR,
-        marginBottom: 10
-    },
-    centeredView: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        alignSelf: 'center',
-    },
-    modalView: {
-        backgroundColor: 'white',
-        borderRadius: 5,
-        alignItems: 'center',
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 2
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
-        marginTop: SIZES.WIDTH_BASE * 0.5,
-        width: SIZES.WIDTH_BASE * 0.9,
-        marginBottom: 10
     },
 });

@@ -42,7 +42,10 @@ export default async (
         };
     }
 
-    if (!apiTokenLocal && endpoint !== Rx.AUTHENTICATION.LOGIN) {
+    if (!apiTokenLocal
+        && endpoint !== Rx.AUTHENTICATION.LOGIN
+        && endpoint !== Rx.USER.GET_OTP_REGISTER
+    ) {
         return {
             data: {
                 data: null

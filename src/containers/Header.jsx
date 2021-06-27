@@ -1,4 +1,4 @@
-import { CustomInput, IconCustom, Tabs } from '@components/uiComponents';
+import { CustomInput, IconCustom } from '@components/uiComponents';
 import {
     IconFamily, NowTheme, ScreenName
 } from '@constants/index';
@@ -46,7 +46,6 @@ export default function Header({
         !noShadow ? styles.shadow : null,
         transparent ? { backgroundColor: 'rgba(0,0,0,0)' } : null
     ];
-
     const chattingWith = useSelector((state) => state.messageReducer.chattingWith);
     const dispatch = useDispatch();
 
@@ -148,9 +147,8 @@ export default function Header({
     );
 
     const navbarStyles = [
-        styles.navbar, bgColor && {
-            backgroundColor: bgColor, zIndex: 1
-        },
+        styles.navbar,
+        { backgroundColor: COLORS.BLOCK },
         iPhoneX ? styles.navbarHeight : {}];
 
     const renderRight = () => {
@@ -192,20 +190,6 @@ export default function Header({
         />
     );
 
-    const renderTabs = () => {
-        const defaultTab = tabs && tabs[0] && tabs[0].id;
-
-        if (!tabs) return null;
-
-        return (
-            <Tabs
-                data={tabs || []}
-                initialIndex={tabIndex || defaultTab}
-                onChange={(id) => navigation.setParams({ tabId: id })}
-            />
-        );
-    };
-
     const renderHeader = () => {
         if (search || tabs || options) {
             return (
@@ -215,7 +199,6 @@ export default function Header({
                     }}
                 >
                     {search ? renderSearch() : null}
-                    {tabs ? renderTabs() : null}
                 </View>
             );
         }
@@ -265,7 +248,7 @@ export default function Header({
                     leftStyle={{ paddingVertical: 12, flex: 0.2 }}
                     titleStyle={[
                         styles.title,
-                        { color: COLORS[white ? 'WHITE' : 'HEADER'] },
+                        { color: COLORS.DEFAULT },
                         titleColor && { color: titleColor }
                     ]}
                     {...props}
@@ -329,47 +312,9 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.2,
         elevation: 3
     },
-    notify: {
-        backgroundColor: COLORS.SUCCESS,
-        borderRadius: 4,
-        height: SIZES.HEIGHT_BASE / 2,
-        width: SIZES.WIDTH_BASE / 2,
-        position: 'absolute',
-        top: 9,
-        right: 12
-    },
-    header: {
-        backgroundColor: COLORS.BASE
-    },
-    divider: {
-        borderRightWidth: 0.3,
-        borderRightColor: COLORS.View
-    },
-    search: {
-        height: 48,
-        width: SIZES.WIDTH_BASE - 32,
-        marginHorizontal: 16,
-        borderWidth: 1,
-        borderRadius: 30,
-        borderColor: COLORS.BORDER
-    },
     options: {
         marginBottom: 24,
         marginTop: 10,
         elevation: 4
-    },
-    tab: {
-        backgroundColor: COLORS.TRANSPARENT,
-        width: SIZES.WIDTH_BASE * 0.35,
-        borderRadius: 0,
-        borderWidth: 0,
-        height: 24,
-        elevation: 0
-    },
-    tabTitle: {
-        lineHeight: 19,
-        fontWeight: '400',
-        color: COLORS.HEADER,
-        fontFamily: MONTSERRAT_REGULAR
     },
 });

@@ -86,6 +86,7 @@ export default function Notification({ navigation }) {
                         <RefreshControl
                             refreshing={refreshing}
                             onRefresh={() => onRefresh()}
+                            tintColor={COLORS.ACTIVE}
                         />
                     )}
                     contentContainerStyle={{
@@ -106,6 +107,7 @@ export default function Notification({ navigation }) {
                         <RefreshControl
                             refreshing={refreshing}
                             onRefresh={() => onRefresh()}
+                            tintColor={COLORS.ACTIVE}
                         />
                     )}
                 >
@@ -119,7 +121,7 @@ export default function Notification({ navigation }) {
                             style={{
                                 fontFamily: MONTSERRAT_REGULAR,
                                 color: COLORS.DEFAULT,
-                                fontSize: SIZES.FONT_H2
+                                fontSize: SIZES.FONT_H3
                             }}
                         >
                             Danh sách trống

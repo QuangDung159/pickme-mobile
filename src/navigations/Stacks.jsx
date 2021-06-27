@@ -153,6 +153,8 @@ const BottomTabMenuStack = () => {
                 activeTintColor: COLORS.ACTIVE,
                 inactiveTintColor: COLORS.DEFAULT,
                 showLabel: false,
+                activeBackgroundColor: COLORS.BLOCK,
+                inactiveBackgroundColor: COLORS.BLOCK
             }}
         >
             <Tab.Screen

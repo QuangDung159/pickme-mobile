@@ -5,7 +5,7 @@ import { setCurrentUser, setPersonTabActiveIndex } from '@redux/Actions';
 import { UserServices } from '@services/index';
 import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useDispatch, useSelector } from 'react-redux';
 
 const { SIZES, COLORS } = NowTheme;
@@ -113,7 +113,8 @@ export default function UpdateInfoForm() {
             style={{
                 paddingTop: 10,
                 flexDirection: 'row',
-                justifyContent: 'space-between'
+                justifyContent: 'space-between',
+                paddingBottom: 20
             }}
         >
             <CustomButton
@@ -212,32 +213,27 @@ export default function UpdateInfoForm() {
             {isShowSpinner ? (
                 <CenterLoader />
             ) : (
-                <ScrollView
+                <KeyboardAwareScrollView
                     showsVerticalScrollIndicator={false}
                     contentContainerStyle={{
-                        width: SIZES.WIDTH_BASE * 0.9,
+                        backgroundColor: COLORS.BLOCK,
                         alignSelf: 'center',
-                        alignItems: 'center'
+                        alignItems: 'center',
+                        marginTop: 5,
+                        width: SIZES.WIDTH_BASE
                     }}
                 >
-                    <View
-                        style={{
-                            backgroundColor: COLORS.BASE,
-                            marginVertical: 10
-                        }}
-                    >
-                        {newUser && (
-                            <>
-                                {renderInputName()}
-                                {renderInputHometown()}
-                                {renderInputYear()}
-                                {renderInputInterests()}
-                                {renderInputDescription()}
-                                {renderButtonPanel()}
-                            </>
-                        )}
-                    </View>
-                </ScrollView>
+                    {newUser && (
+                        <View>
+                            {renderInputName()}
+                            {renderInputHometown()}
+                            {renderInputYear()}
+                            {renderInputInterests()}
+                            {renderInputDescription()}
+                            {renderButtonPanel()}
+                        </View>
+                    )}
+                </KeyboardAwareScrollView>
             )}
         </>
     );

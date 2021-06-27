@@ -10,7 +10,7 @@ import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
 import * as React from 'react';
 import {
-    Image, StyleSheet, Text, View
+    Image, StatusBar, StyleSheet, Text, View
 } from 'react-native';
 import { MenuProvider } from 'react-native-popup-menu';
 import Toast from 'react-native-toast-message';
@@ -153,6 +153,10 @@ export default function App() {
     }
     return (
         <MenuProvider>
+            <StatusBar
+                barStyle="light-content"
+                translucent
+            />
             <Provider store={store}>
                 <ExpoNotification />
                 <Main />
@@ -165,7 +169,7 @@ export default function App() {
 const styles = StyleSheet.create({
     toastContainer: {
         width: SIZES.WIDTH_BASE * 0.85,
-        backgroundColor: COLORS.BASE,
+        backgroundColor: COLORS.BLOCK,
         borderRadius: 30,
         borderColor: COLORS.DEFAULT,
         borderWidth: 0.5,

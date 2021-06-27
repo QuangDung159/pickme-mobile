@@ -45,8 +45,7 @@ export default function CardBooking({ booking }) {
         return (
             <View
                 style={{
-                    backgroundColor: COLORS.BASE,
-                    marginVertical: 10,
+                    marginVertical: 20,
                     alignSelf: 'center',
                     width: SIZES.WIDTH_BASE * 0.9,
                 }}
@@ -191,15 +190,9 @@ CardBooking.propTypes = {
 const styles = StyleSheet.create({
     cardTitle: {
         fontFamily: MONTSERRAT_BOLD,
-        marginBottom: 10
     },
     subInfoCard: {
         fontFamily: MONTSERRAT_REGULAR,
         marginBottom: 10
     },
-    cardSubTitle: {
-        fontFamily: MONTSERRAT_REGULAR,
-        paddingBottom: 15,
-        color: COLORS.ICON_INPUT
-    }
 });

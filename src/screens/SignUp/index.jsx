@@ -104,7 +104,7 @@ export default function SignUp({ navigation }) {
                                                 [
                                                     styles.title,
                                                     {
-                                                        color: '#333',
+                                                        color: COLORS.DEFAULT,
                                                         fontSize: 24,
                                                         height: 100,
                                                         marginTop: SIZES.HEIGHT_BASE * 0.1

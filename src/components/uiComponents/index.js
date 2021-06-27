@@ -11,11 +11,10 @@ import Line from './Line';
 import NoteText from './NoteText';
 import StepIndicator from './StepIndicator';
 import Switch from './Switch';
-import Tabs from './Tabs';
 import TopTabBar from './TopTabBar';
 
 export {
-    IconCustom, Tabs,
+    IconCustom,
     CenterLoader,
     Switch,
     Line, NoteText,
