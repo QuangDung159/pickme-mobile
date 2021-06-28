@@ -172,11 +172,12 @@ export default function BookingDetail({
     };
 
     const handleShowButtonByStatus = () => {
+        const { status } = booking;
         // partner confirmed: payment, cancel
         // customer payment: cancel
         // booking is going on: N/A
         // booking done: complete => report/rating
-        if (isBookingGoingOn() || booking.status === BookingStatus.CANCEL) return null;
+        if (isBookingGoingOn() || status === BookingStatus.CANCEL) return null;
 
         if (isBookingDone()) {
             return (
@@ -184,21 +185,19 @@ export default function BookingDetail({
             );
         }
 
-        if (booking.isConfirm) {
-            if (booking.status === BookingStatus.SCHEDULING) {
-                return (
-                    <>
-                        {renderCancelBooking(0.44)}
-                        {renderConfirmPaymentButton(0.44)}
-                    </>
-                );
-            }
+        if (status === BookingStatus.IS_CONFIRMED) {
+            return (
+                <>
+                    {renderCancelBooking(0.44)}
+                    {renderConfirmPaymentButton(0.44)}
+                </>
+            );
+        }
 
-            if (booking.status === BookingStatus.FINISH_PAYMENT) {
-                return (
-                    renderCancelBooking(0.9)
-                );
-            }
+        if (status === BookingStatus.PAID) {
+            return (
+                renderCancelBooking(0.9)
+            );
         }
 
         return null;

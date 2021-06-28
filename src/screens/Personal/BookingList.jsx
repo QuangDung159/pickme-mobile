@@ -81,7 +81,7 @@ export default function BookingList({ navigation }) {
                 colorByStatus = COLORS.DEFAULT;
                 break;
             }
-            case BookingStatus.FINISH_PAYMENT: {
+            case BookingStatus.PAID: {
                 colorByStatus = COLORS.ACTIVE;
                 break;
             }

@@ -215,6 +215,92 @@ const fetchOtpSignUpAsync = async (body) => {
     return CommonHelpers.handleResByStatus(result);
 };
 
+const mappingCurrentUserInfo = (data) => {
+    const {
+        accessFailedCount,
+        address,
+        bankNum,
+        description,
+        deviceId,
+        dob,
+        earningExpected,
+        email,
+        expoNotificationToken,
+        fullName,
+        height,
+        homeTown,
+        id,
+        imageUrl,
+        interests,
+        isCashInAble,
+        isCashOutAble,
+        isCusomCalendar,
+        isDeactive,
+        isEmailConfirmed,
+        isLocked,
+        isTest,
+        isVerified,
+        latitude,
+        longtitude,
+        ownerName,
+        token,
+        url,
+        userName,
+        userType,
+        userTypeValue,
+        verifyNote,
+        verifyStatus,
+        verifyStatusValue,
+        walletAmount,
+        walletAmountDisplay,
+        weight,
+        posts
+    } = data;
+
+    const currentUserInfo = {
+        accessFailedCount,
+        address,
+        bankNum,
+        description,
+        deviceId,
+        dob,
+        earningExpected,
+        email,
+        expoNotificationToken,
+        fullName,
+        height,
+        homeTown,
+        id,
+        imageUrl,
+        interests,
+        isCashInAble,
+        isCashOutAble,
+        isCusomCalendar,
+        isDeactive,
+        isEmailConfirmed,
+        isLocked,
+        isTest,
+        isVerified,
+        latitude,
+        longtitude,
+        ownerName,
+        token,
+        url,
+        userName,
+        userType,
+        userTypeValue,
+        verifyNote,
+        verifyStatus,
+        verifyStatusValue,
+        walletAmount,
+        walletAmountDisplay,
+        weight,
+        posts
+    };
+
+    return currentUserInfo;
+};
+
 export default {
     loginAsync,
     fetchCurrentUserInfoAsync,
@@ -226,5 +312,6 @@ export default {
     submitGetOtpForgotPasswordAsync,
     fetchLeaderBoardAsync,
     submitSignUpAsync,
-    fetchOtpSignUpAsync
+    fetchOtpSignUpAsync,
+    mappingCurrentUserInfo
 };

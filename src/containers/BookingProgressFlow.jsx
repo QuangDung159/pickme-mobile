@@ -19,8 +19,7 @@ export default function BookingProgressFlow({
         partner: {
             fullName
         },
-        status,
-        isConfirm
+        status
     } = booking;
 
     const [stepArr, setStepArr] = useState([
@@ -36,7 +35,7 @@ export default function BookingProgressFlow({
         },
         {
             type: 'next',
-            content: 'Thanh toán',
+            content: 'Chờ thanh toán',
             buttonText: '3'
         },
         {
@@ -59,7 +58,7 @@ export default function BookingProgressFlow({
 
     const handleActiveStepByStatus = () => {
         switch (status) {
-            case BookingStatus.FINISH_PAYMENT: {
+            case BookingStatus.PAID: {
                 setStepArr(
                     [
                         {
@@ -74,7 +73,7 @@ export default function BookingProgressFlow({
                         },
                         {
                             type: 'prev',
-                            content: 'Thanh toán',
+                            content: 'Chờ thanh toán',
                             buttonText: '3'
                         },
                         {
@@ -106,7 +105,7 @@ export default function BookingProgressFlow({
                         },
                         {
                             type: 'prev',
-                            content: 'Thanh toán',
+                            content: 'Chờ thanh toán',
                             buttonText: '3'
                         },
                         {
@@ -123,38 +122,36 @@ export default function BookingProgressFlow({
                 );
                 break;
             }
-            case BookingStatus.SCHEDULING: {
-                if (isConfirm) {
-                    setStepArr(
-                        [
-                            {
-                                type: 'prev',
-                                content: 'Đơn hẹn được tạo',
-                                buttonText: '1'
-                            },
-                            {
-                                type: 'prev',
-                                content: `Chờ xác nhận từ ${fullName}`,
-                                buttonText: '2'
-                            },
-                            {
-                                type: 'current',
-                                content: 'Thanh toán',
-                                buttonText: '3'
-                            },
-                            {
-                                type: 'next',
-                                content: 'Cuộc hẹn sắp diễn ra',
-                                buttonText: '4'
-                            },
-                            {
-                                type: 'next',
-                                content: 'Hoàn tất',
-                                buttonText: '5'
-                            }
-                        ]
-                    );
-                }
+            case BookingStatus.IS_CONFIRMED: {
+                setStepArr(
+                    [
+                        {
+                            type: 'prev',
+                            content: 'Đơn hẹn được tạo',
+                            buttonText: '1'
+                        },
+                        {
+                            type: 'prev',
+                            content: `Chờ xác nhận từ ${fullName}`,
+                            buttonText: '2'
+                        },
+                        {
+                            type: 'current',
+                            content: 'Chờ thanh toán',
+                            buttonText: '3'
+                        },
+                        {
+                            type: 'next',
+                            content: 'Cuộc hẹn sắp diễn ra',
+                            buttonText: '4'
+                        },
+                        {
+                            type: 'next',
+                            content: 'Hoàn tất',
+                            buttonText: '5'
+                        }
+                    ]
+                );
                 break;
             }
             default: {
