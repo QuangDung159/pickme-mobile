@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import ImageView from 'react-native-image-viewing';
+import uuid from 'react-native-uuid';
 import { useSelector } from 'react-redux';
 import UserInfoSection from '../Personal/UserInformation/UserInfoSection';
 
@@ -32,7 +33,7 @@ export default function Profile({ route, navigation }) {
     const [partnerInfo, setPartnerInfo] = useState({});
     const [isShowSpinner, setIsShowSpinner] = useState(true);
     const [imageIndex, setImageIndex] = useState(0);
-    const [listImageFullscreen, setListImageFullscreen] = useState([]);
+    const [listImageFullscreen, setListImageFullscreen] = useState();
 
     const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
 
@@ -70,13 +71,15 @@ export default function Profile({ route, navigation }) {
 
             const listImage = [
                 {
-                    uri: data.url,
+                    uri: data.data.url,
+                    id: uuid.v4()
                 }
             ];
 
             posts.forEach((post) => {
                 listImage.push({
-                    uri: post.url
+                    uri: post.url,
+                    id: uuid.v4()
                 });
             });
 
@@ -109,13 +112,13 @@ export default function Profile({ route, navigation }) {
                     style={{
                         color: COLORS.ACTIVE,
                         fontWeight: 'bold',
-                        fontSize: SIZES.FONT_H1,
+                        fontSize: SIZES.FONT_H1 - 5,
                         fontFamily: MONTSERRAT_BOLD,
-                        marginBottom: 5
+                        marginBottom: 10,
+                        textAlign: 'center'
                     }}
                 >
                     {fullName}
-                    {' '}
                 </Text>
 
                 <View
@@ -227,10 +230,10 @@ export default function Profile({ route, navigation }) {
             {listImageFullscreen && (
                 <View>
                     {listImageFullscreen.map((imageItem, index) => (
-                        <View key={`${imageItem.uri}`}>
+                        <View key={imageItem.id}>
                             {index === 0 ? (<></>) : (
                                 <View style={{
-                                    marginVertical: 10
+                                    marginBottom: 5
                                 }}
                                 >
                                     <TouchableWithoutFeedback
@@ -240,7 +243,6 @@ export default function Profile({ route, navigation }) {
                                         }}
                                     >
                                         <CardImage
-                                            key={imageItem.imageId}
                                             imageUrl={imageItem.uri}
                                             user={partnerInfo}
                                             isShowTitle={false}
@@ -251,7 +253,7 @@ export default function Profile({ route, navigation }) {
                             )}
                         </View>
                     ))}
-                    <View style={{ height: SIZES.HEIGHT_BASE * 0.13 }} />
+                    <View style={{ height: SIZES.HEIGHT_BASE * 0.1 }} />
                 </View>
             )}
         </>
@@ -273,110 +275,115 @@ export default function Profile({ route, navigation }) {
                     flex: 1
                 }}
             >
-                <CenterLoader isShow={isShowSpinner} />
-                <View style={{
-                    justifyContent: 'space-between',
-                    zIndex: 1,
-                    backgroundColor: COLORS.BASE
-                }}
-                >
-                    <ImageView
-                        images={listImageFullscreen}
-                        imageIndex={imageIndex}
-                        visible={visible}
-                        onRequestClose={() => setVisible(false)}
-                    />
-
-                    <View>
-                        <ScrollView
-                            showsVerticalScrollIndicator={false}
+                {isShowSpinner ? (
+                    <CenterLoader />
+                ) : (
+                    <>
+                        <View style={{
+                            justifyContent: 'space-between',
+                            zIndex: 1,
+                            backgroundColor: COLORS.BASE
+                        }}
                         >
-                            <TouchableWithoutFeedback
-                                onPress={() => {
-                                    setVisible(true);
-                                    setImageIndex(0);
+                            <ImageView
+                                images={listImageFullscreen}
+                                imageIndex={imageIndex}
+                                visible={visible}
+                                onRequestClose={() => setVisible(false)}
+                            />
+
+                            <View>
+                                <ScrollView
+                                    showsVerticalScrollIndicator={false}
+                                >
+                                    <TouchableWithoutFeedback
+                                        onPress={() => {
+                                            setVisible(true);
+                                            setImageIndex(0);
+                                        }}
+                                    >
+                                        <View
+                                            style={{
+                                                zIndex: 99
+                                            }}
+                                        >
+                                            <ImageBackground
+                                                source={{
+                                                    uri: partnerInfo.url || NO_AVATAR_URL
+                                                }}
+                                                style={[styles.profileContainer]}
+                                                imageStyle={styles.profileBackground}
+                                            />
+                                        </View>
+                                        <ImageLoader />
+                                    </TouchableWithoutFeedback>
+
+                                    <View style={{ marginTop: -(SIZES.HEIGHT_BASE * 0.4) }}>
+                                        {renderSubInfo()}
+                                        {renderListPostImage()}
+                                    </View>
+                                </ScrollView>
+                            </View>
+                        </View>
+                        <View style={styles.buttonPanelContainer}>
+                            <View
+                                style={{
+                                    alignSelf: 'center',
+                                    alignItems: 'center',
+                                    flexDirection: 'row'
                                 }}
                             >
-                                <View
-                                    style={{
-                                        zIndex: 99
+                                <CustomButton
+                                    onPress={() => {
+                                        navigation.navigate(ScreenName.MESSAGE, {
+                                            name: partnerInfo.fullName,
+                                            userStatus: 'Vừa mới truy cập',
+                                            toUserId: userId,
+                                            userInfo: partnerInfo
+                                        });
                                     }}
-                                >
-                                    <ImageBackground
-                                        source={{
-                                            uri: partnerInfo.url || NO_AVATAR_URL
-                                        }}
-                                        style={[styles.profileContainer]}
-                                        imageStyle={styles.profileBackground}
-                                    />
-                                </View>
-                                <ImageLoader />
-                            </TouchableWithoutFeedback>
+                                    type="active"
+                                    label="Nhắn tin"
+                                    buttonStyle={{
+                                        width: 114,
+                                        height: 44,
+                                        marginHorizontal: 5,
+                                        elevation: 0,
+                                        borderRadius: 20,
+                                        backgroundColor: COLORS.BASE
+                                    }}
+                                    labelStyle={{
+                                        fontSize: 16,
+                                        color: COLORS.DEFAULT
+                                    }}
+                                />
 
-                            <View style={{ marginTop: -(SIZES.HEIGHT_BASE * 0.4) }}>
-                                {renderSubInfo()}
-                                {renderListPostImage()}
+                                <CustomButton
+                                    onPress={() => {
+                                        navigation.navigate(ScreenName.CREATE_BOOKING, {
+                                            partner: partnerInfo,
+                                            from: ScreenName.PROFILE
+                                        });
+                                    }}
+                                    type="active"
+                                    label="Đặt hẹn"
+                                    buttonStyle={{
+                                        width: 114,
+                                        height: 44,
+                                        marginHorizontal: 5,
+                                        elevation: 0,
+                                        borderRadius: 20,
+                                        backgroundColor: COLORS.BASE
+                                    }}
+                                    labelStyle={{
+                                        fontSize: 16,
+                                        color: COLORS.DEFAULT
+                                    }}
+                                />
                             </View>
-                        </ScrollView>
-                    </View>
-                </View>
-                <View style={styles.buttonPanelContainer}>
-                    <View
-                        style={{
-                            alignSelf: 'center',
-                            alignItems: 'center',
-                            flexDirection: 'row'
-                        }}
-                    >
-                        <CustomButton
-                            onPress={() => {
-                                navigation.navigate(ScreenName.MESSAGE, {
-                                    name: partnerInfo.fullName,
-                                    userStatus: 'Vừa mới truy cập',
-                                    toUserId: userId,
-                                    userInfo: partnerInfo
-                                });
-                            }}
-                            type="active"
-                            label="Nhắn tin"
-                            buttonStyle={{
-                                width: 114,
-                                height: 44,
-                                marginHorizontal: 5,
-                                elevation: 0,
-                                borderRadius: 20,
-                                backgroundColor: COLORS.ACTIVE
-                            }}
-                            labelStyle={{
-                                fontSize: 16,
-                                color: COLORS.BASE
-                            }}
-                        />
-
-                        <CustomButton
-                            onPress={() => {
-                                navigation.navigate(ScreenName.CREATE_BOOKING, {
-                                    partner: partnerInfo,
-                                    from: ScreenName.PROFILE
-                                });
-                            }}
-                            type="active"
-                            label="Đặt hẹn"
-                            buttonStyle={{
-                                width: 114,
-                                height: 44,
-                                marginHorizontal: 5,
-                                elevation: 0,
-                                borderRadius: 20,
-                                backgroundColor: COLORS.ACTIVE
-                            }}
-                            labelStyle={{
-                                fontSize: 16,
-                                color: COLORS.BASE
-                            }}
-                        />
-                    </View>
-                </View>
+                        </View>
+                    </>
+                )}
             </SafeAreaView>
         );
     } catch (exception) {
@@ -411,7 +418,7 @@ const styles = StyleSheet.create({
     buttonPanelContainer: {
         backgroundColor: 'transparent',
         position: 'absolute',
-        top: SIZES.HEIGHT_BASE * 0.83,
+        top: SIZES.HEIGHT_BASE * 0.74,
         left: 0,
         right: 0,
         height: 80,

@@ -28,7 +28,6 @@ export default function Message({ navigation, route }) {
     const [nextPageIndex, setNextPageIndex] = useState(2);
     const [isShowLoader, setIsShowLoader] = useState(false);
 
-    const token = useSelector((state) => state.userReducer.token);
     const currentUser = useSelector((state) => state.userReducer.currentUser);
     const messageListened = useSelector((state) => state.messageReducer.messageListened);
     const chattingWith = useSelector((state) => state.messageReducer.chattingWith);
@@ -133,6 +132,7 @@ export default function Message({ navigation, route }) {
 
     // trigger read all message in backend
     const triggerReadAllMessage = (chattingWithUserId) => {
+        const { token } = currentUser;
         const data = {
             query: GraphQueryString.READ_ALL_MESSAGE,
             variables: { from: chattingWithUserId }
@@ -146,6 +146,7 @@ export default function Message({ navigation, route }) {
     };
 
     const fetchListMessage = (to, pageIndex, pageSize, onSuccess) => {
+        const { token } = currentUser;
         const data = {
             query: GraphQueryString.GET_LIST_MESSAGE,
             variables: {
@@ -183,17 +184,22 @@ export default function Message({ navigation, route }) {
                     }}
                 />
                 <View
-                    style={[{
-                        borderRadius: 10,
-                        maxWidth: SIZES.WIDTH_BASE * 0.8
-                    }, messageStyle]}
+                    style={
+                        [
+                            {
+                                borderRadius: 10,
+                                maxWidth: SIZES.WIDTH_BASE * 0.8
+                            },
+                            messageStyle
+                        ]
+                    }
                 >
                     <View>
                         <Text
                             style={{
                                 margin: 10,
                                 fontFamily: MONTSERRAT_REGULAR,
-                                color: COLORS.DEFAULT,
+                                color: id !== message.from ? COLORS.DEFAULT : COLORS.BASE,
                                 fontSize: SIZES.FONT_H3
                             }}
                         >
@@ -254,6 +260,7 @@ export default function Message({ navigation, route }) {
     };
 
     const triggerSendMessage = () => {
+        const { token } = currentUser;
         const data = {
             query: GraphQueryString.SEND_MESSAGE,
             variables: {
@@ -292,7 +299,10 @@ export default function Message({ navigation, route }) {
                 width: SIZES.WIDTH_BASE,
                 flexDirection: 'row',
                 justifyContent: 'space-between',
-                alignSelf: 'center'
+                alignSelf: 'center',
+                alignItems: 'center',
+                backgroundColor: COLORS.BLOCK,
+                height: 50
             }}
         >
             <CustomInput
@@ -315,7 +325,7 @@ export default function Message({ navigation, route }) {
                     }
                 }}
                 style={{
-                    marginRight: 10
+                    marginRight: 10,
                 }}
             >
                 <IconCustom
@@ -331,14 +341,19 @@ export default function Message({ navigation, route }) {
     try {
         return (
             <>
-                <CenterLoader isShow={isShowLoader} />
-                {renderListMessage()}
-                <KeyboardAvoidingView
-                    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                    keyboardVerticalOffset={SIZES.HEIGHT_BASE * 0.11}
-                >
-                    {renderInputMessage()}
-                </KeyboardAvoidingView>
+                {isShowLoader ? (
+                    <CenterLoader />
+                ) : (
+                    <>
+                        {renderListMessage()}
+                        <KeyboardAvoidingView
+                            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                            keyboardVerticalOffset={90}
+                        >
+                            {renderInputMessage()}
+                        </KeyboardAvoidingView>
+                    </>
+                )}
             </>
         );
     } catch (exception) {
@@ -354,10 +369,10 @@ export default function Message({ navigation, route }) {
 const styles = StyleSheet.create({
     messageRight: {
         alignItems: 'flex-start',
-        backgroundColor: COLORS.MESSAGE_BACKGROUND_CURRENT
+        backgroundColor: COLORS.BLOCK
     },
     messageLeft: {
         alignItems: 'flex-end',
-        backgroundColor: COLORS.MESSAGE_BACKGROUND_INCOMING
+        backgroundColor: COLORS.MESSAGE_1
     }
 });

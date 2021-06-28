@@ -1,5 +1,5 @@
 import {
-    CenterLoader, CustomButton, Line
+    CenterLoader, CustomButton
 } from '@components/uiComponents';
 import {
     DocumentType, NowTheme, Rx, ScreenName, VerificationStatus
@@ -301,44 +301,27 @@ export default function Verification({ navigation }) {
     try {
         return (
             <>
-                {/* eslint-disable-next-line max-len */}
-                <CenterLoader isShow={isShowSpinner} content={`Quá trình tải lên mất nhiều thời gian do\nchất lượng hình ảnh.\nBạn vui lòng đợi nhé ${'<3'}!`} />
-                <KeyboardAwareScrollView
-                    showsVerticalScrollIndicator={false}
-                    contentContainerStyle={{
-                        width: SIZES.WIDTH_BASE * 0.9,
-                        alignSelf: 'center'
-                    }}
-                >
-                    <View
-                        style={{
-                            marginTop: 10,
-                            backgroundColor: COLORS.BASE,
+                {isShowSpinner ? (
+                    <CenterLoader />
+                ) : (
+                    <KeyboardAwareScrollView
+                        showsVerticalScrollIndicator={false}
+                        contentContainerStyle={{
+                            width: SIZES.WIDTH_BASE * 0.9,
+                            alignSelf: 'center'
                         }}
                     >
                         <View
                             style={{
-                                justifyContent: 'space-between',
-                                alignItems: 'center',
-                                flexDirection: 'row'
+                                marginTop: 10,
+                                backgroundColor: COLORS.BASE,
                             }}
                         >
-                            <Text style={{
-                                fontFamily: MONTSERRAT_REGULAR,
-                                marginVertical: 10
-                            }}
-                            >
-                                TẢI LÊN CHỨNG TỪ XÁC THỰC
-                            </Text>
+                            {renderDocSection()}
                         </View>
-                        <Line
-                            borderWidth={0.5}
-                            borderColor={COLORS.ACTIVE}
-                        />
-                        {renderDocSection()}
-                    </View>
-                    {renderButtonPanel()}
-                </KeyboardAwareScrollView>
+                        {renderButtonPanel()}
+                    </KeyboardAwareScrollView>
+                )}
             </>
         );
     } catch (exception) {

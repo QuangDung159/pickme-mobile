@@ -475,33 +475,35 @@ export default function CreateAccount(props) {
                             </Text>
                         </View>
 
-                        <CenterLoader isShow={isShowSpinner} />
-
-                        <View
-                            style={styles.stepFormContainer}
-                        >
-                            {isShowSpinner
-                                ? (
-                                    <ImageLoader />
-                                )
-                                : (
-                                    <TouchableWithoutFeedback
-                                        onPress={() => onClickUploadProfileImage()}
-                                    >
-                                        {image ? (
-                                            <Image
-                                                source={{ uri: image }}
-                                                style={styles.image}
-                                            />
-                                        ) : (
-                                            <Image
-                                                source={noAvatar}
-                                                style={styles.image}
-                                            />
-                                        )}
-                                    </TouchableWithoutFeedback>
-                                )}
-                        </View>
+                        {isShowSpinner ? (
+                            <CenterLoader />
+                        ) : (
+                            <View
+                                style={styles.stepFormContainer}
+                            >
+                                {isShowSpinner
+                                    ? (
+                                        <ImageLoader />
+                                    )
+                                    : (
+                                        <TouchableWithoutFeedback
+                                            onPress={() => onClickUploadProfileImage()}
+                                        >
+                                            {image ? (
+                                                <Image
+                                                    source={{ uri: image }}
+                                                    style={styles.image}
+                                                />
+                                            ) : (
+                                                <Image
+                                                    source={noAvatar}
+                                                    style={styles.image}
+                                                />
+                                            )}
+                                        </TouchableWithoutFeedback>
+                                    )}
+                            </View>
+                        )}
 
                         <View
                             style={{

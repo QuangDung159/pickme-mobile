@@ -9,8 +9,18 @@ const loginRefreshTokenAsync = async (body) => {
         'POST',
         body
     );
+    const { data } = result;
 
-    await SecureStore.setItemAsync('api_token', result.data.data.token);
+    if (data.data) {
+        await SecureStore.setItemAsync('api_token', result.data.data.token);
+        await SecureStore.setItemAsync('phoneNumber', body.username);
+        await SecureStore.setItemAsync('password', body.password);
+    } else {
+        await SecureStore.deleteItemAsync('api_token');
+        await SecureStore.deleteItemAsync('phoneNumber');
+        await SecureStore.deleteItemAsync('password');
+    }
+
     return CommonHelpers.handleResByStatus(result);
 };
 

@@ -4,7 +4,7 @@ import React from 'react';
 import { Modal, StyleSheet, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
-const { SIZES } = NowTheme;
+const { SIZES, COLORS } = NowTheme;
 
 export default function CustomModal({
     modalVisible, renderContent, contentStyle, containerStyle
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         marginTop: SIZES.HEIGHT_BASE * 0.2,
         margin: 10,
-        backgroundColor: 'white',
+        backgroundColor: COLORS.BLOCK,
         borderRadius: 10,
         padding: 20,
         shadowColor: '#000',

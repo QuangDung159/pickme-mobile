@@ -1,20 +1,20 @@
 /* eslint-disable global-require */
-import AppLoading from 'expo-app-loading';
-import { Asset } from 'expo-asset';
-import * as Font from 'expo-font';
-import * as React from 'react';
-import {
-    Image, StyleSheet, Text, View
-} from 'react-native';
-import { MenuProvider } from 'react-native-popup-menu';
-import Toast from 'react-native-toast-message';
-import { Provider } from 'react-redux';
 import { ExpoNotification } from '@components/businessComponents';
 import { IconCustom } from '@components/uiComponents';
 import { IconFamily, Images, NowTheme } from '@constants/index';
 import Main from '@containers/Main';
 import { ToastHelpers } from '@helpers/index';
 import store from '@redux/Store';
+import AppLoading from 'expo-app-loading';
+import { Asset } from 'expo-asset';
+import * as Font from 'expo-font';
+import * as React from 'react';
+import {
+    Image, StatusBar, StyleSheet, Text, View
+} from 'react-native';
+import { MenuProvider } from 'react-native-popup-menu';
+import Toast from 'react-native-toast-message';
+import { Provider } from 'react-redux';
 
 const {
     FONT: {
@@ -153,9 +153,13 @@ export default function App() {
     }
     return (
         <MenuProvider>
+            <StatusBar
+                barStyle="light-content"
+                translucent
+            />
             <Provider store={store}>
-                <Main />
                 <ExpoNotification />
+                <Main />
                 <Toast config={toastConfig} ref={(ref) => Toast.setRef(ref)} />
             </Provider>
         </MenuProvider>
@@ -165,7 +169,7 @@ export default function App() {
 const styles = StyleSheet.create({
     toastContainer: {
         width: SIZES.WIDTH_BASE * 0.85,
-        backgroundColor: COLORS.BASE,
+        backgroundColor: COLORS.BLOCK,
         borderRadius: 30,
         borderColor: COLORS.DEFAULT,
         borderWidth: 0.5,

@@ -1,6 +1,6 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
 import { Rx } from '@constants/index';
-import { API_URL } from '@env';
+import { API_URL, PICKME_INFO_URL } from '@env';
 import ToastHelpers from '@helpers/ToastHelpers';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
@@ -13,8 +13,6 @@ const generateLogData = (endpoint, body, headers, res) => {
         res
     });
 
-    logMessage(res, endpoint, headers, body);
-
     return `${res.status} ${endpoint}:\n ${objectStr}`;
 };
 
@@ -22,7 +20,7 @@ const logMessage = (res, endpoint, headers, body) => {
     console.log(`${res.status} ${endpoint}`, {
         headers,
         body,
-        res
+        response: res
     });
 };
 
@@ -44,6 +42,17 @@ export default async (
         };
     }
 
+    if (!apiTokenLocal
+        && endpoint !== Rx.AUTHENTICATION.LOGIN
+        && endpoint !== Rx.USER.GET_OTP_REGISTER
+    ) {
+        return {
+            data: {
+                data: null
+            }
+        };
+    }
+
     try {
         const res = await axios({
             url,
@@ -52,13 +61,36 @@ export default async (
             headers
         });
 
-        logMessage(res, endpoint, headers, body);
-        return res;
+        const response = {
+            config: res.config,
+            data: res.data,
+            headers: res.headers,
+            request: res.request,
+            status: res.data.status
+        };
+
+        // check domain
+        if (domain === PICKME_INFO_URL) {
+            response.status = res.status;
+        }
+
+        logMessage(response, endpoint, headers, body);
+
+        if (response.status !== 200 && response.status !== 201) {
+            // check token expired
+            if (!response.headers?.tokenexpired) {
+            // if does not have tokenexpired => do not toast
+                ToastHelpers.renderToast(response.data.message || null);
+            }
+        }
+
+        return response;
     } catch (err) {
         const {
             response, response: { data }
         } = err;
 
+        logMessage(response, endpoint, headers, body);
         const logInfo = generateLogData(endpoint, data, headers, response);
         slackUtil('catch', logInfo);
 

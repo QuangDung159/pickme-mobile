@@ -15,9 +15,7 @@ const {
 
 export default function LeaderBoard({ navigation }) {
     const [tabActiveIndex, setTabActiveIndex] = useState(0);
-    const [listLeaderBoard, setListLeaderBoard] = useState([]);
 
-    const pickMeInfoStore = useSelector((state) => state.appConfigReducer.pickMeInfoStore);
     const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
 
     const [routes] = React.useState([
@@ -41,24 +39,11 @@ export default function LeaderBoard({ navigation }) {
         {
             tabLabel: 'Mức chi trả',
             tabIcon: (
-                <IconCustom
-                    name="money"
-                    family={IconFamily.FONT_AWESOME}
-                    size={30}
-                    color={COLORS.ACTIVE}
-                />
+                <></>
             ),
             endpoint: Rx.PARTNER.LEADER_BOARD_DIAMOND
         }
     ];
-
-    useEffect(
-        () => {
-            if (pickMeInfoStore) {
-                setListLeaderBoard(pickMeInfoStore.booking);
-            }
-        }, []
-    );
 
     useEffect(
         () => {
@@ -77,18 +62,18 @@ export default function LeaderBoard({ navigation }) {
     const BookingRoute = () => (
         <LeaderBoadViewByType
             navigation={navigation}
-            listLeaderBoard={listLeaderBoard}
             tabActiveIndex={tabActiveIndex}
             tabs={tabs}
+            tabCode="booking"
         />
     );
 
     const EarningExpectedRoute = () => (
         <LeaderBoadViewByType
             navigation={navigation}
-            listLeaderBoard={listLeaderBoard}
             tabActiveIndex={tabActiveIndex}
             tabs={tabs}
+            tabCode="diamon"
         />
     );
 

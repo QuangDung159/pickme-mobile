@@ -6,27 +6,32 @@ import {
 import { WebSocketLink } from '@apollo/client/link/ws';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { Listener } from '@components/businessComponents';
+import ScreenName from '@constants/ScreenName';
 import { SOCKET_URL } from '@env';
 import Stacks from '@navigations/Stacks';
 import { NavigationContainer } from '@react-navigation/native';
 import {
-    setDeviceTimezone, setListNotification, setMessageListened, setNumberNotificationUnread
+    setDeviceTimezone, setMessageListened, setNotificationReceivedRedux, setPersonTabActiveIndex
 } from '@redux/Actions';
-import { NotificationServices } from '@services/index';
 import * as SecureStore from 'expo-secure-store';
 import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import uuid from 'react-native-uuid';
 import { useDispatch, useSelector } from 'react-redux';
 
-export default function Main() {
-    const listNotification = useSelector((state) => state.notificationReducer.listNotification);
+let token = null;
+const getTokenFromLocal = async () => {
+    token = await SecureStore.getItemAsync('api_token');
+};
 
+export default function Main() {
+    const notificationReceivedRedux = useSelector((state) => state.notificationReducer.notificationReceivedRedux);
+    const navigationObj = useSelector((state) => state.appConfigReducer.navigationObj);
     const dispatch = useDispatch();
-    const token = useSelector((state) => state.userReducer.token);
 
     useEffect(
         () => {
+            getTokenFromLocal();
             dispatch(setDeviceTimezone());
         }, []
     );
@@ -37,28 +42,13 @@ export default function Main() {
         }, []
     );
 
-    const getListNotificationAPI = async () => {
-        const result = await NotificationServices.fetchListNotificationAsync();
-        const { data } = result;
-
-        if (data) {
-            if (listNotification.length === 0) {
-                dispatch(setListNotification(data.data));
-                countNumberNotificationUnread(data.data);
+    useEffect(
+        () => {
+            if (notificationReceivedRedux) {
+                handleNotificationByType(notificationReceivedRedux.Type);
             }
-        }
-    };
-
-    const countNumberNotificationUnread = (listNotiFromAPI) => {
-        let count = 0;
-        listNotiFromAPI.forEach((item) => {
-            if (!item.isRead) {
-                count += 1;
-            }
-        });
-
-        dispatch(setNumberNotificationUnread(count));
-    };
+        }, [notificationReceivedRedux]
+    );
 
     // apollo
     // Instantiate required constructor fields
@@ -109,14 +99,6 @@ export default function Main() {
         }
     };
 
-    useEffect(
-        () => {
-            if (token && token !== 'Bearer ') {
-                getListNotificationAPI();
-            }
-        }, [token]
-    );
-
     const handleNotification = () => {};
 
     const handleData = (data) => {
@@ -130,6 +112,32 @@ export default function Main() {
         } else {
             handleNotification(payload);
         }
+    };
+
+    const handleNotificationByType = (notificationType) => {
+        switch (notificationType) {
+            case 2: {
+                dispatch(setPersonTabActiveIndex(2));
+                break;
+            }
+            case 3: {
+                dispatch(setPersonTabActiveIndex(1));
+                break;
+            }
+            case 4: {
+                dispatch(setPersonTabActiveIndex(1));
+                break;
+            }
+            case 5: {
+                dispatch(setPersonTabActiveIndex(2));
+                break;
+            }
+            default: {
+                break;
+            }
+        }
+        navigationObj.navigate(ScreenName.PERSONAL);
+        dispatch(setNotificationReceivedRedux(null));
     };
 
     try {

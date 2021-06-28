@@ -11,7 +11,8 @@ import { useDispatch } from 'react-redux';
 const {
     FONT: {
         MONTSERRAT_REGULAR,
-    }, SIZES
+    }, SIZES,
+    COLORS
 } = NowTheme;
 
 export default function ReasonCancelBookingModal({
@@ -44,6 +45,10 @@ export default function ReasonCancelBookingModal({
             fontFamily={MONTSERRAT_REGULAR}
             style={{
                 width: SIZES.WIDTH_BASE * 0.8
+            }}
+            itemStyle={{
+                fontSize: SIZES.FONT_H3,
+                color: COLORS.DEFAULT
             }}
         >
             {reasonDropdownArr.map((item) => (
@@ -84,8 +89,6 @@ export default function ReasonCancelBookingModal({
                     </Text>
                     {renderReasonDropdown()}
                     <View
-                        middle
-                        row
                         style={{
                             width: SIZES.WIDTH_BASE * 0.8,
                             marginBottom: 10,

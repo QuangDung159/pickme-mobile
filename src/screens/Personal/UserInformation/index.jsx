@@ -11,7 +11,7 @@ import { resetStoreSignOut, setCurrentUser } from '@redux/Actions';
 import { UserServices } from '@services/index';
 import * as SecureStore from 'expo-secure-store';
 import moment from 'moment';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
     Image, RefreshControl, StyleSheet, Text, View
 } from 'react-native';
@@ -42,15 +42,6 @@ export default function UserInformation({ navigation }) {
     const dispatch = useDispatch();
 
     // Render \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
-    useEffect(
-        () => {
-            if (JSON.stringify(currentUser) === JSON.stringify({})) {
-                setIsShowSpinner(true);
-                fetchCurrentUserInfo();
-            }
-        }, []
-    );
-
     const handleOnPickAvatar = (uri) => {
         setIsShowSpinner(true);
 
@@ -101,12 +92,9 @@ export default function UserInformation({ navigation }) {
 
         if (data) {
             dispatch(setCurrentUser(data.data));
-            setIsShowSpinner(false);
-            setRefreshing(false);
-        } else {
-            setIsShowSpinner(false);
-            setRefreshing(false);
         }
+        setIsShowSpinner(false);
+        setRefreshing(false);
     };
 
     const onRefresh = () => {
@@ -253,91 +241,46 @@ export default function UserInformation({ navigation }) {
         <>
             <View
                 style={{
-                    marginTop: 20,
+                    backgroundColor: COLORS.BLOCK,
+                    marginTop: 5
                 }}
             >
-                <Text
-                    style={{
-                        color: COLORS.ACTIVE,
-                        fontSize: SIZES.FONT_H1,
-                        fontFamily: MONTSERRAT_BOLD,
-                        alignSelf: 'center'
-                    }}
-                >
-                    {currentUser.fullName}
-                </Text>
-            </View>
-
-            <View
-                style={{
-                    marginBottom: 20,
-                    marginTop: 10
-                }}
-            >
-                <Text
-                    style={{
-                        fontFamily: MONTSERRAT_REGULAR,
-                        fontSize: SIZES.FONT_H2,
-                        color: COLORS.DEFAULT,
-                        alignSelf: 'center'
-                    }}
-                >
-                    {'"'}
-                    {currentUser.description}
-                    {'"'}
-                </Text>
-            </View>
-
-            <TouchableWithoutFeedback
-                onPress={() => {
-                    navigation.navigate(ScreenName.VERIFICATION);
-                }}
-            >
-
                 <View
                     style={{
-                        marginVertical: 10
+                        marginTop: 10,
                     }}
                 >
-                    <VerificationStatusPanel />
+                    <Text
+                        style={{
+                            color: COLORS.ACTIVE,
+                            fontSize: SIZES.FONT_H1,
+                            fontFamily: MONTSERRAT_BOLD,
+                            alignSelf: 'center'
+                        }}
+                    >
+                        {currentUser.fullName}
+                    </Text>
                 </View>
-            </TouchableWithoutFeedback>
 
-            <View style={{
-                marginBottom: 10,
-                alignItems: 'center'
-            }}
-            >
                 <View
                     style={{
+                        marginBottom: 20,
                         marginTop: 10
                     }}
                 >
-                    <CustomButton
-                        onPress={
-                            () => navigation.navigate(
-                                ScreenName.UPDATE_INFO_ACCOUNT,
-                            )
-                        }
-                        labelStyle={{
-                            fontSize: SIZES.FONT_H3
+                    <Text
+                        style={{
+                            fontFamily: MONTSERRAT_REGULAR,
+                            fontSize: SIZES.FONT_H2,
+                            color: COLORS.DEFAULT,
+                            alignSelf: 'center'
                         }}
-                        label="Chỉnh sửa thông tin cá nhân"
-                    />
+                    >
+                        {'"'}
+                        {currentUser.description}
+                        {'"'}
+                    </Text>
                 </View>
-            </View>
-
-            <View
-                style={{
-                    alignSelf: 'center',
-                    alignItems: 'center'
-                }}
-            >
-                <Line
-                    borderColor={COLORS.ACTIVE}
-                    borderWidth={0.5}
-                    width={SIZES.WIDTH_BASE * 0.9}
-                />
             </View>
         </>
     );
@@ -355,52 +298,119 @@ export default function UserInformation({ navigation }) {
                 color: COLORS.SWITCH_OFF,
                 family: IconFamily.SIMPLE_LINE_ICONS
             }}
+            buttonStyle={{
+                marginVertical: 10
+            }}
         />
     );
 
     try {
         return (
-            <ScrollView
-                showsVerticalScrollIndicator={false}
-                refreshControl={(
-                    <RefreshControl
-                        refreshing={refreshing}
-                        onRefresh={() => onRefresh()}
-                    />
+            <>
+                {isShowSpinner ? (
+                    <CenterLoader />
+                ) : (
+                    <ScrollView
+                        showsVerticalScrollIndicator={false}
+                        refreshControl={(
+                            <RefreshControl
+                                refreshing={refreshing}
+                                onRefresh={() => onRefresh()}
+                                tintColor={COLORS.ACTIVE}
+                            />
+                        )}
+                    >
+                        {renderImageView()}
+
+                        <View
+                            style={{
+                                backgroundColor: COLORS.BLOCK,
+                                marginTop: 5
+                            }}
+                        >
+                            <View
+                                style={{
+                                    width: SIZES.WIDTH_BASE * 0.9,
+                                    alignSelf: 'center',
+                                    flexDirection: 'row',
+                                }}
+                            >
+                                {renderAvatarPanel()}
+                                {renderSubInfoPanel()}
+                            </View>
+                            <View
+                                style={{
+                                    alignSelf: 'center',
+                                    alignItems: 'center'
+                                }}
+                            >
+                                <Line
+                                    borderColor={COLORS.ACTIVE}
+                                    borderWidth={0.5}
+                                    width={SIZES.WIDTH_BASE * 0.9}
+                                />
+                            </View>
+                            {renderInfoPanel(currentUser, navigation)}
+                        </View>
+
+                        <TouchableWithoutFeedback
+                            onPress={() => {
+                                navigation.navigate(ScreenName.VERIFICATION);
+                            }}
+                        >
+
+                            <View
+                                style={{
+                                    backgroundColor: COLORS.BLOCK,
+                                    marginTop: 5
+                                }}
+                            >
+                                <VerificationStatusPanel />
+                            </View>
+                        </TouchableWithoutFeedback>
+
+                        <View
+                            style={{
+                                backgroundColor: COLORS.BLOCK,
+                                marginTop: 5
+                            }}
+                        >
+                            <View style={{
+                                marginVertical: 20,
+                                alignItems: 'center'
+                            }}
+                            >
+                                <CustomButton
+                                    onPress={
+                                        () => navigation.navigate(
+                                            ScreenName.UPDATE_INFO_ACCOUNT,
+                                        )
+                                    }
+                                    labelStyle={{
+                                        fontSize: SIZES.FONT_H3
+                                    }}
+                                    label="Chỉnh sửa thông tin cá nhân"
+                                />
+                            </View>
+
+                            <View
+                                style={{
+                                    alignSelf: 'center',
+                                    alignItems: 'center'
+                                }}
+                            >
+                                <Line
+                                    borderColor={COLORS.ACTIVE}
+                                    borderWidth={0.5}
+                                    width={SIZES.WIDTH_BASE * 0.9}
+                                />
+                            </View>
+
+                            {renderButtonLogout(navigation)}
+                        </View>
+                    </ScrollView>
                 )}
-            >
-                <CenterLoader isShow={isShowSpinner} />
-
-                {renderImageView()}
-
-                <View
-                    style={{
-                        width: SIZES.WIDTH_BASE * 0.9,
-                        alignSelf: 'center',
-                        flexDirection: 'row'
-                    }}
-                >
-                    {renderAvatarPanel()}
-                    {renderSubInfoPanel()}
-                </View>
-
-                <View
-                    style={{
-                        alignSelf: 'center',
-                        alignItems: 'center'
-                    }}
-                >
-                    <Line
-                        borderColor={COLORS.ACTIVE}
-                        borderWidth={0.5}
-                        width={SIZES.WIDTH_BASE * 0.9}
-                    />
-                </View>
-
-                {renderInfoPanel(currentUser, navigation)}
-
-                {renderButtonLogout(navigation)}
-            </ScrollView>
+            </>
         );
     } catch (exception) {
         console.log('exception :>> ', exception);

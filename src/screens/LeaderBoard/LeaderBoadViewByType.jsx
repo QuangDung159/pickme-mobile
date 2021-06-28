@@ -19,7 +19,8 @@ const {
 } = NowTheme;
 
 export default function LeaderBoadViewByType({
-    navigation, tabs, tabActiveIndex, listLeaderBoard
+    navigation, tabs, tabActiveIndex,
+    tabCode
 }) {
     const pickMeInfoStore = useSelector((state) => state.appConfigReducer.pickMeInfoStore);
 
@@ -45,13 +46,13 @@ export default function LeaderBoadViewByType({
     );
 
     const renderTopPanel = () => {
-        if (!pickMeInfoStore || (!listLeaderBoard || listLeaderBoard.length === 0)) return <></>;
+        if (!pickMeInfoStore) return <></>;
 
         const {
             url,
             value,
             fullName
-        } = listLeaderBoard[tabActiveIndex];
+        } = pickMeInfoStore[tabCode.toString()][0];
 
         return (
             <View
@@ -66,7 +67,7 @@ export default function LeaderBoadViewByType({
                         () => navigation.navigate(
                             ScreenName.PROFILE,
                             {
-                                userId: listLeaderBoard[tabActiveIndex].userId
+                                userId: pickMeInfoStore[tabCode.toString()][0].userId
                             }
                         )
                     }
@@ -149,9 +150,9 @@ export default function LeaderBoadViewByType({
                 flex: 1
             }}
         >
-            {listLeaderBoard && listLeaderBoard.length !== 0 && (
+            {pickMeInfoStore && (
                 <FlatList
-                    data={listLeaderBoard}
+                    data={pickMeInfoStore[tabCode.toString()]}
                     keyExtractor={(item) => item.userId}
                     renderItem={({ item, index }) => renderLeaderBoardItem(item, index)}
                 />
@@ -168,7 +169,7 @@ export default function LeaderBoadViewByType({
                     <View
                         style={[
                             {
-                                backgroundColor: !(index % 2 === 0) || COLORS.LIST_ITEM_BACKGROUND_1,
+                                backgroundColor: !(index % 2 === 0) || COLORS.BLOCK,
                                 flexDirection: 'row',
                                 alignSelf: 'center',
                                 width: SIZES.WIDTH_BASE,

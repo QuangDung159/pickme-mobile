@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import { CustomCalendar } from '@components/businessComponents';
 import {
-    CenterLoader, CustomButton, CustomInput, CustomModal, GooglePlacesInput, IconCustom, Line
+    CenterLoader, CustomButton, CustomInput, CustomModal, IconCustom
 } from '@components/uiComponents';
 import {
     DateTimeConst, IconFamily, NowTheme, ScreenName
@@ -340,6 +340,10 @@ export default function CreateBooking({ route, navigation }) {
                         selectedValue={packageActive.id}
                         onValueChange={(itemValue) => onChangePackage(itemValue)}
                         fontFamily={MONTSERRAT_REGULAR}
+                        itemStyle={{
+                            fontSize: SIZES.FONT_H2,
+                            color: COLORS.DEFAULT
+                        }}
                     >
                         {listPartnerPackage.map((item) => (
                             <Picker.Item value={item.id} label={item.title} key={item.id} />
@@ -676,20 +680,29 @@ export default function CreateBooking({ route, navigation }) {
         }
     };
 
-    const onChangeAddress = (input) => {
-        const {
-            formatted_address, name, geometry: {
-                location: {
-                    lgn, lat
-                }
-            }
-        } = input;
+    // const onChangeAddress = (input) => {
+    //     const {
+    //         formatted_address, geometry: {
+    //             location: {
+    //                 lgn, lat
+    //             }
+    //         }
+    //     } = input;
 
+    //     setBooking({
+    //         ...booking,
+    //         address: `${formatted_address}`,
+    //         longtitude: lgn,
+    //         latitude: lat
+    //     });
+    // };
+
+    const onChangeAddress = (input) => {
         setBooking({
             ...booking,
-            address: `${name}, ${formatted_address}`,
-            longtitude: lgn,
-            latitude: lat
+            address: input,
+            longtitude: 0,
+            latitude: 0
         });
     };
 
@@ -716,29 +729,33 @@ export default function CreateBooking({ route, navigation }) {
         />
     );
 
+    const renderInputAddress = () => (
+        <CustomInput
+            value={booking.address}
+            multiline
+            onChangeText={(input) => onChangeAddress(input)}
+            containerStyle={{
+                marginVertical: 10,
+                width: SIZES.WIDTH_BASE * 0.9
+            }}
+            label="Địa điểm:"
+            inputStyle={{
+                height: 80,
+            }}
+        />
+    );
+
     const renderFormView = (partner) => (
         <View
             style={{
                 zIndex: 99,
-                flex: 1
+                flex: 1,
+                width: SIZES.WIDTH_BASE * 0.9,
+                alignSelf: 'center',
+                paddingBottom: 20
             }}
         >
             <View>
-                <Text
-                    style={{
-                        fontFamily: MONTSERRAT_REGULAR,
-                        marginTop: 10
-                    }}
-                >
-                    THÔNG TIN CUỘC HẸN
-                </Text>
-                <Line
-                    borderWidth={0.5}
-                    borderColor={COLORS.ACTIVE}
-                    style={{
-                        marginVertical: 10
-                    }}
-                />
 
                 {renderInfoView(partner)}
 
@@ -770,11 +787,13 @@ export default function CreateBooking({ route, navigation }) {
 
                 {renderButtonTimePicker()}
 
-                <GooglePlacesInput
+                {/* <GooglePlacesInput
                     label="Địa điểm (google API):"
                     onChangeAddress={(detail) => onChangeAddress(detail)}
                     addressInput={booking.address}
-                />
+                /> */}
+
+                {renderInputAddress()}
 
                 {renderInputNote()}
             </View>
@@ -815,48 +834,35 @@ export default function CreateBooking({ route, navigation }) {
 
     const renderTotal = () => (
         <View>
-            <View>
-                <Text
-                    style={{
-                        fontFamily: MONTSERRAT_REGULAR,
-                        marginTop: 10
-                    }}
-                >
-                    XÁC NHẬN ĐẶT
-                </Text>
-                <Line
-                    borderWidth={0.5}
-                    borderColor={COLORS.ACTIVE}
-                    style={{
-                        marginTop: 10
-                    }}
-                />
-            </View>
             <View
                 style={{
-                    alignItems: 'center',
-                    alignSelf: 'center'
+                    alignSelf: 'center',
+                    width: SIZES.WIDTH_BASE * 0.9,
+                    marginTop: 20,
+                    marginBottom: 15
                 }}
             >
                 <Text
                     style={{
                         fontFamily: MONTSERRAT_BOLD,
                         fontSize: 30,
-                        paddingVertical: 10,
-                        color: COLORS.ACTIVE
+                        color: COLORS.ACTIVE,
+                        textAlign: 'center',
+                        marginBottom: 10
                     }}
                 >
                     {CommonHelpers.generateMoneyStr(calculateTotalAmount(startTimeStr, endTimeStr))}
                 </Text>
+
+                {renderButtonPanel()}
             </View>
-            {renderButtonPanel()}
+
         </View>
     );
 
     const renderButtonPanel = () => (
         <View
             style={{
-                paddingVertical: 10,
                 flexDirection: 'row',
                 justifyContent: 'space-between'
             }}
@@ -905,7 +911,7 @@ export default function CreateBooking({ route, navigation }) {
                         marginBottom: 10,
                         alignSelf: 'center',
                         alignItems: 'center',
-                        flex: 1
+                        flex: 1.0
                     }}
                 >
                     <Text
@@ -935,23 +941,44 @@ export default function CreateBooking({ route, navigation }) {
 
     try {
         return (
-            <SafeAreaView>
-                <CenterLoader isShow={isShowSpinner} />
-                <KeyboardAwareScrollView
-                    keyboardShouldPersistTaps="always"
-                    style={{
-                        width: SIZES.WIDTH_BASE * 0.9,
-                        alignSelf: 'center'
-                    }}
-                    showsVerticalScrollIndicator={false}
-                >
-                    {renderModal()}
-                    {renderTimePickerModal()}
-                    {renderPartnerPackageModal()}
-                    {renderFormView(partner)}
-                    {renderTotal()}
-                </KeyboardAwareScrollView>
-            </SafeAreaView>
+            <>
+                {isShowSpinner ? (
+                    <CenterLoader />
+                ) : (
+                    <SafeAreaView>
+                        <KeyboardAwareScrollView
+                            keyboardShouldPersistTaps="handled"
+                            showsVerticalScrollIndicator={false}
+                            contentContainerStyle={{
+                                marginTop: 5
+                            }}
+                        >
+                            {renderModal()}
+                            {renderTimePickerModal()}
+                            {renderPartnerPackageModal()}
+                            <View
+                                style={{
+                                    backgroundColor: COLORS.BLOCK,
+                                    width: SIZES.WIDTH_BASE
+                                }}
+                            >
+                                {renderFormView(partner)}
+                            </View>
+
+                            <View
+                                style={{
+                                    backgroundColor: COLORS.BLOCK,
+                                    width: SIZES.WIDTH_BASE,
+                                    marginTop: 5,
+                                    paddingBottom: 20
+                                }}
+                            >
+                                {renderTotal()}
+                            </View>
+                        </KeyboardAwareScrollView>
+                    </SafeAreaView>
+                )}
+            </>
         );
     } catch (exception) {
         console.log('exception :>> ', exception);

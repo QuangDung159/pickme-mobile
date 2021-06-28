@@ -94,7 +94,8 @@ export default function CustomCalendar({ selectedDate, onChangeDate }) {
                                 [
                                     {
                                         fontFamily: MONTSERRAT_REGULAR,
-                                        fontSize: SIZES.FONT_H4
+                                        fontSize: SIZES.FONT_H4,
+                                        color: COLORS.DEFAULT
                                     },
                                     (item === 'T.Bảy' || item === 'C.Nhật') && weekendStyle,
                                 ]
@@ -119,13 +120,13 @@ export default function CustomCalendar({ selectedDate, onChangeDate }) {
                 }}
             >
                 {arrDateLine1.map((item) => {
-                    let buttonColor = COLORS.BASE;
+                    let buttonColor = COLORS.TRANSPARENT;
                     if (item === selectedDateState) {
-                        buttonColor = COLORS.SELECTED_DATE;
+                        buttonColor = COLORS.BASE;
                     }
 
                     const dateTextStyle = {
-                        color: currentDate === item ? COLORS.ACTIVE : COLORS.TEXT,
+                        color: currentDate === item || item === selectedDateState ? COLORS.ACTIVE : COLORS.DEFAULT,
                         fontFamily: currentDate === item
                             ? MONTSERRAT_BOLD
                             : MONTSERRAT_REGULAR

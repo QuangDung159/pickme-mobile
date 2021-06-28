@@ -1,4 +1,3 @@
-import { ExpoNotification } from '@components/businessComponents';
 import {
     CenterLoader, CustomButton, CustomInput, IconCustom, NoteText
 } from '@components/uiComponents';
@@ -223,70 +222,72 @@ export default function ForgotPassword({ navigation }) {
                 flex: 1
             }}
         >
-            <CenterLoader isShow={isShowSpinner} />
-            <ExpoNotification navigation={navigation} />
-            <ImageBackground
-                source={Images.RegisterBackground}
-                style={styles.imageBackgroundContainer}
-                imageStyle={styles.imageBackground}
-            >
-                <KeyboardAwareScrollView>
-                    <View
-                        style={{
-                            alignSelf: 'center',
-                            alignItems: 'center',
-                            flex: 1
-                        }}
-                    >
-                        <View style={styles.registerContainer}>
-                            <View
-                                style={{
-                                    height: SIZES.HEIGHT_BASE * 0.3,
-                                    alignSelf: 'center',
-                                    alignItems: 'center',
-                                }}
-                            >
+            {isShowSpinner ? (
+                <CenterLoader />
+            ) : (
+                <ImageBackground
+                    source={Images.RegisterBackground}
+                    style={styles.imageBackgroundContainer}
+                    imageStyle={styles.imageBackground}
+                >
+                    <KeyboardAwareScrollView>
+                        <View
+                            style={{
+                                alignSelf: 'center',
+                                alignItems: 'center',
+                                flex: 1
+                            }}
+                        >
+                            <View style={styles.registerContainer}>
                                 <View
                                     style={{
-                                        marginTop: SIZES.HEIGHT_BASE * 0.1
+                                        height: SIZES.HEIGHT_BASE * 0.3,
+                                        alignSelf: 'center',
+                                        alignItems: 'center',
                                     }}
                                 >
-                                    <NoteText
-                                        width={SIZES.WIDTH_BASE * 0.77}
-                                        title="Bạn đang yêu cầu lấy lại mật khẩu:"
-                                        content="Bạn vui lòng nhập số điện thoại đã đăng kí để nhận mã xác thực."
-                                        contentStyle={{
-                                            fontSize: SIZES.FONT_H4,
-                                            color: COLORS.ACTIVE,
-                                            fontFamily: MONTSERRAT_REGULAR,
-                                            marginTop: 5
+                                    <View
+                                        style={{
+                                            marginTop: SIZES.HEIGHT_BASE * 0.1
                                         }}
-                                        iconComponent={(
-                                            <IconCustom
-                                                name="info-circle"
-                                                family={IconFamily.FONT_AWESOME}
-                                                size={18}
-                                                color={COLORS.ACTIVE}
-                                            />
-                                        )}
-                                        backgroundColor={COLORS.LIST_ITEM_BACKGROUND_1}
-                                    />
+                                    >
+                                        <NoteText
+                                            width={SIZES.WIDTH_BASE * 0.77}
+                                            title="Bạn đang yêu cầu lấy lại mật khẩu:"
+                                            content="Bạn vui lòng nhập số điện thoại đã đăng kí để nhận mã xác thực."
+                                            contentStyle={{
+                                                fontSize: SIZES.FONT_H4,
+                                                color: COLORS.ACTIVE,
+                                                fontFamily: MONTSERRAT_REGULAR,
+                                                marginTop: 5
+                                            }}
+                                            iconComponent={(
+                                                <IconCustom
+                                                    name="info-circle"
+                                                    family={IconFamily.FONT_AWESOME}
+                                                    size={18}
+                                                    color={COLORS.ACTIVE}
+                                                />
+                                            )}
+                                            backgroundColor={COLORS.LIST_ITEM_BACKGROUND_1}
+                                        />
+                                    </View>
                                 </View>
-                            </View>
 
-                            {otp === '' ? (
-                                <>
-                                    {renderFormOtp()}
-                                </>
-                            ) : (
-                                <>
-                                    {renderFormNewPassword()}
-                                </>
-                            )}
+                                {otp === '' ? (
+                                    <>
+                                        {renderFormOtp()}
+                                    </>
+                                ) : (
+                                    <>
+                                        {renderFormNewPassword()}
+                                    </>
+                                )}
+                            </View>
                         </View>
-                    </View>
-                </KeyboardAwareScrollView>
-            </ImageBackground>
+                    </KeyboardAwareScrollView>
+                </ImageBackground>
+            )}
         </View>
     );
 }

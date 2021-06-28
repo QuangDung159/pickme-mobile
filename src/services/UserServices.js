@@ -13,7 +13,18 @@ const loginAsync = async (body) => {
         body
     );
 
-    await SecureStore.setItemAsync('api_token', result.data.data.token);
+    const { data } = result;
+
+    if (data.data) {
+        await SecureStore.setItemAsync('api_token', result.data.data.token);
+        await SecureStore.setItemAsync('phoneNumber', body.username);
+        await SecureStore.setItemAsync('password', body.password);
+    } else {
+        await SecureStore.deleteItemAsync('api_token');
+        await SecureStore.deleteItemAsync('phoneNumber');
+        await SecureStore.deleteItemAsync('password');
+    }
+
     return CommonHelpers.handleResByStatus(result);
 };
 
