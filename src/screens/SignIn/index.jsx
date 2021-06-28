@@ -282,7 +282,6 @@ export default function SignIn({ navigation }) {
                                                     width: SIZES.WIDTH_BASE * 0.77
                                                 }}
                                                 onChangeText={(passwordInput) => setPassword(passwordInput)}
-                                                keyboardType="number-pad"
                                                 containerStyle={{
                                                     marginVertical: 10,
                                                     width: SIZES.WIDTH_BASE * 0.77

@@ -310,7 +310,8 @@ export default function BookingDetail({
                         style={{
                             fontFamily: MONTSERRAT_REGULAR,
                             width: SIZES.WIDTH_BASE * 0.8,
-                            fontSize: SIZES.FONT_H2
+                            fontSize: SIZES.FONT_H2,
+                            color: COLORS.DEFAULT
                         }}
                     >
                         Bạn vui lòng góp ý để chúng tôi phục vụ bạn tốt hơn, cảm ơn.
@@ -373,7 +374,8 @@ export default function BookingDetail({
                         style={{
                             fontFamily: MONTSERRAT_REGULAR,
                             marginVertical: 10,
-                            fontSize: SIZES.FONT_H2
+                            fontSize: SIZES.FONT_H2,
+                            color: COLORS.DEFAULT
                         }}
                     >
                         Vui lòng nhập ý kiến

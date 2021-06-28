@@ -1,6 +1,7 @@
 export default {
-    SCHEDULING: 2,
-    FINISH_PAYMENT: 3,
     CANCEL: 1,
-    COMPLETED: 4
+    SCHEDULING: 2,
+    IS_CONFIRMED: 3,
+    FINISH_PAYMENT: 4,
+    COMPLETED: 5,
 };

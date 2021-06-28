@@ -47,7 +47,7 @@ export default function ReasonCancelBookingModal({
                 width: SIZES.WIDTH_BASE * 0.8
             }}
             itemStyle={{
-                fontSize: SIZES.FONT_H3,
+                fontSize: SIZES.FONT_H2,
                 color: COLORS.DEFAULT
             }}
         >
@@ -82,7 +82,8 @@ export default function ReasonCancelBookingModal({
                         style={{
                             fontFamily: MONTSERRAT_REGULAR,
                             marginVertical: 10,
-                            fontSize: SIZES.FONT_H2
+                            fontSize: SIZES.FONT_H2,
+                            color: COLORS.DEFAULT
                         }}
                     >
                         Vui lòng chọn lý do

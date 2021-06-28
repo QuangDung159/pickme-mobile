@@ -224,15 +224,7 @@ export default function CreateAccount(props) {
                             style={styles.stepViewContainer}
                         >
                             <Text
-                                style={
-                                    [
-                                        styles.stepTitleText,
-                                        {
-                                            color: '#333',
-                                            fontSize: SIZES.FONT_H2
-                                        }
-                                    ]
-                                }
+                                style={styles.stepTitleText}
                             >
                                 {!newUser.fullName
                                     ? 'Xin hỏi, bạn là...?'
@@ -276,15 +268,7 @@ export default function CreateAccount(props) {
                             style={styles.stepViewContainer}
                         >
                             <Text
-                                style={
-                                    [
-                                        styles.stepTitleText,
-                                        {
-                                            color: '#333',
-                                            fontSize: SIZES.FONT_H2
-                                        }
-                                    ]
-                                }
+                                style={styles.stepTitleText}
                             >
 
                                 {!newUser.hometown
@@ -329,15 +313,7 @@ export default function CreateAccount(props) {
                             style={styles.stepViewContainer}
                         >
                             <Text
-                                style={
-                                    [
-                                        styles.stepTitleText,
-                                        {
-                                            color: '#333',
-                                            fontSize: SIZES.FONT_H2
-                                        }
-                                    ]
-                                }
+                                style={styles.stepTitleText}
                             >
                                 {!newUser.description
                                     ? 'Mô tả về bạn'
@@ -392,15 +368,7 @@ export default function CreateAccount(props) {
                             style={styles.stepViewContainer}
                         >
                             <Text
-                                style={
-                                    [
-                                        styles.stepTitleText,
-                                        {
-                                            color: '#333',
-                                            fontSize: SIZES.FONT_H2
-                                        }
-                                    ]
-                                }
+                                style={styles.stepTitleText}
                             >
                                 Thông tin cơ bản
                             </Text>
@@ -459,65 +427,58 @@ export default function CreateAccount(props) {
                             style={styles.stepViewContainer}
                         >
                             <Text
-                                style={
-                                    [
-                                        styles.stepTitleText,
-                                        {
-                                            color: '#333',
-                                            fontSize: SIZES.FONT_H2
-                                        }
-                                    ]
-                                }
+                                style={styles.stepTitleText}
                             >
                                 {isShowDoneMessage
-                                    ? 'Đang hoàn tất quá trình tạo tài khoản...'
-                                    : 'Hãy chọn một bức ảnh thật đẹp nào!'}
+                                    ? 'Đang hoàn tất quá trình\ntạo tài khoản...'
+                                    : 'Hãy chọn một bức ảnh\nthật đẹp nào!'}
                             </Text>
                         </View>
 
                         {isShowSpinner ? (
                             <CenterLoader />
                         ) : (
-                            <View
-                                style={styles.stepFormContainer}
-                            >
-                                {isShowSpinner
-                                    ? (
-                                        <ImageLoader />
-                                    )
-                                    : (
-                                        <TouchableWithoutFeedback
-                                            onPress={() => onClickUploadProfileImage()}
-                                        >
-                                            {image ? (
-                                                <Image
-                                                    source={{ uri: image }}
-                                                    style={styles.image}
-                                                />
-                                            ) : (
-                                                <Image
-                                                    source={noAvatar}
-                                                    style={styles.image}
-                                                />
-                                            )}
-                                        </TouchableWithoutFeedback>
-                                    )}
-                            </View>
+                            <>
+                                <View
+                                    style={styles.stepFormContainer}
+                                >
+                                    {isShowSpinner
+                                        ? (
+                                            <ImageLoader />
+                                        )
+                                        : (
+                                            <TouchableWithoutFeedback
+                                                onPress={() => onClickUploadProfileImage()}
+                                            >
+                                                {image ? (
+                                                    <Image
+                                                        source={{ uri: image }}
+                                                        style={styles.image}
+                                                    />
+                                                ) : (
+                                                    <Image
+                                                        source={noAvatar}
+                                                        style={styles.image}
+                                                    />
+                                                )}
+                                            </TouchableWithoutFeedback>
+                                        )}
+                                </View>
+                                <View
+                                    style={{
+                                        marginTop: 50,
+                                        alignSelf: 'center'
+                                    }}
+                                >
+                                    <CustomButton
+                                        onPress={() => onSubmitAccountCreation()}
+                                        buttonStyle={styles.inputWith}
+                                        type="active"
+                                        label="Hoàn tất"
+                                    />
+                                </View>
+                            </>
                         )}
-
-                        <View
-                            style={{
-                                marginTop: 50,
-                                alignSelf: 'center'
-                            }}
-                        >
-                            <CustomButton
-                                onPress={() => onSubmitAccountCreation()}
-                                buttonStyle={styles.inputWith}
-                                type="active"
-                                label="Hoàn tất"
-                            />
-                        </View>
                     </View>
                 );
             }
@@ -535,15 +496,7 @@ export default function CreateAccount(props) {
                             }
                         >
                             <Text
-                                style={
-                                    [
-                                        styles.stepTitleText,
-                                        {
-                                            color: '#333',
-                                            fontSize: SIZES.FONT_H2
-                                        }
-                                    ]
-                                }
+                                style={styles.stepTitleText}
                             >
                                 Hoàn tất quá trình tạo tài khoản!
                             </Text>
@@ -553,15 +506,7 @@ export default function CreateAccount(props) {
                                 }}
                             >
                                 <Text
-                                    style={
-                                        [
-                                            styles.stepTitleText,
-                                            {
-                                                color: '#333',
-                                                fontSize: SIZES.FONT_H2
-                                            }
-                                        ]
-                                    }
+                                    style={styles.stepTitleText}
                                 >
                                     {`Cảm ơn bạn đã ở đây ${'<3'}!`}
                                 </Text>
@@ -669,7 +614,9 @@ const styles = StyleSheet.create({
     },
     stepTitleText: {
         fontFamily: MONTSERRAT_REGULAR,
-        textAlign: 'center'
+        textAlign: 'center',
+        color: COLORS.DEFAULT,
+        fontSize: SIZES.FONT_H2
     },
     stepFormContainer: {
         height: SIZES.HEIGHT_BASE * 0.35,
