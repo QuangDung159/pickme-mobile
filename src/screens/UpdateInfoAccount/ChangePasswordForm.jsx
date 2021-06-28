@@ -85,6 +85,7 @@ export default function ChangePasswordForm() {
                         size: 20,
                         color: COLORS.DEFAULT
                     }}
+                    label="Mật khẩu hiện tại"
                     onPressRightIcon={() => setIsShowCurrentPassword(!isShowCurrentPassword)}
                 />
 
@@ -107,6 +108,7 @@ export default function ChangePasswordForm() {
                         size: 20,
                         color: COLORS.DEFAULT
                     }}
+                    label="Mật khẩu mới"
                     onPressRightIcon={() => setIsShowNewPassword(!isShowNewPassword)}
                 />
 
@@ -129,6 +131,7 @@ export default function ChangePasswordForm() {
                         size: 20,
                         color: COLORS.DEFAULT
                     }}
+                    label="Nhập lại mật khẩu mới"
                     onPressRightIcon={() => setIsShowReNewPassword(!isShowReNewPassword)}
                 />
             </View>
@@ -136,7 +139,8 @@ export default function ChangePasswordForm() {
             <View
                 style={{
                     flexDirection: 'row',
-                    justifyContent: 'space-between'
+                    justifyContent: 'space-between',
+                    paddingBottom: 20
                 }}
             >
 
@@ -160,28 +164,26 @@ export default function ChangePasswordForm() {
 
     try {
         return (
-            <ScrollView
-                showsVerticalScrollIndicator={false}
-                contentContainerStyle={{
-                    width: SIZES.WIDTH_BASE * 0.9,
-                    alignSelf: 'center',
-                    alignItems: 'center'
-                }}
-            >
-                <CenterLoader isShow={isShowSpinner} />
-                <View
-                    style={{
-                        backgroundColor: COLORS.BASE,
-                        marginVertical: 10
-                    }}
-                >
-                    <>
-
-                        {renderFormNewPassword()}
-                    </>
-                </View>
-            </ScrollView>
-
+            <>
+                {isShowSpinner ? (
+                    <CenterLoader />
+                ) : (
+                    <ScrollView
+                        showsVerticalScrollIndicator={false}
+                        contentContainerStyle={{
+                            width: SIZES.WIDTH_BASE,
+                            alignSelf: 'center',
+                            alignItems: 'center',
+                            backgroundColor: COLORS.BLOCK,
+                            marginTop: 5
+                        }}
+                    >
+                        <View>
+                            {renderFormNewPassword()}
+                        </View>
+                    </ScrollView>
+                )}
+            </>
         );
     } catch (exception) {
         console.log('exception :>> ', exception);

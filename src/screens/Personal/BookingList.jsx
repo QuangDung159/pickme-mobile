@@ -9,7 +9,7 @@ import groupBy from 'lodash/groupBy';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import {
-    RefreshControl, SafeAreaView, Text, View
+    RefreshControl, Text, View
 } from 'react-native';
 import { ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
@@ -32,14 +32,9 @@ export default function BookingList({ navigation }) {
 
     useEffect(
         () => {
-            const eventTriggerGetListBooking = navigation.addListener('focus', () => {
-                if (!listBookingStore || listBookingStore.length === 0) {
-                    setIsShowSpinner(true);
-                    fetchListBooking();
-                }
-            });
-
-            return eventTriggerGetListBooking;
+            if (!listBookingStore || listBookingStore.length === 0) {
+                fetchListBooking();
+            }
         }, []
     );
 
@@ -79,15 +74,15 @@ export default function BookingList({ navigation }) {
         const startStr = convertMinutesToStringHours(startAt);
         const endStr = convertMinutesToStringHours(endAt);
 
-        let colorByStatus = COLORS.LIST_ITEM_BACKGROUND_2;
+        let colorByStatus = COLORS.ACTIVE;
 
         switch (status) {
             case BookingStatus.CANCEL: {
-                colorByStatus = COLORS.BORDER_COLOR;
+                colorByStatus = COLORS.DEFAULT;
                 break;
             }
             case BookingStatus.FINISH_PAYMENT: {
-                colorByStatus = COLORS.LIST_ITEM_BACKGROUND_2;
+                colorByStatus = COLORS.ACTIVE;
                 break;
             }
             default: {
@@ -105,9 +100,9 @@ export default function BookingList({ navigation }) {
             >
                 <View
                     style={{
-                        backgroundColor: colorByStatus,
+                        backgroundColor: COLORS.BLOCK,
                         borderRadius: 5,
-                        marginBottom: 10
+                        marginBottom: 5
                     }}
                 >
                     <View
@@ -119,8 +114,7 @@ export default function BookingList({ navigation }) {
                             style={{
                                 fontFamily: MONTSERRAT_BOLD,
                                 fontSize: SIZES.FONT_H3,
-                                color: COLORS.ACTIVE,
-
+                                color: colorByStatus,
                             }}
                         >
                             {partner.fullName}
@@ -146,7 +140,7 @@ export default function BookingList({ navigation }) {
                             <Text style={{
                                 fontFamily: MONTSERRAT_BOLD,
                                 fontSize: SIZES.FONT_H4,
-                                color: COLORS.ACTIVE
+                                color: colorByStatus
                             }}
                             >
                                 {statusValue}
@@ -215,7 +209,7 @@ export default function BookingList({ navigation }) {
                     <Text
                         style={{
                             fontFamily: MONTSERRAT_BOLD,
-                            fontSize: SIZES.FONT_H1,
+                            fontSize: SIZES.FONT_H1 - 5,
                             color: COLORS.ACTIVE
                         }}
                     >
@@ -231,7 +225,7 @@ export default function BookingList({ navigation }) {
                     <Text
                         style={{
                             fontFamily: MONTSERRAT_REGULAR,
-                            fontSize: SIZES.FONT_H1,
+                            fontSize: SIZES.FONT_H1 - 5,
                             color: COLORS.DEFAULT
                         }}
                     >
@@ -271,11 +265,12 @@ export default function BookingList({ navigation }) {
                         <RefreshControl
                             refreshing={refreshing}
                             onRefresh={() => onRefresh()}
+                            tintColor={COLORS.ACTIVE}
                         />
                     )}
                     contentContainerStyle={{
                         alignItems: 'center',
-                        marginTop: 10
+                        marginTop: 5
                     }}
                 >
                     <Text
@@ -299,11 +294,12 @@ export default function BookingList({ navigation }) {
                     <RefreshControl
                         refreshing={refreshing}
                         onRefresh={() => onRefresh()}
+                        tintColor={COLORS.ACTIVE}
                     />
                 )}
                 contentContainerStyle={{
-                    marginTop: 10,
-                    paddingBottom: 10
+                    marginTop: 5,
+                    paddingBottom: 5
                 }}
                 showsVerticalScrollIndicator={false}
             >
@@ -318,14 +314,16 @@ export default function BookingList({ navigation }) {
 
     try {
         return (
-            <SafeAreaView
-                style={{
-                    flex: 1
-                }}
-            >
-                <CenterLoader isShow={isShowSpinner} />
-                {renderListDateSection()}
-            </SafeAreaView>
+            <>
+                {isShowSpinner ? (
+                    <CenterLoader />
+                ) : (
+                    <>
+                        {renderListDateSection()}
+                    </>
+                )}
+            </>
+
         );
     } catch (exception) {
         console.log('exception :>> ', exception);

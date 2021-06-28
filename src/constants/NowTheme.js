@@ -3,23 +3,22 @@ import { Dimensions } from 'react-native';
 const { width, height } = Dimensions.get('window');
 
 const COLORS = {
-    DEFAULT: '#888888',
+    DEFAULT: '#DCDCDC',
     ERROR: '#FF3636',
     SUCCESS: '#18ce0f',
     SECONDARY: '#444444',
     NEUTRAL: 'rgba(255, 255, 255, 0.2)',
     TABS: 'rgba(222, 222, 222, 0.3)',
     INPUT: '#DCDCDC',
-    ACTIVE: '#f96332',
-    BORDER_COLOR: '#E7E7E7',
-    BASE: '#FFFFFF',
+    ACTIVE: '#ff693b',
+    BORDER_COLOR: '#DCDCDC',
+    BASE: '#303133',
     NOTIFICATION_BACKGROUND: '#ffeee3',
-    MESSAGE_BACKGROUND_CURRENT: '#b3f1ff',
-    MESSAGE_BACKGROUND_INCOMING: '#ffeee3',
     LIST_ITEM_BACKGROUND_1: '#ffeee3',
     LIST_ITEM_BACKGROUND_2: '#cdf6ff',
     TRANSPARENT: 'transparent',
     SELECTED_DATE: '#b3f1ff',
+    BLOCK: '#3a3b3c'
 };
 
 const SIZES = {

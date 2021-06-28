@@ -52,23 +52,24 @@ export default function GooglePlacesInput({ onChangeAddress, addressInput, label
                 fetchDetails
                 styles={{
                     textInputContainer: {
-                        borderWidth: 1,
                         borderRadius: 5,
-                        borderColor: COLORS.INPUT,
+                        borderColor: COLORS.DEFAULT,
                         width: SIZES.WIDTH_BASE * 0.9,
                         marginBottom: 10,
+                        borderWidth: 1
                     },
                     textInput: {
                         height: 80,
-                        color: COLORS.HEADER,
+                        color: COLORS.DEFAULT,
                         fontSize: SIZES.FONT_H3,
-                        fontFamily: MONTSERRAT_REGULAR
+                        fontFamily: MONTSERRAT_REGULAR,
+                        backgroundColor: COLORS.TRANSPARENT
                     },
                 }}
                 textInputProps={{
                     multiline: true,
                 }}
-                getDefaultValue={() => addressInput || 'asd'}
+                getDefaultValue={() => addressInput || 'N/a'}
                 renderRow={(rowData) => {
                     const title = rowData.structured_formatting.main_text;
                     const address = rowData.structured_formatting.secondary_text;
@@ -77,7 +78,7 @@ export default function GooglePlacesInput({ onChangeAddress, addressInput, label
                             <Text style={{
                                 fontSize: SIZES.FONT_H3,
                                 fontFamily: MONTSERRAT_REGULAR,
-                                color: COLORS.HEADER
+                                color: COLORS.BASE
                             }}
                             >
                                 {title}
@@ -85,7 +86,7 @@ export default function GooglePlacesInput({ onChangeAddress, addressInput, label
                             <Text style={{
                                 fontSize: SIZES.FONT_H4,
                                 fontFamily: MONTSERRAT_REGULAR,
-                                color: COLORS.HEADER
+                                color: COLORS.BASE
                             }}
                             >
                                 {address}

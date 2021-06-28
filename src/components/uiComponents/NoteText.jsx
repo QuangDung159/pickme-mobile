@@ -6,7 +6,8 @@ const {
     FONT: {
         MONTSERRAT_REGULAR,
         MONTSERRAT_BOLD
-    }, COLORS
+    }, COLORS,
+    SIZES
 } = NowTheme;
 
 export default class NoteText extends PureComponent {
@@ -20,10 +21,10 @@ export default class NoteText extends PureComponent {
         return (
             <View
                 style={{
-                    backgroundColor: backgroundColor || COLORS.LIST_ITEM_BACKGROUND_1,
+                    backgroundColor: backgroundColor || COLORS.BLOCK,
                     width,
                     alignSelf: 'center',
-                    borderRadius: 5,
+                    borderRadius: 5
                 }}
             >
                 <View
@@ -40,7 +41,9 @@ export default class NoteText extends PureComponent {
                         {title && (
                             <Text
                                 style={{
-                                    fontFamily: MONTSERRAT_BOLD
+                                    fontFamily: MONTSERRAT_BOLD,
+                                    color: COLORS.DEFAULT,
+                                    fontSize: SIZES.FONT_H3
                                 }}
                             >
                                 {iconComponent && ' '}
@@ -49,12 +52,16 @@ export default class NoteText extends PureComponent {
                         )}
                     </View>
                     <Text
-                        style={[
-                            {
-                                fontFamily: MONTSERRAT_REGULAR,
-                                alignSelf: 'center'
-                            },
-                            contentStyle]}
+                        style={
+                            [
+                                {
+                                    fontFamily: MONTSERRAT_REGULAR,
+                                    alignSelf: 'center',
+                                    color: COLORS.DEFAULT
+                                },
+                                contentStyle
+                            ]
+                        }
                     >
                         {content}
                     </Text>

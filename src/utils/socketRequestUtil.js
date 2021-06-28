@@ -14,10 +14,10 @@ export default (
         method,
         url: `https:${SOCKET_URL}`,
         headers: {
-            Authorization: token,
+            Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json'
         },
-        data: JSON.stringify(data)
+        data
     };
 
     const graphQueryString = data.query;

@@ -28,14 +28,10 @@ export default function Wallet({ navigation }) {
 
     useEffect(
         () => {
-            const eventTriggerGetListHistory = navigation.addListener('focus', () => {
-                if (!listCashHistoryStore || listCashHistoryStore.length === 0) {
-                    setIsShowSpinner(true);
-                    fetchHistory();
-                }
-            });
-
-            return eventTriggerGetListHistory;
+            if (!listCashHistoryStore || listCashHistoryStore.length === 0) {
+                setIsShowSpinner(true);
+                fetchHistory();
+            }
         }, []
     );
 
@@ -143,7 +139,8 @@ export default function Wallet({ navigation }) {
                 <Text
                     style={{
                         fontFamily: MONTSERRAT_REGULAR,
-                        fontSize: SIZES.FONT_H4
+                        fontSize: SIZES.FONT_H4,
+                        color: COLORS.DEFAULT
                     }}
                 >
                     Số dư trong ví
@@ -204,7 +201,9 @@ export default function Wallet({ navigation }) {
             return (
                 <View
                     style={{
-                        flex: 1
+                        flex: 1,
+                        backgroundColor: COLORS.BLOCK,
+                        marginTop: 5
                     }}
                 >
                     <FlatList
@@ -216,6 +215,7 @@ export default function Wallet({ navigation }) {
                             <RefreshControl
                                 refreshing={refreshing}
                                 onRefresh={() => onRefresh()}
+                                tintColor={COLORS.ACTIVE}
                             />
                         )}
                     />
@@ -229,6 +229,7 @@ export default function Wallet({ navigation }) {
                     <RefreshControl
                         refreshing={refreshing}
                         onRefresh={() => onRefresh()}
+                        tintColor={COLORS.ACTIVE}
                     />
                 )}
             >
@@ -242,7 +243,7 @@ export default function Wallet({ navigation }) {
                         style={{
                             fontFamily: MONTSERRAT_REGULAR,
                             color: COLORS.DEFAULT,
-                            fontSize: SIZES.FONT_H2
+                            fontSize: SIZES.FONT_H3
                         }}
                     >
                         Danh sách trống
@@ -255,18 +256,30 @@ export default function Wallet({ navigation }) {
     try {
         return (
             <>
-                <CenterLoader isShow={isShowSpinner} />
-                <View
-                    style={{
-                        height: 120,
-                        width: SIZES.WIDTH_BASE * 0.9,
-                        alignSelf: 'center',
-                    }}
-                >
-                    {renderWalletAmountPanel()}
-                </View>
+                {isShowSpinner ? (
+                    <CenterLoader />
+                ) : (
+                    <>
+                        <View
+                            style={{
+                                backgroundColor: COLORS.BLOCK,
+                                marginTop: 5
+                            }}
+                        >
+                            <View
+                                style={{
+                                    height: 120,
+                                    width: SIZES.WIDTH_BASE * 0.9,
+                                    alignSelf: 'center',
+                                }}
+                            >
+                                {renderWalletAmountPanel()}
+                            </View>
+                        </View>
 
-                {renderHistory()}
+                        {renderHistory()}
+                    </>
+                )}
             </>
         );
     } catch (exception) {

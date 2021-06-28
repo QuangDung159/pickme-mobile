@@ -122,7 +122,7 @@ export default function NotificationItem({
     return (
         <View style={[
             !isRead
-                ? { backgroundColor: COLORS.NOTIFICATION_BACKGROUND }
+                ? { backgroundColor: COLORS.BLOCK }
                 : { }, {
                 height: SIZES.HEIGHT_BASE * 0.08
             }]}

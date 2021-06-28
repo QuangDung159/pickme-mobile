@@ -1,4 +1,4 @@
-import { IndicatorVerticalLine, Line, StepIndicator } from '@components/uiComponents';
+import { IndicatorVerticalLine, StepIndicator } from '@components/uiComponents';
 import { BookingStatus, NowTheme } from '@constants/index';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
@@ -166,26 +166,16 @@ export default function BookingProgressFlow({
     return (
         <View
             style={{
-                marginBottom: 20,
+                paddingVertical: 20,
             }}
         >
-            <Text
-                style={{
-                    fontFamily: MONTSERRAT_REGULAR,
-                }}
-            >
-                SƠ ĐỒ ĐẶT HẸN
-            </Text>
-            <Line
-                borderWidth={0.5}
-                borderColor={COLORS.ACTIVE}
-                style={{
-                    marginVertical: 10
-                }}
-            />
-
             {status !== BookingStatus.CANCEL ? (
-                <View>
+                <View
+                    style={{
+                        width: SIZES.WIDTH_BASE * 0.9,
+                        alignSelf: 'center'
+                    }}
+                >
                     {stepArr.map((item, index) => (
                         <View key={item.buttonText}>
                             <StepIndicator
@@ -206,13 +196,13 @@ export default function BookingProgressFlow({
                 <View
                     style={{
                         alignItems: 'center',
-                        marginVertical: 15
+                        paddingVertical: 20,
                     }}
                 >
                     <Text
                         style={{
                             fontFamily: MONTSERRAT_REGULAR,
-                            color: COLORS.SWITCH_OFF,
+                            color: COLORS.DEFAULT,
                             fontSize: SIZES.FONT_H2
                         }}
                     >

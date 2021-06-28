@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
+import { NowTheme, ScreenName } from '@constants/index';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { NowTheme, ScreenName } from '@constants/index';
 import {
     BookingDetailScreen,
     CashInScreen,
@@ -153,6 +153,8 @@ const BottomTabMenuStack = () => {
                 activeTintColor: COLORS.ACTIVE,
                 inactiveTintColor: COLORS.DEFAULT,
                 showLabel: false,
+                activeBackgroundColor: COLORS.BLOCK,
+                inactiveBackgroundColor: COLORS.BLOCK
             }}
         >
             <Tab.Screen

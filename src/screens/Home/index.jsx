@@ -9,10 +9,14 @@ import { ToastHelpers } from '@helpers/index';
 import {
     setCurrentUser,
     setListBookingStore,
-    setListConversation, setNumberMessageUnread, setPickMeInfoStore
+    setListConversation,
+    setListNotification,
+    setNumberMessageUnread,
+    setNumberNotificationUnread, setPickMeInfoStore
 } from '@redux/Actions';
-import { BookingServices, UserServices } from '@services/index';
+import { BookingServices, NotificationServices, UserServices } from '@services/index';
 import { socketRequestUtil } from '@utils/index';
+import * as SecureStore from 'expo-secure-store';
 import React, { useEffect, useState } from 'react';
 import {
     FlatList, Image, RefreshControl, SafeAreaView, StyleSheet, Text, View
@@ -30,13 +34,17 @@ const {
     COLORS
 } = NowTheme;
 
+let token = null;
+const getTokenFromLocal = async () => {
+    token = await SecureStore.getItemAsync('api_token');
+};
+
 export default function Home({ navigation }) {
     const [refreshing, setRefreshing] = useState(false);
     const [isShowSpinner, setIsShowSpinner] = useState(true);
     const [listPartnerHome, setListPartnerHome] = useState([]);
     const [listConversationGetAtHome, setListConversationGetAtHome] = useState([]);
 
-    const token = useSelector((state) => state.userReducer.token);
     const pickMeInfoStore = useSelector((state) => state.appConfigReducer.pickMeInfoStore);
     const currentUser = useSelector((state) => state.userReducer.currentUser);
     const messageListened = useSelector((state) => state.messageReducer.messageListened);
@@ -49,11 +57,12 @@ export default function Home({ navigation }) {
     useEffect(
         () => {
             fetchCurrentUserInfo();
+            fetchListNotification();
             fetchListBooking();
+
             if (!pickMeInfoStore) fetchPickMeInfo();
 
             getListPartner();
-            const intervalUpdateLatest = setIntervalToUpdateLastActiveOfUserStatus();
 
             getListConversationFromSocket(
                 1, 20,
@@ -63,11 +72,18 @@ export default function Home({ navigation }) {
                     countNumberOfUnreadConversation(data.data.data.getRecently);
                 }
             );
+        }, []
+    );
 
+    useEffect(
+        () => {
+            if (!token) getTokenFromLocal();
+
+            const intervalUpdateLatest = setIntervalToUpdateLastActiveOfUserStatus();
             return () => {
                 clearInterval(intervalUpdateLatest);
             };
-        }, []
+        }, [token]
     );
 
     useEffect(
@@ -139,6 +155,27 @@ export default function Home({ navigation }) {
         }
     };
 
+    const fetchListNotification = async () => {
+        const result = await NotificationServices.fetchListNotificationAsync();
+        const { data } = result;
+
+        if (data) {
+            dispatch(setListNotification(data.data));
+            countNumberNotificationUnread(data.data);
+        }
+    };
+
+    const countNumberNotificationUnread = (listNotiFromAPI) => {
+        let count = 0;
+        listNotiFromAPI.forEach((item) => {
+            if (!item.isRead) {
+                count += 1;
+            }
+        });
+
+        dispatch(setNumberNotificationUnread(count));
+    };
+
     const getConversationByMessage = (message, listConversationSource) => {
         const index = listConversationSource.findIndex(
             (conversation) => conversation.from === message.from || conversation.from === message.to
@@ -155,19 +192,21 @@ export default function Home({ navigation }) {
     };
 
     const getListConversationFromSocket = (pageIndex, pageSize, onFetchData) => {
-        const data = {
-            query: GraphQueryString.GET_LIST_CONVERSATION,
-            variables: { pageIndex, pageSize }
-        };
+        if (token) {
+            const data = {
+                query: GraphQueryString.GET_LIST_CONVERSATION,
+                variables: { pageIndex, pageSize }
+            };
 
-        socketRequestUtil(
-            'POST',
-            data,
-            token,
-            (res) => {
-                onFetchData(res);
-            }
-        );
+            socketRequestUtil(
+                'POST',
+                data,
+                token,
+                (res) => {
+                    onFetchData(res);
+                }
+            );
+        }
     };
 
     const countNumberOfUnreadConversation = (listConversation) => {
@@ -194,10 +233,6 @@ export default function Home({ navigation }) {
 
     const setIntervalToUpdateLastActiveOfUserStatus = () => {
         const intervalUpdateLastActive = setInterval(() => {
-            if (token === 'Bearer ') {
-                clearInterval(intervalUpdateLastActive);
-            }
-
             const data = {
                 query: GraphQueryString.UPDATE_LAST_ACTIVE,
                 variables: { url: currentUser.url }
@@ -225,17 +260,18 @@ export default function Home({ navigation }) {
                 <RefreshControl
                     refreshing={refreshing}
                     onRefresh={() => onRefresh()}
+                    tintColor={COLORS.ACTIVE}
                 />
             )}
             keyExtractor={(item) => item.id}
             contentContainerStyle={{
-                marginVertical: 10,
-                paddingBottom: 10
+                marginVertical: 5,
+                paddingBottom: 5
             }}
             renderItem={({ item }) => (
                 <View
                     style={{
-                        marginBottom: 10
+                        marginBottom: 5,
                     }}
                 >
                     {renderImage(item)}
@@ -250,7 +286,7 @@ export default function Home({ navigation }) {
         >
             <View
                 style={{
-                    backgroundColor: COLORS.BASE,
+                    backgroundColor: COLORS.BLOCK,
                     borderWidth: 0,
                 }}
             >
@@ -337,16 +373,20 @@ export default function Home({ navigation }) {
                     flex: 1
                 }}
             >
-                <CenterLoader isShow={isShowSpinner} />
-                <View
-                    style={{
-                        backgroundColor: COLORS.INPUT,
-                        alignSelf: 'center'
-                    }}
-                >
-                    {renderArticles()}
-                </View>
+                {isShowSpinner ? (
+                    <CenterLoader />
+                ) : (
+                    <View
+                        style={{
+                            backgroundColor: COLORS.BASE,
+                            alignSelf: 'center'
+                        }}
+                    >
+                        {renderArticles()}
+                    </View>
+                )}
             </SafeAreaView>
+
         );
     } catch (exception) {
         console.log('exception :>> ', exception);

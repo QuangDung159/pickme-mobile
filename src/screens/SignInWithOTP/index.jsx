@@ -1,4 +1,3 @@
-import { ExpoNotification } from '@components/businessComponents';
 import {
     CenterLoader, CustomButton, CustomInput, IconCustom, NoteText
 } from '@components/uiComponents';
@@ -136,120 +135,122 @@ export default function SignInWithOTP({ navigation }) {
                 alignItems: 'center'
             }}
         >
-            <CenterLoader isShow={isShowSpinner} />
-            <ExpoNotification navigation={navigation} />
             <ImageBackground
                 source={Images.RegisterBackground}
                 style={styles.imageBackgroundContainer}
                 imageStyle={styles.imageBackground}
             >
-                <KeyboardAwareScrollView>
-                    <View
-                        style={{
-                            flex: 1,
-                            alignSelf: 'center',
-                            alignItems: 'center'
-                        }}
-                    >
-                        <View style={styles.registerContainer}>
-                            <View
-                                style={{
-                                    height: SIZES.HEIGHT_BASE * 0.2,
-                                    alignSelf: 'center',
-                                    alignItems: 'center',
-                                    marginTop: SIZES.HEIGHT_BASE * 0.1
-                                }}
-                            >
-                                <NoteText
-                                    width={SIZES.WIDTH_BASE * 0.77}
-                                    title="Dường như bạn đang đăng nhập từ một thiết bị khác:"
-                                    content="Bạn vui lòng đăng nhập lại để xác thực thiết bị này."
-                                    contentStyle={{
-                                        fontSize: SIZES.FONT_H4,
-                                        color: COLORS.ACTIVE,
-                                        fontFamily: MONTSERRAT_REGULAR,
-                                        marginTop: 5
-                                    }}
-                                    iconComponent={(
-                                        <IconCustom
-                                            name="info-circle"
-                                            family={IconFamily.FONT_AWESOME}
-                                            size={18}
-                                            color={COLORS.ACTIVE}
-                                        />
-                                    )}
-                                    backgroundColor={COLORS.LIST_ITEM_BACKGROUND_1}
-                                />
-                            </View>
-
-                            <View style={{
-                                height: SIZES.HEIGHT_BASE * 0.2
+                {isShowSpinner ? (
+                    <CenterLoader />
+                ) : (
+                    <KeyboardAwareScrollView>
+                        <View
+                            style={{
+                                flex: 1,
+                                alignSelf: 'center',
+                                alignItems: 'center'
                             }}
-                            >
+                        >
+                            <View style={styles.registerContainer}>
                                 <View
                                     style={{
-                                        marginBottom: 10,
-                                        alignItems: 'center'
+                                        height: SIZES.HEIGHT_BASE * 0.2,
+                                        alignSelf: 'center',
+                                        alignItems: 'center',
+                                        marginTop: SIZES.HEIGHT_BASE * 0.1
                                     }}
                                 >
+                                    <NoteText
+                                        width={SIZES.WIDTH_BASE * 0.77}
+                                        title="Dường như bạn đang đăng nhập từ một thiết bị khác:"
+                                        content="Bạn vui lòng đăng nhập lại để xác thực thiết bị này."
+                                        contentStyle={{
+                                            fontSize: SIZES.FONT_H4,
+                                            color: COLORS.ACTIVE,
+                                            fontFamily: MONTSERRAT_REGULAR,
+                                            marginTop: 5
+                                        }}
+                                        iconComponent={(
+                                            <IconCustom
+                                                name="info-circle"
+                                                family={IconFamily.FONT_AWESOME}
+                                                size={18}
+                                                color={COLORS.ACTIVE}
+                                            />
+                                        )}
+                                        backgroundColor={COLORS.LIST_ITEM_BACKGROUND_1}
+                                    />
+                                </View>
 
+                                <View style={{
+                                    height: SIZES.HEIGHT_BASE * 0.2
+                                }}
+                                >
+                                    <View
+                                        style={{
+                                            marginBottom: 10,
+                                            alignItems: 'center'
+                                        }}
+                                    >
+
+                                        {!otp ? (
+                                            <CustomInput
+                                                placeholder="Nhập số điện thoại..."
+                                                value={phoneNumber}
+                                                onChangeText={
+                                                    (phoneNumberInput) => setPhoneNumber(phoneNumberInput)
+                                                }
+                                                containerStyle={{
+                                                    marginVertical: 10,
+                                                    width: SIZES.WIDTH_BASE * 0.77
+                                                }}
+                                            />
+                                        ) : (
+                                            <CustomInput
+                                                value={otp}
+                                                inputStyle={{
+                                                    width: SIZES.WIDTH_BASE * 0.77
+                                                }}
+                                                onChangeText={(otpInput) => setOtp(otpInput)}
+                                                keyboardType="number-pad"
+                                                containerStyle={{
+                                                    marginVertical: 10,
+                                                    width: SIZES.WIDTH_BASE * 0.77
+                                                }}
+                                                placeholder="Nhập mã xác thực..."
+                                            />
+                                        )}
+                                    </View>
+                                </View>
+
+                                <View style={{
+                                    alignSelf: 'center'
+                                }}
+                                >
                                     {!otp ? (
-                                        <CustomInput
-                                            placeholder="Nhập số điện thoại..."
-                                            value={phoneNumber}
-                                            onChangeText={
-                                                (phoneNumberInput) => setPhoneNumber(phoneNumberInput)
-                                            }
-                                            containerStyle={{
-                                                marginVertical: 10,
-                                                width: SIZES.WIDTH_BASE * 0.77
-                                            }}
+                                        <CustomButton
+                                            onPress={() => onClickGetOTPWhenChangeDevice()}
+                                            type="active"
+                                            label="Yêu cầu mã xác thực"
+                                            buttonStyle={[styles.button, {
+                                                marginVertical: 10
+                                            }]}
                                         />
                                     ) : (
-                                        <CustomInput
-                                            value={otp}
-                                            inputStyle={{
-                                                width: SIZES.WIDTH_BASE * 0.77
-                                            }}
-                                            onChangeText={(otpInput) => setOtp(otpInput)}
-                                            keyboardType="number-pad"
-                                            containerStyle={{
-                                                marginVertical: 10,
-                                                width: SIZES.WIDTH_BASE * 0.77
-                                            }}
-                                            placeholder="Nhập mã xác thực..."
+                                        <CustomButton
+                                            onPress={() => onSubmitOTP()}
+                                            type="active"
+                                            label="Xác thực và đăng nhập"
+                                            buttonStyle={[styles.button, {
+                                                marginVertical: 10
+                                            }]}
                                         />
                                     )}
                                 </View>
                             </View>
-
-                            <View style={{
-                                alignSelf: 'center'
-                            }}
-                            >
-                                {!otp ? (
-                                    <CustomButton
-                                        onPress={() => onClickGetOTPWhenChangeDevice()}
-                                        type="active"
-                                        label="Yêu cầu mã xác thực"
-                                        buttonStyle={[styles.button, {
-                                            marginVertical: 10
-                                        }]}
-                                    />
-                                ) : (
-                                    <CustomButton
-                                        onPress={() => onSubmitOTP()}
-                                        type="active"
-                                        label="Xác thực và đăng nhập"
-                                        buttonStyle={[styles.button, {
-                                            marginVertical: 10
-                                        }]}
-                                    />
-                                )}
-                            </View>
                         </View>
-                    </View>
-                </KeyboardAwareScrollView>
+                    </KeyboardAwareScrollView>
+                )}
             </ImageBackground>
         </View>
     );

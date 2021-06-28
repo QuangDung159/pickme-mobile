@@ -117,15 +117,24 @@ export default function Support({ navigation }) {
 
     // render \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
     const ListFaqRoute = () => (
-        <>
+        <View
+            style={{
+                marginBottom: 10
+            }}
+        >
             {renderListFAQ()}
-        </>
+        </View>
     );
 
     const BugReportFormRoute = () => (
-        <>
+        <View
+            style={{
+                backgroundColor: COLORS.BLOCK,
+                marginTop: 5
+            }}
+        >
             {renderBugReportForm()}
-        </>
+        </View>
     );
 
     const renderScene = SceneMap({
@@ -211,7 +220,7 @@ export default function Support({ navigation }) {
                         <View
                             key={item.answer}
                             style={{
-                                paddingVertical: 10
+                                marginTop: 10,
                             }}
                         >
                             <NoteText
@@ -223,7 +232,7 @@ export default function Support({ navigation }) {
                                     fontFamily: MONTSERRAT_REGULAR,
                                     alignSelf: 'flex-start'
                                 }}
-                                backgroundColor={COLORS.LIST_ITEM_BACKGROUND_2}
+                                backgroundColor={COLORS.BLOCK}
                             />
                         </View>
                     )}
@@ -243,7 +252,7 @@ export default function Support({ navigation }) {
                     style={{
                         fontFamily: MONTSERRAT_REGULAR,
                         color: COLORS.DEFAULT,
-                        fontSize: SIZES.FONT_H2
+                        fontSize: SIZES.FONT_H3
                     }}
                 >
                     Danh sách trống
@@ -292,19 +301,25 @@ export default function Support({ navigation }) {
     );
 
     const renderBugReportForm = () => (
-        <View
-            style={{
-                width: SIZES.WIDTH_BASE * 0.9,
-                alignSelf: 'center',
-                paddingVertical: 10
-            }}
-        >
-            {renderInputBugTitle()}
-            {renderInputBugDescription()}
-            {renderUploadImageReportButton()}
-            {renderImageReport()}
-            {renderButtonPanel()}
-        </View>
+        <>
+            {isShowSpinner ? (
+                <CenterLoader />
+            ) : (
+                <View
+                    style={{
+                        width: SIZES.WIDTH_BASE * 0.9,
+                        alignSelf: 'center',
+                        paddingBottom: 20
+                    }}
+                >
+                    {renderInputBugTitle()}
+                    {renderInputBugDescription()}
+                    {renderUploadImageReportButton()}
+                    {renderImageReport()}
+                    {renderButtonPanel()}
+                </View>
+            )}
+        </>
     );
 
     const renderInputBugTitle = () => (
@@ -348,7 +363,6 @@ export default function Support({ navigation }) {
             }}
         >
             {renderImageView()}
-            <CenterLoader isShow={isShowSpinner} />
             <TopTabBar
                 routes={routes}
                 renderScene={renderScene}
