@@ -10,7 +10,7 @@ const COLORS = {
     NEUTRAL: 'rgba(255, 255, 255, 0.2)',
     TABS: 'rgba(222, 222, 222, 0.3)',
     INPUT: '#DCDCDC',
-    ACTIVE: '#f25829',
+    ACTIVE: '#ff693b',
     BORDER_COLOR: '#DCDCDC',
     BASE: '#303133',
     NOTIFICATION_BACKGROUND: '#ffeee3',

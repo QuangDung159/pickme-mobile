@@ -1,5 +1,5 @@
 import {
-    CenterLoader, CustomButton, Line
+    CenterLoader, CustomButton
 } from '@components/uiComponents';
 import {
     DocumentType, NowTheme, Rx, ScreenName, VerificationStatus
@@ -317,25 +317,6 @@ export default function Verification({ navigation }) {
                                 backgroundColor: COLORS.BASE,
                             }}
                         >
-                            <View
-                                style={{
-                                    justifyContent: 'space-between',
-                                    alignItems: 'center',
-                                    flexDirection: 'row'
-                                }}
-                            >
-                                <Text style={{
-                                    fontFamily: MONTSERRAT_REGULAR,
-                                    marginVertical: 10
-                                }}
-                                >
-                                    TẢI LÊN CHỨNG TỪ XÁC THỰC
-                                </Text>
-                            </View>
-                            <Line
-                                borderWidth={0.5}
-                                borderColor={COLORS.ACTIVE}
-                            />
                             {renderDocSection()}
                         </View>
                         {renderButtonPanel()}
