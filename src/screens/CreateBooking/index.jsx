@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import { CustomCalendar } from '@components/businessComponents';
 import {
-    CenterLoader, CustomButton, CustomInput, CustomModal, IconCustom
+    CenterLoader, CustomButton, CustomInput, CustomModal, GooglePlacesInput, IconCustom
 } from '@components/uiComponents';
 import {
     DateTimeConst, IconFamily, NowTheme, ScreenName
@@ -680,31 +680,31 @@ export default function CreateBooking({ route, navigation }) {
         }
     };
 
-    // const onChangeAddress = (input) => {
-    //     const {
-    //         formatted_address, geometry: {
-    //             location: {
-    //                 lgn, lat
-    //             }
-    //         }
-    //     } = input;
+    const onChangeAddressGoogle = (input) => {
+        const {
+            formatted_address, geometry: {
+                location: {
+                    lgn, lat
+                }
+            }
+        } = input;
 
-    //     setBooking({
-    //         ...booking,
-    //         address: `${formatted_address}`,
-    //         longtitude: lgn,
-    //         latitude: lat
-    //     });
-    // };
-
-    const onChangeAddress = (input) => {
         setBooking({
             ...booking,
-            address: input,
-            longtitude: 0,
-            latitude: 0
+            address: `${formatted_address}`,
+            longtitude: lgn,
+            latitude: lat
         });
     };
+
+    // const onChangeAddress = (input) => {
+    //     setBooking({
+    //         ...booking,
+    //         address: input,
+    //         longtitude: 0,
+    //         latitude: 0
+    //     });
+    // };
 
     const onChangeNote = (input) => {
         setBooking({
@@ -729,21 +729,21 @@ export default function CreateBooking({ route, navigation }) {
         />
     );
 
-    const renderInputAddress = () => (
-        <CustomInput
-            value={booking.address}
-            multiline
-            onChangeText={(input) => onChangeAddress(input)}
-            containerStyle={{
-                marginVertical: 10,
-                width: SIZES.WIDTH_BASE * 0.9
-            }}
-            label="Địa điểm:"
-            inputStyle={{
-                height: 80,
-            }}
-        />
-    );
+    // const renderInputAddress = () => (
+    //     <CustomInput
+    //         value={booking.address}
+    //         multiline
+    //         onChangeText={(input) => onChangeAddress(input)}
+    //         containerStyle={{
+    //             marginVertical: 10,
+    //             width: SIZES.WIDTH_BASE * 0.9
+    //         }}
+    //         label="Địa điểm:"
+    //         inputStyle={{
+    //             height: 80,
+    //         }}
+    //     />
+    // );
 
     const renderFormView = (partner) => (
         <View
@@ -787,13 +787,13 @@ export default function CreateBooking({ route, navigation }) {
 
                 {renderButtonTimePicker()}
 
-                {/* <GooglePlacesInput
+                <GooglePlacesInput
                     label="Địa điểm (google API):"
-                    onChangeAddress={(detail) => onChangeAddress(detail)}
+                    onChangeAddress={(detail) => onChangeAddressGoogle(detail)}
                     addressInput={booking.address}
-                /> */}
+                />
 
-                {renderInputAddress()}
+                {/* {renderInputAddress()} */}
 
                 {renderInputNote()}
             </View>
