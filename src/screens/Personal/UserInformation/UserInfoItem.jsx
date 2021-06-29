@@ -51,7 +51,8 @@ export default function UserInfoItem({
                     style={{
                         fontFamily: MONTSERRAT_REGULAR,
                         fontSize: SIZES.FONT_H2,
-                        color: COLORS.DEFAULT
+                        color: COLORS.DEFAULT,
+                        marginLeft: 10
                     }}
                 >
                     {handleValue}

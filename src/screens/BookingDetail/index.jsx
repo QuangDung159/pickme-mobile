@@ -172,11 +172,12 @@ export default function BookingDetail({
     };
 
     const handleShowButtonByStatus = () => {
+        const { status } = booking;
         // partner confirmed: payment, cancel
         // customer payment: cancel
         // booking is going on: N/A
         // booking done: complete => report/rating
-        if (isBookingGoingOn() || booking.status === BookingStatus.CANCEL) return null;
+        if (isBookingGoingOn() || status === BookingStatus.CANCEL) return null;
 
         if (isBookingDone()) {
             return (
@@ -184,21 +185,19 @@ export default function BookingDetail({
             );
         }
 
-        if (booking.isConfirm) {
-            if (booking.status === BookingStatus.SCHEDULING) {
-                return (
-                    <>
-                        {renderCancelBooking(0.44)}
-                        {renderConfirmPaymentButton(0.44)}
-                    </>
-                );
-            }
+        if (status === BookingStatus.IS_CONFIRMED) {
+            return (
+                <>
+                    {renderCancelBooking(0.44)}
+                    {renderConfirmPaymentButton(0.44)}
+                </>
+            );
+        }
 
-            if (booking.status === BookingStatus.FINISH_PAYMENT) {
-                return (
-                    renderCancelBooking(0.9)
-                );
-            }
+        if (status === BookingStatus.PAID) {
+            return (
+                renderCancelBooking(0.9)
+            );
         }
 
         return null;
@@ -310,7 +309,8 @@ export default function BookingDetail({
                         style={{
                             fontFamily: MONTSERRAT_REGULAR,
                             width: SIZES.WIDTH_BASE * 0.8,
-                            fontSize: SIZES.FONT_H2
+                            fontSize: SIZES.FONT_H2,
+                            color: COLORS.DEFAULT
                         }}
                     >
                         Bạn vui lòng góp ý để chúng tôi phục vụ bạn tốt hơn, cảm ơn.
@@ -373,7 +373,8 @@ export default function BookingDetail({
                         style={{
                             fontFamily: MONTSERRAT_REGULAR,
                             marginVertical: 10,
-                            fontSize: SIZES.FONT_H2
+                            fontSize: SIZES.FONT_H2,
+                            color: COLORS.DEFAULT
                         }}
                     >
                         Vui lòng nhập ý kiến
@@ -549,16 +550,26 @@ export default function BookingDetail({
                                     />
                                 </View>
 
-                                <View
-                                    style={{
-                                        width: SIZES.WIDTH_BASE * 0.9,
-                                        alignSelf: 'center',
-                                        flexDirection: 'row',
-                                        justifyContent: 'space-between'
-                                    }}
-                                >
-                                    {handleShowButtonByStatus()}
-                                </View>
+                                {handleShowButtonByStatus() && (
+                                    <View
+                                        style={{
+                                            backgroundColor: COLORS.BLOCK,
+                                            marginTop: 5
+                                        }}
+                                    >
+                                        <View
+                                            style={{
+                                                width: SIZES.WIDTH_BASE * 0.9,
+                                                alignSelf: 'center',
+                                                flexDirection: 'row',
+                                                justifyContent: 'space-between',
+                                                paddingVertical: 20
+                                            }}
+                                        >
+                                            {handleShowButtonByStatus()}
+                                        </View>
+                                    </View>
+                                )}
                             </View>
                         )}
                     </ScrollView>

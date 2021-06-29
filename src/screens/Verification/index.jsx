@@ -207,7 +207,9 @@ export default function Verification({ navigation }) {
         const { data } = result;
 
         if (data) {
-            dispatch(setCurrentUser(data.data));
+            const currentUserInfo = await UserServices.mappingCurrentUserInfo(data.data);
+            dispatch(setCurrentUser(currentUserInfo));
+
             navigation.navigate(ScreenName.PERSONAL);
             dispatch(setPersonTabActiveIndex(0));
         }

@@ -90,9 +90,11 @@ export default function UserInformation({ navigation }) {
         const result = await UserServices.fetchCurrentUserInfoAsync();
         const { data } = result;
 
+        const currentUserInfo = await UserServices.mappingCurrentUserInfo(data.data);
         if (data) {
-            dispatch(setCurrentUser(data.data));
+            dispatch(setCurrentUser(currentUserInfo));
         }
+
         setIsShowSpinner(false);
         setRefreshing(false);
     };
@@ -255,7 +257,7 @@ export default function UserInformation({ navigation }) {
                             color: COLORS.ACTIVE,
                             fontSize: SIZES.FONT_H1,
                             fontFamily: MONTSERRAT_BOLD,
-                            alignSelf: 'center'
+                            textAlign: 'center'
                         }}
                     >
                         {currentUser.fullName}
@@ -273,7 +275,7 @@ export default function UserInformation({ navigation }) {
                             fontFamily: MONTSERRAT_REGULAR,
                             fontSize: SIZES.FONT_H2,
                             color: COLORS.DEFAULT,
-                            alignSelf: 'center'
+                            textAlign: 'center'
                         }}
                     >
                         {'"'}

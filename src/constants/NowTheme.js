@@ -25,7 +25,7 @@ const SIZES = {
     BASE: 16,
     OPACITY: 0.8,
 
-    FONT_H1: 30,
+    FONT_H1: 25,
     FONT_H2: 18,
     FONT_H3: 16,
     FONT_H4: 14,

@@ -25,10 +25,10 @@ export default function CustomCheckbox({
         let background = COLORS.BASE;
         let active = false;
         if (defaultChecked) {
-            background = defaultChecked || checked ? COLORS.ACTIVE : COLORS.BASE;
+            background = defaultChecked || checked ? COLORS.ACTIVE : COLORS.TRANSPARENT;
             active = defaultChecked || checked;
         } else {
-            background = checked ? COLORS.ACTIVE : COLORS.BASE;
+            background = checked ? COLORS.ACTIVE : COLORS.TRANSPARENT;
             active = checked;
         }
 
@@ -54,7 +54,8 @@ export default function CustomCheckbox({
                                 height: 20,
                                 borderRadius: 2,
                                 borderColor: COLORS.INPUT,
-                                backgroundColor: background
+                                backgroundColor: background,
+                                marginRight: 5
                             },
                             checkboxStyle
                         ]

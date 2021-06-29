@@ -45,6 +45,7 @@ export default async (
     if (!apiTokenLocal
         && endpoint !== Rx.AUTHENTICATION.LOGIN
         && endpoint !== Rx.USER.GET_OTP_REGISTER
+        && endpoint !== Rx.AUTHENTICATION.SIGN_UP
     ) {
         return {
             data: {

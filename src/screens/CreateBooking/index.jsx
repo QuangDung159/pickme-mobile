@@ -263,7 +263,8 @@ export default function CreateBooking({ route, navigation }) {
                 width: SIZES.WIDTH_BASE * 0.8,
                 marginVertical: 10,
                 flexDirection: 'row',
-                justifyContent: 'space-between'
+                justifyContent: 'space-between',
+                backgroundColor: COLORS.BASE
             }}
         >
             <ScrollPicker
@@ -272,11 +273,7 @@ export default function CreateBooking({ route, navigation }) {
                     modalActiveType === 'start' ? startHourActive : endHourActive
                 }
                 renderItem={(data) => (
-                    <Text
-                        style={{
-                            fontFamily: MONTSERRAT_REGULAR
-                        }}
-                    >
+                    <Text>
                         {`${data}`}
                     </Text>
                 )}
@@ -285,12 +282,20 @@ export default function CreateBooking({ route, navigation }) {
                 }}
                 wrapperHeight={120}
                 wrapperWidth={150}
-                wrapperBackground="#FFFFFF"
+                wrapperBackground={COLORS.BLOCK}
                 itemHeight={40}
-                highlightColor="#d8d8d8"
+                highlightColor={COLORS.BASE}
                 highlightBorderWidth={2}
-                activeItemColor="#222121"
-                itemColor="#B4B4B4"
+                activeItemTextStyle={{
+                    color: COLORS.ACTIVE,
+                    fontFamily: MONTSERRAT_REGULAR,
+                    fontSize: SIZES.FONT_H1
+                }}
+                itemTextStyle={{
+                    color: COLORS.DEFAULT,
+                    fontFamily: MONTSERRAT_REGULAR,
+                    fontSize: SIZES.FONT_H1
+                }}
             />
 
             <ScrollPicker
@@ -299,11 +304,7 @@ export default function CreateBooking({ route, navigation }) {
                     modalActiveType === 'start' ? startMinuteActive : endMinuteActive
                 }
                 renderItem={(data) => (
-                    <Text
-                        style={{
-                            fontFamily: MONTSERRAT_REGULAR
-                        }}
-                    >
+                    <Text>
                         {`${data}`}
                     </Text>
                 )}
@@ -312,12 +313,20 @@ export default function CreateBooking({ route, navigation }) {
                 }}
                 wrapperHeight={120}
                 wrapperWidth={150}
-                wrapperBackground="#FFFFFF"
+                wrapperBackground={COLORS.BLOCK}
                 itemHeight={40}
-                highlightColor="#d8d8d8"
+                highlightColor={COLORS.BASE}
                 highlightBorderWidth={2}
-                activeItemColor="#222121"
-                itemColor="#B4B4B4"
+                activeItemTextStyle={{
+                    color: COLORS.ACTIVE,
+                    fontFamily: MONTSERRAT_REGULAR,
+                    fontSize: SIZES.FONT_H1
+                }}
+                itemTextStyle={{
+                    color: COLORS.DEFAULT,
+                    fontFamily: MONTSERRAT_REGULAR,
+                    fontSize: SIZES.FONT_H1
+                }}
             />
         </View>
     );
@@ -680,7 +689,7 @@ export default function CreateBooking({ route, navigation }) {
         }
     };
 
-    // const onChangeAddress = (input) => {
+    // const onChangeAddressGoogle = (input) => {
     //     const {
     //         formatted_address, geometry: {
     //             location: {
@@ -789,7 +798,7 @@ export default function CreateBooking({ route, navigation }) {
 
                 {/* <GooglePlacesInput
                     label="Địa điểm (google API):"
-                    onChangeAddress={(detail) => onChangeAddress(detail)}
+                    onChangeAddress={(detail) => onChangeAddressGoogle(detail)}
                     addressInput={booking.address}
                 /> */}
 
