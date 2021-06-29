@@ -117,7 +117,7 @@ export default function CardBooking({ booking }) {
                             ]
                         }
                     >
-                        {`Từ ${startStr} đến ${endStr}`}
+                        {`${startStr} - ${endStr}`}
                     </Text>
                 </View>
 

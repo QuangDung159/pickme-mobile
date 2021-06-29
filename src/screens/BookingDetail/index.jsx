@@ -550,16 +550,26 @@ export default function BookingDetail({
                                     />
                                 </View>
 
-                                <View
-                                    style={{
-                                        width: SIZES.WIDTH_BASE * 0.9,
-                                        alignSelf: 'center',
-                                        flexDirection: 'row',
-                                        justifyContent: 'space-between'
-                                    }}
-                                >
-                                    {handleShowButtonByStatus()}
-                                </View>
+                                {handleShowButtonByStatus() && (
+                                    <View
+                                        style={{
+                                            backgroundColor: COLORS.BLOCK,
+                                            marginTop: 5
+                                        }}
+                                    >
+                                        <View
+                                            style={{
+                                                width: SIZES.WIDTH_BASE * 0.9,
+                                                alignSelf: 'center',
+                                                flexDirection: 'row',
+                                                justifyContent: 'space-between',
+                                                paddingVertical: 20
+                                            }}
+                                        >
+                                            {handleShowButtonByStatus()}
+                                        </View>
+                                    </View>
+                                )}
                             </View>
                         )}
                     </ScrollView>

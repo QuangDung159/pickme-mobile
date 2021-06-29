@@ -255,7 +255,7 @@ export default function UserInformation({ navigation }) {
                             color: COLORS.ACTIVE,
                             fontSize: SIZES.FONT_H1,
                             fontFamily: MONTSERRAT_BOLD,
-                            alignSelf: 'center'
+                            textAlign: 'center'
                         }}
                     >
                         {currentUser.fullName}
@@ -273,7 +273,7 @@ export default function UserInformation({ navigation }) {
                             fontFamily: MONTSERRAT_REGULAR,
                             fontSize: SIZES.FONT_H2,
                             color: COLORS.DEFAULT,
-                            alignSelf: 'center'
+                            textAlign: 'center'
                         }}
                     >
                         {'"'}

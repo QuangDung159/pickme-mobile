@@ -257,9 +257,7 @@ export default function Header({
             {screenNameProp && screenNameProp === ScreenName.MESSAGE && (
                 <View
                     style={{
-                        marginLeft: 7,
-                        marginTop: 0,
-                        zIndex: 99
+                        marginLeft: 10,
                     }}
                 >
                     <Text

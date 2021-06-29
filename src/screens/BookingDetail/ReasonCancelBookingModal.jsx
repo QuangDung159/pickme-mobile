@@ -48,7 +48,8 @@ export default function ReasonCancelBookingModal({
             }}
             itemStyle={{
                 fontSize: SIZES.FONT_H2,
-                color: COLORS.DEFAULT
+                color: COLORS.DEFAULT,
+                fontFamily: MONTSERRAT_REGULAR
             }}
         >
             {reasonDropdownArr.map((item) => (
