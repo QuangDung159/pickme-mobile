@@ -199,7 +199,7 @@ export default function Message({ navigation, route }) {
                             style={{
                                 margin: 10,
                                 fontFamily: MONTSERRAT_REGULAR,
-                                color: id !== message.from ? COLORS.DEFAULT : COLORS.BASE,
+                                color: COLORS.DEFAULT,
                                 fontSize: SIZES.FONT_H3
                             }}
                         >
@@ -373,6 +373,6 @@ const styles = StyleSheet.create({
     },
     messageLeft: {
         alignItems: 'flex-end',
-        backgroundColor: COLORS.MESSAGE_1
+        backgroundColor: COLORS.BLOCK
     }
 });

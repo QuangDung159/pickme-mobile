@@ -7,7 +7,6 @@ import {
 import { NO_AVATAR_URL } from '@env';
 import { ToastHelpers } from '@helpers/index';
 import {
-    setCurrentUser,
     setListBookingStore,
     setListConversation,
     setListNotification,
@@ -56,7 +55,6 @@ export default function Home({ navigation }) {
 
     useEffect(
         () => {
-            fetchCurrentUserInfo();
             fetchListNotification();
             fetchListBooking();
 
@@ -143,15 +141,6 @@ export default function Home({ navigation }) {
 
         if (data) {
             dispatch(setPickMeInfoStore(data));
-        }
-    };
-
-    const fetchCurrentUserInfo = async () => {
-        const result = await UserServices.fetchCurrentUserInfoAsync();
-        const { data } = result;
-
-        if (data) {
-            dispatch(setCurrentUser(data.data));
         }
     };
 

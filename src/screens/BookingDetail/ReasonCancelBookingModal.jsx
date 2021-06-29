@@ -20,7 +20,6 @@ export default function ReasonCancelBookingModal({
     setModalReasonVisible,
     bookingId,
     navigation,
-    fetchListBooking
 }) {
     const reasonDropdownArr = [
         { label: 'Bận đột xuất', value: 0 },
@@ -47,8 +46,9 @@ export default function ReasonCancelBookingModal({
                 width: SIZES.WIDTH_BASE * 0.8
             }}
             itemStyle={{
-                fontSize: SIZES.FONT_H3,
-                color: COLORS.DEFAULT
+                fontSize: SIZES.FONT_H2,
+                color: COLORS.DEFAULT,
+                fontFamily: MONTSERRAT_REGULAR
             }}
         >
             {reasonDropdownArr.map((item) => (
@@ -65,7 +65,6 @@ export default function ReasonCancelBookingModal({
         const { data } = result;
 
         if (data) {
-            await fetchListBooking();
             navigation.navigate(ScreenName.PERSONAL);
             dispatch(setPersonTabActiveIndex(2));
             ToastHelpers.renderToast(data.message, 'success');
@@ -82,7 +81,8 @@ export default function ReasonCancelBookingModal({
                         style={{
                             fontFamily: MONTSERRAT_REGULAR,
                             marginVertical: 10,
-                            fontSize: SIZES.FONT_H2
+                            fontSize: SIZES.FONT_H2,
+                            color: COLORS.DEFAULT
                         }}
                     >
                         Vui lòng chọn lý do

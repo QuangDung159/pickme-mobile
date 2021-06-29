@@ -86,92 +86,11 @@ export default function SignIn({ navigation }) {
         return true;
     };
 
-    const onLoginSuccess = (data, status) => {
+    const onLoginSuccess = async (data, status) => {
         SecureStore.setItemAsync('password', `${password}`);
         SecureStore.setItemAsync('phoneNumber', `${phoneNumber}`);
 
-        const {
-            accessFailedCount,
-            address,
-            bankNum,
-            description,
-            deviceId,
-            dob,
-            earningExpected,
-            email,
-            expoNotificationToken,
-            fullName,
-            height,
-            homeTown,
-            id,
-            imageUrl,
-            interests,
-            isCashInAble,
-            isCashOutAble,
-            isCusomCalendar,
-            isDeactive,
-            isEmailConfirmed,
-            isLocked,
-            isTest,
-            isVerified,
-            latitude,
-            longtitude,
-            ownerName,
-            token,
-            url,
-            userName,
-            userType,
-            userTypeValue,
-            verifyNote,
-            verifyStatus,
-            verifyStatusValue,
-            walletAmount,
-            walletAmountDisplay,
-            weight,
-            posts
-        } = data.data;
-
-        const currentUserInfo = {
-            accessFailedCount,
-            address,
-            bankNum,
-            description,
-            deviceId,
-            dob,
-            earningExpected,
-            email,
-            expoNotificationToken,
-            fullName,
-            height,
-            homeTown,
-            id,
-            imageUrl,
-            interests,
-            isCashInAble,
-            isCashOutAble,
-            isCusomCalendar,
-            isDeactive,
-            isEmailConfirmed,
-            isLocked,
-            isTest,
-            isVerified,
-            latitude,
-            longtitude,
-            ownerName,
-            token,
-            url,
-            userName,
-            userType,
-            userTypeValue,
-            verifyNote,
-            verifyStatus,
-            verifyStatusValue,
-            walletAmount,
-            walletAmountDisplay,
-            weight,
-            posts
-        };
-
+        const currentUserInfo = await UserServices.mappingCurrentUserInfo(data.data);
         dispatch(setCurrentUser(currentUserInfo));
 
         if (status === 200) {
@@ -282,7 +201,6 @@ export default function SignIn({ navigation }) {
                                                     width: SIZES.WIDTH_BASE * 0.77
                                                 }}
                                                 onChangeText={(passwordInput) => setPassword(passwordInput)}
-                                                keyboardType="number-pad"
                                                 containerStyle={{
                                                     marginVertical: 10,
                                                     width: SIZES.WIDTH_BASE * 0.77

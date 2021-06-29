@@ -81,7 +81,7 @@ export default function BookingList({ navigation }) {
                 colorByStatus = COLORS.DEFAULT;
                 break;
             }
-            case BookingStatus.FINISH_PAYMENT: {
+            case BookingStatus.PAID: {
                 colorByStatus = COLORS.ACTIVE;
                 break;
             }
@@ -277,7 +277,8 @@ export default function BookingList({ navigation }) {
                         style={{
                             fontFamily: MONTSERRAT_REGULAR,
                             color: COLORS.DEFAULT,
-                            fontSize: SIZES.FONT_H3
+                            fontSize: SIZES.FONT_H3,
+                            marginVertical: 15
                         }}
                     >
                         Danh sách trống

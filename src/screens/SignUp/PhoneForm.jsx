@@ -43,11 +43,10 @@ export default function PhoneForm({
         const { data } = result;
 
         if (data) {
-            ToastHelpers.renderToast(data.message, 'success');
             setStep(2);
 
             // in testing, will remove when prod
-            setOtp(data.data.code);
+            setOtp(data.message);
         }
         dispatch(setShowLoaderStore(false));
     };
