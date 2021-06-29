@@ -20,7 +20,6 @@ export default function ReasonCancelBookingModal({
     setModalReasonVisible,
     bookingId,
     navigation,
-    fetchListBooking
 }) {
     const reasonDropdownArr = [
         { label: 'Bận đột xuất', value: 0 },
@@ -66,7 +65,6 @@ export default function ReasonCancelBookingModal({
         const { data } = result;
 
         if (data) {
-            await fetchListBooking();
             navigation.navigate(ScreenName.PERSONAL);
             dispatch(setPersonTabActiveIndex(2));
             ToastHelpers.renderToast(data.message, 'success');

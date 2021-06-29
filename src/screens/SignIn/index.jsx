@@ -86,11 +86,11 @@ export default function SignIn({ navigation }) {
         return true;
     };
 
-    const onLoginSuccess = (data, status) => {
+    const onLoginSuccess = async (data, status) => {
         SecureStore.setItemAsync('password', `${password}`);
         SecureStore.setItemAsync('phoneNumber', `${phoneNumber}`);
 
-        const currentUserInfo = UserServices.mappingCurrentUserInfo(data.data);
+        const currentUserInfo = await UserServices.mappingCurrentUserInfo(data.data);
         dispatch(setCurrentUser(currentUserInfo));
 
         if (status === 200) {

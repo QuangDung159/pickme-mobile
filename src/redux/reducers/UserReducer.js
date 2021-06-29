@@ -26,7 +26,7 @@ const userReducer = (state = initState, action) => {
             return { ...state, currentUser: payload.currentUser };
         }
         case SET_TOKEN: {
-            return { ...state, token: `Bearer ${payload.token}` };
+            return { ...state, token: payload.token };
         }
         case SET_LIST_CASH_HISTORY_STORE: {
             return { ...state, listCashHistoryStore: payload.listCashHistoryStore };

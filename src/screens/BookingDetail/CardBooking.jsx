@@ -132,6 +132,8 @@ export default function CardBooking({ booking }) {
                         ]
                     }
                 >
+                    Tại:
+                    {' '}
                     {address || 'N/A'}
                 </Text>
 

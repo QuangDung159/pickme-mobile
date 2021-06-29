@@ -215,7 +215,12 @@ const fetchOtpSignUpAsync = async (body) => {
     return CommonHelpers.handleResByStatus(result);
 };
 
-const mappingCurrentUserInfo = (data) => {
+const mappingCurrentUserInfo = async (data) => {
+    let apiToken = data.token;
+    if (!apiToken) {
+        apiToken = await SecureStore.getItemAsync('api_token');
+    }
+
     const {
         accessFailedCount,
         address,
@@ -243,7 +248,6 @@ const mappingCurrentUserInfo = (data) => {
         latitude,
         longtitude,
         ownerName,
-        token,
         url,
         userName,
         userType,
@@ -284,7 +288,7 @@ const mappingCurrentUserInfo = (data) => {
         latitude,
         longtitude,
         ownerName,
-        token,
+        token: apiToken,
         url,
         userName,
         userType,
