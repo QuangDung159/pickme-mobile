@@ -90,8 +90,10 @@ export default function UserInformation({ navigation }) {
         const result = await UserServices.fetchCurrentUserInfoAsync();
         const { data } = result;
 
+        const currentUserInfo = UserServices.mappingCurrentUserInfo(data.data);
+
         if (data) {
-            dispatch(setCurrentUser(data.data));
+            dispatch(setCurrentUser(currentUserInfo));
         }
         setIsShowSpinner(false);
         setRefreshing(false);
