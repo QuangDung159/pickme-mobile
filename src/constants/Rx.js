@@ -57,7 +57,7 @@ export default {
         TRIGGER_READ_ALL: '/Notifications/ReadAll'
     },
     PAYMENT: {
-        CREATE_PAYMENT: '/Payments/CreatePayment'
+        CREATE_PAYMENT: '/bookings/CustomerMakePayment'
     },
     SYSTEM: {
         CREATE_BUG: '/Systems/CreateBug',
