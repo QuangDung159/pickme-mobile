@@ -2,7 +2,7 @@ import { CenterLoader, CustomButton } from '@components/uiComponents';
 import {
     Images, NowTheme, ScreenName, Utils
 } from '@constants/index';
-import { setIsSignInOtherDeviceStore, setNavigation } from '@redux/Actions';
+import { setCurrentUser, setIsSignInOtherDeviceStore, setNavigation } from '@redux/Actions';
 import { UserServices } from '@services/index';
 import Constants from 'expo-constants';
 import * as SecureStore from 'expo-secure-store';
@@ -69,6 +69,9 @@ export default function Onboarding({ navigation }) {
             } = result;
 
             if (data) {
+                const currentUserInfo = await UserServices.mappingCurrentUserInfo(data.data);
+                dispatch(setCurrentUser(currentUserInfo));
+
                 if (status === 200) {
                     navigation.reset({
                         index: 0,
