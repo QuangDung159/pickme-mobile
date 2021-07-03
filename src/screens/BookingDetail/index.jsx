@@ -1,5 +1,5 @@
 import {
-    CenterLoader, CustomButton, CustomCheckbox, CustomInput, CustomModal
+    CenterLoader, CustomButton, CustomInput, CustomModal
 } from '@components/uiComponents';
 import {
     BookingStatus, NowTheme, ScreenName
@@ -17,9 +17,9 @@ import React, { useEffect, useState } from 'react';
 import {
     Alert, RefreshControl, SafeAreaView, ScrollView, StyleSheet, Text, View
 } from 'react-native';
-import { AirbnbRating } from 'react-native-ratings';
 import { useDispatch, useSelector } from 'react-redux';
 import CardBooking from './CardBooking';
+import RatingModal from './RatingModal';
 import ReasonCancelBookingModal from './ReasonCancelBookingModal';
 
 const {
@@ -46,13 +46,6 @@ export default function BookingDetail({
     const [modalReportVisible, setModalReportVisible] = useState(false);
     const [modalReasonVisible, setModalReasonVisible] = useState(false);
     const [reportDesc, setReportDesc] = useState();
-
-    const [enthusiasm, setEnthusiasm] = useState(5);
-    const [onTime, setOnTime] = useState(5);
-    const [possitive, setPossitive] = useState(5);
-    const [professional, setProfessional] = useState(5);
-    const [isRecomendForFriends, setIsRecomendForFriends] = useState(true);
-    const [ratingDesc, setRatingDesc] = useState('');
 
     const showLoaderStore = useSelector((state) => state.appConfigReducer.showLoaderStore);
     const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
@@ -130,21 +123,25 @@ export default function BookingDetail({
         dispatch(setShowLoaderStore(false));
     };
 
-    const sendRating = async () => {
-        const result = await BookingServices.submitRatingAsync({
-            bookingId,
-            description: ratingDesc || 'Rating',
-            enthusiasm,
-            professional,
-            onTime,
-            possitive,
-            isRecomendForFriends
-        });
+    // const sendRating = async () => {
+    //     const result = await BookingServices.submitRatingAsync({
+    //         bookingId,
+    //         description: ratingDesc || 'Rating',
+    //         enthusiasm,
+    //         professional,
+    //         onTime,
+    //         possitive,
+    //         isRecomendForFriends
+    //     });
 
-        const { data } = result;
-        if (data) {
-            ToastHelpers.renderToast(data.message, 'success');
-        }
+    //     const { data } = result;
+    //     if (data) {
+    //         ToastHelpers.renderToast(data.message, 'success');
+    //     }
+    // };
+
+    const endReport = async () => {
+        // send report
     };
 
     const onChangeReport = (reportInput) => {
@@ -245,124 +242,124 @@ export default function BookingDetail({
         )
     );
 
-    const renderIsRecommendSession = () => (
-        <View
-            style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginBottom: 30,
-            }}
-        >
-            <CustomCheckbox
-                label={`Sẽ giới thiệu đối tác với bạn bè ${'<3'}!`}
-                onChange={(checked) => {
-                    setIsRecomendForFriends(checked);
-                }}
-                labelStyle={{
-                    fontSize: SIZES.FONT_H3,
-                    color: COLORS.ACTIVE
-                }}
-                containerStyle={{
-                    width: SIZES.WIDTH_BASE * 0.8
-                }}
-            />
-        </View>
-    );
+    // const renderIsRecommendSession = () => (
+    //     <View
+    //         style={{
+    //             flexDirection: 'row',
+    //             alignItems: 'center',
+    //             marginBottom: 30,
+    //         }}
+    //     >
+    //         <CustomCheckbox
+    //             label={`Sẽ giới thiệu đối tác với bạn bè ${'<3'}!`}
+    //             onChange={(checked) => {
+    //                 setIsRecomendForFriends(checked);
+    //             }}
+    //             labelStyle={{
+    //                 fontSize: SIZES.FONT_H3,
+    //                 color: COLORS.ACTIVE
+    //             }}
+    //             containerStyle={{
+    //                 width: SIZES.WIDTH_BASE * 0.8
+    //             }}
+    //         />
+    //     </View>
+    // );
 
-    const renderRatingItem = (label, ratingValue, setRatingValue) => (
-        <View
-            style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                marginBottom: 5
-            }}
-        >
-            <Text
-                style={{
-                    color: COLORS.ACTIVE,
-                    fontFamily: MONTSERRAT_REGULAR,
-                    fontSize: SIZES.FONT_H2
-                }}
-            >
-                {label}
-            </Text>
-            <AirbnbRating
-                count={5}
-                reviewSize={25}
-                defaultRating={ratingValue}
-                size={25}
-                onFinishRating={(ratingNumber) => {
-                    setRatingValue(ratingNumber);
-                }}
-                showRating={false}
-            />
-        </View>
-    );
+    // const renderRatingItem = (label, ratingValue, setRatingValue) => (
+    //     <View
+    //         style={{
+    //             flexDirection: 'row',
+    //             justifyContent: 'space-between',
+    //             alignItems: 'center',
+    //             marginBottom: 5
+    //         }}
+    //     >
+    //         <Text
+    //             style={{
+    //                 color: COLORS.ACTIVE,
+    //                 fontFamily: MONTSERRAT_REGULAR,
+    //                 fontSize: SIZES.FONT_H2
+    //             }}
+    //         >
+    //             {label}
+    //         </Text>
+    //         <AirbnbRating
+    //             count={5}
+    //             reviewSize={25}
+    //             defaultRating={ratingValue}
+    //             size={25}
+    //             onFinishRating={(ratingNumber) => {
+    //                 setRatingValue(ratingNumber);
+    //             }}
+    //             showRating={false}
+    //         />
+    //     </View>
+    // );
 
-    const renderRatingModal = () => (
-        <CustomModal
-            modalVisible={modalRatingVisible}
-            renderContent={() => (
-                <>
-                    <Text
-                        style={{
-                            fontFamily: MONTSERRAT_REGULAR,
-                            width: SIZES.WIDTH_BASE * 0.8,
-                            fontSize: SIZES.FONT_H2,
-                            color: COLORS.DEFAULT
-                        }}
-                    >
-                        Bạn vui lòng góp ý để chúng tôi phục vụ bạn tốt hơn, cảm ơn.
-                    </Text>
-                    <View
-                        style={{
-                            width: SIZES.WIDTH_BASE * 0.8,
-                            marginTop: 20,
-                            marginBottom: 10
-                        }}
-                    >
-                        {renderRatingItem('Hăng hái:', enthusiasm, (rating) => setEnthusiasm(rating))}
-                        {renderRatingItem('Đúng giờ:', onTime, (rating) => setOnTime(rating))}
-                        {renderRatingItem('Tích cực:', possitive, (rating) => setPossitive(rating))}
-                        {renderRatingItem('Chuyên nghiệp:', professional, (rating) => setProfessional(rating))}
-                    </View>
-                    <CustomInput
-                        value={ratingDesc}
-                        multiline
-                        onChangeText={(input) => setRatingDesc(input)}
-                        containerStyle={{
-                            marginBottom: 20,
-                            width: SIZES.WIDTH_BASE * 0.8
-                        }}
-                        label="Góp ý:"
-                        inputStyle={{
-                            height: 80,
-                        }}
-                    />
-                    {renderIsRecommendSession()}
+    // const renderRatingModal = () => (
+    //     <CustomModal
+    //         modalVisible={modalRatingVisible}
+    //         renderContent={() => (
+    //             <>
+    //                 <Text
+    //                     style={{
+    //                         fontFamily: MONTSERRAT_REGULAR,
+    //                         width: SIZES.WIDTH_BASE * 0.8,
+    //                         fontSize: SIZES.FONT_H2,
+    //                         color: COLORS.DEFAULT
+    //                     }}
+    //                 >
+    //                     Bạn vui lòng góp ý để chúng tôi phục vụ bạn tốt hơn, cảm ơn.
+    //                 </Text>
+    //                 <View
+    //                     style={{
+    //                         width: SIZES.WIDTH_BASE * 0.8,
+    //                         marginTop: 20,
+    //                         marginBottom: 10
+    //                     }}
+    //                 >
+    //                     {renderRatingItem('Hăng hái:', enthusiasm, (rating) => setEnthusiasm(rating))}
+    //                     {renderRatingItem('Đúng giờ:', onTime, (rating) => setOnTime(rating))}
+    //                     {renderRatingItem('Tích cực:', possitive, (rating) => setPossitive(rating))}
+    //                     {renderRatingItem('Chuyên nghiệp:', professional, (rating) => setProfessional(rating))}
+    //                 </View>
+    //                 <CustomInput
+    //                     value={ratingDesc}
+    //                     multiline
+    //                     onChangeText={(input) => setRatingDesc(input)}
+    //                     containerStyle={{
+    //                         marginBottom: 20,
+    //                         width: SIZES.WIDTH_BASE * 0.8
+    //                     }}
+    //                     label="Góp ý:"
+    //                     inputStyle={{
+    //                         height: 80,
+    //                     }}
+    //                 />
+    //                 {renderIsRecommendSession()}
 
-                    <View
-                        style={{
-                            alignSelf: 'center'
-                        }}
-                    >
-                        <CustomButton
-                            onPress={() => {
-                                sendRating();
-                                setModalRatingVisible(false);
-                            }}
-                            buttonStyle={{
-                                width: SIZES.WIDTH_BASE * 0.8
-                            }}
-                            type="active"
-                            label="Gửi đánh giá"
-                        />
-                    </View>
-                </>
-            )}
-        />
-    );
+    //                 <View
+    //                     style={{
+    //                         alignSelf: 'center'
+    //                     }}
+    //                 >
+    //                     <CustomButton
+    //                         onPress={() => {
+    //                             sendRating();
+    //                             setModalRatingVisible(false);
+    //                         }}
+    //                         buttonStyle={{
+    //                             width: SIZES.WIDTH_BASE * 0.8
+    //                         }}
+    //                         type="active"
+    //                         label="Gửi đánh giá"
+    //                     />
+    //                 </View>
+    //             </>
+    //         )}
+    //     />
+    // );
 
     const renderReportModal = () => (
         <CustomModal
@@ -400,7 +397,7 @@ export default function BookingDetail({
                     >
                         <CustomButton
                             onPress={() => {
-                                sendRating();
+                                endReport();
                                 setModalReportVisible(false);
                             }}
                             buttonStyle={{
@@ -477,7 +474,11 @@ export default function BookingDetail({
                             paddingBottom: 10
                         }}
                     >
-                        {renderRatingModal()}
+                        <RatingModal
+                            modalRatingVisible={modalRatingVisible}
+                            setModalRatingVisible={setModalRatingVisible}
+                        />
+
                         {renderReportModal()}
 
                         <ReasonCancelBookingModal
