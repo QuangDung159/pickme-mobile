@@ -3,6 +3,7 @@ import NowTheme from '@constants/NowTheme';
 import ScreenName from '@constants/ScreenName';
 import CommonHelpers from '@helpers/CommonHelpers';
 import ToastHelpers from '@helpers/ToastHelpers';
+import ValidationHelpers from '@helpers/ValidationHelpers';
 import { setListBookingStore, setPersonTabActiveIndex } from '@redux/Actions';
 import BookingServices from '@services/BookingServices';
 import moment from 'moment';
@@ -57,7 +58,28 @@ export default function Total({
         }
     };
 
+    const validate = () => {
+        const validationArr = [
+            {
+                fieldName: 'Địa điểm',
+                input: booking.address,
+                validate: {
+                    required: {
+                        value: true,
+                    },
+                    maxLength: {
+                        value: 255,
+                    },
+                }
+            }
+        ];
+
+        return ValidationHelpers.validate(validationArr);
+    };
+
     const onSubmitBooking = async () => {
+        if (!validate()) return;
+
         const {
             params: {
                 partner
@@ -76,7 +98,7 @@ export default function Total({
             Longtitude: booking.longtitude || 0,
             Latitude: booking.latitude || 0,
             Description: 'N/a',
-            Noted: booking.noted,
+            Noted: booking.noted || 'N/a',
             totalAmount: total !== 0 ? total : calculateTotalAmount(startTimeStr, endTimeStr)
         };
 
@@ -157,7 +179,7 @@ export default function Total({
                         marginBottom: 10
                     }}
                 >
-                    {CommonHelpers.generateMoneyStr(calculateTotalAmount(startTimeStr, endTimeStr))}
+                    {CommonHelpers.generateMoneyStr(calculateTotalAmount(startTimeStr, endTimeStr) * 1000)}
                 </Text>
 
                 {renderButtonPanel()}

@@ -38,7 +38,7 @@ export default function CreateAccount(props) {
         fullName: '',
         dob: '',
         location: '',
-        earningExpected: 600,
+        earningExpected: 0,
         height: 0,
         weight: 0,
         description: '',

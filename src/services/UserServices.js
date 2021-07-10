@@ -148,11 +148,13 @@ const rxSubmitGetOtpForgotPasswordAsync = async (body) => {
         'POST',
         body
     );
+
     return result;
 };
 
 const submitGetOtpForgotPasswordAsync = async (body) => {
     let result = await rxSubmitGetOtpForgotPasswordAsync(body);
+
     const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
     if (handledResult) {
         result = await rxSubmitGetOtpForgotPasswordAsync(body);

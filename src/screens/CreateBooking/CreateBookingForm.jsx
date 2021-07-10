@@ -218,12 +218,6 @@ export default function CreateBookingForm({
 
                 {renderButtonTimePicker()}
 
-                {/* <GooglePlacesInput
-                    label="Địa điểm (google API):"
-                    onChangeAddress={(detail) => onChangeAddressGoogle(detail)}
-                    addressInput={booking.address}
-                /> */}
-
                 {renderInputAddress()}
 
                 {renderInputNote()}

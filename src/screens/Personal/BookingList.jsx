@@ -305,7 +305,9 @@ export default function BookingList({ navigation }) {
                 showsVerticalScrollIndicator={false}
             >
                 {arrayDate.map((dateString) => (
-                    <View>
+                    <View
+                        key={dateString}
+                    >
                         {renderDateSection(listBookingByDate[dateString.toString()], dateString)}
                     </View>
                 ))}

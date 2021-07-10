@@ -155,7 +155,11 @@ export default function CreateBooking({ route, navigation }) {
                 {isShowSpinner ? (
                     <CenterLoader />
                 ) : (
-                    <SafeAreaView>
+                    <SafeAreaView
+                        style={{
+                            flex: 1
+                        }}
+                    >
                         <KeyboardAwareScrollView
                             keyboardShouldPersistTaps="handled"
                             showsVerticalScrollIndicator={false}
