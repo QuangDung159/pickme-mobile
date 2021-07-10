@@ -13,7 +13,7 @@ import {
     Platform, StyleSheet, Text, TouchableOpacity, View
 } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 const iPhoneX = Platform.OS === 'ios';
 const {
@@ -46,7 +46,7 @@ export default function Header({
         !noShadow ? styles.shadow : null,
         transparent ? { backgroundColor: 'rgba(0,0,0,0)' } : null
     ];
-    const chattingWith = useSelector((state) => state.messageReducer.chattingWith);
+
     const dispatch = useDispatch();
 
     const countNumberNotificationUnread = (listNotiFromAPI) => {
@@ -148,8 +148,11 @@ export default function Header({
 
     const navbarStyles = [
         styles.navbar,
-        { backgroundColor: COLORS.BLOCK },
-        iPhoneX ? styles.navbarHeight : {}];
+        {
+            backgroundColor: COLORS.BLOCK
+        },
+        styles.navbarHeight
+    ];
 
     const renderRight = () => {
         if (showRight) {
@@ -225,18 +228,9 @@ export default function Header({
             .then(console.log('deviceId was cleaned!'));
     };
 
-    const handleOnPressNavBar = () => {
-        if (screenNameProp && screenNameProp === ScreenName.MESSAGE) {
-            navigation.navigate(ScreenName.PROFILE, {
-                userId: chattingWith
-            });
-        }
-    };
-
     return (
         <View style={headerStyles}>
             <TouchableWithoutFeedback
-                onPress={() => handleOnPressNavBar()}
                 onLongPress={() => clearAllCache()}
             >
                 <NavBar
@@ -245,10 +239,14 @@ export default function Header({
                     style={navbarStyles}
                     transparent={transparent}
                     rightStyle={{ alignItems: 'center' }}
-                    leftStyle={{ paddingVertical: 12, flex: 0.2 }}
+                    leftStyle={{
+                        flex: 0.2,
+                    }}
                     titleStyle={[
                         styles.title,
-                        { color: COLORS.DEFAULT },
+                        {
+                            color: COLORS.DEFAULT
+                        },
                         titleColor && { color: titleColor }
                     ]}
                     {...props}
@@ -257,7 +255,9 @@ export default function Header({
             {screenNameProp && screenNameProp === ScreenName.MESSAGE && (
                 <View
                     style={{
-                        marginLeft: 10,
+                        marginLeft: 7,
+                        marginTop: 0,
+                        zIndex: 99
                     }}
                 >
                     <Text
@@ -291,16 +291,18 @@ const styles = StyleSheet.create({
     },
     title: {
         width: '100%',
-        fontSize: 16,
+        fontSize: SIZES.FONT_H2,
         fontFamily: MONTSERRAT_BOLD,
-        marginLeft: -70
+        marginLeft: -70,
+        color: COLORS.DEFAULT,
+        marginTop: iPhoneX ? 5 : 20
     },
     navbar: {
         paddingTop: iPhoneX ? SIZES.HEIGHT_BASE * 0.05 : null,
         zIndex: 5
     },
     navbarHeight: {
-        height: SIZES.HEIGHT_BASE * 0.1,
+        height: 80,
     },
     shadow: {
         backgroundColor: COLORS.BASE,
