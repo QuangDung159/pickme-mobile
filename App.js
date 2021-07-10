@@ -1,4 +1,6 @@
 /* eslint-disable global-require */
+/* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
+import { ENV } from '@env';
 import { ExpoNotification } from '@components/businessComponents';
 import { IconCustom } from '@components/uiComponents';
 import { IconFamily, Images, NowTheme } from '@constants/index';
@@ -18,7 +20,8 @@ import { Provider } from 'react-redux';
 
 const {
     FONT: {
-        MONTSERRAT_BOLD
+        MONTSERRAT_BOLD,
+        MONTSERRAT_REGULAR
     },
     SIZES,
     COLORS
@@ -161,6 +164,26 @@ export default function App() {
                 <ExpoNotification />
                 <Main />
                 <Toast config={toastConfig} ref={(ref) => Toast.setRef(ref)} />
+                {ENV !== 'prod' && (
+                    <View
+                        style={{
+                            position: 'absolute',
+                            right: 5,
+                            bottom: 32,
+                            zIndex: 99
+                        }}
+                    >
+                        <Text
+                            style={{
+                                fontFamily: MONTSERRAT_REGULAR,
+                                color: COLORS.ACTIVE,
+                                fontSize: SIZES.FONT_H5,
+                            }}
+                        >
+                            {ENV}
+                        </Text>
+                    </View>
+                )}
             </Provider>
         </MenuProvider>
     );
