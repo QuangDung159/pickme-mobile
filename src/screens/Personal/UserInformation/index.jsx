@@ -1,6 +1,6 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
 import {
-    CenterLoader, CustomButton, ImageLoader, Line
+    CenterLoader, CustomButton, Line
 } from '@components/uiComponents';
 import {
     IconFamily, NowTheme, Rx, ScreenName
@@ -16,7 +16,6 @@ import {
     Image, RefreshControl, StyleSheet, Text, View
 } from 'react-native';
 import { ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler';
-import ImageView from 'react-native-image-viewing';
 import { useDispatch, useSelector } from 'react-redux';
 import UserInfoSection from './UserInfoSection';
 import VerificationStatusPanel from './VerificationStatusPanel';
@@ -32,8 +31,6 @@ const {
 
 export default function UserInformation({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
-    const [visible, setVisible] = useState(false);
-    const [imageIndex, setImageIndex] = useState(0);
     const [image, setImage] = useState('');
     const [refreshing, setRefreshing] = useState(false);
 
@@ -105,20 +102,6 @@ export default function UserInformation({ navigation }) {
     };
 
     // Render \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
-    const renderImageView = () => {
-        if (visible) {
-            return (
-                <ImageView
-                    images={[{ uri: currentUser.url }]}
-                    imageIndex={imageIndex}
-                    visible={visible}
-                    onRequestClose={() => setVisible(false)}
-                />
-            );
-        }
-        return <></>;
-    };
-
     const renderAvatar = () => {
         if (image) {
             return (
@@ -143,27 +126,20 @@ export default function UserInformation({ navigation }) {
                 marginTop: 5,
             }}
         >
-            <TouchableWithoutFeedback
-                onPress={() => {
-                    setVisible(true);
-                    setImageIndex(0);
+            <View
+                style={{
+                    marginTop: 10
                 }}
             >
+                <CenterLoader />
                 <View
                     style={{
-                        marginTop: 10
+                        zIndex: 99
                     }}
                 >
-                    <ImageLoader />
-                    <View
-                        style={{
-                            zIndex: 99
-                        }}
-                    >
-                        {renderAvatar()}
-                    </View>
+                    {renderAvatar()}
                 </View>
-            </TouchableWithoutFeedback>
+            </View>
             <CustomButton
                 onPress={() => onClickUpdateAvatar()}
                 labelStyle={{
@@ -322,8 +298,6 @@ export default function UserInformation({ navigation }) {
                             />
                         )}
                     >
-                        {renderImageView()}
-
                         <View
                             style={{
                                 backgroundColor: COLORS.BLOCK,

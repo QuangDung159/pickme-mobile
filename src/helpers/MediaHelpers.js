@@ -39,7 +39,7 @@ const uploadImage = async (uri, uploadUrl, onSuccess, onFail, imgTitle = 'image'
     }
 };
 
-const pickImage = async (allowCrop, uploadAspect, callBack, quality = 0) => {
+const pickImage = async (allowCrop, uploadAspect, callBack, quality = 1) => {
     const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
         allowsEditing: allowCrop,
