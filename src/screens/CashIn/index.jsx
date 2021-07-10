@@ -62,11 +62,11 @@ export default function CashIn(props) {
                                 title="Số tài khoản: "
                                 content="0186xxxxxxxxx"
                                 contentStyle={{
-                                    fontSize: SIZES.FONT_H2,
+                                    fontSize: SIZES.FONT_H1 - 5,
                                     color: COLORS.ACTIVE,
-                                    marginTop: 10
+                                    marginTop: 10,
+                                    paddingVertical: 20
                                 }}
-                                backgroundColor={COLORS.BLOCK}
                             />
                         </View>
 
@@ -80,11 +80,11 @@ export default function CashIn(props) {
                                 title="Ngân hàng: "
                                 content="Tienphong Bank - TPBank"
                                 contentStyle={{
-                                    fontSize: SIZES.FONT_H2,
+                                    fontSize: SIZES.FONT_H1 - 5,
                                     color: COLORS.ACTIVE,
-                                    marginTop: 10
+                                    marginTop: 10,
+                                    paddingVertical: 20
                                 }}
-                                backgroundColor={COLORS.BLOCK}
                             />
                         </View>
 
@@ -101,11 +101,11 @@ export default function CashIn(props) {
                                     title="Nội dung chuyển khoản:"
                                     content={moneyTransferContent}
                                     contentStyle={{
-                                        fontSize: SIZES.FONT_H2,
+                                        fontSize: SIZES.FONT_H1 - 5,
                                         color: COLORS.ACTIVE,
-                                        marginTop: 10
+                                        marginTop: 10,
+                                        paddingVertical: 20
                                     }}
-                                    backgroundColor={COLORS.BLOCK}
                                 />
                             </TouchableWithoutFeedback>
 

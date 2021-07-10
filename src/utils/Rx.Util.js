@@ -46,6 +46,8 @@ export default async (
         && endpoint !== Rx.AUTHENTICATION.LOGIN
         && endpoint !== Rx.USER.GET_OTP_REGISTER
         && endpoint !== Rx.AUTHENTICATION.SIGN_UP
+        && endpoint !== Rx.USER.GENERATE_OTP_WHEN_FORGOT_PASSWORD
+        && endpoint !== Rx.USER.SUBMIT_FORGOT_PASSWORD_CONFIRM
     ) {
         return {
             data: {

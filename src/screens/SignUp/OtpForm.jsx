@@ -2,7 +2,7 @@ import { CustomButton, CustomInput } from '@components/uiComponents';
 import {
     IconFamily, NowTheme, ScreenName
 } from '@constants/index';
-import { ToastHelpers } from '@helpers/index';
+import { ValidationHelpers } from '@helpers/index';
 import { setIsSignInOtherDeviceStore, setShowLoaderStore, setToken } from '@redux/Actions';
 import { UserServices } from '@services/index';
 import * as SecureStore from 'expo-secure-store';
@@ -47,16 +47,39 @@ export default function OtpForm({
         dispatch(setShowLoaderStore(false));
     };
 
-    const onClickSubmitRegister = async () => {
-        if (!otp) {
-            ToastHelpers.renderToast('Mã OTP không hợp lệ!', 'error');
-            return;
-        }
+    const validate = () => {
+        const validateArr = [
+            {
+                fieldName: 'OTP',
+                input: otp,
+                validate: {
+                    required: {
+                        value: true
+                    }
+                }
+            },
+            {
+                fieldName: 'Mật khẩu',
+                input: password,
+                validate: {
+                    required: {
+                        value: true
+                    },
+                    maxLength: {
+                        value: 50,
+                    },
+                    minLength: {
+                        value: 8,
+                    },
+                }
+            }
+        ];
 
-        if (!password) {
-            ToastHelpers.renderToast('Mật khẩu không hợp lệ!', 'error');
-            return;
-        }
+        return ValidationHelpers.validate(validateArr);
+    };
+
+    const onClickSubmitRegister = async () => {
+        if (!validate()) return;
 
         const deviceId = await SecureStore.getItemAsync('deviceId');
 

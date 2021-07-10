@@ -1,6 +1,6 @@
 import { CustomButton, CustomCheckbox, CustomInput } from '@components/uiComponents';
 import { NowTheme } from '@constants/index';
-import { ToastHelpers } from '@helpers/index';
+import { ToastHelpers, ValidationHelpers } from '@helpers/index';
 import { setShowLoaderStore } from '@redux/Actions';
 import { UserServices } from '@services/index';
 import React, { useState } from 'react';
@@ -25,11 +25,27 @@ export default function PhoneForm({
 
     const dispatch = useDispatch();
 
+    const validate = () => {
+        const validateArr = [
+            {
+                filedName: phoneNumber,
+                input: phoneNumber,
+                validate: {
+                    required: {
+                        value: true
+                    },
+                    isPhone: {
+                        value: true
+                    }
+                }
+            }
+        ];
+
+        return ValidationHelpers.validate(validateArr);
+    };
+
     const onClickGetOTP = async () => {
-        if (!phoneNumber) {
-            ToastHelpers.renderToast('Số điện thoại không hợp lệ!', 'error');
-            return;
-        }
+        if (!validate()) return;
 
         if (!onCheckedDisclaimer) {
             ToastHelpers.renderToast('Bạn vui lòng đồng ý với các Điều khoản và Điều kiện.', 'error');
