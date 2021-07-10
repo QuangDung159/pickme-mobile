@@ -5,7 +5,7 @@ import {
     IconFamily,
     Images, NowTheme, ScreenName
 } from '@constants/index';
-import { ToastHelpers } from '@helpers/index';
+import { ToastHelpers, ValidationHelpers } from '@helpers/index';
 import { UserServices } from '@services/index';
 import * as SecureStore from 'expo-secure-store';
 import React, { useEffect, useState } from 'react';
@@ -46,9 +46,65 @@ export default function ForgotPassword({ navigation }) {
         setDeviceId(deviceIdLocalStore);
     };
 
+    const validate = () => {
+        const validationArr = [
+            {
+                fieldName: 'OTP',
+                input: otp,
+                validate: {
+                    required: {
+                        value: true,
+                    },
+                    maxLength: {
+                        value: 4,
+                    },
+                    minLength: {
+                        value: 4,
+                    },
+                }
+            },
+            {
+                fieldName: 'Mật khẩu mới',
+                input: password,
+                validate: {
+                    required: {
+                        value: true,
+                    },
+                    maxLength: {
+                        value: 50,
+                    },
+                    minLength: {
+                        value: 8,
+                    },
+                }
+            },
+            {
+                fieldName: 'Nhập lại mật khẩu mới',
+                input: rePassword,
+                validate: {
+                    required: {
+                        value: true,
+                    },
+                    maxLength: {
+                        value: 50,
+                    },
+                    minLength: {
+                        value: 8,
+                    },
+                }
+            }
+        ];
+
+        if (!ValidationHelpers.validate(validationArr)) return false;
+
+        if (!isPasswordMatch()) return false;
+
+        return true;
+    };
+
     // handler \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
     const onSubmitForgotPassword = async () => {
-        if (!isPasswordMatch()) return;
+        if (!validate()) return;
 
         setIsShowSpinner(true);
         const body = {
@@ -58,7 +114,7 @@ export default function ForgotPassword({ navigation }) {
             code: otp
         };
 
-        toggleSpinner(true);
+        setIsShowSpinner(true);
         const result = await UserServices.submitForgotPasswordAsync(body);
         const { data } = result;
 
@@ -66,7 +122,7 @@ export default function ForgotPassword({ navigation }) {
             navigation.navigate(ScreenName.SIGN_IN);
             ToastHelpers.renderToast(data.message, 'success');
         }
-        toggleSpinner(false);
+        setIsShowSpinner(false);
     };
 
     const isPasswordMatch = () => {
@@ -82,19 +138,14 @@ export default function ForgotPassword({ navigation }) {
         const result = await UserServices.submitGetOtpForgotPasswordAsync({
             phoneNum: phoneNumber
         });
+
         const { data } = result;
 
         if (data) {
-            ToastHelpers.renderToast(data.message, 'success');
-
             // for testing
-            setOtp(data.data.code);
+            setOtp(data.message);
         }
         setIsShowSpinner(false);
-    };
-
-    const toggleSpinner = (isShowSpinnerToggled) => {
-        setIsShowSpinner(isShowSpinnerToggled);
     };
 
     const renderFormNewPassword = () => (
@@ -222,14 +273,14 @@ export default function ForgotPassword({ navigation }) {
                 flex: 1
             }}
         >
-            {isShowSpinner ? (
-                <CenterLoader />
-            ) : (
-                <ImageBackground
-                    source={Images.RegisterBackground}
-                    style={styles.imageBackgroundContainer}
-                    imageStyle={styles.imageBackground}
-                >
+            <ImageBackground
+                source={Images.RegisterBackground}
+                style={styles.imageBackgroundContainer}
+                imageStyle={styles.imageBackground}
+            >
+                {isShowSpinner ? (
+                    <CenterLoader />
+                ) : (
                     <KeyboardAwareScrollView>
                         <View
                             style={{
@@ -269,7 +320,6 @@ export default function ForgotPassword({ navigation }) {
                                                     color={COLORS.ACTIVE}
                                                 />
                                             )}
-                                            backgroundColor={COLORS.LIST_ITEM_BACKGROUND_1}
                                         />
                                     </View>
                                 </View>
@@ -286,8 +336,8 @@ export default function ForgotPassword({ navigation }) {
                             </View>
                         </View>
                     </KeyboardAwareScrollView>
-                </ImageBackground>
-            )}
+                )}
+            </ImageBackground>
         </View>
     );
 }

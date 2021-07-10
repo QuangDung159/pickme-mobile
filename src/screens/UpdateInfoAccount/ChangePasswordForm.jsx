@@ -1,6 +1,6 @@
 import { CenterLoader, CustomButton, CustomInput } from '@components/uiComponents';
 import { IconFamily, NowTheme } from '@constants/index';
-import { ToastHelpers } from '@helpers/index';
+import { ToastHelpers, ValidationHelpers } from '@helpers/index';
 import { UserServices } from '@services/index';
 import * as SecureStore from 'expo-secure-store';
 import React, { useState } from 'react';
@@ -20,8 +20,52 @@ export default function ChangePasswordForm() {
 
     const [isShowSpinner, setIsShowSpinner] = useState(false);
 
-    const validateChangePasswordForm = async () => {
+    const validate = async () => {
         const password = await SecureStore.getItemAsync('password');
+
+        const validationArr = [
+            {
+                fieldName: 'Mật khẩu hiện tại',
+                input: currentPassword,
+                validate: {
+                    required: {
+                        value: true,
+                    },
+                }
+            },
+            {
+                fieldName: 'Mật khẩu mới',
+                input: newPassword,
+                validate: {
+                    required: {
+                        value: true,
+                    },
+                    maxLength: {
+                        value: 50,
+                    },
+                    minLength: {
+                        value: 8,
+                    },
+                }
+            },
+            {
+                fieldName: 'Nhập lại mật khẩu mới',
+                input: reNewPassword,
+                validate: {
+                    required: {
+                        value: true,
+                    },
+                    maxLength: {
+                        value: 50,
+                    },
+                    minLength: {
+                        value: 8,
+                    },
+                }
+            }
+        ];
+
+        if (!ValidationHelpers.validate(validationArr)) return false;
 
         if (password !== currentPassword) {
             ToastHelpers.renderToast('Mật khẩu hiện tại không đúng.', 'error');
@@ -37,7 +81,7 @@ export default function ChangePasswordForm() {
     };
 
     const onSubmitChangePassword = async () => {
-        if (!validateChangePasswordForm) return;
+        if (!(await validate())) return;
 
         setIsShowSpinner(true);
 

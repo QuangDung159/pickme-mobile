@@ -88,7 +88,7 @@ const getLength = (text) => text.toString().length;
 const doValidate = (validateType, validateProp, fieldName, input) => {
     switch (validateType) {
         case 'maxLength': {
-            if (getLength(input) >= validateProp.value) {
+            if (getLength(input) > validateProp.value) {
                 const message = validateProp?.message
                 || `${generateValidateMessage(
                     ValidationMessageTemplate.MAX_LENGTH,
@@ -242,9 +242,9 @@ const doValidate = (validateType, validateProp, fieldName, input) => {
         // }
 
         case 'match': {
-            if (validatePhoneNum(validateProp.value)) {
+            if (!validateProp.value.test(input)) {
                 const message = validateProp?.message
-                || generateValidateMessage(ValidationMessageTemplate.IS_PHONE, fieldName, validateProp.value);
+                || generateValidateMessage(ValidationMessageTemplate.MATCH, fieldName, validateProp.value);
 
                 ToastHelpers.renderToast(message);
                 return false;

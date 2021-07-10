@@ -1,6 +1,7 @@
 import { CenterLoader, CustomButton, CustomInput } from '@components/uiComponents';
 import { NowTheme } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
+import ValidationHelpers from '@helpers/ValidationHelpers';
 import { setCurrentUser, setPersonTabActiveIndex } from '@redux/Actions';
 import { UserServices } from '@services/index';
 import React, { useEffect, useState } from 'react';
@@ -88,7 +89,7 @@ export default function UpdateInfoForm() {
                 marginVertical: 10,
                 width: SIZES.WIDTH_BASE * 0.9
             }}
-            label="Mô tả:"
+            label="Mô tả bản thân:"
         />
     );
 
@@ -136,30 +137,77 @@ export default function UpdateInfoForm() {
         const {
             fullName,
             description,
-            homeTown, interests
+            homeTown, interests,
+            dob
         } = newUser;
 
-        if (!fullName) {
-            ToastHelpers.renderToast('Tên của bạn không được trống!', 'error');
-            return false;
-        }
+        const validationArr = [
+            {
+                fieldName: 'Tên hiển thị',
+                input: fullName,
+                validate: {
+                    required: {
+                        value: true,
+                    },
+                    maxLength: {
+                        value: 255,
+                    },
+                }
+            },
+            {
+                fieldName: 'Quê quán',
+                input: homeTown,
+                validate: {
+                    required: {
+                        value: true,
+                    },
+                    maxLength: {
+                        value: 255,
+                    },
+                }
+            },
+            {
+                fieldName: 'Sở thích',
+                input: interests,
+                validate: {
+                    required: {
+                        value: true,
+                    },
+                    maxLength: {
+                        value: 255,
+                    },
+                }
+            },
+            {
+                fieldName: 'Mô tả bạn thân',
+                input: description,
+                validate: {
+                    required: {
+                        value: true,
+                    },
+                    maxLength: {
+                        value: 255,
+                    },
+                }
+            },
+            {
+                fieldName: 'Năm sinh',
+                input: dob,
+                validate: {
+                    required: {
+                        value: true,
+                    },
+                    maxLength: {
+                        value: 4,
+                    },
+                    minLength: {
+                        value: 4
+                    }
+                }
+            },
+        ];
 
-        if (!homeTown) {
-            ToastHelpers.renderToast('Quê quán không được trống!', 'error');
-            return false;
-        }
-
-        if (!interests) {
-            ToastHelpers.renderToast('Sở thích không được trống!', 'error');
-            return false;
-        }
-
-        if (!description) {
-            ToastHelpers.renderToast('Mô tả không được trống!', 'error');
-            return false;
-        }
-
-        return true;
+        return ValidationHelpers.validate(validationArr);
     };
 
     const onSubmitUpdateInfo = async () => {
