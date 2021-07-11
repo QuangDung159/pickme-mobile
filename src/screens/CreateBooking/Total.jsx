@@ -179,7 +179,7 @@ export default function Total({
                         marginBottom: 10
                     }}
                 >
-                    {CommonHelpers.generateMoneyStr(calculateTotalAmount(startTimeStr, endTimeStr) * 1000)}
+                    {CommonHelpers.generateMoneyStr(calculateTotalAmount(startTimeStr, endTimeStr))}
                 </Text>
 
                 {renderButtonPanel()}
