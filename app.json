@@ -5,7 +5,7 @@
     "version": "dev-0.5.0",
     "sdkVersion": "40.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/PickMe_Customer_Logo.png",
+    "icon": "./assets/images/customer-512.png",
     "splash": {
       "image": "./assets/images/bg-1.png",
       "resizeMode": "cover",
@@ -22,7 +22,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/PickMe_Customer_Logo.png",
+        "foregroundImage": "./assets/images/customer-512.png",
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.dragonc92team.pickmecustomer",
@@ -31,7 +31,7 @@
       "versionCode": 50
     },
     "web": {
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/customer-512.png"
     }
   }
 }
