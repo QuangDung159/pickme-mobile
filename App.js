@@ -12,7 +12,7 @@ import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
 import * as React from 'react';
 import {
-    Image, StatusBar, StyleSheet, Text, View
+    Image, Platform, StatusBar, StyleSheet, Text, View
 } from 'react-native';
 import { MenuProvider } from 'react-native-popup-menu';
 import Toast from 'react-native-toast-message';
@@ -169,7 +169,7 @@ export default function App() {
                         style={{
                             position: 'absolute',
                             right: 5,
-                            bottom: 32,
+                            bottom: Platform.OS === 'android' ? 5 : 32,
                             zIndex: 99
                         }}
                     >
