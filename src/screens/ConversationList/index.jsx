@@ -1,6 +1,6 @@
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 import { CenterLoader } from '@components/uiComponents';
-import { GraphQueryString, NowTheme, ScreenName } from '@constants/index';
+import { GraphQueryString, Theme, ScreenName } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
 import { setListConversation, setNumberMessageUnread } from '@redux/Actions';
 import { socketRequestUtil } from '@utils/index';
@@ -18,7 +18,7 @@ const {
     },
     SIZES,
     COLORS
-} = NowTheme;
+} = Theme;
 
 export default function ConversationList({ navigation }) {
     const [refreshing, setRefreshing] = useState(false);

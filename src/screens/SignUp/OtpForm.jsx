@@ -1,6 +1,6 @@
 import { CustomButton, CustomInput } from '@components/uiComponents';
 import {
-    IconFamily, NowTheme, ScreenName
+    IconFamily, Theme, ScreenName
 } from '@constants/index';
 import { ValidationHelpers } from '@helpers/index';
 import { setIsSignInOtherDeviceStore, setShowLoaderStore, setToken } from '@redux/Actions';
@@ -10,7 +10,7 @@ import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 
-const { SIZES, COLORS } = NowTheme;
+const { SIZES, COLORS } = Theme;
 
 export default function OtpForm({
     otp, setOtp, password,

@@ -1,6 +1,6 @@
 import { CenterLoader, CustomButton } from '@components/uiComponents';
 import {
-    Images, NowTheme, ScreenName, Utils
+    Images, Theme, ScreenName, Utils
 } from '@constants/index';
 import { setCurrentUser, setIsSignInOtherDeviceStore, setNavigation } from '@redux/Actions';
 import { UserServices } from '@services/index';
@@ -18,7 +18,7 @@ const {
     },
     SIZES,
     COLORS
-} = NowTheme;
+} = Theme;
 
 export default function Onboarding({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);

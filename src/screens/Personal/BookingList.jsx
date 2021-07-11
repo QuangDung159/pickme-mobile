@@ -1,6 +1,6 @@
 import { CenterLoader, Line } from '@components/uiComponents';
 import {
-    BookingStatus, NowTheme, ScreenName
+    BookingStatus, Theme, ScreenName
 } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
 import { setListBookingStore } from '@redux/Actions';
@@ -21,7 +21,7 @@ const {
     },
     SIZES,
     COLORS
-} = NowTheme;
+} = Theme;
 
 export default function BookingList({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);

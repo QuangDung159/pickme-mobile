@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import {
-    Images, NowTheme, ScreenName
+    Images, Theme, ScreenName
 } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
 import * as ImagePicker from 'expo-image-picker';
@@ -28,7 +28,7 @@ const {
     },
     SIZES,
     COLORS
-} = NowTheme;
+} = Theme;
 
 export default function CreateAccount(props) {
     const { navigation } = props;

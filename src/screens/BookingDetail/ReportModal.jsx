@@ -1,5 +1,5 @@
 import { CustomButton, CustomInput, CustomModal } from '@components/uiComponents';
-import NowTheme from '@constants/NowTheme';
+import Theme from '@constants/Theme';
 import React, { useState } from 'react';
 import { Text, View } from 'react-native';
 
@@ -9,7 +9,7 @@ const {
     },
     SIZES,
     COLORS
-} = NowTheme;
+} = Theme;
 
 export default function ReportModal({ modalReportVisible, setModalReportVisible }) {
     const [reportDesc, setReportDesc] = useState();

@@ -1,5 +1,5 @@
 import { CustomButton } from '@components/uiComponents';
-import { BookingStatus, NowTheme, ScreenName } from '@constants/index';
+import { BookingStatus, Theme, ScreenName } from '@constants/index';
 import ToastHelpers from '@helpers/ToastHelpers';
 import { setPersonTabActiveIndex, setShowLoaderStore } from '@redux/Actions';
 import BookingServices from '@services/BookingServices';
@@ -11,7 +11,7 @@ import { useDispatch } from 'react-redux';
 const {
     SIZES,
     COLORS
-} = NowTheme;
+} = Theme;
 
 export default function ButtonPanel({
     booking, setModalReasonVisible, navigation, fetchListBooking, renderAlertRatingReport

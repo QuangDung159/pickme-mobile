@@ -1,9 +1,9 @@
 /* eslint-disable no-undef */
 import { Platform, StatusBar } from 'react-native';
-import NowTheme from './NowTheme';
+import Theme from './Theme';
 
 const StatusHeight = StatusBar.currentHeight;
-const HeaderHeight = NowTheme.SIZES.BASE * 3.5 + (StatusHeight || 0);
+const HeaderHeight = Theme.SIZES.BASE * 3.5 + (StatusHeight || 0);
 const iPhoneX = () => Platform.OS === 'ios' && (height === 812 || width === 812);
 
 const TIME_FORMAT = {

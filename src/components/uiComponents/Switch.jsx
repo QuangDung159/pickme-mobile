@@ -1,8 +1,8 @@
-import { NowTheme } from '@constants/index';
+import { Theme } from '@constants/index';
 import React, { PureComponent } from 'react';
 import { Platform, Switch } from 'react-native';
 
-const { COLORS } = NowTheme;
+const { COLORS } = Theme;
 
 class MkSwitch extends PureComponent {
     render() {

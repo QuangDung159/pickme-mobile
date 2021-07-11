@@ -1,5 +1,5 @@
 import { CenterLoader } from '@components/uiComponents';
-import { NowTheme, ScreenName } from '@constants/index';
+import { Theme, ScreenName } from '@constants/index';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import {
@@ -17,7 +17,7 @@ const {
     },
     SIZES,
     COLORS
-} = NowTheme;
+} = Theme;
 
 export default function CardImage({
     navigation, user, isShowTitle, imageUrl,

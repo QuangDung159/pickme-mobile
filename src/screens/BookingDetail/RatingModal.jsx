@@ -1,7 +1,7 @@
 import {
     CustomButton, CustomCheckbox, CustomInput, CustomModal
 } from '@components/uiComponents';
-import NowTheme from '@constants/NowTheme';
+import Theme from '@constants/Theme';
 import ToastHelpers from '@helpers/ToastHelpers';
 import BookingServices from '@services/BookingServices';
 import React, { useState } from 'react';
@@ -14,7 +14,7 @@ const {
     },
     SIZES,
     COLORS
-} = NowTheme;
+} = Theme;
 
 export default function RatingModal({ modalRatingVisible, setModalRatingVisible, bookingId }) {
     const [enthusiasm, setEnthusiasm] = useState(5);

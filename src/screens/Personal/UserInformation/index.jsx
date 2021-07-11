@@ -3,7 +3,7 @@ import {
     CenterLoader, CustomButton, Line
 } from '@components/uiComponents';
 import {
-    IconFamily, NowTheme, Rx, ScreenName
+    IconFamily, Theme, Rx, ScreenName
 } from '@constants/index';
 import { NO_AVATAR_URL } from '@env';
 import { MediaHelpers, ToastHelpers } from '@helpers/index';
@@ -27,7 +27,7 @@ const {
     },
     SIZES,
     COLORS
-} = NowTheme;
+} = Theme;
 
 export default function UserInformation({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);

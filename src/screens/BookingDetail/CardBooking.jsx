@@ -4,7 +4,7 @@ import React from 'react';
 import {
     StyleSheet, Text, View
 } from 'react-native';
-import { NowTheme } from '@constants/index';
+import { Theme } from '@constants/index';
 import { CommonHelpers, ToastHelpers } from '@helpers/index';
 
 const {
@@ -14,7 +14,7 @@ const {
     },
     SIZES,
     COLORS
-} = NowTheme;
+} = Theme;
 
 export default function CardBooking({ booking }) {
     const convertMinutesToStringHours = (minutes) => moment.utc()

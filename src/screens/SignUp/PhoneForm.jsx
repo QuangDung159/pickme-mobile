@@ -1,5 +1,5 @@
 import { CustomButton, CustomCheckbox, CustomInput } from '@components/uiComponents';
-import { NowTheme } from '@constants/index';
+import { Theme } from '@constants/index';
 import { ToastHelpers, ValidationHelpers } from '@helpers/index';
 import { setShowLoaderStore } from '@redux/Actions';
 import { UserServices } from '@services/index';
@@ -13,7 +13,7 @@ const {
     },
     SIZES,
     COLORS
-} = NowTheme;
+} = Theme;
 
 export default function PhoneForm({
     phoneNumber,
