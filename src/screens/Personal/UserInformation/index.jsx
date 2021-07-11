@@ -3,9 +3,8 @@ import {
     CenterLoader, CustomButton, Line
 } from '@components/uiComponents';
 import {
-    IconFamily, Theme, Rx, ScreenName
+    IconFamily, Images, Rx, ScreenName, Theme
 } from '@constants/index';
-import { NO_AVATAR_URL } from '@env';
 import { MediaHelpers, ToastHelpers } from '@helpers/index';
 import { resetStoreSignOut, setCurrentUser } from '@redux/Actions';
 import { UserServices } from '@services/index';
@@ -53,7 +52,7 @@ export default function UserInformation({ navigation }) {
                 setImage(uri);
 
                 dispatch(
-                    setCurrentUser({ ...currentUser, url: res.data.data.url || NO_AVATAR_URL })
+                    setCurrentUser({ ...currentUser, url: res.data.data.url })
                 );
             },
             (res) => {
@@ -114,7 +113,7 @@ export default function UserInformation({ navigation }) {
         return (
             <Image
                 style={styles.avatar}
-                source={{ uri: currentUser?.url || NO_AVATAR_URL }}
+                source={currentUser?.url ? { uri: currentUser.url } : Images.defaultImage}
             />
         );
     };

@@ -2,9 +2,8 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
 import { CenterLoader } from '@components/uiComponents';
 import {
-    GraphQueryString, Theme, ScreenName
+    GraphQueryString, Images, ScreenName, Theme
 } from '@constants/index';
-import { NO_AVATAR_URL } from '@env';
 import { ToastHelpers } from '@helpers/index';
 import {
     setListBookingStore,
@@ -293,7 +292,7 @@ export default function Home({ navigation }) {
                         }}
                     >
                         <Image
-                            source={{ uri: item.url || NO_AVATAR_URL }}
+                            source={item.url ? { uri: item.url } : Images.defaultImage}
                             style={{
                                 width: 45,
                                 height: 45,
@@ -348,7 +347,7 @@ export default function Home({ navigation }) {
                             zIndex: 99
                         }}
                         width={SIZES.WIDTH_BASE}
-                        source={{ uri: item.imageUrl || NO_AVATAR_URL }}
+                        source={item.imageUrl ? { uri: item.imageUrl } : Images.defaultImage}
                     />
                 </View>
             </View>

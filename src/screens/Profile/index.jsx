@@ -2,9 +2,8 @@
 import { CardImage } from '@components/businessComponents';
 import { CenterLoader, CustomButton, ImageLoader } from '@components/uiComponents';
 import {
-    IconFamily, Theme, ScreenName
+    IconFamily, Images, ScreenName, Theme
 } from '@constants/index';
-import { NO_AVATAR_URL } from '@env';
 import { CommonHelpers, ToastHelpers } from '@helpers/index';
 import { BookingServices } from '@services/index';
 import moment from 'moment';
@@ -308,9 +307,9 @@ export default function Profile({ route, navigation }) {
                                             }}
                                         >
                                             <ImageBackground
-                                                source={{
-                                                    uri: partnerInfo.url || NO_AVATAR_URL
-                                                }}
+                                                source={
+                                                    partnerInfo.url ? { uri: partnerInfo.url } : Images.defaultImage
+                                                }
                                                 style={[styles.profileContainer]}
                                                 imageStyle={styles.profileBackground}
                                             />

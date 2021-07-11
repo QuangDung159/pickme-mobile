@@ -1,6 +1,5 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
-import { Theme, ScreenName } from '@constants/index';
-import { NO_AVATAR_URL } from '@env';
+import { Images, ScreenName, Theme } from '@constants/index';
 import { setPersonTabActiveIndex } from '@redux/Actions';
 import { NotificationServices } from '@services/index';
 import PropTypes from 'prop-types';
@@ -59,7 +58,7 @@ export default function NotificationItem({
     const renderAvatar = () => (
         <Image
             style={styles.avatar}
-            source={{ uri: notiItem.url || NO_AVATAR_URL }}
+            source={notiItem.url ? { uri: notiItem.url } : Images.defaultImage}
         />
     );
 

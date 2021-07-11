@@ -1,7 +1,8 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
 import { IconCustom } from '@components/uiComponents';
-import { IconFamily, Theme, ScreenName } from '@constants/index';
-import { NO_AVATAR_URL } from '@env';
+import {
+    IconFamily, Images, ScreenName, Theme
+} from '@constants/index';
 import React from 'react';
 import {
     Image, StyleSheet, Text, View
@@ -80,9 +81,7 @@ export default function LeaderBoadViewByType({
                         }}
                     >
                         <Image
-                            source={{
-                                uri: url || NO_AVATAR_URL
-                            }}
+                            source={url ? { uri: url } : Images.defaultImage}
                             style={{
                                 width: 100,
                                 height: 100,
@@ -211,9 +210,9 @@ export default function LeaderBoadViewByType({
                             }}
                         >
                             <Image
-                                source={{
-                                    uri: leaderBoardItem.url || NO_AVATAR_URL
-                                }}
+                                source={
+                                    leaderBoardItem.url ? { uri: leaderBoardItem.url } : Images.defaultImage
+                                }
                                 style={{
                                     width: 50,
                                     height: 50,
