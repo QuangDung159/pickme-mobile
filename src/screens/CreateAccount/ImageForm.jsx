@@ -1,7 +1,6 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
 import { CenterLoader, CustomButton } from '@components/uiComponents';
-import { Theme, Rx } from '@constants/index';
-import { NO_AVATAR_URL } from '@env';
+import { Images, Rx, Theme } from '@constants/index';
 import { MediaHelpers, ToastHelpers } from '@helpers/index';
 import { UserServices } from '@services/index';
 import React from 'react';
@@ -127,7 +126,7 @@ export default function ImageForm({
                                         />
                                     ) : (
                                         <Image
-                                            source={{ uri: NO_AVATAR_URL }}
+                                            source={Images.defaultImage}
                                             style={styles.image}
                                         />
                                     )}
