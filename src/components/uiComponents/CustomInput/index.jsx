@@ -1,4 +1,4 @@
-import { IconFamily, NowTheme } from '@constants/index';
+import { IconFamily, Theme } from '@constants/index';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Text, TextInput, View } from 'react-native';
@@ -11,7 +11,7 @@ const {
     },
     SIZES,
     COLORS
-} = NowTheme;
+} = Theme;
 
 CustomInput.propTypes = {
     label: PropTypes.string,

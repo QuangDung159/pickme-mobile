@@ -1,7 +1,7 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
 import { IconCustom, TopTabBar } from '@components/uiComponents';
 import {
-    IconFamily, NowTheme, Rx, ScreenName
+    IconFamily, Theme, Rx, ScreenName
 } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
 import React, { useEffect, useState } from 'react';
@@ -11,7 +11,7 @@ import LeaderBoadViewByType from './LeaderBoadViewByType';
 
 const {
     COLORS
-} = NowTheme;
+} = Theme;
 
 export default function LeaderBoard({ navigation }) {
     const [tabActiveIndex, setTabActiveIndex] = useState(0);

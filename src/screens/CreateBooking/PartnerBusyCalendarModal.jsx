@@ -1,5 +1,5 @@
 import { CustomButton, CustomModal } from '@components/uiComponents';
-import NowTheme from '@constants/NowTheme';
+import Theme from '@constants/Theme';
 import moment from 'moment';
 import React from 'react';
 import { Text, View } from 'react-native';
@@ -10,7 +10,7 @@ const {
     },
     SIZES,
     COLORS
-} = NowTheme;
+} = Theme;
 
 export default function PartnerBusyCalendarModal({ listBusyBySelectedDate, modalVisible, setModalVisible }) {
     const convertMinutesToStringHours = (minutes) => moment.utc()

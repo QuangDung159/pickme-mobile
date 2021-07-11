@@ -1,5 +1,5 @@
 import { CustomButton } from '@components/uiComponents';
-import { NowTheme, ScreenName } from '@constants/index';
+import { Theme, ScreenName } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
 import { setToken } from '@redux/Actions';
 import React from 'react';
@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 
 const {
     SIZES,
-} = NowTheme;
+} = Theme;
 
 export default function DoneSection({
     registerContainer,

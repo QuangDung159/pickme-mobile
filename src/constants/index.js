@@ -4,17 +4,17 @@ import DocumentType from './DocumentType';
 import GraphQueryString from './GraphQueryString';
 import IconFamily from './IconFamily';
 import Images from './Images';
-import NowTheme from './NowTheme';
 import Rx from './Rx';
 import ScreenName from './ScreenName';
 import ScreenTitle from './ScreenTitle';
+import Theme from './Theme';
 import Utils from './Utils';
 import ValidationMessageTemplate from './ValidationMessageTemplate';
 import VerificationStatus from './VerificationStatus';
 
 export {
     Images,
-    NowTheme,
+    Theme,
     ScreenName,
     ScreenTitle,
     IconFamily,

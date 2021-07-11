@@ -1,10 +1,10 @@
-import { NowTheme } from '@constants/index';
+import { Theme } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
 import React from 'react';
 import { Modal, StyleSheet, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
-const { SIZES, COLORS } = NowTheme;
+const { SIZES, COLORS } = Theme;
 
 export default function CustomModal({
     modalVisible, renderContent, contentStyle, containerStyle

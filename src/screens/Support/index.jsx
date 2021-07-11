@@ -4,7 +4,7 @@ import {
     CustomButton, CustomInput, IconCustom, NoteText, TopTabBar
 } from '@components/uiComponents';
 import {
-    IconFamily, NowTheme, Rx, ScreenName
+    IconFamily, Theme, Rx, ScreenName
 } from '@constants/index';
 import { MediaHelpers, ToastHelpers } from '@helpers/index';
 import { SystemServices } from '@services/index';
@@ -24,7 +24,7 @@ const {
     },
     SIZES,
     COLORS
-} = NowTheme;
+} = Theme;
 
 export default function Support({ navigation }) {
     const [routes] = React.useState([

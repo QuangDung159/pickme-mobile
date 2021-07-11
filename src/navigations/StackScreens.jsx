@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { NowTheme, ScreenName, ScreenTitle } from '@constants/index';
+import { Theme, ScreenName, ScreenTitle } from '@constants/index';
 import Header from '@containers/Header';
 import { createStackNavigator } from '@react-navigation/stack';
 // screens
@@ -21,7 +21,7 @@ import React from 'react';
 const Stack = createStackNavigator();
 const {
     COLORS
-} = NowTheme;
+} = Theme;
 
 export const PersonalScreen = () => (
     <Stack.Screen

@@ -1,4 +1,4 @@
-import { NowTheme } from '@constants/index';
+import { Theme } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
 import React from 'react';
 import { Text, View } from 'react-native';
@@ -6,7 +6,7 @@ import { CustomButton, CustomInput } from '@components/uiComponents';
 
 const {
     SIZES,
-} = NowTheme;
+} = Theme;
 
 export default function HometownForm({
     registerContainer,

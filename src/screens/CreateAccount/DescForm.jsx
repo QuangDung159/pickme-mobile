@@ -1,12 +1,12 @@
 import { CustomButton, CustomInput } from '@components/uiComponents';
-import { NowTheme } from '@constants/index';
+import { Theme } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
 import React from 'react';
 import { Text, View } from 'react-native';
 
 const {
     SIZES,
-} = NowTheme;
+} = Theme;
 
 export default function DescForm({
     registerContainer,

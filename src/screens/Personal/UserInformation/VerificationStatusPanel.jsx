@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import { NowTheme, VerificationStatus } from '@constants/index';
+import { Theme, VerificationStatus } from '@constants/index';
 import React from 'react';
 import { Text, View } from 'react-native';
 import { useSelector } from 'react-redux';
@@ -11,7 +11,7 @@ const {
     },
     SIZES,
     COLORS
-} = NowTheme;
+} = Theme;
 
 export default function VerificationStatusPanel() {
     const currentUser = useSelector((state) => state.userReducer.currentUser);

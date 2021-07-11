@@ -2,7 +2,7 @@
 import { CardImage } from '@components/businessComponents';
 import { CenterLoader, CustomButton, ImageLoader } from '@components/uiComponents';
 import {
-    IconFamily, NowTheme, ScreenName
+    IconFamily, Theme, ScreenName
 } from '@constants/index';
 import { NO_AVATAR_URL } from '@env';
 import { CommonHelpers, ToastHelpers } from '@helpers/index';
@@ -26,7 +26,7 @@ const {
     },
     SIZES,
     COLORS
-} = NowTheme;
+} = Theme;
 
 export default function Profile({ route, navigation }) {
     const [visible, setVisible] = useState(false);

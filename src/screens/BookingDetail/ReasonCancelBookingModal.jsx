@@ -1,5 +1,5 @@
 import { CustomButton, CustomModal } from '@components/uiComponents';
-import { NowTheme, ScreenName } from '@constants/index';
+import { Theme, ScreenName } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
 import { Picker } from '@react-native-picker/picker';
 import { setPersonTabActiveIndex, setShowLoaderStore } from '@redux/Actions';
@@ -13,7 +13,7 @@ const {
         MONTSERRAT_REGULAR,
     }, SIZES,
     COLORS
-} = NowTheme;
+} = Theme;
 
 export default function ReasonCancelBookingModal({
     modalReasonVisible,

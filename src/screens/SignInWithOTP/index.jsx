@@ -3,7 +3,7 @@ import {
 } from '@components/uiComponents';
 import {
     IconFamily,
-    Images, NowTheme, ScreenName
+    Images, Theme, ScreenName
 } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
 import {
@@ -27,7 +27,7 @@ const {
     },
     SIZES,
     COLORS
-} = NowTheme;
+} = Theme;
 
 export default function SignInWithOTP({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);

@@ -2,7 +2,7 @@ import {
     CenterLoader
 } from '@components/uiComponents';
 import {
-    Images, NowTheme
+    Images, Theme
 } from '@constants/index';
 import React, { useState } from 'react';
 import {
@@ -23,7 +23,7 @@ const {
     },
     SIZES,
     COLORS
-} = NowTheme;
+} = Theme;
 
 export default function SignUp({ navigation }) {
     const [modalVisible, setModalVisible] = useState(false);

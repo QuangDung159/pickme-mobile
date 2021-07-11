@@ -1,4 +1,4 @@
-import { NowTheme } from '@constants/index';
+import { Theme } from '@constants/index';
 import React from 'react';
 import { Text } from 'react-native';
 import { TabBar, TabView } from 'react-native-tab-view';
@@ -9,7 +9,7 @@ const {
     },
     SIZES,
     COLORS
-} = NowTheme;
+} = Theme;
 
 export default function TopTabBar({
     tabActiveIndex, setTabActiveIndex, routes, renderScene,

@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { NowTheme, ScreenName } from '@constants/index';
+import { Theme, ScreenName } from '@constants/index';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
@@ -24,7 +24,7 @@ import {
 } from './StackScreens';
 import TabIcon from './TabIcon';
 
-const { COLORS } = NowTheme;
+const { COLORS } = Theme;
 
 const Stack = createStackNavigator();
 

@@ -1,4 +1,4 @@
-import { NowTheme } from '@constants/index';
+import { Theme } from '@constants/index';
 import React, { PureComponent } from 'react';
 import { Text, View } from 'react-native';
 
@@ -8,7 +8,7 @@ const {
         MONTSERRAT_BOLD
     }, COLORS,
     SIZES
-} = NowTheme;
+} = Theme;
 
 export default class NoteText extends PureComponent {
     render() {

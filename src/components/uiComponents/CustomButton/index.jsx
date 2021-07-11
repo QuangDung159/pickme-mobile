@@ -1,5 +1,5 @@
 import IconCustom from '@components/uiComponents/IconCustom';
-import { IconFamily, NowTheme } from '@constants/index';
+import { IconFamily, Theme } from '@constants/index';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {
@@ -13,7 +13,7 @@ const {
     },
     SIZES,
     COLORS
-} = NowTheme;
+} = Theme;
 
 CustomButton.propTypes = {
     label: PropTypes.string,

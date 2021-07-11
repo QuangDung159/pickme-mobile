@@ -1,5 +1,5 @@
 import { CustomButton, Line } from '@components/uiComponents';
-import { NowTheme } from '@constants/index';
+import { Theme } from '@constants/index';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
@@ -22,7 +22,7 @@ const {
     },
     SIZES,
     COLORS
-} = NowTheme;
+} = Theme;
 
 export default function CustomCalendar({ selectedDate, onChangeDate }) {
     const [selectedDateState, setSelectedDateState] = useState(moment().format('DD-MM-YYYY'));

@@ -1,5 +1,5 @@
 import { IndicatorVerticalLine, StepIndicator } from '@components/uiComponents';
-import { BookingStatus, NowTheme } from '@constants/index';
+import { BookingStatus, Theme } from '@constants/index';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
@@ -10,7 +10,7 @@ const {
     },
     SIZES,
     COLORS
-} = NowTheme;
+} = Theme;
 
 export default function BookingProgressFlow({
     booking

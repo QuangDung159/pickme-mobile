@@ -1,5 +1,5 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
-import { NowTheme } from '@constants/index';
+import { Theme } from '@constants/index';
 import { MAP_API_KEY } from '@env';
 import React, { useEffect, useRef } from 'react';
 import { Text, View } from 'react-native';
@@ -11,7 +11,7 @@ const {
     },
     SIZES,
     COLORS
-} = NowTheme;
+} = Theme;
 
 export default function GooglePlacesInput({ onChangeAddress, addressInput, label }) {
     const ref = useRef();

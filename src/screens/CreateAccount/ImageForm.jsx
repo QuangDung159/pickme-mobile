@@ -1,6 +1,6 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
 import { CenterLoader, CustomButton } from '@components/uiComponents';
-import { NowTheme, Rx } from '@constants/index';
+import { Theme, Rx } from '@constants/index';
 import { NO_AVATAR_URL } from '@env';
 import { MediaHelpers, ToastHelpers } from '@helpers/index';
 import { UserServices } from '@services/index';
@@ -12,7 +12,7 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 const {
     SIZES,
-} = NowTheme;
+} = Theme;
 
 export default function ImageForm({
     registerContainer,

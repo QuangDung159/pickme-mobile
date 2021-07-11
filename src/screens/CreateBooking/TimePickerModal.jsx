@@ -1,6 +1,6 @@
 import { CustomButton, CustomModal } from '@components/uiComponents';
 import DateTimeConst from '@constants/DateTimeConst';
-import NowTheme from '@constants/NowTheme';
+import Theme from '@constants/Theme';
 import React from 'react';
 import { Text, View } from 'react-native';
 import ScrollPicker from 'react-native-wheel-scroll-picker';
@@ -11,7 +11,7 @@ const {
     },
     SIZES,
     COLORS
-} = NowTheme;
+} = Theme;
 
 const hourArr = DateTimeConst.HOUR_ARR;
 const minuteArr = DateTimeConst.MINUTE_ARR;
