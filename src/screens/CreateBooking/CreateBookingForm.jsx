@@ -1,6 +1,6 @@
 import { CustomCalendar } from '@components/businessComponents';
 import { CustomButton, CustomInput } from '@components/uiComponents';
-import NowTheme from '@constants/NowTheme';
+import Theme from '@constants/Theme';
 import ToastHelpers from '@helpers/ToastHelpers';
 import moment from 'moment';
 import React from 'react';
@@ -14,7 +14,7 @@ const {
     },
     SIZES,
     COLORS
-} = NowTheme;
+} = Theme;
 
 export default function CreateBookingForm({
     route,

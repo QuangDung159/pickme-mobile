@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Text, View } from 'react-native';
-import { NowTheme } from '../../../constants';
+import { Theme } from '../../../constants';
 
 const {
     FONT: {
@@ -10,7 +10,7 @@ const {
     },
     SIZES,
     COLORS
-} = NowTheme;
+} = Theme;
 
 export default function ProfileInfoItem({
     label, value

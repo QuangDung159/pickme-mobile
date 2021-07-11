@@ -1,5 +1,5 @@
 import { CustomButton } from '@components/uiComponents';
-import NowTheme from '@constants/NowTheme';
+import Theme from '@constants/Theme';
 import ScreenName from '@constants/ScreenName';
 import CommonHelpers from '@helpers/CommonHelpers';
 import ToastHelpers from '@helpers/ToastHelpers';
@@ -17,7 +17,7 @@ const {
     },
     SIZES,
     COLORS
-} = NowTheme;
+} = Theme;
 
 export default function Total({
     total,
@@ -179,7 +179,7 @@ export default function Total({
                         marginBottom: 10
                     }}
                 >
-                    {CommonHelpers.generateMoneyStr(calculateTotalAmount(startTimeStr, endTimeStr) * 1000)}
+                    {CommonHelpers.generateMoneyStr(calculateTotalAmount(startTimeStr, endTimeStr))}
                 </Text>
 
                 {renderButtonPanel()}

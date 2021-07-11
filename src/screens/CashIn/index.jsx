@@ -1,5 +1,5 @@
 import { NoteText } from '@components/uiComponents';
-import { NowTheme, ScreenName } from '@constants/index';
+import { Theme, ScreenName } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
 import Clipboard from 'expo-clipboard';
 import React, { useEffect } from 'react';
@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 const {
     SIZES,
     COLORS
-} = NowTheme;
+} = Theme;
 
 export default function CashIn(props) {
     const { navigation } = props;

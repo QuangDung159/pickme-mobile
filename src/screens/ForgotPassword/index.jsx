@@ -3,7 +3,7 @@ import {
 } from '@components/uiComponents';
 import {
     IconFamily,
-    Images, NowTheme, ScreenName
+    Images, Theme, ScreenName
 } from '@constants/index';
 import { ToastHelpers, ValidationHelpers } from '@helpers/index';
 import { UserServices } from '@services/index';
@@ -22,7 +22,7 @@ const {
     },
     SIZES,
     COLORS
-} = NowTheme;
+} = Theme;
 
 export default function ForgotPassword({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);

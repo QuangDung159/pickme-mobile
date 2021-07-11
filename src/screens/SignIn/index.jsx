@@ -1,7 +1,7 @@
 import { CenterLoader, CustomButton, CustomInput } from '@components/uiComponents';
 import {
     IconFamily,
-    Images, NowTheme, ScreenName
+    Images, Theme, ScreenName
 } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
 import {
@@ -28,7 +28,7 @@ const {
     },
     SIZES,
     COLORS
-} = NowTheme;
+} = Theme;
 
 export default function SignIn({ navigation }) {
     const [phoneNumber, setPhoneNumber] = useState('huyvd');

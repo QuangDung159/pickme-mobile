@@ -1,5 +1,5 @@
 import { CustomButton, CustomModal } from '@components/uiComponents';
-import { NowTheme } from '@constants/index';
+import { Theme } from '@constants/index';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
@@ -8,7 +8,7 @@ const {
         MONTSERRAT_REGULAR,
     }, SIZES,
     COLORS
-} = NowTheme;
+} = Theme;
 
 export default function ModalDisclaimer({ modalVisible, setModalVisible }) {
     const renderModalDisclaimer = () => (

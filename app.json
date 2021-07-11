@@ -5,7 +5,7 @@
     "version": "dev-0.5.0",
     "sdkVersion": "40.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/PickMe_Customer_Logo.png",
     "splash": {
       "image": "./assets/images/bg-1.png",
       "resizeMode": "cover",
@@ -22,7 +22,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/icon.png",
+        "foregroundImage": "./assets/images/PickMe_Customer_Logo.png",
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.dragonc92team.pickmecustomer",

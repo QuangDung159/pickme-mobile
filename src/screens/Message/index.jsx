@@ -1,7 +1,7 @@
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 import { CenterLoader, CustomInput, IconCustom } from '@components/uiComponents';
 import {
-    GraphQueryString, IconFamily, NowTheme, ScreenName
+    GraphQueryString, IconFamily, Theme, ScreenName
 } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
 import { setChattingWith, setNumberMessageUnread } from '@redux/Actions';
@@ -20,7 +20,7 @@ const {
     },
     SIZES,
     COLORS
-} = NowTheme;
+} = Theme;
 
 export default function Message({ navigation, route }) {
     const [listMessageFromAPI, setListMessageFromAPI] = useState([]);

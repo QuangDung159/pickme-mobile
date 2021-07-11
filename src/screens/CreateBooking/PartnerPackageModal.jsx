@@ -1,5 +1,5 @@
 import { CustomButton, CustomModal } from '@components/uiComponents';
-import NowTheme from '@constants/NowTheme';
+import Theme from '@constants/Theme';
 import CommonHelpers from '@helpers/CommonHelpers';
 import { Picker } from '@react-native-picker/picker';
 import moment from 'moment';
@@ -13,7 +13,7 @@ const {
     },
     SIZES,
     COLORS
-} = NowTheme;
+} = Theme;
 
 export default function PartnerPackageModal({
     listPartnerPackage,

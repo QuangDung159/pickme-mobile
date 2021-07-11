@@ -1,6 +1,6 @@
 import { CenterLoader, CustomButton, IconCustom } from '@components/uiComponents';
 import {
-    IconFamily, NowTheme, ScreenName
+    IconFamily, Theme, ScreenName
 } from '@constants/index';
 import { CommonHelpers, ToastHelpers } from '@helpers/index';
 import { setCurrentUser, setListCashHistoryStore } from '@redux/Actions';
@@ -16,7 +16,7 @@ const {
     },
     SIZES,
     COLORS
-} = NowTheme;
+} = Theme;
 
 export default function Wallet({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);

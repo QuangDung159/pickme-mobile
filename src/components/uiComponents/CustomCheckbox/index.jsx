@@ -1,5 +1,5 @@
 import IconCustom from '@components/uiComponents/IconCustom';
-import { IconFamily, NowTheme } from '@constants/index';
+import { IconFamily, Theme } from '@constants/index';
 import React, { useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 
@@ -9,7 +9,7 @@ const {
         MONTSERRAT_REGULAR
     },
     SIZES
-} = NowTheme;
+} = Theme;
 
 export default function CustomCheckbox({
     containerStyle,

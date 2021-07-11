@@ -1,4 +1,4 @@
-import { NowTheme } from '@constants/index';
+import { Theme } from '@constants/index';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
@@ -11,7 +11,7 @@ const {
     },
     SIZES,
     COLORS
-} = NowTheme;
+} = Theme;
 
 export default function StepIndicator({
     type, buttonText, content

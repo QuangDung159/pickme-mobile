@@ -1,5 +1,5 @@
 import { CenterLoader, CustomButton, CustomInput } from '@components/uiComponents';
-import { NowTheme } from '@constants/index';
+import { Theme } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
 import ValidationHelpers from '@helpers/ValidationHelpers';
 import { setCurrentUser, setPersonTabActiveIndex } from '@redux/Actions';
@@ -9,7 +9,7 @@ import { View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useDispatch, useSelector } from 'react-redux';
 
-const { SIZES, COLORS } = NowTheme;
+const { SIZES, COLORS } = Theme;
 
 export default function UpdateInfoForm() {
     const [newUser, setNewUser] = useState({});

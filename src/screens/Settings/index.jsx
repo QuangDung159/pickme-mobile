@@ -1,5 +1,5 @@
 import { IconCustom, Switch } from '@components/uiComponents';
-import { NowTheme } from '@constants/index';
+import { Theme } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
 import React, { useEffect, useState } from 'react';
 import {
@@ -17,7 +17,7 @@ const {
     },
     SIZES,
     COLORS
-} = NowTheme;
+} = Theme;
 
 const recommended = [
     {

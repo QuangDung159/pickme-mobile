@@ -1,6 +1,6 @@
 import { CustomInput, IconCustom } from '@components/uiComponents';
 import {
-    IconFamily, NowTheme, ScreenName
+    IconFamily, Theme, ScreenName
 } from '@constants/index';
 import { resetStoreSignOut, setListNotification, setNumberNotificationUnread } from '@redux/Actions';
 import { NotificationServices } from '@services/index';
@@ -23,7 +23,7 @@ const {
     },
     SIZES,
     COLORS
-} = NowTheme;
+} = Theme;
 
 export default function Header({
     back,

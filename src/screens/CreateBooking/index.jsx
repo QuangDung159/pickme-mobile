@@ -3,7 +3,7 @@ import {
     CenterLoader, IconCustom
 } from '@components/uiComponents';
 import {
-    DateTimeConst, IconFamily, NowTheme, ScreenName
+    DateTimeConst, IconFamily, Theme, ScreenName
 } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
 import { BookingServices } from '@services/index';
@@ -22,7 +22,7 @@ import Total from './Total';
 const {
     SIZES,
     COLORS
-} = NowTheme;
+} = Theme;
 
 const hourArr = DateTimeConst.HOUR_ARR;
 const minuteArr = DateTimeConst.MINUTE_ARR;

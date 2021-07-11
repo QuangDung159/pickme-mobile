@@ -2,7 +2,7 @@ import {
     CenterLoader, CustomButton
 } from '@components/uiComponents';
 import {
-    DocumentType, NowTheme, Rx, ScreenName, VerificationStatus
+    DocumentType, Theme, Rx, ScreenName, VerificationStatus
 } from '@constants/index';
 import { MediaHelpers, ToastHelpers } from '@helpers/index';
 import { setCurrentUser, setPersonTabActiveIndex, setVerificationStore } from '@redux/Actions';
@@ -19,7 +19,7 @@ const {
     },
     SIZES,
     COLORS
-} = NowTheme;
+} = Theme;
 let count = 0;
 
 export default function Verification({ navigation }) {

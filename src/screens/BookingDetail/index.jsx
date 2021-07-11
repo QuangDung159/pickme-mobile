@@ -1,7 +1,7 @@
 import {
     CenterLoader
 } from '@components/uiComponents';
-import { NowTheme, ScreenName } from '@constants/index';
+import { Theme, ScreenName } from '@constants/index';
 import BookingProgressFlow from '@containers/BookingProgressFlow';
 import { ToastHelpers } from '@helpers/index';
 import {
@@ -26,7 +26,7 @@ const {
     },
     SIZES,
     COLORS
-} = NowTheme;
+} = Theme;
 
 export default function BookingDetail({
     route: {

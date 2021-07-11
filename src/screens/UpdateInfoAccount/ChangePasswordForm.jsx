@@ -1,5 +1,5 @@
 import { CenterLoader, CustomButton, CustomInput } from '@components/uiComponents';
-import { IconFamily, NowTheme } from '@constants/index';
+import { IconFamily, Theme } from '@constants/index';
 import { ToastHelpers, ValidationHelpers } from '@helpers/index';
 import { UserServices } from '@services/index';
 import * as SecureStore from 'expo-secure-store';
@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 import { View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
-const { SIZES, COLORS } = NowTheme;
+const { SIZES, COLORS } = Theme;
 
 export default function ChangePasswordForm() {
     const [currentPassword, setCurrentPassword] = useState('');

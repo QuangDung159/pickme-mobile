@@ -1,6 +1,6 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
 import { IconCustom } from '@components/uiComponents';
-import { IconFamily, NowTheme, ScreenName } from '@constants/index';
+import { IconFamily, Theme, ScreenName } from '@constants/index';
 import { NO_AVATAR_URL } from '@env';
 import React from 'react';
 import {
@@ -16,7 +16,7 @@ const {
     },
     SIZES,
     COLORS
-} = NowTheme;
+} = Theme;
 
 export default function LeaderBoadViewByType({
     navigation, tabs, tabActiveIndex,

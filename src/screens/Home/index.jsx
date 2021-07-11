@@ -2,7 +2,7 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
 import { CenterLoader } from '@components/uiComponents';
 import {
-    GraphQueryString, NowTheme, ScreenName
+    GraphQueryString, Theme, ScreenName
 } from '@constants/index';
 import { NO_AVATAR_URL } from '@env';
 import { ToastHelpers } from '@helpers/index';
@@ -31,7 +31,7 @@ const {
     },
     SIZES,
     COLORS
-} = NowTheme;
+} = Theme;
 
 let token = null;
 const getTokenFromLocal = async () => {

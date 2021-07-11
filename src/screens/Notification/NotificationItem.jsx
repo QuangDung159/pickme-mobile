@@ -1,5 +1,5 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
-import { NowTheme, ScreenName } from '@constants/index';
+import { Theme, ScreenName } from '@constants/index';
 import { NO_AVATAR_URL } from '@env';
 import { setPersonTabActiveIndex } from '@redux/Actions';
 import { NotificationServices } from '@services/index';
@@ -16,7 +16,7 @@ const {
     },
     SIZES,
     COLORS
-} = NowTheme;
+} = Theme;
 
 export default function NotificationItem({
     onTriggerRead,
