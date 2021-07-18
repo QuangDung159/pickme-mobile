@@ -1,6 +1,6 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
 import { CenterLoader, CustomButton } from '@components/uiComponents';
-import { Images, Rx, Theme } from '@constants/index';
+import { Images, Theme } from '@constants/index';
 import { MediaHelpers, ToastHelpers } from '@helpers/index';
 import { UserServices } from '@services/index';
 import React from 'react';
@@ -34,23 +34,17 @@ export default function ImageForm({
     const handleUploadImageProfile = (uri) => {
         setIsShowSpinner(true);
 
-        MediaHelpers.uploadImage(
+        MediaHelpers.imgbbUploadImage(
             uri,
-            Rx.USER.UPDATE_AVATAR,
-            (res) => {
-                ToastHelpers.renderToast(
-                    res?.data?.message || 'Tải ảnh lên thành công!', 'success'
-                );
-
+            () => {
+                ToastHelpers.renderToast('Tải ảnh lên thành công!', 'success');
                 setIsShowSpinner(false);
                 setImage(uri);
             },
-            (err) => {
-                ToastHelpers.renderToast(
-                    err?.data?.message || 'Tải ảnh lên thất bại! Vui lòng thử lại.', 'error'
-                );
+            () => {
+                ToastHelpers.renderToast();
                 setIsShowSpinner(false);
-            },
+            }
         );
     };
 

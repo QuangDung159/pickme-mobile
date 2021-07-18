@@ -6,13 +6,13 @@ import React, { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
 
 const arrDOW = [
-    'C.Nhật',
-    'T.Hai',
-    'T.Ba',
-    'T.Tư',
-    'T.Năm',
-    'T.Sáu',
-    'T.Bảy'
+    'CN',
+    'T2',
+    'T3',
+    'T4',
+    'T5',
+    'T6',
+    'T7'
 ];
 const currentDate = moment().format('DD-MM-YYYY');
 const {
@@ -60,7 +60,6 @@ export default function CustomCalendar({ selectedDate, onChangeDate }) {
     // const arrDateLine2 = createArrDate(moment().add(7, 'days').format('DD-MM-YYYY'), 7);
 
     const weekendStyle = {
-        fontFamily: MONTSERRAT_BOLD,
         color: COLORS.ACTIVE
     };
 
@@ -93,11 +92,11 @@ export default function CustomCalendar({ selectedDate, onChangeDate }) {
                             style={
                                 [
                                     {
-                                        fontFamily: MONTSERRAT_REGULAR,
-                                        fontSize: SIZES.FONT_H4,
+                                        fontFamily: MONTSERRAT_BOLD,
+                                        fontSize: SIZES.FONT_H3,
                                         color: COLORS.DEFAULT
                                     },
-                                    (item === 'T.Bảy' || item === 'C.Nhật') && weekendStyle,
+                                    (item === 'T7' || item === 'CN') && weekendStyle,
                                 ]
                             }
                         >
@@ -120,9 +119,11 @@ export default function CustomCalendar({ selectedDate, onChangeDate }) {
                 }}
             >
                 {arrDateLine1.map((item) => {
-                    let buttonColor = COLORS.TRANSPARENT;
+                    let borderWidth = 0;
+                    let borderColor = '';
                     if (item === selectedDateState) {
-                        buttonColor = COLORS.BASE;
+                        borderWidth = 0.5;
+                        borderColor = COLORS.ACTIVE;
                     }
 
                     const dateTextStyle = {
@@ -146,9 +147,9 @@ export default function CustomCalendar({ selectedDate, onChangeDate }) {
                                 buttonStyle={{
                                     width: 34,
                                     height: 34,
-                                    backgroundColor: buttonColor,
                                     borderRadius: 17,
-                                    borderWidth: 0
+                                    borderColor,
+                                    borderWidth
                                 }}
                                 labelStyle={dateTextStyle}
                                 label={item.substring(0, 2)}

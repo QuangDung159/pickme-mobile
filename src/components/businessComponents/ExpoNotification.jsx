@@ -1,6 +1,6 @@
 import {
-    setExpoToken,
-    setListBookingStore,
+    setCurrentBookingRedux,
+    setCurrentUser, setListBookingStore,
     setListCashHistoryStore,
     setListNotification,
     setNotificationReceivedRedux,
@@ -9,11 +9,10 @@ import {
 import BookingServices from '@services/BookingServices';
 import CashServices from '@services/CashServices';
 import NotificationServices from '@services/NotificationServices';
-import Constants from 'expo-constants';
+import UserServices from '@services/UserServices';
 import * as Notifications from 'expo-notifications';
-import React, { useEffect, useRef } from 'react';
-import { Alert, Platform } from 'react-native';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
@@ -27,18 +26,17 @@ export default function ExpoNotification() {
     const notificationListener = useRef();
     const responseListener = useRef();
 
+    const [bookingId, setBookingId] = useState();
+
+    const currentBookingRedux = useSelector((state) => state.bookingReducer.currentBookingRedux);
+
     const dispatch = useDispatch();
 
     useEffect(() => {
-        registerForPushNotificationsAsync();
-
         // handle received
         notificationListener.current = Notifications.addNotificationReceivedListener((notificationReceived) => {
-            console.log('notificationReceived :>> ', notificationReceived);
             fetchListNotification();
-
-            const notificationType = notificationReceived.request.content.data.Type;
-            if (notificationType) handleNotificationByType(notificationType);
+            handleNotiReceived(notificationReceived);
         });
 
         // handle click pop-up
@@ -47,8 +45,7 @@ export default function ExpoNotification() {
             console.log('notificationBody :>> ', notificationBody);
             dispatch(setNotificationReceivedRedux(notificationBody));
 
-            const notificationType = notificationBody?.Type;
-            if (notificationType) handleNotificationByType(notificationType);
+            handleNotiReceived(response.notification);
         });
 
         return () => {
@@ -57,31 +54,19 @@ export default function ExpoNotification() {
         };
     }, []);
 
-    const registerForPushNotificationsAsync = async () => {
-        let token;
-        if (Constants.isDevice) {
-            const { status: existingStatus } = await Notifications.getPermissionsAsync();
-            let finalStatus = existingStatus;
-            if (existingStatus !== 'granted') {
-                const { status } = await Notifications.requestPermissionsAsync();
-                finalStatus = status;
-            }
-            if (finalStatus !== 'granted') {
-                Alert.alert('Failed to get push token for push notification!');
-                return;
-            }
-            token = (await Notifications.getExpoPushTokenAsync()).data;
-            dispatch(setExpoToken(token));
-            console.log(token);
+    useEffect(() => {
+        if (bookingId && currentBookingRedux) {
+            fetchBookingDetailInfo(currentBookingRedux.id);
         }
+    }, [currentBookingRedux, bookingId]);
 
-        if (Platform.OS === 'android') {
-            Notifications.setNotificationChannelAsync('default', {
-                name: 'default',
-                importance: Notifications.AndroidImportance.MAX,
-                vibrationPattern: [0, 250, 250, 250],
-                lightColor: '#FF231F7C',
-            });
+    const fetchCurrentUserInfo = async () => {
+        const result = await UserServices.fetchCurrentUserInfoAsync();
+        const { data } = result;
+
+        const currentUserInfo = await UserServices.mappingCurrentUserInfo(data.data);
+        if (data) {
+            dispatch(setCurrentUser(currentUserInfo));
         }
     };
 
@@ -106,10 +91,13 @@ export default function ExpoNotification() {
         dispatch(setNumberNotificationUnread(count));
     };
 
-    const handleNotificationByType = (notificationType) => {
-        switch (notificationType) {
+    const handleNotiReceived = (notificationReceived) => {
+        const notificationBody = notificationReceived.request.content.data;
+
+        switch (notificationBody.Type) {
             case 2: {
                 fetchListBooking();
+                setBookingId(notificationBody.NavigationId);
                 break;
             }
             case 3: {
@@ -119,10 +107,12 @@ export default function ExpoNotification() {
             case 4:
             {
                 fetchListHistory();
+                fetchCurrentUserInfo();
                 break;
             }
             case 5: {
                 fetchListBooking();
+                setBookingId(notificationBody.NavigationId);
                 break;
             }
             default: {
@@ -147,6 +137,18 @@ export default function ExpoNotification() {
         if (data) {
             dispatch(setListCashHistoryStore(data.data));
         }
+    };
+
+    const fetchBookingDetailInfo = async (currentBookingId) => {
+        if (currentBookingId === bookingId) {
+            const result = await BookingServices.fetchBookingDetailAsync(bookingId);
+            const { data } = result;
+
+            if (data) {
+                dispatch(setCurrentBookingRedux(data.data));
+            }
+        }
+        setBookingId(null);
     };
 
     return (

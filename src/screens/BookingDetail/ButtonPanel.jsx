@@ -1,12 +1,12 @@
 import { CustomButton } from '@components/uiComponents';
-import { BookingStatus, Theme, ScreenName } from '@constants/index';
+import { BookingStatus, ScreenName, Theme } from '@constants/index';
 import ToastHelpers from '@helpers/ToastHelpers';
 import { setPersonTabActiveIndex, setShowLoaderStore } from '@redux/Actions';
 import BookingServices from '@services/BookingServices';
 import moment from 'moment';
 import React from 'react';
 import { View } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const {
     SIZES,
@@ -14,8 +14,11 @@ const {
 } = Theme;
 
 export default function ButtonPanel({
-    booking, setModalReasonVisible, navigation, fetchListBooking, renderAlertRatingReport
+    booking, setModalReasonVisible, navigation, fetchListBooking,
+    setModalReportVisible, setModalRatingVisible
 }) {
+    const currentUser = useSelector((state) => state.userReducer.currentUser);
+
     const dispatch = useDispatch();
 
     const convertMinutesToUnix = (minutes) => moment(booking.date)
@@ -47,9 +50,7 @@ export default function ButtonPanel({
         if (isBookingGoingOn() || status === BookingStatus.CANCEL) return null;
 
         if (isBookingDone()) {
-            return (
-                renderCompleteBookingButton(0.9)
-            );
+            return renderRatingReportBooking();
         }
 
         if (status === BookingStatus.IS_CONFIRMED) {
@@ -71,6 +72,12 @@ export default function ButtonPanel({
     };
 
     const onCustomerConfirmPayment = async () => {
+        const { walletAmount } = currentUser;
+        if (walletAmount < booking.totalAmount) {
+            ToastHelpers.renderToast('Số dư không đủ');
+            return;
+        }
+
         dispatch(setShowLoaderStore(true));
         const result = await BookingServices.submitConfirmPaymentAsync(booking.id);
         const { data } = result;
@@ -84,30 +91,17 @@ export default function ButtonPanel({
         dispatch(setShowLoaderStore(false));
     };
 
-    const onClickCompleteBooking = async () => {
-        dispatch(setShowLoaderStore(true));
-        const result = await BookingServices.submitCompleteBookingAsync(booking.id);
-        const { data } = result;
-
-        if (data) {
-            renderAlertRatingReport();
+    const renderRatingReportBooking = () => {
+        if (booking.isRated) {
+            return renderReportButton(0.9);
         }
-
-        dispatch(setShowLoaderStore(false));
+        return (
+            <>
+                {renderReportButton(0.44)}
+                {renderRatingButton(0.44)}
+            </>
+        );
     };
-
-    const renderCompleteBookingButton = (width) => (
-        <CustomButton
-            onPress={() => {
-                onClickCompleteBooking();
-            }}
-            buttonStyle={{
-                width: SIZES.WIDTH_BASE * (+width)
-            }}
-            type="active"
-            label="Hoàn tất buổi hẹn"
-        />
-    );
 
     const renderCancelBooking = (width) => (
         <CustomButton
@@ -119,6 +113,32 @@ export default function ButtonPanel({
             }}
             type="default"
             label="Huỷ buổi hẹn"
+        />
+    );
+
+    const renderReportButton = (width) => (
+        <CustomButton
+            onPress={() => {
+                setModalReportVisible(true);
+            }}
+            buttonStyle={{
+                width: SIZES.WIDTH_BASE * (+width)
+            }}
+            type="default"
+            label="Báo cáo"
+        />
+    );
+
+    const renderRatingButton = (width) => (
+        <CustomButton
+            onPress={() => {
+                setModalRatingVisible(true);
+            }}
+            buttonStyle={{
+                width: SIZES.WIDTH_BASE * (+width)
+            }}
+            type="active"
+            label="Đánh giá"
         />
     );
 

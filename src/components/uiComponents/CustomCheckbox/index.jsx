@@ -2,6 +2,7 @@ import IconCustom from '@components/uiComponents/IconCustom';
 import { IconFamily, Theme } from '@constants/index';
 import React, { useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 const {
     COLORS,
@@ -74,7 +75,7 @@ export default function CustomCheckbox({
                         />
                     )}
                 </TouchableOpacity>
-                <TouchableOpacity
+                <TouchableWithoutFeedback
                     onPress={() => {
                         if (onPressLabel) onPressLabel();
                     }}
@@ -97,7 +98,7 @@ export default function CustomCheckbox({
                     >
                         {label}
                     </Text>
-                </TouchableOpacity>
+                </TouchableWithoutFeedback>
             </View>
         );
     };

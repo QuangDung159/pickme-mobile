@@ -10,20 +10,20 @@ export default {
     },
     USER: {
         CURRENT_USER_INFO: '/users/CurrentCustomerInfo',
-        UPDATE_AVATAR: '/Users/UpdateAvatar',
         UPDATE_USER_INFO: '/users/UpdateCustomerInfo',
         UPLOAD_USER_IMAGE: '/Posts/AddPost',
         REMOVE_USER_IMAGE: '/Posts/RemovePost',
         UPDATE_EXPO_TOKEN: '/Users/UpdateExpoToken',
         GET_OTP_REGISTER: '/users/CustomerRegister',
-        UPLOAD_VERIFICATION_DOC: '/Verify/AddVerifiDocument',
+        ADD_VERIFY_DOCUMENT: '/Verify/AddVerifiDocument',
         GET_VERIFICATION_DETAIL: '/Verify/VerificationRequestDetail',
-        SUBMIT_VERIFICATION: '/Verify/SubmitVerify',
+        // SUBMIT_VERIFICATION: '/Verify/SubmitVerify',
         GENERATE_OTP_WHEN_CHANGE_DEVICE: '/Devices/CustomerGenerateOTPChangedDeviceId',
         SUBMIT_CHANGE_DEVICE_CONFIRM: '/Devices/CustomerChangedDeviceIdConfirm',
         GENERATE_OTP_WHEN_FORGOT_PASSWORD: '/users/CustomerForGotPasswordOTP',
         SUBMIT_FORGOT_PASSWORD_CONFIRM: '/users/CustomerForGotPasswordConfirm',
         SUBMIT_CHANGE_PASSWORD: '/users/changepassword',
+        REPORT_USER: '/users/UpdateUserInfo'
     },
     BANK: {
         BANK_ACCOUNTS: '/users/BankAccounts',
@@ -62,6 +62,5 @@ export default {
     SYSTEM: {
         CREATE_BUG: '/Systems/CreateBug',
         PICK_ME_INFO: '/master',
-        UPLOAD_IMAGE_AND_GET_URL: '/Verify/UploadDocument'
     }
 };
