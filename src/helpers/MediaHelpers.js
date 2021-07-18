@@ -1,10 +1,10 @@
+/* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
+import { IMAGE_STORAGE_URL, IMGBB_API_KEY } from '@env';
 import { RxUtil } from '@utils/index';
 import * as ImagePicker from 'expo-image-picker';
-import * as SecureStore from 'expo-secure-store';
 import FormData from 'form-data';
 
-const uploadImage = async (uri, uploadUrl, onSuccess, onFail, imgTitle = 'image') => {
-    const apiTokenLocal = await SecureStore.getItemAsync('api_token');
+const imgbbUploadImage = async (uri, onSuccess, onFail) => {
     const filename = `${uri.split('/').pop()}`;
 
     // Infer the type of the image
@@ -15,23 +15,21 @@ const uploadImage = async (uri, uploadUrl, onSuccess, onFail, imgTitle = 'image'
     const formData = new FormData();
     // Assume "file" is the name of the form field the server expects
     formData.append('image', { uri, name: filename, type });
-    formData.append('Title', imgTitle);
+    formData.append('key', IMGBB_API_KEY);
 
     const headers = {
         'content-type': 'multipart/form-data',
-        Authorization: apiTokenLocal
     };
 
     const result = await RxUtil(
-        uploadUrl,
+        '/upload',
         'POST',
         formData,
-        undefined,
+        IMAGE_STORAGE_URL,
         headers
     );
 
     const { data } = result;
-
     if (data) {
         onSuccess(data);
     } else {
@@ -52,44 +50,7 @@ const pickImage = async (allowCrop, uploadAspect, callBack, quality = 1) => {
     }
 };
 
-const uploadImageDocument = async (uri, uploadUrl, onSuccess, onFail, docType) => {
-    const apiTokenLocal = await SecureStore.getItemAsync('api_token');
-    const filename = uri.split('/').pop();
-
-    // Infer the type of the image
-    const match = /\.(\w+)$/.exec(filename);
-    const type = match ? `image/${match[1]}` : 'image';
-
-    // Upload the image using the fetch and FormData APIs
-    const formData = new FormData();
-    // Assume "file" is the name of the form field the server expects
-    formData.append('image', { uri, name: filename, type });
-    formData.append('type', docType);
-
-    const headers = {
-        'content-type': 'multipart/form-data',
-        Authorization: apiTokenLocal
-    };
-
-    const result = await RxUtil(
-        uploadUrl,
-        'POST',
-        formData,
-        undefined,
-        headers
-    );
-
-    const { data } = result;
-
-    if (data) {
-        onSuccess(data);
-    } else {
-        onFail(data);
-    }
-};
-
 export default {
-    uploadImage,
     pickImage,
-    uploadImageDocument
+    imgbbUploadImage
 };

@@ -3,7 +3,7 @@ import {
     CenterLoader, CustomButton, Line
 } from '@components/uiComponents';
 import {
-    IconFamily, Images, Rx, ScreenName, Theme
+    IconFamily, Images, ScreenName, Theme
 } from '@constants/index';
 import { MediaHelpers, ToastHelpers } from '@helpers/index';
 import { resetStoreSignOut, setCurrentUser } from '@redux/Actions';
@@ -41,9 +41,8 @@ export default function UserInformation({ navigation }) {
     const handleOnPickAvatar = (uri) => {
         setIsShowSpinner(true);
 
-        MediaHelpers.uploadImage(
+        MediaHelpers.imgbbUploadImage(
             uri,
-            Rx.USER.UPDATE_AVATAR,
             (res) => {
                 ToastHelpers.renderToast(
                     res.data.message || 'Tải ảnh lên thành công!', 'success'
@@ -51,15 +50,29 @@ export default function UserInformation({ navigation }) {
                 setIsShowSpinner(false);
                 setImage(uri);
 
+                const newUserInfo = { ...currentUser, url: res.data.url };
                 dispatch(
-                    setCurrentUser({ ...currentUser, url: res.data.data.url })
+                    setCurrentUser(newUserInfo)
                 );
+                onSubmitUpdateInfo(newUserInfo);
             },
-            (res) => {
-                ToastHelpers.renderToast(res.data.message, 'error');
+            () => {
+                ToastHelpers.renderToast();
                 setIsShowSpinner(false);
             }
         );
+    };
+
+    const onSubmitUpdateInfo = async (body) => {
+        setIsShowSpinner(true);
+
+        const result = await UserServices.submitUpdateInfoAsync(body);
+        const { data } = result;
+
+        if (data) {
+            ToastHelpers.renderToast(data.message, 'success');
+        }
+        setIsShowSpinner(false);
     };
 
     const onClickUpdateAvatar = () => {

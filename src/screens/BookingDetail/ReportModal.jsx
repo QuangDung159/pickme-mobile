@@ -27,7 +27,7 @@ export default function ReportModal({ modalReportVisible, setModalReportVisible,
         }
 
         dispatch(setShowLoaderStore(true));
-        const result = await UserServices.submitReportUser({ description: reportDesc }, partner.id);
+        const result = await UserServices.submitReportUserAsync({ description: reportDesc }, partner.id);
         const { data } = result;
 
         if (data) {

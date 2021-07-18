@@ -2,7 +2,7 @@ import {
     CenterLoader, CustomButton
 } from '@components/uiComponents';
 import {
-    DocumentType, Theme, Rx, ScreenName, VerificationStatus
+    DocumentType, ScreenName, Theme, VerificationStatus
 } from '@constants/index';
 import { MediaHelpers, ToastHelpers } from '@helpers/index';
 import { setCurrentUser, setPersonTabActiveIndex, setVerificationStore } from '@redux/Actions';
@@ -20,7 +20,8 @@ const {
     SIZES,
     COLORS
 } = Theme;
-let count = 0;
+
+let verificationArray = [];
 
 export default function Verification({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
@@ -150,7 +151,8 @@ export default function Verification({ navigation }) {
             [4, 3],
             (result) => {
                 handleOnPickVerificationDoc(result.uri, docType);
-            }
+            },
+            0.6
         );
     };
 
@@ -174,31 +176,29 @@ export default function Verification({ navigation }) {
         }
     };
 
-    const submitVerificationRequest = async () => {
-        const result = await UserServices.submitVerificationAsync();
-        const { data } = result;
-
-        if (data) {
-            dispatch(setCurrentUser({
-                ...currentUser,
-                verifyStatus: VerificationStatus.IN_PROCESS
-            }));
-        }
-    };
-
     const uploadDoc = (docType, imageLocalUrl) => {
-        MediaHelpers.uploadImageDocument(
+        MediaHelpers.imgbbUploadImage(
             imageLocalUrl,
-            Rx.USER.UPLOAD_VERIFICATION_DOC,
-            () => {
-                count += 1;
-                if (count === 3) {
-                    submitVerificationRequest();
-                    count = 0;
+            (res) => {
+                const verifyItem = {
+                    url: res.data.url,
+                    type: docType
+                };
+
+                verificationArray.push(verifyItem);
+                if (verificationArray.length === 3) {
+                    const result = UserServices.addVerifyDocAsync({ documents: verificationArray });
+                    const { data } = result;
+
+                    if (data) {
+                        verificationArray = [];
+                    }
                 }
             },
-            () => {},
-            docType,
+            () => {
+                ToastHelpers.renderToast();
+                setIsShowSpinner(false);
+            }
         );
     };
 
@@ -273,7 +273,7 @@ export default function Verification({ navigation }) {
                     <Text
                         style={{
                             fontFamily: MONTSERRAT_REGULAR,
-                            color: COLORS.SWITCH_OFF,
+                            color: COLORS.DEFAULT,
                             fontSize: SIZES.FONT_H3
                         }}
                     >
