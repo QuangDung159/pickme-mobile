@@ -46,8 +46,6 @@ export default function Wallet({ navigation }) {
         return (
             <View
                 style={{
-                    marginRight: 10,
-                    alignItems: 'center',
                     flexDirection: 'row',
                     height: 55,
                     width: SIZES.WIDTH_BASE * 0.9,
@@ -56,13 +54,13 @@ export default function Wallet({ navigation }) {
             >
                 <View
                     style={{
-                        width: SIZES.WIDTH_BASE * 0.1
+                        width: SIZES.WIDTH_BASE * 0.05,
                     }}
                 >
                     <IconCustom
                         name={isIncrease ? 'chevron-circle-right' : 'chevron-circle-left'}
                         size={SIZES.FONT_H1 - 5}
-                        color={COLORS.DEFAULT}
+                        color={isIncrease ? COLORS.ACTIVE : COLORS.DEFAULT}
                         family={IconFamily.FONT_AWESOME}
                     />
                 </View>
@@ -84,17 +82,17 @@ export default function Wallet({ navigation }) {
                 style={{
                     flexDirection: 'row',
                     justifyContent: 'space-between',
-                    width: SIZES.WIDTH_BASE * 0.8,
+                    width: SIZES.WIDTH_BASE * 0.85,
                 }}
             >
                 <View
                     style={{
-                        width: SIZES.WIDTH_BASE * 0.4
+                        width: SIZES.WIDTH_BASE * 0.63,
                     }}
                 >
                     <Text
                         style={{
-                            color: COLORS.DEFAULT,
+                            color: isIncrease ? COLORS.ACTIVE : COLORS.DEFAULT,
                             fontSize: SIZES.FONT_H3,
                             fontFamily: MONTSERRAT_REGULAR,
                         }}
@@ -104,13 +102,14 @@ export default function Wallet({ navigation }) {
                 </View>
                 <View
                     style={{
-                        alignSelf: 'center'
+                        width: SIZES.WIDTH_BASE * 0.22,
+                        alignItems: 'flex-end'
                     }}
                 >
                     <Text
                         style={{
                             fontFamily: MONTSERRAT_REGULAR,
-                            color: COLORS.ACTIVE,
+                            color: isIncrease ? COLORS.ACTIVE : COLORS.DEFAULT,
                             fontSize: SIZES.FONT_H3,
                         }}
                     >
@@ -153,11 +152,11 @@ export default function Wallet({ navigation }) {
                     <Text
                         style={{
                             fontFamily: MONTSERRAT_REGULAR,
-                            fontSize: SIZES.FONT_H1,
+                            fontSize: SIZES.FONT_H1 + 5,
                             color: COLORS.ACTIVE,
                         }}
                     >
-                        {`${currentUser.walletAmountDisplay}k VND`}
+                        {`${currentUser.walletAmountDisplay}`}
                     </Text>
                 </View>
             </View>
@@ -218,6 +217,9 @@ export default function Wallet({ navigation }) {
                                 tintColor={COLORS.ACTIVE}
                             />
                         )}
+                        contentContainerStyle={{
+                            marginTop: 10
+                        }}
                     />
                 </View>
             );

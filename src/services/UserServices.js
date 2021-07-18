@@ -70,23 +70,23 @@ const fetchVerificationAsync = async () => {
     return CommonHelpers.handleResByStatus(result);
 };
 
-const rxSubmitVerificationAsync = async () => {
-    const result = await RxUtil(
-        Rx.USER.SUBMIT_VERIFICATION,
-        'POST'
-    );
-    return result;
-};
+// const rxSubmitVerificationAsync = async () => {
+//     const result = await RxUtil(
+//         Rx.USER.SUBMIT_VERIFICATION,
+//         'POST'
+//     );
+//     return result;
+// };
 
-const submitVerificationAsync = async () => {
-    let result = await rxSubmitVerificationAsync();
+// const submitVerificationAsync = async () => {
+//     let result = await rxSubmitVerificationAsync();
 
-    const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
-    if (handledResult) {
-        result = await rxSubmitVerificationAsync();
-    }
-    return CommonHelpers.handleResByStatus(result);
-};
+//     const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
+//     if (handledResult) {
+//         result = await rxSubmitVerificationAsync();
+//     }
+//     return CommonHelpers.handleResByStatus(result);
+// };
 
 const rxSubmitChangePasswordAsync = async (body) => {
     const result = await RxUtil(
@@ -217,6 +217,42 @@ const fetchOtpSignUpAsync = async (body) => {
     return CommonHelpers.handleResByStatus(result);
 };
 
+const rxSubmitReportUserAsync = async (body, userId) => {
+    const result = await RxUtil(
+        `${Rx.USER.REPORT_USER}/${userId}`,
+        'POST',
+        body
+    );
+    return result;
+};
+
+const submitReportUserAsync = async (body, userId) => {
+    let result = await rxSubmitReportUserAsync(body, userId);
+    const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
+    if (handledResult) {
+        result = await rxSubmitReportUserAsync(body);
+    }
+    return CommonHelpers.handleResByStatus(result);
+};
+
+const rxAddVerifyDoc = async (body) => {
+    const result = await RxUtil(
+        Rx.USER.ADD_VERIFY_DOCUMENT,
+        'POST',
+        body
+    );
+    return result;
+};
+
+const addVerifyDocAsync = async (body, userId) => {
+    let result = await rxAddVerifyDoc(body, userId);
+    const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
+    if (handledResult) {
+        result = await rxAddVerifyDoc(body);
+    }
+    return CommonHelpers.handleResByStatus(result);
+};
+
 const mappingCurrentUserInfo = async (data) => {
     let apiToken = data.token;
     if (!apiToken) {
@@ -311,7 +347,6 @@ export default {
     loginAsync,
     fetchCurrentUserInfoAsync,
     fetchVerificationAsync,
-    submitVerificationAsync,
     submitChangePasswordAsync,
     submitUpdateInfoAsync,
     submitForgotPasswordAsync,
@@ -319,5 +354,7 @@ export default {
     fetchLeaderBoardAsync,
     submitSignUpAsync,
     fetchOtpSignUpAsync,
-    mappingCurrentUserInfo
+    mappingCurrentUserInfo,
+    submitReportUserAsync,
+    addVerifyDocAsync
 };

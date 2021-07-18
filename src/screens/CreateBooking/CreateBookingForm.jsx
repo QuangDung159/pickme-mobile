@@ -154,9 +154,9 @@ export default function CreateBookingForm({
         return (
             <View
                 style={{
-                    marginBottom: 10,
+                    marginVertical: 15,
                     alignSelf: 'center',
-                    alignItems: 'center'
+                    alignItems: 'center',
                 }}
             >
                 <Text
@@ -190,10 +190,16 @@ export default function CreateBookingForm({
 
                 {renderInfoView(partner)}
 
-                <CustomCalendar
-                    onChangeDate={(date) => { onChangeDateCalendar(date); }}
-                    selectedDate={selectedDate}
-                />
+                <View
+                    style={{
+                        marginBottom: 20,
+                    }}
+                >
+                    <CustomCalendar
+                        onChangeDate={(date) => { onChangeDateCalendar(date); }}
+                        selectedDate={selectedDate}
+                    />
+                </View>
 
                 {listPartnerPackage && listPartnerPackage.length !== 0 && (
                     <TouchableWithoutFeedback

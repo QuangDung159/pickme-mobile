@@ -1,16 +1,16 @@
 import {
     CenterLoader
 } from '@components/uiComponents';
-import { Theme, ScreenName } from '@constants/index';
+import { ScreenName, Theme } from '@constants/index';
 import BookingProgressFlow from '@containers/BookingProgressFlow';
 import { ToastHelpers } from '@helpers/index';
 import {
-    setListBookingStore, setShowLoaderStore
+    setCurrentBookingRedux, setListBookingStore, setShowLoaderStore
 } from '@redux/Actions';
 import { BookingServices } from '@services/index';
 import React, { useEffect, useState } from 'react';
 import {
-    Alert, RefreshControl, SafeAreaView, ScrollView, StyleSheet, Text, View
+    RefreshControl, SafeAreaView, ScrollView, StyleSheet, Text, View
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import ButtonPanel from './ButtonPanel';
@@ -37,7 +37,6 @@ export default function BookingDetail({
     },
     navigation
 }) {
-    const [booking, setBooking] = useState();
     const [refreshing, setRefreshing] = useState(false);
     const [modalRatingVisible, setModalRatingVisible] = useState(false);
     const [modalReportVisible, setModalReportVisible] = useState(false);
@@ -45,6 +44,7 @@ export default function BookingDetail({
 
     const showLoaderStore = useSelector((state) => state.appConfigReducer.showLoaderStore);
     const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
+    const currentBookingRedux = useSelector((state) => state.bookingReducer.currentBookingRedux);
 
     const dispatch = useDispatch();
 
@@ -100,41 +100,19 @@ export default function BookingDetail({
         const { data } = result;
 
         if (data) {
-            setBooking(data.data);
+            dispatch(setCurrentBookingRedux(data.data));
         }
 
         setRefreshing(false);
         dispatch(setShowLoaderStore(false));
     };
 
-    // render \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
-    const renderAlertRatingReport = () => (
-        Alert.alert(
-            'Cảm ơn <3',
-            'Bạn vui lòng đánh giá hoặc báo cáo về đối tác của chúng tôi.',
-            [
-                {
-                    text: 'Đánh giá',
-                    onPress: () => {
-                        setModalRatingVisible(true);
-                    },
-                    style: 'cancel'
-                },
-                {
-                    text: 'Báo cáo',
-                    onPress: () => {
-                        setModalReportVisible(true);
-                    },
-                },
-                {
-                    text: 'Đóng',
-                    style: 'cancel'
-                }
-            ],
-            { cancelable: true }
-        )
-    );
+    const onSendedRating = () => {
+        dispatch(setShowLoaderStore(true));
+        fetchBookingDetailInfo();
+    };
 
+    // render \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
     try {
         return (
             <SafeAreaView
@@ -161,11 +139,14 @@ export default function BookingDetail({
                         <RatingModal
                             modalRatingVisible={modalRatingVisible}
                             setModalRatingVisible={setModalRatingVisible}
+                            bookingId={currentBookingRedux.id}
+                            onSendedRating={onSendedRating}
                         />
 
                         <ReportModal
                             modalReportVisible={modalReportVisible}
                             setModalReportVisible={setModalReportVisible}
+                            partner={currentBookingRedux.partner}
                         />
 
                         <ReasonCancelBookingModal
@@ -176,7 +157,7 @@ export default function BookingDetail({
                             fetchListBooking={() => fetchListBooking()}
                         />
 
-                        {booking && (
+                        {currentBookingRedux && (
                             <View
                                 style={{
                                     alignSelf: 'center',
@@ -190,7 +171,7 @@ export default function BookingDetail({
                                     }}
                                 >
                                     <CardBooking
-                                        booking={booking}
+                                        booking={currentBookingRedux}
                                         navigation={navigation}
                                     />
                                 </View>
@@ -220,7 +201,7 @@ export default function BookingDetail({
                                                 ]
                                             }
                                         >
-                                            {booking.noted}
+                                            {currentBookingRedux.noted}
                                         </Text>
                                     </View>
                                 </View>
@@ -232,18 +213,19 @@ export default function BookingDetail({
                                     }}
                                 >
                                     <BookingProgressFlow
-                                        status={booking.status}
-                                        partner={booking.partner}
-                                        booking={booking}
+                                        status={currentBookingRedux.status}
+                                        partner={currentBookingRedux.partner}
+                                        booking={currentBookingRedux}
                                     />
                                 </View>
 
                                 <ButtonPanel
-                                    booking={booking}
+                                    booking={currentBookingRedux}
                                     setModalReasonVisible={setModalReasonVisible}
                                     navigation={navigation}
                                     fetchListBooking={fetchListBooking}
-                                    renderAlertRatingReport={renderAlertRatingReport}
+                                    setModalReportVisible={setModalReportVisible}
+                                    setModalRatingVisible={setModalRatingVisible}
                                 />
                             </View>
                         )}

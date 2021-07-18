@@ -73,7 +73,7 @@ const validateEmail = (mail) => {
 
 const validatePhoneNum = (phoneNum) => {
     const phoneRegex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
-    phoneRegex.test(phoneNum);
+    return phoneRegex.test(phoneNum);
 };
 
 const checkType = (input, typeArr) => {
@@ -129,7 +129,7 @@ const doValidate = (validateType, validateProp, fieldName, input) => {
 
         case 'isEmail': {
             if (validateProp.value) {
-                if (!validateEmail(validateProp.value)) {
+                if (!validateEmail(input)) {
                     const message = validateProp?.message
                 || generateValidateMessage(ValidationMessageTemplate.IS_EMAIL, fieldName, validateProp.value);
 
@@ -142,7 +142,7 @@ const doValidate = (validateType, validateProp, fieldName, input) => {
 
         case 'isPhone': {
             if (validateProp.value) {
-                if (!validatePhoneNum(validateProp.value)) {
+                if (!validatePhoneNum(input)) {
                     const message = validateProp?.message
                 || generateValidateMessage(ValidationMessageTemplate.IS_PHONE, fieldName, validateProp.value);
 

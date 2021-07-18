@@ -114,7 +114,7 @@ export default function ReasonCancelBookingModal({
                                 setModalReasonVisible(false);
                             }}
                             type="active"
-                            label="Cân nhắc lại"
+                            label="Huỷ"
                             buttonStyle={{
                                 width: SIZES.WIDTH_BASE * 0.39
                             }}

@@ -1,8 +1,8 @@
 import { IndicatorVerticalLine, StepIndicator } from '@components/uiComponents';
 import { BookingStatus, Theme } from '@constants/index';
-import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
+import { useSelector } from 'react-redux';
 
 const {
     FONT: {
@@ -12,15 +12,15 @@ const {
     COLORS
 } = Theme;
 
-export default function BookingProgressFlow({
-    booking
-}) {
+export default function BookingProgressFlow() {
+    const currentBookingRedux = useSelector((state) => state.bookingReducer.currentBookingRedux);
     const {
-        partner: {
-            fullName
-        },
         status
-    } = booking;
+    } = currentBookingRedux;
+
+    useEffect(() => {
+        handleActiveStepByStatus();
+    }, [currentBookingRedux]);
 
     const [stepArr, setStepArr] = useState([
         {
@@ -30,7 +30,7 @@ export default function BookingProgressFlow({
         },
         {
             type: 'current',
-            content: `Chờ xác nhận từ ${fullName}`,
+            content: 'Đối tác xác nhận',
             buttonText: '2'
         },
         {
@@ -50,12 +50,6 @@ export default function BookingProgressFlow({
         },
     ]);
 
-    useEffect(
-        () => {
-            handleActiveStepByStatus();
-        }, []
-    );
-
     const handleActiveStepByStatus = () => {
         switch (status) {
             case BookingStatus.PAID: {
@@ -68,7 +62,7 @@ export default function BookingProgressFlow({
                         },
                         {
                             type: 'prev',
-                            content: `Chờ xác nhận từ ${fullName}`,
+                            content: 'Đối tác xác nhận',
                             buttonText: '2'
                         },
                         {
@@ -100,7 +94,7 @@ export default function BookingProgressFlow({
                         },
                         {
                             type: 'prev',
-                            content: `Chờ xác nhận từ ${fullName}`,
+                            content: 'Đối tác xác nhận',
                             buttonText: '2'
                         },
                         {
@@ -132,7 +126,7 @@ export default function BookingProgressFlow({
                         },
                         {
                             type: 'prev',
-                            content: `Chờ xác nhận từ ${fullName}`,
+                            content: 'Đối tác xác nhận',
                             buttonText: '2'
                         },
                         {
@@ -210,7 +204,3 @@ export default function BookingProgressFlow({
         </View>
     );
 }
-
-BookingProgressFlow.propTypes = {
-    booking: PropTypes.object.isRequired
-};

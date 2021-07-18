@@ -417,7 +417,7 @@ const styles = StyleSheet.create({
     buttonPanelContainer: {
         backgroundColor: 'transparent',
         position: 'absolute',
-        top: SIZES.HEIGHT_BASE * 0.74,
+        bottom: 0,
         left: 0,
         right: 0,
         height: 80,

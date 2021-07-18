@@ -45,7 +45,7 @@ export default function StepIndicator({
                     buttonStyle={indicatorStyle}
                     labelStyle={{
                         fontFamily: MONTSERRAT_BOLD,
-                        fontSize: SIZES.FONT_H2,
+                        fontSize: SIZES.FONT_H4,
                         color: buttonFontColor
                     }}
                     label={buttonText}
@@ -114,11 +114,10 @@ const styles = StyleSheet.create({
         width: 30,
         height: 30,
         alignSelf: 'center',
-        alignItems: 'center'
     },
     contentContainer: {
         marginLeft: 10,
         alignSelf: 'center',
-        alignItems: 'center'
+        width: SIZES.WIDTH_BASE * 0.8
     }
 });

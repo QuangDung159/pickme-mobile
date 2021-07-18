@@ -4,7 +4,7 @@ import {
     CustomButton, CustomInput, IconCustom, NoteText, TopTabBar
 } from '@components/uiComponents';
 import {
-    IconFamily, Theme, Rx, ScreenName
+    IconFamily, ScreenName, Theme
 } from '@constants/index';
 import { MediaHelpers, ToastHelpers } from '@helpers/index';
 import { SystemServices } from '@services/index';
@@ -94,20 +94,17 @@ export default function Support({ navigation }) {
 
     const handleOnPickImageReport = (uri) => {
         setIsShowSpinner(true);
-        MediaHelpers.uploadImage(
+        MediaHelpers.imgbbUploadImage(
             uri,
-            Rx.SYSTEM.UPLOAD_IMAGE_AND_GET_URL,
             (res) => {
                 setIsShowSpinner(false);
                 setImage(uri);
-                setBugReportForm({ ...bugReportForm, url: res.data.data.url });
+                setBugReportForm({ ...bugReportForm, url: res.data.url });
             },
-            (err) => {
-                ToastHelpers.renderToast(
-                    err?.data?.message || 'Tải ảnh lên thất bại! Vui lòng thử lại.', 'error'
-                );
+            () => {
+                ToastHelpers.renderToast();
                 setIsShowSpinner(false);
-            },
+            }
         );
     };
 
