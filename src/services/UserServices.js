@@ -217,6 +217,24 @@ const fetchOtpSignUpAsync = async (body) => {
     return CommonHelpers.handleResByStatus(result);
 };
 
+const rxSubmitReportUser = async (body, userId) => {
+    const result = await RxUtil(
+        `${Rx.USER.REPORT_USER}/${userId}`,
+        'POST',
+        body
+    );
+    return result;
+};
+
+const submitReportUser = async (body, userId) => {
+    let result = await rxSubmitReportUser(body, userId);
+    const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
+    if (handledResult) {
+        result = await rxSubmitReportUser(body);
+    }
+    return CommonHelpers.handleResByStatus(result);
+};
+
 const mappingCurrentUserInfo = async (data) => {
     let apiToken = data.token;
     if (!apiToken) {
@@ -319,5 +337,6 @@ export default {
     fetchLeaderBoardAsync,
     submitSignUpAsync,
     fetchOtpSignUpAsync,
-    mappingCurrentUserInfo
+    mappingCurrentUserInfo,
+    submitReportUser
 };

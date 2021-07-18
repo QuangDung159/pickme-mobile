@@ -172,7 +172,7 @@ export default function UserInformation({ navigation }) {
                     listUserInfo={
                         [
                             {
-                                value: walletAmountDisplay && `${walletAmountDisplay.toString()}k VND`,
+                                value: walletAmountDisplay && `${walletAmountDisplay.toString()}`,
                                 icon: {
                                     name: 'money',
                                     family: IconFamily.FONT_AWESOME,

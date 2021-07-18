@@ -1,25 +1,30 @@
 import { CenterLoader, CustomButton, CustomInput } from '@components/uiComponents';
 import {
     IconFamily,
-    Images, Theme, ScreenName
+    Images, ScreenName, Theme
 } from '@constants/index';
-import { ToastHelpers } from '@helpers/index';
+import { ValidationHelpers } from '@helpers/index';
 import {
     setCurrentUser,
+    setExpoToken,
     setIsSignInOtherDeviceStore
 } from '@redux/Actions';
 import { SystemServices, UserServices } from '@services/index';
+import Constants from 'expo-constants';
+import * as Notifications from 'expo-notifications';
 import * as SecureStore from 'expo-secure-store';
 import React, { useState } from 'react';
 import {
+    Alert,
     ImageBackground,
+    Platform,
     StyleSheet,
     Text,
     View
 } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 const {
     FONT: {
@@ -31,26 +36,56 @@ const {
 } = Theme;
 
 export default function SignIn({ navigation }) {
-    const [phoneNumber, setPhoneNumber] = useState('huyvd');
+    const [phoneNumber, setPhoneNumber] = useState('dongvu');
     const [password, setPassword] = useState('0000');
     const [isShowSpinner, setIsShowSpinner] = useState(false);
     const [deviceIdToSend, setDeviceIdToSend] = useState('');
     const [isShowPassword, setIsShowPassword] = useState(false);
 
-    const expoToken = useSelector((state) => state.appConfigReducer.expoToken);
+    // const expoToken = useSelector((state) => state.appConfigReducer.expoToken);
 
     const dispatch = useDispatch();
 
     // handler \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
-    const updateExpoTokenToServer = async () => {
+    const updateExpoTokenToServer = async (expoTokenFromServer) => {
         await SystemServices.submitUpdateExpoTokenAsync({
-            token: expoToken
+            token: expoTokenFromServer
         });
+    };
+
+    const registerForPushNotificationsAsync = async () => {
+        let expoTokenFromServer;
+        if (Constants.isDevice) {
+            const { status: existingStatus } = await Notifications.getPermissionsAsync();
+            let finalStatus = existingStatus;
+            if (existingStatus !== 'granted') {
+                const { status } = await Notifications.requestPermissionsAsync();
+                finalStatus = status;
+            }
+            if (finalStatus !== 'granted') {
+                Alert.alert('Failed to get push token for push notification!');
+                return;
+            }
+            expoTokenFromServer = (await Notifications.getExpoPushTokenAsync()).data;
+            console.log('expoTokenFromServer :>> ', expoTokenFromServer);
+            dispatch(setExpoToken(expoTokenFromServer));
+            console.log(expoTokenFromServer);
+            updateExpoTokenToServer(expoTokenFromServer);
+        }
+
+        if (Platform.OS === 'android') {
+            Notifications.setNotificationChannelAsync('default', {
+                name: 'default',
+                importance: Notifications.AndroidImportance.MAX,
+                vibrationPattern: [0, 250, 250, 250],
+                lightColor: '#FF231F7C',
+            });
+        }
     };
 
     const onSubmitLogin = async () => {
         const deviceId = await SecureStore.getItemAsync('deviceId');
-        if (validation()) {
+        if (validate()) {
             const body = {
                 username: phoneNumber,
                 password,
@@ -72,18 +107,29 @@ export default function SignIn({ navigation }) {
         }
     };
 
-    const validation = () => {
-        if (!phoneNumber) {
-            ToastHelpers.renderToast('Tên đăng nhập không hợp lệ!', 'error');
-            return false;
-        }
+    const validate = () => {
+        const validationArr = [
+            {
+                fieldName: 'Số điện thoại',
+                input: phoneNumber,
+                validate: {
+                    required: {
+                        value: true,
+                    },
+                }
+            },
+            {
+                fieldName: 'Mật khẩu',
+                input: password,
+                validate: {
+                    required: {
+                        value: true,
+                    },
+                }
+            },
+        ];
 
-        if (!password) {
-            ToastHelpers.renderToast('Mật khẩu không hợp lệ!', 'error');
-            return false;
-        }
-
-        return true;
+        return ValidationHelpers.validate(validationArr);
     };
 
     const onLoginSuccess = async (data, status) => {
@@ -99,7 +145,7 @@ export default function SignIn({ navigation }) {
                 routes: [{ name: ScreenName.APP }],
             });
 
-            updateExpoTokenToServer();
+            registerForPushNotificationsAsync();
             dispatch(setIsSignInOtherDeviceStore(false));
         }
 
@@ -222,7 +268,6 @@ export default function SignIn({ navigation }) {
                                                 value={deviceIdToSend}
                                                 onChangeText={
                                                     (deviceIdInput) => {
-                                                        console.log('deviceIdInput :>> ', deviceIdInput);
                                                         setDeviceIdToSend(deviceIdInput);
                                                     }
                                                 }

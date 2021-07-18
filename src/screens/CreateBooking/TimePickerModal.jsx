@@ -2,7 +2,7 @@ import { CustomButton, CustomModal } from '@components/uiComponents';
 import DateTimeConst from '@constants/DateTimeConst';
 import Theme from '@constants/Theme';
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import ScrollPicker from 'react-native-wheel-scroll-picker';
 
 const {
@@ -71,11 +71,6 @@ export default function TimePickerModal({
                 selectedIndex={
                     modalActiveType === 'start' ? startHourActive : endHourActive
                 }
-                renderItem={(data) => (
-                    <Text>
-                        {`${data}`}
-                    </Text>
-                )}
                 onValueChange={(data) => {
                     onChangeHourTimePicker(data);
                 }}
@@ -100,13 +95,8 @@ export default function TimePickerModal({
             <ScrollPicker
                 dataSource={minuteArr}
                 selectedIndex={
-                    modalActiveType === 'start' ? startMinuteActive : endMinuteActive
+                    modalActiveType === 'start' ? startMinuteActive + 60 : endMinuteActive + 60
                 }
-                renderItem={(data) => (
-                    <Text>
-                        {`${data}`}
-                    </Text>
-                )}
                 onValueChange={(data) => {
                     onChangeMinuteTimePicker(data);
                 }}
@@ -148,7 +138,7 @@ export default function TimePickerModal({
                                 marginVertical: 10
                             }}
                             type="active"
-                            label="Đóng"
+                            label="Chọn"
                         />
                     </View>
                 </>

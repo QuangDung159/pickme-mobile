@@ -46,13 +46,13 @@ export default function CreateBooking({ route, navigation }) {
     const [modalPartnerPackageVisible, setModalPartnerPackageVisible] = useState(false);
 
     const [modalActiveType, setModalActiveType] = useState('start');
-    const [startTimeStr, setStartTimeStr] = useState('07:00');
-    const [endTimeStr, setEndTimeStr] = useState('09:00');
+    const [startTimeStr, setStartTimeStr] = useState('06:00');
+    const [endTimeStr, setEndTimeStr] = useState('08:00');
 
     const [startHourActive, setStartHourActive] = useState(0);
     const [startMinuteActive, setStartMinuteActive] = useState(0);
     const [endHourActive, setEndHourActive] = useState(0);
-    const [endMinuteActive, setEndMinuteActive] = useState(0);
+    const [endMinuteActive, setEndMinuteActive] = useState(60);
     const [listPartnerPackage, setListPartnerPackage] = useState([]);
 
     const [packageActive, setPackageActive] = useState();
@@ -161,10 +161,10 @@ export default function CreateBooking({ route, navigation }) {
                         }}
                     >
                         <KeyboardAwareScrollView
-                            keyboardShouldPersistTaps="handled"
+                            // keyboardShouldPersistTaps="handled"
                             showsVerticalScrollIndicator={false}
                             contentContainerStyle={{
-                                marginTop: 5
+                                marginTop: 5,
                             }}
                         >
                             <PartnerBusyCalendarModal

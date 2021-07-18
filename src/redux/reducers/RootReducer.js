@@ -1,11 +1,12 @@
 import { combineReducers } from 'redux';
+import { RESET_STORE_SIGN_OUT } from '../ActionTypes';
 import appConfigReducer from './AppConfigReducer';
-import userReducer from './UserReducer';
+import bankReducer from './BankReducer';
+import bookingReducer from './BookingReducer';
+import locationReducer from './LocationReducer';
 import messageReducer from './MessageReducer';
 import notificationReducer from './NotificationReducer';
-import bankReducer from './BankReducer';
-import locationReducer from './LocationReducer';
-import { RESET_STORE_SIGN_OUT } from '../ActionTypes';
+import userReducer from './UserReducer';
 
 const appReducer = combineReducers({
     appConfigReducer,
@@ -13,7 +14,8 @@ const appReducer = combineReducers({
     messageReducer,
     notificationReducer,
     bankReducer,
-    locationReducer
+    locationReducer,
+    bookingReducer
 });
 
 const rootReducer = (state, action) => {

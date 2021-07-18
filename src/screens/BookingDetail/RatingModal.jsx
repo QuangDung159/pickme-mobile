@@ -16,7 +16,11 @@ const {
     COLORS
 } = Theme;
 
-export default function RatingModal({ modalRatingVisible, setModalRatingVisible, bookingId }) {
+export default function RatingModal({
+    modalRatingVisible,
+    setModalRatingVisible, bookingId,
+    onSendedRating
+}) {
     const [enthusiasm, setEnthusiasm] = useState(5);
     const [onTime, setOnTime] = useState(5);
     const [possitive, setPossitive] = useState(5);
@@ -38,6 +42,8 @@ export default function RatingModal({ modalRatingVisible, setModalRatingVisible,
         const { data } = result;
         if (data) {
             ToastHelpers.renderToast(data.message, 'success');
+            onSendedRating();
+            setModalRatingVisible(false);
         }
     };
 
@@ -140,16 +146,28 @@ export default function RatingModal({ modalRatingVisible, setModalRatingVisible,
 
                     <View
                         style={{
-                            alignSelf: 'center'
+                            width: SIZES.WIDTH_BASE * 0.8,
+                            marginBottom: 10,
+                            alignSelf: 'center',
+                            alignItems: 'center',
+                            flexDirection: 'row',
+                            justifyContent: 'space-between'
                         }}
                     >
                         <CustomButton
+                            onPress={() => setModalRatingVisible(false)}
+                            buttonStyle={{
+                                width: SIZES.WIDTH_BASE * 0.39
+                            }}
+                            type="default"
+                            label="Huỷ"
+                        />
+                        <CustomButton
                             onPress={() => {
                                 sendRating();
-                                setModalRatingVisible(false);
                             }}
                             buttonStyle={{
-                                width: SIZES.WIDTH_BASE * 0.8
+                                width: SIZES.WIDTH_BASE * 0.39
                             }}
                             type="active"
                             label="Gửi đánh giá"
