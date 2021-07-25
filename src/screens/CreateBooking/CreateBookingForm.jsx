@@ -4,7 +4,9 @@ import Theme from '@constants/Theme';
 import ToastHelpers from '@helpers/ToastHelpers';
 import moment from 'moment';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import {
+    Platform, StyleSheet, Text, View
+} from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 const {
@@ -192,7 +194,7 @@ export default function CreateBookingForm({
 
                 <View
                     style={{
-                        marginBottom: 20,
+                        marginBottom: Platform.OS === 'ios' || 20,
                     }}
                 >
                     <CustomCalendar
@@ -206,7 +208,7 @@ export default function CreateBookingForm({
                         containerStyle={{
                             width: SIZES.WIDTH_BASE * 0.9,
                             alignSelf: 'center',
-                            paddingBottom: 10,
+                            paddingBottom: 20,
                         }}
                         onPress={() => setModalPartnerPackageVisible(true)}
                     >

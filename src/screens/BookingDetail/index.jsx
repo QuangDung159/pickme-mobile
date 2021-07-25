@@ -136,98 +136,102 @@ export default function BookingDetail({
                             paddingBottom: 10
                         }}
                     >
-                        <RatingModal
-                            modalRatingVisible={modalRatingVisible}
-                            setModalRatingVisible={setModalRatingVisible}
-                            bookingId={currentBookingRedux.id}
-                            onSendedRating={onSendedRating}
-                        />
-
-                        <ReportModal
-                            modalReportVisible={modalReportVisible}
-                            setModalReportVisible={setModalReportVisible}
-                            partner={currentBookingRedux.partner}
-                        />
-
-                        <ReasonCancelBookingModal
-                            modalReasonVisible={modalReasonVisible}
-                            setModalReasonVisible={setModalReasonVisible}
-                            bookingId={bookingId}
-                            navigation={navigation}
-                            fetchListBooking={() => fetchListBooking()}
-                        />
-
                         {currentBookingRedux && (
-                            <View
-                                style={{
-                                    alignSelf: 'center',
-                                    marginTop: 5,
-                                }}
-                            >
-                                <View
-                                    style={{
-                                        backgroundColor: COLORS.BLOCK,
-                                        width: SIZES.WIDTH_BASE
-                                    }}
-                                >
-                                    <CardBooking
-                                        booking={currentBookingRedux}
-                                        navigation={navigation}
-                                    />
-                                </View>
+                            <>
+                                <RatingModal
+                                    modalRatingVisible={modalRatingVisible}
+                                    setModalRatingVisible={setModalRatingVisible}
+                                    bookingId={currentBookingRedux.id}
+                                    onSendedRating={onSendedRating}
+                                />
 
-                                <View
-                                    style={{
-                                        backgroundColor: COLORS.BLOCK,
-                                        marginTop: 5,
-                                        alignContent: 'center'
-                                    }}
-                                >
+                                <ReportModal
+                                    modalReportVisible={modalReportVisible}
+                                    setModalReportVisible={setModalReportVisible}
+                                    partner={currentBookingRedux.partner}
+                                />
+
+                                <ReasonCancelBookingModal
+                                    modalReasonVisible={modalReasonVisible}
+                                    setModalReasonVisible={setModalReasonVisible}
+                                    bookingId={bookingId}
+                                    navigation={navigation}
+                                    fetchListBooking={() => fetchListBooking()}
+                                />
+
+                                {currentBookingRedux && (
                                     <View
                                         style={{
-                                            width: SIZES.WIDTH_BASE * 0.9,
                                             alignSelf: 'center',
+                                            marginTop: 5,
                                         }}
                                     >
-                                        <Text
-                                            style={
-                                                [
-                                                    styles.subTitle,
-                                                    {
-                                                        color: COLORS.DEFAULT,
-                                                        fontSize: SIZES.FONT_H3,
-                                                        marginVertical: 20
-                                                    }
-                                                ]
-                                            }
+                                        <View
+                                            style={{
+                                                backgroundColor: COLORS.BLOCK,
+                                                width: SIZES.WIDTH_BASE
+                                            }}
                                         >
-                                            {currentBookingRedux.noted}
-                                        </Text>
+                                            <CardBooking
+                                                booking={currentBookingRedux}
+                                                navigation={navigation}
+                                            />
+                                        </View>
+
+                                        <View
+                                            style={{
+                                                backgroundColor: COLORS.BLOCK,
+                                                marginTop: 5,
+                                                alignContent: 'center'
+                                            }}
+                                        >
+                                            <View
+                                                style={{
+                                                    width: SIZES.WIDTH_BASE * 0.9,
+                                                    alignSelf: 'center',
+                                                }}
+                                            >
+                                                <Text
+                                                    style={
+                                                        [
+                                                            styles.subTitle,
+                                                            {
+                                                                color: COLORS.DEFAULT,
+                                                                fontSize: SIZES.FONT_H3,
+                                                                marginVertical: 20
+                                                            }
+                                                        ]
+                                                    }
+                                                >
+                                                    {currentBookingRedux.noted}
+                                                </Text>
+                                            </View>
+                                        </View>
+
+                                        <View
+                                            style={{
+                                                backgroundColor: COLORS.BLOCK,
+                                                marginTop: 5,
+                                            }}
+                                        >
+                                            <BookingProgressFlow
+                                                status={currentBookingRedux.status}
+                                                partner={currentBookingRedux.partner}
+                                                booking={currentBookingRedux}
+                                            />
+                                        </View>
+
+                                        <ButtonPanel
+                                            booking={currentBookingRedux}
+                                            setModalReasonVisible={setModalReasonVisible}
+                                            navigation={navigation}
+                                            fetchListBooking={fetchListBooking}
+                                            setModalReportVisible={setModalReportVisible}
+                                            setModalRatingVisible={setModalRatingVisible}
+                                        />
                                     </View>
-                                </View>
-
-                                <View
-                                    style={{
-                                        backgroundColor: COLORS.BLOCK,
-                                        marginTop: 5,
-                                    }}
-                                >
-                                    <BookingProgressFlow
-                                        status={currentBookingRedux.status}
-                                        partner={currentBookingRedux.partner}
-                                        booking={currentBookingRedux}
-                                    />
-                                </View>
-
-                                <ButtonPanel
-                                    booking={currentBookingRedux}
-                                    setModalReasonVisible={setModalReasonVisible}
-                                    navigation={navigation}
-                                    fetchListBooking={fetchListBooking}
-                                    setModalReportVisible={setModalReportVisible}
-                                    setModalRatingVisible={setModalRatingVisible}
-                                />
-                            </View>
+                                )}
+                            </>
                         )}
                     </ScrollView>
                 )}

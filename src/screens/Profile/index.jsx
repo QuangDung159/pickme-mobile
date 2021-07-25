@@ -146,7 +146,7 @@ export default function Profile({ route, navigation }) {
                         [
                             {
                                 value: earningExpected
-                                && `${CommonHelpers.generateMoneyStr((earningExpected * 60))}/giờ`,
+                                && `${CommonHelpers.formatCurrency((earningExpected * 60))}/giờ`,
                                 icon: {
                                     name: 'money',
                                     family: IconFamily.FONT_AWESOME,

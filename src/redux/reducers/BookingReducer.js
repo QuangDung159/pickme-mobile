@@ -1,5 +1,6 @@
 import {
-    SET_CURRENT_BOOKING_REDUX
+    SET_CURRENT_BOOKING_REDUX,
+    SET_LIST_PARTNER_HOME_REDUX
 } from '../ActionTypes';
 
 const initState = {
@@ -11,6 +12,9 @@ const bookingReducer = (state = initState, action) => {
     switch (type) {
         case SET_CURRENT_BOOKING_REDUX: {
             return { ...state, currentBookingRedux: payload.currentBookingRedux };
+        }
+        case SET_LIST_PARTNER_HOME_REDUX: {
+            return { ...state, listPartnerHomeRedux: payload.listPartnerHomeRedux };
         }
         default: {
             return state;

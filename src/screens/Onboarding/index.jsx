@@ -1,9 +1,11 @@
 import { CenterLoader, CustomButton } from '@components/uiComponents';
 import {
-    Images, Theme, ScreenName, Utils
+    Images, ScreenName, Theme, Utils
 } from '@constants/index';
-import { setCurrentUser, setIsSignInOtherDeviceStore, setNavigation } from '@redux/Actions';
-import { UserServices } from '@services/index';
+import {
+    setCurrentUser, setIsSignInOtherDeviceStore, setListPartnerHomeRedux, setNavigation
+} from '@redux/Actions';
+import { BookingServices, UserServices } from '@services/index';
 import Constants from 'expo-constants';
 import * as SecureStore from 'expo-secure-store';
 import React, { useEffect, useState } from 'react';
@@ -30,6 +32,7 @@ export default function Onboarding({ navigation }) {
 
     useEffect(
         () => {
+            getListPartner();
             dispatch(setNavigation(navigation));
             onLogin();
 
@@ -49,6 +52,15 @@ export default function Onboarding({ navigation }) {
             }
         }, [isSignInOtherDeviceStore]
     );
+
+    const getListPartner = async () => {
+        const result = await BookingServices.fetchListPartnerAsync();
+        const { data } = result;
+
+        if (data) {
+            dispatch(setListPartnerHomeRedux(data.data));
+        }
+    };
 
     const onLogin = async () => {
         const phoneNumber = await SecureStore.getItemAsync('phoneNumber');
@@ -186,7 +198,6 @@ export default function Onboarding({ navigation }) {
                         </View>
                     </View>
                 )}
-
             </View>
         </View>
     );

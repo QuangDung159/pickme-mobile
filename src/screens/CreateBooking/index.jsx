@@ -236,7 +236,8 @@ export default function CreateBooking({ route, navigation }) {
                                     backgroundColor: COLORS.BLOCK,
                                     width: SIZES.WIDTH_BASE,
                                     marginTop: 5,
-                                    paddingBottom: 20
+                                    paddingBottom: 20,
+                                    marginBottom: 10
                                 }}
                             >
                                 <Total

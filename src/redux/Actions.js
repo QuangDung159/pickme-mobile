@@ -5,8 +5,7 @@ import {
     SET_LIST_BOOKING_LOCATION,
     SET_LIST_BOOKING_STORE,
     SET_LIST_CASH_HISTORY_STORE,
-    SET_LIST_CONVERSATION, SET_LIST_NOTIFICATION,
-    SET_MESSAGE_LISTENED,
+    SET_LIST_CONVERSATION, SET_LIST_NOTIFICATION, SET_LIST_PARTNER_HOME_REDUX, SET_MESSAGE_LISTENED,
     SET_NAVIGATION,
     SET_NOTIFICATION_RECEIVED_REDUX,
     SET_NUMBER_MESSAGE_UNREAD,
@@ -179,5 +178,12 @@ export const setCurrentBookingRedux = (currentBookingRedux) => ({
     type: SET_CURRENT_BOOKING_REDUX,
     payload: {
         currentBookingRedux
+    }
+});
+
+export const setListPartnerHomeRedux = (listPartnerHomeRedux) => ({
+    type: SET_LIST_PARTNER_HOME_REDUX,
+    payload: {
+        listPartnerHomeRedux
     }
 });

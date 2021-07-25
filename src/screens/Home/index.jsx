@@ -9,6 +9,7 @@ import {
     setListBookingStore,
     setListConversation,
     setListNotification,
+    setListPartnerHomeRedux,
     setNumberMessageUnread,
     setNumberNotificationUnread, setPickMeInfoStore
 } from '@redux/Actions';
@@ -39,8 +40,7 @@ const getTokenFromLocal = async () => {
 
 export default function Home({ navigation }) {
     const [refreshing, setRefreshing] = useState(false);
-    const [isShowSpinner, setIsShowSpinner] = useState(true);
-    const [listPartnerHome, setListPartnerHome] = useState([]);
+    const [isShowSpinner, setIsShowSpinner] = useState(false);
     const [listConversationGetAtHome, setListConversationGetAtHome] = useState([]);
 
     const pickMeInfoStore = useSelector((state) => state.appConfigReducer.pickMeInfoStore);
@@ -49,6 +49,7 @@ export default function Home({ navigation }) {
     const numberMessageUnread = useSelector((state) => state.messageReducer.numberMessageUnread);
     const chattingWith = useSelector((state) => state.messageReducer.chattingWith);
     const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
+    const listPartnerHomeRedux = useSelector((state) => state.bookingReducer.listPartnerHomeRedux);
 
     const dispatch = useDispatch();
 
@@ -58,8 +59,10 @@ export default function Home({ navigation }) {
             fetchListBooking();
 
             if (!pickMeInfoStore) fetchPickMeInfo();
-
-            getListPartner();
+            if (!listPartnerHomeRedux || listPartnerHomeRedux.length === 0) {
+                setIsShowSpinner(true);
+                getListPartner();
+            }
 
             getListConversationFromSocket(
                 1, 20,
@@ -213,7 +216,7 @@ export default function Home({ navigation }) {
         const { data } = result;
 
         if (data) {
-            setListPartnerHome(data.data);
+            dispatch(setListPartnerHomeRedux(data.data));
         }
         setRefreshing(false);
         setIsShowSpinner(false);
@@ -243,7 +246,7 @@ export default function Home({ navigation }) {
     const renderArticles = () => (
         <FlatList
             showsVerticalScrollIndicator={false}
-            data={listPartnerHome}
+            data={listPartnerHomeRedux}
             refreshControl={(
                 <RefreshControl
                     refreshing={refreshing}
