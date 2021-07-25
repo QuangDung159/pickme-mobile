@@ -1,17 +1,19 @@
 /* eslint-disable global-require */
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
-import { ENV } from '@env';
 import { ExpoNotification } from '@components/businessComponents';
 import { IconCustom } from '@components/uiComponents';
 import { IconFamily, Images, Theme } from '@constants/index';
 import Main from '@containers/Main';
+import { ENV } from '@env';
 import { ToastHelpers } from '@helpers/index';
 import store from '@redux/Store';
 import AppLoading from 'expo-app-loading';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
+import * as Updates from 'expo-updates';
 import * as React from 'react';
 import {
+    Alert,
     Image, Platform, StatusBar, StyleSheet, Text, View
 } from 'react-native';
 import { MenuProvider } from 'react-native-popup-menu';
@@ -108,6 +110,25 @@ const toastConfig = {
 export default function App() {
     const [isLoadingComplete, setIsLoadingComplete] = React.useState(false);
     const [fontLoaded, setFontLoaded] = React.useState(false);
+
+    React.useEffect(
+        () => {
+            const fetchUpdateOTA = Updates.addListener(async () => {
+                const otaObj = await Updates.fetchUpdateAsync();
+                if (otaObj.isNew) {
+                    Alert.alert(
+                        'Bạn có bản cập nhật mới,\nvui lòng khởi động lại ứng dụng',
+                        '',
+                        [
+                            { text: 'Cập nhật', onPress: () => Updates.reloadAsync() },
+                        ],
+                    );
+                }
+            });
+
+            return () => fetchUpdateOTA;
+        }, []
+    );
 
     React.useEffect(
         () => {

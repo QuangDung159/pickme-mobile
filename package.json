@@ -22,6 +22,7 @@
     "expo-notifications": "~0.8.2",
     "expo-permissions": "10.0.0",
     "expo-secure-store": "~9.3.0",
+    "expo-updates": "~0.4.1",
     "form-data": "3.0.0",
     "galio-framework": "0.7.1",
     "graphql": "15.4.0",
