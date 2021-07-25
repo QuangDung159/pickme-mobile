@@ -87,7 +87,7 @@ export default function Wallet({ navigation }) {
             >
                 <View
                     style={{
-                        width: SIZES.WIDTH_BASE * 0.63,
+                        width: SIZES.WIDTH_BASE * 0.65,
                     }}
                 >
                     <Text
@@ -95,6 +95,7 @@ export default function Wallet({ navigation }) {
                             color: isIncrease ? COLORS.ACTIVE : COLORS.DEFAULT,
                             fontSize: SIZES.FONT_H3,
                             fontFamily: MONTSERRAT_REGULAR,
+                            marginLeft: 5
                         }}
                     >
                         {content}
@@ -102,7 +103,7 @@ export default function Wallet({ navigation }) {
                 </View>
                 <View
                     style={{
-                        width: SIZES.WIDTH_BASE * 0.22,
+                        width: SIZES.WIDTH_BASE * 0.15,
                         alignItems: 'flex-end'
                     }}
                 >

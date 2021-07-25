@@ -1,5 +1,5 @@
 import { NoteText } from '@components/uiComponents';
-import { Theme, ScreenName } from '@constants/index';
+import { ScreenName, Theme } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
 import Clipboard from 'expo-clipboard';
 import React, { useEffect } from 'react';
@@ -22,7 +22,7 @@ export default function CashIn(props) {
         ToastHelpers.renderToast('Đã lưu vào khay nhớ tạm.', 'success');
     };
 
-    const moneyTransferContent = 'Số điện thoại - pickme';
+    const moneyTransferContent = '[Số điện thoại] - pickme';
 
     useEffect(
         () => {
@@ -57,17 +57,21 @@ export default function CashIn(props) {
                                 marginTop: 10
                             }}
                         >
-                            <NoteText
-                                width={SIZES.WIDTH_BASE * 0.9}
-                                title="Số tài khoản: "
-                                content="0186xxxxxxxxx"
-                                contentStyle={{
-                                    fontSize: SIZES.FONT_H1 - 5,
-                                    color: COLORS.ACTIVE,
-                                    marginTop: 10,
-                                    paddingVertical: 20
-                                }}
-                            />
+                            <TouchableWithoutFeedback
+                                onPress={() => copyToClipboard('0186xxxxxxxxx')}
+                            >
+                                <NoteText
+                                    width={SIZES.WIDTH_BASE * 0.9}
+                                    title="Số tài khoản: "
+                                    content="0186xxxxxxxxx"
+                                    contentStyle={{
+                                        fontSize: SIZES.FONT_H1 - 5,
+                                        color: COLORS.ACTIVE,
+                                        marginTop: 10,
+                                        paddingVertical: 20
+                                    }}
+                                />
+                            </TouchableWithoutFeedback>
                         </View>
 
                         <View
