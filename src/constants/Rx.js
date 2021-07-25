@@ -23,7 +23,7 @@ export default {
         GENERATE_OTP_WHEN_FORGOT_PASSWORD: '/users/CustomerForGotPasswordOTP',
         SUBMIT_FORGOT_PASSWORD_CONFIRM: '/users/CustomerForGotPasswordConfirm',
         SUBMIT_CHANGE_PASSWORD: '/users/changepassword',
-        REPORT_USER: '/users/UpdateUserInfo'
+        REPORT_USER: '/Reports/Report',
     },
     BANK: {
         BANK_ACCOUNTS: '/users/BankAccounts',
