@@ -120,7 +120,7 @@ export default function App() {
                         'Bạn có bản cập nhật mới,\nvui lòng khởi động lại ứng dụng',
                         '',
                         [
-                            { text: 'Cập nhật', onPress: () => Updates.reloadAsync() },
+                            { text: 'Khởi động lại', onPress: () => Updates.reloadAsync() },
                         ],
                     );
                 }
