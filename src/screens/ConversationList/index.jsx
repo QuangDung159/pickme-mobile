@@ -1,15 +1,19 @@
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
-import { CenterLoader } from '@components/uiComponents';
-import { GraphQueryString, Theme, ScreenName } from '@constants/index';
+import {
+    CenterLoader
+} from '@components/uiComponents';
+import { GraphQueryString, ScreenName, Theme } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
 import { setListConversation, setNumberMessageUnread } from '@redux/Actions';
 import { socketRequestUtil } from '@utils/index';
 import React, { useEffect, useState } from 'react';
 import {
+    Alert,
     Image, RefreshControl, Text, View
 } from 'react-native';
 import { FlatList, ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
+import ModalReport from './ModalReport';
 
 const {
     FONT: {
@@ -23,6 +27,8 @@ const {
 export default function ConversationList({ navigation }) {
     const [refreshing, setRefreshing] = useState(false);
     const [isShowSpinner, setIsShowSpinner] = useState(false);
+    const [modalReasonVisible, setModalReasonVisible] = useState(false);
+    const [userId, setUserId] = useState();
 
     const messageListened = useSelector((state) => state.messageReducer.messageListened);
     const currentUser = useSelector((state) => state.userReducer.currentUser);
@@ -76,8 +82,27 @@ export default function ConversationList({ navigation }) {
         if (!conversationParams.isRead) {
             dispatch(setNumberMessageUnread(numberMessageUnread - 1));
         }
+    };
 
-        navigation.navigate(ScreenName.MESSAGE, conversationParams);
+    const onLongPressConversationItem = (conversationParams) => {
+        Alert.alert(
+            `${conversationParams.name}`,
+            '',
+            [
+                {
+                    text: 'Huỷ',
+                    style: 'cancel'
+                },
+                {
+                    text: 'Báo cáo người dùng',
+                    onPress: () => {
+                        setModalReasonVisible(true);
+                        setUserId(conversationParams.toUserId);
+                    }
+                },
+            ],
+            { cancelable: false }
+        );
     };
 
     const getListConversationFromSocket = (pageIndex, pageSize, onFetchData) => {
@@ -156,6 +181,9 @@ export default function ConversationList({ navigation }) {
                 onPress={
                     () => onClickConversationItem(params)
                 }
+                onLongPress={
+                    () => onLongPressConversationItem(params)
+                }
                 containerStyle={{
                     backgroundColor: COLORS.BLOCK,
                     marginTop: 5
@@ -227,6 +255,12 @@ export default function ConversationList({ navigation }) {
                     <CenterLoader />
                 ) : (
                     <>
+                        <ModalReport
+                            modalReasonVisible={modalReasonVisible}
+                            setModalReasonVisible={(visible) => setModalReasonVisible(visible)}
+                            setIsShowSpinner={(showSpinner) => setIsShowSpinner(showSpinner)}
+                            userId={userId}
+                        />
                         {listConversation && listConversation.length !== 0 ? (
                             <FlatList
                                 data={listConversation}
