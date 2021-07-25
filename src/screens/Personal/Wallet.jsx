@@ -1,6 +1,6 @@
 import { CenterLoader, CustomButton, IconCustom } from '@components/uiComponents';
 import {
-    IconFamily, Theme, ScreenName
+    IconFamily, ScreenName, Theme
 } from '@constants/index';
 import { CommonHelpers, ToastHelpers } from '@helpers/index';
 import { setCurrentUser, setListCashHistoryStore } from '@redux/Actions';
