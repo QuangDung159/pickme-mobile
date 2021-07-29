@@ -117,10 +117,10 @@ export default function App() {
                 const otaObj = await Updates.fetchUpdateAsync();
                 if (otaObj.isNew) {
                     Alert.alert(
-                        'Bạn có bản cập nhật mới,\nvui lòng khởi động lại ứng dụng',
-                        '',
+                        'Bạn có bản cập nhật mới',
+                        '(ota-290721)',
                         [
-                            { text: 'Khởi động lại', onPress: () => Updates.reloadAsync() },
+                            { text: 'Cập nhật', onPress: () => Updates.reloadAsync() },
                         ],
                     );
                 }

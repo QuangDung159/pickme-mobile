@@ -1,5 +1,6 @@
 import { Theme } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
+import { BlurView } from 'expo-blur';
 import React from 'react';
 import { Modal, StyleSheet, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -11,36 +12,38 @@ export default function CustomModal({
 }) {
     const renderModal = () => (
         <Modal
-            animationType="slide"
+            animationType="fade"
             transparent
             visible={modalVisible}
         >
-            <ScrollView
-                showsVerticalScrollIndicator={false}
-            >
-                <View style={
-                    [
-                        styles.containerStyle,
-                        containerStyle
-                    ]
-                }
+            <BlurView intensity={100} style={[StyleSheet.absoluteFill]}>
+                <ScrollView
+                    showsVerticalScrollIndicator={false}
                 >
-                    <View
-                        style={
-                            [
-                                styles.contentStyle,
-                                contentStyle
-                            ]
-                        }
+                    <View style={
+                        [
+                            styles.containerStyle,
+                            containerStyle
+                        ]
+                    }
                     >
-                        {renderContent && (
-                            <>
-                                {renderContent()}
-                            </>
-                        )}
+                        <View
+                            style={
+                                [
+                                    styles.contentStyle,
+                                    contentStyle
+                                ]
+                            }
+                        >
+                            {renderContent && (
+                                <>
+                                    {renderContent()}
+                                </>
+                            )}
+                        </View>
                     </View>
-                </View>
-            </ScrollView>
+                </ScrollView>
+            </BlurView>
         </Modal>
     );
 

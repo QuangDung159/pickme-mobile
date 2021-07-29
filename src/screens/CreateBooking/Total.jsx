@@ -90,6 +90,11 @@ export default function Total({
         const startString = convertStringHoursToMinutes(startTimeStr);
         const endString = convertStringHoursToMinutes(endTimeStr);
 
+        if (startString > 1200) {
+            ToastHelpers.renderToast('Vui lòng không bắt đầu sau 20h');
+            return;
+        }
+
         const bookingToSubmit = {
             StartAt: startString,
             EndAt: endString,

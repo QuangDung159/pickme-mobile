@@ -69,7 +69,7 @@ export default function TimePickerModal({
             <ScrollPicker
                 dataSource={hourArr}
                 selectedIndex={
-                    modalActiveType === 'start' ? startHourActive : endHourActive
+                    modalActiveType === 'start' ? startHourActive + 17 : endHourActive + 17
                 }
                 onValueChange={(data) => {
                     onChangeHourTimePicker(data);
