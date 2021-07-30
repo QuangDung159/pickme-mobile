@@ -8,8 +8,8 @@ import { Text, View } from 'react-native';
 
 const {
     FONT: {
-        MONTSERRAT_REGULAR,
-        MONTSERRAT_BOLD
+        TEXT_REGULAR,
+        TEXT_BOLD
     },
     SIZES,
     COLORS
@@ -57,7 +57,7 @@ export default function PartnerPackageModal({
                     <Picker
                         selectedValue={packageActive.id}
                         onValueChange={(itemValue) => onChangePackage(itemValue)}
-                        fontFamily={MONTSERRAT_REGULAR}
+                        fontFamily={TEXT_REGULAR}
                         itemStyle={{
                             fontSize: SIZES.FONT_H2,
                             color: COLORS.DEFAULT
@@ -75,7 +75,7 @@ export default function PartnerPackageModal({
                     >
                         <Text
                             style={{
-                                fontFamily: MONTSERRAT_REGULAR,
+                                fontFamily: TEXT_REGULAR,
                                 color: COLORS.ACTIVE,
                                 fontSize: SIZES.FONT_H1,
                                 marginBottom: 10,
@@ -85,7 +85,7 @@ export default function PartnerPackageModal({
                         </Text>
                         <Text
                             style={{
-                                fontFamily: MONTSERRAT_REGULAR,
+                                fontFamily: TEXT_REGULAR,
                                 color: COLORS.ACTIVE,
                                 fontSize: SIZES.FONT_H1,
                                 marginBottom: 10
@@ -97,7 +97,7 @@ export default function PartnerPackageModal({
 
                     <Text
                         style={{
-                            fontFamily: MONTSERRAT_REGULAR,
+                            fontFamily: TEXT_REGULAR,
                             color: COLORS.DEFAULT,
                             fontSize: SIZES.FONT_H2,
                             marginBottom: 10
@@ -107,7 +107,7 @@ export default function PartnerPackageModal({
                     </Text>
                     <Text
                         style={{
-                            fontFamily: MONTSERRAT_REGULAR,
+                            fontFamily: TEXT_REGULAR,
                             color: COLORS.DEFAULT,
                             fontSize: SIZES.FONT_H2,
                             marginBottom: 10
@@ -123,7 +123,7 @@ export default function PartnerPackageModal({
                     >
                         <Text
                             style={{
-                                fontFamily: MONTSERRAT_BOLD,
+                                fontFamily: TEXT_BOLD,
                                 fontSize: 30,
                                 paddingVertical: 10,
                                 color: COLORS.ACTIVE

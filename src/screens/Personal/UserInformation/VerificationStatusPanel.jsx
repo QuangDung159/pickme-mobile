@@ -6,8 +6,8 @@ import { useSelector } from 'react-redux';
 
 const {
     FONT: {
-        MONTSERRAT_REGULAR,
-        MONTSERRAT_BOLD
+        TEXT_REGULAR,
+        TEXT_BOLD
     },
     SIZES,
     COLORS
@@ -30,7 +30,7 @@ export default function VerificationStatusPanel() {
                             <Text
                                 style={{
                                     color: COLORS.DEFAULT,
-                                    fontFamily: MONTSERRAT_BOLD,
+                                    fontFamily: TEXT_BOLD,
                                     fontSize: SIZES.FONT_H3,
                                 }}
                             >
@@ -39,7 +39,7 @@ export default function VerificationStatusPanel() {
                             <Text
                                 style={{
                                     color: COLORS.ACTIVE,
-                                    fontFamily: MONTSERRAT_REGULAR,
+                                    fontFamily: TEXT_REGULAR,
                                     fontSize: SIZES.FONT_H3,
                                     marginTop: 10
                                 }}
@@ -62,7 +62,7 @@ export default function VerificationStatusPanel() {
                             <Text
                                 style={{
                                     color: COLORS.DEFAULT,
-                                    fontFamily: MONTSERRAT_BOLD,
+                                    fontFamily: TEXT_BOLD,
                                     fontSize: SIZES.FONT_H3,
                                 }}
                             >
@@ -71,7 +71,7 @@ export default function VerificationStatusPanel() {
                             <Text
                                 style={{
                                     color: COLORS.ACTIVE,
-                                    fontFamily: MONTSERRAT_REGULAR,
+                                    fontFamily: TEXT_REGULAR,
                                     fontSize: SIZES.FONT_H3,
                                     marginTop: 10
                                 }}
@@ -94,7 +94,7 @@ export default function VerificationStatusPanel() {
                             <Text
                                 style={{
                                     color: COLORS.DEFAULT,
-                                    fontFamily: MONTSERRAT_BOLD,
+                                    fontFamily: TEXT_BOLD,
                                     fontSize: SIZES.FONT_H3,
                                 }}
                             >
@@ -103,7 +103,7 @@ export default function VerificationStatusPanel() {
                             <Text
                                 style={{
                                     color: COLORS.ACTIVE,
-                                    fontFamily: MONTSERRAT_REGULAR,
+                                    fontFamily: TEXT_REGULAR,
                                     fontSize: SIZES.FONT_H3,
                                     marginTop: 10
                                 }}

@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const {
     FONT: {
-        MONTSERRAT_REGULAR,
+        TEXT_REGULAR,
     },
     SIZES,
     COLORS
@@ -50,6 +50,7 @@ export default function Wallet({ navigation }) {
                     height: 55,
                     width: SIZES.WIDTH_BASE * 0.9,
                     alignSelf: 'center',
+                    alignItems: 'center',
                 }}
             >
                 <View
@@ -59,7 +60,7 @@ export default function Wallet({ navigation }) {
                 >
                     <IconCustom
                         name={isIncrease ? 'chevron-circle-right' : 'chevron-circle-left'}
-                        size={SIZES.FONT_H1 - 5}
+                        size={SIZES.FONT_H1 - 6}
                         color={isIncrease ? COLORS.ACTIVE : COLORS.DEFAULT}
                         family={IconFamily.FONT_AWESOME}
                     />
@@ -87,14 +88,14 @@ export default function Wallet({ navigation }) {
             >
                 <View
                     style={{
-                        width: SIZES.WIDTH_BASE * 0.65,
+                        width: SIZES.WIDTH_BASE * 0.6,
                     }}
                 >
                     <Text
                         style={{
                             color: isIncrease ? COLORS.ACTIVE : COLORS.DEFAULT,
                             fontSize: SIZES.FONT_H3,
-                            fontFamily: MONTSERRAT_REGULAR,
+                            fontFamily: TEXT_REGULAR,
                             marginLeft: 5
                         }}
                     >
@@ -103,13 +104,13 @@ export default function Wallet({ navigation }) {
                 </View>
                 <View
                     style={{
-                        width: SIZES.WIDTH_BASE * 0.15,
+                        width: SIZES.WIDTH_BASE * 0.2,
                         alignItems: 'flex-end'
                     }}
                 >
                     <Text
                         style={{
-                            fontFamily: MONTSERRAT_REGULAR,
+                            fontFamily: TEXT_REGULAR,
                             color: isIncrease ? COLORS.ACTIVE : COLORS.DEFAULT,
                             fontSize: SIZES.FONT_H3,
                         }}
@@ -138,7 +139,7 @@ export default function Wallet({ navigation }) {
             >
                 <Text
                     style={{
-                        fontFamily: MONTSERRAT_REGULAR,
+                        fontFamily: TEXT_REGULAR,
                         fontSize: SIZES.FONT_H4,
                         color: COLORS.DEFAULT
                     }}
@@ -152,7 +153,7 @@ export default function Wallet({ navigation }) {
                 >
                     <Text
                         style={{
-                            fontFamily: MONTSERRAT_REGULAR,
+                            fontFamily: TEXT_REGULAR,
                             fontSize: SIZES.FONT_H1 + 5,
                             color: COLORS.ACTIVE,
                         }}
@@ -244,7 +245,7 @@ export default function Wallet({ navigation }) {
                 >
                     <Text
                         style={{
-                            fontFamily: MONTSERRAT_REGULAR,
+                            fontFamily: TEXT_REGULAR,
                             color: COLORS.DEFAULT,
                             fontSize: SIZES.FONT_H3
                         }}

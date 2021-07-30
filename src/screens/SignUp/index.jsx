@@ -19,7 +19,7 @@ import PhoneForm from './PhoneForm';
 
 const {
     FONT: {
-        MONTSERRAT_BOLD
+        TEXT_BOLD
     },
     SIZES,
     COLORS
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
         overflow: 'hidden'
     },
     title: {
-        fontFamily: MONTSERRAT_BOLD,
+        fontFamily: TEXT_BOLD,
         textAlign: 'center'
     },
     stepSessionContainer: {

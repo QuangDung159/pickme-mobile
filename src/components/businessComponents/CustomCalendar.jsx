@@ -17,8 +17,8 @@ const arrDOW = [
 const currentDate = moment().format('DD-MM-YYYY');
 const {
     FONT: {
-        MONTSERRAT_REGULAR,
-        MONTSERRAT_BOLD
+        TEXT_REGULAR,
+        TEXT_BOLD
     },
     SIZES,
     COLORS
@@ -92,7 +92,7 @@ export default function CustomCalendar({ selectedDate, onChangeDate }) {
                             style={
                                 [
                                     {
-                                        fontFamily: MONTSERRAT_BOLD,
+                                        fontFamily: TEXT_BOLD,
                                         fontSize: SIZES.FONT_H3,
                                         color: COLORS.DEFAULT
                                     },
@@ -129,8 +129,8 @@ export default function CustomCalendar({ selectedDate, onChangeDate }) {
                     const dateTextStyle = {
                         color: currentDate === item || item === selectedDateState ? COLORS.ACTIVE : COLORS.DEFAULT,
                         fontFamily: currentDate === item
-                            ? MONTSERRAT_BOLD
-                            : MONTSERRAT_REGULAR
+                            ? TEXT_BOLD
+                            : TEXT_REGULAR
                     };
 
                     return (
@@ -174,8 +174,8 @@ export default function CustomCalendar({ selectedDate, onChangeDate }) {
                     const dateTextStyle = {
                         color: currentDate === item ? COLORS.ACTIVE : COLORS.TEXT,
                         fontFamily: currentDate === item
-                            ? MONTSERRAT_BOLD
-                            : MONTSERRAT_REGULAR
+                            ? TEXT_BOLD
+                            : TEXT_REGULAR
                     };
 
                     return (

@@ -7,7 +7,7 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 const {
     COLORS,
     FONT: {
-        MONTSERRAT_REGULAR
+        TEXT_REGULAR
     },
     SIZES
 } = Theme;
@@ -87,7 +87,7 @@ export default function CustomCheckbox({
                         style={
                             [
                                 {
-                                    fontFamily: MONTSERRAT_REGULAR,
+                                    fontFamily: TEXT_REGULAR,
                                     fontSize: SIZES.FONT_H4,
                                     color: COLORS.DEFAULT,
                                     marginLeft: 5,

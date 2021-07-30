@@ -10,7 +10,7 @@ import { useDispatch } from 'react-redux';
 
 const {
     FONT: {
-        MONTSERRAT_REGULAR,
+        TEXT_REGULAR,
     }, SIZES,
     COLORS
 } = Theme;
@@ -41,14 +41,14 @@ export default function ReasonCancelBookingModal({
         <Picker
             selectedValue={reason.value}
             onValueChange={(itemValue) => onChangeReason(itemValue)}
-            fontFamily={MONTSERRAT_REGULAR}
+            fontFamily={TEXT_REGULAR}
             style={{
                 width: SIZES.WIDTH_BASE * 0.8
             }}
             itemStyle={{
                 fontSize: SIZES.FONT_H2,
                 color: COLORS.DEFAULT,
-                fontFamily: MONTSERRAT_REGULAR
+                fontFamily: TEXT_REGULAR
             }}
         >
             {reasonDropdownArr.map((item) => (
@@ -79,7 +79,7 @@ export default function ReasonCancelBookingModal({
                 <>
                     <Text
                         style={{
-                            fontFamily: MONTSERRAT_REGULAR,
+                            fontFamily: TEXT_REGULAR,
                             marginVertical: 10,
                             fontSize: SIZES.FONT_H2,
                             color: COLORS.DEFAULT

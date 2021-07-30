@@ -23,7 +23,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const {
     FONT: {
-        MONTSERRAT_REGULAR,
+        TEXT_REGULAR,
     },
     SIZES,
     COLORS
@@ -167,7 +167,7 @@ export default function SignInWithOTP({ navigation }) {
                                         contentStyle={{
                                             fontSize: SIZES.FONT_H4,
                                             color: COLORS.ACTIVE,
-                                            fontFamily: MONTSERRAT_REGULAR,
+                                            fontFamily: TEXT_REGULAR,
                                             marginTop: 5
                                         }}
                                         iconComponent={(

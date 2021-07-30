@@ -11,7 +11,7 @@ import { useDispatch } from 'react-redux';
 
 const {
     FONT: {
-        MONTSERRAT_REGULAR,
+        TEXT_REGULAR,
     },
     SIZES,
     COLORS
@@ -102,7 +102,7 @@ export default function NotificationItem({
                                 style={{
                                     color: COLORS.DEFAULT,
                                     fontSize: 16,
-                                    fontFamily: MONTSERRAT_REGULAR,
+                                    fontFamily: TEXT_REGULAR,
                                 }}
                             >
                                 {content}

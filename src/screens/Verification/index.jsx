@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const {
     FONT: {
-        MONTSERRAT_REGULAR,
+        TEXT_REGULAR,
     },
     SIZES,
     COLORS
@@ -87,7 +87,7 @@ export default function Verification({ navigation }) {
                         marginBottom: 10
                     }}
                     labelStyle={{
-                        fontFamily: MONTSERRAT_REGULAR,
+                        fontFamily: TEXT_REGULAR,
                         fontSize: SIZES.FONT_H4
                     }}
                     disabled={isDisabled}
@@ -272,7 +272,7 @@ export default function Verification({ navigation }) {
                 >
                     <Text
                         style={{
-                            fontFamily: MONTSERRAT_REGULAR,
+                            fontFamily: TEXT_REGULAR,
                             color: COLORS.DEFAULT,
                             fontSize: SIZES.FONT_H3
                         }}

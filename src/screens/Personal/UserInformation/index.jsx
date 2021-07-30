@@ -21,8 +21,8 @@ import VerificationStatusPanel from './VerificationStatusPanel';
 
 const {
     FONT: {
-        MONTSERRAT_REGULAR,
-        MONTSERRAT_BOLD
+        TEXT_REGULAR,
+        TEXT_BOLD
     },
     SIZES,
     COLORS
@@ -155,7 +155,7 @@ export default function UserInformation({ navigation }) {
             <CustomButton
                 onPress={() => onClickUpdateAvatar()}
                 labelStyle={{
-                    fontSize: SIZES.FONT_H3,
+                    fontSize: SIZES.FONT_H4,
                 }}
                 buttonStyle={{
                     width: SIZES.WIDTH_BASE * 0.25,
@@ -244,7 +244,7 @@ export default function UserInformation({ navigation }) {
                         style={{
                             color: COLORS.ACTIVE,
                             fontSize: SIZES.FONT_H1,
-                            fontFamily: MONTSERRAT_BOLD,
+                            fontFamily: TEXT_BOLD,
                             textAlign: 'center'
                         }}
                     >
@@ -260,7 +260,7 @@ export default function UserInformation({ navigation }) {
                 >
                     <Text
                         style={{
-                            fontFamily: MONTSERRAT_REGULAR,
+                            fontFamily: TEXT_REGULAR,
                             fontSize: SIZES.FONT_H2,
                             color: COLORS.DEFAULT,
                             textAlign: 'center'

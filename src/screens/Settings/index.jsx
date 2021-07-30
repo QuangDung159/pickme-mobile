@@ -12,8 +12,8 @@ import {
 
 const {
     FONT: {
-        MONTSERRAT_REGULAR,
-        MONTSERRAT_BOLD
+        TEXT_REGULAR,
+        TEXT_BOLD
     },
     SIZES,
     COLORS
@@ -79,7 +79,7 @@ export default function Settings({ navigation }) {
                     >
                         <Text
                             style={{
-                                fontFamily: MONTSERRAT_REGULAR,
+                                fontFamily: TEXT_REGULAR,
                                 fontSize: SIZES.FONT_H4,
                                 color: '#525F7F'
                             }}
@@ -107,7 +107,7 @@ export default function Settings({ navigation }) {
                             >
                                 <Text
                                     style={{
-                                        fontFamily: MONTSERRAT_REGULAR,
+                                        fontFamily: TEXT_REGULAR,
                                         fontSize: SIZES.FONT_H4,
                                         color: '#525F7F'
                                     }}
@@ -151,7 +151,7 @@ export default function Settings({ navigation }) {
                         >
                             <Text
                                 style={{
-                                    fontFamily: MONTSERRAT_BOLD,
+                                    fontFamily: TEXT_BOLD,
                                     paddingBottom: 5,
                                     fontSize: SIZES.FONT_H2,
                                     color: COLORS.TEXT,
@@ -161,7 +161,7 @@ export default function Settings({ navigation }) {
                             </Text>
                             <Text
                                 style={{
-                                    fontFamily: MONTSERRAT_REGULAR,
+                                    fontFamily: TEXT_REGULAR,
                                     fontSize: 12,
                                     color: COLORS.ACTIVE,
                                 }}
@@ -183,7 +183,7 @@ export default function Settings({ navigation }) {
                 >
                     <Text
                         style={{
-                            fontFamily: MONTSERRAT_BOLD,
+                            fontFamily: TEXT_BOLD,
                             paddingBottom: 5,
                             fontSize: SIZES.FONT_H2,
                             color: COLORS.TEXT,
@@ -193,7 +193,7 @@ export default function Settings({ navigation }) {
                     </Text>
                     <Text
                         style={{
-                            fontFamily: MONTSERRAT_REGULAR,
+                            fontFamily: TEXT_REGULAR,
                             fontSize: 12,
                             color: COLORS.ACTIVE,
                         }}
@@ -220,7 +220,7 @@ export default function Settings({ navigation }) {
                 >
                     <Text
                         style={{
-                            fontFamily: MONTSERRAT_BOLD,
+                            fontFamily: TEXT_BOLD,
                             paddingBottom: 5,
                             fontSize: SIZES.BASE,
                             color: COLORS.TEXT,
@@ -230,7 +230,7 @@ export default function Settings({ navigation }) {
                     </Text>
                     <Text
                         style={{
-                            fontFamily: MONTSERRAT_REGULAR,
+                            fontFamily: TEXT_REGULAR,
                             fontSize: 12,
                             color: COLORS.ACTIVE,
                         }}

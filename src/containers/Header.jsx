@@ -18,8 +18,8 @@ import { useDispatch } from 'react-redux';
 const iPhoneX = Platform.OS === 'ios';
 const {
     FONT: {
-        MONTSERRAT_REGULAR,
-        MONTSERRAT_BOLD
+        TEXT_REGULAR,
+        TEXT_BOLD
     },
     SIZES,
     COLORS
@@ -255,19 +255,18 @@ export default function Header({
             {screenNameProp && screenNameProp === ScreenName.MESSAGE && (
                 <View
                     style={{
-                        marginLeft: 7,
+                        marginLeft: 10,
                         marginTop: 0,
                         zIndex: 99
                     }}
                 >
                     <Text
                         style={{
-                            fontFamily: MONTSERRAT_REGULAR,
-                            marginTop: iPhoneX ? -16 : -20,
-                            fontSize: SIZES.FONT_H5,
+                            fontFamily: TEXT_REGULAR,
+                            marginTop: iPhoneX ? -14 : -18,
+                            fontSize: SIZES.FONT_H5 - 2,
                             color: COLORS.ACTIVE
                         }}
-
                     >
                         Vừa mới truy cập
                     </Text>
@@ -292,7 +291,7 @@ const styles = StyleSheet.create({
     title: {
         width: '100%',
         fontSize: SIZES.FONT_H2,
-        fontFamily: MONTSERRAT_BOLD,
+        fontFamily: TEXT_BOLD,
         marginLeft: -70,
         color: COLORS.DEFAULT,
         marginTop: iPhoneX ? 5 : 20

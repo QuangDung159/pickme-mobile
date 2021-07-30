@@ -4,8 +4,8 @@ import { Text, View } from 'react-native';
 
 const {
     FONT: {
-        MONTSERRAT_REGULAR,
-        MONTSERRAT_BOLD
+        TEXT_REGULAR,
+        TEXT_BOLD
     }, COLORS,
     SIZES
 } = Theme;
@@ -41,7 +41,7 @@ export default class NoteText extends PureComponent {
                         {title && (
                             <Text
                                 style={{
-                                    fontFamily: MONTSERRAT_BOLD,
+                                    fontFamily: TEXT_BOLD,
                                     color: COLORS.DEFAULT,
                                     fontSize: SIZES.FONT_H3
                                 }}
@@ -55,7 +55,7 @@ export default class NoteText extends PureComponent {
                         style={
                             [
                                 {
-                                    fontFamily: MONTSERRAT_REGULAR,
+                                    fontFamily: TEXT_REGULAR,
                                     alignSelf: 'center',
                                     color: COLORS.DEFAULT
                                 },

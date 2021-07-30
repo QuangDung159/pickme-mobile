@@ -9,8 +9,8 @@ import { CommonHelpers, ToastHelpers } from '@helpers/index';
 
 const {
     FONT: {
-        MONTSERRAT_REGULAR,
-        MONTSERRAT_BOLD
+        TEXT_REGULAR,
+        TEXT_BOLD
     },
     SIZES,
     COLORS
@@ -163,7 +163,7 @@ export default function CardBooking({ booking }) {
                     >
                         <Text
                             style={{
-                                fontFamily: MONTSERRAT_BOLD,
+                                fontFamily: TEXT_BOLD,
                                 marginRight: 5,
                                 fontSize: SIZES.FONT_H2,
                                 color: COLORS.ACTIVE
@@ -191,10 +191,10 @@ CardBooking.propTypes = {
 
 const styles = StyleSheet.create({
     cardTitle: {
-        fontFamily: MONTSERRAT_BOLD,
+        fontFamily: TEXT_BOLD,
     },
     subInfoCard: {
-        fontFamily: MONTSERRAT_REGULAR,
+        fontFamily: TEXT_REGULAR,
         marginBottom: 10
     },
 });

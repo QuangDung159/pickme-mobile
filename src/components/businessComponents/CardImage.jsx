@@ -12,8 +12,8 @@ import { useSelector } from 'react-redux';
 
 const {
     FONT: {
-        MONTSERRAT_REGULAR,
-        MONTSERRAT_BOLD
+        TEXT_REGULAR,
+        TEXT_BOLD
     },
     SIZES,
     COLORS
@@ -92,7 +92,7 @@ export default function CardImage({
                                 <Text
                                     style={{
                                         fontSize: SIZES.FONT_H2,
-                                        fontFamily: MONTSERRAT_BOLD,
+                                        fontFamily: TEXT_BOLD,
                                         color: COLORS.ACTIVE,
                                     }}
                                 >
@@ -154,6 +154,6 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
     },
     subInfoCard: {
-        fontFamily: MONTSERRAT_REGULAR,
+        fontFamily: TEXT_REGULAR,
     },
 });

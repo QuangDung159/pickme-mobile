@@ -13,7 +13,7 @@ import { useDispatch } from 'react-redux';
 
 const {
     FONT: {
-        MONTSERRAT_BOLD
+        TEXT_BOLD
     },
     SIZES,
     COLORS
@@ -177,7 +177,7 @@ export default function Total({
             >
                 <Text
                     style={{
-                        fontFamily: MONTSERRAT_BOLD,
+                        fontFamily: TEXT_BOLD,
                         fontSize: 30,
                         color: COLORS.ACTIVE,
                         textAlign: 'center',

@@ -18,7 +18,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 
 const {
     FONT: {
-        MONTSERRAT_REGULAR,
+        TEXT_REGULAR,
     },
     SIZES,
     COLORS
@@ -309,7 +309,7 @@ export default function ForgotPassword({ navigation }) {
                                             contentStyle={{
                                                 fontSize: SIZES.FONT_H4,
                                                 color: COLORS.ACTIVE,
-                                                fontFamily: MONTSERRAT_REGULAR,
+                                                fontFamily: TEXT_REGULAR,
                                                 marginTop: 5
                                             }}
                                             iconComponent={(
@@ -415,6 +415,6 @@ const styles = StyleSheet.create({
     modalText: {
         marginBottom: 15,
         textAlign: 'center',
-        fontFamily: MONTSERRAT_REGULAR
+        fontFamily: TEXT_REGULAR
     }
 });

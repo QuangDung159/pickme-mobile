@@ -17,8 +17,8 @@ import ModalReport from './ModalReport';
 
 const {
     FONT: {
-        MONTSERRAT_REGULAR,
-        MONTSERRAT_BOLD
+        TEXT_REGULAR,
+        TEXT_BOLD
     },
     SIZES,
     COLORS
@@ -82,6 +82,8 @@ export default function ConversationList({ navigation }) {
         if (!conversationParams.isRead) {
             dispatch(setNumberMessageUnread(numberMessageUnread - 1));
         }
+
+        navigation.navigate(ScreenName.MESSAGE, conversationParams);
     };
 
     const onLongPressConversationItem = (conversationParams) => {
@@ -179,7 +181,9 @@ export default function ConversationList({ navigation }) {
         return (
             <TouchableWithoutFeedback
                 onPress={
-                    () => onClickConversationItem(params)
+                    () => {
+                        onClickConversationItem(params);
+                    }
                 }
                 onLongPress={
                     () => onLongPressConversationItem(params)
@@ -215,7 +219,7 @@ export default function ConversationList({ navigation }) {
                     <View>
                         <Text
                             style={{
-                                fontFamily: MONTSERRAT_BOLD,
+                                fontFamily: TEXT_BOLD,
                                 fontSize: SIZES.FONT_H3,
                                 color: COLORS.DEFAULT,
                             }}
@@ -231,8 +235,8 @@ export default function ConversationList({ navigation }) {
                             <Text
                                 style={{
                                     fontFamily: conversation.isRead
-                                        ? MONTSERRAT_REGULAR
-                                        : MONTSERRAT_BOLD,
+                                        ? TEXT_REGULAR
+                                        : TEXT_BOLD,
                                     fontSize: SIZES.FONT_H3,
                                     color: COLORS.DEFAULT,
 
@@ -292,7 +296,7 @@ export default function ConversationList({ navigation }) {
                                 >
                                     <Text
                                         style={{
-                                            fontFamily: MONTSERRAT_REGULAR,
+                                            fontFamily: TEXT_REGULAR,
                                             color: COLORS.DEFAULT,
                                             fontSize: SIZES.FONT_H3
                                         }}

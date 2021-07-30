@@ -6,8 +6,8 @@ import CustomButton from './CustomButton';
 
 const {
     FONT: {
-        MONTSERRAT_REGULAR,
-        MONTSERRAT_BOLD
+        TEXT_REGULAR,
+        TEXT_BOLD
     },
     SIZES,
     COLORS
@@ -44,7 +44,7 @@ export default function StepIndicator({
                 <CustomButton
                     buttonStyle={indicatorStyle}
                     labelStyle={{
-                        fontFamily: MONTSERRAT_BOLD,
+                        fontFamily: TEXT_BOLD,
                         fontSize: SIZES.FONT_H4,
                         color: buttonFontColor
                     }}
@@ -59,7 +59,7 @@ export default function StepIndicator({
                     style={{
                         color: COLORS.DEFAULT,
                         fontSize: SIZES.FONT_H3,
-                        fontFamily: MONTSERRAT_REGULAR
+                        fontFamily: TEXT_REGULAR
                     }}
                 >
                     {content}

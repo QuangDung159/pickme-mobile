@@ -26,8 +26,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const {
     FONT: {
-        MONTSERRAT_REGULAR,
-        MONTSERRAT_BOLD
+        TEXT_REGULAR,
+        TEXT_BOLD
     },
     SIZES,
     COLORS
@@ -320,7 +320,7 @@ export default function Home({ navigation }) {
                                 style={{
                                     fontSize: SIZES.FONT_H2,
                                     color: COLORS.ACTIVE,
-                                    fontFamily: MONTSERRAT_BOLD
+                                    fontFamily: TEXT_BOLD
                                 }}
                             >
                                 {item.fullName}
@@ -396,6 +396,6 @@ const styles = StyleSheet.create({
         flex: 1
     },
     subInfoCard: {
-        fontFamily: MONTSERRAT_REGULAR,
+        fontFamily: TEXT_REGULAR,
     },
 });

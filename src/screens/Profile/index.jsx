@@ -20,8 +20,8 @@ import UserInfoSection from '../Personal/UserInformation/UserInfoSection';
 
 const {
     FONT: {
-        MONTSERRAT_REGULAR,
-        MONTSERRAT_BOLD
+        TEXT_REGULAR,
+        TEXT_BOLD
     },
     SIZES,
     COLORS
@@ -112,7 +112,7 @@ export default function Profile({ route, navigation }) {
                         color: COLORS.ACTIVE,
                         fontWeight: 'bold',
                         fontSize: SIZES.FONT_H1 - 5,
-                        fontFamily: MONTSERRAT_BOLD,
+                        fontFamily: TEXT_BOLD,
                         marginBottom: 10,
                         textAlign: 'center'
                     }}
@@ -129,7 +129,7 @@ export default function Profile({ route, navigation }) {
                 >
                     <Text
                         style={{
-                            fontFamily: MONTSERRAT_REGULAR,
+                            fontFamily: TEXT_REGULAR,
                             textAlign: 'center',
                             fontSize: SIZES.FONT_H2,
                             color: COLORS.DEFAULT,

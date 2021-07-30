@@ -19,8 +19,8 @@ import { useSelector } from 'react-redux';
 
 const {
     FONT: {
-        MONTSERRAT_REGULAR,
-        MONTSERRAT_BOLD
+        TEXT_REGULAR,
+        TEXT_BOLD
     },
     SIZES,
     COLORS
@@ -226,7 +226,7 @@ export default function Support({ navigation }) {
                                 content={item.answer || 'N/A'}
                                 contentStyle={{
                                     fontSize: SIZES.FONT_H3,
-                                    fontFamily: MONTSERRAT_REGULAR,
+                                    fontFamily: TEXT_REGULAR,
                                     alignSelf: 'flex-start'
                                 }}
                                 backgroundColor={COLORS.BLOCK}
@@ -247,7 +247,7 @@ export default function Support({ navigation }) {
             >
                 <Text
                     style={{
-                        fontFamily: MONTSERRAT_REGULAR,
+                        fontFamily: TEXT_REGULAR,
                         color: COLORS.DEFAULT,
                         fontSize: SIZES.FONT_H3
                     }}
@@ -271,7 +271,7 @@ export default function Support({ navigation }) {
             >
                 <Text
                     style={{
-                        fontFamily: MONTSERRAT_REGULAR,
+                        fontFamily: TEXT_REGULAR,
                         color: COLORS.ACTIVE,
                         fontSize: 16,
                     }}
@@ -380,7 +380,7 @@ const styles = StyleSheet.create({
         elevation: 3
     },
     titleBold: {
-        fontFamily: MONTSERRAT_BOLD,
+        fontFamily: TEXT_BOLD,
         fontSize: SIZES.FONT_H4
     },
     button: {

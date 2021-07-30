@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux';
 
 const {
     FONT: {
-        MONTSERRAT_BOLD
+        TEXT_BOLD
     },
     SIZES,
     COLORS
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
         marginVertical: 10
     },
     title: {
-        fontFamily: MONTSERRAT_BOLD,
+        fontFamily: TEXT_BOLD,
         textAlign: 'center'
     },
     stepSessionContainer: {

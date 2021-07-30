@@ -10,7 +10,7 @@ import { AirbnbRating } from 'react-native-ratings';
 
 const {
     FONT: {
-        MONTSERRAT_REGULAR,
+        TEXT_REGULAR,
     },
     SIZES,
     COLORS
@@ -83,7 +83,7 @@ export default function RatingModal({
             <Text
                 style={{
                     color: COLORS.ACTIVE,
-                    fontFamily: MONTSERRAT_REGULAR,
+                    fontFamily: TEXT_REGULAR,
                     fontSize: SIZES.FONT_H2
                 }}
             >
@@ -109,7 +109,7 @@ export default function RatingModal({
                 <>
                     <Text
                         style={{
-                            fontFamily: MONTSERRAT_REGULAR,
+                            fontFamily: TEXT_REGULAR,
                             width: SIZES.WIDTH_BASE * 0.8,
                             fontSize: SIZES.FONT_H2,
                             color: COLORS.DEFAULT

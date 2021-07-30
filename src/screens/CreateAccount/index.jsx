@@ -24,7 +24,7 @@ import UserInfoForm from './UserInfoForm';
 
 const {
     FONT: {
-        MONTSERRAT_REGULAR,
+        TEXT_REGULAR,
     },
     SIZES,
     COLORS
@@ -302,7 +302,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     stepTitleText: {
-        fontFamily: MONTSERRAT_REGULAR,
+        fontFamily: TEXT_REGULAR,
         fontSize: SIZES.FONT_H1,
         textAlign: 'center',
         color: COLORS.DEFAULT

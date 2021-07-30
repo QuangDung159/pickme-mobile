@@ -26,18 +26,18 @@ const SIZES = {
     OPACITY: 0.8,
 
     FONT_H1: 25,
-    FONT_H2: 18,
-    FONT_H3: 16,
-    FONT_H4: 14,
-    FONT_H5: 12,
+    FONT_H2: 19,
+    FONT_H3: 17,
+    FONT_H4: 15,
+    FONT_H5: 13,
 
     WIDTH_BASE: width,
     HEIGHT_BASE: height,
 };
 
 const FONT = {
-    MONTSERRAT_REGULAR: 'montserrat-regular',
-    MONTSERRAT_BOLD: 'montserrat-bold'
+    TEXT_REGULAR: 'tahoma-regular',
+    TEXT_BOLD: 'tahoma-bold'
 };
 
 export default {

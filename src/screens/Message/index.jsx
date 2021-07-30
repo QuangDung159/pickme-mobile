@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const {
     FONT: {
-        MONTSERRAT_REGULAR,
+        TEXT_REGULAR,
     },
     SIZES,
     COLORS
@@ -198,7 +198,7 @@ export default function Message({ navigation, route }) {
                         <Text
                             style={{
                                 margin: 10,
-                                fontFamily: MONTSERRAT_REGULAR,
+                                fontFamily: TEXT_REGULAR,
                                 color: COLORS.DEFAULT,
                                 fontSize: SIZES.FONT_H3
                             }}

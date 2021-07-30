@@ -5,7 +5,7 @@ import { StyleSheet, Text, View } from 'react-native';
 
 const {
     FONT: {
-        MONTSERRAT_REGULAR,
+        TEXT_REGULAR,
     }, SIZES,
     COLORS
 } = Theme;
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     modalText: {
         margin: 15,
         textAlign: 'center',
-        fontFamily: MONTSERRAT_REGULAR,
+        fontFamily: TEXT_REGULAR,
         color: COLORS.DEFAULT
     },
 });

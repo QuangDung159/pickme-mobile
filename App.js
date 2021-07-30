@@ -22,8 +22,8 @@ import { Provider } from 'react-redux';
 
 const {
     FONT: {
-        MONTSERRAT_BOLD,
-        MONTSERRAT_REGULAR
+        TEXT_BOLD,
+        TEXT_REGULAR
     },
     SIZES,
     COLORS
@@ -107,6 +107,17 @@ const toastConfig = {
     any_custom_type: (res) => ToastHelpers.renderToast(res.data.message, 'error')
 };
 
+const getFonts = () => Font.loadAsync({
+    'montserrat-regular': require('./assets/fonts/Montserrat-Regular.ttf'),
+    'montserrat-bold': require('./assets/fonts/Montserrat-Bold.ttf'),
+    'tahoma-regular': require('./assets/fonts/tahoma-regular.ttf'),
+    'tahoma-bold': require('./assets/fonts/tahoma-bold.ttf'),
+    'helvetica-neue-regular': require('./assets/fonts/helvetica-neue-regular.ttf'),
+    'helvetica-neue-bold': require('./assets/fonts/helvetica-neue-bold.ttf'),
+    'roboto-regular': require('./assets/fonts/roboto-regular.ttf'),
+    'roboto-bold': require('./assets/fonts/roboto-bold.ttf')
+});
+
 export default function App() {
     const [isLoadingComplete, setIsLoadingComplete] = React.useState(false);
     const [fontLoaded, setFontLoaded] = React.useState(false);
@@ -118,7 +129,7 @@ export default function App() {
                 if (otaObj.isNew) {
                     Alert.alert(
                         'Bạn có bản cập nhật mới',
-                        '(ota-290721)',
+                        '(ota-300721)',
                         [
                             { text: 'Cập nhật', onPress: () => Updates.reloadAsync() },
                         ],
@@ -133,10 +144,7 @@ export default function App() {
     React.useEffect(
         () => {
             async function loadFont() {
-                Font.loadAsync({
-                    'montserrat-regular': require('./assets/fonts/Montserrat-Regular.ttf'),
-                    'montserrat-bold': require('./assets/fonts/Montserrat-Bold.ttf')
-                });
+                await getFonts();
                 setFontLoaded(true);
             }
             loadFont();
@@ -144,10 +152,7 @@ export default function App() {
     );
 
     const loadResourcesAsync = async () => {
-        await Font.loadAsync({
-            'montserrat-regular': require('./assets/fonts/Montserrat-Regular.ttf'),
-            'montserrat-bold': require('./assets/fonts/Montserrat-Bold.ttf')
-        });
+        await getFonts();
         setFontLoaded(true);
 
         return Promise.all([...cacheImages(assetImages)]);
@@ -196,7 +201,7 @@ export default function App() {
                     >
                         <Text
                             style={{
-                                fontFamily: MONTSERRAT_REGULAR,
+                                fontFamily: TEXT_REGULAR,
                                 color: COLORS.ACTIVE,
                                 fontSize: SIZES.FONT_H5,
                             }}
@@ -220,7 +225,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
     toastContent: {
-        fontFamily: MONTSERRAT_BOLD,
+        fontFamily: TEXT_BOLD,
         textAlign: 'center',
         margin: 10
     }
