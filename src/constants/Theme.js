@@ -26,18 +26,18 @@ const SIZES = {
     OPACITY: 0.8,
 
     FONT_H1: 25,
-    FONT_H2: 19,
-    FONT_H3: 17,
-    FONT_H4: 15,
-    FONT_H5: 13,
+    FONT_H2: 21,
+    FONT_H3: 19,
+    FONT_H4: 17,
+    FONT_H5: 15,
 
     WIDTH_BASE: width,
     HEIGHT_BASE: height,
 };
 
 const FONT = {
-    TEXT_REGULAR: 'tahoma-regular',
-    TEXT_BOLD: 'tahoma-bold'
+    TEXT_REGULAR: 'roboto-regular',
+    TEXT_BOLD: 'roboto-bold'
 };
 
 export default {

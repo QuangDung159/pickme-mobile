@@ -183,6 +183,7 @@ export default function Home({ navigation }) {
     };
 
     const getListConversationFromSocket = (pageIndex, pageSize, onFetchData) => {
+        console.log('getListConversationFromSocket');
         if (token) {
             const data = {
                 query: GraphQueryString.GET_LIST_CONVERSATION,
@@ -255,18 +256,10 @@ export default function Home({ navigation }) {
                 />
             )}
             keyExtractor={(item) => item.id}
-            contentContainerStyle={{
-                marginVertical: 5,
-                paddingBottom: 5
-            }}
             renderItem={({ item }) => (
-                <View
-                    style={{
-                        marginBottom: 5,
-                    }}
-                >
+                <>
                     {renderImage(item)}
-                </View>
+                </>
             )}
         />
     );

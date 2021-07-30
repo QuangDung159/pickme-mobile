@@ -1,6 +1,6 @@
 import { CustomInput, IconCustom } from '@components/uiComponents';
 import {
-    IconFamily, Theme, ScreenName
+    IconFamily, ScreenName, Theme
 } from '@constants/index';
 import { resetStoreSignOut, setListNotification, setNumberNotificationUnread } from '@redux/Actions';
 import { NotificationServices } from '@services/index';
@@ -10,7 +10,7 @@ import {
 } from 'galio-framework';
 import React from 'react';
 import {
-    Platform, StyleSheet, Text, TouchableOpacity, View
+    Platform, StyleSheet, TouchableOpacity, View
 } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useDispatch } from 'react-redux';
@@ -18,7 +18,6 @@ import { useDispatch } from 'react-redux';
 const iPhoneX = Platform.OS === 'ios';
 const {
     FONT: {
-        TEXT_REGULAR,
         TEXT_BOLD
     },
     SIZES,
@@ -252,7 +251,7 @@ export default function Header({
                     {...props}
                 />
             </TouchableWithoutFeedback>
-            {screenNameProp && screenNameProp === ScreenName.MESSAGE && (
+            {/* {screenNameProp && screenNameProp === ScreenName.MESSAGE && (
                 <View
                     style={{
                         marginLeft: 10,
@@ -271,7 +270,7 @@ export default function Header({
                         Vừa mới truy cập
                     </Text>
                 </View>
-            )}
+            )} */}
 
             {renderHeader()}
             {renderRight()}

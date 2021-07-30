@@ -2,7 +2,9 @@
 import {
     CenterLoader
 } from '@components/uiComponents';
-import { GraphQueryString, ScreenName, Theme } from '@constants/index';
+import {
+    GraphQueryString, Images, ScreenName, Theme
+} from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
 import { setListConversation, setNumberMessageUnread } from '@redux/Actions';
 import { socketRequestUtil } from '@utils/index';
@@ -139,6 +141,7 @@ export default function ConversationList({ navigation }) {
         getListConversationFromSocket(
             1, 20,
             (data) => {
+                console.log('data :>> ', data);
                 dispatch(setListConversation(data.data.data.getRecently));
                 countNumberOfUnreadConversation(data.data.data.getRecently);
             }
@@ -206,9 +209,9 @@ export default function ConversationList({ navigation }) {
                         }}
                     >
                         <Image
-                            source={{
-                                uri: params.imageUrl
-                            }}
+                            source={
+                                params.imageUrl ? { uri: params.imageUrl } : Images.defaultImage
+                            }
                             style={{
                                 width: 50,
                                 height: 50,

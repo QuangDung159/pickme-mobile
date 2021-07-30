@@ -111,7 +111,7 @@ export default function Profile({ route, navigation }) {
                     style={{
                         color: COLORS.ACTIVE,
                         fontWeight: 'bold',
-                        fontSize: SIZES.FONT_H1 - 5,
+                        fontSize: SIZES.FONT_H1,
                         fontFamily: TEXT_BOLD,
                         marginBottom: 10,
                         textAlign: 'center'
@@ -417,10 +417,9 @@ const styles = StyleSheet.create({
     buttonPanelContainer: {
         backgroundColor: 'transparent',
         position: 'absolute',
-        bottom: 0,
+        bottom: 20,
         left: 0,
         right: 0,
-        height: 80,
         zIndex: 2,
         width: SIZES.WIDTH_BASE,
     },

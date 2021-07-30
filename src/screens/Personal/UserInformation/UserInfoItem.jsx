@@ -44,7 +44,7 @@ export default function UserInfoItem({
             <View
                 style={{
                     flexDirection: 'row',
-                    flex: 7
+                    flex: 9
                 }}
             >
                 <Text
