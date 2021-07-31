@@ -44,9 +44,6 @@ export default function UserInformation({ navigation }) {
         MediaHelpers.imgbbUploadImage(
             uri,
             (res) => {
-                ToastHelpers.renderToast(
-                    res.data.message || 'Tải ảnh lên thành công!', 'success'
-                );
                 setIsShowSpinner(false);
                 setImage(uri);
 

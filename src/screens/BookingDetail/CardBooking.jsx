@@ -86,7 +86,7 @@ export default function CardBooking({ booking }) {
                             ]
                         }
                     >
-                        {`Mã đơn hẹn: #${idReadAble}`}
+                        {`Mã đơn: #${idReadAble}`}
                     </Text>
                 </View>
 
