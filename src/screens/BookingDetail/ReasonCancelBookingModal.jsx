@@ -5,7 +5,7 @@ import { Picker } from '@react-native-picker/picker';
 import { setPersonTabActiveIndex, setShowLoaderStore } from '@redux/Actions';
 import { BookingServices } from '@services/index';
 import React, { useState } from 'react';
-import { Text, View } from 'react-native';
+import { Platform, Text, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 
 const {
@@ -38,23 +38,34 @@ export default function ReasonCancelBookingModal({
     };
 
     const renderReasonDropdown = () => (
-        <Picker
-            selectedValue={reason.value}
-            onValueChange={(itemValue) => onChangeReason(itemValue)}
-            fontFamily={TEXT_REGULAR}
+        <View
             style={{
-                width: SIZES.WIDTH_BASE * 0.8
-            }}
-            itemStyle={{
-                fontSize: SIZES.FONT_H2,
-                color: COLORS.DEFAULT,
-                fontFamily: TEXT_REGULAR
+                width: SIZES.WIDTH_BASE * 0.8,
+                marginTop: Platform.OS === 'ios' ? -20 : -10,
+                marginBottom: Platform.OS === 'ios' || 10
             }}
         >
-            {reasonDropdownArr.map((item) => (
-                <Picker.Item value={item.value} label={item.label} key={item.value} />
-            ))}
-        </Picker>
+            <Picker
+                selectedValue={reason.value}
+                onValueChange={(itemValue) => onChangeReason(itemValue)}
+                fontFamily={TEXT_REGULAR}
+                itemStyle={{
+                    fontSize: SIZES.FONT_H2,
+                    color: COLORS.DEFAULT,
+                    fontFamily: TEXT_REGULAR
+                }}
+                mode="dropdown"
+                dropdownIconColor={COLORS.ACTIVE}
+                style={{
+                    fontSize: SIZES.FONT_H2,
+                    color: COLORS.ACTIVE
+                }}
+            >
+                {reasonDropdownArr.map((item) => (
+                    <Picker.Item value={item.value} label={item.label} key={item.value} />
+                ))}
+            </Picker>
+        </View>
     );
 
     const sendRequestToCancelBooking = async () => {
@@ -100,21 +111,21 @@ export default function ReasonCancelBookingModal({
                     >
                         <CustomButton
                             onPress={() => {
-                                sendRequestToCancelBooking();
                                 setModalReasonVisible(false);
                             }}
                             type="default"
-                            label="Xác nhận huỷ"
+                            label="Quay lại"
                             buttonStyle={{
                                 width: SIZES.WIDTH_BASE * 0.39
                             }}
                         />
                         <CustomButton
                             onPress={() => {
+                                sendRequestToCancelBooking();
                                 setModalReasonVisible(false);
                             }}
                             type="active"
-                            label="Huỷ"
+                            label="Xác nhận huỷ"
                             buttonStyle={{
                                 width: SIZES.WIDTH_BASE * 0.39
                             }}

@@ -46,7 +46,7 @@ export default function PartnerPackageModal({
                 width: SIZES.WIDTH_BASE * 0.8,
                 flexDirection: 'row',
                 justifyContent: 'space-between',
-                marginTop: Platform.OS === 'ios' ? -30 : -10
+                marginTop: Platform.OS === 'ios' ? -20 : -10
             }}
         >
             {listPartnerPackage && packageActive && (
@@ -58,7 +58,7 @@ export default function PartnerPackageModal({
                     <Picker
                         selectedValue={packageActive.id}
                         onValueChange={(itemValue) => onChangePackage(itemValue)}
-                        fontFamily={TEXT_BOLD}
+                        fontFamily={TEXT_REGULAR}
                         itemStyle={{
                             fontSize: SIZES.FONT_H2,
                             color: COLORS.DEFAULT
@@ -149,8 +149,17 @@ export default function PartnerPackageModal({
             modalVisible={modalPartnerPackageVisible}
             renderContent={() => (
                 <>
+                    <Text
+                        style={{
+                            fontFamily: TEXT_REGULAR,
+                            marginVertical: 10,
+                            fontSize: SIZES.FONT_H2,
+                            color: COLORS.DEFAULT
+                        }}
+                    >
+                        Chọn gói đơn hẹn
+                    </Text>
                     {renderPartnerPackage()}
-
                     <View
                         style={{
                             paddingVertical: 10,
