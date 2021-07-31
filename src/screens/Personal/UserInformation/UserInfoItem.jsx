@@ -5,7 +5,7 @@ import { Theme } from '../../../constants';
 
 const {
     FONT: {
-        MONTSERRAT_REGULAR,
+        TEXT_REGULAR,
     },
     SIZES,
     COLORS
@@ -44,12 +44,12 @@ export default function UserInfoItem({
             <View
                 style={{
                     flexDirection: 'row',
-                    flex: 7
+                    flex: 9
                 }}
             >
                 <Text
                     style={{
-                        fontFamily: MONTSERRAT_REGULAR,
+                        fontFamily: TEXT_REGULAR,
                         fontSize: SIZES.FONT_H2,
                         color: COLORS.DEFAULT,
                         marginLeft: 10

@@ -12,8 +12,8 @@ import { useSelector } from 'react-redux';
 
 const {
     FONT: {
-        MONTSERRAT_BOLD,
-        MONTSERRAT_REGULAR
+        TEXT_BOLD,
+        TEXT_REGULAR
     },
     SIZES,
     COLORS
@@ -34,7 +34,7 @@ export default function LeaderBoadViewByType({
         >
             <Text
                 style={{
-                    fontFamily: MONTSERRAT_REGULAR,
+                    fontFamily: TEXT_REGULAR,
                     color: COLORS.ACTIVE,
                     fontSize: SIZES.FONT_H1,
                 }}
@@ -122,7 +122,7 @@ export default function LeaderBoadViewByType({
                     >
                         <Text
                             style={{
-                                fontFamily: MONTSERRAT_BOLD,
+                                fontFamily: TEXT_BOLD,
                                 fontSize: SIZES.FONT_H1 - 5,
                                 color: COLORS.ACTIVE
                             }}
@@ -193,7 +193,7 @@ export default function LeaderBoadViewByType({
                                     color: index === 1 || index === 2
                                         ? COLORS.ACTIVE
                                         : COLORS.DEFAULT,
-                                    fontFamily: MONTSERRAT_REGULAR,
+                                    fontFamily: TEXT_REGULAR,
                                     fontSize: SIZES.FONT_H2
                                 }}
                             >
@@ -238,7 +238,7 @@ export default function LeaderBoadViewByType({
                                     style={{
                                         color: COLORS.ACTIVE,
                                         fontSize: SIZES.FONT_H2,
-                                        fontFamily: MONTSERRAT_REGULAR,
+                                        fontFamily: TEXT_REGULAR,
                                         paddingVertical: 10
                                     }}
                                 >

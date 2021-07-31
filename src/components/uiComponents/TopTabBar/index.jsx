@@ -5,7 +5,7 @@ import { TabBar, TabView } from 'react-native-tab-view';
 
 const {
     FONT: {
-        MONTSERRAT_BOLD
+        TEXT_BOLD
     },
     SIZES,
     COLORS
@@ -47,7 +47,7 @@ export default function TopTabBar({
                     [
                         {
                             color: COLORS.ACTIVE,
-                            fontFamily: MONTSERRAT_BOLD,
+                            fontFamily: TEXT_BOLD,
                             fontSize: SIZES.FONT_H4,
                             textAlign: 'center',
                         },

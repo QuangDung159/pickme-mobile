@@ -20,8 +20,8 @@ import UserInfoSection from '../Personal/UserInformation/UserInfoSection';
 
 const {
     FONT: {
-        MONTSERRAT_REGULAR,
-        MONTSERRAT_BOLD
+        TEXT_REGULAR,
+        TEXT_BOLD
     },
     SIZES,
     COLORS
@@ -111,8 +111,8 @@ export default function Profile({ route, navigation }) {
                     style={{
                         color: COLORS.ACTIVE,
                         fontWeight: 'bold',
-                        fontSize: SIZES.FONT_H1 - 5,
-                        fontFamily: MONTSERRAT_BOLD,
+                        fontSize: SIZES.FONT_H1,
+                        fontFamily: TEXT_BOLD,
                         marginBottom: 10,
                         textAlign: 'center'
                     }}
@@ -129,7 +129,7 @@ export default function Profile({ route, navigation }) {
                 >
                     <Text
                         style={{
-                            fontFamily: MONTSERRAT_REGULAR,
+                            fontFamily: TEXT_REGULAR,
                             textAlign: 'center',
                             fontSize: SIZES.FONT_H2,
                             color: COLORS.DEFAULT,
@@ -349,8 +349,9 @@ export default function Profile({ route, navigation }) {
                                         marginHorizontal: 5,
                                         elevation: 0,
                                         borderRadius: 20,
-                                        backgroundColor: COLORS.BASE
+                                        backgroundColor: COLORS.BASE,
                                     }}
+                                    activeOpacity={0.8}
                                     labelStyle={{
                                         fontSize: 16,
                                         color: COLORS.DEFAULT
@@ -372,8 +373,9 @@ export default function Profile({ route, navigation }) {
                                         marginHorizontal: 5,
                                         elevation: 0,
                                         borderRadius: 20,
-                                        backgroundColor: COLORS.BASE
+                                        backgroundColor: COLORS.BASE,
                                     }}
+                                    activeOpacity={0.8}
                                     labelStyle={{
                                         fontSize: 16,
                                         color: COLORS.DEFAULT
@@ -417,10 +419,9 @@ const styles = StyleSheet.create({
     buttonPanelContainer: {
         backgroundColor: 'transparent',
         position: 'absolute',
-        bottom: 0,
+        bottom: 20,
         left: 0,
         right: 0,
-        height: 80,
         zIndex: 2,
         width: SIZES.WIDTH_BASE,
     },

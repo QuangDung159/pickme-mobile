@@ -13,7 +13,7 @@ import { useDispatch } from 'react-redux';
 
 const {
     FONT: {
-        MONTSERRAT_BOLD
+        TEXT_BOLD
     },
     SIZES,
     COLORS
@@ -89,6 +89,11 @@ export default function Total({
         const dateString = `${moment(selectedDate, 'DD-MM-YYYY').format('YYYY-MM-DD')}T00:00:00`;
         const startString = convertStringHoursToMinutes(startTimeStr);
         const endString = convertStringHoursToMinutes(endTimeStr);
+
+        if (startString > 1200) {
+            ToastHelpers.renderToast('Vui lòng không bắt đầu sau 20h');
+            return;
+        }
 
         const bookingToSubmit = {
             StartAt: startString,
@@ -172,7 +177,7 @@ export default function Total({
             >
                 <Text
                     style={{
-                        fontFamily: MONTSERRAT_BOLD,
+                        fontFamily: TEXT_BOLD,
                         fontSize: 30,
                         color: COLORS.ACTIVE,
                         textAlign: 'center',

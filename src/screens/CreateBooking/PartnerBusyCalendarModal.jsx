@@ -6,7 +6,7 @@ import { Text, View } from 'react-native';
 
 const {
     FONT: {
-        MONTSERRAT_REGULAR,
+        TEXT_REGULAR,
     },
     SIZES,
     COLORS
@@ -53,7 +53,7 @@ export default function PartnerBusyCalendarModal({ listBusyBySelectedDate, modal
                             >
                                 <Text
                                     style={{
-                                        fontFamily: MONTSERRAT_REGULAR,
+                                        fontFamily: TEXT_REGULAR,
                                         fontSize: 27,
                                         color: COLORS.ACTIVE,
                                     }}
@@ -63,7 +63,7 @@ export default function PartnerBusyCalendarModal({ listBusyBySelectedDate, modal
                                 </Text>
                                 <Text
                                     style={{
-                                        fontFamily: MONTSERRAT_REGULAR,
+                                        fontFamily: TEXT_REGULAR,
                                         fontSize: 27,
                                         color: COLORS.ACTIVE
                                     }}
@@ -73,7 +73,7 @@ export default function PartnerBusyCalendarModal({ listBusyBySelectedDate, modal
                                 </Text>
                                 <Text
                                     style={{
-                                        fontFamily: MONTSERRAT_REGULAR,
+                                        fontFamily: TEXT_REGULAR,
                                         fontSize: 27,
                                         color: COLORS.ACTIVE
                                     }}
@@ -103,7 +103,7 @@ export default function PartnerBusyCalendarModal({ listBusyBySelectedDate, modal
                 >
                     <Text
                         style={{
-                            fontFamily: MONTSERRAT_REGULAR,
+                            fontFamily: TEXT_REGULAR,
                             color: COLORS.SWITCH_OFF,
                             fontSize: 14
                         }}
@@ -127,7 +127,7 @@ export default function PartnerBusyCalendarModal({ listBusyBySelectedDate, modal
                 <>
                     <Text
                         style={{
-                            fontFamily: MONTSERRAT_REGULAR,
+                            fontFamily: TEXT_REGULAR,
                             marginVertical: 10,
                             fontSize: SIZES.FONT_H2
                         }}

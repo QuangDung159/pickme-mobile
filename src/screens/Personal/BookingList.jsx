@@ -16,8 +16,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const {
     FONT: {
-        MONTSERRAT_REGULAR,
-        MONTSERRAT_BOLD
+        TEXT_REGULAR,
+        TEXT_BOLD
     },
     SIZES,
     COLORS
@@ -112,7 +112,7 @@ export default function BookingList({ navigation }) {
                     >
                         <Text
                             style={{
-                                fontFamily: MONTSERRAT_BOLD,
+                                fontFamily: TEXT_BOLD,
                                 fontSize: SIZES.FONT_H3,
                                 color: colorByStatus,
                             }}
@@ -130,7 +130,7 @@ export default function BookingList({ navigation }) {
                         >
                             <Text
                                 style={{
-                                    fontFamily: MONTSERRAT_REGULAR,
+                                    fontFamily: TEXT_REGULAR,
                                     fontSize: SIZES.FONT_H5,
                                     color: COLORS.DEFAULT,
                                 }}
@@ -138,7 +138,7 @@ export default function BookingList({ navigation }) {
                                 {`Đơn hẹn #${idReadAble}`}
                             </Text>
                             <Text style={{
-                                fontFamily: MONTSERRAT_BOLD,
+                                fontFamily: TEXT_BOLD,
                                 fontSize: SIZES.FONT_H4,
                                 color: colorByStatus
                             }}
@@ -155,7 +155,7 @@ export default function BookingList({ navigation }) {
                             }}
                         >
                             <Text style={{
-                                fontFamily: MONTSERRAT_REGULAR,
+                                fontFamily: TEXT_REGULAR,
                                 fontSize: SIZES.FONT_H1 - 8,
                                 color: COLORS.ACTIVE
                             }}
@@ -163,7 +163,7 @@ export default function BookingList({ navigation }) {
                                 {startStr}
                             </Text>
                             <Text style={{
-                                fontFamily: MONTSERRAT_REGULAR,
+                                fontFamily: TEXT_REGULAR,
                                 fontSize: SIZES.FONT_H1 - 8,
                                 color: COLORS.ACTIVE
                             }}
@@ -173,7 +173,7 @@ export default function BookingList({ navigation }) {
                         </View>
 
                         <Text style={{
-                            fontFamily: MONTSERRAT_REGULAR,
+                            fontFamily: TEXT_REGULAR,
                             fontSize: SIZES.FONT_H4,
                             color: COLORS.DEFAULT,
                             marginBottom: 5
@@ -208,7 +208,7 @@ export default function BookingList({ navigation }) {
                 >
                     <Text
                         style={{
-                            fontFamily: MONTSERRAT_BOLD,
+                            fontFamily: TEXT_BOLD,
                             fontSize: SIZES.FONT_H1 - 5,
                             color: COLORS.ACTIVE
                         }}
@@ -224,7 +224,7 @@ export default function BookingList({ navigation }) {
                     />
                     <Text
                         style={{
-                            fontFamily: MONTSERRAT_REGULAR,
+                            fontFamily: TEXT_REGULAR,
                             fontSize: SIZES.FONT_H1 - 5,
                             color: COLORS.DEFAULT
                         }}
@@ -275,7 +275,7 @@ export default function BookingList({ navigation }) {
                 >
                     <Text
                         style={{
-                            fontFamily: MONTSERRAT_REGULAR,
+                            fontFamily: TEXT_REGULAR,
                             color: COLORS.DEFAULT,
                             fontSize: SIZES.FONT_H3,
                             marginVertical: 15

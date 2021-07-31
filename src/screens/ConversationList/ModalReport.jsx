@@ -7,7 +7,7 @@ import { View, Text } from 'react-native';
 
 const {
     FONT: {
-        MONTSERRAT_REGULAR,
+        TEXT_REGULAR,
     },
     SIZES,
     COLORS
@@ -40,7 +40,7 @@ export default function ModalReport({
                 <>
                     <Text
                         style={{
-                            fontFamily: MONTSERRAT_REGULAR,
+                            fontFamily: TEXT_REGULAR,
                             marginVertical: 10,
                             fontSize: SIZES.FONT_H2,
                             color: COLORS.DEFAULT

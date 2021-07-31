@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const {
     FONT: {
-        MONTSERRAT_REGULAR,
+        TEXT_REGULAR,
     },
     SIZES,
     COLORS
@@ -146,7 +146,7 @@ export default function Onboarding({ navigation }) {
                                 >
                                     <Text
                                         style={{
-                                            fontFamily: MONTSERRAT_REGULAR,
+                                            fontFamily: TEXT_REGULAR,
                                             fontSize: SIZES.WIDTH_BASE * 0.1,
                                             color: COLORS.ACTIVE
                                         }}
@@ -178,7 +178,7 @@ export default function Onboarding({ navigation }) {
                             >
                                 <Text
                                     style={{
-                                        fontFamily: MONTSERRAT_REGULAR,
+                                        fontFamily: TEXT_REGULAR,
                                         color: COLORS.DEFAULT,
                                         fontSize: SIZES.FONT_H4 - 2,
                                     }}
@@ -187,7 +187,7 @@ export default function Onboarding({ navigation }) {
                                 </Text>
                                 <Text
                                     style={{
-                                        fontFamily: MONTSERRAT_REGULAR,
+                                        fontFamily: TEXT_REGULAR,
                                         color: COLORS.DEFAULT,
                                         fontSize: SIZES.FONT_H4 - 2,
                                     }}

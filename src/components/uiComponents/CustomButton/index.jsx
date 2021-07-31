@@ -8,8 +8,8 @@ import {
 
 const {
     FONT: {
-        MONTSERRAT_REGULAR,
-        MONTSERRAT_BOLD
+        TEXT_REGULAR,
+        TEXT_BOLD
     },
     SIZES,
     COLORS
@@ -63,7 +63,7 @@ export default function CustomButton(
                 style={
                     [
                         {
-                            fontFamily: MONTSERRAT_BOLD,
+                            fontFamily: TEXT_BOLD,
                             fontSize: SIZES.FONT_H2,
                             color: COLORS.DEFAULT
                         },
@@ -89,7 +89,7 @@ export default function CustomButton(
                             styles.baseButtonStyle,
                             {
                                 width: SIZES.WIDTH_BASE * 0.44,
-                                borderColor: colorByType
+                                borderColor: colorByType,
                             },
                             buttonStyle,
                         ]
@@ -100,8 +100,8 @@ export default function CustomButton(
                             [
                                 {
                                     fontSize: SIZES.FONT_H3,
-                                    fontFamily: MONTSERRAT_BOLD,
-                                    color: colorByType
+                                    fontFamily: TEXT_BOLD,
+                                    color: colorByType,
                                 },
                                 labelStyle
                             ]
@@ -157,7 +157,7 @@ export default function CustomButton(
                         style={
                             [
                                 {
-                                    fontFamily: MONTSERRAT_REGULAR,
+                                    fontFamily: TEXT_REGULAR,
                                     fontSize: SIZES.FONT_H3,
                                     color: COLORS.DEFAULT,
                                     marginLeft: 10

@@ -7,7 +7,7 @@ import IconCustom from '../IconCustom';
 
 const {
     FONT: {
-        MONTSERRAT_REGULAR,
+        TEXT_REGULAR,
     },
     SIZES,
     COLORS
@@ -51,7 +51,7 @@ export default function CustomInput({
                         borderRadius: 5,
                         height: 50,
                         paddingHorizontal: 10,
-                        fontFamily: MONTSERRAT_REGULAR,
+                        fontFamily: TEXT_REGULAR,
                         fontSize: SIZES.FONT_H3,
                         color: COLORS.DEFAULT
                     },
@@ -127,7 +127,7 @@ export default function CustomInput({
                     style={
                         [
                             {
-                                fontFamily: MONTSERRAT_REGULAR,
+                                fontFamily: TEXT_REGULAR,
                                 fontSize: SIZES.FONT_H3,
                                 color: COLORS.ACTIVE,
                                 marginBottom: 10

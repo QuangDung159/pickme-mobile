@@ -9,8 +9,8 @@ import { CommonHelpers, ToastHelpers } from '@helpers/index';
 
 const {
     FONT: {
-        MONTSERRAT_REGULAR,
-        MONTSERRAT_BOLD
+        TEXT_REGULAR,
+        TEXT_BOLD
     },
     SIZES,
     COLORS
@@ -34,6 +34,8 @@ export default function CardBooking({ booking }) {
             address
         } = booking;
 
+        console.log('booking :>> ', booking);
+
         if (!booking) {
             return null;
         }
@@ -56,7 +58,7 @@ export default function CardBooking({ booking }) {
                         width: SIZES.WIDTH_BASE * 0.9,
                         justifyContent: 'space-between',
                         alignItems: 'center',
-                        marginBottom: 10,
+                        marginBottom: 15,
                     }}
                 >
                     <Text
@@ -79,11 +81,12 @@ export default function CardBooking({ booking }) {
                                 {
                                     fontSize: SIZES.FONT_H4,
                                     color: COLORS.DEFAULT,
+                                    marginBottom: 0,
                                 }
                             ]
                         }
                     >
-                        {`Mã đơn hẹn: #${idReadAble}`}
+                        {`Mã đơn: #${idReadAble}`}
                     </Text>
                 </View>
 
@@ -163,7 +166,7 @@ export default function CardBooking({ booking }) {
                     >
                         <Text
                             style={{
-                                fontFamily: MONTSERRAT_BOLD,
+                                fontFamily: TEXT_BOLD,
                                 marginRight: 5,
                                 fontSize: SIZES.FONT_H2,
                                 color: COLORS.ACTIVE
@@ -191,10 +194,10 @@ CardBooking.propTypes = {
 
 const styles = StyleSheet.create({
     cardTitle: {
-        fontFamily: MONTSERRAT_BOLD,
+        fontFamily: TEXT_BOLD,
     },
     subInfoCard: {
-        fontFamily: MONTSERRAT_REGULAR,
+        fontFamily: TEXT_REGULAR,
         marginBottom: 10
     },
 });

@@ -7,7 +7,7 @@ import ScrollPicker from 'react-native-wheel-scroll-picker';
 
 const {
     FONT: {
-        MONTSERRAT_REGULAR
+        TEXT_REGULAR
     },
     SIZES,
     COLORS
@@ -69,7 +69,7 @@ export default function TimePickerModal({
             <ScrollPicker
                 dataSource={hourArr}
                 selectedIndex={
-                    modalActiveType === 'start' ? startHourActive : endHourActive
+                    modalActiveType === 'start' ? startHourActive + 17 : endHourActive + 17
                 }
                 onValueChange={(data) => {
                     onChangeHourTimePicker(data);
@@ -82,12 +82,12 @@ export default function TimePickerModal({
                 highlightBorderWidth={2}
                 activeItemTextStyle={{
                     color: COLORS.ACTIVE,
-                    fontFamily: MONTSERRAT_REGULAR,
+                    fontFamily: TEXT_REGULAR,
                     fontSize: SIZES.FONT_H1
                 }}
                 itemTextStyle={{
                     color: COLORS.DEFAULT,
-                    fontFamily: MONTSERRAT_REGULAR,
+                    fontFamily: TEXT_REGULAR,
                     fontSize: SIZES.FONT_H1
                 }}
             />
@@ -108,12 +108,12 @@ export default function TimePickerModal({
                 highlightBorderWidth={2}
                 activeItemTextStyle={{
                     color: COLORS.ACTIVE,
-                    fontFamily: MONTSERRAT_REGULAR,
+                    fontFamily: TEXT_REGULAR,
                     fontSize: SIZES.FONT_H1
                 }}
                 itemTextStyle={{
                     color: COLORS.DEFAULT,
-                    fontFamily: MONTSERRAT_REGULAR,
+                    fontFamily: TEXT_REGULAR,
                     fontSize: SIZES.FONT_H1
                 }}
             />

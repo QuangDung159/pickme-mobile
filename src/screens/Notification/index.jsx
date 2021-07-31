@@ -13,7 +13,7 @@ import NotificationItem from './NotificationItem';
 
 const {
     FONT: {
-        MONTSERRAT_REGULAR,
+        TEXT_REGULAR,
     },
     SIZES,
     COLORS
@@ -119,7 +119,7 @@ export default function Notification({ navigation }) {
                     >
                         <Text
                             style={{
-                                fontFamily: MONTSERRAT_REGULAR,
+                                fontFamily: TEXT_REGULAR,
                                 color: COLORS.DEFAULT,
                                 fontSize: SIZES.FONT_H3
                             }}

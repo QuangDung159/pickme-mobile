@@ -4,12 +4,12 @@ import CommonHelpers from '@helpers/CommonHelpers';
 import { Picker } from '@react-native-picker/picker';
 import moment from 'moment';
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Platform, Text, View } from 'react-native';
 
 const {
     FONT: {
-        MONTSERRAT_REGULAR,
-        MONTSERRAT_BOLD
+        TEXT_REGULAR,
+        TEXT_BOLD
     },
     SIZES,
     COLORS
@@ -45,7 +45,8 @@ export default function PartnerPackageModal({
             style={{
                 width: SIZES.WIDTH_BASE * 0.8,
                 flexDirection: 'row',
-                justifyContent: 'space-between'
+                justifyContent: 'space-between',
+                marginTop: Platform.OS === 'ios' ? -20 : -10
             }}
         >
             {listPartnerPackage && packageActive && (
@@ -57,10 +58,16 @@ export default function PartnerPackageModal({
                     <Picker
                         selectedValue={packageActive.id}
                         onValueChange={(itemValue) => onChangePackage(itemValue)}
-                        fontFamily={MONTSERRAT_REGULAR}
+                        fontFamily={TEXT_REGULAR}
                         itemStyle={{
                             fontSize: SIZES.FONT_H2,
                             color: COLORS.DEFAULT
+                        }}
+                        mode="dropdown"
+                        dropdownIconColor={COLORS.ACTIVE}
+                        style={{
+                            fontSize: SIZES.FONT_H2,
+                            color: COLORS.ACTIVE
                         }}
                     >
                         {listPartnerPackage.map((item) => (
@@ -75,7 +82,7 @@ export default function PartnerPackageModal({
                     >
                         <Text
                             style={{
-                                fontFamily: MONTSERRAT_REGULAR,
+                                fontFamily: TEXT_REGULAR,
                                 color: COLORS.ACTIVE,
                                 fontSize: SIZES.FONT_H1,
                                 marginBottom: 10,
@@ -85,7 +92,7 @@ export default function PartnerPackageModal({
                         </Text>
                         <Text
                             style={{
-                                fontFamily: MONTSERRAT_REGULAR,
+                                fontFamily: TEXT_REGULAR,
                                 color: COLORS.ACTIVE,
                                 fontSize: SIZES.FONT_H1,
                                 marginBottom: 10
@@ -97,7 +104,7 @@ export default function PartnerPackageModal({
 
                     <Text
                         style={{
-                            fontFamily: MONTSERRAT_REGULAR,
+                            fontFamily: TEXT_REGULAR,
                             color: COLORS.DEFAULT,
                             fontSize: SIZES.FONT_H2,
                             marginBottom: 10
@@ -107,7 +114,7 @@ export default function PartnerPackageModal({
                     </Text>
                     <Text
                         style={{
-                            fontFamily: MONTSERRAT_REGULAR,
+                            fontFamily: TEXT_REGULAR,
                             color: COLORS.DEFAULT,
                             fontSize: SIZES.FONT_H2,
                             marginBottom: 10
@@ -123,7 +130,7 @@ export default function PartnerPackageModal({
                     >
                         <Text
                             style={{
-                                fontFamily: MONTSERRAT_BOLD,
+                                fontFamily: TEXT_BOLD,
                                 fontSize: 30,
                                 paddingVertical: 10,
                                 color: COLORS.ACTIVE
@@ -142,8 +149,17 @@ export default function PartnerPackageModal({
             modalVisible={modalPartnerPackageVisible}
             renderContent={() => (
                 <>
+                    <Text
+                        style={{
+                            fontFamily: TEXT_REGULAR,
+                            marginVertical: 10,
+                            fontSize: SIZES.FONT_H2,
+                            color: COLORS.DEFAULT
+                        }}
+                    >
+                        Chọn gói đơn hẹn
+                    </Text>
                     {renderPartnerPackage()}
-
                     <View
                         style={{
                             paddingVertical: 10,

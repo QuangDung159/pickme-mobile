@@ -20,7 +20,7 @@ export default {
     CREATE_ACCOUNT: 'Tạo tài khoản',
     CASH_IN: 'Nạp tiền',
     CONVERSATION_LIST: 'Trò chuyện',
-    UPDATE_INFO_ACCOUNT: 'Chỉnh sửa trang cá nhân',
+    UPDATE_INFO_ACCOUNT: 'Thông tin cá nhân',
     BANK_ACCOUNT: 'Tài khoản ngân hàng',
     BUSY_CALENDAR: 'Lịch bận',
     SUPPORT: 'Hỗ trợ',

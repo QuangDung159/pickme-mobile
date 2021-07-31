@@ -11,8 +11,8 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 const {
     FONT: {
-        MONTSERRAT_REGULAR,
-        MONTSERRAT_BOLD
+        TEXT_REGULAR,
+        TEXT_BOLD
     },
     SIZES,
     COLORS
@@ -215,7 +215,7 @@ export default function CreateBookingForm({
                         <Text
                             style={{
                                 fontSize: SIZES.FONT_H3,
-                                fontFamily: MONTSERRAT_REGULAR,
+                                fontFamily: TEXT_REGULAR,
                                 color: COLORS.ACTIVE
                             }}
                         >
@@ -251,7 +251,7 @@ export default function CreateBookingForm({
 
 const styles = StyleSheet.create({
     title: {
-        fontFamily: MONTSERRAT_BOLD,
+        fontFamily: TEXT_BOLD,
         marginVertical: 10
     },
 });

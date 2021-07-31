@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux';
 
 const {
     FONT: {
-        MONTSERRAT_REGULAR,
+        TEXT_REGULAR,
     },
     SIZES,
     COLORS
@@ -31,7 +31,6 @@ export default function ReportModal({ modalReportVisible, setModalReportVisible,
         const { data } = result;
 
         if (data) {
-            console.log('data.data :>> ', data.data);
             ToastHelpers.renderToast(data.message, 'success');
             setModalReportVisible(false);
         }
@@ -49,7 +48,7 @@ export default function ReportModal({ modalReportVisible, setModalReportVisible,
                 <>
                     <Text
                         style={{
-                            fontFamily: MONTSERRAT_REGULAR,
+                            fontFamily: TEXT_REGULAR,
                             marginVertical: 10,
                             fontSize: SIZES.FONT_H2,
                             color: COLORS.DEFAULT

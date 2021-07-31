@@ -21,8 +21,8 @@ import ReportModal from './ReportModal';
 
 const {
     FONT: {
-        MONTSERRAT_REGULAR,
-        MONTSERRAT_BOLD
+        TEXT_REGULAR,
+        TEXT_BOLD
     },
     SIZES,
     COLORS
@@ -133,7 +133,7 @@ export default function BookingDetail({
                             />
                         )}
                         contentContainerStyle={{
-                            paddingBottom: 10
+                            paddingBottom: 5
                         }}
                     >
                         {currentBookingRedux && (
@@ -249,10 +249,10 @@ export default function BookingDetail({
 
 const styles = StyleSheet.create({
     title: {
-        fontFamily: MONTSERRAT_BOLD,
+        fontFamily: TEXT_BOLD,
         marginBottom: 20
     },
     subTitle: {
-        fontFamily: MONTSERRAT_REGULAR,
+        fontFamily: TEXT_REGULAR,
     },
 });

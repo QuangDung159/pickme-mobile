@@ -7,7 +7,7 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 
 const {
     FONT: {
-        MONTSERRAT_REGULAR,
+        TEXT_REGULAR,
     },
     SIZES,
     COLORS
@@ -29,7 +29,7 @@ export default function GooglePlacesInput({ onChangeAddress, addressInput, label
             {label && (
                 <Text
                     style={{
-                        fontFamily: MONTSERRAT_REGULAR,
+                        fontFamily: TEXT_REGULAR,
                         fontSize: SIZES.FONT_H3,
                         color: COLORS.ACTIVE,
                         marginVertical: 10
@@ -62,7 +62,7 @@ export default function GooglePlacesInput({ onChangeAddress, addressInput, label
                         height: 80,
                         color: COLORS.DEFAULT,
                         fontSize: SIZES.FONT_H3,
-                        fontFamily: MONTSERRAT_REGULAR,
+                        fontFamily: TEXT_REGULAR,
                         backgroundColor: COLORS.TRANSPARENT
                     },
                 }}
@@ -77,7 +77,7 @@ export default function GooglePlacesInput({ onChangeAddress, addressInput, label
                         <View>
                             <Text style={{
                                 fontSize: SIZES.FONT_H3,
-                                fontFamily: MONTSERRAT_REGULAR,
+                                fontFamily: TEXT_REGULAR,
                                 color: COLORS.BASE
                             }}
                             >
@@ -85,7 +85,7 @@ export default function GooglePlacesInput({ onChangeAddress, addressInput, label
                             </Text>
                             <Text style={{
                                 fontSize: SIZES.FONT_H4,
-                                fontFamily: MONTSERRAT_REGULAR,
+                                fontFamily: TEXT_REGULAR,
                                 color: COLORS.BASE
                             }}
                             >

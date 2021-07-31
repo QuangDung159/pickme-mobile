@@ -28,8 +28,8 @@ import { useDispatch } from 'react-redux';
 
 const {
     FONT: {
-        MONTSERRAT_REGULAR,
-        MONTSERRAT_BOLD
+        TEXT_REGULAR,
+        TEXT_BOLD
     },
     SIZES,
     COLORS
@@ -171,7 +171,7 @@ export default function SignIn({ navigation }) {
             <View>
                 <Text
                     style={{
-                        fontFamily: MONTSERRAT_REGULAR,
+                        fontFamily: TEXT_REGULAR,
                         color: COLORS.DEFAULT,
                         fontSize: SIZES.FONT_H4
                     }}
@@ -206,7 +206,7 @@ export default function SignIn({ navigation }) {
                                 >
                                     <Text
                                         style={{
-                                            fontFamily: MONTSERRAT_BOLD,
+                                            fontFamily: TEXT_BOLD,
                                             textAlign: 'center',
                                             color: COLORS.DEFAULT,
                                             fontSize: 24,
