@@ -89,7 +89,7 @@ export default function CustomButton(
                             styles.baseButtonStyle,
                             {
                                 width: SIZES.WIDTH_BASE * 0.44,
-                                borderColor: colorByType
+                                borderColor: colorByType,
                             },
                             buttonStyle,
                         ]
@@ -101,7 +101,7 @@ export default function CustomButton(
                                 {
                                     fontSize: SIZES.FONT_H3,
                                     fontFamily: TEXT_BOLD,
-                                    color: colorByType
+                                    color: colorByType,
                                 },
                                 labelStyle
                             ]

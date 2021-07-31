@@ -141,7 +141,6 @@ export default function ConversationList({ navigation }) {
         getListConversationFromSocket(
             1, 20,
             (data) => {
-                console.log('data :>> ', data);
                 dispatch(setListConversation(data.data.data.getRecently));
                 countNumberOfUnreadConversation(data.data.data.getRecently);
             }

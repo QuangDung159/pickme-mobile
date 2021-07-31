@@ -34,6 +34,8 @@ export default function CardBooking({ booking }) {
             address
         } = booking;
 
+        console.log('booking :>> ', booking);
+
         if (!booking) {
             return null;
         }
@@ -56,7 +58,7 @@ export default function CardBooking({ booking }) {
                         width: SIZES.WIDTH_BASE * 0.9,
                         justifyContent: 'space-between',
                         alignItems: 'center',
-                        marginBottom: 10,
+                        marginBottom: 15,
                     }}
                 >
                     <Text
@@ -79,6 +81,7 @@ export default function CardBooking({ booking }) {
                                 {
                                     fontSize: SIZES.FONT_H4,
                                     color: COLORS.DEFAULT,
+                                    marginBottom: 0,
                                 }
                             ]
                         }

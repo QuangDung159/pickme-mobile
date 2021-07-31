@@ -4,7 +4,7 @@ import CommonHelpers from '@helpers/CommonHelpers';
 import { Picker } from '@react-native-picker/picker';
 import moment from 'moment';
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Platform, Text, View } from 'react-native';
 
 const {
     FONT: {
@@ -45,7 +45,8 @@ export default function PartnerPackageModal({
             style={{
                 width: SIZES.WIDTH_BASE * 0.8,
                 flexDirection: 'row',
-                justifyContent: 'space-between'
+                justifyContent: 'space-between',
+                marginTop: Platform.OS === 'ios' ? -30 : -10
             }}
         >
             {listPartnerPackage && packageActive && (
@@ -57,10 +58,16 @@ export default function PartnerPackageModal({
                     <Picker
                         selectedValue={packageActive.id}
                         onValueChange={(itemValue) => onChangePackage(itemValue)}
-                        fontFamily={TEXT_REGULAR}
+                        fontFamily={TEXT_BOLD}
                         itemStyle={{
                             fontSize: SIZES.FONT_H2,
                             color: COLORS.DEFAULT
+                        }}
+                        mode="dropdown"
+                        dropdownIconColor={COLORS.ACTIVE}
+                        style={{
+                            fontSize: SIZES.FONT_H2,
+                            color: COLORS.ACTIVE
                         }}
                     >
                         {listPartnerPackage.map((item) => (

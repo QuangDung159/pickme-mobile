@@ -31,7 +31,6 @@ export default function ReportModal({ modalReportVisible, setModalReportVisible,
         const { data } = result;
 
         if (data) {
-            console.log('data.data :>> ', data.data);
             ToastHelpers.renderToast(data.message, 'success');
             setModalReportVisible(false);
         }
