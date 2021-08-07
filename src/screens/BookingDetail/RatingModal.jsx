@@ -29,7 +29,7 @@ export default function RatingModal({
     const [ratingDesc, setRatingDesc] = useState('');
 
     const sendRating = async () => {
-        const result = await BookingServices.submitRatingAsync({
+        const result = await BookingServices.submitRatingAsync(bookingId, {
             bookingId,
             description: ratingDesc || 'Rating',
             enthusiasm,

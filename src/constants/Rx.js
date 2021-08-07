@@ -38,7 +38,7 @@ export default {
         PARTNER_CONFIRM_BOOKING: '/bookings/PartnerConfirmBooking',
         CANCEL_BOOKING: '/bookings/CancelBooking',
         COMPLETE_BOOKING: '/bookings/CompleteBooking',
-        DETAIL_BOOKING: '/bookings/DetailBooking',
+        DETAIL_BOOKING: '/bookings/DetailBookingAsCustomer',
         BOOKING_RATE: '/Ratings/Insert',
         GET_PARTNER_PACKAGE: '/UserPackages/Packages'
     },

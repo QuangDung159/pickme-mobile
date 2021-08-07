@@ -1,6 +1,7 @@
 import BookingStatus from './BookingStatus';
 import DateTimeConst from './DateTimeConst';
 import DocumentType from './DocumentType';
+import Gender from './Gender';
 import GraphQueryString from './GraphQueryString';
 import IconFamily from './IconFamily';
 import Images from './Images';
@@ -25,5 +26,6 @@ export {
     DateTimeConst,
     VerificationStatus,
     DocumentType,
-    ValidationMessageTemplate
+    ValidationMessageTemplate,
+    Gender
 };

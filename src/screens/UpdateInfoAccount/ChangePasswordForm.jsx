@@ -105,89 +105,82 @@ export default function ChangePasswordForm() {
 
     const renderFormNewPassword = () => (
         <>
-            <View
-                style={{
-                    marginBottom: 10,
+            <CustomInput
+                value={currentPassword}
+                inputStyle={{
+                    width: SIZES.WIDTH_BASE * 0.9
                 }}
-            >
-                <CustomInput
-                    value={currentPassword}
-                    inputStyle={{
-                        width: SIZES.WIDTH_BASE * 0.9
-                    }}
-                    onChangeText={(passwordInput) => setCurrentPassword(passwordInput)}
-                    keyboardType="number-pad"
-                    containerStyle={{
-                        marginVertical: 10,
-                        width: SIZES.WIDTH_BASE * 0.9
-                    }}
-                    secureTextEntry={!isShowCurrentPassword}
-                    placeholder="Nhập mật khẩu hiện tại..."
-                    rightIcon={{
-                        name: 'eye',
-                        family: IconFamily.ENTYPO,
-                        size: 20,
-                        color: COLORS.DEFAULT
-                    }}
-                    label="Mật khẩu hiện tại"
-                    onPressRightIcon={() => setIsShowCurrentPassword(!isShowCurrentPassword)}
-                />
+                onChangeText={(passwordInput) => setCurrentPassword(passwordInput)}
+                keyboardType="number-pad"
+                containerStyle={{
+                    marginVertical: 10,
+                    width: SIZES.WIDTH_BASE * 0.9
+                }}
+                secureTextEntry={!isShowCurrentPassword}
+                placeholder="Nhập mật khẩu hiện tại..."
+                rightIcon={{
+                    name: 'eye',
+                    family: IconFamily.ENTYPO,
+                    size: 20,
+                    color: COLORS.DEFAULT
+                }}
+                label="Mật khẩu hiện tại"
+                onPressRightIcon={() => setIsShowCurrentPassword(!isShowCurrentPassword)}
+            />
 
-                <CustomInput
-                    value={newPassword}
-                    inputStyle={{
-                        width: SIZES.WIDTH_BASE * 0.9
-                    }}
-                    onChangeText={(passwordInput) => setNewPassword(passwordInput)}
-                    keyboardType="number-pad"
-                    containerStyle={{
-                        marginVertical: 10,
-                        width: SIZES.WIDTH_BASE * 0.9
-                    }}
-                    secureTextEntry={!isShowNewPassword}
-                    placeholder="Nhập mật khẩu mới..."
-                    rightIcon={{
-                        name: 'eye',
-                        family: IconFamily.ENTYPO,
-                        size: 20,
-                        color: COLORS.DEFAULT
-                    }}
-                    label="Mật khẩu mới"
-                    onPressRightIcon={() => setIsShowNewPassword(!isShowNewPassword)}
-                />
+            <CustomInput
+                value={newPassword}
+                inputStyle={{
+                    width: SIZES.WIDTH_BASE * 0.9
+                }}
+                onChangeText={(passwordInput) => setNewPassword(passwordInput)}
+                keyboardType="number-pad"
+                containerStyle={{
+                    marginVertical: 10,
+                    width: SIZES.WIDTH_BASE * 0.9
+                }}
+                secureTextEntry={!isShowNewPassword}
+                placeholder="Nhập mật khẩu mới..."
+                rightIcon={{
+                    name: 'eye',
+                    family: IconFamily.ENTYPO,
+                    size: 20,
+                    color: COLORS.DEFAULT
+                }}
+                label="Mật khẩu mới"
+                onPressRightIcon={() => setIsShowNewPassword(!isShowNewPassword)}
+            />
 
-                <CustomInput
-                    value={reNewPassword}
-                    inputStyle={{
-                        width: SIZES.WIDTH_BASE * 0.9
-                    }}
-                    onChangeText={(passwordInput) => setReNewPassword(passwordInput)}
-                    keyboardType="number-pad"
-                    containerStyle={{
-                        marginVertical: 10,
-                        width: SIZES.WIDTH_BASE * 0.9
-                    }}
-                    secureTextEntry={!isShowReNewPassword}
-                    placeholder="Nhập lại mật khẩu mới..."
-                    rightIcon={{
-                        name: 'eye',
-                        family: IconFamily.ENTYPO,
-                        size: 20,
-                        color: COLORS.DEFAULT
-                    }}
-                    label="Nhập lại mật khẩu mới"
-                    onPressRightIcon={() => setIsShowReNewPassword(!isShowReNewPassword)}
-                />
-            </View>
+            <CustomInput
+                value={reNewPassword}
+                inputStyle={{
+                    width: SIZES.WIDTH_BASE * 0.9
+                }}
+                onChangeText={(passwordInput) => setReNewPassword(passwordInput)}
+                keyboardType="number-pad"
+                containerStyle={{
+                    marginVertical: 10,
+                    width: SIZES.WIDTH_BASE * 0.9
+                }}
+                secureTextEntry={!isShowReNewPassword}
+                placeholder="Nhập lại mật khẩu mới..."
+                rightIcon={{
+                    name: 'eye',
+                    family: IconFamily.ENTYPO,
+                    size: 20,
+                    color: COLORS.DEFAULT
+                }}
+                label="Nhập lại mật khẩu mới"
+                onPressRightIcon={() => setIsShowReNewPassword(!isShowReNewPassword)}
+            />
 
             <View
                 style={{
                     flexDirection: 'row',
                     justifyContent: 'space-between',
-                    paddingBottom: 20
+                    paddingVertical: 20
                 }}
             >
-
                 <CustomButton
                     onPress={() => {
                         setCurrentPassword('');
@@ -216,7 +209,6 @@ export default function ChangePasswordForm() {
                         showsVerticalScrollIndicator={false}
                         contentContainerStyle={{
                             width: SIZES.WIDTH_BASE,
-                            alignSelf: 'center',
                             alignItems: 'center',
                             backgroundColor: COLORS.BLOCK,
                             marginTop: 5

@@ -1,15 +1,16 @@
 import { CenterLoader, CustomButton, CustomInput } from '@components/uiComponents';
-import { Theme } from '@constants/index';
+import { Gender, Theme } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
 import ValidationHelpers from '@helpers/ValidationHelpers';
+import { Picker } from '@react-native-picker/picker';
 import { setCurrentUser, setPersonTabActiveIndex } from '@redux/Actions';
 import { UserServices } from '@services/index';
 import React, { useEffect, useState } from 'react';
-import { View } from 'react-native';
+import { Platform, Text, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useDispatch, useSelector } from 'react-redux';
 
-const { SIZES, COLORS } = Theme;
+const { SIZES, COLORS, FONT: { TEXT_REGULAR } } = Theme;
 
 export default function UpdateInfoForm() {
     const [newUser, setNewUser] = useState({});
@@ -41,6 +42,10 @@ export default function UpdateInfoForm() {
         setNewUser({ ...newUser, description: descriptionInput });
     };
 
+    const onChangeGender = (genderKey) => {
+        setNewUser({ ...newUser, gender: genderKey });
+    };
+
     const renderInputName = () => (
         <CustomInput
             value={newUser.fullName}
@@ -51,6 +56,50 @@ export default function UpdateInfoForm() {
             }}
             label="Tên hiển thị:"
         />
+    );
+
+    const renderPickerGender = () => (
+        <View
+            style={{
+                marginVertical: 10,
+                width: SIZES.WIDTH_BASE * 0.9
+            }}
+        >
+            <Text
+                style={{
+                    fontFamily: TEXT_REGULAR,
+                    fontSize: SIZES.FONT_H3,
+                    color: COLORS.ACTIVE,
+                    marginBottom: 10
+                }}
+            >
+                Giới tính:
+            </Text>
+            <View
+                style={{
+                    marginVertical: Platform.OS === 'ios' ? -30 : -20
+                }}
+            >
+                <Picker
+                    selectedValue={newUser.gender}
+                    onValueChange={(itemValue) => onChangeGender(itemValue)}
+                    itemStyle={{
+                        fontSize: SIZES.FONT_H2,
+                        color: COLORS.DEFAULT
+                    }}
+                    mode="dropdown"
+                    dropdownIconColor={COLORS.ACTIVE}
+                    style={{
+                        fontSize: SIZES.FONT_H2,
+                        color: COLORS.ACTIVE
+                    }}
+                >
+                    {Gender.GENDER_ARRAY.map((item) => (
+                        <Picker.Item value={item.value} label={item.label} key={item.value} />
+                    ))}
+                </Picker>
+            </View>
+        </View>
     );
 
     const renderInputHometown = () => (
@@ -115,7 +164,8 @@ export default function UpdateInfoForm() {
                 paddingTop: 10,
                 flexDirection: 'row',
                 justifyContent: 'space-between',
-                paddingBottom: 20
+                paddingBottom: 20,
+                width: SIZES.WIDTH_BASE * 0.9
             }}
         >
             <CustomButton
@@ -217,7 +267,9 @@ export default function UpdateInfoForm() {
             dob,
             homeTown,
             interests,
-            address
+            address,
+            gender,
+            url,
         } = newUser;
 
         if (!validate()) {
@@ -231,7 +283,9 @@ export default function UpdateInfoForm() {
             homeTown,
             interests,
             address,
-            email: 'N/a'
+            email: 'N/a',
+            gender,
+            url,
         };
 
         setIsShowSpinner(true);
@@ -245,7 +299,9 @@ export default function UpdateInfoForm() {
                 fullName,
                 dob,
                 homeTown,
-                interests
+                interests,
+                gender,
+                genderDisplay: data.data.genderDisplay,
             };
 
             dispatch(setCurrentUser(userInfo));
@@ -265,21 +321,22 @@ export default function UpdateInfoForm() {
                     showsVerticalScrollIndicator={false}
                     contentContainerStyle={{
                         backgroundColor: COLORS.BLOCK,
-                        alignSelf: 'center',
                         alignItems: 'center',
+                        width: SIZES.WIDTH_BASE,
                         marginTop: 5,
-                        width: SIZES.WIDTH_BASE
+                        marginBottom: 5,
                     }}
                 >
                     {newUser && (
-                        <View>
+                        <>
                             {renderInputName()}
+                            {renderPickerGender()}
                             {renderInputHometown()}
                             {renderInputYear()}
                             {renderInputInterests()}
                             {renderInputDescription()}
                             {renderButtonPanel()}
-                        </View>
+                        </>
                     )}
                 </KeyboardAwareScrollView>
             )}
