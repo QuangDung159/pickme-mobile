@@ -90,13 +90,15 @@ export default function Profile({ route, navigation }) {
     const renderSubInfo = () => {
         const {
             description,
-            earningExpected,
+            estimatePricing,
             fullName,
             height,
             weight,
             dob,
             homeTown,
-            interests
+            interests,
+            ratingAvg,
+            bookingCount
         } = partnerInfo;
 
         return (
@@ -117,7 +119,15 @@ export default function Profile({ route, navigation }) {
                         textAlign: 'center'
                     }}
                 >
-                    {fullName}
+                    {`${fullName} `}
+                    {/* {'( '}
+                    <IconCustom
+                        name={gender === Gender.FEMALE ? 'female' : 'male'}
+                        family={IconFamily.FONT_AWESOME_5}
+                        size={22}
+                        color={COLORS.ACTIVE}
+                    />
+                    {' )'} */}
                 </Text>
 
                 <View
@@ -145,8 +155,8 @@ export default function Profile({ route, navigation }) {
                     listUserInfo={
                         [
                             {
-                                value: earningExpected
-                                && `${CommonHelpers.formatCurrency((earningExpected * 60))}/giờ`,
+                                value: estimatePricing
+                                && `${CommonHelpers.numberWithCommas((estimatePricing))}đ/phút`,
                                 icon: {
                                     name: 'money',
                                     family: IconFamily.FONT_AWESOME,
@@ -155,7 +165,7 @@ export default function Profile({ route, navigation }) {
                                 }
                             },
                             {
-                                value: '26 đơn hẹn',
+                                value: `${bookingCount} đơn hẹn`,
                                 icon: {
                                     name: 'list-alt',
                                     family: IconFamily.FONT_AWESOME,
@@ -164,7 +174,7 @@ export default function Profile({ route, navigation }) {
                                 }
                             },
                             {
-                                value: '4.8/5 đánh giá',
+                                value: `${ratingAvg}/5 đánh giá`,
                                 icon: {
                                     name: 'star-o',
                                     family: IconFamily.FONT_AWESOME,

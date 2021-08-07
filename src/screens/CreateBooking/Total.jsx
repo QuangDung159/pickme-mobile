@@ -33,11 +33,11 @@ export default function Total({
 
     const calculateTotalAmount = (start, end) => {
         if (total !== 0) return total;
-        const { earningExpected } = route.params.partner;
+        const { estimatePricing } = route.params.partner;
         const startMinutesNumber = convertStringHoursToMinutes(start) || 0;
         const endMinutesNumber = convertStringHoursToMinutes(end) || 0;
         if (startMinutesNumber < endMinutesNumber) {
-            return (endMinutesNumber - startMinutesNumber) * earningExpected;
+            return (endMinutesNumber - startMinutesNumber) * estimatePricing;
         }
         return 0;
     };

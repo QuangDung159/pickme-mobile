@@ -34,8 +34,6 @@ export default function CardBooking({ booking }) {
             address
         } = booking;
 
-        console.log('booking :>> ', booking);
-
         if (!booking) {
             return null;
         }

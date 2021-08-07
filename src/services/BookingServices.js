@@ -80,21 +80,21 @@ const submitCompleteBookingAsync = async (bookingId) => {
     return CommonHelpers.handleResByStatus(result);
 };
 
-const rxSubmitRatingAsync = async (body) => {
+const rxSubmitRatingAsync = async (bookingId, body) => {
     const result = await RxUtil(
-        Rx.BOOKING.BOOKING_RATE,
+        `${Rx.BOOKING.BOOKING_RATE}/${bookingId}`,
         'POST',
         body
     );
     return result;
 };
 
-const submitRatingAsync = async (body) => {
-    let result = await rxSubmitRatingAsync(body);
+const submitRatingAsync = async (bookingId, body) => {
+    let result = await rxSubmitRatingAsync(bookingId, body);
 
     const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
     if (handledResult) {
-        result = await rxSubmitRatingAsync(body);
+        result = await rxSubmitRatingAsync(bookingId, body);
     }
 
     return CommonHelpers.handleResByStatus(result);
