@@ -97,6 +97,8 @@ export default function Profile({ route, navigation }) {
             dob,
             homeTown,
             interests,
+            ratingAvg,
+            bookingCount
         } = partnerInfo;
 
         return (
@@ -163,7 +165,7 @@ export default function Profile({ route, navigation }) {
                                 }
                             },
                             {
-                                value: '26 đơn hẹn',
+                                value: `${bookingCount} đơn hẹn`,
                                 icon: {
                                     name: 'list-alt',
                                     family: IconFamily.FONT_AWESOME,
@@ -172,7 +174,7 @@ export default function Profile({ route, navigation }) {
                                 }
                             },
                             {
-                                value: '4.8/5 đánh giá',
+                                value: `${ratingAvg}/5 đánh giá`,
                                 icon: {
                                     name: 'star-o',
                                     family: IconFamily.FONT_AWESOME,
