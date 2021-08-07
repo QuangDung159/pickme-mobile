@@ -90,13 +90,13 @@ export default function Profile({ route, navigation }) {
     const renderSubInfo = () => {
         const {
             description,
-            earningExpected,
+            estimatePricing,
             fullName,
             height,
             weight,
             dob,
             homeTown,
-            interests
+            interests,
         } = partnerInfo;
 
         return (
@@ -117,7 +117,15 @@ export default function Profile({ route, navigation }) {
                         textAlign: 'center'
                     }}
                 >
-                    {fullName}
+                    {`${fullName} `}
+                    {/* {'( '}
+                    <IconCustom
+                        name={gender === Gender.FEMALE ? 'female' : 'male'}
+                        family={IconFamily.FONT_AWESOME_5}
+                        size={22}
+                        color={COLORS.ACTIVE}
+                    />
+                    {' )'} */}
                 </Text>
 
                 <View
@@ -145,8 +153,8 @@ export default function Profile({ route, navigation }) {
                     listUserInfo={
                         [
                             {
-                                value: earningExpected
-                                && `${CommonHelpers.formatCurrency((earningExpected * 60))}/giờ`,
+                                value: estimatePricing
+                                && `${CommonHelpers.numberWithCommas((estimatePricing))}đ/phút`,
                                 icon: {
                                     name: 'money',
                                     family: IconFamily.FONT_AWESOME,
