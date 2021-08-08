@@ -54,14 +54,17 @@ export default function ConversationList({ navigation }) {
 
     useEffect(
         () => {
-            getListConversationFromSocket(
-                1, 20,
-                (data) => {
-                    dispatch(setListConversation(data.data.data.getRecently));
-                    countNumberOfUnreadConversation(data.data.data.getRecently);
-                }
-            );
+            getListConversationFromSocket();
         }, [messageListened]
+    );
+
+    useEffect(
+        () => {
+            const onFocus = navigation.addListener('focus', () => {
+                getListConversationFromSocket();
+            });
+            return onFocus;
+        }
     );
 
     const countNumberOfUnreadConversation = (listMessage) => {
@@ -109,11 +112,11 @@ export default function ConversationList({ navigation }) {
         );
     };
 
-    const getListConversationFromSocket = (pageIndex, pageSize, onFetchData) => {
+    const getListConversationFromSocket = () => {
         const { token } = currentUser;
         const data = {
             query: GraphQueryString.GET_LIST_CONVERSATION,
-            variables: { pageIndex, pageSize }
+            variables: { pageIndex: 1, pageSize: 20 }
         };
 
         socketRequestUtil(
@@ -121,7 +124,8 @@ export default function ConversationList({ navigation }) {
             data,
             token,
             (res) => {
-                onFetchData(res);
+                dispatch(setListConversation(res.data.data.getRecently));
+                countNumberOfUnreadConversation(res.data.data.getRecently);
                 setRefreshing(false);
                 setIsShowSpinner(false);
             },
@@ -138,13 +142,7 @@ export default function ConversationList({ navigation }) {
 
     const onRefresh = () => {
         setRefreshing(true);
-        getListConversationFromSocket(
-            1, 20,
-            (data) => {
-                dispatch(setListConversation(data.data.data.getRecently));
-                countNumberOfUnreadConversation(data.data.data.getRecently);
-            }
-        );
+        getListConversationFromSocket();
     };
 
     // render \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\

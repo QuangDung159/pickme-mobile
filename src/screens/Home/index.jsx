@@ -15,7 +15,6 @@ import {
 } from '@redux/Actions';
 import { BookingServices, NotificationServices, UserServices } from '@services/index';
 import { socketRequestUtil } from '@utils/index';
-import * as SecureStore from 'expo-secure-store';
 import React, { useEffect, useState } from 'react';
 import {
     FlatList, Image, RefreshControl, SafeAreaView, StyleSheet, Text, View
@@ -32,11 +31,6 @@ const {
     SIZES,
     COLORS
 } = Theme;
-
-let token = null;
-const getTokenFromLocal = async () => {
-    token = await SecureStore.getItemAsync('api_token');
-};
 
 export default function Home({ navigation }) {
     const [refreshing, setRefreshing] = useState(false);
@@ -57,33 +51,22 @@ export default function Home({ navigation }) {
         () => {
             fetchListNotification();
             fetchListBooking();
-
+            getListConversationFromSocket();
             if (!pickMeInfoStore) fetchPickMeInfo();
             if (!listPartnerHomeRedux || listPartnerHomeRedux.length === 0) {
                 setIsShowSpinner(true);
                 getListPartner();
             }
-
-            getListConversationFromSocket(
-                1, 20,
-                (data) => {
-                    dispatch(setListConversation(data.data.data.getRecently));
-                    setListConversationGetAtHome(data.data.data.getRecently);
-                    countNumberOfUnreadConversation(data.data.data.getRecently);
-                }
-            );
         }, []
     );
 
     useEffect(
         () => {
-            if (!token) getTokenFromLocal();
-
             const intervalUpdateLatest = setIntervalToUpdateLastActiveOfUserStatus();
             return () => {
                 clearInterval(intervalUpdateLatest);
             };
-        }, [token]
+        }, []
     );
 
     useEffect(
@@ -182,23 +165,23 @@ export default function Home({ navigation }) {
         };
     };
 
-    const getListConversationFromSocket = (pageIndex, pageSize, onFetchData) => {
-        console.log('getListConversationFromSocket');
-        if (token) {
-            const data = {
-                query: GraphQueryString.GET_LIST_CONVERSATION,
-                variables: { pageIndex, pageSize }
-            };
+    const getListConversationFromSocket = () => {
+        const { token } = currentUser;
+        const data = {
+            query: GraphQueryString.GET_LIST_CONVERSATION,
+            variables: { pageIndex: 1, pageSize: 20 }
+        };
 
-            socketRequestUtil(
-                'POST',
-                data,
-                token,
-                (res) => {
-                    onFetchData(res);
-                }
-            );
-        }
+        socketRequestUtil(
+            'POST',
+            data,
+            token,
+            (res) => {
+                dispatch(setListConversation(res.data.data.getRecently));
+                setListConversationGetAtHome(res.data.data.getRecently);
+                countNumberOfUnreadConversation(res.data.data.getRecently);
+            }
+        );
     };
 
     const countNumberOfUnreadConversation = (listConversation) => {
@@ -233,7 +216,7 @@ export default function Home({ navigation }) {
             socketRequestUtil(
                 'POST',
                 data,
-                token
+                currentUser.token
             );
         }, 300000);
         return intervalUpdateLastActive;
