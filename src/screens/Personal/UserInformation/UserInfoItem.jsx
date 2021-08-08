@@ -1,7 +1,7 @@
+import { IconCustom } from '@components/uiComponents';
+import { Theme } from '@constants/index';
 import React from 'react';
 import { Text, View } from 'react-native';
-import { IconCustom } from '../../../components/uiComponents';
-import { Theme } from '../../../constants';
 
 const {
     FONT: {
@@ -14,24 +14,24 @@ const {
 export default function UserInfoItem({
     value, icon: {
         name, family, color, size
-    }
+    },
 }) {
     let handleValue = value;
-    if (value === null || value === undefined || value.toString() === '') {
+    if (value === undefined || value === null || value.toString() === '') {
         handleValue = 'N/a';
     }
 
     return (
         <View
             style={{
-                alignSelf: 'center',
                 marginBottom: 10,
                 flexDirection: 'row',
+                alignItems: 'center'
             }}
         >
             <View
                 style={{
-                    flex: 1
+                    marginRight: 5
                 }}
             >
                 <IconCustom
@@ -43,8 +43,7 @@ export default function UserInfoItem({
             </View>
             <View
                 style={{
-                    flexDirection: 'row',
-                    flex: 9
+                    flexDirection: 'row'
                 }}
             >
                 <Text

@@ -1,6 +1,6 @@
 import { Theme } from '@constants/index';
 import React, { PureComponent } from 'react';
-import { Platform, Switch } from 'react-native';
+import { Switch } from 'react-native';
 
 const { COLORS } = Theme;
 
@@ -8,24 +8,18 @@ class MkSwitch extends PureComponent {
     render() {
         const { value, ...props } = this.props;
 
-        // const thumbColor = Platform.OS === 'ios'
-        //     ? COLORS.PRIMARY
-        //     : Platform.OS === 'android' && value
-        //         ? COLORS.SWITCH_ON
-        //         : COLORS.SWITCH_OFF;
-
         return (
             <Switch
                 value={value}
                 thumbColor={[
                     value === true
-                        ? COLORS.SWITCH_ON
-                        : '#ffffff'
+                        ? COLORS.ACTIVE
+                        : COLORS.DEFAULT
                 ]}
-                ios_backgroundColor="#D8D8D8"
+                ios_backgroundColor={COLORS.BLOCK}
                 trackColor={{
-                    true: '#d3d3d3',
-                    false: Platform.OS === 'ios' ? '#d3d3d3' : '#333'
+                    true: COLORS.ACTIVE,
+                    false: COLORS.DEFAULT
                 }}
                 {...props}
             />
