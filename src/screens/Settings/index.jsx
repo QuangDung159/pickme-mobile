@@ -99,7 +99,7 @@ export default function Settings() {
                         marginTop: 10
                     }}
                 >
-                    {`Version ${Constants.manifest.version} (2108082)`}
+                    {`PickMe ${Constants.manifest.version} (2108087)`}
                 </Text>
             </ScrollView>
         );

@@ -129,6 +129,7 @@ export default function App() {
                 if (otaObj.isNew) {
                     Alert.alert(
                         'Bạn có bản cập nhật mới',
+                        '',
                         [
                             { text: 'Cập nhật', onPress: () => Updates.reloadAsync() },
                         ],
