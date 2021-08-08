@@ -19,25 +19,15 @@ import { View } from 'react-native';
 import uuid from 'react-native-uuid';
 import { useDispatch, useSelector } from 'react-redux';
 
-let token = null;
-const getTokenFromLocal = async () => {
-    token = await SecureStore.getItemAsync('api_token');
-};
-
 export default function Main() {
     const notificationReceivedRedux = useSelector((state) => state.notificationReducer.notificationReceivedRedux);
     const navigationObj = useSelector((state) => state.appConfigReducer.navigationObj);
+    const currentUser = useSelector((state) => state.userReducer.currentUser);
     const dispatch = useDispatch();
 
     useEffect(
         () => {
-            getTokenFromLocal();
             dispatch(setDeviceTimezone());
-        }, []
-    );
-
-    useEffect(
-        () => {
             generateNewDeviceId();
         }, []
     );
@@ -57,7 +47,7 @@ export default function Main() {
     const httpLink = new HttpLink({
         uri: `http:${SOCKET_URL}`,
         headers: {
-            authorization: token,
+            authorization: `Bearer ${currentUser.token}`,
         }
     });
 
@@ -66,7 +56,7 @@ export default function Main() {
         options: {
             reconnect: true,
             connectionParams: {
-                authorization: token,
+                authorization: `Bearer ${currentUser.token}`,
             },
         }
     });
