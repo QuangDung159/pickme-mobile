@@ -106,7 +106,6 @@ export default function Profile({ route, navigation }) {
                 marginTop: 30,
                 width: SIZES.WIDTH_BASE * 0.9,
                 alignSelf: 'center',
-                alignItems: 'center'
             }}
             >
                 <Text
