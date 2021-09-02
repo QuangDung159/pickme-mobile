@@ -1,6 +1,6 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
 import { CenterLoader, CustomButton } from '@components/uiComponents';
-import { Images, Theme } from '@constants/index';
+import { Gender, Images, Theme } from '@constants/index';
 import { MediaHelpers, ToastHelpers } from '@helpers/index';
 import { UserServices } from '@services/index';
 import React, { useState } from 'react';
@@ -74,7 +74,7 @@ export default function ImageForm({
                 homeTown: hometown,
                 email: 'N/a',
                 url: imageUrl,
-                gender
+                gender: gender || Gender.GENDER_ARRAY[0].value
             };
 
             setIsShowDoneMessage(true);

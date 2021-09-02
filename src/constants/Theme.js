@@ -36,7 +36,7 @@ const SIZES = {
     // montserrat
     FONT_H1: 24,
     FONT_H2: 20,
-    FONT_H3: 18,
+    FONT_H3: 17,
     FONT_H4: 16,
     FONT_H5: 14,
 

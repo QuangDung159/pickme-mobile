@@ -59,7 +59,7 @@ export default function CustomInput({
                 ]
             }
             value={value?.toString() || ''}
-            placeholderTextColor={COLORS.DEFAULT}
+            placeholderTextColor={COLORS.TABS}
             {...props}
         />
     );
