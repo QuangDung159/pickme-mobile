@@ -1,4 +1,5 @@
 import { Switch } from '@components/uiComponents';
+import App from '@constants/App';
 import { Theme } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
 import Constants from 'expo-constants';
@@ -99,7 +100,7 @@ export default function Settings() {
                         marginTop: 10
                     }}
                 >
-                    {`PickMe ${Constants.manifest.version} (2108087)`}
+                    {`PickMe ${Constants.manifest.version} (${App.APP_VERSION_OTA})`}
                 </Text>
             </ScrollView>
         );

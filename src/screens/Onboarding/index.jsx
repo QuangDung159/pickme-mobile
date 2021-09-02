@@ -1,4 +1,5 @@
 import { CenterLoader, CustomButton } from '@components/uiComponents';
+import App from '@constants/App';
 import {
     Images, ScreenName, Theme, Utils
 } from '@constants/index';
@@ -183,7 +184,7 @@ export default function Onboarding({ navigation }) {
                                         fontSize: SIZES.FONT_H4 - 2,
                                     }}
                                 >
-                                    {`${Constants.manifest.version}`}
+                                    {`${Constants.manifest.version} (${App.APP_VERSION_OTA})`}
                                 </Text>
                                 <Text
                                     style={{

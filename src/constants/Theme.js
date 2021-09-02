@@ -1,4 +1,5 @@
 import { Dimensions } from 'react-native';
+import App from './App';
 
 const { width, height } = Dimensions.get('window');
 
@@ -25,19 +26,27 @@ const SIZES = {
     BASE: 16,
     OPACITY: 0.8,
 
-    FONT_H1: 25,
-    FONT_H2: 21,
-    FONT_H3: 19,
-    FONT_H4: 17,
-    FONT_H5: 15,
+    // non-montserrat
+    // FONT_H1: 25,
+    // FONT_H2: 21,
+    // FONT_H3: 19,
+    // FONT_H4: 17,
+    // FONT_H5: 15,
+
+    // montserrat
+    FONT_H1: 24,
+    FONT_H2: 20,
+    FONT_H3: 18,
+    FONT_H4: 16,
+    FONT_H5: 14,
 
     WIDTH_BASE: width,
     HEIGHT_BASE: height,
 };
 
 const FONT = {
-    TEXT_REGULAR: 'roboto-regular',
-    TEXT_BOLD: 'roboto-bold'
+    TEXT_REGULAR: App.FONT.montserratRegular,
+    TEXT_BOLD: App.FONT.montserratBold
 };
 
 export default {
