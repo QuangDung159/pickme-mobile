@@ -1,3 +1,4 @@
+import ResponsiveHelpers from '@helpers/ResponsiveHelpers';
 import { Dimensions } from 'react-native';
 import App from './App';
 
@@ -34,11 +35,11 @@ const SIZES = {
     // FONT_H5: 15,
 
     // montserrat
-    FONT_H1: 24,
-    FONT_H2: 20,
-    FONT_H3: 17,
-    FONT_H4: 16,
-    FONT_H5: 14,
+    FONT_H1: ResponsiveHelpers.normalize(24),
+    FONT_H2: ResponsiveHelpers.normalize(20),
+    FONT_H3: ResponsiveHelpers.normalize(18),
+    FONT_H4: ResponsiveHelpers.normalize(16),
+    FONT_H5: ResponsiveHelpers.normalize(14),
 
     WIDTH_BASE: width,
     HEIGHT_BASE: height,
