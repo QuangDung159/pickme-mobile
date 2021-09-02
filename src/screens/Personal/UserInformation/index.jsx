@@ -84,12 +84,6 @@ export default function UserInformation({ navigation }) {
         dispatch(resetStoreSignOut());
         SecureStore.deleteItemAsync('api_token')
             .then(console.log('api_token was cleaned!'));
-
-        SecureStore.deleteItemAsync('phoneNumber')
-            .then(console.log('phoneNumber was cleaned!'));
-
-        SecureStore.deleteItemAsync('password')
-            .then(console.log('password was cleaned!'));
     };
 
     const fetchCurrentUserInfo = async () => {
@@ -274,7 +268,7 @@ export default function UserInformation({ navigation }) {
 
     const renderButtonLogout = () => (
         <CustomButton
-            onPress={() => onSignOut(navigation)}
+            onPress={() => onSignOut()}
             labelStyle={{
                 fontSize: SIZES.FONT_H3,
             }}

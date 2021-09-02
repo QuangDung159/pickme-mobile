@@ -66,42 +66,46 @@ export default function Onboarding({ navigation }) {
     const onLogin = async () => {
         const phoneNumber = await SecureStore.getItemAsync('phoneNumber');
         const password = await SecureStore.getItemAsync('password');
+        const apiToken = await SecureStore.getItemAsync('api_token');
         const deviceId = await SecureStore.getItemAsync('deviceId');
 
-        if (phoneNumber && password) {
-            const body = {
-                username: phoneNumber,
-                password,
-                deviceId
-            };
+        if (apiToken) {
+            if (phoneNumber && password) {
+                const body = {
+                    username: phoneNumber,
+                    password,
+                    deviceId
+                };
 
-            setIsShowSpinner(true);
-            const result = await UserServices.loginAsync(body);
-            const {
-                data, status
-            } = result;
+                setIsShowSpinner(true);
+                const result = await UserServices.loginAsync(body);
+                const {
+                    data, status
+                } = result;
 
-            if (data) {
-                const currentUserInfo = await UserServices.mappingCurrentUserInfo(data.data);
-                dispatch(setCurrentUser(currentUserInfo));
+                if (data) {
+                    const currentUserInfo = await UserServices.mappingCurrentUserInfo(data.data);
+                    SecureStore.setItemAsync('api_token', `${currentUserInfo.token}`);
+                    dispatch(setCurrentUser(currentUserInfo));
 
-                if (status === 200) {
-                    navigation.reset({
-                        index: 0,
-                        routes: [{ name: ScreenName.APP }],
-                    });
-                    dispatch(setIsSignInOtherDeviceStore(false));
-                }
+                    if (status === 200) {
+                        navigation.reset({
+                            index: 0,
+                            routes: [{ name: ScreenName.APP }],
+                        });
+                        dispatch(setIsSignInOtherDeviceStore(false));
+                    }
 
-                if (status === 201) {
+                    if (status === 201) {
                     // re otp
-                    navigation.reset({
-                        index: 0,
-                        routes: [{ name: ScreenName.SIGN_IN_WITH_OTP }],
-                    });
+                        navigation.reset({
+                            index: 0,
+                            routes: [{ name: ScreenName.SIGN_IN_WITH_OTP }],
+                        });
+                    }
+                } else {
+                    setIsShowSpinner(false);
                 }
-            } else {
-                setIsShowSpinner(false);
             }
         }
     };
