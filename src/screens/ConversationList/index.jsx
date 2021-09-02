@@ -241,7 +241,7 @@ export default function ConversationList({ navigation }) {
                                     color: COLORS.DEFAULT,
 
                                 }}
-                                numberOfLines={2}
+                                numberOfLines={1}
                             >
                                 {conversation?.content}
                             </Text>

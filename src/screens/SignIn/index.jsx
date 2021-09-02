@@ -76,15 +76,17 @@ export default function SignIn({ navigation }) {
                 const { status } = await Notifications.requestPermissionsAsync();
                 finalStatus = status;
             }
+
             if (finalStatus !== 'granted') {
                 Alert.alert('Failed to get push token for push notification!');
                 return;
             }
+
             expoTokenFromServer = (await Notifications.getExpoPushTokenAsync()).data;
-            console.log('expoTokenFromServer :>> ', expoTokenFromServer);
             dispatch(setExpoToken(expoTokenFromServer));
-            console.log(expoTokenFromServer);
             updateExpoTokenToServer(expoTokenFromServer);
+
+            console.log('expoTokenFromServer :>>', expoTokenFromServer);
         }
 
         if (Platform.OS === 'android') {

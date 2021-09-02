@@ -1,4 +1,3 @@
-import Theme from '@constants/Theme';
 import {
     setCurrentBookingRedux,
     setCurrentUser, setListBookingStore,
@@ -11,63 +10,9 @@ import BookingServices from '@services/BookingServices';
 import CashServices from '@services/CashServices';
 import NotificationServices from '@services/NotificationServices';
 import UserServices from '@services/UserServices';
-import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
 import React, { useEffect, useRef, useState } from 'react';
-import { Alert, Platform } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-
-const {
-    COLORS
-} = Theme;
-
-Notifications.setNotificationHandler({
-    handleNotification: async () => ({
-        shouldShowAlert: true,
-        shouldPlaySound: false,
-        shouldSetBadge: false,
-    }),
-});
-
-const schedulePushNotification = async () => {
-    await Notifications.scheduleNotificationAsync({
-        content: {
-            title: 'Bạn có tin nhắn mới',
-        },
-        trigger: { seconds: 2 },
-    });
-};
-
-const registerForPushNotificationsAsync = async () => {
-    let token;
-    if (Constants.isDevice) {
-        const { status: existingStatus } = await Notifications.getPermissionsAsync();
-        let finalStatus = existingStatus;
-        if (existingStatus !== 'granted') {
-            const { status } = await Notifications.requestPermissionsAsync();
-            finalStatus = status;
-        }
-        if (finalStatus !== 'granted') {
-            Alert.alert('Failed to get push token for push notification!');
-            return;
-        }
-        token = (await Notifications.getExpoPushTokenAsync()).data;
-        console.log(token);
-    } else {
-        Alert.alert('Must use physical device for Push Notifications');
-    }
-
-    if (Platform.OS === 'android') {
-        Notifications.setNotificationChannelAsync('default', {
-            name: 'default',
-            importance: Notifications.AndroidImportance.MAX,
-            vibrationPattern: [0, 250, 250, 250],
-            lightColor: COLORS.ACTIVE
-        });
-    }
-
-    // return token;
-};
 
 export default function ExpoNotification() {
     const notificationListener = useRef();
@@ -78,20 +23,19 @@ export default function ExpoNotification() {
     const currentBookingRedux = useSelector((state) => state.bookingReducer.currentBookingRedux);
     const messageListened = useSelector((state) => state.messageReducer.messageListened);
     const chattingWith = useSelector((state) => state.messageReducer.chattingWith);
+    const listConversation = useSelector((state) => state.messageReducer.listConversation);
 
     const dispatch = useDispatch();
 
     useEffect(
         () => {
             if (!chattingWith && messageListened && JSON.stringify(messageListened) !== JSON.stringify({})) {
-                schedulePushNotification();
+                schedulePushNotification(messageListened.from);
             }
         }, [messageListened]
     );
 
     useEffect(() => {
-        registerForPushNotificationsAsync();
-
         // handle received
         notificationListener.current = Notifications.addNotificationReceivedListener((notificationReceived) => {
             fetchListNotification();
@@ -117,6 +61,26 @@ export default function ExpoNotification() {
             fetchBookingDetailInfo(currentBookingRedux.id);
         }
     }, [currentBookingRedux, bookingId]);
+
+    Notifications.setNotificationHandler({
+        handleNotification: async () => ({
+            shouldShowAlert: true,
+            shouldPlaySound: false,
+            shouldSetBadge: false,
+        }),
+    });
+
+    const schedulePushNotification = async (from) => {
+        const conversation = listConversation.find((item) => item.fromUser.userId === from);
+        await Notifications.scheduleNotificationAsync({
+            content: {
+                title: 'Bạn có tin nhắn mới',
+                body: `Từ ${conversation ? conversation.fromUser.fullName : 'người lạ'}`,
+                data: {},
+            },
+            trigger: { seconds: 2 },
+        });
+    };
 
     const fetchCurrentUserInfo = async () => {
         const result = await UserServices.fetchCurrentUserInfoAsync();
