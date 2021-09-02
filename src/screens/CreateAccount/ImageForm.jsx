@@ -3,7 +3,7 @@ import { CenterLoader, CustomButton } from '@components/uiComponents';
 import { Images, Theme } from '@constants/index';
 import { MediaHelpers, ToastHelpers } from '@helpers/index';
 import { UserServices } from '@services/index';
-import React from 'react';
+import React, { useState } from 'react';
 import {
     Image, StyleSheet, Text, View
 } from 'react-native';
@@ -27,6 +27,8 @@ export default function ImageForm({
     setImage,
     goToStep
 }) {
+    const [imageUrl, setImageUrl] = useState('');
+
     const onClickUploadProfileImage = () => {
         MediaHelpers.pickImage(true, [1, 1], (result) => handleUploadImageProfile(result.uri));
     };
@@ -36,10 +38,14 @@ export default function ImageForm({
 
         MediaHelpers.imgbbUploadImage(
             uri,
-            () => {
+            (res) => {
                 ToastHelpers.renderToast('Tải ảnh lên thành công!', 'success');
                 setIsShowSpinner(false);
                 setImage(uri);
+
+                if (res?.data?.url) {
+                    setImageUrl(res?.data?.url);
+                }
             },
             () => {
                 ToastHelpers.renderToast();
@@ -53,7 +59,7 @@ export default function ImageForm({
             ToastHelpers.renderToast('Ảnh không hợp lệ!', 'error');
         } else {
             const {
-                fullName, description, dob, height, earningExpected, weight, address, interests, hometown
+                fullName, description, dob, height, earningExpected, weight, address, interests, hometown, gender
             } = newUser;
 
             const body = {
@@ -66,7 +72,9 @@ export default function ImageForm({
                 address,
                 interests,
                 homeTown: hometown,
-                email: 'N/a'
+                email: 'N/a',
+                url: imageUrl,
+                gender
             };
 
             setIsShowDoneMessage(true);

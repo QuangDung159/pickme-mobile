@@ -1,6 +1,6 @@
 import { CustomButton, CustomInput } from '@components/uiComponents';
 import { Theme } from '@constants/index';
-import { ToastHelpers } from '@helpers/index';
+import { ToastHelpers, ValidationHelpers } from '@helpers/index';
 import React from 'react';
 import { Text, View } from 'react-native';
 
@@ -20,6 +20,29 @@ export default function NameForm({
     const onChangeInputName = (nameInput) => {
         const user = { ...newUser, fullName: nameInput };
         setNewUser(user);
+    };
+
+    const validate = () => {
+        const {
+            fullName
+        } = newUser;
+
+        const validationArr = [
+            {
+                fieldName: 'Tên hiển thị',
+                input: fullName,
+                validate: {
+                    required: {
+                        value: true,
+                    },
+                    maxLength: {
+                        value: 255,
+                    },
+                }
+            },
+        ];
+
+        return ValidationHelpers.validate(validationArr);
     };
 
     const renderNameForm = () => (
@@ -52,7 +75,12 @@ export default function NameForm({
             </View>
 
             <CustomButton
-                onPress={() => goToStep(2)}
+                onPress={() => {
+                    if (!validate()) {
+                        return;
+                    }
+                    goToStep(2);
+                }}
                 buttonStyle={inputWith}
                 type="active"
                 label="Bước kế tiếp"

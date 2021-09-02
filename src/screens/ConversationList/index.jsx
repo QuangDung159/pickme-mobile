@@ -74,7 +74,7 @@ export default function ConversationList({ navigation }) {
 
         let count = 0;
         listMessage.forEach((conversation) => {
-            if (conversation.to === currentUser.id && !conversation.isRead) {
+            if (conversation?.to === currentUser.id && !conversation?.isRead) {
                 count += 1;
             }
         });
@@ -149,19 +149,19 @@ export default function ConversationList({ navigation }) {
     const renderConversationItem = (conversation) => {
         let params = {
             userStatus: 'Vừa mới truy cập',
-            conversationId: conversation.id
+            conversationId: conversation?.id
         };
 
         // detect this recently message from current user or another
-        if (conversation.to === currentUser.id) {
+        if (conversation?.to === currentUser.id) {
             // this recently message from another
             params = {
                 ...params,
-                toUserId: conversation.from,
-                userInfo: conversation.fromUser,
-                name: conversation.fromUser.fullName || 'N/A',
-                imageUrl: conversation.fromUser.url,
-                isRead: conversation.isRead
+                toUserId: conversation?.from,
+                userInfo: conversation?.fromUser,
+                name: conversation?.fromUser?.fullName || 'N/A',
+                imageUrl: conversation?.fromUser?.url,
+                isRead: conversation?.isRead
             };
         } else {
             // this recently message from current user
@@ -170,11 +170,11 @@ export default function ConversationList({ navigation }) {
             conversation.isRead = true;
             params = {
                 ...params,
-                toUserId: conversation.to,
-                userInfo: conversation.toUser,
-                name: conversation.toUser.fullName || 'N/A',
-                imageUrl: conversation.toUser.url,
-                isRead: conversation.isRead
+                toUserId: conversation?.to,
+                userInfo: conversation?.toUser,
+                name: conversation?.toUser?.fullName || 'N/A',
+                imageUrl: conversation?.toUser?.url,
+                isRead: conversation?.isRead
             };
         }
 
@@ -234,7 +234,7 @@ export default function ConversationList({ navigation }) {
                         >
                             <Text
                                 style={{
-                                    fontFamily: conversation.isRead
+                                    fontFamily: conversation?.isRead
                                         ? TEXT_REGULAR
                                         : TEXT_BOLD,
                                     fontSize: SIZES.FONT_H3,
@@ -243,7 +243,7 @@ export default function ConversationList({ navigation }) {
                                 }}
                                 numberOfLines={2}
                             >
-                                {conversation.content}
+                                {conversation?.content}
                             </Text>
                         </View>
                     </View>
@@ -265,7 +265,7 @@ export default function ConversationList({ navigation }) {
                             setIsShowSpinner={(showSpinner) => setIsShowSpinner(showSpinner)}
                             userId={userId}
                         />
-                        {listConversation && listConversation.length !== 0 ? (
+                        {listConversation && listConversation?.length !== 0 ? (
                             <FlatList
                                 data={listConversation}
                                 renderItem={({ item, index }) => renderConversationItem(item, index)}

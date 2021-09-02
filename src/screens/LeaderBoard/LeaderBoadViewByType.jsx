@@ -72,7 +72,6 @@ export default function LeaderBoadViewByType({
                             }
                         )
                     }
-
                 >
                     <View
                         style={{
@@ -252,7 +251,6 @@ export default function LeaderBoadViewByType({
                             >
                                 {renderAchieveValueTopPanel(leaderBoardItem.value)}
                             </View>
-
                         </View>
                     </View>
                 </TouchableWithoutFeedback>

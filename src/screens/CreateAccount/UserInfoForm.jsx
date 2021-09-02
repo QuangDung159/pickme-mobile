@@ -1,11 +1,13 @@
 import { CustomButton, CustomInput } from '@components/uiComponents';
-import { Theme } from '@constants/index';
-import { ToastHelpers } from '@helpers/index';
+import { Gender, Theme } from '@constants/index';
+import { ToastHelpers, ValidationHelpers } from '@helpers/index';
+import { Picker } from '@react-native-picker/picker';
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Platform, Text, View } from 'react-native';
 
 const {
     SIZES,
+    COLORS,
 } = Theme;
 
 export default function UserInfoForm({
@@ -26,6 +28,83 @@ export default function UserInfoForm({
         const user = { ...newUser, dob: yearInput };
         setNewUser(user);
     };
+
+    const onChangeGender = (genderKey) => {
+        setNewUser({ ...newUser, gender: genderKey });
+    };
+
+    const validate = () => {
+        const {
+            interests,
+            dob
+        } = newUser;
+
+        const validationArr = [
+            {
+                fieldName: 'Sở thích',
+                input: interests,
+                validate: {
+                    required: {
+                        value: true,
+                    },
+                    maxLength: {
+                        value: 255,
+                    },
+                }
+            },
+            {
+                fieldName: 'Năm sinh',
+                input: dob,
+                validate: {
+                    required: {
+                        value: true,
+                    },
+                    maxLength: {
+                        value: 4,
+                    },
+                    minLength: {
+                        value: 4
+                    }
+                }
+            },
+        ];
+
+        return ValidationHelpers.validate(validationArr);
+    };
+
+    const renderPickerGender = () => (
+        <View
+            style={{
+                marginVertical: 10,
+                width: SIZES.WIDTH_BASE * 0.77
+            }}
+        >
+            <View
+                style={{
+                    marginVertical: Platform.OS === 'ios' ? -30 : -20
+                }}
+            >
+                <Picker
+                    selectedValue={newUser.gender}
+                    onValueChange={(itemValue) => onChangeGender(itemValue)}
+                    itemStyle={{
+                        fontSize: SIZES.FONT_H2,
+                        color: COLORS.DEFAULT
+                    }}
+                    mode="dropdown"
+                    dropdownIconColor={COLORS.ACTIVE}
+                    style={{
+                        fontSize: SIZES.FONT_H2,
+                        color: COLORS.ACTIVE
+                    }}
+                >
+                    {Gender.GENDER_ARRAY.map((item) => (
+                        <Picker.Item value={item.value} label={item.label} key={item.value} />
+                    ))}
+                </Picker>
+            </View>
+        </View>
+    );
 
     const renderUserInfoForm = () => (
         <View style={registerContainer}>
@@ -69,12 +148,19 @@ export default function UserInfoForm({
                     placeholder="Nhập năm sinh của bạn..."
                 />
 
+                {renderPickerGender()}
+
             </View>
             <View
                 center
             >
                 <CustomButton
-                    onPress={() => goToStep(5)}
+                    onPress={() => {
+                        if (!validate()) {
+                            return;
+                        }
+                        goToStep(5);
+                    }}
                     buttonStyle={inputWith}
                     type="active"
                     label="Bước kế tiếp"

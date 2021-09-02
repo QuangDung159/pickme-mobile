@@ -1,7 +1,7 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
 import { IconCustom, TopTabBar } from '@components/uiComponents';
 import {
-    IconFamily, Theme, Rx, ScreenName
+    IconFamily, Rx, ScreenName, Theme
 } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
 import React, { useEffect, useState } from 'react';
@@ -13,19 +13,21 @@ const {
     COLORS
 } = Theme;
 
+const tabArr = [
+    { key: 'booking', title: 'Đơn hẹn' },
+    { key: 'earningExpected', title: 'Thu nhập (VND/phút)' },
+];
+
 export default function LeaderBoard({ navigation }) {
     const [tabActiveIndex, setTabActiveIndex] = useState(0);
 
     const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
 
-    const [routes] = React.useState([
-        { key: 'booking', title: 'Đơn hẹn' },
-        { key: 'earningExpected', title: 'Mức chi trả' },
-    ]);
+    const [routes] = React.useState(tabArr);
 
     const tabs = [
         {
-            tabLabel: 'Đơn hẹn',
+            tabLabel: tabArr[0].title,
             tabIcon: (
                 <IconCustom
                     name="list-alt"
@@ -37,7 +39,7 @@ export default function LeaderBoard({ navigation }) {
             endpoint: Rx.PARTNER.LEADER_BOARD_BOOKING
         },
         {
-            tabLabel: 'Mức chi trả',
+            tabLabel: tabArr[1].title,
             tabIcon: (
                 <></>
             ),
