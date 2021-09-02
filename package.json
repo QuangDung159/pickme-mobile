@@ -71,7 +71,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "publish": "expo publish"
+    "expo-pub": "expo publish"
   },
   "private": true
 }

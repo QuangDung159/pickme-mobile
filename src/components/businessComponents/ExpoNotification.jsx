@@ -1,3 +1,4 @@
+import Theme from '@constants/Theme';
 import {
     setCurrentBookingRedux,
     setCurrentUser, setListBookingStore,
@@ -10,9 +11,15 @@ import BookingServices from '@services/BookingServices';
 import CashServices from '@services/CashServices';
 import NotificationServices from '@services/NotificationServices';
 import UserServices from '@services/UserServices';
+import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
 import React, { useEffect, useRef, useState } from 'react';
+import { Alert, Platform } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+
+const {
+    COLORS
+} = Theme;
 
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
@@ -22,6 +29,46 @@ Notifications.setNotificationHandler({
     }),
 });
 
+const schedulePushNotification = async () => {
+    await Notifications.scheduleNotificationAsync({
+        content: {
+            title: 'Bạn có tin nhắn mới',
+        },
+        trigger: { seconds: 2 },
+    });
+};
+
+const registerForPushNotificationsAsync = async () => {
+    let token;
+    if (Constants.isDevice) {
+        const { status: existingStatus } = await Notifications.getPermissionsAsync();
+        let finalStatus = existingStatus;
+        if (existingStatus !== 'granted') {
+            const { status } = await Notifications.requestPermissionsAsync();
+            finalStatus = status;
+        }
+        if (finalStatus !== 'granted') {
+            Alert.alert('Failed to get push token for push notification!');
+            return;
+        }
+        token = (await Notifications.getExpoPushTokenAsync()).data;
+        console.log(token);
+    } else {
+        Alert.alert('Must use physical device for Push Notifications');
+    }
+
+    if (Platform.OS === 'android') {
+        Notifications.setNotificationChannelAsync('default', {
+            name: 'default',
+            importance: Notifications.AndroidImportance.MAX,
+            vibrationPattern: [0, 250, 250, 250],
+            lightColor: COLORS.ACTIVE
+        });
+    }
+
+    // return token;
+};
+
 export default function ExpoNotification() {
     const notificationListener = useRef();
     const responseListener = useRef();
@@ -29,10 +76,22 @@ export default function ExpoNotification() {
     const [bookingId, setBookingId] = useState();
 
     const currentBookingRedux = useSelector((state) => state.bookingReducer.currentBookingRedux);
+    const messageListened = useSelector((state) => state.messageReducer.messageListened);
+    const chattingWith = useSelector((state) => state.messageReducer.chattingWith);
 
     const dispatch = useDispatch();
 
+    useEffect(
+        () => {
+            if (!chattingWith && messageListened && JSON.stringify(messageListened) !== JSON.stringify({})) {
+                schedulePushNotification();
+            }
+        }, [messageListened]
+    );
+
     useEffect(() => {
+        registerForPushNotificationsAsync();
+
         // handle received
         notificationListener.current = Notifications.addNotificationReceivedListener((notificationReceived) => {
             fetchListNotification();
@@ -42,7 +101,6 @@ export default function ExpoNotification() {
         // handle click pop-up
         responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
             const notificationBody = response.notification.request.content.data;
-            console.log('notificationBody :>> ', notificationBody);
             dispatch(setNotificationReceivedRedux(notificationBody));
 
             handleNotiReceived(response.notification);
@@ -64,8 +122,8 @@ export default function ExpoNotification() {
         const result = await UserServices.fetchCurrentUserInfoAsync();
         const { data } = result;
 
-        const currentUserInfo = await UserServices.mappingCurrentUserInfo(data.data);
         if (data) {
+            const currentUserInfo = await UserServices.mappingCurrentUserInfo(data.data);
             dispatch(setCurrentUser(currentUserInfo));
         }
     };
