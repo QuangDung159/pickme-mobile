@@ -71,7 +71,8 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "expo-pub": "expo publish"
+    "expo-pub": "expo publish",
+    "pub-android": "sh publish-android-latest.sh"
   },
   "private": true
 }
