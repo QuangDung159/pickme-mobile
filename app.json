@@ -2,7 +2,7 @@
   "expo": {
     "name": "PickMe",
     "slug": "customer-pick-me-mobile",
-    "version": "stg-0.7.1",
+    "version": "stg-0.7.2",
     "sdkVersion": "40.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/customer-512.png",
@@ -28,7 +28,7 @@
       "package": "com.dragonc92team.pickmecustomer",
       "googleServicesFile": "./google-services.json",
       "useNextNotificationsApi":true,
-      "versionCode": 71
+      "versionCode": 72
     },
     "web": {
       "favicon": "./assets/images/customer-512.png"
