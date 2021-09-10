@@ -1,6 +1,5 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
 import { Rx } from '@constants/index';
-import { PICKME_INFO_URL } from '@env';
 import { CommonHelpers } from '@helpers/index';
 import Middlewares from '@middlewares/index';
 import { RxUtil } from '@utils/index';
@@ -162,25 +161,6 @@ const submitGetOtpForgotPasswordAsync = async (body) => {
     return CommonHelpers.handleResByStatus(result);
 };
 
-const rxFetchLeaderBoardAsync = async () => {
-    const result = await RxUtil(
-        Rx.SYSTEM.PICK_ME_INFO,
-        'GET',
-        null,
-        PICKME_INFO_URL
-    );
-    return result;
-};
-
-const fetchLeaderBoardAsync = async () => {
-    let result = await rxFetchLeaderBoardAsync();
-    const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
-    if (handledResult) {
-        result = await rxFetchLeaderBoardAsync();
-    }
-    return CommonHelpers.handleResByStatus(result);
-};
-
 const rxSubmitSignUpAsync = async (body) => {
     const result = await RxUtil(
         Rx.AUTHENTICATION.SIGN_UP,
@@ -275,7 +255,6 @@ export default {
     submitUpdateInfoAsync,
     submitForgotPasswordAsync,
     submitGetOtpForgotPasswordAsync,
-    fetchLeaderBoardAsync,
     submitSignUpAsync,
     fetchOtpSignUpAsync,
     mappingCurrentUserInfo,

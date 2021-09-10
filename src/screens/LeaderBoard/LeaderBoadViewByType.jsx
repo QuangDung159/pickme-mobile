@@ -1,14 +1,13 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
 import { IconCustom } from '@components/uiComponents';
 import {
-    IconFamily, Images, ScreenName, Theme
+    IconFamily, Images, PickMeInfo, ScreenName, Theme
 } from '@constants/index';
 import React from 'react';
 import {
     Image, StyleSheet, Text, View
 } from 'react-native';
 import { FlatList, TouchableWithoutFeedback } from 'react-native-gesture-handler';
-import { useSelector } from 'react-redux';
 
 const {
     FONT: {
@@ -20,11 +19,10 @@ const {
 } = Theme;
 
 export default function LeaderBoadViewByType({
-    navigation, tabs, tabActiveIndex,
+    navigation,
+    tabs, tabActiveIndex,
     tabCode
 }) {
-    const pickMeInfoStore = useSelector((state) => state.appConfigReducer.pickMeInfoStore);
-
     const renderAchieveValueTopPanel = (achieveValue) => (
         <View
             style={{
@@ -47,13 +45,11 @@ export default function LeaderBoadViewByType({
     );
 
     const renderTopPanel = () => {
-        if (!pickMeInfoStore) return <></>;
-
         const {
             url,
             value,
             fullName
-        } = pickMeInfoStore[tabCode.toString()][0];
+        } = PickMeInfo[tabCode][0];
 
         return (
             <View
@@ -68,7 +64,7 @@ export default function LeaderBoadViewByType({
                         () => navigation.navigate(
                             ScreenName.PROFILE,
                             {
-                                userId: pickMeInfoStore[tabCode.toString()][0].userId
+                                userId: PickMeInfo[tabCode][0].userId
                             }
                         )
                     }
@@ -148,13 +144,11 @@ export default function LeaderBoadViewByType({
                 flex: 1
             }}
         >
-            {pickMeInfoStore && (
-                <FlatList
-                    data={pickMeInfoStore[tabCode.toString()]}
-                    keyExtractor={(item) => item.userId}
-                    renderItem={({ item, index }) => renderLeaderBoardItem(item, index)}
-                />
-            )}
+            <FlatList
+                data={PickMeInfo[tabCode.toString()]}
+                keyExtractor={(item) => item.userId}
+                renderItem={({ item, index }) => renderLeaderBoardItem(item, index)}
+            />
         </View>
     );
 
@@ -209,9 +203,7 @@ export default function LeaderBoadViewByType({
                             }}
                         >
                             <Image
-                                source={
-                                    leaderBoardItem.url ? { uri: leaderBoardItem.url } : Images.defaultImage
-                                }
+                                source={leaderBoardItem.url ? { uri: leaderBoardItem.url } : Images.defaultImage}
                                 style={{
                                     width: 50,
                                     height: 50,

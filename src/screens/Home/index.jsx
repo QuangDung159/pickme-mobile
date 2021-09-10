@@ -11,9 +11,9 @@ import {
     setListNotification,
     setListPartnerHomeRedux,
     setNumberMessageUnread,
-    setNumberNotificationUnread, setPickMeInfoStore
+    setNumberNotificationUnread
 } from '@redux/Actions';
-import { BookingServices, NotificationServices, UserServices } from '@services/index';
+import { BookingServices, NotificationServices } from '@services/index';
 import { socketRequestUtil } from '@utils/index';
 import React, { useEffect, useState } from 'react';
 import {
@@ -37,7 +37,6 @@ export default function Home({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
     const [listConversationGetAtHome, setListConversationGetAtHome] = useState([]);
 
-    const pickMeInfoStore = useSelector((state) => state.appConfigReducer.pickMeInfoStore);
     const currentUser = useSelector((state) => state.userReducer.currentUser);
     const messageListened = useSelector((state) => state.messageReducer.messageListened);
     const numberMessageUnread = useSelector((state) => state.messageReducer.numberMessageUnread);
@@ -52,7 +51,6 @@ export default function Home({ navigation }) {
             fetchListNotification();
             fetchListBooking();
             getListConversationFromSocket();
-            if (!pickMeInfoStore) fetchPickMeInfo();
             if (!listPartnerHomeRedux || listPartnerHomeRedux.length === 0) {
                 setIsShowSpinner(true);
                 getListPartner();
@@ -117,15 +115,6 @@ export default function Home({ navigation }) {
         const { data } = result;
         if (data) {
             dispatch(setListBookingStore(data.data));
-        }
-    };
-
-    const fetchPickMeInfo = async () => {
-        const result = await UserServices.fetchLeaderBoardAsync();
-        const { data } = result;
-
-        if (data) {
-            dispatch(setPickMeInfoStore(data));
         }
     };
 

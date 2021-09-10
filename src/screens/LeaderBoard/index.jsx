@@ -23,7 +23,7 @@ export default function LeaderBoard({ navigation }) {
 
     const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
 
-    const [routes] = React.useState(tabArr);
+    const [routes] = useState(tabArr);
 
     const tabs = [
         {
@@ -66,7 +66,7 @@ export default function LeaderBoard({ navigation }) {
             navigation={navigation}
             tabActiveIndex={tabActiveIndex}
             tabs={tabs}
-            tabCode="booking"
+            tabCode={tabArr[0].key}
         />
     );
 
@@ -75,7 +75,7 @@ export default function LeaderBoard({ navigation }) {
             navigation={navigation}
             tabActiveIndex={tabActiveIndex}
             tabs={tabs}
-            tabCode="diamon"
+            tabCode={tabArr[1].key}
         />
     );
 
