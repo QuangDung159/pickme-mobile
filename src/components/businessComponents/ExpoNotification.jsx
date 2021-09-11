@@ -14,14 +14,6 @@ import * as Notifications from 'expo-notifications';
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-Notifications.setNotificationHandler({
-    handleNotification: async () => ({
-        shouldShowAlert: true,
-        shouldPlaySound: false,
-        shouldSetBadge: false,
-    }),
-});
-
 export default function ExpoNotification() {
     const notificationListener = useRef();
     const responseListener = useRef();
@@ -29,8 +21,19 @@ export default function ExpoNotification() {
     const [bookingId, setBookingId] = useState();
 
     const currentBookingRedux = useSelector((state) => state.bookingReducer.currentBookingRedux);
+    const messageListened = useSelector((state) => state.messageReducer.messageListened);
+    const chattingWith = useSelector((state) => state.messageReducer.chattingWith);
+    const listConversation = useSelector((state) => state.messageReducer.listConversation);
 
     const dispatch = useDispatch();
+
+    useEffect(
+        () => {
+            if (!chattingWith && messageListened && JSON.stringify(messageListened) !== JSON.stringify({})) {
+                schedulePushNotification(messageListened.from);
+            }
+        }, [messageListened]
+    );
 
     useEffect(() => {
         // handle received
@@ -42,7 +45,6 @@ export default function ExpoNotification() {
         // handle click pop-up
         responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
             const notificationBody = response.notification.request.content.data;
-            console.log('notificationBody :>> ', notificationBody);
             dispatch(setNotificationReceivedRedux(notificationBody));
 
             handleNotiReceived(response.notification);
@@ -60,12 +62,32 @@ export default function ExpoNotification() {
         }
     }, [currentBookingRedux, bookingId]);
 
+    Notifications.setNotificationHandler({
+        handleNotification: async () => ({
+            shouldShowAlert: true,
+            shouldPlaySound: false,
+            shouldSetBadge: false,
+        }),
+    });
+
+    const schedulePushNotification = async (from) => {
+        const conversation = listConversation.find((item) => item.fromUser.userId === from);
+        await Notifications.scheduleNotificationAsync({
+            content: {
+                title: 'Bạn có tin nhắn mới',
+                body: `Từ ${conversation ? conversation.fromUser.fullName : 'người lạ'}`,
+                data: {},
+            },
+            trigger: { seconds: 2 },
+        });
+    };
+
     const fetchCurrentUserInfo = async () => {
         const result = await UserServices.fetchCurrentUserInfoAsync();
         const { data } = result;
 
-        const currentUserInfo = await UserServices.mappingCurrentUserInfo(data.data);
         if (data) {
+            const currentUserInfo = await UserServices.mappingCurrentUserInfo(data.data);
             dispatch(setCurrentUser(currentUserInfo));
         }
     };

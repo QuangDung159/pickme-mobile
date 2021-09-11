@@ -1,8 +1,8 @@
+import { CustomButton, CustomInput } from '@components/uiComponents';
 import { Theme } from '@constants/index';
-import { ToastHelpers } from '@helpers/index';
+import { ToastHelpers, ValidationHelpers } from '@helpers/index';
 import React from 'react';
 import { Text, View } from 'react-native';
-import { CustomButton, CustomInput } from '@components/uiComponents';
 
 const {
     SIZES,
@@ -20,6 +20,29 @@ export default function HometownForm({
     const onChangeInputHometown = (hometownInput) => {
         const user = { ...newUser, hometown: hometownInput };
         setNewUser(user);
+    };
+
+    const validate = () => {
+        const {
+            hometown
+        } = newUser;
+
+        const validationArr = [
+            {
+                fieldName: 'Quê quán',
+                input: hometown,
+                validate: {
+                    required: {
+                        value: true,
+                    },
+                    maxLength: {
+                        value: 255,
+                    },
+                }
+            },
+        ];
+
+        return ValidationHelpers.validate(validationArr);
     };
 
     const renderHometownForm = () => (
@@ -55,7 +78,10 @@ export default function HometownForm({
 
             <View center>
                 <CustomButton
-                    onPress={() => goToStep(3)}
+                    onPress={() => {
+                        if (!validate()) return;
+                        goToStep(3);
+                    }}
                     buttonStyle={inputWith}
                     type="active"
                     label="Bước kế tiếp"

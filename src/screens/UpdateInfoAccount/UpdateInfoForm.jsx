@@ -229,7 +229,7 @@ export default function UpdateInfoForm() {
                 }
             },
             {
-                fieldName: 'Mô tả bạn thân',
+                fieldName: 'Mô tả bản thân',
                 input: description,
                 validate: {
                     required: {

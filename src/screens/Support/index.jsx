@@ -4,7 +4,7 @@ import {
     CustomButton, CustomInput, IconCustom, NoteText, TopTabBar
 } from '@components/uiComponents';
 import {
-    IconFamily, ScreenName, Theme
+    IconFamily, PickMeInfo, ScreenName, Theme
 } from '@constants/index';
 import { MediaHelpers, ToastHelpers } from '@helpers/index';
 import { SystemServices } from '@services/index';
@@ -44,15 +44,12 @@ export default function Support({ navigation }) {
     const [image, setImage] = useState();
     const [visible, setVisible] = useState(false);
 
-    const pickMeInfoStore = useSelector((state) => state.appConfigReducer.pickMeInfoStore);
     const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
 
     // handler \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
     useEffect(
         () => {
-            if (pickMeInfoStore?.faq) {
-                setListFAQ(pickMeInfoStore.faq);
-            }
+            setListFAQ(PickMeInfo.faq);
         }, []
     );
 
@@ -222,7 +219,7 @@ export default function Support({ navigation }) {
                         >
                             <NoteText
                                 width={SIZES.WIDTH_BASE * 0.9}
-                                title={`${item.question}?`}
+                                title={`${item.question}`}
                                 content={item.answer || 'N/A'}
                                 contentStyle={{
                                     fontSize: SIZES.FONT_H3,

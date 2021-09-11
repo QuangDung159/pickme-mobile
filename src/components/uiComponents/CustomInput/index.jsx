@@ -58,8 +58,8 @@ export default function CustomInput({
                     inputStyle,
                 ]
             }
-            value={value.toString()}
-            placeholderTextColor={COLORS.DEFAULT}
+            value={value?.toString() || ''}
+            placeholderTextColor={COLORS.TABS}
             {...props}
         />
     );
@@ -106,7 +106,6 @@ export default function CustomInput({
                             />
                         </TouchableWithoutFeedback>
                     </View>
-
                 </View>
             );
         }

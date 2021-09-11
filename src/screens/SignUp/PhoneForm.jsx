@@ -28,7 +28,7 @@ export default function PhoneForm({
     const validate = () => {
         const validateArr = [
             {
-                filedName: phoneNumber,
+                fieldName: 'Số điện thoại',
                 input: phoneNumber,
                 validate: {
                     required: {

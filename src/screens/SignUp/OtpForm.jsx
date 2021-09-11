@@ -1,6 +1,6 @@
 import { CustomButton, CustomInput } from '@components/uiComponents';
 import {
-    IconFamily, Theme, ScreenName
+    IconFamily, ScreenName, Theme
 } from '@constants/index';
 import { ValidationHelpers } from '@helpers/index';
 import { setIsSignInOtherDeviceStore, setShowLoaderStore, setToken } from '@redux/Actions';
@@ -25,6 +25,8 @@ export default function OtpForm({
         dispatch(setToken(tokenFromAPI));
         dispatch(setIsSignInOtherDeviceStore(false));
         dispatch(setShowLoaderStore(false));
+
+        SecureStore.setItemAsync('api_token', tokenFromAPI);
         navigation.navigate(ScreenName.CREATE_ACCOUNT);
     };
 
@@ -43,6 +45,8 @@ export default function OtpForm({
 
         if (data) {
             onLoginSuccess(data);
+            SecureStore.setItemAsync('phoneNumber', phoneNumber);
+            SecureStore.setItemAsync('password', password);
         }
         dispatch(setShowLoaderStore(false));
     };

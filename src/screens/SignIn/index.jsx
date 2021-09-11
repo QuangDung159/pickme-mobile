@@ -13,7 +13,7 @@ import { SystemServices, UserServices } from '@services/index';
 import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
 import * as SecureStore from 'expo-secure-store';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Alert,
     ImageBackground,
@@ -36,8 +36,8 @@ const {
 } = Theme;
 
 export default function SignIn({ navigation }) {
-    const [phoneNumber, setPhoneNumber] = useState('huyvd');
-    const [password, setPassword] = useState('0000');
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [password, setPassword] = useState('');
     const [isShowSpinner, setIsShowSpinner] = useState(false);
     const [deviceIdToSend, setDeviceIdToSend] = useState('');
     const [isShowPassword, setIsShowPassword] = useState(false);
@@ -47,10 +47,24 @@ export default function SignIn({ navigation }) {
     const dispatch = useDispatch();
 
     // handler \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+    useEffect(
+        () => {
+            getLoginInfo();
+        }, []
+    );
+
     const updateExpoTokenToServer = async (expoTokenFromServer) => {
         await SystemServices.submitUpdateExpoTokenAsync({
             token: expoTokenFromServer
         });
+    };
+
+    const getLoginInfo = async () => {
+        const phoneNumberLocal = await SecureStore.getItemAsync('phoneNumber');
+        setPhoneNumber(phoneNumberLocal);
+
+        const passwordLocal = await SecureStore.getItemAsync('password');
+        setPassword(passwordLocal);
     };
 
     const registerForPushNotificationsAsync = async () => {
@@ -62,15 +76,17 @@ export default function SignIn({ navigation }) {
                 const { status } = await Notifications.requestPermissionsAsync();
                 finalStatus = status;
             }
+
             if (finalStatus !== 'granted') {
                 Alert.alert('Failed to get push token for push notification!');
                 return;
             }
+
             expoTokenFromServer = (await Notifications.getExpoPushTokenAsync()).data;
-            console.log('expoTokenFromServer :>> ', expoTokenFromServer);
             dispatch(setExpoToken(expoTokenFromServer));
-            console.log(expoTokenFromServer);
             updateExpoTokenToServer(expoTokenFromServer);
+
+            console.log('expoTokenFromServer :>>', expoTokenFromServer);
         }
 
         if (Platform.OS === 'android') {
@@ -137,6 +153,7 @@ export default function SignIn({ navigation }) {
         SecureStore.setItemAsync('phoneNumber', `${phoneNumber}`);
 
         const currentUserInfo = await UserServices.mappingCurrentUserInfo(data.data);
+        SecureStore.setItemAsync('api_token', `${currentUserInfo.token}`);
         dispatch(setCurrentUser(currentUserInfo));
 
         if (status === 200) {

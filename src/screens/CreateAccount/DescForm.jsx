@@ -1,6 +1,6 @@
 import { CustomButton, CustomInput } from '@components/uiComponents';
 import { Theme } from '@constants/index';
-import { ToastHelpers } from '@helpers/index';
+import { ToastHelpers, ValidationHelpers } from '@helpers/index';
 import React from 'react';
 import { Text, View } from 'react-native';
 
@@ -20,6 +20,29 @@ export default function DescForm({
     const onChangeInputDescription = (descriptionInput) => {
         const user = { ...newUser, description: descriptionInput };
         setNewUser(user);
+    };
+
+    const validate = () => {
+        const {
+            description
+        } = newUser;
+
+        const validationArr = [
+            {
+                fieldName: 'Mô tả bản thân',
+                input: description,
+                validate: {
+                    required: {
+                        value: true,
+                    },
+                    maxLength: {
+                        value: 255,
+                    },
+                }
+            },
+        ];
+
+        return ValidationHelpers.validate(validationArr);
     };
 
     const renderDescForm = () => (
@@ -65,7 +88,10 @@ export default function DescForm({
 
             <View center>
                 <CustomButton
-                    onPress={() => goToStep(4)}
+                    onPress={() => {
+                        if (!validate()) return;
+                        goToStep(4);
+                    }}
                     buttonStyle={inputWith}
                     type="active"
                     label="Bước kế tiếp"

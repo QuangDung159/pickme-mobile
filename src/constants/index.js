@@ -12,6 +12,7 @@ import Theme from './Theme';
 import Utils from './Utils';
 import ValidationMessageTemplate from './ValidationMessageTemplate';
 import VerificationStatus from './VerificationStatus';
+import PickMeInfo from './PickMeInfo';
 
 export {
     Images,
@@ -27,5 +28,6 @@ export {
     VerificationStatus,
     DocumentType,
     ValidationMessageTemplate,
-    Gender
+    Gender,
+    PickMeInfo
 };

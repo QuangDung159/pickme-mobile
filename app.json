@@ -2,10 +2,10 @@
   "expo": {
     "name": "PickMe",
     "slug": "customer-pick-me-mobile",
-    "version": "dev-0.6.9",
+    "version": "stg-0.7.4",
     "sdkVersion": "40.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/customer-512.png",
+    "icon": "./assets/images/customer-mobile-512.png",
     "splash": {
       "image": "./assets/images/bg-1.png",
       "resizeMode": "cover",
@@ -22,16 +22,16 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/customer-512.png",
+        "foregroundImage": "./assets/images/customer-mobile-512.png",
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.dragonc92team.pickmecustomer",
       "googleServicesFile": "./google-services.json",
       "useNextNotificationsApi":true,
-      "versionCode": 69
+      "versionCode": 74
     },
     "web": {
-      "favicon": "./assets/images/customer-512.png"
+      "favicon": "./assets/images/customer-mobile-512.png"
     }
   }
 }

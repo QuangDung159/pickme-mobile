@@ -61,6 +61,5 @@ export default {
     },
     SYSTEM: {
         CREATE_BUG: '/Systems/CreateBug',
-        PICK_ME_INFO: '/master',
     }
 };
