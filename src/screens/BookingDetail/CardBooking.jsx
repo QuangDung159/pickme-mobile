@@ -48,6 +48,8 @@ export default function CardBooking({ booking }) {
                     marginVertical: 20,
                     alignSelf: 'center',
                     width: SIZES.WIDTH_BASE * 0.9,
+                    borderBottomColor: COLORS.ACTIVE,
+                    borderBottomWidth: 0.5
                 }}
             >
                 <View
@@ -56,7 +58,7 @@ export default function CardBooking({ booking }) {
                         width: SIZES.WIDTH_BASE * 0.9,
                         justifyContent: 'space-between',
                         alignItems: 'center',
-                        marginBottom: 15,
+                        marginBottom: 15
                     }}
                 >
                     <Text
@@ -141,7 +143,8 @@ export default function CardBooking({ booking }) {
                 <View
                     style={{
                         flexDirection: 'row',
-                        justifyContent: 'space-between'
+                        justifyContent: 'space-between',
+                        paddingBottom: 15
                     }}
                 >
                     <Text
@@ -159,7 +162,7 @@ export default function CardBooking({ booking }) {
                     </Text>
                     <View
                         style={{
-                            flexDirection: 'row'
+                            flexDirection: 'row',
                         }}
                     >
                         <Text

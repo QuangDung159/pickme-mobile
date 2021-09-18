@@ -275,6 +275,8 @@ export default function Wallet({ navigation }) {
                                     height: 120,
                                     width: SIZES.WIDTH_BASE * 0.9,
                                     alignSelf: 'center',
+                                    borderBottomWidth: 0.5,
+                                    borderBottomColor: COLORS.ACTIVE
                                 }}
                             >
                                 {renderWalletAmountPanel()}

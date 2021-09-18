@@ -161,7 +161,9 @@ export default function ButtonPanel({
                 <View
                     style={{
                         backgroundColor: COLORS.BLOCK,
-                        marginTop: 5
+                        marginTop: 5,
+                        borderTopWidth: 0.5,
+                        borderTopColor: COLORS.ACTIVE
                     }}
                 >
                     <View
