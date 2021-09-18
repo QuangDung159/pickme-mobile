@@ -115,83 +115,105 @@ export default function Onboarding({ navigation }) {
         <View style={styles.container}>
             <View style={{
                 flex: 1,
-                backgroundColor: COLORS.BLOCK
+                backgroundColor: COLORS.BLOCK,
             }}
             >
                 {isShowSpinner ? (
                     <CenterLoader />
                 ) : (
                     <View
-                        style={styles.padded}
+                        style={{
+                            height: SIZES.HEIGHT_BASE
+                        }}
                     >
-                        <View>
-                            <View>
-                                <View
-                                    style={{
-                                        paddingBottom: SIZES.HEIGHT_BASE * 0.2,
-                                        alignSelf: 'center',
-                                        alignItems: 'center'
-                                    }}
-                                >
-                                    <Image
-                                        source={Images.Logo}
-                                        style={{
-                                            width: SIZES.WIDTH_BASE * 0.9,
-                                            height: 50
-                                        }}
-                                    />
-                                    <Text
-                                        style={{
-                                            fontFamily: TEXT_REGULAR,
-                                            fontSize: SIZES.FONT_H4,
-                                            color: COLORS.ACTIVE,
-                                            marginTop: 10
-                                        }}
-                                    >
-                                        Ở đây chúng tôi phát người yêu!
-                                    </Text>
-                                </View>
-                                <CustomButton
-                                    onPress={() => {
-                                        navigation.navigate(ScreenName.SIGN_IN);
-                                    }}
-                                    type="active"
-                                    label="Đăng nhập"
-                                    buttonStyle={styles.button}
-                                />
-                                <CustomButton
-                                    onPress={() => navigation.navigate(ScreenName.SIGN_UP)}
-                                    type="active"
-                                    label="Đăng kí"
-                                    buttonStyle={styles.button}
-                                />
-                            </View>
+                        <View
+                            style={{
+                                marginTop: 200
+                            }}
+                        >
                             <View
                                 style={{
-                                    marginTop: 10,
+                                    paddingBottom: SIZES.HEIGHT_BASE * 0.2,
                                     alignSelf: 'center',
                                     alignItems: 'center'
                                 }}
                             >
+                                <Image
+                                    source={Images.Logo}
+                                    style={{
+                                        width: SIZES.WIDTH_BASE * 0.9,
+                                        height: 50
+                                    }}
+                                />
                                 <Text
                                     style={{
                                         fontFamily: TEXT_REGULAR,
-                                        color: COLORS.DEFAULT,
-                                        fontSize: SIZES.FONT_H4 - 2,
+                                        fontSize: SIZES.FONT_H4,
+                                        color: COLORS.ACTIVE,
+                                        marginTop: 10
                                     }}
                                 >
-                                    {`${Constants.manifest.version} (${App.APP_VERSION_OTA})`}
-                                </Text>
-                                <Text
-                                    style={{
-                                        fontFamily: TEXT_REGULAR,
-                                        color: COLORS.DEFAULT,
-                                        fontSize: SIZES.FONT_H4 - 2,
-                                    }}
-                                >
-                                    {deviceIdDisplay}
+                                    Ở đây chúng tôi phát người yêu!
                                 </Text>
                             </View>
+                            <CustomButton
+                                onPress={() => {
+                                    navigation.navigate(ScreenName.SIGN_IN);
+                                }}
+                                type="active"
+                                label="Đăng nhập"
+                                buttonStyle={styles.button}
+                            />
+                            <CustomButton
+                                onPress={() => navigation.navigate(ScreenName.SIGN_UP)}
+                                type="active"
+                                label="Đăng kí"
+                                buttonStyle={styles.button}
+                            />
+                        </View>
+                        <View
+                            style={{
+                                marginTop: 10,
+                                alignSelf: 'center',
+                                alignItems: 'center'
+                            }}
+                        >
+                            <Text
+                                style={{
+                                    fontFamily: TEXT_REGULAR,
+                                    color: COLORS.DEFAULT,
+                                    fontSize: SIZES.FONT_H5,
+                                }}
+                            >
+                                {`${Constants.manifest.version} (${App.APP_VERSION_OTA})`}
+                            </Text>
+                            <Text
+                                style={{
+                                    fontFamily: TEXT_REGULAR,
+                                    color: COLORS.DEFAULT,
+                                    fontSize: SIZES.FONT_H5,
+                                }}
+                            >
+                                {deviceIdDisplay}
+                            </Text>
+
+                        </View>
+                        <View
+                            style={{
+                                position: 'absolute',
+                                bottom: 30,
+                                alignSelf: 'center'
+                            }}
+                        >
+                            <Text
+                                style={{
+                                    fontFamily: TEXT_REGULAR,
+                                    color: COLORS.ACTIVE,
+                                    fontSize: SIZES.FONT_H4,
+                                }}
+                            >
+                                Powered by DragonC92Team
+                            </Text>
                         </View>
                     </View>
                 )}
