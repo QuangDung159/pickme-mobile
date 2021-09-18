@@ -7,7 +7,7 @@
     "orientation": "portrait",
     "icon": "./assets/images/customer-mobile-512.png",
     "splash": {
-      "image": "./assets/images/bg-1.png",
+      "image": "./assets/images/splash.png",
       "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },

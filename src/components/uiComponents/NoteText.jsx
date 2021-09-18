@@ -24,7 +24,9 @@ export default class NoteText extends PureComponent {
                     backgroundColor: backgroundColor || COLORS.BLOCK,
                     width,
                     alignSelf: 'center',
-                    borderRadius: 5
+                    borderRadius: 8,
+                    borderWidth: 1,
+                    borderColor: COLORS.ACTIVE
                 }}
             >
                 <View

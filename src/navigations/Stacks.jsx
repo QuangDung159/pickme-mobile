@@ -107,6 +107,8 @@ const OnboardingStack = () => (
     <Stack.Navigator initialRouteName={ScreenName.ONBOARDING} mode="card" headerMode="none">
         {OnboardingScreen()}
         {SignInWithOTPScreen()}
+        {HomeScreen()}
+        {ForgotPasswordScreen()}
     </Stack.Navigator>
 );
 

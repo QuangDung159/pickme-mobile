@@ -5,27 +5,29 @@ import App from './App';
 const { width, height } = Dimensions.get('window');
 
 const COLORS = {
-    DEFAULT: '#DCDCDC',
+    DEFAULT: '#303133',
     ERROR: '#FF3636',
     SUCCESS: '#18ce0f',
-    SECONDARY: '#444444',
+    PLACE_HOLDER: '#adadad',
     NEUTRAL: 'rgba(255, 255, 255, 0.2)',
     TABS: 'rgba(222, 222, 222, 0.3)',
-    INPUT: '#DCDCDC',
-    ACTIVE: '#ff693b',
+    INPUT: '#303133',
+    // INPUT: '#DCDCDC',
+    // ACTIVE: '#ff693b',
+    ACTIVE: '#2C8F46',
     BORDER_COLOR: '#DCDCDC',
-    BASE: '#303133',
+    // BASE: '#303133',
     NOTIFICATION_BACKGROUND: '#ffeee3',
     LIST_ITEM_BACKGROUND_1: '#ffeee3',
     LIST_ITEM_BACKGROUND_2: '#cdf6ff',
     TRANSPARENT: 'transparent',
     SELECTED_DATE: '#b3f1ff',
-    BLOCK: '#3a3b3c'
+    BASE: '#f1f1f1',
+    BLOCK: '#ffffff',
 };
 
 const SIZES = {
     BASE: 16,
-    OPACITY: 0.8,
 
     // non-montserrat
     // FONT_H1: 25,

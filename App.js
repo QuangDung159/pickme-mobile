@@ -4,7 +4,6 @@ import { ExpoNotification } from '@components/businessComponents';
 import { IconCustom } from '@components/uiComponents';
 import { IconFamily, Images, Theme } from '@constants/index';
 import Main from '@containers/Main';
-import { ENV } from '@env';
 import { ToastHelpers } from '@helpers/index';
 import store from '@redux/Store';
 import AppLoading from 'expo-app-loading';
@@ -14,7 +13,7 @@ import * as Updates from 'expo-updates';
 import * as React from 'react';
 import {
     Alert,
-    Image, Platform, StatusBar, StyleSheet, Text, View
+    Image, StatusBar, StyleSheet, Text, View
 } from 'react-native';
 import { MenuProvider } from 'react-native-popup-menu';
 import Toast from 'react-native-toast-message';
@@ -23,7 +22,6 @@ import { Provider } from 'react-redux';
 const {
     FONT: {
         TEXT_BOLD,
-        TEXT_REGULAR
     },
     SIZES,
     COLORS
@@ -183,14 +181,14 @@ export default function App() {
     return (
         <MenuProvider>
             <StatusBar
-                barStyle="light-content"
+                barStyle="dark-content"
                 translucent
             />
             <Provider store={store}>
                 <ExpoNotification />
                 <Main />
                 <Toast config={toastConfig} ref={(ref) => Toast.setRef(ref)} />
-                {ENV !== 'prod' && (
+                {/* {ENV !== 'prod' && (
                     <View
                         style={{
                             position: 'absolute',
@@ -209,7 +207,7 @@ export default function App() {
                             {ENV}
                         </Text>
                     </View>
-                )}
+                )} */}
             </Provider>
         </MenuProvider>
     );

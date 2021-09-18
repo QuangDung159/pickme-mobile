@@ -52,7 +52,7 @@ export default function GooglePlacesInput({ onChangeAddress, addressInput, label
                 fetchDetails
                 styles={{
                     textInputContainer: {
-                        borderRadius: 5,
+                        borderRadius: 8,
                         borderColor: COLORS.DEFAULT,
                         width: SIZES.WIDTH_BASE * 0.9,
                         marginBottom: 10,

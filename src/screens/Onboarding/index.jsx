@@ -1,7 +1,7 @@
-import { CenterLoader, CustomButton } from '@components/uiComponents';
+import { CenterLoader } from '@components/uiComponents';
 import App from '@constants/App';
 import {
-    Images, ScreenName, Theme, Utils
+    Images, ScreenName, Theme
 } from '@constants/index';
 import {
     setCurrentUser, setIsSignInOtherDeviceStore, setListPartnerHomeRedux, setNavigation
@@ -11,9 +11,10 @@ import Constants from 'expo-constants';
 import * as SecureStore from 'expo-secure-store';
 import React, { useEffect, useState } from 'react';
 import {
-    ImageBackground, Platform, StatusBar, StyleSheet, Text, View
+    Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import SignIn from './SignIn';
 
 const {
     FONT: {
@@ -111,126 +112,125 @@ export default function Onboarding({ navigation }) {
     };
 
     return (
-        <View style={styles.container}>
-            <StatusBar barStyle="light-content" />
-            <View style={{
-                flex: 1
-            }}
-            >
-                <ImageBackground
-                    source={Images.Onboarding}
-                    style={{
-                        flex: 1,
-                        zIndex: 1,
-                        resizeMode: 'cover',
-                    }}
-                />
-                {isShowSpinner ? (
-                    <CenterLoader />
-                ) : (
+        <SafeAreaView style={styles.container}>
+            {isShowSpinner ? (
+                <CenterLoader />
+            ) : (
+                <>
                     <View
-                        style={styles.padded}
+                        style={{
+                            paddingVertical: 140,
+                            alignItems: 'center'
+                        }}
                     >
-                        <View>
-                            {/* <View middle>
-                            <Image
-                                source={Images.NowLogo}
-                                style={{
-                                    width: 115, height: 124, bottom: 200, position: 'absolute'
-                                }}
-                            />
-                        </View> */}
-
-                            <View>
-                                <View
-                                    style={{
-                                        paddingBottom: SIZES.HEIGHT_BASE * 0.2,
-                                        alignSelf: 'center',
-                                        alignItems: 'center'
-                                    }}
-                                >
-                                    <Text
-                                        style={{
-                                            fontFamily: TEXT_REGULAR,
-                                            fontSize: SIZES.WIDTH_BASE * 0.1,
-                                            color: COLORS.ACTIVE
-                                        }}
-                                    >
-                                        PickMe
-                                    </Text>
-                                </View>
-                                <CustomButton
-                                    onPress={() => {
-                                        navigation.navigate(ScreenName.SIGN_IN);
-                                    }}
-                                    type="active"
-                                    label="Đăng nhập"
-                                    buttonStyle={styles.button}
-                                />
-                                <CustomButton
-                                    onPress={() => navigation.navigate(ScreenName.SIGN_UP)}
-                                    type="active"
-                                    label="Đăng kí"
-                                    buttonStyle={styles.button}
-                                />
-                            </View>
-                            <View
-                                style={{
-                                    marginTop: 10,
-                                    alignSelf: 'center',
-                                    alignItems: 'center'
-                                }}
-                            >
-                                <Text
-                                    style={{
-                                        fontFamily: TEXT_REGULAR,
-                                        color: COLORS.DEFAULT,
-                                        fontSize: SIZES.FONT_H4 - 2,
-                                    }}
-                                >
-                                    {`${Constants.manifest.version} (${App.APP_VERSION_OTA})`}
-                                </Text>
-                                <Text
-                                    style={{
-                                        fontFamily: TEXT_REGULAR,
-                                        color: COLORS.DEFAULT,
-                                        fontSize: SIZES.FONT_H4 - 2,
-                                    }}
-                                >
-                                    {deviceIdDisplay}
-                                </Text>
-                            </View>
-                        </View>
+                        <Image
+                            style={{
+                                width: SIZES.WIDTH_BASE * 0.9,
+                                height: 60
+                            }}
+                            source={Images.Logo}
+                        />
+                        <Text
+                            style={{
+                                fontFamily: TEXT_REGULAR,
+                                fontSize: SIZES.FONT_H3,
+                                color: COLORS.ACTIVE
+                            }}
+                        >
+                            Ở đây chúng tôi phát người yêu!
+                        </Text>
                     </View>
-                )}
-            </View>
-        </View>
+                    <SignIn
+                        navigation={navigation}
+                        setIsShowSpinner={(isShow) => setIsShowSpinner(isShow)}
+                    />
+                    <TouchableOpacity
+                        onPress={() => navigation.navigate(ScreenName.SIGN_UP)}
+                        style={{
+                            marginTop: 60
+                        }}
+                    >
+                        <Text
+                            style={styles.text}
+                        >
+                            Đăng ký
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => {
+                            navigation.navigate(ScreenName.FORGOT_PASSWORD);
+                        }}
+                    >
+                        <Text
+                            style={styles.text}
+                        >
+                            Quên mật khẩu?
+                        </Text>
+                    </TouchableOpacity>
+                    <View
+                        style={{
+                            marginTop: 10,
+                            alignSelf: 'center',
+                            alignItems: 'center'
+                        }}
+                    >
+                        <Text
+                            style={{
+                                fontFamily: TEXT_REGULAR,
+                                color: COLORS.DEFAULT,
+                                fontSize: SIZES.FONT_H4 - 2,
+                            }}
+                        >
+                            {`${Constants.manifest.version} (${App.APP_VERSION_OTA})`}
+                        </Text>
+                        <Text
+                            style={{
+                                fontFamily: TEXT_REGULAR,
+                                color: COLORS.DEFAULT,
+                                fontSize: SIZES.FONT_H4 - 2,
+                            }}
+                        >
+                            {deviceIdDisplay}
+                        </Text>
+
+                    </View>
+                    <View
+                        style={{
+                            position: 'absolute',
+                            bottom: 20,
+                            alignSelf: 'center'
+                        }}
+                    >
+                        <Text
+                            style={{
+                                fontFamily: TEXT_REGULAR,
+                                fontSize: SIZES.FONT_H5,
+                                color: COLORS.ACTIVE,
+                            }}
+                        >
+                            Powered by DragonC92Team
+                        </Text>
+                    </View>
+                </>
+            )}
+        </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: Platform.OS === 'android' ? -Utils.HeaderHeight : 0,
-        flex: 1
-    },
-    padded: {
-        zIndex: 3,
-        position: 'absolute',
-        bottom: SIZES.HEIGHT_BASE * 0.17,
+        flex: 1,
         alignSelf: 'center',
-        justifyContent: 'space-between'
+        width: SIZES.WIDTH_BASE,
+        backgroundColor: COLORS.BLOCK
     },
     button: {
-        width: SIZES.WIDTH_BASE * 0.8,
         marginTop: 10
     },
-
-    gradient: {
-        zIndex: 1,
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        height: 66
+    text: {
+        fontFamily: TEXT_REGULAR,
+        fontSize: SIZES.FONT_H2,
+        color: COLORS.ACTIVE,
+        alignSelf: 'center'
     }
 });
