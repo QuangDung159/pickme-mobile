@@ -243,7 +243,7 @@ export default function Home({ navigation }) {
             <View
                 style={{
                     backgroundColor: COLORS.BLOCK,
-                    borderWidth: 0,
+                    marginBottom: 10
                 }}
             >
                 <View

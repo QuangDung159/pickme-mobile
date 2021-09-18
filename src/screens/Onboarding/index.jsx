@@ -1,6 +1,8 @@
 import { CenterLoader, CustomButton } from '@components/uiComponents';
 import App from '@constants/App';
-import { ScreenName, Theme, Utils } from '@constants/index';
+import {
+    ScreenName, Theme, Utils, Images
+} from '@constants/index';
 import {
     setCurrentUser, setIsSignInOtherDeviceStore, setListPartnerHomeRedux, setNavigation
 } from '@redux/Actions';
@@ -9,6 +11,7 @@ import Constants from 'expo-constants';
 import * as SecureStore from 'expo-secure-store';
 import React, { useEffect, useState } from 'react';
 import {
+    Image,
     Platform, StyleSheet, Text, View
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -130,14 +133,22 @@ export default function Onboarding({ navigation }) {
                                         alignItems: 'center'
                                     }}
                                 >
+                                    <Image
+                                        source={Images.Logo}
+                                        style={{
+                                            width: SIZES.WIDTH_BASE * 0.9,
+                                            height: 50
+                                        }}
+                                    />
                                     <Text
                                         style={{
                                             fontFamily: TEXT_REGULAR,
-                                            fontSize: SIZES.WIDTH_BASE * 0.1,
-                                            color: COLORS.ACTIVE
+                                            fontSize: SIZES.FONT_H4,
+                                            color: COLORS.ACTIVE,
+                                            marginTop: 10
                                         }}
                                     >
-                                        PickMe
+                                        Ở đây chúng tôi phát người yêu!
                                     </Text>
                                 </View>
                                 <CustomButton
