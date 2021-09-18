@@ -1,7 +1,6 @@
 import { CenterLoader, CustomButton, CustomInput } from '@components/uiComponents';
 import {
-    IconFamily,
-    Images, ScreenName, Theme
+    IconFamily, ScreenName, Theme
 } from '@constants/index';
 import { ValidationHelpers } from '@helpers/index';
 import {
@@ -15,9 +14,7 @@ import * as Notifications from 'expo-notifications';
 import * as SecureStore from 'expo-secure-store';
 import React, { useEffect, useState } from 'react';
 import {
-    Alert,
-    ImageBackground,
-    Platform,
+    Alert, Platform,
     StyleSheet,
     Text,
     View
@@ -181,7 +178,7 @@ export default function SignIn({ navigation }) {
                 navigation.navigate(ScreenName.FORGOT_PASSWORD);
             }}
             containerStyle={{
-                width: SIZES.WIDTH_BASE * 0.77,
+                width: SIZES.WIDTH_BASE * 0.9,
                 alignSelf: 'center'
             }}
         >
@@ -200,168 +197,125 @@ export default function SignIn({ navigation }) {
     );
 
     return (
-        <View>
-            <ImageBackground
-                source={Images.RegisterBackground}
-                style={styles.imageBackgroundContainer}
-                imageStyle={styles.imageBackground}
-            >
-                {isShowSpinner ? (
-                    <CenterLoader />
-                ) : (
-                    <KeyboardAwareScrollView>
+        <View
+            style={styles.container}
+        >
+            {isShowSpinner ? (
+                <CenterLoader />
+            ) : (
+                <KeyboardAwareScrollView>
+                    <View>
                         <View
                             style={{
-                                alignSelf: 'center',
+                                height: SIZES.HEIGHT_BASE * 0.2
                             }}
                         >
-                            <View style={styles.registerContainer}>
+                            <Text
+                                style={{
+                                    fontFamily: TEXT_BOLD,
+                                    textAlign: 'center',
+                                    color: COLORS.DEFAULT,
+                                    fontSize: 24,
+                                    height: 100,
+                                    marginTop: SIZES.HEIGHT_BASE * 0.1
+                                }}
+                            >
+                                Đăng nhập
+                            </Text>
+                        </View>
+
+                        <>
+                            <View style={{
+                                height: SIZES.HEIGHT_BASE * 0.4
+                            }}
+                            >
                                 <View
                                     style={{
-                                        height: SIZES.HEIGHT_BASE * 0.2
+                                        marginBottom: 10,
+                                        alignItems: 'center'
                                     }}
                                 >
-                                    <Text
-                                        style={{
-                                            fontFamily: TEXT_BOLD,
-                                            textAlign: 'center',
-                                            color: COLORS.DEFAULT,
-                                            fontSize: 24,
-                                            height: 100,
-                                            marginTop: SIZES.HEIGHT_BASE * 0.1
+                                    <CustomInput
+                                        placeholder="Nhập số điện thoại..."
+                                        value={phoneNumber}
+                                        onChangeText={
+                                            (phoneNumberInput) => setPhoneNumber(phoneNumberInput)
+                                        }
+                                        containerStyle={{
+                                            marginVertical: 10,
+                                            width: SIZES.WIDTH_BASE * 0.9
                                         }}
-                                    >
-                                        Đăng nhập
-                                    </Text>
-                                </View>
+                                    />
 
-                                <>
-                                    <View style={{
-                                        height: SIZES.HEIGHT_BASE * 0.4
-                                    }}
-                                    >
-                                        <View
-                                            style={{
-                                                marginBottom: 10,
-                                                alignItems: 'center'
-                                            }}
-                                        >
-                                            <CustomInput
-                                                placeholder="Nhập số điện thoại..."
-                                                value={phoneNumber}
-                                                onChangeText={
-                                                    (phoneNumberInput) => setPhoneNumber(phoneNumberInput)
-                                                }
-                                                containerStyle={{
-                                                    marginVertical: 10,
-                                                    width: SIZES.WIDTH_BASE * 0.77
-                                                }}
-                                            />
+                                    <CustomInput
+                                        value={password}
+                                        inputStyle={{
+                                            width: SIZES.WIDTH_BASE * 0.9
+                                        }}
+                                        onChangeText={(passwordInput) => setPassword(passwordInput)}
+                                        containerStyle={{
+                                            marginVertical: 10,
+                                            width: SIZES.WIDTH_BASE * 0.9
+                                        }}
+                                        secureTextEntry={!isShowPassword}
+                                        placeholder="Nhập mật khẩu..."
+                                        rightIcon={{
+                                            name: 'eye',
+                                            family: IconFamily.ENTYPO,
+                                            size: 20,
+                                            color: COLORS.DEFAULT
+                                        }}
+                                        onPressRightIcon={() => setIsShowPassword(!isShowPassword)}
+                                    />
 
-                                            <CustomInput
-                                                value={password}
-                                                inputStyle={{
-                                                    width: SIZES.WIDTH_BASE * 0.77
-                                                }}
-                                                onChangeText={(passwordInput) => setPassword(passwordInput)}
-                                                containerStyle={{
-                                                    marginVertical: 10,
-                                                    width: SIZES.WIDTH_BASE * 0.77
-                                                }}
-                                                secureTextEntry={!isShowPassword}
-                                                placeholder="Nhập mật khẩu..."
-                                                rightIcon={{
-                                                    name: 'eye',
-                                                    family: IconFamily.ENTYPO,
-                                                    size: 20,
-                                                    color: COLORS.DEFAULT
-                                                }}
-                                                onPressRightIcon={() => setIsShowPassword(!isShowPassword)}
-                                            />
-
-                                            {/* for testing */}
-                                            <CustomInput
-                                                placeholder="Empty or 'test'"
-                                                value={deviceIdToSend}
-                                                onChangeText={
-                                                    (deviceIdInput) => {
-                                                        setDeviceIdToSend(deviceIdInput);
-                                                    }
-                                                }
-                                                containerStyle={{
-                                                    marginVertical: 10,
-                                                    width: SIZES.WIDTH_BASE * 0.77
-                                                }}
-                                            />
-                                            {renderButtonForgotPassword()}
-                                        </View>
-                                    </View>
-
-                                    <View>
-                                        <CustomButton
-                                            onPress={() => onSubmitLogin()}
-                                            type="active"
-                                            label="Đăng nhập"
-                                            buttonStyle={
-                                                [
-                                                    styles.button,
-                                                    {
-                                                        marginVertical: 10
-                                                    }
-                                                ]
+                                    {/* for testing */}
+                                    <CustomInput
+                                        placeholder="Empty or 'test'"
+                                        value={deviceIdToSend}
+                                        onChangeText={
+                                            (deviceIdInput) => {
+                                                setDeviceIdToSend(deviceIdInput);
                                             }
-                                        />
-                                    </View>
-                                </>
+                                        }
+                                        containerStyle={{
+                                            marginVertical: 10,
+                                            width: SIZES.WIDTH_BASE * 0.9
+                                        }}
+                                    />
+                                    {renderButtonForgotPassword()}
+                                </View>
                             </View>
-                        </View>
-                    </KeyboardAwareScrollView>
-                )}
 
-            </ImageBackground>
+                            <View>
+                                <CustomButton
+                                    onPress={() => onSubmitLogin()}
+                                    type="active"
+                                    label="Đăng nhập"
+                                    buttonStyle={
+                                        [
+                                            styles.button,
+                                            {
+                                                marginVertical: 10
+                                            }
+                                        ]
+                                    }
+                                />
+                            </View>
+                        </>
+                    </View>
+                </KeyboardAwareScrollView>
+            )}
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    imageBackgroundContainer: {
+    container: {
         width: SIZES.WIDTH_BASE,
         height: SIZES.HEIGHT_BASE,
-        padding: 0,
-        zIndex: 1
-    },
-    imageBackground: {
-        width: SIZES.WIDTH_BASE,
-        height: SIZES.HEIGHT_BASE
-    },
-    registerContainer: {
-        marginTop: 55,
-        width: SIZES.WIDTH_BASE * 0.9,
-        height: SIZES.HEIGHT_BASE < 812 ? SIZES.HEIGHT_BASE * 0.8 : SIZES.HEIGHT_BASE * 0.8,
-        backgroundColor: COLORS.BASE,
-        borderRadius: 4,
-        shadowColor: COLORS.BLACK,
-        shadowOffset: {
-            width: 0,
-            height: 4
-        },
-        shadowRadius: 8,
-        shadowOpacity: 0.1,
-        elevation: 1,
-        overflow: 'hidden'
+        backgroundColor: COLORS.BLOCK
     },
     button: {
-        width: SIZES.WIDTH_BASE * 0.77
-    },
-    openButton: {
-        backgroundColor: '#F194FF',
-        borderRadius: 20,
-        padding: 10,
-        elevation: 2
-    },
-    textStyle: {
-        color: 'white',
-        fontWeight: 'bold',
-        textAlign: 'center'
+        width: SIZES.WIDTH_BASE * 0.9
     },
 });

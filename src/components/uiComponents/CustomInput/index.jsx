@@ -46,20 +46,20 @@ export default function CustomInput({
             style={
                 [
                     {
-                        borderColor: COLORS.INPUT,
+                        borderColor: COLORS.BORDER_COLOR,
                         borderWidth: 1,
                         borderRadius: 5,
                         height: 50,
                         paddingHorizontal: 10,
                         fontFamily: TEXT_REGULAR,
                         fontSize: SIZES.FONT_H3,
-                        color: COLORS.DEFAULT
+                        color: COLORS.DEFAULT,
                     },
                     inputStyle,
                 ]
             }
             value={value?.toString() || ''}
-            placeholderTextColor={COLORS.TABS}
+            placeholderTextColor={COLORS.PLACE_HOLDER}
             {...props}
         />
     );

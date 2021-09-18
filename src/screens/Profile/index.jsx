@@ -290,7 +290,7 @@ export default function Profile({ route, navigation }) {
                         <View style={{
                             justifyContent: 'space-between',
                             zIndex: 1,
-                            backgroundColor: COLORS.BASE
+                            backgroundColor: COLORS.BLOCK
                         }}
                         >
                             <ImageView
@@ -358,7 +358,7 @@ export default function Profile({ route, navigation }) {
                                         marginHorizontal: 5,
                                         elevation: 0,
                                         borderRadius: 20,
-                                        backgroundColor: COLORS.BASE,
+                                        backgroundColor: COLORS.BLOCK,
                                     }}
                                     activeOpacity={0.8}
                                     labelStyle={{
@@ -382,7 +382,7 @@ export default function Profile({ route, navigation }) {
                                         marginHorizontal: 5,
                                         elevation: 0,
                                         borderRadius: 20,
-                                        backgroundColor: COLORS.BASE,
+                                        backgroundColor: COLORS.BLOCK,
                                     }}
                                     activeOpacity={0.8}
                                     labelStyle={{

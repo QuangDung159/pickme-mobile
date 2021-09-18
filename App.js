@@ -183,7 +183,7 @@ export default function App() {
     return (
         <MenuProvider>
             <StatusBar
-                barStyle="light-content"
+                barStyle="dark-content"
                 translucent
             />
             <Provider store={store}>

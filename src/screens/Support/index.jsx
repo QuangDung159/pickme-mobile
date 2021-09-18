@@ -369,7 +369,7 @@ export default function Support({ navigation }) {
 
 const styles = StyleSheet.create({
     shadow: {
-        backgroundColor: COLORS.BASE,
+        backgroundColor: COLORS.BLOCK,
         shadowColor: 'black',
         shadowOffset: { width: 0, height: 2 },
         shadowRadius: 6,

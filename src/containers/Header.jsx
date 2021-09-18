@@ -303,7 +303,7 @@ const styles = StyleSheet.create({
         height: 80,
     },
     shadow: {
-        backgroundColor: COLORS.BASE,
+        backgroundColor: COLORS.BLOCK,
         shadowColor: 'black',
         shadowOffset: { width: 0, height: 2 },
         shadowRadius: 6,

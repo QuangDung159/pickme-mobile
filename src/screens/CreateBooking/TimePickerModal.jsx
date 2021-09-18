@@ -63,7 +63,7 @@ export default function TimePickerModal({
                 marginVertical: 10,
                 flexDirection: 'row',
                 justifyContent: 'space-between',
-                backgroundColor: COLORS.BASE
+                backgroundColor: COLORS.BLOCK
             }}
         >
             <ScrollPicker
@@ -78,7 +78,7 @@ export default function TimePickerModal({
                 wrapperWidth={150}
                 wrapperBackground={COLORS.BLOCK}
                 itemHeight={40}
-                highlightColor={COLORS.BASE}
+                highlightColor={COLORS.BLOCK}
                 highlightBorderWidth={2}
                 activeItemTextStyle={{
                     color: COLORS.ACTIVE,
@@ -104,7 +104,7 @@ export default function TimePickerModal({
                 wrapperWidth={150}
                 wrapperBackground={COLORS.BLOCK}
                 itemHeight={40}
-                highlightColor={COLORS.BASE}
+                highlightColor={COLORS.BLOCK}
                 highlightBorderWidth={2}
                 activeItemTextStyle={{
                     color: COLORS.ACTIVE,

@@ -36,7 +36,7 @@ export const PersonalScreen = () => (
                     scene={scene}
                 />
             ),
-            cardStyle: { backgroundColor: COLORS.BASE }
+            cardStyle: { backgroundColor: COLORS.BLOCK }
         }}
     />
 );
@@ -54,7 +54,7 @@ export const UpdateInfoAccountScreen = () => (
                     scene={scene}
                 />
             ),
-            cardStyle: { backgroundColor: COLORS.BASE }
+            cardStyle: { backgroundColor: COLORS.BLOCK }
         }}
     />
 );
@@ -72,7 +72,7 @@ export const ProfileScreen = () => (
                     scene={scene}
                 />
             ),
-            cardStyle: { backgroundColor: COLORS.BASE }
+            cardStyle: { backgroundColor: COLORS.BLOCK }
         }}
     />
 );
@@ -90,7 +90,7 @@ export const HomeScreen = () => (
                     scene={scene}
                 />
             ),
-            cardStyle: { backgroundColor: COLORS.BASE }
+            cardStyle: { backgroundColor: COLORS.BLOCK }
         }}
     />
 );
@@ -108,7 +108,7 @@ export const LeaderBoardScreen = () => (
                     scene={scene}
                 />
             ),
-            cardStyle: { backgroundColor: COLORS.BASE }
+            cardStyle: { backgroundColor: COLORS.BLOCK }
         }}
     />
 );
@@ -126,7 +126,7 @@ export const CreateBookingScreen = () => (
                     scene={scene}
                 />
             ),
-            cardStyle: { backgroundColor: COLORS.BASE }
+            cardStyle: { backgroundColor: COLORS.BLOCK }
         }}
     />
 );
@@ -144,7 +144,7 @@ export const BookingDetailScreen = () => (
                     scene={scene}
                 />
             ),
-            cardStyle: { backgroundColor: COLORS.BASE }
+            cardStyle: { backgroundColor: COLORS.BLOCK }
         }}
     />
 );
@@ -162,7 +162,7 @@ export const CashInScreen = () => (
                     scene={scene}
                 />
             ),
-            cardStyle: { backgroundColor: COLORS.BASE }
+            cardStyle: { backgroundColor: COLORS.BLOCK }
         }}
     />
 );
@@ -181,7 +181,7 @@ export const CreateAccountScreen = () => (
                     showRight={false}
                 />
             ),
-            cardStyle: { backgroundColor: COLORS.BASE }
+            cardStyle: { backgroundColor: COLORS.BLOCK }
         }}
     />
 );
@@ -202,7 +202,7 @@ export const MessageScreen = () => (
                         userStatus={route.params.userStatus}
                     />
                 ),
-                cardStyle: { backgroundColor: COLORS.BASE }
+                cardStyle: { backgroundColor: COLORS.BLOCK }
             })
         }
     />
@@ -221,7 +221,7 @@ export const ConversationListScreen = () => (
                     scene={scene}
                 />
             ),
-            cardStyle: { backgroundColor: COLORS.BASE }
+            cardStyle: { backgroundColor: COLORS.BLOCK }
         }}
     />
 );
@@ -240,7 +240,7 @@ export const NotificationScreen = () => (
                     screenNameProp={ScreenName.NOTIFICATION}
                 />
             ),
-            cardStyle: { backgroundColor: COLORS.BASE }
+            cardStyle: { backgroundColor: COLORS.BLOCK }
         }}
     />
 );
@@ -258,7 +258,7 @@ export const SettingsScreen = () => (
                     scene={scene}
                 />
             ),
-            cardStyle: { backgroundColor: COLORS.BASE }
+            cardStyle: { backgroundColor: COLORS.BLOCK }
         }}
     />
 );
@@ -381,7 +381,7 @@ export const SupportScreen = () => (
                     scene={scene}
                 />
             ),
-            cardStyle: { backgroundColor: COLORS.BASE }
+            cardStyle: { backgroundColor: COLORS.BLOCK }
         }}
     />
 );
@@ -399,7 +399,7 @@ export const VerificationScreen = () => (
                     scene={scene}
                 />
             ),
-            cardStyle: { backgroundColor: COLORS.BASE }
+            cardStyle: { backgroundColor: COLORS.BLOCK }
         }}
     />
 );

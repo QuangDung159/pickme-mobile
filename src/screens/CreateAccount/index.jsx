@@ -284,17 +284,7 @@ const styles = StyleSheet.create({
         marginTop: 55,
         width: SIZES.WIDTH_BASE * 0.9,
         height: SIZES.HEIGHT_BASE < 812 ? SIZES.HEIGHT_BASE * 0.8 : SIZES.HEIGHT_BASE * 0.8,
-        backgroundColor: COLORS.BASE,
-        borderRadius: 4,
-        shadowColor: COLORS.BLACK,
-        shadowOffset: {
-            width: 0,
-            height: 4
-        },
-        shadowRadius: 8,
-        shadowOpacity: 0.1,
-        elevation: 1,
-        overflow: 'hidden'
+        backgroundColor: COLORS.BLOCK,
     },
     stepViewContainer: {
         height: SIZES.HEIGHT_BASE * 0.25,

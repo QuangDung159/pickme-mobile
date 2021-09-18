@@ -17,7 +17,7 @@ export default function StepIndicator({
     type, buttonText, content
 }) {
     let indicatorStyle = styles.stepIndicatorCurrent;
-    let buttonFontColor = COLORS.BASE;
+    let buttonFontColor = COLORS.BLOCK;
     switch (type) {
         case 'next': {
             indicatorStyle = styles.stepIndicatorNext;

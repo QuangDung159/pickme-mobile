@@ -35,7 +35,7 @@ export default function CardImage({
     return (
         <View
             style={{
-                backgroundColor: COLORS.BASE,
+                backgroundColor: COLORS.BLOCK,
                 borderWidth: 0,
             }}
         >

@@ -2,15 +2,13 @@ import {
     CenterLoader, CustomButton, CustomInput, IconCustom, NoteText
 } from '@components/uiComponents';
 import {
-    IconFamily,
-    Images, Theme, ScreenName
+    IconFamily, ScreenName, Theme
 } from '@constants/index';
 import { ToastHelpers, ValidationHelpers } from '@helpers/index';
 import { UserServices } from '@services/index';
 import * as SecureStore from 'expo-secure-store';
 import React, { useEffect, useState } from 'react';
 import {
-    ImageBackground,
     StyleSheet,
     View
 } from 'react-native';
@@ -160,13 +158,13 @@ export default function ForgotPassword({ navigation }) {
                     <CustomInput
                         value={otp}
                         inputStyle={{
-                            width: SIZES.WIDTH_BASE * 0.77
+                            width: SIZES.WIDTH_BASE * 0.9
                         }}
                         onChangeText={(otpInput) => setOtp(otpInput)}
                         keyboardType="number-pad"
                         containerStyle={{
                             marginVertical: 10,
-                            width: SIZES.WIDTH_BASE * 0.77
+                            width: SIZES.WIDTH_BASE * 0.9
                         }}
                         placeholder="Nhập mã xác thực..."
                     />
@@ -174,13 +172,13 @@ export default function ForgotPassword({ navigation }) {
                     <CustomInput
                         value={password}
                         inputStyle={{
-                            width: SIZES.WIDTH_BASE * 0.77
+                            width: SIZES.WIDTH_BASE * 0.9
                         }}
                         onChangeText={(passwordInput) => setPassword(passwordInput)}
                         keyboardType="number-pad"
                         containerStyle={{
                             marginVertical: 10,
-                            width: SIZES.WIDTH_BASE * 0.77
+                            width: SIZES.WIDTH_BASE * 0.9
                         }}
                         secureTextEntry={!isShowPassword}
                         placeholder="Nhập mật khẩu mới..."
@@ -196,7 +194,7 @@ export default function ForgotPassword({ navigation }) {
                     <CustomInput
                         value={rePassword}
                         inputStyle={{
-                            width: SIZES.WIDTH_BASE * 0.77
+                            width: SIZES.WIDTH_BASE * 0.9
                         }}
                         onChangeText={
                             (rePasswordInput) => setRePassword(rePasswordInput)
@@ -204,7 +202,7 @@ export default function ForgotPassword({ navigation }) {
                         keyboardType="number-pad"
                         containerStyle={{
                             marginVertical: 10,
-                            width: SIZES.WIDTH_BASE * 0.77
+                            width: SIZES.WIDTH_BASE * 0.9
                         }}
                         secureTextEntry={!isShowRePassword}
                         placeholder="Nhập lại mật khẩu mới..."
@@ -248,7 +246,7 @@ export default function ForgotPassword({ navigation }) {
                         }
                         containerStyle={{
                             marginVertical: 10,
-                            width: SIZES.WIDTH_BASE * 0.77
+                            width: SIZES.WIDTH_BASE * 0.9
                         }}
                     />
                 </View>
@@ -273,112 +271,87 @@ export default function ForgotPassword({ navigation }) {
                 flex: 1
             }}
         >
-            <ImageBackground
-                source={Images.RegisterBackground}
-                style={styles.imageBackgroundContainer}
-                imageStyle={styles.imageBackground}
-            >
-                {isShowSpinner ? (
-                    <CenterLoader />
-                ) : (
-                    <KeyboardAwareScrollView>
-                        <View
-                            style={{
-                                alignSelf: 'center',
-                                alignItems: 'center',
-                                flex: 1
-                            }}
-                        >
-                            <View style={styles.registerContainer}>
+
+            {isShowSpinner ? (
+                <CenterLoader />
+            ) : (
+                <KeyboardAwareScrollView>
+                    <View
+                        style={{
+                            alignSelf: 'center',
+                            alignItems: 'center',
+                            flex: 1
+                        }}
+                    >
+                        <View style={styles.registerContainer}>
+                            <View
+                                style={{
+                                    height: SIZES.HEIGHT_BASE * 0.3,
+                                    alignSelf: 'center',
+                                    alignItems: 'center',
+                                }}
+                            >
                                 <View
                                     style={{
-                                        height: SIZES.HEIGHT_BASE * 0.3,
-                                        alignSelf: 'center',
-                                        alignItems: 'center',
+                                        marginTop: SIZES.HEIGHT_BASE * 0.1
                                     }}
                                 >
-                                    <View
-                                        style={{
-                                            marginTop: SIZES.HEIGHT_BASE * 0.1
+                                    <NoteText
+                                        width={SIZES.WIDTH_BASE * 0.9}
+                                        title="Bạn đang yêu cầu lấy lại mật khẩu:"
+                                        content="Bạn vui lòng nhập số điện thoại đã đăng kí để nhận mã xác thực."
+                                        contentStyle={{
+                                            fontSize: SIZES.FONT_H4,
+                                            color: COLORS.ACTIVE,
+                                            fontFamily: TEXT_REGULAR,
+                                            marginTop: 5
                                         }}
-                                    >
-                                        <NoteText
-                                            width={SIZES.WIDTH_BASE * 0.77}
-                                            title="Bạn đang yêu cầu lấy lại mật khẩu:"
-                                            content="Bạn vui lòng nhập số điện thoại đã đăng kí để nhận mã xác thực."
-                                            contentStyle={{
-                                                fontSize: SIZES.FONT_H4,
-                                                color: COLORS.ACTIVE,
-                                                fontFamily: TEXT_REGULAR,
-                                                marginTop: 5
-                                            }}
-                                            iconComponent={(
-                                                <IconCustom
-                                                    name="info-circle"
-                                                    family={IconFamily.FONT_AWESOME}
-                                                    size={18}
-                                                    color={COLORS.ACTIVE}
-                                                />
-                                            )}
-                                        />
-                                    </View>
+                                        iconComponent={(
+                                            <IconCustom
+                                                name="info-circle"
+                                                family={IconFamily.FONT_AWESOME}
+                                                size={18}
+                                                color={COLORS.ACTIVE}
+                                            />
+                                        )}
+                                    />
                                 </View>
-
-                                {otp === '' ? (
-                                    <>
-                                        {renderFormOtp()}
-                                    </>
-                                ) : (
-                                    <>
-                                        {renderFormNewPassword()}
-                                    </>
-                                )}
                             </View>
+
+                            {otp === '' ? (
+                                <>
+                                    {renderFormOtp()}
+                                </>
+                            ) : (
+                                <>
+                                    {renderFormNewPassword()}
+                                </>
+                            )}
                         </View>
-                    </KeyboardAwareScrollView>
-                )}
-            </ImageBackground>
+                    </View>
+                </KeyboardAwareScrollView>
+            )}
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    imageBackgroundContainer: {
+    registerContainer: {
         width: SIZES.WIDTH_BASE,
         height: SIZES.HEIGHT_BASE,
-        padding: 0,
-        zIndex: 1
-    },
-    imageBackground: {
-        width: SIZES.WIDTH_BASE,
-        height: SIZES.HEIGHT_BASE
-    },
-    registerContainer: {
-        marginTop: 55,
-        width: SIZES.WIDTH_BASE * 0.9,
-        height: SIZES.HEIGHT_BASE < 812 ? SIZES.HEIGHT_BASE * 0.8 : SIZES.HEIGHT_BASE * 0.8,
-        backgroundColor: COLORS.BASE,
+        backgroundColor: COLORS.BLOCK,
         borderRadius: 4,
-        shadowColor: COLORS.BLACK,
-        shadowOffset: {
-            width: 0,
-            height: 4
-        },
-        shadowRadius: 8,
-        shadowOpacity: 0.1,
-        elevation: 1,
-        overflow: 'hidden'
     },
     formContainer: {
         height: SIZES.HEIGHT_BASE * 0.3
     },
     button: {
-        width: SIZES.WIDTH_BASE * 0.77,
+        width: SIZES.WIDTH_BASE * 0.9,
         marginVertical: 10
     },
     input: {
         borderRadius: 5,
-        width: SIZES.WIDTH_BASE * 0.77
+        width: SIZES.WIDTH_BASE * 0.9
     },
     centeredView: {
         flex: 1,

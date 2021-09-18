@@ -1,8 +1,6 @@
 import { CenterLoader, CustomButton } from '@components/uiComponents';
 import App from '@constants/App';
-import {
-    Images, ScreenName, Theme, Utils
-} from '@constants/index';
+import { ScreenName, Theme, Utils } from '@constants/index';
 import {
     setCurrentUser, setIsSignInOtherDeviceStore, setListPartnerHomeRedux, setNavigation
 } from '@redux/Actions';
@@ -11,7 +9,7 @@ import Constants from 'expo-constants';
 import * as SecureStore from 'expo-secure-store';
 import React, { useEffect, useState } from 'react';
 import {
-    ImageBackground, Platform, StatusBar, StyleSheet, Text, View
+    Platform, StyleSheet, Text, View
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -112,19 +110,11 @@ export default function Onboarding({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <StatusBar barStyle="light-content" />
             <View style={{
-                flex: 1
+                flex: 1,
+                backgroundColor: COLORS.BLOCK
             }}
             >
-                <ImageBackground
-                    source={Images.Onboarding}
-                    style={{
-                        flex: 1,
-                        zIndex: 1,
-                        resizeMode: 'cover',
-                    }}
-                />
                 {isShowSpinner ? (
                     <CenterLoader />
                 ) : (
@@ -132,15 +122,6 @@ export default function Onboarding({ navigation }) {
                         style={styles.padded}
                     >
                         <View>
-                            {/* <View middle>
-                            <Image
-                                source={Images.NowLogo}
-                                style={{
-                                    width: 115, height: 124, bottom: 200, position: 'absolute'
-                                }}
-                            />
-                        </View> */}
-
                             <View>
                                 <View
                                     style={{
@@ -211,7 +192,7 @@ export default function Onboarding({ navigation }) {
 const styles = StyleSheet.create({
     container: {
         marginTop: Platform.OS === 'android' ? -Utils.HeaderHeight : 0,
-        flex: 1
+        flex: 1,
     },
     padded: {
         zIndex: 3,
@@ -224,13 +205,4 @@ const styles = StyleSheet.create({
         width: SIZES.WIDTH_BASE * 0.8,
         marginTop: 10
     },
-
-    gradient: {
-        zIndex: 1,
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        height: 66
-    }
 });
