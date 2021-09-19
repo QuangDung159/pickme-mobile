@@ -203,7 +203,7 @@ export default function Wallet({ navigation }) {
                 <View
                     style={{
                         flex: 1,
-                        backgroundColor: COLORS.BLOCK,
+                        backgroundColor: COLORS.BASE,
                         marginTop: 5
                     }}
                 >
@@ -266,7 +266,7 @@ export default function Wallet({ navigation }) {
                     <>
                         <View
                             style={{
-                                backgroundColor: COLORS.BLOCK,
+                                backgroundColor: COLORS.BASE,
                                 marginTop: 5
                             }}
                         >

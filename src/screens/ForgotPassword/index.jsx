@@ -339,7 +339,7 @@ const styles = StyleSheet.create({
     registerContainer: {
         width: SIZES.WIDTH_BASE,
         height: SIZES.HEIGHT_BASE,
-        backgroundColor: COLORS.BLOCK,
+        backgroundColor: COLORS.BASE,
         borderRadius: 4,
     },
     formContainer: {

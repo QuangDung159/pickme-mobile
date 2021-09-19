@@ -242,7 +242,7 @@ export default function Home({ navigation }) {
         >
             <View
                 style={{
-                    backgroundColor: COLORS.BLOCK,
+                    backgroundColor: COLORS.BASE,
                     marginBottom: 10
                 }}
             >
@@ -334,7 +334,7 @@ export default function Home({ navigation }) {
                 ) : (
                     <View
                         style={{
-                            backgroundColor: COLORS.BLOCK,
+                            backgroundColor: COLORS.BASE,
                             alignSelf: 'center'
                         }}
                     >

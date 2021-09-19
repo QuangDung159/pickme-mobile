@@ -90,7 +90,7 @@ export default function Notification({ navigation }) {
                         />
                     )}
                     contentContainerStyle={{
-                        backgroundColor: COLORS.BLOCK,
+                        backgroundColor: COLORS.BASE,
                     }}
                     showsVerticalScrollIndicator={false}
                     data={listNotification}

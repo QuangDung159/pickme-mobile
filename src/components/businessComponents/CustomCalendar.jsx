@@ -166,7 +166,7 @@ export default function CustomCalendar({ selectedDate, onChangeDate }) {
                 }}
             >
                 {arrDateLine2.map((item) => {
-                    let buttonColor = COLORS.BLOCK;
+                    let buttonColor = COLORS.BASE;
                     if (item === selectedDateState) {
                         buttonColor = COLORS.SELECTED_DATE;
                     }

@@ -29,7 +29,7 @@ export default function TopTabBar({
             style={
                 [
                     {
-                        backgroundColor: COLORS.BLOCK,
+                        backgroundColor: COLORS.BASE,
                         height: 50,
                         padding: 0,
                         justifyContent: 'center'

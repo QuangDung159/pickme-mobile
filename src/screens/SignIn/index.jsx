@@ -313,7 +313,7 @@ const styles = StyleSheet.create({
     container: {
         width: SIZES.WIDTH_BASE,
         height: SIZES.HEIGHT_BASE,
-        backgroundColor: COLORS.BLOCK
+        backgroundColor: COLORS.BASE
     },
     button: {
         width: SIZES.WIDTH_BASE * 0.9

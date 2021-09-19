@@ -316,7 +316,7 @@ export default function Verification({ navigation }) {
                         <View
                             style={{
                                 marginTop: 10,
-                                backgroundColor: COLORS.BLOCK,
+                                backgroundColor: COLORS.BASE,
                             }}
                         >
                             {renderDocSection()}

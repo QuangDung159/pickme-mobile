@@ -115,7 +115,7 @@ export default function Onboarding({ navigation }) {
         <View style={styles.container}>
             <View style={{
                 flex: 1,
-                backgroundColor: COLORS.BLOCK,
+                backgroundColor: COLORS.BASE,
             }}
             >
                 {isShowSpinner ? (

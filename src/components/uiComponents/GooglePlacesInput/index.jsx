@@ -78,7 +78,7 @@ export default function GooglePlacesInput({ onChangeAddress, addressInput, label
                             <Text style={{
                                 fontSize: SIZES.FONT_H3,
                                 fontFamily: TEXT_REGULAR,
-                                color: COLORS.BLOCK
+                                color: COLORS.BASE
                             }}
                             >
                                 {title}
@@ -86,7 +86,7 @@ export default function GooglePlacesInput({ onChangeAddress, addressInput, label
                             <Text style={{
                                 fontSize: SIZES.FONT_H4,
                                 fontFamily: TEXT_REGULAR,
-                                color: COLORS.BLOCK
+                                color: COLORS.BASE
                             }}
                             >
                                 {address}

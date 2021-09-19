@@ -16,8 +16,7 @@ const COLORS = {
     LIST_ITEM_BACKGROUND_2: '#cdf6ff',
     TRANSPARENT: 'transparent',
     SELECTED_DATE: '#b3f1ff',
-    BLOCK: '#ffffff',
-    BASE: '#f1f1f1',
+    BASE: '#ffffff',
 
     // BLOCK: '#c9c9c9',
     // BASE: '#878787',

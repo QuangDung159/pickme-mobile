@@ -210,7 +210,7 @@ export default function ChangePasswordForm() {
                         contentContainerStyle={{
                             width: SIZES.WIDTH_BASE,
                             alignItems: 'center',
-                            backgroundColor: COLORS.BLOCK,
+                            backgroundColor: COLORS.BASE,
                             marginTop: 5
                         }}
                     >

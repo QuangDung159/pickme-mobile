@@ -324,7 +324,7 @@ export default function BookingList({ navigation }) {
                 ) : (
                     <View
                         style={{
-                            backgroundColor: COLORS.BLOCK
+                            backgroundColor: COLORS.BASE
                         }}
                     >
                         {renderListDateSection()}

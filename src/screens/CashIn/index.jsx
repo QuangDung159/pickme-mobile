@@ -49,7 +49,7 @@ export default function CashIn(props) {
                     <View
                         style={{
                             marginVertical: 10,
-                            backgroundColor: COLORS.BLOCK,
+                            backgroundColor: COLORS.BASE,
                         }}
                     >
                         <View

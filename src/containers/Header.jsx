@@ -148,7 +148,7 @@ export default function Header({
     const navbarStyles = [
         styles.navbar,
         {
-            backgroundColor: COLORS.BLOCK
+            backgroundColor: COLORS.BASE
         },
         styles.navbarHeight
     ];
@@ -303,7 +303,7 @@ const styles = StyleSheet.create({
         height: 80,
     },
     shadow: {
-        backgroundColor: COLORS.BLOCK,
+        backgroundColor: COLORS.BASE,
         shadowColor: 'black',
         shadowOffset: { width: 0, height: 2 },
         shadowRadius: 6,

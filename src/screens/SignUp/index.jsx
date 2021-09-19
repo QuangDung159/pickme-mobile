@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     container: {
         width: SIZES.WIDTH_BASE,
         height: SIZES.HEIGHT_BASE,
-        backgroundColor: COLORS.BLOCK,
+        backgroundColor: COLORS.BASE,
     },
     title: {
         fontFamily: TEXT_BOLD,

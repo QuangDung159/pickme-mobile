@@ -191,7 +191,7 @@ export default function Message({ navigation, route }) {
                                 maxWidth: SIZES.WIDTH_BASE * 0.8,
                                 borderColor: COLORS.ACTIVE,
                                 borderWidth: 0.5,
-                                backgroundColor: COLORS.BLOCK
+                                backgroundColor: COLORS.BASE
                             },
                             messageStyle
                         ]
@@ -228,7 +228,7 @@ export default function Message({ navigation, route }) {
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => renderMessageItem(item)}
             style={{
-                backgroundColor: COLORS.BLOCK
+                backgroundColor: COLORS.BASE
             }}
             onScroll={({ nativeEvent }) => {
                 if (isCloseToBottom(nativeEvent)) {
@@ -316,7 +316,7 @@ export default function Message({ navigation, route }) {
                 justifyContent: 'space-between',
                 alignSelf: 'center',
                 alignItems: 'center',
-                backgroundColor: COLORS.BLOCK,
+                backgroundColor: COLORS.BASE,
                 height: 50,
                 borderTopWidth: 0.5,
                 borderTopColor: COLORS.ACTIVE
@@ -386,10 +386,10 @@ export default function Message({ navigation, route }) {
 const styles = StyleSheet.create({
     messageRight: {
         alignItems: 'flex-start',
-        backgroundColor: COLORS.BLOCK
+        backgroundColor: COLORS.BASE
     },
     messageLeft: {
         alignItems: 'flex-end',
-        backgroundColor: COLORS.BLOCK
+        backgroundColor: COLORS.BASE
     }
 });

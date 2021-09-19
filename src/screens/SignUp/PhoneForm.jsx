@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
         marginTop: 55,
         width: SIZES.WIDTH_BASE * 0.9,
         height: SIZES.HEIGHT_BASE < 812 ? SIZES.HEIGHT_BASE * 0.8 : SIZES.HEIGHT_BASE * 0.8,
-        backgroundColor: COLORS.BLOCK,
+        backgroundColor: COLORS.BASE,
     },
     button: {
         width: SIZES.WIDTH_BASE * 0.77,

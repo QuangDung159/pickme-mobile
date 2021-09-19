@@ -23,7 +23,7 @@ export default function CustomCheckbox({
     const [checked, setChecked] = useState(false);
 
     const renderCustomerCheckbox = () => {
-        let background = COLORS.BLOCK;
+        let background = COLORS.BASE;
         let active = false;
         if (defaultChecked) {
             background = defaultChecked || checked ? COLORS.ACTIVE : COLORS.TRANSPARENT;
@@ -71,7 +71,7 @@ export default function CustomCheckbox({
                             name="check"
                             family={IconFamily.ENTYPO}
                             size={18}
-                            color={COLORS.BLOCK}
+                            color={COLORS.BASE}
                         />
                     )}
                 </TouchableOpacity>
