@@ -22,8 +22,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/icon.png",
-        "backgroundColor": "#FFFFFF"
+        "foregroundImage": "./assets/images/icon.png"
       },
       "package": "com.dragonc92team.pickmecustomer",
       "googleServicesFile": "./google-services.json",
