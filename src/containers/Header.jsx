@@ -148,7 +148,7 @@ export default function Header({
     const navbarStyles = [
         styles.navbar,
         {
-            backgroundColor: COLORS.BLOCK
+            backgroundColor: COLORS.BASE
         },
         styles.navbarHeight
     ];

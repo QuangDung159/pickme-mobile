@@ -16,7 +16,7 @@ class MkSwitch extends PureComponent {
                         ? COLORS.ACTIVE
                         : COLORS.DEFAULT
                 ]}
-                ios_backgroundColor={COLORS.BLOCK}
+                ios_backgroundColor={COLORS.BASE}
                 trackColor={{
                     true: COLORS.ACTIVE,
                     false: COLORS.DEFAULT

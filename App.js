@@ -216,7 +216,7 @@ export default function App() {
 const styles = StyleSheet.create({
     toastContainer: {
         width: SIZES.WIDTH_BASE * 0.85,
-        backgroundColor: COLORS.BLOCK,
+        backgroundColor: COLORS.BASE,
         borderRadius: 30,
         borderColor: COLORS.DEFAULT,
         borderWidth: 0.5,

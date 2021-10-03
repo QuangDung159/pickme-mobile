@@ -320,7 +320,7 @@ export default function UpdateInfoForm() {
                 <KeyboardAwareScrollView
                     showsVerticalScrollIndicator={false}
                     contentContainerStyle={{
-                        backgroundColor: COLORS.BLOCK,
+                        backgroundColor: COLORS.BASE,
                         alignItems: 'center',
                         width: SIZES.WIDTH_BASE,
                         marginTop: 5,

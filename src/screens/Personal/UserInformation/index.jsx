@@ -222,7 +222,7 @@ export default function UserInformation({ navigation }) {
         <>
             <View
                 style={{
-                    backgroundColor: COLORS.BLOCK,
+                    backgroundColor: COLORS.BASE,
                     marginTop: 5
                 }}
             >
@@ -303,7 +303,7 @@ export default function UserInformation({ navigation }) {
                     >
                         <View
                             style={{
-                                backgroundColor: COLORS.BLOCK,
+                                backgroundColor: COLORS.BASE,
                                 marginTop: 5
                             }}
                         >
@@ -340,7 +340,7 @@ export default function UserInformation({ navigation }) {
 
                             <View
                                 style={{
-                                    backgroundColor: COLORS.BLOCK,
+                                    backgroundColor: COLORS.BASE,
                                     marginTop: 5
                                 }}
                             >
@@ -350,7 +350,7 @@ export default function UserInformation({ navigation }) {
 
                         <View
                             style={{
-                                backgroundColor: COLORS.BLOCK,
+                                backgroundColor: COLORS.BASE,
                                 marginTop: 5
                             }}
                         >

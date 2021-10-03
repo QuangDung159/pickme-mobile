@@ -1,12 +1,9 @@
 import {
     CenterLoader
 } from '@components/uiComponents';
-import {
-    Images, Theme
-} from '@constants/index';
+import { Theme } from '@constants/index';
 import React, { useState } from 'react';
 import {
-    ImageBackground,
     StyleSheet,
     Text,
     View
@@ -73,88 +70,55 @@ export default function SignUp({ navigation }) {
             />
 
             <View
-                style={{
-                    flex: 1,
-                    alignSelf: 'center',
-                    alignItems: 'center'
-                }}
+                style={styles.container}
             >
-                <ImageBackground
-                    source={Images.RegisterBackground}
-                    style={styles.imageBackgroundContainer}
-                    imageStyle={styles.imageBackground}
-                >
-                    {showLoaderStore ? (
-                        <CenterLoader />
-                    ) : (
-                        <KeyboardAwareScrollView>
+                {showLoaderStore ? (
+                    <CenterLoader />
+                ) : (
+                    <KeyboardAwareScrollView>
+                        <View
+                            style={{
+                                flex: 1,
+                                alignSelf: 'center',
+                                alignItems: 'center'
+                            }}
+                        >
                             <View
-                                style={{
-                                    flex: 1,
-                                    alignSelf: 'center',
-                                    alignItems: 'center'
-                                }}
+                                style={styles.stepSessionContainer}
                             >
-                                <View style={styles.registerContainer}>
-                                    <View
-                                        style={styles.stepSessionContainer}
-                                    >
-                                        <Text
-                                            style={
-                                                [
-                                                    styles.title,
-                                                    {
-                                                        color: COLORS.DEFAULT,
-                                                        fontSize: 24,
-                                                        height: 100,
-                                                        marginTop: SIZES.HEIGHT_BASE * 0.1
-                                                    }
-                                                ]
+                                <Text
+                                    style={
+                                        [
+                                            styles.title,
+                                            {
+                                                color: COLORS.DEFAULT,
+                                                fontSize: 24,
+                                                height: 100,
+                                                marginTop: SIZES.HEIGHT_BASE * 0.1
                                             }
-                                        >
-                                            Đăng kí
-                                        </Text>
-                                    </View>
-
-                                    {/* render from this shit */}
-                                    {renderSignUpViewByStep()}
-                                </View>
+                                        ]
+                                    }
+                                >
+                                    Đăng kí
+                                </Text>
                             </View>
-                        </KeyboardAwareScrollView>
-                    )}
 
-                </ImageBackground>
+                            {/* render from this shit */}
+                            {renderSignUpViewByStep()}
+                        </View>
+                    </KeyboardAwareScrollView>
+                )}
+
             </View>
         </>
     );
 }
 
 const styles = StyleSheet.create({
-    imageBackgroundContainer: {
+    container: {
         width: SIZES.WIDTH_BASE,
         height: SIZES.HEIGHT_BASE,
-        padding: 0,
-        zIndex: 1
-    },
-    imageBackground: {
-        width: SIZES.WIDTH_BASE,
-        height: SIZES.HEIGHT_BASE
-    },
-    registerContainer: {
-        marginTop: 55,
-        width: SIZES.WIDTH_BASE * 0.9,
-        height: SIZES.HEIGHT_BASE < 812 ? SIZES.HEIGHT_BASE * 0.8 : SIZES.HEIGHT_BASE * 0.8,
         backgroundColor: COLORS.BASE,
-        borderRadius: 4,
-        shadowColor: COLORS.BLACK,
-        shadowOffset: {
-            width: 0,
-            height: 4
-        },
-        shadowRadius: 8,
-        shadowOpacity: 0.1,
-        elevation: 1,
-        overflow: 'hidden'
     },
     title: {
         fontFamily: TEXT_BOLD,

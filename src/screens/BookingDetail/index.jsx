@@ -22,7 +22,6 @@ import ReportModal from './ReportModal';
 const {
     FONT: {
         TEXT_REGULAR,
-        TEXT_BOLD
     },
     SIZES,
     COLORS
@@ -132,9 +131,6 @@ export default function BookingDetail({
                                 tintColor={COLORS.ACTIVE}
                             />
                         )}
-                        contentContainerStyle={{
-                            paddingBottom: 5
-                        }}
                     >
                         {currentBookingRedux && (
                             <>
@@ -163,63 +159,43 @@ export default function BookingDetail({
                                     <View
                                         style={{
                                             alignSelf: 'center',
-                                            marginTop: 5,
+
                                         }}
                                     >
-                                        <View
-                                            style={{
-                                                backgroundColor: COLORS.BLOCK,
-                                                width: SIZES.WIDTH_BASE
-                                            }}
-                                        >
-                                            <CardBooking
-                                                booking={currentBookingRedux}
-                                                navigation={navigation}
-                                            />
-                                        </View>
+                                        <CardBooking
+                                            booking={currentBookingRedux}
+                                            navigation={navigation}
+                                        />
 
                                         <View
                                             style={{
-                                                backgroundColor: COLORS.BLOCK,
-                                                marginTop: 5,
-                                                alignContent: 'center'
+                                                width: SIZES.WIDTH_BASE * 0.9,
+                                                alignSelf: 'center',
+                                                borderBottomWidth: 0.5,
+                                                borderBottomColor: COLORS.ACTIVE
                                             }}
                                         >
-                                            <View
-                                                style={{
-                                                    width: SIZES.WIDTH_BASE * 0.9,
-                                                    alignSelf: 'center',
-                                                }}
+                                            <Text
+                                                style={
+                                                    [
+                                                        styles.subTitle,
+                                                        {
+                                                            color: COLORS.DEFAULT,
+                                                            fontSize: SIZES.FONT_H3,
+                                                            marginBottom: 20
+                                                        }
+                                                    ]
+                                                }
                                             >
-                                                <Text
-                                                    style={
-                                                        [
-                                                            styles.subTitle,
-                                                            {
-                                                                color: COLORS.DEFAULT,
-                                                                fontSize: SIZES.FONT_H3,
-                                                                marginVertical: 20
-                                                            }
-                                                        ]
-                                                    }
-                                                >
-                                                    {currentBookingRedux.noted}
-                                                </Text>
-                                            </View>
+                                                {currentBookingRedux.noted || 'N/a'}
+                                            </Text>
                                         </View>
 
-                                        <View
-                                            style={{
-                                                backgroundColor: COLORS.BLOCK,
-                                                marginTop: 5,
-                                            }}
-                                        >
-                                            <BookingProgressFlow
-                                                status={currentBookingRedux.status}
-                                                partner={currentBookingRedux.partner}
-                                                booking={currentBookingRedux}
-                                            />
-                                        </View>
+                                        <BookingProgressFlow
+                                            status={currentBookingRedux.status}
+                                            partner={currentBookingRedux.partner}
+                                            booking={currentBookingRedux}
+                                        />
 
                                         <ButtonPanel
                                             booking={currentBookingRedux}
@@ -248,10 +224,6 @@ export default function BookingDetail({
 }
 
 const styles = StyleSheet.create({
-    title: {
-        fontFamily: TEXT_BOLD,
-        marginBottom: 20
-    },
     subTitle: {
         fontFamily: TEXT_REGULAR,
     },

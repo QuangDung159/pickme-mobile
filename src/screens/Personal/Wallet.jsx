@@ -203,7 +203,7 @@ export default function Wallet({ navigation }) {
                 <View
                     style={{
                         flex: 1,
-                        backgroundColor: COLORS.BLOCK,
+                        backgroundColor: COLORS.BASE,
                         marginTop: 5
                     }}
                 >
@@ -266,7 +266,7 @@ export default function Wallet({ navigation }) {
                     <>
                         <View
                             style={{
-                                backgroundColor: COLORS.BLOCK,
+                                backgroundColor: COLORS.BASE,
                                 marginTop: 5
                             }}
                         >
@@ -275,6 +275,8 @@ export default function Wallet({ navigation }) {
                                     height: 120,
                                     width: SIZES.WIDTH_BASE * 0.9,
                                     alignSelf: 'center',
+                                    borderBottomWidth: 0.5,
+                                    borderBottomColor: COLORS.ACTIVE
                                 }}
                             >
                                 {renderWalletAmountPanel()}

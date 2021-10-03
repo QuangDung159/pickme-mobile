@@ -161,7 +161,7 @@ export default function LeaderBoadViewByType({
                     <View
                         style={[
                             {
-                                backgroundColor: !(index % 2 === 0) || COLORS.BLOCK,
+                                backgroundColor: !(index % 2 === 0) || COLORS.BASE,
                                 flexDirection: 'row',
                                 alignSelf: 'center',
                                 width: SIZES.WIDTH_BASE,

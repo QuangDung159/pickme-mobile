@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         marginTop: SIZES.HEIGHT_BASE * 0.2,
         margin: 10,
-        backgroundColor: COLORS.BLOCK,
+        backgroundColor: COLORS.BASE,
         borderRadius: 10,
         padding: 20,
         shadowColor: '#000',

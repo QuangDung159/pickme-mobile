@@ -21,7 +21,7 @@ export default class NoteText extends PureComponent {
         return (
             <View
                 style={{
-                    backgroundColor: backgroundColor || COLORS.BLOCK,
+                    backgroundColor: backgroundColor || COLORS.BASE,
                     width,
                     alignSelf: 'center',
                     borderRadius: 8,

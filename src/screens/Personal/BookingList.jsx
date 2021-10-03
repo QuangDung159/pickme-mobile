@@ -100,9 +100,10 @@ export default function BookingList({ navigation }) {
             >
                 <View
                     style={{
-                        backgroundColor: COLORS.BLOCK,
-                        borderRadius: 8,
-                        marginBottom: 5
+                        borderRadius: 5,
+                        marginBottom: 5,
+                        borderWidth: 0.5,
+                        borderColor: COLORS.ACTIVE
                     }}
                 >
                     <View
@@ -321,9 +322,13 @@ export default function BookingList({ navigation }) {
                 {isShowSpinner ? (
                     <CenterLoader />
                 ) : (
-                    <>
+                    <View
+                        style={{
+                            backgroundColor: COLORS.BASE
+                        }}
+                    >
                         {renderListDateSection()}
-                    </>
+                    </View>
                 )}
             </>
 

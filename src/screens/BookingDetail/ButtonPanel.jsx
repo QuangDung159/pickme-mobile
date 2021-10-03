@@ -160,8 +160,10 @@ export default function ButtonPanel({
             {handleShowButtonByStatus() && (
                 <View
                     style={{
-                        backgroundColor: COLORS.BLOCK,
-                        marginTop: 5
+                        backgroundColor: COLORS.BASE,
+                        marginTop: 5,
+                        borderTopWidth: 0.5,
+                        borderTopColor: COLORS.ACTIVE
                     }}
                 >
                     <View

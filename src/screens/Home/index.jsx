@@ -242,8 +242,8 @@ export default function Home({ navigation }) {
         >
             <View
                 style={{
-                    backgroundColor: COLORS.BLOCK,
-                    borderWidth: 0,
+                    backgroundColor: COLORS.BASE,
+                    marginBottom: 10
                 }}
             >
                 <View
