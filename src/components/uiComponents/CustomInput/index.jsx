@@ -54,6 +54,7 @@ export default function CustomInput({
                         fontFamily: TEXT_REGULAR,
                         fontSize: SIZES.FONT_H3,
                         color: COLORS.DEFAULT,
+                        width: SIZES.WIDTH_BASE * 0.9
                     },
                     inputStyle,
                 ]

@@ -162,72 +162,64 @@ export default function SignIn({ navigation, setIsShowSpinner }) {
     };
 
     return (
-        <View>
+        <View
+            style={{
+                alignSelf: 'center',
+            }}
+        >
             <View
                 style={{
-                    alignSelf: 'center',
+                    marginBottom: 10,
+                    alignItems: 'center'
                 }}
             >
-                <>
-                    <View>
-                        <View
-                            style={{
-                                marginBottom: 10,
-                                alignItems: 'center'
-                            }}
-                        >
-                            <CustomInput
-                                placeholder="Nhập số điện thoại..."
-                                value={phoneNumber}
-                                onChangeText={
-                                    (phoneNumberInput) => setPhoneNumber(phoneNumberInput)
-                                }
-                                containerStyle={{
-                                    marginVertical: 10,
-                                }}
-                            />
+                <CustomInput
+                    placeholder="Nhập số điện thoại..."
+                    value={phoneNumber}
+                    onChangeText={
+                        (phoneNumberInput) => setPhoneNumber(phoneNumberInput)
+                    }
+                    containerStyle={{
+                        marginVertical: 10,
+                    }}
+                />
 
-                            <CustomInput
-                                value={password}
-                                onChangeText={(passwordInput) => setPassword(passwordInput)}
-                                containerStyle={{
-                                    marginVertical: 10,
-                                }}
-                                secureTextEntry={!isShowPassword}
-                                placeholder="Nhập mật khẩu..."
-                                rightIcon={{
-                                    name: 'eye',
-                                    family: IconFamily.ENTYPO,
-                                    size: 20,
-                                    color: COLORS.DEFAULT
-                                }}
-                                onPressRightIcon={() => setIsShowPassword(!isShowPassword)}
-                            />
+                <CustomInput
+                    value={password}
+                    onChangeText={(passwordInput) => setPassword(passwordInput)}
+                    containerStyle={{
+                        marginVertical: 10,
+                    }}
+                    secureTextEntry={!isShowPassword}
+                    placeholder="Nhập mật khẩu..."
+                    rightIcon={{
+                        name: 'eye',
+                        family: IconFamily.ENTYPO,
+                        size: 20,
+                        color: COLORS.DEFAULT
+                    }}
+                    onPressRightIcon={() => setIsShowPassword(!isShowPassword)}
+                />
 
-                            {/* for testing */}
-                            <CustomInput
-                                placeholder="Empty or 'test'"
-                                value={deviceIdToSend}
-                                onChangeText={
-                                    (deviceIdInput) => {
-                                        setDeviceIdToSend(deviceIdInput);
-                                    }
-                                }
-                                containerStyle={{
-                                    marginVertical: 10,
-                                }}
-                            />
-                        </View>
-                    </View>
-
-                    <View>
-                        <CustomButton
-                            onPress={() => onSubmitLogin()}
-                            label="Đăng nhập"
-                        />
-                    </View>
-                </>
+                {/* for testing */}
+                <CustomInput
+                    placeholder="Empty or 'test'"
+                    value={deviceIdToSend}
+                    onChangeText={
+                        (deviceIdInput) => {
+                            setDeviceIdToSend(deviceIdInput);
+                        }
+                    }
+                    containerStyle={{
+                        marginVertical: 10,
+                    }}
+                />
             </View>
+
+            <CustomButton
+                onPress={() => onSubmitLogin()}
+                label="Đăng nhập"
+            />
         </View>
     );
 }
