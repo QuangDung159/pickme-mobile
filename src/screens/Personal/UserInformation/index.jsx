@@ -2,6 +2,7 @@
 import {
     CenterLoader, CustomButton, Line
 } from '@components/uiComponents';
+import IconCustom from '@components/uiComponents/IconCustom';
 import {
     IconFamily, Images, ScreenName, Theme
 } from '@constants/index';
@@ -14,7 +15,7 @@ import React, { useState } from 'react';
 import {
     Image, RefreshControl, StyleSheet, Text, View
 } from 'react-native';
-import { ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { ScrollView, TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import UserInfoSection from './UserInfoSection';
 import VerificationStatusPanel from './VerificationStatusPanel';
@@ -135,26 +136,15 @@ export default function UserInformation({ navigation }) {
                 }}
             >
                 <CenterLoader />
-                <View
-                    style={{
+                <TouchableWithoutFeedback
+                    onPress={() => onClickUpdateAvatar()}
+                    containerStyle={{
                         zIndex: 99
                     }}
                 >
                     {renderAvatar()}
-                </View>
+                </TouchableWithoutFeedback>
             </View>
-            <CustomButton
-                onPress={() => onClickUpdateAvatar()}
-                labelStyle={{
-                    fontSize: SIZES.FONT_H4,
-                }}
-                buttonStyle={{
-                    width: SIZES.WIDTH_BASE * 0.25,
-                    borderWidth: 0,
-                    alignSelf: 'flex-start'
-                }}
-                label="Đổi avatar"
-            />
         </View>
     );
 
@@ -229,6 +219,9 @@ export default function UserInformation({ navigation }) {
                 <View
                     style={{
                         marginTop: 10,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        alignSelf: 'center'
                     }}
                 >
                     <Text
@@ -236,11 +229,24 @@ export default function UserInformation({ navigation }) {
                             color: COLORS.ACTIVE,
                             fontSize: SIZES.FONT_H1,
                             fontFamily: TEXT_BOLD,
-                            textAlign: 'center'
+                            textAlign: 'center',
+                            marginRight: 5
                         }}
                     >
                         {currentUser.fullName}
                     </Text>
+                    <TouchableOpacity
+                        onPress={() => navigation.navigate(
+                            ScreenName.UPDATE_INFO_ACCOUNT,
+                        )}
+                    >
+                        <IconCustom
+                            name="edit"
+                            family={IconFamily.ENTYPO}
+                            size={SIZES.FONT_H4}
+                            color={COLORS.DEFAULT}
+                        />
+                    </TouchableOpacity>
                 </View>
 
                 <View
@@ -354,7 +360,7 @@ export default function UserInformation({ navigation }) {
                                 marginTop: 5
                             }}
                         >
-                            <View style={{
+                            {/* <View style={{
                                 marginVertical: 20,
                                 alignItems: 'center'
                             }}
@@ -370,7 +376,7 @@ export default function UserInformation({ navigation }) {
                                     }}
                                     label="Chỉnh sửa thông tin cá nhân"
                                 />
-                            </View>
+                            </View> */}
 
                             <View
                                 style={{
