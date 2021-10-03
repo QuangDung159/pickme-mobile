@@ -1,4 +1,4 @@
-import { CenterLoader } from '@components/uiComponents';
+import { CenterLoader, CustomText, TouchableText } from '@components/uiComponents';
 import App from '@constants/App';
 import {
     Images, ScreenName, Theme, Utils
@@ -14,7 +14,6 @@ import {
     Image,
     Platform, StyleSheet, Text, View
 } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import SignIn from './SignIn';
 
@@ -138,11 +137,13 @@ export default function Onboarding({ navigation }) {
                                     height: 50
                                 }}
                             />
-                            <Text
-                                style={styles.text}
-                            >
-                                Ở đây chúng tôi phát người yêu!
-                            </Text>
+                            <CustomText
+                                style={{
+                                    color: COLORS.ACTIVE,
+                                    marginTop: 10
+                                }}
+                                text="Ở đây chúng tôi phát người yêu!"
+                            />
                         </View>
                     </View>
                     <SignIn
@@ -151,52 +152,48 @@ export default function Onboarding({ navigation }) {
                     />
                     <View
                         style={{
-                            marginTop: 10,
+                            marginTop: 35,
                             alignSelf: 'center',
                             alignItems: 'center'
                         }}
                     >
-                        <TouchableOpacity
+                        <TouchableText
+                            style={{
+                                color: COLORS.ACTIVE,
+                            }}
+                            text="Đăng ký"
                             onPress={() => navigation.navigate(ScreenName.SIGN_UP)}
-                        >
-                            <Text
-                                style={[styles.text]}
-                            >
-                                Đăng ký
-                            </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            onPress={() => {
-                                navigation.navigate(ScreenName.FORGOT_PASSWORD);
-                            }}
-                        >
-                            <Text
-                                style={[styles.text, {
-                                    marginBottom: 10,
-                                    marginTop: 5
-                                }]}
-                            >
-                                Quên mật khẩu?
-                            </Text>
-                        </TouchableOpacity>
-                        <Text
+                        />
+                        <TouchableText
+                            text="Quên mật khẩu?"
+                            onPress={() => navigation.navigate(ScreenName.FORGOT_PASSWORD)}
                             style={{
-                                fontFamily: TEXT_REGULAR,
-                                color: COLORS.DEFAULT,
-                                fontSize: SIZES.FONT_H4 - 2,
+                                color: COLORS.ACTIVE,
+                                marginTop: 5,
+                                marginBottom: 10
                             }}
-                        >
-                            {`${Constants.manifest.version} (${App.APP_VERSION_OTA})`}
-                        </Text>
-                        <Text
+                        />
+                        <TouchableText
+                            text="Trở thành đối tác của PickMe?"
+                            onPress={() => navigation.navigate(ScreenName.FORGOT_PASSWORD)}
                             style={{
-                                fontFamily: TEXT_REGULAR,
-                                color: COLORS.DEFAULT,
-                                fontSize: SIZES.FONT_H4 - 2,
+                                color: COLORS.ACTIVE,
+                                marginTop: 20,
+                                marginBottom: 10
                             }}
-                        >
-                            {deviceIdDisplay}
-                        </Text>
+                        />
+                        <CustomText
+                            style={{
+                                fontSize: SIZES.FONT_H4 - 4
+                            }}
+                            text={`${Constants.manifest.version} (${App.APP_VERSION_OTA})`}
+                        />
+                        <CustomText
+                            style={{
+                                fontSize: SIZES.FONT_H4 - 4
+                            }}
+                            text={deviceIdDisplay}
+                        />
                     </View>
                     <View
                         style={{
