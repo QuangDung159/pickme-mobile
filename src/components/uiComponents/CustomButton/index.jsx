@@ -52,7 +52,6 @@ export default function CustomButton(
                 [
                     styles.baseButtonStyle,
                     {
-                        borderColor: COLORS.DEFAULT,
                         width: SIZES.WIDTH_BASE * 0.9,
                     },
                     buttonStyle,
@@ -64,8 +63,8 @@ export default function CustomButton(
                     [
                         {
                             fontFamily: TEXT_BOLD,
-                            fontSize: SIZES.FONT_H2,
-                            color: COLORS.DEFAULT
+                            fontSize: SIZES.FONT_H3,
+                            color: COLORS.ACTIVE
                         },
                         labelStyle
                     ]
@@ -191,11 +190,13 @@ export default function CustomButton(
 const styles = StyleSheet.create({
     baseButtonStyle: {
         borderWidth: 1,
-        borderRadius: 5,
+        borderRadius: 8,
         height: 40,
         alignSelf: 'center',
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: COLORS.TRANSPARENT,
+        width: SIZES.WIDTH_BASE * 0.8,
+        borderColor: COLORS.ACTIVE
     }
 });

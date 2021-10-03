@@ -385,7 +385,7 @@ const styles = StyleSheet.create({
         margin: 0
     },
     input: {
-        borderRadius: 5,
+        borderRadius: 8,
         width: SIZES.WIDTH_BASE * 0.9,
     },
     imageReport: {

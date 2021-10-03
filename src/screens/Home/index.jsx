@@ -326,7 +326,7 @@ export default function Home({ navigation }) {
         return (
             <SafeAreaView
                 style={{
-                    flex: 1
+                    flex: 1,
                 }}
             >
                 {isShowSpinner ? (

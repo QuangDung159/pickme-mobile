@@ -46,20 +46,21 @@ export default function CustomInput({
             style={
                 [
                     {
-                        borderColor: COLORS.INPUT,
+                        borderColor: COLORS.ACTIVE,
                         borderWidth: 1,
-                        borderRadius: 5,
+                        borderRadius: 8,
                         height: 50,
                         paddingHorizontal: 10,
                         fontFamily: TEXT_REGULAR,
                         fontSize: SIZES.FONT_H3,
-                        color: COLORS.DEFAULT
+                        color: COLORS.INPUT,
+                        width: SIZES.WIDTH_BASE * 0.9
                     },
                     inputStyle,
                 ]
             }
             value={value?.toString() || ''}
-            placeholderTextColor={COLORS.TABS}
+            placeholderTextColor={COLORS.PLACE_HOLDER}
             {...props}
         />
     );
@@ -90,7 +91,7 @@ export default function CustomInput({
                             justifyContent: 'center',
                             alignItems: 'flex-end',
                             marginRight: 10,
-                            flex: 1
+                            flex: 1,
                         }}
                     >
                         <TouchableWithoutFeedback
@@ -119,7 +120,9 @@ export default function CustomInput({
 
     return (
         <View
-            style={containerStyle}
+            style={!rightIcon ? containerStyle : [containerStyle, {
+                width: SIZES.WIDTH_BASE * 0.9
+            }]}
         >
             {label !== '' && (
                 <Text

@@ -101,7 +101,7 @@ export default function BookingList({ navigation }) {
                 <View
                     style={{
                         backgroundColor: COLORS.BLOCK,
-                        borderRadius: 5,
+                        borderRadius: 8,
                         marginBottom: 5
                     }}
                 >
