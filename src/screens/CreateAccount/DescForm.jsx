@@ -76,7 +76,7 @@ export default function DescForm({
                         onChangeText={(description) => onChangeInputDescription(description)}
                         containerStyle={{
                             marginVertical: 10,
-                            width: SIZES.WIDTH_BASE * 0.77
+                            width: SIZES.WIDTH_BASE * 0.9
                         }}
                         inputStyle={{
                             height: 80,

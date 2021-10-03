@@ -76,13 +76,13 @@ export default function PhoneForm({
                     <CustomInput
                         value={phoneNumber}
                         inputStyle={{
-                            width: SIZES.WIDTH_BASE * 0.77
+                            width: SIZES.WIDTH_BASE * 0.9
                         }}
                         onChangeText={(phoneNumberInput) => setPhoneNumber(phoneNumberInput)}
                         keyboardType="number-pad"
                         containerStyle={{
                             marginVertical: 10,
-                            width: SIZES.WIDTH_BASE * 0.77
+                            width: SIZES.WIDTH_BASE * 0.9
                         }}
                         placeholder="Nhập số điện thoại..."
                     />
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.BASE,
     },
     button: {
-        width: SIZES.WIDTH_BASE * 0.77,
+        width: SIZES.WIDTH_BASE * 0.9,
         marginVertical: 10
     },
     title: {

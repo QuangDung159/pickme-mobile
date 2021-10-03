@@ -76,7 +76,7 @@ export default function UserInfoForm({
         <View
             style={{
                 marginVertical: 10,
-                width: SIZES.WIDTH_BASE * 0.77
+                width: SIZES.WIDTH_BASE * 0.9
             }}
         >
             <View
@@ -131,7 +131,7 @@ export default function UserInfoForm({
                 <CustomInput
                     containerStyle={{
                         marginVertical: 10,
-                        width: SIZES.WIDTH_BASE * 0.77
+                        width: SIZES.WIDTH_BASE * 0.9
                     }}
                     onChangeText={(userInterests) => onChangeInputInterests(userInterests)}
                     value={newUser.interests}
@@ -141,7 +141,7 @@ export default function UserInfoForm({
                 <CustomInput
                     containerStyle={{
                         marginVertical: 10,
-                        width: SIZES.WIDTH_BASE * 0.77
+                        width: SIZES.WIDTH_BASE * 0.9
                     }}
                     onChangeText={(input) => onChangeYear(input)}
                     value={newUser.dob}

@@ -302,7 +302,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     inputWith: {
-        width: SIZES.WIDTH_BASE * 0.77,
+        width: SIZES.WIDTH_BASE * 0.9,
         marginTop: 10
     }
 });

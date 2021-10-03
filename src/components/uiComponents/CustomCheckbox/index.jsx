@@ -40,7 +40,7 @@ export default function CustomCheckbox({
                         {
                             flexDirection: 'row',
                             alignSelf: 'center',
-                            width: SIZES.WIDTH_BASE * 0.77,
+                            width: SIZES.WIDTH_BASE * 0.9,
                         },
                         containerStyle
                     ]

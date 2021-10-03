@@ -1,6 +1,9 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
+import Theme from '@constants/Theme';
 import { SOCKET_URL } from '@env';
 import axios from 'axios';
+
+const { COLORS } = Theme;
 
 export default (
     method,
@@ -31,13 +34,13 @@ export default (
                 if (successCallBack) successCallBack(response);
             } else {
                 if (failCallBack) failCallBack(response);
-                console.log('fail error :>> ', response);
+                console.log('%c Fail error :>> ', `color: ${COLORS.ERROR}`, response);
             }
-            console.log(`${response.status} socket ${infoString}`, config);
+            console.log(`%c ${response.status} socket ${infoString}`, `color: ${COLORS.SUCCESS}`, config);
         })
         .catch((error) => {
             const { response } = error;
             if (catchCallBack) catchCallBack(response);
-            console.log('catch error :>> ', response);
+            console.log('%c catch error :>> ', `color: ${COLORS.ERROR}`, response);
         });
 };

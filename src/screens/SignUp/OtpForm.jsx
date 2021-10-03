@@ -113,13 +113,13 @@ export default function OtpForm({
                     <CustomInput
                         value={otp}
                         inputStyle={{
-                            width: SIZES.WIDTH_BASE * 0.77
+                            width: SIZES.WIDTH_BASE * 0.9
                         }}
                         onChangeText={(otpInput) => setOtp(otpInput)}
                         keyboardType="number-pad"
                         containerStyle={{
                             marginVertical: 10,
-                            width: SIZES.WIDTH_BASE * 0.77
+                            width: SIZES.WIDTH_BASE * 0.9
                         }}
                         placeholder="Nhập mã xác thực..."
                     />
@@ -127,12 +127,12 @@ export default function OtpForm({
                     <CustomInput
                         value={password}
                         inputStyle={{
-                            width: SIZES.WIDTH_BASE * 0.77
+                            width: SIZES.WIDTH_BASE * 0.9
                         }}
                         onChangeText={(passwordInput) => setPassword(passwordInput)}
                         containerStyle={{
                             marginVertical: 10,
-                            width: SIZES.WIDTH_BASE * 0.77
+                            width: SIZES.WIDTH_BASE * 0.9
                         }}
                         secureTextEntry={!isShowPassword}
                         placeholder="Nhập mật khẩu..."
@@ -168,7 +168,7 @@ export default function OtpForm({
 
 const styles = StyleSheet.create({
     button: {
-        width: SIZES.WIDTH_BASE * 0.77,
+        width: SIZES.WIDTH_BASE * 0.9,
         marginVertical: 10
     },
     stepSessionContainer: {

@@ -1,10 +1,12 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
-import { Rx } from '@constants/index';
+import { Rx, Theme } from '@constants/index';
 import { API_URL, PICKME_INFO_URL } from '@env';
 import ToastHelpers from '@helpers/ToastHelpers';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 import slackUtil from './slackUtil';
+
+const { COLORS } = Theme;
 
 const generateLogData = (endpoint, body, headers, res) => {
     const objectStr = JSON.stringify({
@@ -17,7 +19,8 @@ const generateLogData = (endpoint, body, headers, res) => {
 };
 
 const logMessage = (res, endpoint, headers, body) => {
-    console.log(`${res.status} ${endpoint}`, {
+    const textColor = res.status === 200 || res.status === 201 ? `color: ${COLORS.SUCCESS}` : `color: ${COLORS.ERROR}`;
+    console.log(`%c ${res.status} ${endpoint}`, textColor, {
         headers,
         body,
         response: res

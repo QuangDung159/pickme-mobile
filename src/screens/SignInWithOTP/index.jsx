@@ -161,7 +161,7 @@ export default function SignInWithOTP({ navigation }) {
                                     }}
                                 >
                                     <NoteText
-                                        width={SIZES.WIDTH_BASE * 0.77}
+                                        width={SIZES.WIDTH_BASE * 0.9}
                                         title="Dường như bạn đang đăng nhập từ một thiết bị khác:"
                                         content="Bạn vui lòng đăng nhập lại để xác thực thiết bị này."
                                         contentStyle={{
@@ -202,20 +202,20 @@ export default function SignInWithOTP({ navigation }) {
                                                 }
                                                 containerStyle={{
                                                     marginVertical: 10,
-                                                    width: SIZES.WIDTH_BASE * 0.77
+                                                    width: SIZES.WIDTH_BASE * 0.9
                                                 }}
                                             />
                                         ) : (
                                             <CustomInput
                                                 value={otp}
                                                 inputStyle={{
-                                                    width: SIZES.WIDTH_BASE * 0.77
+                                                    width: SIZES.WIDTH_BASE * 0.9
                                                 }}
                                                 onChangeText={(otpInput) => setOtp(otpInput)}
                                                 keyboardType="number-pad"
                                                 containerStyle={{
                                                     marginVertical: 10,
-                                                    width: SIZES.WIDTH_BASE * 0.77
+                                                    width: SIZES.WIDTH_BASE * 0.9
                                                 }}
                                                 placeholder="Nhập mã xác thực..."
                                             />
@@ -284,7 +284,7 @@ const styles = StyleSheet.create({
         overflow: 'hidden'
     },
     button: {
-        width: SIZES.WIDTH_BASE * 0.77
+        width: SIZES.WIDTH_BASE * 0.9
     },
     openButton: {
         backgroundColor: '#F194FF',

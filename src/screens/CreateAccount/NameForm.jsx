@@ -68,7 +68,7 @@ export default function NameForm({
                     onChangeText={(name) => onChangeInputName(name)}
                     containerStyle={{
                         marginVertical: 10,
-                        width: SIZES.WIDTH_BASE * 0.77
+                        width: SIZES.WIDTH_BASE * 0.9
                     }}
                     placeholder="Nhập tên của bạn..."
                 />
