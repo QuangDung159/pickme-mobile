@@ -1,16 +1,15 @@
 /* eslint-disable max-len */
+import { CustomText } from '@components/uiComponents';
 import { Theme, VerificationStatus } from '@constants/index';
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import { useSelector } from 'react-redux';
 
 const {
     FONT: {
-        TEXT_REGULAR,
         TEXT_BOLD
     },
     SIZES,
-    COLORS
 } = Theme;
 
 export default function VerificationStatusPanel() {
@@ -21,96 +20,60 @@ export default function VerificationStatusPanel() {
             case VerificationStatus.NONE: {
                 return (
                     <>
-                        <View
+                        <CustomText
                             style={{
-                                width: SIZES.WIDTH_BASE * 0.9,
-                                alignSelf: 'center'
+                                fontFamily: TEXT_BOLD,
+                                fontSize: SIZES.FONT_H4
                             }}
-                        >
-                            <Text
-                                style={{
-                                    color: COLORS.DEFAULT,
-                                    fontFamily: TEXT_BOLD,
-                                    fontSize: SIZES.FONT_H3,
-                                }}
-                            >
-                                Tài khoản của bạn chưa được xác thực
-                            </Text>
-                            <Text
-                                style={{
-                                    color: COLORS.ACTIVE,
-                                    fontFamily: TEXT_REGULAR,
-                                    fontSize: SIZES.FONT_H3,
-                                    marginTop: 10
-                                }}
-                            >
-                                {'Tài khoản chưa được xác thực sẽ bị hạn chế một số chức năng.\nVui lòng nhấp vào đây để hoàn tất quá trình xác thực tài khoản.'}
-                            </Text>
-                        </View>
+                            text="Tài khoản của bạn chưa được xác thực"
+                        />
+                        <CustomText
+                            style={{
+                                marginTop: 5,
+                                fontSize: SIZES.FONT_H4
+                            }}
+                            text={'Tài khoản chưa được xác thực sẽ bị hạn chế một số chức năng.\nVui lòng nhấp vào đây để hoàn tất quá trình xác thực tài khoản.'}
+                        />
                     </>
                 );
             }
             case VerificationStatus.REJECT: {
                 return (
                     <>
-                        <View
+                        <CustomText
                             style={{
-                                width: SIZES.WIDTH_BASE * 0.9,
-                                alignSelf: 'center'
+                                fontFamily: TEXT_BOLD,
+                                fontSize: SIZES.FONT_H4
                             }}
-                        >
-                            <Text
-                                style={{
-                                    color: COLORS.DEFAULT,
-                                    fontFamily: TEXT_BOLD,
-                                    fontSize: SIZES.FONT_H3,
-                                }}
-                            >
-                                Tài khoản của bạn chưa được xác thực
-                            </Text>
-                            <Text
-                                style={{
-                                    color: COLORS.ACTIVE,
-                                    fontFamily: TEXT_REGULAR,
-                                    fontSize: SIZES.FONT_H3,
-                                    marginTop: 10
-                                }}
-                            >
-                                {'Tài khoản chưa được xác thực sẽ bị hạn chế một số chức năng.\nVui lòng nhấp vào đây để hoàn tất quá trình xác thực tài khoản.'}
-                            </Text>
-                        </View>
+                            text="Tài khoản của bạn chưa được xác thực"
+                        />
+                        <CustomText
+                            text={'Tài khoản chưa được xác thực sẽ bị hạn chế một số chức năng.\nVui lòng nhấp vào đây để hoàn tất quá trình xác thực tài khoản.'}
+                            style={{
+                                marginTop: 15,
+                                fontSize: SIZES.FONT_H4
+                            }}
+                        />
                     </>
                 );
             }
             case VerificationStatus.IN_PROCESS: {
                 return (
                     <>
-                        <View
+                        <CustomText
+                            text="Quá trình xác thực đang được tiến hành"
                             style={{
-                                width: SIZES.WIDTH_BASE * 0.9,
-                                alignSelf: 'center'
+                                fontFamily: TEXT_BOLD,
+                                fontSize: SIZES.FONT_H4
                             }}
-                        >
-                            <Text
-                                style={{
-                                    color: COLORS.DEFAULT,
-                                    fontFamily: TEXT_BOLD,
-                                    fontSize: SIZES.FONT_H3,
-                                }}
-                            >
-                                Quá trình xác thực đang được tiến hành
-                            </Text>
-                            <Text
-                                style={{
-                                    color: COLORS.ACTIVE,
-                                    fontFamily: TEXT_REGULAR,
-                                    fontSize: SIZES.FONT_H3,
-                                    marginTop: 10
-                                }}
-                            >
-                                Quá trình này sẽ mất một khoảng thời gian, chúng tôi sẽ sớm có thông báo về tình trạng tài khoản của bạn.
-                            </Text>
-                        </View>
+                        />
+                        <CustomText
+                            text="Quá trình này sẽ mất một khoảng thời gian, chúng tôi sẽ sớm có thông báo về tình trạng tài khoản của bạn."
+                            style={{
+                                marginTop: 5,
+                                fontSize: SIZES.FONT_H4
+                            }}
+                        />
                     </>
                 );
             }
@@ -125,7 +88,9 @@ export default function VerificationStatusPanel() {
     return (
         <View
             style={{
-                marginVertical: 20
+                marginVertical: 10,
+                width: SIZES.WIDTH_BASE * 0.8,
+                alignSelf: 'center'
             }}
         >
             {renderStatusInfo()}

@@ -163,7 +163,7 @@ export default function Wallet({ navigation }) {
                 </View>
             </View>
             <CustomButton
-                onPress={() => navigation.navigate(ScreenName.CASH_IN)}
+                onPress={() => navigation.navigate(ScreenName.CASH_OUT)}
                 labelStyle={{
                     fontSize: SIZES.FONT_H3,
                     color: COLORS.ACTIVE
@@ -172,7 +172,7 @@ export default function Wallet({ navigation }) {
                     width: SIZES.WIDTH_BASE * 0.35,
                     borderColor: COLORS.ACTIVE
                 }}
-                label="Nạp tiền"
+                label="Rút tiền"
             />
         </View>
     );
@@ -209,7 +209,7 @@ export default function Wallet({ navigation }) {
                 >
                     <FlatList
                         data={listCashHistoryStore}
-                        keyExtractor={(item) => `${item.navigationId}-${item.isIncrease}`}
+                        keyExtractor={(item) => item.traceId}
                         renderItem={({ item }) => renderHistoryItem(item)}
                         showsVerticalScrollIndicator={false}
                         refreshControl={(

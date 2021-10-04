@@ -102,7 +102,7 @@ export default function BookingList({ navigation }) {
                     style={{
                         borderRadius: 5,
                         marginBottom: 5,
-                        borderWidth: 0.5,
+                        borderWidth: 1,
                         borderColor: COLORS.ACTIVE
                     }}
                 >
@@ -118,7 +118,7 @@ export default function BookingList({ navigation }) {
                                 color: colorByStatus,
                             }}
                         >
-                            {partner.fullName}
+                            {partner?.fullName}
                         </Text>
 
                         <View
@@ -324,7 +324,8 @@ export default function BookingList({ navigation }) {
                 ) : (
                     <View
                         style={{
-                            backgroundColor: COLORS.BASE
+                            backgroundColor: COLORS.BASE,
+                            flex: 1
                         }}
                     >
                         {renderListDateSection()}

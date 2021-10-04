@@ -69,23 +69,23 @@ const fetchVerificationAsync = async () => {
     return CommonHelpers.handleResByStatus(result);
 };
 
-// const rxSubmitVerificationAsync = async () => {
-//     const result = await RxUtil(
-//         Rx.USER.SUBMIT_VERIFICATION,
-//         'POST'
-//     );
-//     return result;
-// };
+const rxSubmitVerificationAsync = async () => {
+    const result = await RxUtil(
+        Rx.USER.SUBMIT_VERIFICATION,
+        'POST'
+    );
+    return result;
+};
 
-// const submitVerificationAsync = async () => {
-//     let result = await rxSubmitVerificationAsync();
+const submitVerificationAsync = async () => {
+    let result = await rxSubmitVerificationAsync();
 
-//     const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
-//     if (handledResult) {
-//         result = await rxSubmitVerificationAsync();
-//     }
-//     return CommonHelpers.handleResByStatus(result);
-// };
+    const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
+    if (handledResult) {
+        result = await rxSubmitVerificationAsync();
+    }
+    return CommonHelpers.handleResByStatus(result);
+};
 
 const rxSubmitChangePasswordAsync = async (body) => {
     const result = await RxUtil(
@@ -147,13 +147,11 @@ const rxSubmitGetOtpForgotPasswordAsync = async (body) => {
         'POST',
         body
     );
-
     return result;
 };
 
 const submitGetOtpForgotPasswordAsync = async (body) => {
     let result = await rxSubmitGetOtpForgotPasswordAsync(body);
-
     const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
     if (handledResult) {
         result = await rxSubmitGetOtpForgotPasswordAsync(body);
@@ -197,6 +195,77 @@ const fetchOtpSignUpAsync = async (body) => {
     return CommonHelpers.handleResByStatus(result);
 };
 
+const rxFetchUserBusyCalendarAsync = async () => {
+    const result = await RxUtil(
+        Rx.CALENDAR.MY_CALENDAR,
+        'GET'
+    );
+    return result;
+};
+
+const fetchUserBusyCalendar = async () => {
+    let result = await rxFetchUserBusyCalendarAsync();
+    const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
+    if (handledResult) {
+        result = await rxFetchUserBusyCalendarAsync();
+    }
+    return CommonHelpers.handleResByStatus(result);
+};
+
+const rxSubmitBusyCalendarAsync = async (body) => {
+    const result = await RxUtil(
+        Rx.CALENDAR.ADD_CALENDAR,
+        'POST',
+        body
+    );
+    return result;
+};
+
+const submitBusyCalendarAsync = async (body) => {
+    let result = await rxSubmitBusyCalendarAsync(body);
+    const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
+    if (handledResult) {
+        result = await rxSubmitBusyCalendarAsync(body);
+    }
+    return CommonHelpers.handleResByStatus(result);
+};
+
+const rxSubmitUpdatePackageAsync = async (packageId, body) => {
+    const result = await RxUtil(
+        `${Rx.USER.UPDATE_PACKAGE}/${packageId}`,
+        'POST',
+        body
+    );
+    return result;
+};
+
+const submitUpdatePackageSync = async (packageId, body) => {
+    let result = await rxSubmitUpdatePackageAsync(packageId, body);
+    const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
+    if (handledResult) {
+        result = await rxSubmitUpdatePackageAsync(packageId, body);
+    }
+    return CommonHelpers.handleResByStatus(result);
+};
+
+const rxSubmitAddPackageAsync = async (body) => {
+    const result = await RxUtil(
+        Rx.USER.ADD_PACKAGE,
+        'POST',
+        body
+    );
+    return result;
+};
+
+const submitAddPackageAsync = async (body) => {
+    let result = await rxSubmitAddPackageAsync(body);
+    const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
+    if (handledResult) {
+        result = await rxSubmitAddPackageAsync(body);
+    }
+    return CommonHelpers.handleResByStatus(result);
+};
+
 const rxSubmitReportUserAsync = async (body, userId) => {
     const result = await RxUtil(
         `${Rx.USER.REPORT_USER}/${userId}`,
@@ -233,6 +302,24 @@ const addVerifyDocAsync = async (body, userId) => {
     return CommonHelpers.handleResByStatus(result);
 };
 
+const rxAddUserPostImageAsync = async (body) => {
+    const result = await RxUtil(
+        Rx.USER.UPLOAD_USER_IMAGE,
+        'POST',
+        body
+    );
+    return result;
+};
+
+const addUserPostImageAsync = async (body) => {
+    let result = await rxAddUserPostImageAsync(body);
+    const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
+    if (handledResult) {
+        result = await rxAddUserPostImageAsync(body);
+    }
+    return CommonHelpers.handleResByStatus(result);
+};
+
 const mappingCurrentUserInfo = async (data) => {
     let apiToken = data.token;
     if (!apiToken) {
@@ -251,13 +338,19 @@ export default {
     loginAsync,
     fetchCurrentUserInfoAsync,
     fetchVerificationAsync,
+    submitVerificationAsync,
     submitChangePasswordAsync,
     submitUpdateInfoAsync,
     submitForgotPasswordAsync,
     submitGetOtpForgotPasswordAsync,
     submitSignUpAsync,
     fetchOtpSignUpAsync,
+    fetchUserBusyCalendar,
+    submitBusyCalendarAsync,
+    submitUpdatePackageSync,
+    submitAddPackageAsync,
     mappingCurrentUserInfo,
     submitReportUserAsync,
+    addUserPostImageAsync,
     addVerifyDocAsync
 };

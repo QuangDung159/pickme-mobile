@@ -1,61 +1,70 @@
+import { IconCustom } from '@components/uiComponents';
+import { IconFamily, Theme } from '@constants/index';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Text, View } from 'react-native';
-import { Theme } from '../../../constants';
+import { StyleSheet, Text, View } from 'react-native';
 
 const {
     FONT: {
         TEXT_REGULAR,
-        TEXT_BOLD
     },
     SIZES,
     COLORS
 } = Theme;
-
 export default function ProfileInfoItem({
-    label, value
+    iconName,
+    iconFamily,
+    iconSize,
+    iconColor,
+    content,
+    fontSize,
 }) {
-    let handleValue = value;
-    if (value === null || value === undefined || value.toString() === '') {
-        handleValue = 'N/a';
-    }
     return (
         <View
-            style={{
-                margin: 5,
-                flexDirection: 'row'
-            }}
+            style={styles.container}
         >
+            <IconCustom
+                name={iconName}
+                family={iconFamily}
+                size={iconSize ?? SIZES.BASE * 1.375}
+                color={iconColor ?? COLORS.DEFAULT}
+            />
             <Text
+                muted
                 style={{
                     fontFamily: TEXT_REGULAR,
-                    fontSize: SIZES.FONT_H2,
+                    zIndex: 2,
+                    lineHeight: 25,
                     color: COLORS.DEFAULT,
-                }}
-
-            >
-                {`${label}: `}
-            </Text>
-
-            <Text
-                style={{
-                    fontFamily: TEXT_BOLD,
-                    fontSize: SIZES.FONT_H2,
-                    color: COLORS.ACTIVE,
+                    paddingHorizontal: 15,
+                    fontSize
                 }}
             >
-                {handleValue}
+                {content}
             </Text>
         </View>
     );
 }
 
 ProfileInfoItem.propTypes = {
-    label: PropTypes.string,
-    value: PropTypes.string,
+    iconName: PropTypes.string,
+    iconFamily: PropTypes.string,
+    iconSize: PropTypes.number,
+    iconColor: PropTypes.string,
+    fontSize: PropTypes.number
 };
 
 ProfileInfoItem.defaultProps = {
-    label: 'label',
-    value: 'N/a',
+    iconName: 'home',
+    iconSize: 24,
+    iconFamily: IconFamily.FONT_AWESOME,
+    iconColor: COLORS.ACTIVE,
+    fontSize: 24
 };
+
+const styles = StyleSheet.create({
+    container: {
+        margin: 5,
+        flexDirection: 'row'
+    },
+});
