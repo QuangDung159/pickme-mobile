@@ -16,7 +16,7 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import ImageView from 'react-native-image-viewing';
 import uuid from 'react-native-uuid';
 import { useSelector } from 'react-redux';
-import UserInfoSection from '../Personal/UserInformation/UserInfoSection';
+import UserInfoSection from '../Personal/UserInformation/PartnerDataSection';
 
 const {
     FONT: {

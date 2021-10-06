@@ -8,6 +8,8 @@ export default class Line extends PureComponent {
         } = this.props;
         return (
             <View style={[{
+                marginVertical: 10
+            }, {
                 borderWidth,
                 borderColor,
                 width

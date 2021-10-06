@@ -21,9 +21,8 @@ import {
 import ImageView from 'react-native-image-viewing';
 import uuid from 'react-native-uuid';
 import { useDispatch, useSelector } from 'react-redux';
-import ProfileInfoItem from './ProfileInfoItem';
 import SubInfoProfile from './SubInfoProfile';
-import UserInfoSection from './UserInfoSection';
+import PartnerDataSection from './PartnerDataSection';
 import VerificationStatusPanel from './VerificationStatusPanel';
 
 const {
@@ -285,50 +284,31 @@ export default function UserInformation({ navigation }) {
                         zIndex: 99
                     }}
                 >
-                    {renderAvatar()}
+                    <TouchableWithoutFeedback
+                        onPress={() => onClickUpdateAvatar()}
+                    >
+                        {renderAvatar()}
+                    </TouchableWithoutFeedback>
                 </View>
             </View>
-            <CustomButton
-                onPress={() => onClickUpdateAvatar()}
-                labelStyle={{
-                    fontSize: SIZES.FONT_H4,
-                }}
-                buttonStyle={{
-                    width: SIZES.WIDTH_BASE * 0.25,
-                    borderWidth: 0,
-                    alignSelf: 'flex-start'
-                }}
-                label="Đổi avatar"
-            />
         </View>
     );
 
-    const renderSubInfoPanel = () => {
+    const renderPartnerDataPanel = () => {
         const {
             earningExpected,
-            walletAmountDisplay,
             bookingCompletedCount,
             ratingAvg
         } = currentUser;
         return (
             <View
                 style={{
-                    width: SIZES.WIDTH_BASE * 0.6,
-                    marginVertical: 15,
+                    width: SIZES.WIDTH_BASE * 0.9,
                 }}
             >
-                <UserInfoSection
-                    listUserInfo={
+                <PartnerDataSection
+                    listData={
                         [
-                            {
-                                value: walletAmountDisplay && `${walletAmountDisplay}`,
-                                icon: {
-                                    name: 'treasure-chest',
-                                    family: IconFamily.MATERIAL_COMMUNITY_ICONS,
-                                    color: COLORS.ACTIVE,
-                                    size: 26
-                                }
-                            },
                             {
                                 value: earningExpected && `${CommonHelpers.generateMoneyStr(earningExpected)}/phút`,
                                 icon: {
@@ -410,13 +390,7 @@ export default function UserInformation({ navigation }) {
                         width: SIZES.WIDTH_BASE * 0.9
                     }}
                 >
-                    <SubInfoProfile user={currentUser} />
-                    <ProfileInfoItem
-                        fontSize={SIZES.FONT_H2}
-                        iconName="badminton"
-                        iconFamily={IconFamily.MATERIAL_COMMUNITY_ICONS}
-                        content={`${currentUser.interests}`}
-                    />
+                    {renderPartnerDataPanel()}
                 </View>
                 <View
                     style={{
@@ -595,7 +569,7 @@ export default function UserInformation({ navigation }) {
                         }}
                     >
                         {renderAvatarPanel()}
-                        {renderSubInfoPanel()}
+                        <SubInfoProfile user={currentUser} />
                     </View>
 
                     <View
@@ -632,7 +606,6 @@ export default function UserInformation({ navigation }) {
                             </View>
                         </TouchableWithoutFeedback>
                     )}
-
                     {renderInfoPanel(currentUser, navigation)}
                     <View style={{
                         marginVertical: 10

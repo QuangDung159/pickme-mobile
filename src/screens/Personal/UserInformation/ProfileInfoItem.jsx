@@ -23,12 +23,18 @@ export default function ProfileInfoItem({
         <View
             style={styles.container}
         >
-            <IconCustom
-                name={iconName}
-                family={iconFamily}
-                size={iconSize ?? SIZES.BASE * 1.375}
-                color={iconColor ?? COLORS.DEFAULT}
-            />
+            <View
+                style={{
+                    width: 35
+                }}
+            >
+                <IconCustom
+                    name={iconName}
+                    family={iconFamily}
+                    size={iconSize ?? SIZES.BASE * 1.375}
+                    color={iconColor ?? COLORS.DEFAULT}
+                />
+            </View>
             <Text
                 muted
                 style={{
@@ -36,7 +42,6 @@ export default function ProfileInfoItem({
                     zIndex: 2,
                     lineHeight: 25,
                     color: COLORS.DEFAULT,
-                    paddingHorizontal: 15,
                     fontSize
                 }}
             >
