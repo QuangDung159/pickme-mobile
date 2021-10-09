@@ -52,7 +52,7 @@ export default function CustomInput({
                         height: 50,
                         paddingHorizontal: 10,
                         fontFamily: TEXT_REGULAR,
-                        fontSize: SIZES.FONT_H3,
+                        fontSize: SIZES.FONT_H2,
                         color: COLORS.DEFAULT,
                         width: SIZES.WIDTH_BASE * 0.9
                     },

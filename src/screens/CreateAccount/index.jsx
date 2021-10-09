@@ -1,15 +1,11 @@
 /* eslint-disable max-len */
-import {
-    Images, Theme, ScreenName
-} from '@constants/index';
+import { ScreenName, Theme } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
 import * as ImagePicker from 'expo-image-picker';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import {
-    Alert,
-    ImageBackground,
-    Platform,
+    Alert, Platform,
     StyleSheet,
     View
 } from 'react-native';
@@ -240,22 +236,16 @@ export default function CreateAccount(props) {
                         alignItems: 'center'
                     }}
                 >
-                    <ImageBackground
-                        source={Images.RegisterBackground}
-                        style={styles.imageBackgroundContainer}
-                        imageStyle={styles.imageBackground}
-                    >
-                        <KeyboardAwareScrollView>
-                            <View style={{
-                                flex: 1,
-                                alignSelf: 'center',
-                                alignItems: 'center'
-                            }}
-                            >
-                                {renderMainContent(step)}
-                            </View>
-                        </KeyboardAwareScrollView>
-                    </ImageBackground>
+                    <KeyboardAwareScrollView>
+                        <View style={{
+                            flex: 1,
+                            alignSelf: 'center',
+                            alignItems: 'center'
+                        }}
+                        >
+                            {renderMainContent(step)}
+                        </View>
+                    </KeyboardAwareScrollView>
                 </View>
             </>
         );

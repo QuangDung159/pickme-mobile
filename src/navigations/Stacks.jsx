@@ -80,6 +80,7 @@ const HomeStack = () => (
         {MessageScreen()}
         {SupportScreen()}
         {SettingsScreen()}
+        {PersonalScreen()}
     </Stack.Navigator>
 );
 

@@ -78,6 +78,7 @@ export default function CustomButton(
     const renderButtonByType = () => {
         if (type) {
             const colorByType = type === 'active' ? COLORS.ACTIVE : COLORS.DEFAULT;
+            const labelColorByType = type === 'active' ? COLORS.BASE : COLORS.ACTIVE;
 
             return (
                 <TouchableOpacity
@@ -89,6 +90,7 @@ export default function CustomButton(
                             {
                                 width: SIZES.WIDTH_BASE * 0.44,
                                 borderColor: colorByType,
+                                backgroundColor: colorByType
                             },
                             buttonStyle,
                         ]
@@ -100,7 +102,7 @@ export default function CustomButton(
                                 {
                                     fontSize: SIZES.FONT_H3,
                                     fontFamily: TEXT_BOLD,
-                                    color: colorByType,
+                                    color: labelColorByType,
                                 },
                                 labelStyle
                             ]

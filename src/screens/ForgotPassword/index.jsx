@@ -305,7 +305,7 @@ export default function ForgotPassword({ navigation }) {
                                     <NoteText
                                         width={SIZES.WIDTH_BASE * 0.9}
                                         title="Bạn đang yêu cầu lấy lại mật khẩu:"
-                                        content="Bạn vui lòng nhập số điện thoại đã đăng kí để nhận mã xác thực."
+                                        content="Bạn vui lòng nhập số điện thoại đã đăng ký để nhận mã xác thực."
                                         contentStyle={{
                                             fontSize: SIZES.FONT_H4,
                                             color: COLORS.ACTIVE,

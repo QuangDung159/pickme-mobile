@@ -1,8 +1,8 @@
-import { CustomButton, CustomInput } from '@components/uiComponents';
+import { CustomButton, CustomInput, TouchableText } from '@components/uiComponents';
 import {
     IconFamily, ScreenName, Theme
 } from '@constants/index';
-import { ValidationHelpers } from '@helpers/index';
+import { ValidationHelpers, ToastHelpers } from '@helpers/index';
 import { setIsSignInOtherDeviceStore, setShowLoaderStore, setToken } from '@redux/Actions';
 import { UserServices } from '@services/index';
 import * as SecureStore from 'expo-secure-store';
@@ -10,7 +10,11 @@ import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 
-const { SIZES, COLORS } = Theme;
+const {
+    SIZES, COLORS, FONT: {
+        TEXT_BOLD
+    }
+} = Theme;
 
 export default function OtpForm({
     otp, setOtp, password,
@@ -104,6 +108,18 @@ export default function OtpForm({
         dispatch(setShowLoaderStore(false));
     };
 
+    const onClickGetOTP = async () => {
+        const result = await UserServices.fetchOtpSignUpAsync({
+            phoneNum: phoneNumber
+        });
+        const { data } = result;
+
+        if (data) {
+            ToastHelpers.renderToast('OTP đã được gửi,\nvui lòng kiểm tra', 'success');
+            setOtp(data.message);
+        }
+    };
+
     const renderOtpForm = () => (
         <>
             <View style={styles.stepSessionContainer}>
@@ -113,13 +129,15 @@ export default function OtpForm({
                     <CustomInput
                         value={otp}
                         inputStyle={{
-                            width: SIZES.WIDTH_BASE * 0.9
+                            width: SIZES.WIDTH_BASE * 0.9,
+                            textAlign: 'center',
+                            fontFamily: TEXT_BOLD
                         }}
                         onChangeText={(otpInput) => setOtp(otpInput)}
                         keyboardType="number-pad"
                         containerStyle={{
                             marginVertical: 10,
-                            width: SIZES.WIDTH_BASE * 0.9
+                            width: SIZES.WIDTH_BASE * 0.9,
                         }}
                         placeholder="Nhập mã xác thực..."
                     />
@@ -127,7 +145,8 @@ export default function OtpForm({
                     <CustomInput
                         value={password}
                         inputStyle={{
-                            width: SIZES.WIDTH_BASE * 0.9
+                            width: SIZES.WIDTH_BASE * 0.9,
+                            textAlign: 'center',
                         }}
                         onChangeText={(passwordInput) => setPassword(passwordInput)}
                         containerStyle={{
@@ -145,10 +164,23 @@ export default function OtpForm({
                         onPressRightIcon={() => setIsShowPassword(!isShowPassword)}
                     />
 
+                    <TouchableText
+                        style={{
+                            color: COLORS.ACTIVE,
+                            marginTop: 10,
+                        }}
+                        text="Gửi lại OTP"
+                        onPress={() => onClickGetOTP()}
+                    />
+
                 </View>
             </View>
 
-            <View center>
+            <View style={{
+                position: 'absolute',
+                bottom: 0
+            }}
+            >
                 <CustomButton
                     onPress={() => onClickSubmitRegister()}
                     buttonStyle={styles.button}
@@ -172,7 +204,7 @@ const styles = StyleSheet.create({
         marginVertical: 10
     },
     stepSessionContainer: {
-        height: SIZES.HEIGHT_BASE * 0.3
+        height: SIZES.HEIGHT_BASE * 0.65
     },
     formInputContainer: {
         alignItems: 'center',

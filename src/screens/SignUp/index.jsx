@@ -93,13 +93,12 @@ export default function SignUp({ navigation }) {
                                             {
                                                 color: COLORS.DEFAULT,
                                                 fontSize: 24,
-                                                height: 100,
-                                                marginTop: SIZES.HEIGHT_BASE * 0.1
+                                                marginTop: SIZES.HEIGHT_BASE * 0.15
                                             }
                                         ]
                                     }
                                 >
-                                    Đăng kí
+                                    Đăng ký
                                 </Text>
                             </View>
 

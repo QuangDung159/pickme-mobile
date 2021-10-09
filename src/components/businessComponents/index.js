@@ -1,4 +1,6 @@
 /* eslint-disable import/prefer-default-export */
+import Albums from './Albums';
+import AvatarPanel from './AvatarPanel';
 import CardImage from './CardImage';
 import CustomCalendar from './CustomCalendar';
 import ExpoNotification from './ExpoNotification';
@@ -9,4 +11,6 @@ export {
     CustomCalendar,
     CardImage,
     ExpoNotification,
+    AvatarPanel,
+    Albums
 };

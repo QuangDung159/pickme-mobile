@@ -1,9 +1,10 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
+import { Albums, AvatarPanel } from '@components/businessComponents';
 import {
     CenterLoader, CustomButton, Line
 } from '@components/uiComponents';
 import {
-    IconFamily, Images, Rx, ScreenName, Theme, VerificationStatus
+    IconFamily, Rx, ScreenName, Theme, VerificationStatus
 } from '@constants/index';
 import { CommonHelpers, MediaHelpers, ToastHelpers } from '@helpers/index';
 import { resetStoreSignOut, setCurrentUser } from '@redux/Actions';
@@ -11,18 +12,13 @@ import { UserServices } from '@services/index';
 import * as SecureStore from 'expo-secure-store';
 import React, { useEffect, useState } from 'react';
 import {
-    Alert,
-    Image,
-    RefreshControl,
-    ScrollView,
-    StyleSheet,
-    Text, TouchableWithoutFeedback, View
+    Alert, RefreshControl,
+    ScrollView, Text, TouchableWithoutFeedback, View
 } from 'react-native';
 import ImageView from 'react-native-image-viewing';
-import uuid from 'react-native-uuid';
 import { useDispatch, useSelector } from 'react-redux';
-import SubInfoProfile from './SubInfoProfile';
 import PartnerDataSection from './PartnerDataSection';
+import SubInfoProfile from './SubInfoProfile';
 import VerificationStatusPanel from './VerificationStatusPanel';
 
 const {
@@ -33,9 +29,6 @@ const {
     SIZES,
     COLORS
 } = Theme;
-
-const thumbMeasure = (SIZES.WIDTH_BASE * 0.85) / 3;
-const marginValue = ((SIZES.WIDTH_BASE * 0.9) - thumbMeasure * 3) / 2;
 
 export default function UserInformation({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
@@ -249,51 +242,6 @@ export default function UserInformation({ navigation }) {
         return <></>;
     };
 
-    const renderAvatar = () => {
-        if (image) {
-            return (
-                <Image
-                    style={styles.avatar}
-                    source={{ uri: image }}
-                />
-            );
-        }
-        return (
-            <Image
-                style={styles.avatar}
-                source={currentUser.url ? { uri: currentUser.url } : Images.defaultImage}
-            />
-        );
-    };
-
-    const renderAvatarPanel = () => (
-        <View
-            style={{
-                width: SIZES.WIDTH_BASE * 0.3,
-                marginTop: 5,
-            }}
-        >
-            <View
-                style={{
-                    marginTop: 10
-                }}
-            >
-                <CenterLoader />
-                <View
-                    style={{
-                        zIndex: 99
-                    }}
-                >
-                    <TouchableWithoutFeedback
-                        onPress={() => onClickUpdateAvatar()}
-                    >
-                        {renderAvatar()}
-                    </TouchableWithoutFeedback>
-                </View>
-            </View>
-        </View>
-    );
-
     const renderPartnerDataPanel = () => {
         const {
             earningExpected,
@@ -426,106 +374,6 @@ export default function UserInformation({ navigation }) {
         </>
     );
 
-    const renderButtonAddPhoto = () => (
-        <CustomButton
-            onPress={() => onClickUploadProfileImage()}
-            labelStyle={{
-                fontSize: SIZES.FONT_H3,
-                color: COLORS.ACTIVE
-            }}
-            label="Thêm ảnh"
-            leftIcon={{
-                name: 'add-a-photo',
-                size: SIZES.FONT_H3,
-                color: COLORS.ACTIVE,
-                family: IconFamily.MATERIAL_ICONS
-            }}
-        />
-    );
-
-    const renderAlbumItem = (imageItem, index, key) => {
-        const isPrimary = imageItem.uri === currentUser.imageUrl;
-        return (
-            <View
-                key={key}
-            >
-                <TouchableWithoutFeedback
-                    onPress={() => {
-                        setVisible(true);
-                        setImageIndex(index);
-                    }}
-                    onLongPress={() => onLongPressImage(imageItem)}
-                >
-                    <View style={isPrimary && styles.shadow}>
-                        <CenterLoader />
-                        <View
-                            style={{
-                                zIndex: 99,
-                                marginRight: (index + 1) % 3 === 0 ? 0 : marginValue,
-                                marginTop: index > 2 ? marginValue : 0
-                            }}
-                        >
-                            <Image
-                                resizeMode="cover"
-                                source={{ uri: imageItem.uri }}
-                                style={[
-                                    styles.albumThumb,
-                                    isPrimary && {
-                                        borderWidth: 1,
-                                        borderColor: COLORS.ACTIVE
-                                    }]}
-                            />
-                        </View>
-                    </View>
-                </TouchableWithoutFeedback>
-            </View>
-        );
-    };
-
-    const renderAlbums = () => (
-        <View
-            style={{
-                width: SIZES.WIDTH_BASE * 0.9,
-                alignSelf: 'center',
-                flex: 1
-            }}
-        >
-            {renderButtonAddPhoto()}
-            <>
-                {listImageDisplay.length === 0 ? (
-                    <View
-                        style={{
-                            alignItems: 'center',
-                        }}
-                    >
-                        <Text
-                            style={{
-                                fontFamily: TEXT_REGULAR,
-                                fontSize: SIZES.FONT_H2,
-                                color: COLORS.DEFAULT
-                            }}
-                        >
-                            Bạn chưa có ảnh
-                        </Text>
-                    </View>
-                ) : (
-                    <View
-                        style={{
-                            flexWrap: 'wrap',
-                            flexDirection: 'row'
-                        }}
-                    >
-                        {listImageDisplay.map(
-                            (imageItem, index) => renderAlbumItem(
-                                imageItem, index, uuid.v4()
-                            )
-                        )}
-                    </View>
-                )}
-            </>
-        </View>
-    );
-
     const renderButtonLogout = () => (
         <CustomButton
             onPress={() => onSignOut()}
@@ -568,7 +416,11 @@ export default function UserInformation({ navigation }) {
                             flexDirection: 'row'
                         }}
                     >
-                        {renderAvatarPanel()}
+                        <AvatarPanel
+                            user={currentUser}
+                            image={image}
+                            onClickAvatar={() => onClickUpdateAvatar()}
+                        />
                         <SubInfoProfile user={currentUser} />
                     </View>
 
@@ -611,39 +463,18 @@ export default function UserInformation({ navigation }) {
                         marginVertical: 10
                     }}
                     >
-                        {renderAlbums()}
+                        <Albums
+                            user={currentUser}
+                            listImageDisplay={listImageDisplay}
+                            onLongPressImage={(imageItem) => onLongPressImage(imageItem)}
+                            setImageIndex={(index) => setImageIndex(index)}
+                            setVisible={(value) => setVisible(value)}
+                            onClickUploadProfileImage={() => onClickUploadProfileImage()}
+                        />
                     </View>
                     {renderButtonLogout(navigation)}
                 </ScrollView>
             )}
         </>
-
     );
 }
-
-const styles = StyleSheet.create({
-    shadow: {
-        shadowColor: 'black',
-        shadowOffset: { width: 0, height: 2 },
-        shadowRadius: 4,
-        shadowOpacity: 0.4,
-        elevation: 2
-    },
-    albumThumb: {
-        borderRadius: 7,
-        alignSelf: 'center',
-        width: thumbMeasure,
-        height: thumbMeasure
-    },
-    avatar: {
-        borderRadius: 100,
-        width: SIZES.WIDTH_BASE * 0.25,
-        height: SIZES.WIDTH_BASE * 0.25,
-    },
-    updateAvatarButton: {
-        position: 'absolute',
-        bottom: 0,
-        right: SIZES.WIDTH_BASE * 0.15,
-        zIndex: 99,
-    }
-});

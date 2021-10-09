@@ -63,6 +63,7 @@ export default function PhoneForm({
 
             // in testing, will remove when prod
             setOtp(data.message);
+            ToastHelpers.renderToast('OTP đã được gửi, vui lòng kiểm tra', 'success');
         }
         dispatch(setShowLoaderStore(false));
     };
@@ -76,7 +77,9 @@ export default function PhoneForm({
                     <CustomInput
                         value={phoneNumber}
                         inputStyle={{
-                            width: SIZES.WIDTH_BASE * 0.9
+                            width: SIZES.WIDTH_BASE * 0.9,
+                            textAlign: 'center',
+                            fontFamily: TEXT_BOLD
                         }}
                         onChangeText={(phoneNumberInput) => setPhoneNumber(phoneNumberInput)}
                         keyboardType="number-pad"
@@ -99,7 +102,12 @@ export default function PhoneForm({
                 />
             </View>
 
-            <View center>
+            <View
+                style={{
+                    position: 'absolute',
+                    bottom: 0
+                }}
+            >
                 <CustomButton
                     onPress={() => onClickGetOTP()}
                     buttonStyle={styles.button}
@@ -117,16 +125,6 @@ export default function PhoneForm({
 }
 
 const styles = StyleSheet.create({
-    imageBackgroundContainer: {
-        width: SIZES.WIDTH_BASE,
-        height: SIZES.HEIGHT_BASE,
-        padding: 0,
-        zIndex: 1
-    },
-    imageBackground: {
-        width: SIZES.WIDTH_BASE,
-        height: SIZES.HEIGHT_BASE
-    },
     registerContainer: {
         marginTop: 55,
         width: SIZES.WIDTH_BASE * 0.9,
@@ -142,7 +140,7 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     stepSessionContainer: {
-        height: SIZES.HEIGHT_BASE * 0.3
+        height: SIZES.HEIGHT_BASE * 0.65
     },
     formInputContainer: {
         alignItems: 'center',
