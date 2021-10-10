@@ -54,7 +54,8 @@ export default function PhoneForm({
 
         dispatch(setShowLoaderStore(true));
         const result = await UserServices.fetchOtpSignUpAsync({
-            phoneNum: phoneNumber
+            username: phoneNumber,
+            isEmail: false
         });
         const { data } = result;
 
@@ -70,7 +71,7 @@ export default function PhoneForm({
 
     const renderPhoneForm = () => (
         <>
-            <View style={styles.stepSessionContainer}>
+            <View style={styles.formContainer}>
                 <View
                     style={styles.formInputContainer}
                 >
@@ -139,7 +140,7 @@ const styles = StyleSheet.create({
         fontFamily: TEXT_BOLD,
         textAlign: 'center'
     },
-    stepSessionContainer: {
+    formContainer: {
         height: SIZES.HEIGHT_BASE * 0.65
     },
     formInputContainer: {

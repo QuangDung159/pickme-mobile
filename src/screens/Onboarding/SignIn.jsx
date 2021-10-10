@@ -19,7 +19,8 @@ import {
 import { useDispatch } from 'react-redux';
 
 const {
-    COLORS
+    COLORS,
+    SIZES
 } = Theme;
 
 export default function SignIn({ navigation, setIsShowSpinner }) {
@@ -217,6 +218,10 @@ export default function SignIn({ navigation, setIsShowSpinner }) {
             </View>
 
             <CustomButton
+                buttonStyle={{
+                    width: SIZES.WIDTH_BASE * 0.9
+                }}
+                type="active"
                 onPress={() => onSubmitLogin()}
                 label="Đăng nhập"
             />

@@ -93,9 +93,10 @@ export default function OtpForm({
 
         const body = {
             password,
-            phoneNum: phoneNumber,
+            username: phoneNumber,
             code: otp,
-            deviceId
+            deviceId,
+            referralCode: '1234'
         };
 
         dispatch(setShowLoaderStore(true));
@@ -110,7 +111,8 @@ export default function OtpForm({
 
     const onClickGetOTP = async () => {
         const result = await UserServices.fetchOtpSignUpAsync({
-            phoneNum: phoneNumber
+            username: phoneNumber,
+            isEmail: false
         });
         const { data } = result;
 
@@ -122,7 +124,7 @@ export default function OtpForm({
 
     const renderOtpForm = () => (
         <>
-            <View style={styles.stepSessionContainer}>
+            <View style={styles.formContainer}>
                 <View
                     style={styles.formInputContainer}
                 >
@@ -203,7 +205,7 @@ const styles = StyleSheet.create({
         width: SIZES.WIDTH_BASE * 0.9,
         marginVertical: 10
     },
-    stepSessionContainer: {
+    formContainer: {
         height: SIZES.HEIGHT_BASE * 0.65
     },
     formInputContainer: {

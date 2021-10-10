@@ -192,8 +192,8 @@ export default function CustomButton(
 const styles = StyleSheet.create({
     baseButtonStyle: {
         borderWidth: 1,
-        borderRadius: 8,
-        height: 40,
+        borderRadius: 25,
+        height: 45,
         alignSelf: 'center',
         justifyContent: 'center',
         alignItems: 'center',

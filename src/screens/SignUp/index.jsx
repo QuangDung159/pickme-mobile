@@ -107,7 +107,6 @@ export default function SignUp({ navigation }) {
                         </View>
                     </KeyboardAwareScrollView>
                 )}
-
             </View>
         </>
     );

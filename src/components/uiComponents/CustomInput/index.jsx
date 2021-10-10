@@ -48,13 +48,14 @@ export default function CustomInput({
                     {
                         borderColor: COLORS.BORDER_COLOR,
                         borderWidth: 1,
-                        borderRadius: 8,
-                        height: 50,
+                        borderRadius: 25,
+                        height: 45,
                         paddingHorizontal: 10,
                         fontFamily: TEXT_REGULAR,
                         fontSize: SIZES.FONT_H2,
                         color: COLORS.DEFAULT,
-                        width: SIZES.WIDTH_BASE * 0.9
+                        width: SIZES.WIDTH_BASE * 0.9,
+                        textAlign: 'center'
                     },
                     inputStyle,
                 ]

@@ -5,16 +5,16 @@ export default {
         PARTNER_CALENDAR: '/Calendars/PartnerCalendar'
     },
     AUTHENTICATION: {
-        SIGN_UP: '/users/CustomerRegisterConfirm',
-        LOGIN: '/users/CustomerLogin',
+        SIGN_UP: '/users/RegisterConfirm',
+        LOGIN: '/users/Login',
     },
     USER: {
-        CURRENT_USER_INFO: '/users/CurrentCustomerInfo',
-        UPDATE_USER_INFO: '/users/UpdateCustomerInfo',
+        CURRENT_USER_INFO: '/users/CurrentUserInfo',
+        UPDATE_USER_INFO: '/users/UpdateUserInfo',
         UPLOAD_USER_IMAGE: '/Posts/AddPost',
         REMOVE_USER_IMAGE: '/Posts/RemovePost',
         UPDATE_EXPO_TOKEN: '/Users/UpdateExpoToken',
-        GET_OTP_REGISTER: '/users/CustomerRegister',
+        GET_OTP_REGISTER: '/users/Register',
         ADD_VERIFY_DOCUMENT: '/Verify/AddVerifiDocument',
         GET_VERIFICATION_DETAIL: '/Verify/VerificationRequestDetail',
         SUBMIT_VERIFICATION: '/Verify/SubmitVerify',
