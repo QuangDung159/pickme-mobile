@@ -1,4 +1,4 @@
-import { IconFamily, Theme, Gender } from '@constants/index';
+import { IconFamily, Theme } from '@constants/index';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -30,21 +30,15 @@ export default function SubInfoProfile({ user }) {
                 >
                     <ProfileInfoItem
                         fontSize={SIZES.FONT_H3}
-                        iconName={user.gender === Gender.MALE ? 'male' : 'female'}
+                        iconName={user.isMale ? 'male' : 'female'}
                         iconFamily={IconFamily.FONTISTO}
-                        content={`${user.genderDisplay}`}
+                        content={`${user.isMale ? 'Nam' : 'Nữ'}`}
                     />
                     <ProfileInfoItem
                         fontSize={SIZES.FONT_H3}
                         iconName="weight"
                         iconFamily={IconFamily.FONT_AWESOME_5}
                         content={`${user.weight} kg`}
-                    />
-                    <ProfileInfoItem
-                        fontSize={SIZES.FONT_H3}
-                        iconName="birthday-cake"
-                        iconFamily={IconFamily.FONT_AWESOME}
-                        content={moment(user.dob).format('YYYY').toString()}
                     />
                 </View>
 
@@ -55,9 +49,9 @@ export default function SubInfoProfile({ user }) {
                 >
                     <ProfileInfoItem
                         fontSize={SIZES.FONT_H3}
-                        iconName="treasure-chest"
-                        iconFamily={IconFamily.MATERIAL_COMMUNITY_ICONS}
-                        content={`${user.walletAmountDisplay}`}
+                        iconName="birthday-cake"
+                        iconFamily={IconFamily.FONT_AWESOME}
+                        content={moment(user.dob).format('YYYY').toString()}
                     />
                     <ProfileInfoItem
                         fontSize={SIZES.FONT_H3}
@@ -65,14 +59,15 @@ export default function SubInfoProfile({ user }) {
                         iconFamily={IconFamily.MATERIAL_COMMUNITY_ICONS}
                         content={`${user.height} cm`}
                     />
-                    <ProfileInfoItem
-                        fontSize={SIZES.FONT_H3}
-                        iconName="home"
-                        iconFamily={IconFamily.FONT_AWESOME_5}
-                        content={`${user.homeTown}`}
-                    />
+
                 </View>
             </View>
+            <ProfileInfoItem
+                fontSize={SIZES.FONT_H3}
+                iconName="home"
+                iconFamily={IconFamily.FONT_AWESOME_5}
+                content={`${user.homeTown}`}
+            />
             <ProfileInfoItem
                 fontSize={SIZES.FONT_H3}
                 iconName="badminton"

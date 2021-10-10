@@ -1,4 +1,6 @@
-import { CenterLoader } from '@components/uiComponents';
+import {
+    CenterLoader
+} from '@components/uiComponents';
 import Images from '@constants/Images';
 import Theme from '@constants/Theme';
 import React from 'react';
@@ -37,7 +39,7 @@ export default function AvatarPanel({
         >
             <View
                 style={{
-                    marginTop: 10
+                    marginTop: 10,
                 }}
             >
                 <CenterLoader />

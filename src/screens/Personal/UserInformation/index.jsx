@@ -1,7 +1,7 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
 import { Albums, AvatarPanel } from '@components/businessComponents';
 import {
-    CenterLoader, CustomButton, Line
+    CenterLoader, CustomButton, CustomText, Line
 } from '@components/uiComponents';
 import {
     IconFamily, Rx, ScreenName, Theme, VerificationStatus
@@ -422,6 +422,7 @@ export default function UserInformation({ navigation }) {
                             onClickAvatar={() => onClickUpdateAvatar()}
                         />
                         <SubInfoProfile user={currentUser} />
+
                     </View>
 
                     <View
@@ -430,6 +431,22 @@ export default function UserInformation({ navigation }) {
                             alignItems: 'center'
                         }}
                     >
+                        <View
+                            style={{
+                                flexDirection: 'row',
+                                alignItems: 'center'
+                            }}
+                        >
+                            <CustomText
+                                text={`Số dư: ${currentUser.walletAmount}`}
+                                style={{
+                                    fontSize: SIZES.FONT_H1,
+                                    fontFamily: TEXT_BOLD,
+                                    color: COLORS.ACTIVE,
+                                    marginVertical: 5
+                                }}
+                            />
+                        </View>
                         <Line
                             borderColor={COLORS.ACTIVE}
                             borderWidth={0.5}
