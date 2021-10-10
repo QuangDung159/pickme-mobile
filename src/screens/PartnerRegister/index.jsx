@@ -68,6 +68,31 @@ export default function PartnerRegister({ navigation }) {
         console.log('partnerForm :>> ', partnerForm);
     };
 
+    const handleGoBack = () => {
+        // const { params } = route;
+        // if (params?.from) {
+        //     if (params.from === ScreenName.SIGN_UP) {
+        //         navigation.reset({
+        //             index: 0,
+        //             routes: [{ name: ScreenName.ONBOARDING }],
+        //         });
+        //     }
+        //     navigation.reset({
+        //         index: 0,
+        //         routes: [{ name: params.from }],
+        //     });
+        // } else {
+        //     navigation.reset({
+        //         index: 0,
+        //         routes: [{ name: ScreenName.ONBOARDING }],
+        //     });
+        // }
+        navigation.reset({
+            index: 0,
+            routes: [{ name: ScreenName.ONBOARDING }],
+        });
+    };
+
     const renderFormByStep = () => (
         <>
             <View style={styles.formContainer}>
@@ -94,14 +119,22 @@ export default function PartnerRegister({ navigation }) {
             <View
                 style={{
                     position: 'absolute',
-                    bottom: 0
+                    bottom: 0,
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    width: SIZES.WIDTH_BASE * 0.9
                 }}
             >
                 <CustomButton
+                    onPress={() => handleGoBack()}
+                    buttonStyle={styles.button}
+                    type="default"
+                    label="Quay lại"
+                />
+                <CustomButton
                     onPress={() => onSubmitAccountCreation()}
-                    buttonStyle={[styles.button, {
-                        width: SIZES.WIDTH_BASE * 0.9
-                    }]}
+                    buttonStyle={styles.button}
                     type="active"
                     label="Xác nhận"
                 />

@@ -9,7 +9,6 @@ export default {
     SETTINGS: 'Cài đặt',
     SIGN_UP: 'Đăng ký',
     WALLET: 'Ví tiền',
-    SIGN_IN: 'Đăng nhập',
     NOTIFICATION: 'Thông báo',
     MENU: 'Menu',
     CREATE_BOOKING: 'Tạo đơn hẹn',

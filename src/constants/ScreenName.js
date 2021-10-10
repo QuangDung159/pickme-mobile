@@ -9,7 +9,6 @@ export default {
     SETTINGS: 'Settings',
     SIGN_UP: 'SignUp',
     WALLET: 'Wallet',
-    SIGN_IN: 'SignIn',
     APP: 'App',
     NOTIFICATION: 'Notification',
     MENU: 'Menu',

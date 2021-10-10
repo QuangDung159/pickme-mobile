@@ -1,5 +1,7 @@
 import { BecomePartnerText } from '@components/businessComponents';
-import { CenterLoader, CustomText, TouchableText } from '@components/uiComponents';
+import {
+    CenterLoader, CustomButton, CustomModal, CustomText, TouchableText
+} from '@components/uiComponents';
 import App from '@constants/App';
 import {
     Images, ScreenName, Theme, Utils
@@ -20,8 +22,7 @@ import SignIn from './SignIn';
 
 const {
     FONT: {
-        TEXT_REGULAR,
-        TEXT_BOLD
+        TEXT_REGULAR
     },
     SIZES,
     COLORS
@@ -30,6 +31,8 @@ const {
 export default function Onboarding({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
     const [deviceIdDisplay, setDeviceIdDisplay] = useState('');
+    const [modalVisible, setModalVisible] = useState(false);
+    const [isRegisterPartner, setIsRegisterPartner] = useState(false);
 
     const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
 
@@ -114,12 +117,51 @@ export default function Onboarding({ navigation }) {
         }
     };
 
+    const renderModalRegisterPartner = () => (
+        <CustomModal
+            modalVisible={modalVisible}
+            renderContent={() => (
+                <View>
+                    <CustomText
+                        style={{
+                            textAlign: 'center',
+                            marginBottom: 10,
+                            fontSize: SIZES.FONT_H2
+                        }}
+                        text="Vui lòng đăng nhập để tiếp tục"
+                    />
+
+                    <CustomText
+                        style={{
+                            textAlign: 'center',
+                            marginBottom: 10,
+                            fontSize: SIZES.FONT_H2
+                        }}
+                        text={'Nếu bạn chưa có tài khoản,\nvui lòng đăng ký cho đến bước cuối'}
+                    />
+
+                    <View>
+                        <CustomButton
+                            onPress={() => setModalVisible(!modalVisible)}
+                            buttonStyle={[styles.button, {
+                                width: SIZES.WIDTH_BASE * 0.8
+                            }]}
+                            type="active"
+                            label="Đã hiểu"
+                        />
+                    </View>
+                </View>
+            )}
+        />
+    );
+
     return (
         <View style={styles.container}>
             {isShowSpinner ? (
                 <CenterLoader />
             ) : (
                 <>
+                    {renderModalRegisterPartner()}
                     <View
                         style={{
                             marginTop: SIZES.HEIGHT_BASE * 0.15
@@ -151,6 +193,7 @@ export default function Onboarding({ navigation }) {
                     <SignIn
                         navigation={navigation}
                         setIsShowSpinner={(isShow) => setIsShowSpinner(isShow)}
+                        isRegisterPartner={isRegisterPartner}
                     />
                     <View
                         style={{
@@ -175,7 +218,11 @@ export default function Onboarding({ navigation }) {
                                 marginBottom: 10
                             }}
                         />
-                        <BecomePartnerText navigation={navigation} />
+                        <BecomePartnerText onPress={() => {
+                            setModalVisible(true);
+                            setIsRegisterPartner(true);
+                        }}
+                        />
                         <CustomText
                             style={{
                                 fontSize: SIZES.FONT_H5 - 4

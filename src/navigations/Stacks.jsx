@@ -16,7 +16,6 @@ import {
     OnboardingScreen, PartnerRegisterScreen, PersonalScreen,
     ProfileScreen,
     SettingsScreen,
-    SignInScreen,
     SignInWithOTPScreen, SignUpScreen,
     SupportScreen, UpdateInfoAccountScreen,
     VerificationScreen
@@ -31,19 +30,12 @@ const SignUpStack = () => (
     <Stack.Navigator initialRouteName={ScreenName.SIGN_UP} mode="card" headerMode="none">
         {SignUpScreen()}
         {CreateAccountScreen()}
-    </Stack.Navigator>
-);
-
-const SignInStack = () => (
-    <Stack.Navigator initialRouteName={ScreenName.SIGN_IN} mode="card" headerMode="none">
-        {SignInScreen()}
-        {SignInWithOTPScreen()}
-        {ForgotPasswordScreen()}
+        {PartnerRegisterScreen()}
     </Stack.Navigator>
 );
 
 const SignInWithOTPStack = () => (
-    <Stack.Navigator initialRouteName={ScreenName.SIGN_IN} mode="card" headerMode="none">
+    <Stack.Navigator initialRouteName={ScreenName.SIGN_IN_WITH_OTP} mode="card" headerMode="none">
         {SignInWithOTPScreen()}
     </Stack.Navigator>
 );
@@ -68,6 +60,7 @@ const PersonalStack = () => (
         {SupportScreen()}
         {SettingsScreen()}
         {VerificationScreen()}
+        {PartnerRegisterScreen()}
     </Stack.Navigator>
 );
 
@@ -199,7 +192,6 @@ export default function AppStack() {
                 component={BottomTabMenuStack}
             />
             <Stack.Screen name={ScreenName.SIGN_UP} component={SignUpStack} />
-            <Stack.Screen name={ScreenName.SIGN_IN} component={SignInStack} />
             <Stack.Screen name={ScreenName.SIGN_IN_WITH_OTP} component={SignInWithOTPStack} />
         </Stack.Navigator>
     );

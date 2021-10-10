@@ -306,27 +306,6 @@ export const PartnerRegisterScreen = () => (
     />
 );
 
-export const SignInScreen = () => (
-    <Stack.Screen
-        name={ScreenName.SIGN_IN}
-        component={SignIn}
-        options={{
-            header: ({ navigation, scene }) => (
-                <Header
-                    title=""
-                    back
-                    white
-                    transparent
-                    navigation={navigation}
-                    scene={scene}
-                    showRight={false}
-                />
-            ),
-            headerTransparent: true
-        }}
-    />
-);
-
 export const SignInWithOTPScreen = () => (
     <Stack.Screen
         name={ScreenName.SIGN_IN_WITH_OTP}

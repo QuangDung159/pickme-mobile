@@ -425,7 +425,12 @@ export default function CreateAccount(props) {
                     bottom: 0
                 }}
             >
-                <BecomePartnerText navigation={navigation} />
+                <BecomePartnerText onPress={
+                    () => navigation.navigate(ScreenName.PARTNER_REGISTER, {
+                        from: ScreenName.SIGN_UP
+                    })
+                }
+                />
                 <CustomButton
                     onPress={() => {
                         dispatch(setToken(''));
