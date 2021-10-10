@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
+import { BecomePartnerText } from '@components/businessComponents';
 import {
-    CenterLoader, CustomButton, CustomInput, CustomText, RadioButton, TouchableText
+    CenterLoader, CustomButton, CustomInput, CustomText, RadioButton
 } from '@components/uiComponents';
 import { Images, ScreenName, Theme } from '@constants/index';
 import { MediaHelpers, ToastHelpers, ValidationHelpers } from '@helpers/index';
@@ -397,7 +398,7 @@ export default function CreateAccount(props) {
                     }}
                 >
                     <CustomText
-                        text={`Cảm ơn bạn đã ở đây ${'<3'}!`}
+                        text="Cảm ơn bạn đã ở đây"
                         style={{
                             color: COLORS.ACTIVE,
                             fontSize: SIZES.FONT_H1,
@@ -424,14 +425,7 @@ export default function CreateAccount(props) {
                     bottom: 0
                 }}
             >
-                <TouchableText
-                    text={'Cải thiện thu nhập?\nHãy trở thành đối tác của PickMe'}
-                    style={{
-                        color: COLORS.ACTIVE,
-                        fontSize: SIZES.FONT_H3,
-                        textAlign: 'center',
-                    }}
-                />
+                <BecomePartnerText navigation={navigation} />
                 <CustomButton
                     onPress={() => {
                         dispatch(setToken(''));

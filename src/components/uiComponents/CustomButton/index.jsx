@@ -77,7 +77,7 @@ export default function CustomButton(
 
     const renderButtonByType = () => {
         if (type) {
-            const colorByType = type === 'active' ? COLORS.ACTIVE : COLORS.DEFAULT;
+            const colorByType = type === 'active' ? COLORS.ACTIVE : COLORS.TRANSPARENT;
             const labelColorByType = type === 'active' ? COLORS.BASE : COLORS.ACTIVE;
 
             return (
@@ -89,7 +89,7 @@ export default function CustomButton(
                             styles.baseButtonStyle,
                             {
                                 width: SIZES.WIDTH_BASE * 0.44,
-                                borderColor: colorByType,
+                                borderColor: COLORS.ACTIVE,
                                 backgroundColor: colorByType
                             },
                             buttonStyle,
@@ -192,8 +192,8 @@ export default function CustomButton(
 const styles = StyleSheet.create({
     baseButtonStyle: {
         borderWidth: 1,
-        borderRadius: 25,
-        height: 45,
+        borderRadius: 20,
+        height: 40,
         alignSelf: 'center',
         justifyContent: 'center',
         alignItems: 'center',

@@ -101,8 +101,6 @@ export default function SignUp({ navigation }) {
                                     Đăng ký
                                 </Text>
                             </View>
-
-                            {/* render from this shit */}
                             {renderSignUpViewByStep()}
                         </View>
                     </KeyboardAwareScrollView>

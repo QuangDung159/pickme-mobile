@@ -26,5 +26,6 @@ export default {
     SUPPORT: 'Hỗ trợ',
     VERIFICATION: 'Xác thực tài khoản',
     SIGN_IN_WITH_OTP: 'Đăng nhập',
-    FORGOT_PASSWORD: 'Quên mật khẩu'
+    FORGOT_PASSWORD: 'Quên mật khẩu',
+    PARTNER_REGISTER: 'Đăng ký trở thành đối tác'
 };

@@ -1,3 +1,4 @@
+import { BecomePartnerText } from '@components/businessComponents';
 import { CenterLoader, CustomText, TouchableText } from '@components/uiComponents';
 import App from '@constants/App';
 import {
@@ -20,6 +21,7 @@ import SignIn from './SignIn';
 const {
     FONT: {
         TEXT_REGULAR,
+        TEXT_BOLD
     },
     SIZES,
     COLORS
@@ -173,24 +175,16 @@ export default function Onboarding({ navigation }) {
                                 marginBottom: 10
                             }}
                         />
-                        <TouchableText
-                            text="Trở thành đối tác của PickMe?"
-                            onPress={() => navigation.navigate(ScreenName.FORGOT_PASSWORD)}
-                            style={{
-                                color: COLORS.ACTIVE,
-                                marginTop: 20,
-                                marginBottom: 10
-                            }}
-                        />
+                        <BecomePartnerText navigation={navigation} />
                         <CustomText
                             style={{
-                                fontSize: SIZES.FONT_H4 - 4
+                                fontSize: SIZES.FONT_H5 - 4
                             }}
                             text={`${Constants.manifest.version} (${App.APP_VERSION_OTA})`}
                         />
                         <CustomText
                             style={{
-                                fontSize: SIZES.FONT_H4 - 4
+                                fontSize: SIZES.FONT_H5 - 4
                             }}
                             text={deviceIdDisplay}
                         />

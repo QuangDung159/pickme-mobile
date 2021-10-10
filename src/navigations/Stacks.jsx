@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { Theme, ScreenName } from '@constants/index';
+import { ScreenName, Theme } from '@constants/index';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
@@ -13,8 +13,7 @@ import {
     LeaderBoardScreen,
     MessageScreen,
     NotificationScreen,
-    OnboardingScreen,
-    PersonalScreen,
+    OnboardingScreen, PartnerRegisterScreen, PersonalScreen,
     ProfileScreen,
     SettingsScreen,
     SignInScreen,
@@ -110,6 +109,7 @@ const OnboardingStack = () => (
         {SignInWithOTPScreen()}
         {HomeScreen()}
         {ForgotPasswordScreen()}
+        {PartnerRegisterScreen()}
     </Stack.Navigator>
 );
 

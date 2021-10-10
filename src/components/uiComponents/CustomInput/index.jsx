@@ -20,7 +20,8 @@ CustomInput.propTypes = {
     containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
     rightIcon: PropTypes.object,
     onPressRightIcon: PropTypes.func,
-    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    editable: PropTypes.bool
 };
 
 CustomInput.defaultProps = {
@@ -30,7 +31,8 @@ CustomInput.defaultProps = {
     containerStyle: {},
     rightIcon: null,
     onPressRightIcon: null,
-    value: ''
+    value: '',
+    editable: true
 };
 
 export default function CustomInput({
@@ -39,6 +41,7 @@ export default function CustomInput({
     containerStyle,
     onPressRightIcon,
     value,
+    editable,
     rightIcon, ...props
 }) {
     const renderTextInputBase = () => (
@@ -48,14 +51,15 @@ export default function CustomInput({
                     {
                         borderColor: COLORS.BORDER_COLOR,
                         borderWidth: 1,
-                        borderRadius: 25,
-                        height: 45,
+                        borderRadius: 20,
+                        height: 40,
                         paddingHorizontal: 10,
                         fontFamily: TEXT_REGULAR,
-                        fontSize: SIZES.FONT_H2,
+                        fontSize: SIZES.FONT_H3,
                         color: COLORS.DEFAULT,
                         width: SIZES.WIDTH_BASE * 0.9,
-                        textAlign: 'center'
+                        textAlign: 'center',
+                        backgroundColor: editable || COLORS.INPUT
                     },
                     inputStyle,
                 ]

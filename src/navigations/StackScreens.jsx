@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { Theme, ScreenName, ScreenTitle } from '@constants/index';
+import { ScreenName, ScreenTitle, Theme } from '@constants/index';
 import Header from '@containers/Header';
 import { createStackNavigator } from '@react-navigation/stack';
 // screens
@@ -16,6 +16,7 @@ import {
     Support, UpdateInfoAccount,
     Verification
 } from '@screens/index';
+import PartnerRegister from '@screens/PartnerRegister';
 import React from 'react';
 
 const Stack = createStackNavigator();
@@ -267,6 +268,27 @@ export const SignUpScreen = () => (
     <Stack.Screen
         name={ScreenName.SIGN_UP}
         component={SignUp}
+        options={{
+            header: ({ navigation, scene }) => (
+                <Header
+                    title=""
+                    back
+                    white
+                    transparent
+                    navigation={navigation}
+                    scene={scene}
+                    showRight={false}
+                />
+            ),
+            headerTransparent: true
+        }}
+    />
+);
+
+export const PartnerRegisterScreen = () => (
+    <Stack.Screen
+        name={ScreenName.PARTNER_REGISTER}
+        component={PartnerRegister}
         options={{
             header: ({ navigation, scene }) => (
                 <Header
