@@ -297,10 +297,27 @@ export default function Profile({ route, navigation }) {
                     }}
                 >
                     <CustomButton
+                        onPress={() => {
+                            navigation.navigate(ScreenName.MESSAGE, {
+                                name: partnerInfo.fullName,
+                                userStatus: 'Vừa mới truy cập',
+                                toUserId: partnerInfo.id,
+                                userInfo: partnerInfo
+                            });
+                        }}
                         type="default"
                         label="Nhắn tin"
+                        buttonStyle={{
+                            backgroundColor: COLORS.BASE
+                        }}
                     />
                     <CustomButton
+                        onPress={() => {
+                            navigation.navigate(ScreenName.CREATE_BOOKING, {
+                                partner: partnerInfo,
+                                from: ScreenName.PROFILE
+                            });
+                        }}
                         type="active"
                         label="Đặt hẹn"
                     />
