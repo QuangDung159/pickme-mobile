@@ -1,6 +1,6 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
 import { Albums, AvatarPanel } from '@components/businessComponents';
-import { CenterLoader, Line } from '@components/uiComponents';
+import { CenterLoader, CustomButton, Line } from '@components/uiComponents';
 import {
     IconFamily, ScreenName, Theme
 } from '@constants/index';
@@ -239,7 +239,7 @@ export default function Profile({ route, navigation }) {
                     <ScrollView
                         showsVerticalScrollIndicator={false}
                         contentContainerStyle={{
-                            paddingBottom: 30
+                            paddingBottom: 50
                         }}
                     >
                         {renderImageView()}
@@ -285,6 +285,26 @@ export default function Profile({ route, navigation }) {
                         </View>
                     </ScrollView>
                 )}
+                <View
+                    style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        width: SIZES.WIDTH_BASE * 0.9,
+                        alignSelf: 'center',
+                        position: 'absolute',
+                        bottom: 10
+                    }}
+                >
+                    <CustomButton
+                        type="default"
+                        label="Nhắn tin"
+                    />
+                    <CustomButton
+                        type="active"
+                        label="Đặt hẹn"
+                    />
+                </View>
             </>
         );
     } catch (exception) {
