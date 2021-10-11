@@ -10,7 +10,9 @@ import {
     View
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { UserServices } from '@services/index';
+import { setShowLoaderStore } from '@redux/Actions';
 
 const {
     FONT: {
@@ -23,9 +25,11 @@ const {
 export default function PartnerRegister({ navigation }) {
     const [partnerForm, setPartnerForm] = useState({
         earningExpected: '',
-        bookingMinimum: ''
+        bookingMinimum: '',
+        imageUrl: ''
     });
 
+    const dispatch = useDispatch();
     const showLoaderStore = useSelector((state) => state.appConfigReducer.showLoaderStore);
 
     const validate = () => {
@@ -59,13 +63,20 @@ export default function PartnerRegister({ navigation }) {
         return ValidationHelpers.validate(validateArr);
     };
 
-    const onSubmitAccountCreation = () => {
+    const onSubmitAccountCreation = async () => {
         if (!validate()) {
             return;
         }
 
-        navigation.navigate(ScreenName.PERSONAL);
-        console.log('partnerForm :>> ', partnerForm);
+        dispatch(setShowLoaderStore(true));
+        const res = await UserServices.submitUpdatePartnerInfoAsync(partnerForm);
+
+        console.log('res :>> ', res);
+        handleGoBack();
+        if (res.data) {
+            handleGoBack();
+        }
+        dispatch(setShowLoaderStore(false));
     };
 
     const handleGoBack = () => {

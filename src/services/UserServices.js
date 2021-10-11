@@ -284,7 +284,7 @@ const submitReportUserAsync = async (body, userId) => {
     return CommonHelpers.handleResByStatus(result);
 };
 
-const rxAddVerifyDoc = async (body) => {
+const rxAddVerifyDocAsync = async (body) => {
     const result = await RxUtil(
         Rx.USER.ADD_VERIFY_DOCUMENT,
         'POST',
@@ -294,10 +294,24 @@ const rxAddVerifyDoc = async (body) => {
 };
 
 const addVerifyDocAsync = async (body, userId) => {
-    let result = await rxAddVerifyDoc(body, userId);
+    let result = await rxAddVerifyDocAsync(body, userId);
     const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
     if (handledResult) {
-        result = await rxAddVerifyDoc(body);
+        result = await rxAddVerifyDocAsync(body);
+    }
+    return CommonHelpers.handleResByStatus(result);
+};
+
+const rxUpdatePartnerInfoAsync = async (body) => {
+    const result = await RxUtil(Rx.USER.UPDATE_PARTNER_INFO, 'POST', body);
+    return result;
+};
+
+const submitUpdatePartnerInfoAsync = async (body) => {
+    let result = await rxUpdatePartnerInfoAsync(body);
+    const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
+    if (handledResult) {
+        result = await rxUpdatePartnerInfoAsync(body);
     }
     return CommonHelpers.handleResByStatus(result);
 };
@@ -352,5 +366,6 @@ export default {
     mappingCurrentUserInfo,
     submitReportUserAsync,
     addUserPostImageAsync,
-    addVerifyDocAsync
+    addVerifyDocAsync,
+    submitUpdatePartnerInfoAsync
 };

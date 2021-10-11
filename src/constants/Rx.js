@@ -26,6 +26,7 @@ export default {
         ADD_PACKAGE: '/UserPackages/AddPackage',
         UPDATE_PACKAGE: '/UserPackages/UpdatePackage',
         REPORT_USER: '/Reports/Report',
+        UPDATE_PARTNER_INFO: '/users/UpdatePartnerInfo'
     },
     BANK: {
         BANK_ACCOUNTS: '/users/BankAccounts',
