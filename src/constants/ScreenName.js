@@ -28,5 +28,5 @@ export default {
     VERIFICATION: 'Verification',
     SIGN_IN_WITH_OTP: 'SignInWithOTP',
     FORGOT_PASSWORD: 'ForgotPassword',
-    PARTNER_REGISTER: 'PartnerRegister'
+    PARTNER_REGISTER: 'PartnerRegister',
 };

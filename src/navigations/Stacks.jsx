@@ -10,8 +10,7 @@ import {
     ConversationListScreen,
     CreateAccountScreen, CreateBookingScreen,
     ForgotPasswordScreen, HomeScreen,
-    LeaderBoardScreen,
-    MessageScreen,
+    LeaderBoardScreen, MenuScreen, MessageScreen,
     NotificationScreen,
     OnboardingScreen, PartnerRegisterScreen, PersonalScreen,
     ProfileScreen,
@@ -40,12 +39,9 @@ const SignInWithOTPStack = () => (
     </Stack.Navigator>
 );
 
-const LeaderBoardStack = () => (
+const MenuStack = () => (
     <Stack.Navigator mode="card" headerMode="screen">
-        {LeaderBoardScreen()}
-        {ProfileScreen()}
-        {MessageScreen()}
-        {CreateBookingScreen()}
+        {MenuScreen()}
     </Stack.Navigator>
 );
 
@@ -154,8 +150,8 @@ const BottomTabMenuStack = () => {
             }}
         >
             <Tab.Screen
-                name={ScreenName.LEADER_BOARD}
-                component={LeaderBoardStack}
+                name={ScreenName.MENU}
+                component={MenuStack}
             />
             <Tab.Screen
                 name={ScreenName.PERSONAL}

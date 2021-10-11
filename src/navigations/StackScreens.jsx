@@ -12,10 +12,11 @@ import {
     LeaderBoard,
     Message, Notification,
     Onboarding, Personal,
-    Profile, Settings, SignIn, SignInWithOTP, SignUp,
+    Profile, Settings, SignInWithOTP, SignUp,
     Support, UpdateInfoAccount,
     Verification
 } from '@screens/index';
+import Menu from '@screens/Menu';
 import PartnerRegister from '@screens/PartnerRegister';
 import React from 'react';
 
@@ -104,6 +105,24 @@ export const LeaderBoardScreen = () => (
             header: ({ navigation, scene }) => (
                 <Header
                     title={ScreenTitle.LEADER_BOARD}
+                    options
+                    navigation={navigation}
+                    scene={scene}
+                />
+            ),
+            cardStyle: { backgroundColor: COLORS.BASE }
+        }}
+    />
+);
+
+export const MenuScreen = () => (
+    <Stack.Screen
+        name={ScreenName.MENU}
+        component={Menu}
+        options={{
+            header: ({ navigation, scene }) => (
+                <Header
+                    title={ScreenTitle.MENU}
                     options
                     navigation={navigation}
                     scene={scene}

@@ -7,9 +7,8 @@ import {
     IconFamily, Rx, ScreenName, Theme, VerificationStatus
 } from '@constants/index';
 import { CommonHelpers, MediaHelpers, ToastHelpers } from '@helpers/index';
-import { resetStoreSignOut, setCurrentUser } from '@redux/Actions';
+import { setCurrentUser } from '@redux/Actions';
 import { UserServices } from '@services/index';
-import * as SecureStore from 'expo-secure-store';
 import React, { useEffect, useState } from 'react';
 import {
     Alert, RefreshControl,
@@ -124,16 +123,6 @@ export default function UserInformation({ navigation }) {
 
     const onClickUploadProfileImage = () => {
         MediaHelpers.pickImage(false, [1, 1], (result) => handleUploadImageProfile(result.uri));
-    };
-
-    const onSignOut = () => {
-        navigation.reset({
-            index: 0,
-            routes: [{ name: ScreenName.ONBOARDING }],
-        });
-        dispatch(resetStoreSignOut());
-        SecureStore.deleteItemAsync('api_token')
-            .then(console.log('api_token was cleaned!'));
     };
 
     const onLongPressImage = (imageObj) => {
@@ -374,22 +363,6 @@ export default function UserInformation({ navigation }) {
         </>
     );
 
-    const renderButtonLogout = () => (
-        <CustomButton
-            onPress={() => onSignOut()}
-            labelStyle={{
-                fontSize: SIZES.FONT_H3,
-            }}
-            label="Đăng xuất"
-            leftIcon={{
-                name: 'logout',
-                size: SIZES.FONT_H3,
-                color: COLORS.DEFAULT,
-                family: IconFamily.SIMPLE_LINE_ICONS
-            }}
-        />
-    );
-
     return (
         <>
             {isShowSpinner ? (
@@ -489,7 +462,6 @@ export default function UserInformation({ navigation }) {
                             onClickUploadProfileImage={() => onClickUploadProfileImage()}
                         />
                     </View>
-                    {renderButtonLogout(navigation)}
                 </ScrollView>
             )}
         </>
