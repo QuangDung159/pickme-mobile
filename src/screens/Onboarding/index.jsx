@@ -160,15 +160,37 @@ export default function Onboarding({ navigation }) {
                 <CenterLoader />
             ) : (
                 <>
+                    <View
+                        style={{
+                            position: 'absolute',
+                            top: 40,
+                            zIndex: 99,
+                            alignSelf: 'center',
+                            alignItems: 'center'
+                        }}
+                    >
+                        <CustomText
+                            style={{
+                                fontSize: SIZES.FONT_H5 - 4
+                            }}
+                            text={`${Constants.manifest.version} (${App.APP_VERSION_OTA})`}
+                        />
+                        <CustomText
+                            style={{
+                                fontSize: SIZES.FONT_H5 - 4
+                            }}
+                            text={deviceIdDisplay}
+                        />
+                    </View>
                     {renderModalRegisterPartner()}
                     <View
                         style={{
-                            marginTop: SIZES.HEIGHT_BASE * 0.15
+                            marginTop: 130
                         }}
                     >
                         <View
                             style={{
-                                paddingBottom: SIZES.HEIGHT_BASE * 0.1,
+                                paddingBottom: 90,
                                 alignSelf: 'center',
                                 alignItems: 'center'
                             }}
@@ -221,18 +243,6 @@ export default function Onboarding({ navigation }) {
                             setModalVisible(true);
                             setIsRegisterPartner(true);
                         }}
-                        />
-                        <CustomText
-                            style={{
-                                fontSize: SIZES.FONT_H5 - 4
-                            }}
-                            text={`${Constants.manifest.version} (${App.APP_VERSION_OTA})`}
-                        />
-                        <CustomText
-                            style={{
-                                fontSize: SIZES.FONT_H5 - 4
-                            }}
-                            text={deviceIdDisplay}
                         />
                     </View>
                     <View

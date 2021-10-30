@@ -56,7 +56,7 @@ export default function CustomCheckbox({
                                 borderRadius: 2,
                                 borderColor: COLORS.INPUT,
                                 backgroundColor: background,
-                                marginRight: 5
+                                marginRight: 5,
                             },
                             checkboxStyle
                         ]
@@ -80,7 +80,8 @@ export default function CustomCheckbox({
                         if (onPressLabel) onPressLabel();
                     }}
                     style={{
-                        justifyContent: 'center'
+                        justifyContent: 'center',
+                        width: SIZES.WIDTH_BASE * 0.9 - 25,
                     }}
                 >
                     <Text
