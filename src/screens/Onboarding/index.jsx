@@ -4,7 +4,7 @@ import {
 } from '@components/uiComponents';
 import App from '@constants/App';
 import {
-    Images, ScreenName, Theme, Utils
+    Images, ScreenName, Theme
 } from '@constants/index';
 import {
     setCurrentUser, setIsSignInOtherDeviceStore, setListPartnerHomeRedux, setNavigation
@@ -14,8 +14,7 @@ import Constants from 'expo-constants';
 import * as SecureStore from 'expo-secure-store';
 import React, { useEffect, useState } from 'react';
 import {
-    Image,
-    Platform, StyleSheet, Text, View
+    Image, StyleSheet, Text, View
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import SignIn from './SignIn';
@@ -197,7 +196,7 @@ export default function Onboarding({ navigation }) {
                     />
                     <View
                         style={{
-                            marginTop: 35,
+                            marginTop: 40,
                             alignSelf: 'center',
                             alignItems: 'center'
                         }}
@@ -239,7 +238,7 @@ export default function Onboarding({ navigation }) {
                     <View
                         style={{
                             position: 'absolute',
-                            bottom: 30,
+                            bottom: 5,
                             alignSelf: 'center'
                         }}
                     >
@@ -261,7 +260,7 @@ export default function Onboarding({ navigation }) {
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: Platform.OS === 'android' ? -Utils.HeaderHeight : 0,
+        // marginTop: Platform.OS === 'android' ? -Utils.HeaderHeight : 0,
         backgroundColor: COLORS.BASE,
         flex: 1,
     },

@@ -19,8 +19,8 @@ export default function BecomePartnerText({ onPress }) {
                 fontSize: SIZES.FONT_H3,
                 textAlign: 'center',
                 fontFamily: TEXT_BOLD,
-                marginTop: 40,
-                marginBottom: 10
+                marginTop: 20,
+                marginBottom: 5
             }}
             onPress={() => onPress()}
         />
