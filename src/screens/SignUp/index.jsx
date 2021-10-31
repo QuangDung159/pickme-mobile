@@ -24,7 +24,7 @@ const {
 
 export default function SignUp({ navigation }) {
     const [modalVisible, setModalVisible] = useState(false);
-    const [step, setStep] = useState(1);
+    const [step, setStep] = useState(2);
     const [isEmail, setIsEmail] = useState('');
     const [otp, setOtp] = useState('');
     const [password, setPassword] = useState('');

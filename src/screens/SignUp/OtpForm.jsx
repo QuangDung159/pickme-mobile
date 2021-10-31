@@ -8,7 +8,7 @@ import { ToastHelpers, ValidationHelpers } from '@helpers/index';
 import { setIsSignInOtherDeviceStore, setShowLoaderStore, setToken } from '@redux/Actions';
 import { UserServices } from '@services/index';
 import * as SecureStore from 'expo-secure-store';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
     Keyboard, StyleSheet, TextInput, View
 } from 'react-native';
@@ -19,6 +19,7 @@ const {
 } = Theme;
 
 const OTP = [0, 1, 2, 3];
+let interval2min = '';
 
 export default function OtpForm({
     otp, setOtp, password,
@@ -29,10 +30,33 @@ export default function OtpForm({
     const [isShowPassword, setIsShowPassword] = useState(false);
     const [code, setCode] = useState(otp);
     const [indexFocus, setIndexFocus] = useState(3);
+    const [twoMins, setTwoMins] = useState(30);
+    const [isCanPressResend, setIsCanPressResend] = useState(false);
 
     const textRef = useRef();
 
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (twoMins === 0) {
+            setIsCanPressResend(true);
+            setTwoMins(0);
+            clearInterval(interval2min);
+        }
+    }, [twoMins]);
+
+    useEffect(() => {
+        startInterval2min();
+        // if (isIOS()) {
+        //     UtilityModule.disableIQKeyboardManager();
+        // }
+        return () => {
+            // if (isIOS()) {
+            //     UtilityModule.enableIQKeyboardManager();
+            // }
+            clearInterval(interval2min);
+        };
+    }, []);
 
     const onLoginSuccess = (tokenFromAPI) => {
         dispatch(setToken(tokenFromAPI));
@@ -119,7 +143,18 @@ export default function OtpForm({
         dispatch(setShowLoaderStore(false));
     };
 
+    const startInterval2min = () => {
+        interval2min = setInterval(() => {
+            setTwoMins((resendTime) => resendTime - 1);
+        }, 1000);
+    };
+
     const onClickGetOTP = async () => {
+        setCode('');
+        setIsCanPressResend(false);
+        setTwoMins(30);
+        startInterval2min();
+
         const result = await UserServices.fetchOtpSignUpAsync({
             username,
             isEmail: false
@@ -151,6 +186,8 @@ export default function OtpForm({
             setCode(text);
         }
     };
+
+    const render2Mins = () => twoMins;
 
     const renderOtpForm = () => (
         <>
@@ -227,7 +264,8 @@ export default function OtpForm({
                             color: COLORS.ACTIVE,
                             marginTop: 10,
                         }}
-                        text="Gửi lại OTP"
+                        text={!isCanPressResend ? `Gửi lại OTP (${render2Mins()}s)` : 'Gửi lại OTP'}
+                        disabled={!isCanPressResend}
                         onPress={() => onClickGetOTP()}
                     />
 
