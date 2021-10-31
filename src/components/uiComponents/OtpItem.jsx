@@ -47,9 +47,10 @@ const styles = StyleSheet.create({
     container: {
         width: 40,
         height: 40,
-        borderBottomWidth: 2,
+        borderWidth: 1,
         backgroundColor: '#FFFFFF',
         marginHorizontal: 4,
+        borderRadius: 10
     },
     wrapper: {
         flex: 1,

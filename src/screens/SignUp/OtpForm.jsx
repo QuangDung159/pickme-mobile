@@ -19,7 +19,7 @@ const {
 } = Theme;
 
 const OTP = [0, 1, 2, 3];
-let interval2min = '';
+let intervalCountdown = '';
 
 export default function OtpForm({
     otp, setOtp, password,
@@ -30,7 +30,7 @@ export default function OtpForm({
     const [isShowPassword, setIsShowPassword] = useState(false);
     const [code, setCode] = useState(otp);
     const [indexFocus, setIndexFocus] = useState(3);
-    const [twoMins, setTwoMins] = useState(30);
+    const [countdown, setCountdown] = useState(30);
     const [isCanPressResend, setIsCanPressResend] = useState(false);
 
     const textRef = useRef();
@@ -38,15 +38,15 @@ export default function OtpForm({
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (twoMins === 0) {
+        if (countdown === 0) {
             setIsCanPressResend(true);
-            setTwoMins(0);
-            clearInterval(interval2min);
+            setCountdown(0);
+            clearInterval(intervalCountdown);
         }
-    }, [twoMins]);
+    }, [countdown]);
 
     useEffect(() => {
-        startInterval2min();
+        startIntervalCountdown();
         // if (isIOS()) {
         //     UtilityModule.disableIQKeyboardManager();
         // }
@@ -54,7 +54,7 @@ export default function OtpForm({
             // if (isIOS()) {
             //     UtilityModule.enableIQKeyboardManager();
             // }
-            clearInterval(interval2min);
+            clearInterval(intervalCountdown);
         };
     }, []);
 
@@ -143,17 +143,17 @@ export default function OtpForm({
         dispatch(setShowLoaderStore(false));
     };
 
-    const startInterval2min = () => {
-        interval2min = setInterval(() => {
-            setTwoMins((resendTime) => resendTime - 1);
+    const startIntervalCountdown = () => {
+        intervalCountdown = setInterval(() => {
+            setCountdown((resendTime) => resendTime - 1);
         }, 1000);
     };
 
     const onClickGetOTP = async () => {
         setCode('');
         setIsCanPressResend(false);
-        setTwoMins(30);
-        startInterval2min();
+        setCountdown(30);
+        startIntervalCountdown();
 
         const result = await UserServices.fetchOtpSignUpAsync({
             username,
@@ -187,7 +187,7 @@ export default function OtpForm({
         }
     };
 
-    const render2Mins = () => twoMins;
+    const renderCountdown = () => countdown;
 
     const renderOtpForm = () => (
         <>
@@ -264,7 +264,7 @@ export default function OtpForm({
                             color: COLORS.ACTIVE,
                             marginTop: 10,
                         }}
-                        text={!isCanPressResend ? `Gửi lại OTP (${render2Mins()}s)` : 'Gửi lại OTP'}
+                        text={!isCanPressResend ? `Gửi lại OTP (${renderCountdown()}s)` : 'Gửi lại OTP'}
                         disabled={!isCanPressResend}
                         onPress={() => onClickGetOTP()}
                     />
