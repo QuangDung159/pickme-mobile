@@ -1,20 +1,24 @@
-import { CustomButton, CustomInput, TouchableText } from '@components/uiComponents';
+import {
+    CustomButton, CustomInput, OtpItem, TouchableText
+} from '@components/uiComponents';
 import {
     IconFamily, ScreenName, Theme
 } from '@constants/index';
-import { ValidationHelpers, ToastHelpers } from '@helpers/index';
+import { ToastHelpers, ValidationHelpers } from '@helpers/index';
 import { setIsSignInOtherDeviceStore, setShowLoaderStore, setToken } from '@redux/Actions';
 import { UserServices } from '@services/index';
 import * as SecureStore from 'expo-secure-store';
-import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, { useRef, useState } from 'react';
+import {
+    Keyboard, StyleSheet, TextInput, View
+} from 'react-native';
 import { useDispatch } from 'react-redux';
 
 const {
-    SIZES, COLORS, FONT: {
-        TEXT_BOLD
-    }
+    SIZES, COLORS
 } = Theme;
+
+const OTP = [0, 1, 2, 3];
 
 export default function OtpForm({
     otp, setOtp, password,
@@ -23,6 +27,10 @@ export default function OtpForm({
     isEmail
 }) {
     const [isShowPassword, setIsShowPassword] = useState(false);
+    const [code, setCode] = useState(otp);
+    const [indexFocus, setIndexFocus] = useState(3);
+
+    const textRef = useRef();
 
     const dispatch = useDispatch();
 
@@ -60,7 +68,7 @@ export default function OtpForm({
         const validateArr = [
             {
                 fieldName: 'OTP',
-                input: otp,
+                input: code,
                 validate: {
                     required: {
                         value: true
@@ -95,7 +103,7 @@ export default function OtpForm({
         const body = {
             password,
             username,
-            code: otp,
+            code,
             deviceId,
             isEmail,
             referralCode: '1234'
@@ -124,13 +132,33 @@ export default function OtpForm({
         }
     };
 
+    const handleChangeText = (text) => {
+        if (text.length === 4) {
+            Keyboard.dismiss();
+        }
+
+        if (text.length < code.length) {
+            const codeArr = code.split('');
+            codeArr.splice(indexFocus, 1);
+
+            const codeStr = codeArr.join('');
+            const nextIndexFocus = indexFocus > 0 ? indexFocus - 1 : 0;
+
+            setCode(codeStr);
+            setIndexFocus(nextIndexFocus);
+        } else if (text.length < 5) {
+            setIndexFocus(text.length > 1 ? text.length - 1 : 0);
+            setCode(text);
+        }
+    };
+
     const renderOtpForm = () => (
         <>
             <View style={styles.formContainer}>
                 <View
                     style={styles.formInputContainer}
                 >
-                    <CustomInput
+                    {/* <CustomInput
                         value={otp}
                         inputStyle={{
                             width: SIZES.WIDTH_BASE * 0.9,
@@ -144,7 +172,33 @@ export default function OtpForm({
                             width: SIZES.WIDTH_BASE * 0.9,
                         }}
                         placeholder="Nhập mã xác thực..."
+                    /> */}
+
+                    <TextInput
+                        textContentType="oneTimeCode"
+                        keyboardType="number-pad"
+                        value={code}
+                        ref={textRef}
+                        style={styles.otpHidden}
+                        onChangeText={(text) => {
+                            handleChangeText(text);
+                        }}
+                        maxLength={4}
+                        onSubmitEditing={() => {}}
                     />
+                    <View style={styles.otp}>
+                        {OTP.map((item, index) => (
+                            <OtpItem
+                                onPress={() => {
+                                    setIndexFocus(index);
+                                    textRef.current.focus();
+                                }}
+                                code={code}
+                                index={index}
+                                key={index.toString()}
+                            />
+                        ))}
+                    </View>
 
                     <CustomInput
                         value={password}
@@ -212,5 +266,11 @@ const styles = StyleSheet.create({
     },
     formInputContainer: {
         alignItems: 'center',
-    }
+    },
+    otpHidden: { width: 0, height: 0, position: 'absolute' },
+    otp: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginVertical: 15,
+    },
 });

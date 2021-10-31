@@ -10,6 +10,7 @@ import ImageLoader from './ImageLoader';
 import IndicatorVerticalLine from './IndicatorVerticalLine';
 import Line from './Line';
 import NoteText from './NoteText';
+import OtpItem from './OtpItem';
 import RadioButton from './RadioButton';
 import StepIndicator from './StepIndicator';
 import Switch from './Switch';
@@ -32,5 +33,6 @@ export {
     ImageLoader,
     TouchableText,
     CustomText,
-    RadioButton
+    RadioButton,
+    OtpItem
 };

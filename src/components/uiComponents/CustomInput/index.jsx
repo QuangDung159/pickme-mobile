@@ -42,6 +42,7 @@ export default function CustomInput({
     onPressRightIcon,
     value,
     editable,
+    ref,
     rightIcon, ...props
 }) {
     const renderTextInputBase = () => (
@@ -66,6 +67,7 @@ export default function CustomInput({
             }
             value={value?.toString() || ''}
             placeholderTextColor={COLORS.PLACE_HOLDER}
+            ref={ref}
             {...props}
         />
     );
