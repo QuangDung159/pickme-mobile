@@ -3,11 +3,12 @@ import { CommonHelpers } from '@helpers/index';
 import Middlewares from '@middlewares/index';
 import { RxUtil } from '@utils/index';
 
-const rxFetchListBookingAsync = async (pageIndex, pageSize) => {
+const rxFetchListBookingAsync = async (pageIndex, pageSize, domain = null) => {
     const pagingStr = `?pageIndex=${pageIndex}&pageSize=${pageSize}`;
     const result = await RxUtil(
         `${Rx.BOOKING.GET_LIST_BOOKING}${pagingStr}`,
-        'GET'
+        'GET',
+        null, domain
     );
     return result;
 };
@@ -15,18 +16,18 @@ const rxFetchListBookingAsync = async (pageIndex, pageSize) => {
 const fetchListBookingAsync = async (pageIndex = 1, pageSize = 100) => {
     let result = await rxFetchListBookingAsync(pageIndex, pageSize);
 
-    const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
+    const handledResult = await Middlewares.handleResponseStatusMiddleware(result);
     if (handledResult) {
-        result = await rxFetchListBookingAsync(pageIndex, pageSize);
+        result = await rxFetchListBookingAsync(pageIndex, pageSize, handledResult.backupDomain);
     }
 
     return CommonHelpers.handleResByStatus(result);
 };
 
-const rxFetchPartnerInfoAsync = async (partnerId) => {
+const rxFetchPartnerInfoAsync = async (partnerId, domain = null) => {
     const result = await RxUtil(
         `${Rx.PARTNER.PARTNER_DETAIL}/${partnerId}`,
-        'GET'
+        'GET', null, domain
     );
     return result;
 };
@@ -34,18 +35,19 @@ const rxFetchPartnerInfoAsync = async (partnerId) => {
 const fetchPartnerInfoAsync = async (partnerId) => {
     let result = await rxFetchPartnerInfoAsync(partnerId);
 
-    const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
+    const handledResult = await Middlewares.handleResponseStatusMiddleware(result);
     if (handledResult) {
-        result = await rxFetchPartnerInfoAsync(partnerId);
+        result = await rxFetchPartnerInfoAsync(partnerId, handledResult.backupDomain);
     }
 
     return CommonHelpers.handleResByStatus(result);
 };
 
-const rxFetchBookingDetailAsync = async (bookingId) => {
+const rxFetchBookingDetailAsync = async (bookingId, domain = null) => {
     const result = await RxUtil(
         `${Rx.BOOKING.DETAIL_BOOKING}/${bookingId}`,
-        'GET'
+        'GET',
+        null, domain
     );
     return result;
 };
@@ -53,18 +55,19 @@ const rxFetchBookingDetailAsync = async (bookingId) => {
 const fetchBookingDetailAsync = async (bookingId) => {
     let result = await rxFetchBookingDetailAsync(bookingId);
 
-    const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
+    const handledResult = await Middlewares.handleResponseStatusMiddleware(result);
     if (handledResult) {
-        result = await rxFetchBookingDetailAsync(bookingId);
+        result = await rxFetchBookingDetailAsync(bookingId, handledResult.backupDomain);
     }
 
     return CommonHelpers.handleResByStatus(result);
 };
 
-const rxSubmitCompleteBookingAsync = async (bookingId) => {
+const rxSubmitCompleteBookingAsync = async (bookingId, domain = null) => {
     const result = await RxUtil(
         `${Rx.BOOKING.COMPLETE_BOOKING}/${bookingId}`,
-        'POST'
+        'POST',
+        null, domain
     );
     return result;
 };
@@ -72,19 +75,19 @@ const rxSubmitCompleteBookingAsync = async (bookingId) => {
 const submitCompleteBookingAsync = async (bookingId) => {
     let result = await rxSubmitCompleteBookingAsync(bookingId);
 
-    const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
+    const handledResult = await Middlewares.handleResponseStatusMiddleware(result);
     if (handledResult) {
-        result = await rxSubmitCompleteBookingAsync(bookingId);
+        result = await rxSubmitCompleteBookingAsync(bookingId, handledResult.backupDomain);
     }
 
     return CommonHelpers.handleResByStatus(result);
 };
 
-const rxSubmitRatingAsync = async (bookingId, body) => {
+const rxSubmitRatingAsync = async (bookingId, body, domain = null) => {
     const result = await RxUtil(
         `${Rx.BOOKING.BOOKING_RATE}/${bookingId}`,
         'POST',
-        body
+        body, domain
     );
     return result;
 };
@@ -92,18 +95,18 @@ const rxSubmitRatingAsync = async (bookingId, body) => {
 const submitRatingAsync = async (bookingId, body) => {
     let result = await rxSubmitRatingAsync(bookingId, body);
 
-    const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
+    const handledResult = await Middlewares.handleResponseStatusMiddleware(result);
     if (handledResult) {
-        result = await rxSubmitRatingAsync(bookingId, body);
+        result = await rxSubmitRatingAsync(bookingId, body, handledResult.backupDomain);
     }
 
     return CommonHelpers.handleResByStatus(result);
 };
 
-const rxSubmitConfirmPaymentAsync = async (bookingId) => {
+const rxSubmitConfirmPaymentAsync = async (bookingId, domain = null) => {
     const result = await RxUtil(
         `${Rx.PAYMENT.CREATE_PAYMENT}/${bookingId}`,
-        'POST'
+        'POST', null, domain
     );
     return result;
 };
@@ -111,18 +114,18 @@ const rxSubmitConfirmPaymentAsync = async (bookingId) => {
 const submitConfirmPaymentAsync = async (bookingId) => {
     let result = await rxSubmitConfirmPaymentAsync(bookingId);
 
-    const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
+    const handledResult = await Middlewares.handleResponseStatusMiddleware(result);
     if (handledResult) {
-        result = await rxSubmitConfirmPaymentAsync(bookingId);
+        result = await rxSubmitConfirmPaymentAsync(bookingId, handledResult.backupDomain);
     }
 
     return CommonHelpers.handleResByStatus(result);
 };
 
-const rxFetchListPartnerPackageAsync = async (partnerId) => {
+const rxFetchListPartnerPackageAsync = async (partnerId, domain = null) => {
     const result = await RxUtil(
         `${Rx.BOOKING.GET_PARTNER_PACKAGE}/${partnerId}`,
-        'GET'
+        'GET', null, domain
     );
     return result;
 };
@@ -130,18 +133,19 @@ const rxFetchListPartnerPackageAsync = async (partnerId) => {
 const fetchListPartnerPackageAsync = async (partnerId) => {
     let result = await rxFetchListPartnerPackageAsync(partnerId);
 
-    const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
+    const handledResult = await Middlewares.handleResponseStatusMiddleware(result);
     if (handledResult) {
-        result = await rxFetchListPartnerPackageAsync(partnerId);
+        result = await rxFetchListPartnerPackageAsync(partnerId, handledResult.backupDomain);
     }
 
     return CommonHelpers.handleResByStatus(result);
 };
 
-const rxFetchPartnerBusyCalendarAsync = async (partnerId) => {
+const rxFetchPartnerBusyCalendarAsync = async (partnerId, domain = null) => {
     const result = await RxUtil(
         `${Rx.CALENDAR.PARTNER_CALENDAR}/${partnerId}`,
-        'GET'
+        'GET',
+        null, domain
     );
     return result;
 };
@@ -149,19 +153,19 @@ const rxFetchPartnerBusyCalendarAsync = async (partnerId) => {
 const fetchPartnerBusyCalendarAsync = async (partnerId) => {
     let result = await rxFetchPartnerBusyCalendarAsync(partnerId);
 
-    const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
+    const handledResult = await Middlewares.handleResponseStatusMiddleware(result);
     if (handledResult) {
-        result = await rxFetchPartnerBusyCalendarAsync(partnerId);
+        result = await rxFetchPartnerBusyCalendarAsync(partnerId, handledResult.backupDomain);
     }
 
     return CommonHelpers.handleResByStatus(result);
 };
 
-const rxSubmitScheduleBookingAsync = async (partnerId, body) => {
+const rxSubmitScheduleBookingAsync = async (partnerId, body, domain = null) => {
     const result = await RxUtil(
         `${Rx.BOOKING.SCHEDULE_BOOKING}/${partnerId}`,
         'POST',
-        body
+        body, domain
     );
     return result;
 };
@@ -169,19 +173,20 @@ const rxSubmitScheduleBookingAsync = async (partnerId, body) => {
 const submitScheduleBookingAsync = async (partnerId, body) => {
     let result = await rxSubmitScheduleBookingAsync(partnerId, body);
 
-    const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
+    const handledResult = await Middlewares.handleResponseStatusMiddleware(result);
     if (handledResult) {
-        result = await rxSubmitScheduleBookingAsync(partnerId, body);
+        result = await rxSubmitScheduleBookingAsync(partnerId, body, handledResult.backupDomain);
     }
 
     return CommonHelpers.handleResByStatus(result);
 };
 
-const rxSubmitCancelBookingAsync = async (bookingId, body) => {
+const rxSubmitCancelBookingAsync = async (bookingId, body, domain = null) => {
     const result = await RxUtil(
         `${Rx.BOOKING.CANCEL_BOOKING}/${bookingId}`,
         'POST',
-        body
+        body,
+        domain
     );
     return result;
 };
@@ -189,18 +194,18 @@ const rxSubmitCancelBookingAsync = async (bookingId, body) => {
 const submitCancelBookingAsync = async (bookingId, body) => {
     let result = await rxSubmitCancelBookingAsync(bookingId, body);
 
-    const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
+    const handledResult = await Middlewares.handleResponseStatusMiddleware(result);
     if (handledResult) {
-        result = await rxSubmitCancelBookingAsync(bookingId, body);
+        result = await rxSubmitCancelBookingAsync(bookingId, body, handledResult.backupDomain);
     }
 
     return CommonHelpers.handleResByStatus(result);
 };
 
-const rxFetchListPartnerAsync = async () => {
+const rxFetchListPartnerAsync = async (domain = null) => {
     const result = await RxUtil(
         Rx.PARTNER.GET_LIST_PARTNER,
-        'GET'
+        'GET', null, domain
     );
     return result;
 };
@@ -208,9 +213,9 @@ const rxFetchListPartnerAsync = async () => {
 const fetchListPartnerAsync = async () => {
     let result = await rxFetchListPartnerAsync();
 
-    const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
+    const handledResult = await Middlewares.handleResponseStatusMiddleware(result);
     if (handledResult) {
-        result = await rxFetchListPartnerAsync();
+        result = await rxFetchListPartnerAsync(handledResult.backupDomain);
     }
 
     return CommonHelpers.handleResByStatus(result);

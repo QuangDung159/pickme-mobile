@@ -1,6 +1,6 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
 import { Rx, Theme } from '@constants/index';
-import { API_URL, PICKME_INFO_URL } from '@env';
+import { API_URL } from '@env';
 import ToastHelpers from '@helpers/ToastHelpers';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
@@ -77,9 +77,9 @@ export default async (
         };
 
         // check domain
-        if (domain === PICKME_INFO_URL) {
-            response.status = res.status;
-        }
+        // if (domain === PICKME_INFO_URL) {
+        //     response.status = res.status;
+        // }
 
         logMessage(response, endpoint, headers, body);
 
@@ -89,6 +89,8 @@ export default async (
             // if does not have tokenexpired => do not toast
                 ToastHelpers.renderToast(response.data.message || null);
             }
+        } else if (response.status === 503) {
+            return response;
         }
 
         return response;

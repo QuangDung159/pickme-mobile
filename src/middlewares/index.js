@@ -1,4 +1,6 @@
+/* eslint-disable import/no-unresolved */
 import Rx from '@constants/Rx';
+import { API_URL_BACKUP } from '@env';
 import CommonHelpers from '@helpers/CommonHelpers';
 import RxUtil from '@utils/Rx.Util';
 import * as SecureStore from 'expo-secure-store';
@@ -24,7 +26,7 @@ const loginRefreshTokenAsync = async (body) => {
     return CommonHelpers.handleResByStatus(result);
 };
 
-const handleTokenStatusMiddleware = async (response) => {
+const handleResponseStatusMiddleware = async (response) => {
     if (response.status === 401 && response.headers.tokenexpired) {
         const phoneNumber = await SecureStore.getItemAsync('phoneNumber');
         const password = await SecureStore.getItemAsync('password');
@@ -37,9 +39,13 @@ const handleTokenStatusMiddleware = async (response) => {
         });
         return res;
     }
+
+    if (response.status === 503) {
+        return { backupDomain: API_URL_BACKUP };
+    }
     return null;
 };
 
 export default {
-    handleTokenStatusMiddleware
+    handleResponseStatusMiddleware
 };

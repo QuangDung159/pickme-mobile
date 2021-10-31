@@ -3,10 +3,11 @@ import { CommonHelpers } from '@helpers/index';
 import Middlewares from '@middlewares/index';
 import { RxUtil } from '@utils/index';
 
-const rxFetchListNotificationAsync = async () => {
+const rxFetchListNotificationAsync = async (domain = null) => {
     const result = await RxUtil(
         Rx.NOTIFICATION.GET_MY_NOTIFICATION,
-        'GET'
+        'GET',
+        null, domain
     );
     return result;
 };
@@ -14,18 +15,19 @@ const rxFetchListNotificationAsync = async () => {
 const fetchListNotificationAsync = async () => {
     let result = await rxFetchListNotificationAsync();
 
-    const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
+    const handledResult = await Middlewares.handleResponseStatusMiddleware(result);
     if (handledResult) {
-        result = await rxFetchListNotificationAsync();
+        result = await rxFetchListNotificationAsync(handledResult.backupDomain);
     }
 
     return CommonHelpers.handleResByStatus(result);
 };
 
-const rxTriggerReadNotificationAsync = async (notificationId) => {
+const rxTriggerReadNotificationAsync = async (notificationId, domain = null) => {
     const result = await RxUtil(
         `${Rx.NOTIFICATION.TRIGGER_READ}/${notificationId}`,
-        'POST'
+        'POST',
+        null, domain
     );
     return result;
 };
@@ -33,18 +35,18 @@ const rxTriggerReadNotificationAsync = async (notificationId) => {
 const triggerReadNotificationAsync = async (notificationId) => {
     let result = await rxTriggerReadNotificationAsync(notificationId);
 
-    const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
+    const handledResult = await Middlewares.handleResponseStatusMiddleware(result);
     if (handledResult) {
-        result = await rxTriggerReadNotificationAsync(notificationId);
+        result = await rxTriggerReadNotificationAsync(notificationId, handledResult.backupDomain);
     }
 
     return CommonHelpers.handleResByStatus(result);
 };
 
-const rxTriggerReadAllNotificationAsync = async () => {
+const rxTriggerReadAllNotificationAsync = async (domain = null) => {
     const result = await RxUtil(
         Rx.NOTIFICATION.TRIGGER_READ_ALL,
-        'POST'
+        'POST', null, domain
     );
     return result;
 };
@@ -52,9 +54,9 @@ const rxTriggerReadAllNotificationAsync = async () => {
 const triggerReadAllNotificationAsync = async () => {
     let result = await rxTriggerReadAllNotificationAsync();
 
-    const handledResult = await Middlewares.handleTokenStatusMiddleware(result);
+    const handledResult = await Middlewares.handleResponseStatusMiddleware(result);
     if (handledResult) {
-        result = await rxTriggerReadAllNotificationAsync();
+        result = await rxTriggerReadAllNotificationAsync(handledResult.backupDomain);
     }
 
     return CommonHelpers.handleResByStatus(result);
