@@ -171,7 +171,7 @@ export default function Header({
         SecureStore.deleteItemAsync('api_token')
             .then(console.log('api_token was cleaned!'));
 
-        SecureStore.deleteItemAsync('phoneNumber')
+        SecureStore.deleteItemAsync('username')
             .then(console.log('phoneNumber was cleaned!'));
 
         SecureStore.deleteItemAsync('password')

@@ -20,7 +20,7 @@ const generateLogData = (endpoint, body, headers, res) => {
 
 const logMessage = (res, endpoint, headers, body) => {
     const textColor = res.status === 200 || res.status === 201 ? `color: ${COLORS.SUCCESS}` : `color: ${COLORS.ERROR}`;
-    console.log(`%c ${res.status} ${endpoint}`, textColor, {
+    console.log(`%c${res.status} ${endpoint}`, textColor, {
         headers,
         body,
         response: res
@@ -31,12 +31,12 @@ export default async (
     endpoint,
     method,
     body = null,
-    domain = API_URL,
+    domain,
     headers = {}
 ) => {
     const apiTokenLocal = await SecureStore.getItemAsync('api_token');
 
-    const url = `${domain}${endpoint}`;
+    const url = `${domain || API_URL}${endpoint}`;
 
     if (endpoint !== Rx.AUTHENTICATION.LOGIN) {
         // eslint-disable-next-line no-param-reassign
@@ -81,7 +81,7 @@ export default async (
         //     response.status = res.status;
         // }
 
-        logMessage(response, endpoint, headers, body);
+        logMessage(response, url, headers, body);
 
         if (response.status !== 200 && response.status !== 201) {
             // check token expired
@@ -99,7 +99,7 @@ export default async (
             response, response: { data }
         } = err;
 
-        logMessage(response, endpoint, headers, body);
+        logMessage(response, url, headers, body);
         const logInfo = generateLogData(endpoint, data, headers, response);
         slackUtil('catch', logInfo);
 

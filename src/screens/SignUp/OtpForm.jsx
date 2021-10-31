@@ -18,8 +18,9 @@ const {
 
 export default function OtpForm({
     otp, setOtp, password,
-    setPassword, phoneNumber,
-    navigation
+    setPassword, username,
+    navigation,
+    isEmail
 }) {
     const [isShowPassword, setIsShowPassword] = useState(false);
 
@@ -37,7 +38,7 @@ export default function OtpForm({
     const loginWithSignUpInfo = async () => {
         const deviceId = await SecureStore.getItemAsync('deviceId');
         const body = {
-            username: phoneNumber,
+            username,
             password,
             deviceId
         };
@@ -49,7 +50,7 @@ export default function OtpForm({
 
         if (data) {
             onLoginSuccess(data);
-            SecureStore.setItemAsync('phoneNumber', phoneNumber);
+            SecureStore.setItemAsync('username', username);
             SecureStore.setItemAsync('password', password);
         }
         dispatch(setShowLoaderStore(false));
@@ -93,9 +94,10 @@ export default function OtpForm({
 
         const body = {
             password,
-            username: phoneNumber,
+            username,
             code: otp,
             deviceId,
+            isEmail,
             referralCode: '1234'
         };
 
@@ -111,7 +113,7 @@ export default function OtpForm({
 
     const onClickGetOTP = async () => {
         const result = await UserServices.fetchOtpSignUpAsync({
-            username: phoneNumber,
+            username,
             isEmail: false
         });
         const { data } = result;

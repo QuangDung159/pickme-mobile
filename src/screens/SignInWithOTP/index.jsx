@@ -46,7 +46,7 @@ export default function SignInWithOTP({ navigation }) {
     );
 
     const getLocalValue = async () => {
-        const phoneNumberLocalStore = await SecureStore.getItemAsync('phoneNumber');
+        const phoneNumberLocalStore = await SecureStore.getItemAsync('username');
         const passwordLocalStore = await SecureStore.getItemAsync('password');
 
         setPassword(passwordLocalStore);

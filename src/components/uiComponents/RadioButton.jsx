@@ -48,7 +48,7 @@ export default function RadioButton({
                     style={{
                         marginLeft: 5,
                         fontFamily: TEXT_REGULAR,
-                        fontSize: SIZES.FONT_H3,
+                        fontSize: SIZES.FONT_H4,
                     }}
                 >
                     {label}

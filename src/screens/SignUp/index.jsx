@@ -12,7 +12,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { useSelector } from 'react-redux';
 import ModalDisclaimer from './ModalDisclaimer';
 import OtpForm from './OtpForm';
-import PhoneForm from './PhoneForm';
+import UsernameForm from './UsernameForm';
 
 const {
     FONT: {
@@ -25,9 +25,10 @@ const {
 export default function SignUp({ navigation }) {
     const [modalVisible, setModalVisible] = useState(false);
     const [step, setStep] = useState(1);
-    const [phoneNumber, setPhoneNumber] = useState('');
+    const [isEmail, setIsEmail] = useState('');
     const [otp, setOtp] = useState('');
     const [password, setPassword] = useState('');
+    const [username, setUsername] = useState('');
 
     const showLoaderStore = useSelector((state) => state.appConfigReducer.showLoaderStore);
 
@@ -35,11 +36,13 @@ export default function SignUp({ navigation }) {
         switch (step) {
             case 1: {
                 return (
-                    <PhoneForm
-                        phoneNumber={phoneNumber}
+                    <UsernameForm
+                        isEmail={isEmail}
+                        username={username}
+                        setUsername={(usernameInput) => setUsername(usernameInput)}
                         setModalVisible={(isVisible) => setModalVisible(isVisible)}
                         setOtp={(otpCode) => setOtp(otpCode)}
-                        setPhoneNumber={(phoneNum) => setPhoneNumber(phoneNum)}
+                        setIsEmail={(isEmailLogin) => setIsEmail(isEmailLogin)}
                         setStep={(stepIndex) => setStep(stepIndex)}
                     />
                 );
@@ -50,9 +53,10 @@ export default function SignUp({ navigation }) {
                         navigation={navigation}
                         otp={otp}
                         password={password}
-                        phoneNumber={phoneNumber}
+                        username={username}
                         setOtp={(otpCode) => setOtp(otpCode)}
                         setPassword={(passwordStr) => setPassword(passwordStr)}
+                        isEmail={isEmail}
                     />
                 );
             }

@@ -16,6 +16,7 @@ import React, { useEffect, useState } from 'react';
 import {
     Image, StyleSheet, Text, View
 } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useDispatch, useSelector } from 'react-redux';
 import SignIn from './SignIn';
 
@@ -70,7 +71,7 @@ export default function Onboarding({ navigation }) {
     };
 
     const onLogin = async () => {
-        const phoneNumber = await SecureStore.getItemAsync('phoneNumber');
+        const phoneNumber = await SecureStore.getItemAsync('username');
         const password = await SecureStore.getItemAsync('password');
         const apiToken = await SecureStore.getItemAsync('api_token');
         const deviceId = await SecureStore.getItemAsync('deviceId');
@@ -125,7 +126,7 @@ export default function Onboarding({ navigation }) {
                         style={{
                             textAlign: 'center',
                             marginBottom: 10,
-                            fontSize: SIZES.FONT_H2
+                            fontSize: SIZES.FONT_H4
                         }}
                         text="Vui lòng đăng nhập để tiếp tục"
                     />
@@ -134,7 +135,7 @@ export default function Onboarding({ navigation }) {
                         style={{
                             textAlign: 'center',
                             marginBottom: 10,
-                            fontSize: SIZES.FONT_H2
+                            fontSize: SIZES.FONT_H4
                         }}
                         text={'Nếu bạn chưa có tài khoản,\nvui lòng đăng ký cho đến bước cuối'}
                     />
@@ -155,7 +156,7 @@ export default function Onboarding({ navigation }) {
     );
 
     return (
-        <View style={styles.container}>
+        <KeyboardAwareScrollView style={styles.container} showsVerticalScrollIndicator={false}>
             {isShowSpinner ? (
                 <CenterLoader />
             ) : (
@@ -220,7 +221,8 @@ export default function Onboarding({ navigation }) {
                         style={{
                             marginTop: 40,
                             alignSelf: 'center',
-                            alignItems: 'center'
+                            alignItems: 'center',
+                            marginBottom: 30
                         }}
                     >
                         <TouchableText
@@ -248,7 +250,7 @@ export default function Onboarding({ navigation }) {
                     <View
                         style={{
                             position: 'absolute',
-                            bottom: 5,
+                            bottom: 0,
                             alignSelf: 'center'
                         }}
                     >
@@ -264,7 +266,7 @@ export default function Onboarding({ navigation }) {
                     </View>
                 </>
             )}
-        </View>
+        </KeyboardAwareScrollView>
     );
 }
 

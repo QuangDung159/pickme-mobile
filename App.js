@@ -59,7 +59,7 @@ const toastConfig = {
                         styles.toastContent,
                         {
                             color: COLORS.SUCCESS,
-                            fontSize: SIZES.FONT_H3
+                            fontSize: SIZES.FONT_H5
                         }
                     ]
                 }
@@ -85,7 +85,7 @@ const toastConfig = {
                         styles.toastContent,
                         {
                             color: COLORS.ERROR,
-                            fontSize: SIZES.FONT_H3
+                            fontSize: SIZES.FONT_H5
                         }
                     ]
                 }

@@ -57,7 +57,7 @@ export default function SignIn({ navigation }) {
     };
 
     const getLoginInfo = async () => {
-        const phoneNumberLocal = await SecureStore.getItemAsync('phoneNumber');
+        const phoneNumberLocal = await SecureStore.getItemAsync('username');
         setPhoneNumber(phoneNumberLocal);
 
         const passwordLocal = await SecureStore.getItemAsync('password');
@@ -147,7 +147,7 @@ export default function SignIn({ navigation }) {
 
     const onLoginSuccess = async (data, status) => {
         SecureStore.setItemAsync('password', `${password}`);
-        SecureStore.setItemAsync('phoneNumber', `${phoneNumber}`);
+        SecureStore.setItemAsync('username', `${phoneNumber}`);
 
         const currentUserInfo = await UserServices.mappingCurrentUserInfo(data.data);
         SecureStore.setItemAsync('api_token', `${currentUserInfo.token}`);
