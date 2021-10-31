@@ -1,10 +1,10 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
 import { Albums, AvatarPanel } from '@components/businessComponents';
 import {
-    CenterLoader, CustomButton, CustomText, Line
+    CenterLoader, CustomButton, CustomText, IconCustom, Line
 } from '@components/uiComponents';
 import {
-    IconFamily, Rx, ScreenName, Theme, VerificationStatus
+    Rx, ScreenName, Theme, VerificationStatus, IconFamily
 } from '@constants/index';
 import { CommonHelpers, MediaHelpers, ToastHelpers } from '@helpers/index';
 import { setCurrentUser } from '@redux/Actions';
@@ -14,6 +14,7 @@ import {
     Alert, RefreshControl,
     ScrollView, Text, TouchableWithoutFeedback, View
 } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import ImageView from 'react-native-image-viewing';
 import { useDispatch, useSelector } from 'react-redux';
 import PartnerDataSection from './PartnerDataSection';
@@ -248,30 +249,12 @@ export default function UserInformation({ navigation }) {
                         [
                             {
                                 value: earningExpected && `${CommonHelpers.generateMoneyStr(earningExpected)}/phút`,
-                                icon: {
-                                    name: 'money',
-                                    family: IconFamily.FONT_AWESOME,
-                                    color: COLORS.ACTIVE,
-                                    size: 24
-                                }
                             },
                             {
                                 value: `${bookingCompletedCount} đơn hẹn`,
-                                icon: {
-                                    name: 'list-alt',
-                                    family: IconFamily.FONT_AWESOME,
-                                    color: COLORS.ACTIVE,
-                                    size: 24
-                                }
                             },
                             {
                                 value: `${ratingAvg}/5 đánh giá`,
-                                icon: {
-                                    name: 'star-o',
-                                    family: IconFamily.FONT_AWESOME,
-                                    color: COLORS.ACTIVE,
-                                    size: 28
-                                }
                             },
                         ]
                     }
@@ -279,89 +262,6 @@ export default function UserInformation({ navigation }) {
             </View>
         );
     };
-
-    const renderInfoPanel = () => (
-        <>
-            <View
-                style={{
-                    marginTop: 20,
-                }}
-            >
-                <Text
-                    style={{
-                        color: COLORS.ACTIVE,
-                        fontSize: 25,
-                        fontFamily: TEXT_BOLD,
-                        textAlign: 'center'
-                    }}
-                >
-                    {currentUser.fullName}
-                </Text>
-            </View>
-
-            <View
-                style={{
-                    marginBottom: 20
-                }}
-            >
-                <Text
-                    style={{
-                        fontFamily: TEXT_REGULAR,
-                        fontSize: SIZES.FONT_H2,
-                        color: COLORS.DEFAULT,
-                        textAlign: 'center'
-                    }}
-                >
-                    {'"'}
-                    {currentUser.description}
-                    {'"'}
-                </Text>
-            </View>
-            <View style={{
-                marginBottom: 10,
-                alignItems: 'center'
-            }}
-            >
-                <View
-                    style={{
-                        width: SIZES.WIDTH_BASE * 0.9
-                    }}
-                >
-                    {renderPartnerDataPanel()}
-                </View>
-                <View
-                    style={{
-                        marginVertical: 20
-                    }}
-                >
-                    <CustomButton
-                        onPress={
-                            () => navigation.navigate(
-                                ScreenName.UPDATE_INFO_ACCOUNT,
-                            )
-                        }
-                        labelStyle={{
-                            fontSize: SIZES.FONT_H3
-                        }}
-                        label="Chỉnh sửa thông tin cá nhân"
-                    />
-                </View>
-            </View>
-
-            <View
-                style={{
-                    alignSelf: 'center',
-                    alignItems: 'center'
-                }}
-            >
-                <Line
-                    borderColor={COLORS.ACTIVE}
-                    borderWidth={0.5}
-                    width={SIZES.WIDTH_BASE * 0.9}
-                />
-            </View>
-        </>
-    );
 
     return (
         <>
@@ -378,7 +278,8 @@ export default function UserInformation({ navigation }) {
                         />
                     )}
                     contentContainerStyle={{
-                        paddingBottom: 30
+                        paddingBottom: 30,
+                        alignItems: 'center'
                     }}
                 >
                     {renderImageView()}
@@ -386,7 +287,8 @@ export default function UserInformation({ navigation }) {
                         style={{
                             width: SIZES.WIDTH_BASE * 0.9,
                             alignSelf: 'center',
-                            flexDirection: 'row'
+                            flexDirection: 'row',
+                            marginBottom: 10
                         }}
                     >
                         <AvatarPanel
@@ -394,14 +296,74 @@ export default function UserInformation({ navigation }) {
                             image={image}
                             onClickAvatar={() => onClickUpdateAvatar()}
                         />
-                        <SubInfoProfile user={currentUser} />
 
+                        <View style={{
+                            width: SIZES.WIDTH_BASE * 0.6,
+                            justifyContent: 'center',
+                            marginTop: 10
+                        }}
+                        >
+                            <TouchableOpacity
+                                onPress={() => navigation.navigate(
+                                    ScreenName.UPDATE_INFO_ACCOUNT,
+                                )}
+                            >
+                                <View style={{
+                                    flexDirection: 'row',
+                                    justifyContent: 'center',
+                                }}
+                                >
+                                    <Text
+                                        style={{
+                                            color: COLORS.ACTIVE,
+                                            fontSize: SIZES.FONT_H1,
+                                            fontFamily: TEXT_BOLD,
+                                            textAlign: 'center'
+                                        }}
+                                    >
+                                        {`${currentUser.fullName}`}
+                                    </Text>
+                                    <IconCustom
+                                        style={{
+                                            marginTop: 10, marginLeft: 5
+                                        }}
+                                        name="edit-2"
+                                        family={IconFamily.FEATHER}
+                                        size={12}
+                                        color={COLORS.DEFAULT}
+                                    />
+                                </View>
+                            </TouchableOpacity>
+
+                            <View>
+                                <Text
+                                    style={{
+                                        fontFamily: TEXT_REGULAR,
+                                        fontSize: SIZES.FONT_H3,
+                                        color: COLORS.DEFAULT,
+                                        textAlign: 'center'
+                                    }}
+                                >
+                                    {'"'}
+                                    {currentUser.description}
+                                    {'"'}
+                                </Text>
+                            </View>
+                        </View>
                     </View>
+
+                    <Line
+                        borderColor={COLORS.ACTIVE}
+                        borderWidth={0.5}
+                        width={SIZES.WIDTH_BASE * 0.9}
+                    />
+
+                    <SubInfoProfile user={currentUser} />
 
                     <View
                         style={{
                             alignSelf: 'center',
-                            alignItems: 'center'
+                            alignItems: 'center',
                         }}
                     >
                         <View
@@ -416,15 +378,28 @@ export default function UserInformation({ navigation }) {
                                     fontSize: SIZES.FONT_H1,
                                     fontFamily: TEXT_BOLD,
                                     color: COLORS.ACTIVE,
-                                    marginVertical: 5
                                 }}
                             />
                         </View>
-                        <Line
-                            borderColor={COLORS.ACTIVE}
-                            borderWidth={0.5}
-                            width={SIZES.WIDTH_BASE * 0.9}
-                        />
+                    </View>
+
+                    <Line
+                        borderColor={COLORS.ACTIVE}
+                        borderWidth={0.5}
+                        width={SIZES.WIDTH_BASE * 0.9}
+                    />
+
+                    <View style={{
+                        alignItems: 'center'
+                    }}
+                    >
+                        <View
+                            style={{
+                                width: SIZES.WIDTH_BASE * 0.9
+                            }}
+                        >
+                            {renderPartnerDataPanel()}
+                        </View>
                     </View>
 
                     {currentUser.verifyStatus !== VerificationStatus.ACCEPTED && (
@@ -436,32 +411,33 @@ export default function UserInformation({ navigation }) {
 
                             <View
                                 style={{
-                                    marginTop: 30,
+                                    marginVertical: 10,
                                     width: '90%',
                                     alignSelf: 'center',
                                     borderWidth: 0.5,
                                     borderColor: COLORS.ACTIVE,
-                                    borderRadius: 7
+                                    borderRadius: 20
                                 }}
                             >
                                 <VerificationStatusPanel />
                             </View>
                         </TouchableWithoutFeedback>
                     )}
-                    {renderInfoPanel(currentUser, navigation)}
-                    <View style={{
-                        marginVertical: 10
-                    }}
-                    >
-                        <Albums
-                            user={currentUser}
-                            listImageDisplay={listImageDisplay}
-                            onLongPressImage={(imageItem) => onLongPressImage(imageItem)}
-                            setImageIndex={(index) => setImageIndex(index)}
-                            setVisible={(value) => setVisible(value)}
-                            onClickUploadProfileImage={() => onClickUploadProfileImage()}
-                        />
-                    </View>
+
+                    <Line
+                        borderColor={COLORS.ACTIVE}
+                        borderWidth={0.5}
+                        width={SIZES.WIDTH_BASE * 0.9}
+                    />
+
+                    <Albums
+                        user={currentUser}
+                        listImageDisplay={listImageDisplay}
+                        onLongPressImage={(imageItem) => onLongPressImage(imageItem)}
+                        setImageIndex={(index) => setImageIndex(index)}
+                        setVisible={(value) => setVisible(value)}
+                        onClickUploadProfileImage={() => onClickUploadProfileImage()}
+                    />
                 </ScrollView>
             )}
         </>

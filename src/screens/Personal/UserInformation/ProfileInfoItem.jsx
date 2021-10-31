@@ -8,7 +8,6 @@ const {
     FONT: {
         TEXT_REGULAR,
     },
-    SIZES,
     COLORS
 } = Theme;
 export default function ProfileInfoItem({
@@ -25,13 +24,13 @@ export default function ProfileInfoItem({
         >
             <View
                 style={{
-                    width: 35
+                    width: 25
                 }}
             >
                 <IconCustom
                     name={iconName}
                     family={iconFamily}
-                    size={iconSize ?? SIZES.BASE * 1.375}
+                    size={iconSize}
                     color={iconColor ?? COLORS.DEFAULT}
                 />
             </View>
@@ -70,6 +69,7 @@ ProfileInfoItem.defaultProps = {
 const styles = StyleSheet.create({
     container: {
         margin: 5,
-        flexDirection: 'row'
+        flexDirection: 'row',
+        alignItems: 'center'
     },
 });

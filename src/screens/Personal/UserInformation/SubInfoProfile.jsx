@@ -13,66 +13,59 @@ export default function SubInfoProfile({ user }) {
     return (
         <View
             style={{
-                flexDirection: 'column'
+                width: SIZES.WIDTH_BASE * 0.9,
+                alignSelf: 'center',
             }}
         >
             <View
                 style={{
                     flexDirection: 'row',
-                    width: SIZES.WIDTH_BASE * 0.6,
-                    marginTop: 15
+                    justifyContent: 'space-between',
+                    width: '100%',
                 }}
             >
-                <View
-                    style={{
-                        flex: 1
-                    }}
-                >
-                    <ProfileInfoItem
-                        fontSize={SIZES.FONT_H3}
-                        iconName={user.isMale ? 'male' : 'female'}
-                        iconFamily={IconFamily.FONTISTO}
-                        content={`${user.isMale ? 'Nam' : 'Nữ'}`}
-                    />
-                    <ProfileInfoItem
-                        fontSize={SIZES.FONT_H3}
-                        iconName="weight"
-                        iconFamily={IconFamily.FONT_AWESOME_5}
-                        content={`${user.weight} kg`}
-                    />
-                </View>
-
-                <View
-                    style={{
-                        flex: 1
-                    }}
-                >
-                    <ProfileInfoItem
-                        fontSize={SIZES.FONT_H3}
-                        iconName="birthday-cake"
-                        iconFamily={IconFamily.FONT_AWESOME}
-                        content={moment(user.dob).format('YYYY').toString()}
-                    />
-                    <ProfileInfoItem
-                        fontSize={SIZES.FONT_H3}
-                        iconName="human-male-height"
-                        iconFamily={IconFamily.MATERIAL_COMMUNITY_ICONS}
-                        content={`${user.height} cm`}
-                    />
-
-                </View>
+                <ProfileInfoItem
+                    fontSize={SIZES.FONT_H3}
+                    iconName={user.isMale ? 'male' : 'female'}
+                    iconFamily={IconFamily.FONTISTO}
+                    content={`${user.isMale ? 'Nam' : 'Nữ'}`}
+                    iconSize={18}
+                />
+                <ProfileInfoItem
+                    fontSize={SIZES.FONT_H3}
+                    iconName="birthday-cake"
+                    iconFamily={IconFamily.FONT_AWESOME}
+                    content={moment(user.dob).format('YYYY').toString()}
+                    iconSize={18}
+                />
+                <ProfileInfoItem
+                    fontSize={SIZES.FONT_H3}
+                    iconName="weight"
+                    iconFamily={IconFamily.FONT_AWESOME_5}
+                    content={`${user.weight} kg`}
+                    iconSize={18}
+                />
+                <ProfileInfoItem
+                    fontSize={SIZES.FONT_H3}
+                    iconName="human-male-height"
+                    iconFamily={IconFamily.MATERIAL_COMMUNITY_ICONS}
+                    content={`${user.height} cm`}
+                    iconSize={18}
+                />
             </View>
             <ProfileInfoItem
                 fontSize={SIZES.FONT_H3}
                 iconName="home"
                 iconFamily={IconFamily.FONT_AWESOME_5}
                 content={`${user.homeTown}`}
+                iconSize={18}
             />
             <ProfileInfoItem
                 fontSize={SIZES.FONT_H3}
                 iconName="badminton"
                 iconFamily={IconFamily.MATERIAL_COMMUNITY_ICONS}
                 content={`${user.interests}`}
+                iconSize={18}
             />
         </View>
     );
