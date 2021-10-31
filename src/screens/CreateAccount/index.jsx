@@ -13,8 +13,7 @@ import React, { useEffect, useState } from 'react';
 import {
     Alert, Image, Platform,
     StyleSheet,
-    Text,
-    View
+    Text, View
 } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -514,9 +513,7 @@ export default function CreateAccount(props) {
 
     try {
         return (
-            <View
-                style={styles.container}
-            >
+            <>
                 {isShowSpinner ? (
                     <CenterLoader />
                 ) : (
@@ -551,7 +548,7 @@ export default function CreateAccount(props) {
                         </View>
                     </KeyboardAwareScrollView>
                 )}
-            </View>
+            </>
         );
     } catch (exception) {
         console.log('exception :>> ', exception);
@@ -598,11 +595,6 @@ const styles = StyleSheet.create({
     inputWith: {
         width: SIZES.WIDTH_BASE * 0.9,
         marginTop: 10
-    },
-    container: {
-        width: SIZES.WIDTH_BASE,
-        height: SIZES.HEIGHT_BASE,
-        backgroundColor: COLORS.BASE,
     },
     title: {
         fontFamily: TEXT_BOLD,

@@ -132,7 +132,7 @@ export default function PhoneForm({
                                 textAlign: 'center',
                                 fontFamily: TEXT_BOLD
                             }}
-                            onChangeText={(input) => setUsername(input)}
+                            onChangeText={(input) => setUsername(input.trim())}
                             containerStyle={{
                                 marginVertical: 10,
                                 width: SIZES.WIDTH_BASE * 0.9
@@ -147,7 +147,7 @@ export default function PhoneForm({
                                 textAlign: 'center',
                                 fontFamily: TEXT_BOLD
                             }}
-                            onChangeText={(input) => setUsername(input)}
+                            onChangeText={(input) => setUsername(input.trim())}
                             keyboardType="number-pad"
                             containerStyle={{
                                 marginVertical: 10,
