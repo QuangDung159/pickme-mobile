@@ -1,10 +1,10 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
 import { Albums, AvatarPanel } from '@components/businessComponents';
 import {
-    CenterLoader, CustomButton, CustomText, IconCustom, Line
+    CenterLoader, CustomText, IconCustom, Line
 } from '@components/uiComponents';
 import {
-    Rx, ScreenName, Theme, VerificationStatus, IconFamily
+    IconFamily, Rx, ScreenName, Theme, VerificationStatus
 } from '@constants/index';
 import { CommonHelpers, MediaHelpers, ToastHelpers } from '@helpers/index';
 import { setCurrentUser } from '@redux/Actions';
@@ -362,44 +362,19 @@ export default function UserInformation({ navigation }) {
 
                     <View
                         style={{
-                            alignSelf: 'center',
-                            alignItems: 'center',
+                            alignItems: 'center'
                         }}
                     >
-                        <View
+                        <CustomText
+                            text={`Số dư: ${currentUser.walletAmount}`}
                             style={{
-                                flexDirection: 'row',
-                                alignItems: 'center'
+                                fontSize: SIZES.FONT_H3,
+                                fontFamily: TEXT_BOLD,
+                                color: COLORS.ACTIVE,
+                                marginVertical: 10
                             }}
-                        >
-                            <CustomText
-                                text={`Số dư: ${currentUser.walletAmount}`}
-                                style={{
-                                    fontSize: SIZES.FONT_H1,
-                                    fontFamily: TEXT_BOLD,
-                                    color: COLORS.ACTIVE,
-                                }}
-                            />
-                        </View>
-                    </View>
-
-                    <Line
-                        borderColor={COLORS.ACTIVE}
-                        borderWidth={0.5}
-                        width={SIZES.WIDTH_BASE * 0.9}
-                    />
-
-                    <View style={{
-                        alignItems: 'center'
-                    }}
-                    >
-                        <View
-                            style={{
-                                width: SIZES.WIDTH_BASE * 0.9
-                            }}
-                        >
-                            {renderPartnerDataPanel()}
-                        </View>
+                        />
+                        {renderPartnerDataPanel()}
                     </View>
 
                     {currentUser.verifyStatus !== VerificationStatus.ACCEPTED && (

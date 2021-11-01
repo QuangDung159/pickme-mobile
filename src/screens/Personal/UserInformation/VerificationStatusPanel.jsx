@@ -30,7 +30,7 @@ export default function VerificationStatusPanel() {
                         <CustomText
                             style={{
                                 marginTop: 5,
-                                fontSize: SIZES.FONT_H4
+                                fontSize: SIZES.FONT_H5
                             }}
                             text={'Tài khoản chưa được xác thực sẽ bị hạn chế một số chức năng.\nVui lòng nhấp vào đây để hoàn tất quá trình xác thực tài khoản.'}
                         />
@@ -51,7 +51,7 @@ export default function VerificationStatusPanel() {
                             text={'Tài khoản chưa được xác thực sẽ bị hạn chế một số chức năng.\nVui lòng nhấp vào đây để hoàn tất quá trình xác thực tài khoản.'}
                             style={{
                                 marginTop: 15,
-                                fontSize: SIZES.FONT_H4
+                                fontSize: SIZES.FONT_H5
                             }}
                         />
                     </>
@@ -71,7 +71,7 @@ export default function VerificationStatusPanel() {
                             text="Quá trình này sẽ mất một khoảng thời gian, chúng tôi sẽ sớm có thông báo về tình trạng tài khoản của bạn."
                             style={{
                                 marginTop: 5,
-                                fontSize: SIZES.FONT_H4
+                                fontSize: SIZES.FONT_H5
                             }}
                         />
                     </>
