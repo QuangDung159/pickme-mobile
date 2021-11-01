@@ -6,9 +6,6 @@ import {
 } from '@constants/index';
 import { CommonHelpers, MediaHelpers, ToastHelpers } from '@helpers/index';
 import { setCurrentUser } from '@redux/Actions';
-import PartnerDataSection from '@screens/Personal/UserInformation/PartnerDataSection';
-import SubInfoProfile from '@screens/Personal/UserInformation/SubInfoProfile';
-import VerificationStatusPanel from '@screens/Personal/UserInformation/VerificationStatusPanel';
 import { UserServices } from '@services/index';
 import React, { useEffect, useState } from 'react';
 import {
@@ -18,6 +15,9 @@ import {
 import { TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import ImageView from 'react-native-image-viewing';
 import { useDispatch, useSelector } from 'react-redux';
+import PartnerDataSection from './PartnerDataSection';
+import SubInfoProfile from './SubInfoProfile';
+import VerificationStatusPanel from './VerificationStatusPanel';
 
 const {
     FONT: {
