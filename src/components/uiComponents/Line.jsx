@@ -7,13 +7,13 @@ const { COLORS, SIZES } = Theme;
 export default class Line extends PureComponent {
     render() {
         const {
-            borderColor = COLORS.ACTIVE, width = SIZES.WIDTH_BASE * 0.9, borderWidth = 0.5, style
+            borderColor = COLORS.ACTIVE, width = SIZES.WIDTH_BASE * 0.9, borderBottomWidth = 1, style
         } = this.props;
         return (
             <View style={[{
                 marginVertical: 10
             }, {
-                borderWidth,
+                borderBottomWidth,
                 borderColor,
                 width
             }, style]}

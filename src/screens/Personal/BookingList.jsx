@@ -217,7 +217,6 @@ export default function BookingList({ navigation }) {
                         {dateFragment[2]}
                     </Text>
                     <Line
-                        borderWidth={0.5}
                         borderColor={COLORS.DEFAULT}
                         style={{
                             width: SIZES.WIDTH_BASE * 0.1

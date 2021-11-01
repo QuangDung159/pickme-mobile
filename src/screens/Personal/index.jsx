@@ -12,7 +12,6 @@ import BookingServices from '@services/BookingServices';
 import NotificationServices from '@services/NotificationServices';
 import socketRequestUtil from '@utils/socketRequestUtil';
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView } from 'react-native';
 import { SceneMap } from 'react-native-tab-view';
 import { useDispatch, useSelector } from 'react-redux';
 import BookingList from './BookingList';
@@ -210,19 +209,13 @@ export default function Personal({ navigation }) {
 
     // Render \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
     return (
-        <SafeAreaView
-            style={{
-                flex: 1
+        <TopTabBar
+            routes={routes}
+            renderScene={renderScene}
+            tabActiveIndex={personTabActiveIndex}
+            setTabActiveIndex={(index) => {
+                dispatch(setPersonTabActiveIndex(index));
             }}
-        >
-            <TopTabBar
-                routes={routes}
-                renderScene={renderScene}
-                tabActiveIndex={personTabActiveIndex}
-                setTabActiveIndex={(index) => {
-                    dispatch(setPersonTabActiveIndex(index));
-                }}
-            />
-        </SafeAreaView>
+        />
     );
 }

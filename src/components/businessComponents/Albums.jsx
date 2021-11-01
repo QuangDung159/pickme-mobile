@@ -17,10 +17,11 @@ const thumbMeasure = (SIZES.WIDTH_BASE * 0.85) / 3;
 const marginValue = ((SIZES.WIDTH_BASE * 0.9) - thumbMeasure * 3) / 2;
 
 export default function Albums({
-    user, isPartner = false,
+    user,
     listImageDisplay,
     onLongPressImage = null, setImageIndex, setVisible,
-    onClickUploadProfileImage = null
+    onClickUploadProfileImage = null,
+    isCurrentUser
 }) {
     // render
     const renderAlbumItem = (imageItem, index, key) => {
@@ -34,7 +35,7 @@ export default function Albums({
                         setVisible(true);
                         setImageIndex(index);
                     }}
-                    onLongPress={() => !isPartner && onLongPressImage && onLongPressImage(imageItem)}
+                    onLongPress={() => isCurrentUser && onLongPressImage && onLongPressImage(imageItem)}
                 >
                     <View style={isPrimary && styles.shadow}>
                         <CenterLoader />
@@ -87,7 +88,7 @@ export default function Albums({
                 flex: 1
             }}
         >
-            {!isPartner && renderButtonAddPhoto()}
+            {isCurrentUser && renderButtonAddPhoto()}
             <>
                 {listImageDisplay.length === 0 ? (
                     <View
@@ -102,7 +103,7 @@ export default function Albums({
                                 color: COLORS.DEFAULT
                             }}
                         >
-                            {`${isPartner ? 'Không có gì để hiển thị' : 'Bạn chưa có ảnh'}`}
+                            {`${isCurrentUser ? 'Bạn chưa có ảnh' : 'Không có gì để hiển thị'}`}
                         </Text>
                     </View>
                 ) : (
