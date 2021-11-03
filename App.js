@@ -1,8 +1,7 @@
 /* eslint-disable global-require */
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
 import { ExpoNotification } from '@components/businessComponents';
-import { IconCustom } from '@components/uiComponents';
-import { IconFamily, Images, Theme } from '@constants/index';
+import { Images, Theme } from '@constants/index';
 import Main from '@containers/Main';
 import { ToastHelpers } from '@helpers/index';
 import store from '@redux/Store';
@@ -64,13 +63,6 @@ const toastConfig = {
                     ]
                 }
             >
-                <IconCustom
-                    name="check"
-                    family={IconFamily.FONT_AWESOME}
-                    size={15}
-                    color={COLORS.SUCCESS}
-                />
-                {'  '}
                 {internalState.text1}
             </Text>
         </View>
@@ -90,13 +82,6 @@ const toastConfig = {
                     ]
                 }
             >
-                <IconCustom
-                    name="remove"
-                    family={IconFamily.FONT_AWESOME}
-                    size={15}
-                    color={COLORS.ERROR}
-                />
-                {'  '}
                 {internalState.text1}
             </Text>
         </View>

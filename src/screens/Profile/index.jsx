@@ -21,6 +21,7 @@ export default function Profile({ route, navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(true);
 
     const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
+    const currentUser = useSelector((state) => state.userReducer.currentUser);
 
     useEffect(
         () => {
@@ -96,6 +97,10 @@ export default function Profile({ route, navigation }) {
                     />
                     <CustomButton
                         onPress={() => {
+                            if (!currentUser.isCustomerVerified) {
+                                ToastHelpers.renderToast('Tài khoản của bạn chưa được xác thực');
+                                return;
+                            }
                             navigation.navigate(ScreenName.CREATE_BOOKING, {
                                 partner: partnerInfo,
                                 from: ScreenName.PROFILE

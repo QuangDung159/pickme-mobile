@@ -107,13 +107,13 @@ export default function Verification({ navigation }) {
             <View
                 style={styles.docFormContainer}
             >
-                {renderUploadDocForm(DocumentType.DRIVER_FRONT, 'Mặt trước CMND/CCCD/bằng xe còn thời hạn')}
+                {renderUploadDocForm(DocumentType.DRIVER_FRONT, 'Ảnh chụp cá nhân')}
                 {renderDocImageByType(DocumentType.DRIVER_FRONT, frontUrl)}
             </View>
             <View
                 style={styles.docFormContainer}
             >
-                {renderUploadDocForm(DocumentType.DRIVER_BACK, 'Mặt sau CMND/CCCD/bằng lái còn thời hạn')}
+                {renderUploadDocForm(DocumentType.DRIVER_BACK, 'Thẻ xanh COVID')}
                 {renderDocImageByType(DocumentType.DRIVER_BACK, backUrl)}
             </View>
         </View>
@@ -187,7 +187,10 @@ export default function Verification({ navigation }) {
 
                 verificationArray.push(verifyItem);
                 if (verificationArray.length === 3) {
-                    const result = UserServices.addVerifyDocAsync({ documents: verificationArray });
+                    const result = UserServices.addVerifyDocAsync({
+                        verifyNote: currentUser.earningExpected ? 'Apply for partner' : 'Apply for customer',
+                        documents: verificationArray
+                    });
                     const { data } = result;
 
                     if (data) {

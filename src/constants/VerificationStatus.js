@@ -1,6 +1,6 @@
 export default {
     REJECT: 'Reject',
     NONE: 'None',
-    IN_PROCESS: 3,
-    ACCEPTED: 4
+    IN_PROCESS: 'InProcess',
+    ACCEPTED: 'Accepted'
 };

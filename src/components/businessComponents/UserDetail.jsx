@@ -244,6 +244,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
             <View
                 style={{
                     width: SIZES.WIDTH_BASE * 0.9,
+                    marginTop: 10
                 }}
             >
                 <PartnerDataSection
@@ -365,6 +366,11 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
 
             <SubInfoProfile user={userInfo} />
 
+            <Line
+                borderColor={COLORS.ACTIVE}
+                width={SIZES.WIDTH_BASE * 0.9}
+            />
+
             <View
                 style={{
                     alignItems: 'center'
@@ -377,7 +383,6 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                             fontSize: SIZES.FONT_H3,
                             fontFamily: TEXT_BOLD,
                             color: COLORS.ACTIVE,
-                            marginVertical: 10
                         }}
                     />
                 )}
@@ -392,7 +397,6 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                                 navigation.navigate(ScreenName.VERIFICATION);
                             }}
                         >
-
                             <View
                                 style={{
                                     marginVertical: 10,
