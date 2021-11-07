@@ -17,15 +17,17 @@ export default function ProfileInfoItem({
     iconColor,
     content,
     fontSize,
+    containerStyle,
+    iconContainerStyle
 }) {
     return (
         <View
-            style={styles.container}
+            style={[styles.container, containerStyle]}
         >
             <View
-                style={{
+                style={[{
                     width: 25
-                }}
+                }, iconContainerStyle]}
             >
                 <IconCustom
                     name={iconName}

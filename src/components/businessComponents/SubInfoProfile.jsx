@@ -66,6 +66,10 @@ export default function SubInfoProfile({ user }) {
                 iconFamily={IconFamily.MATERIAL_COMMUNITY_ICONS}
                 content={`${user.interests}`}
                 iconSize={18}
+                containerStyle={{ alignItems: 'flex-start' }}
+                iconContainerStyle={{
+                    marginTop: 3
+                }}
             />
         </View>
     );
