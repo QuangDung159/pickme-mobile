@@ -311,9 +311,13 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                 }}
                 >
                     <TouchableOpacity
-                        onPress={() => navigation.navigate(
-                            ScreenName.UPDATE_INFO_ACCOUNT,
-                        )}
+                        onPress={() => {
+                            if (isCurrentUser) {
+                                navigation.navigate(
+                                    ScreenName.UPDATE_INFO_ACCOUNT
+                                );
+                            }
+                        }}
                     >
                         <View style={{
                             flexDirection: 'row',
@@ -330,15 +334,17 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                             >
                                 {`${userInfo.fullName}`}
                             </Text>
-                            <IconCustom
-                                style={{
-                                    marginTop: 10, marginLeft: 5
-                                }}
-                                name="edit-2"
-                                family={IconFamily.FEATHER}
-                                size={12}
-                                color={COLORS.DEFAULT}
-                            />
+                            {isCurrentUser && (
+                                <IconCustom
+                                    style={{
+                                        marginTop: 10, marginLeft: 5
+                                    }}
+                                    name="edit-2"
+                                    family={IconFamily.FEATHER}
+                                    size={12}
+                                    color={COLORS.DEFAULT}
+                                />
+                            )}
                         </View>
                     </TouchableOpacity>
 

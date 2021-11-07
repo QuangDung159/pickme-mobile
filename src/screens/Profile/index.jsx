@@ -69,47 +69,49 @@ export default function Profile({ route, navigation }) {
                         setIsShowSpinner={(showSpinner) => setIsShowSpinner(showSpinner)}
                     />
                 )}
-                <View
-                    style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        width: SIZES.WIDTH_BASE * 0.9,
-                        alignSelf: 'center',
-                        position: 'absolute',
-                        bottom: 10
-                    }}
-                >
-                    <CustomButton
-                        onPress={() => {
-                            navigation.navigate(ScreenName.MESSAGE, {
-                                name: partnerInfo.fullName,
-                                userStatus: 'Vừa mới truy cập',
-                                toUserId: partnerInfo.id,
-                                userInfo: partnerInfo
-                            });
+                {currentUser.id !== route.params.userId && (
+                    <View
+                        style={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            width: SIZES.WIDTH_BASE * 0.9,
+                            alignSelf: 'center',
+                            position: 'absolute',
+                            bottom: 10
                         }}
-                        type="default"
-                        label="Nhắn tin"
-                        buttonStyle={{
-                            backgroundColor: COLORS.BASE
-                        }}
-                    />
-                    <CustomButton
-                        onPress={() => {
-                            if (!currentUser.isCustomerVerified) {
-                                ToastHelpers.renderToast('Tài khoản của bạn chưa được xác thực');
-                                return;
-                            }
-                            navigation.navigate(ScreenName.CREATE_BOOKING, {
-                                partner: partnerInfo,
-                                from: ScreenName.PROFILE
-                            });
-                        }}
-                        type="active"
-                        label="Đặt hẹn"
-                    />
-                </View>
+                    >
+                        <CustomButton
+                            onPress={() => {
+                                navigation.navigate(ScreenName.MESSAGE, {
+                                    name: partnerInfo.fullName,
+                                    userStatus: 'Vừa mới truy cập',
+                                    toUserId: partnerInfo.id,
+                                    userInfo: partnerInfo
+                                });
+                            }}
+                            type="default"
+                            label="Nhắn tin"
+                            buttonStyle={{
+                                backgroundColor: COLORS.BASE
+                            }}
+                        />
+                        <CustomButton
+                            onPress={() => {
+                                if (!currentUser.isCustomerVerified) {
+                                    ToastHelpers.renderToast('Tài khoản của bạn chưa được xác thực');
+                                    return;
+                                }
+                                navigation.navigate(ScreenName.CREATE_BOOKING, {
+                                    partner: partnerInfo,
+                                    from: ScreenName.PROFILE
+                                });
+                            }}
+                            type="active"
+                            label="Đặt hẹn"
+                        />
+                    </View>
+                )}
             </>
         );
     } catch (exception) {
