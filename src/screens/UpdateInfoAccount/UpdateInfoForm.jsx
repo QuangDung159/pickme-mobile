@@ -1,20 +1,23 @@
-import { CenterLoader, CustomButton, CustomInput } from '@components/uiComponents';
-import { Gender, Theme } from '@constants/index';
+import {
+    CenterLoader, CustomButton, CustomInput, CustomText, RadioButton
+} from '@components/uiComponents';
+import { Theme } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
 import ValidationHelpers from '@helpers/ValidationHelpers';
-import { Picker } from '@react-native-picker/picker';
 import { setCurrentUser, setPersonTabActiveIndex } from '@redux/Actions';
 import { UserServices } from '@services/index';
+import moment from 'moment';
 import React, { useEffect, useState } from 'react';
-import { Platform, Text, View } from 'react-native';
+import { View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useDispatch, useSelector } from 'react-redux';
 
-const { SIZES, COLORS, FONT: { TEXT_REGULAR } } = Theme;
+const { SIZES, COLORS } = Theme;
 
 export default function UpdateInfoForm() {
     const [newUser, setNewUser] = useState({});
     const [isShowSpinner, setIsShowSpinner] = useState(false);
+    const [isMale, setIsMale] = useState(true);
 
     const currentUser = useSelector((state) => state.userReducer.currentUser);
 
@@ -42,10 +45,6 @@ export default function UpdateInfoForm() {
         setNewUser({ ...newUser, description: descriptionInput });
     };
 
-    const onChangeGender = (genderKey) => {
-        setNewUser({ ...newUser, gender: genderKey });
-    };
-
     const renderInputName = () => (
         <CustomInput
             value={newUser.fullName}
@@ -58,50 +57,6 @@ export default function UpdateInfoForm() {
         />
     );
 
-    const renderPickerGender = () => (
-        <View
-            style={{
-                marginVertical: 10,
-                width: SIZES.WIDTH_BASE * 0.9
-            }}
-        >
-            <Text
-                style={{
-                    fontFamily: TEXT_REGULAR,
-                    fontSize: SIZES.FONT_H3,
-                    color: COLORS.ACTIVE,
-                    marginBottom: 10
-                }}
-            >
-                Giới tính:
-            </Text>
-            <View
-                style={{
-                    marginVertical: Platform.OS === 'ios' ? -30 : -20
-                }}
-            >
-                <Picker
-                    selectedValue={newUser.gender}
-                    onValueChange={(itemValue) => onChangeGender(itemValue)}
-                    itemStyle={{
-                        fontSize: SIZES.FONT_H2,
-                        color: COLORS.DEFAULT
-                    }}
-                    mode="dropdown"
-                    dropdownIconColor={COLORS.ACTIVE}
-                    style={{
-                        fontSize: SIZES.FONT_H2,
-                        color: COLORS.ACTIVE
-                    }}
-                >
-                    {Gender.GENDER_ARRAY.map((item) => (
-                        <Picker.Item value={item.value} label={item.label} key={item.value} />
-                    ))}
-                </Picker>
-            </View>
-        </View>
-    );
-
     const renderInputHometown = () => (
         <CustomInput
             value={newUser.homeTown}
@@ -110,7 +65,7 @@ export default function UpdateInfoForm() {
                 marginVertical: 10,
                 width: SIZES.WIDTH_BASE * 0.9
             }}
-            label="Quê quán:"
+            label="Nơi sinh sống:"
         />
     );
 
@@ -142,21 +97,103 @@ export default function UpdateInfoForm() {
         />
     );
 
+    const renderInputHeightWeight = () => (
+        <View
+            style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginVertical: 10,
+                width: '90%'
+            }}
+        >
+
+            <View>
+                <CustomText
+                    style={{
+                        color: COLORS.ACTIVE,
+                        marginBottom: 10
+                    }}
+                    text="Chiều cao (cm):"
+                />
+                <CustomInput
+                    inputStyle={{
+                        width: SIZES.WIDTH_BASE * 0.44
+                    }}
+                    onChangeText={(input) => setNewUser({ ...newUser, height: input })}
+                    value={newUser.height}
+                    placeholder="Chiều cao (cm)..."
+                    keyboardType="number-pad"
+                />
+            </View>
+
+            <View>
+                <CustomText
+                    style={{
+                        color: COLORS.ACTIVE,
+                        marginBottom: 10
+                    }}
+                    text="Cân nặng (kg):"
+                />
+                <CustomInput
+                    inputStyle={{
+                        width: SIZES.WIDTH_BASE * 0.44
+                    }}
+                    onChangeText={(input) => setNewUser({ ...newUser, weight: input })}
+                    value={newUser.weight}
+                    placeholder="Cân nặng (kg)..."
+                    keyboardType="number-pad"
+                />
+            </View>
+        </View>
+    );
+
+    const renderDobGender = () => (
+        <View
+            style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginVertical: 10,
+                width: '90%',
+            }}
+        >
+            <CustomInput
+                inputStyle={{
+                    width: SIZES.WIDTH_BASE * 0.44
+                }}
+                onChangeText={(input) => onChangeYear(input)}
+                placeholder="Năm sinh..."
+                value={newUser?.dob?.substr(0, 4)}
+                label="Năm sinh:"
+                keyboardType="number-pad"
+            />
+
+            <View style={{
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+                alignItems: 'center',
+                width: SIZES.WIDTH_BASE * 0.44,
+                marginTop: 30
+            }}
+            >
+                <RadioButton
+                    label="Nam"
+                    selected={isMale}
+                    onPress={() => setIsMale(true)}
+                />
+                <RadioButton
+                    label="Nữ"
+                    selected={!isMale}
+                    onPress={() => setIsMale(false)}
+                />
+            </View>
+        </View>
+    );
+
     const onChangeYear = (yearInput) => {
         setNewUser({ ...newUser, dob: yearInput });
     };
-
-    const renderInputYear = () => (
-        <CustomInput
-            containerStyle={{
-                marginVertical: 10,
-                width: SIZES.WIDTH_BASE * 0.9
-            }}
-            onChangeText={(input) => onChangeYear(input)}
-            value={newUser?.dob?.substr(0, 4)}
-            label="Năm sinh:"
-        />
-    );
 
     const renderButtonPanel = () => (
         <View
@@ -184,53 +221,11 @@ export default function UpdateInfoForm() {
     );
 
     const validate = () => {
-        const {
-            fullName,
-            description,
-            homeTown, interests,
-            dob
-        } = newUser;
-
-        const validationArr = [
+        console.log('newUser :>> ', newUser);
+        const validateArr = [
             {
                 fieldName: 'Tên hiển thị',
-                input: fullName,
-                validate: {
-                    required: {
-                        value: true,
-                    },
-                    maxLength: {
-                        value: 255,
-                    },
-                }
-            },
-            {
-                fieldName: 'Quê quán',
-                input: homeTown,
-                validate: {
-                    required: {
-                        value: true,
-                    },
-                    maxLength: {
-                        value: 255,
-                    },
-                }
-            },
-            {
-                fieldName: 'Sở thích',
-                input: interests,
-                validate: {
-                    required: {
-                        value: true,
-                    },
-                    maxLength: {
-                        value: 255,
-                    },
-                }
-            },
-            {
-                fieldName: 'Mô tả bản thân',
-                input: description,
+                input: newUser.fullName,
                 validate: {
                     required: {
                         value: true,
@@ -242,7 +237,7 @@ export default function UpdateInfoForm() {
             },
             {
                 fieldName: 'Năm sinh',
-                input: dob,
+                input: newUser.dob,
                 validate: {
                     required: {
                         value: true,
@@ -255,9 +250,75 @@ export default function UpdateInfoForm() {
                     }
                 }
             },
+            {
+                fieldName: 'Chiều cao',
+                input: newUser.height,
+                validate: {
+                    required: {
+                        value: true,
+                    },
+                }
+            },
+            {
+                fieldName: 'Cân nặng',
+                input: newUser.weight,
+                validate: {
+                    required: {
+                        value: true,
+                    },
+                }
+            },
+            {
+                fieldName: 'Sở thích',
+                input: newUser.interests,
+                validate: {
+                    required: {
+                        value: true,
+                    },
+                    maxLength: {
+                        value: 255,
+                    },
+                }
+            },
+            {
+                fieldName: 'Nơi sinh sống',
+                input: newUser.homeTown,
+                validate: {
+                    required: {
+                        value: true,
+                    },
+                    maxLength: {
+                        value: 255,
+                    },
+                }
+            },
+            {
+                fieldName: 'Mô tả bản thân\n',
+                input: newUser.description,
+                validate: {
+                    required: {
+                        value: true,
+                    },
+                    maxLength: {
+                        value: 255,
+                    },
+                }
+            },
         ];
 
-        return ValidationHelpers.validate(validationArr);
+        if (!validateYearsOld(newUser.dob)) {
+            ToastHelpers.renderToast('Bạn phải đủ 16 tuổi!', 'error');
+            return false;
+        }
+
+        return ValidationHelpers.validate(validateArr);
+    };
+
+    const validateYearsOld = (dob) => {
+        const dateString = moment(dob).format('YYYY-MM-DD');
+        const years = moment().diff(dateString, 'years');
+
+        return !(years < 16);
     };
 
     const onSubmitUpdateInfo = async () => {
@@ -270,6 +331,7 @@ export default function UpdateInfoForm() {
             address,
             gender,
             url,
+            height, weight
         } = newUser;
 
         if (!validate()) {
@@ -283,9 +345,11 @@ export default function UpdateInfoForm() {
             homeTown,
             interests,
             address,
-            email: 'N/a',
-            gender,
+            email: currentUser.userName,
+            IsMale: isMale,
             url,
+            height: +height,
+            weight: +weight
         };
 
         setIsShowSpinner(true);
@@ -302,6 +366,8 @@ export default function UpdateInfoForm() {
                 interests,
                 gender,
                 genderDisplay: data.data.genderDisplay,
+                height,
+                weight
             };
 
             dispatch(setCurrentUser(userInfo));
@@ -330,9 +396,9 @@ export default function UpdateInfoForm() {
                     {newUser && (
                         <>
                             {renderInputName()}
-                            {renderPickerGender()}
+                            {renderDobGender()}
+                            {renderInputHeightWeight()}
                             {renderInputHometown()}
-                            {renderInputYear()}
                             {renderInputInterests()}
                             {renderInputDescription()}
                             {renderButtonPanel()}
