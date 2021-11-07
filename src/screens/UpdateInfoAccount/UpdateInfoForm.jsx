@@ -17,7 +17,6 @@ const { SIZES, COLORS } = Theme;
 export default function UpdateInfoForm() {
     const [newUser, setNewUser] = useState({});
     const [isShowSpinner, setIsShowSpinner] = useState(false);
-    const [isMale, setIsMale] = useState(true);
 
     const currentUser = useSelector((state) => state.userReducer.currentUser);
 
@@ -25,7 +24,8 @@ export default function UpdateInfoForm() {
 
     useEffect(
         () => {
-            setNewUser({ ...currentUser, dob: currentUser?.dob?.substr(0, 4) });
+            console.log('currentUser :>> ', currentUser);
+            setNewUser({ ...currentUser, dob: currentUser?.dob?.substr(0, 4), isMale: currentUser.isMale });
         }, []
     );
 
@@ -179,13 +179,13 @@ export default function UpdateInfoForm() {
             >
                 <RadioButton
                     label="Nam"
-                    selected={isMale}
-                    onPress={() => setIsMale(true)}
+                    selected={newUser.isMale}
+                    onPress={() => setNewUser({ ...newUser, isMale: true })}
                 />
                 <RadioButton
                     label="Nữ"
-                    selected={!isMale}
-                    onPress={() => setIsMale(false)}
+                    selected={!newUser.isMale}
+                    onPress={() => setNewUser({ ...newUser, isMale: false })}
                 />
             </View>
         </View>
@@ -329,9 +329,9 @@ export default function UpdateInfoForm() {
             homeTown,
             interests,
             address,
-            gender,
             url,
-            height, weight
+            height, weight,
+            isMale
         } = newUser;
 
         if (!validate()) {
@@ -364,12 +364,10 @@ export default function UpdateInfoForm() {
                 dob,
                 homeTown,
                 interests,
-                gender,
-                genderDisplay: data.data.genderDisplay,
+                isMale,
                 height,
                 weight
             };
-
             dispatch(setCurrentUser(userInfo));
             dispatch(setPersonTabActiveIndex(0));
             setNewUser(userInfo);
