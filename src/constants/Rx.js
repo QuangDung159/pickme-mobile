@@ -53,7 +53,8 @@ export default {
         GET_LIST_PARTNER: '/users/Partners',
     },
     CASH: {
-        GET_CASH_HISTORY: '/users/UserHistories'
+        GET_CASH_HISTORY: '/users/UserHistories',
+        CREATE_CASH_OUT_REQUEST: '/CashOuts/CreateCashOutRequest',
     },
     NOTIFICATION: {
         GET_MY_NOTIFICATION: '/Notifications/Notifications',

@@ -249,6 +249,9 @@ export default function BookingList({ navigation }) {
                     {groupBooking.map((booking) => (
                         <View
                             key={booking.id}
+                            style={{
+                                marginBottom: 5
+                            }}
                         >
                             {renderBookingInfo(booking)}
                         </View>
