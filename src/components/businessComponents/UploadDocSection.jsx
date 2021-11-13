@@ -135,8 +135,8 @@ export default function UploadDocSection({ setIsShowSpinner, navigation, route }
 
     const renderUploadDocForm = (docType, buttonText) => {
         let isDisabled = false;
-        if (currentUser.verifyStatus !== VerificationStatus.NONE
-            && currentUser.verifyStatus !== VerificationStatus.REJECT) {
+        if (currentUser?.verifyStatus !== VerificationStatus.NONE
+            && currentUser?.verifyStatus !== VerificationStatus.REJECT) {
             isDisabled = true;
         }
         return (
@@ -249,7 +249,7 @@ export default function UploadDocSection({ setIsShowSpinner, navigation, route }
     };
 
     const renderButtonPanel = () => {
-        if (currentUser.verifyStatus === VerificationStatus.NONE) {
+        if (currentUser?.verifyStatus === VerificationStatus.NONE) {
             return (
                 <View
                     style={{

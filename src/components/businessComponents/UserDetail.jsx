@@ -398,7 +398,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
 
             {isCurrentUser && (
                 <>
-                    {userInfo.verifyStatus !== VerificationStatus.ACCEPTED && (
+                    {userInfo?.verifyStatus !== VerificationStatus.ACCEPTED && (
                         <TouchableWithoutFeedback
                             onPress={() => {
                                 navigation.navigate(ScreenName.VERIFICATION);
