@@ -18,13 +18,14 @@ const generateLogData = (endpoint, body, headers, res) => {
     return `${res.status} ${endpoint}:\n ${objectStr}`;
 };
 
-const logMessage = (res, endpoint, headers, body) => {
+const logMessage = (res, endpoint, headers, body, method, apiTokenLocal) => {
     const textColor = res.status === 200 || res.status === 201 ? `color: ${COLORS.SUCCESS}` : `color: ${COLORS.ERROR}`;
-    console.log(`%c${res.status} ${endpoint}`, textColor, {
+    console.log(`%c${method.toUpperCase()} ${res.status} ${endpoint}`, textColor, {
         headers,
         body,
         response: res
     });
+    console.log(`%c${apiTokenLocal}`, textColor);
 };
 
 export default async (
@@ -81,7 +82,7 @@ export default async (
         //     response.status = res.status;
         // }
 
-        logMessage(response, url, headers, body);
+        logMessage(response, url, headers, body, method, apiTokenLocal);
 
         if (response.status !== 200 && response.status !== 201) {
             // check token expired
@@ -99,7 +100,7 @@ export default async (
             response, response: { data }
         } = err;
 
-        logMessage(response, url, headers, body);
+        logMessage(response, url, headers, body, method, apiTokenLocal);
         const logInfo = generateLogData(endpoint, data, headers, response);
         slackUtil('catch', logInfo);
 

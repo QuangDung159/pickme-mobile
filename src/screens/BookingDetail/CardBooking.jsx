@@ -6,6 +6,7 @@ import {
 } from 'react-native';
 import { Theme } from '@constants/index';
 import { CommonHelpers, ToastHelpers } from '@helpers/index';
+import { useSelector } from 'react-redux';
 
 const {
     FONT: {
@@ -17,6 +18,7 @@ const {
 } = Theme;
 
 export default function CardBooking({ booking }) {
+    const currentUser = useSelector((state) => state.userReducer.currentUser);
     const convertMinutesToStringHours = (minutes) => moment.utc()
         .startOf('day')
         .add(minutes, 'minutes')
@@ -26,12 +28,14 @@ export default function CardBooking({ booking }) {
         const {
             startAt,
             endAt,
-            partner,
+            partnerName,
             totalAmount,
-            statusValue,
+            status,
             date,
             idReadAble,
-            address
+            address,
+            customerId,
+            customerName
         } = booking;
 
         if (!booking) {
@@ -40,7 +44,6 @@ export default function CardBooking({ booking }) {
 
         const startStr = convertMinutesToStringHours(startAt);
         const endStr = convertMinutesToStringHours(endAt);
-        const { fullName } = partner;
 
         return (
             <View
@@ -52,6 +55,20 @@ export default function CardBooking({ booking }) {
                     borderBottomWidth: 0.5
                 }}
             >
+                <Text
+                    style={
+                        [
+                            styles.cardTitle,
+                            {
+                                fontSize: SIZES.FONT_H5,
+                                color: COLORS.DEFAULT,
+                                fontFamily: TEXT_REGULAR
+                            }
+                        ]
+                    }
+                >
+                    {`${customerId === currentUser.id ? 'Host' : 'Khách hàng'}`}
+                </Text>
                 <View
                     style={{
                         flexDirection: 'row',
@@ -72,7 +89,7 @@ export default function CardBooking({ booking }) {
                             ]
                         }
                     >
-                        {`${fullName}`}
+                        {`${customerId === currentUser.id ? partnerName : customerName}`}
                     </Text>
                     <Text
                         style={
@@ -158,7 +175,7 @@ export default function CardBooking({ booking }) {
                             ]
                         }
                     >
-                        {`Trạng thái: ${statusValue}`}
+                        {`Trạng thái: ${status}`}
                     </Text>
                     <View
                         style={{

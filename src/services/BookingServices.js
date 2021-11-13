@@ -6,7 +6,7 @@ import { RxUtil } from '@utils/index';
 const rxFetchListBookingAsync = async (pageIndex, pageSize, domain = null) => {
     const pagingStr = `?pageIndex=${pageIndex}&pageSize=${pageSize}`;
     const result = await RxUtil(
-        `${Rx.BOOKING.GET_LIST_BOOKING}${pagingStr}`,
+        `${Rx.BOOKING.GET_LIST_BOOKING_AS_CUSTOMER}${pagingStr}`,
         'GET',
         null, domain
     );
@@ -19,6 +19,27 @@ const fetchListBookingAsync = async (pageIndex = 1, pageSize = 100) => {
     const handledResult = await Middlewares.handleResponseStatusMiddleware(result);
     if (handledResult) {
         result = await rxFetchListBookingAsync(pageIndex, pageSize, handledResult.backupDomain);
+    }
+
+    return CommonHelpers.handleResByStatus(result);
+};
+
+const rxFetchListBookingAsPartnerAsync = async (pageIndex, pageSize, domain = null) => {
+    const pagingStr = `?pageIndex=${pageIndex}&pageSize=${pageSize}`;
+    const result = await RxUtil(
+        `${Rx.BOOKING.GET_LIST_BOOKING_AS_PARTNER}${pagingStr}`,
+        'GET',
+        null, domain
+    );
+    return result;
+};
+
+const fetchListBookingAsPartnerAsync = async (pageIndex = 1, pageSize = 100) => {
+    let result = await rxFetchListBookingAsPartnerAsync(pageIndex, pageSize);
+
+    const handledResult = await Middlewares.handleResponseStatusMiddleware(result);
+    if (handledResult) {
+        result = await rxFetchListBookingAsPartnerAsync(pageIndex, pageSize, handledResult.backupDomain);
     }
 
     return CommonHelpers.handleResByStatus(result);
@@ -221,6 +242,25 @@ const fetchListPartnerAsync = async () => {
     return CommonHelpers.handleResByStatus(result);
 };
 
+const rxSubmitConfirmAcceptAsync = async (bookingId) => {
+    const result = await RxUtil(
+        `${Rx.BOOKING.PARTNER_CONFIRM_BOOKING}/${bookingId}`,
+        'POST'
+    );
+    return result;
+};
+
+const submitConfirmAcceptAsync = async (bookingId) => {
+    let result = await rxSubmitConfirmAcceptAsync(bookingId);
+
+    const handledResult = await Middlewares.handleResponseStatusMiddleware(result);
+    if (handledResult) {
+        result = await rxSubmitConfirmAcceptAsync(bookingId);
+    }
+
+    return CommonHelpers.handleResByStatus(result);
+};
+
 export default {
     fetchListBookingAsync,
     submitCancelBookingAsync,
@@ -232,5 +272,7 @@ export default {
     fetchListPartnerPackageAsync,
     fetchPartnerBusyCalendarAsync,
     submitScheduleBookingAsync,
-    fetchListPartnerAsync
+    fetchListPartnerAsync,
+    submitConfirmAcceptAsync,
+    fetchListBookingAsPartnerAsync
 };

@@ -81,17 +81,16 @@ export default function BookingDetail({
     };
 
     const fetchListBooking = async () => {
-        const result = await BookingServices.fetchListBookingAsync();
-        const { data } = result;
+        const bookingAsCustomer = await BookingServices.fetchListBookingAsync();
+        const bookingAsPartner = await BookingServices.fetchListBookingAsPartnerAsync();
 
-        if (data) {
-            dispatch(setListBookingStore(data.data));
-            dispatch(setShowLoaderStore(false));
-            setRefreshing(false);
-        } else {
-            setRefreshing(false);
-            dispatch(setShowLoaderStore(false));
+        if (bookingAsPartner.data && bookingAsCustomer.data) {
+            const listBooking = bookingAsCustomer.data.data.concat(bookingAsPartner.data.data);
+            dispatch(setListBookingStore(listBooking));
         }
+
+        setRefreshing(false);
+        dispatch(setShowLoaderStore(false));
     };
 
     const fetchBookingDetailInfo = async () => {
@@ -101,6 +100,7 @@ export default function BookingDetail({
         if (data) {
             dispatch(setCurrentBookingRedux(data.data));
         }
+        console.log('data :>> ', data);
 
         setRefreshing(false);
         dispatch(setShowLoaderStore(false));
@@ -191,14 +191,9 @@ export default function BookingDetail({
                                             </Text>
                                         </View>
 
-                                        <BookingProgressFlow
-                                            status={currentBookingRedux.status}
-                                            partner={currentBookingRedux.partner}
-                                            booking={currentBookingRedux}
-                                        />
+                                        <BookingProgressFlow />
 
                                         <ButtonPanel
-                                            booking={currentBookingRedux}
                                             setModalReasonVisible={setModalReasonVisible}
                                             navigation={navigation}
                                             fetchListBooking={fetchListBooking}

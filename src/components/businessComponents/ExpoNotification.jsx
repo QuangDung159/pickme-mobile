@@ -144,11 +144,12 @@ export default function ExpoNotification() {
     };
 
     const fetchListBooking = async () => {
-        const result = await BookingServices.fetchListBookingAsync();
-        const { data } = result;
+        const bookingAsCustomer = await BookingServices.fetchListBookingAsync();
+        const bookingAsPartner = await BookingServices.fetchListBookingAsPartnerAsync();
 
-        if (data) {
-            dispatch(setListBookingStore(data.data));
+        if (bookingAsPartner.data && bookingAsCustomer.data) {
+            const listBooking = bookingAsCustomer.data.data.concat(bookingAsPartner.data.data);
+            dispatch(setListBookingStore(listBooking));
         }
     };
 

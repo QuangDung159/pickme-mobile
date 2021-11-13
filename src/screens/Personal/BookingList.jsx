@@ -1,6 +1,6 @@
 import { CenterLoader, Line } from '@components/uiComponents';
 import {
-    BookingStatus, Theme, ScreenName
+    BookingStatus, ScreenName, Theme
 } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
 import { setListBookingStore } from '@redux/Actions';
@@ -28,6 +28,7 @@ export default function BookingList({ navigation }) {
     const [refreshing, setRefreshing] = useState(false);
 
     const listBookingStore = useSelector((state) => state.userReducer.listBookingStore);
+    const currentUser = useSelector((state) => state.userReducer.currentUser);
     const dispatch = useDispatch();
 
     useEffect(
@@ -41,17 +42,16 @@ export default function BookingList({ navigation }) {
     const groupBookingByDate = () => groupBy(listBookingStore, (n) => n.date);
 
     const fetchListBooking = async () => {
-        const result = await BookingServices.fetchListBookingAsync();
-        const { data } = result;
+        const bookingAsCustomer = await BookingServices.fetchListBookingAsync();
+        const bookingAsPartner = await BookingServices.fetchListBookingAsPartnerAsync();
 
-        if (data) {
-            dispatch(setListBookingStore(data.data));
-            setIsShowSpinner(false);
-            setRefreshing(false);
-        } else {
-            setIsShowSpinner(false);
-            setRefreshing(false);
+        if (bookingAsPartner.data && bookingAsCustomer.data) {
+            const listBooking = bookingAsCustomer.data.data.concat(bookingAsPartner.data.data);
+            dispatch(setListBookingStore(listBooking));
         }
+
+        setIsShowSpinner(false);
+        setRefreshing(false);
     };
 
     const convertMinutesToStringHours = (minutes) => moment.utc()
@@ -61,14 +61,15 @@ export default function BookingList({ navigation }) {
 
     const renderBookingInfo = (booking) => {
         const {
-            partner,
+            partnerName,
             startAt,
             endAt,
-            statusValue,
             status,
             id,
             idReadAble,
-            address
+            address,
+            customerName,
+            customerId
         } = booking;
 
         const startStr = convertMinutesToStringHours(startAt);
@@ -118,7 +119,7 @@ export default function BookingList({ navigation }) {
                                 color: colorByStatus,
                             }}
                         >
-                            {partner?.fullName}
+                            {customerId === currentUser.id ? partnerName : customerName}
                         </Text>
 
                         <View
@@ -144,7 +145,7 @@ export default function BookingList({ navigation }) {
                                 color: colorByStatus
                             }}
                             >
-                                {statusValue}
+                                {status}
                             </Text>
                         </View>
 
