@@ -39,7 +39,8 @@ export default async (
 
     const url = `${domain || API_URL}${endpoint}`;
 
-    if (endpoint !== Rx.AUTHENTICATION.LOGIN) {
+    if (endpoint !== Rx.AUTHENTICATION.LOGIN
+        && endpoint !== Rx.USER.GET_OTP_REGISTER) {
         // eslint-disable-next-line no-param-reassign
         headers = {
             Authorization: `Bearer ${apiTokenLocal}`

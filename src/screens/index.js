@@ -6,9 +6,11 @@ import CreateBooking from './CreateBooking';
 import ForgotPassword from './ForgotPassword';
 import Home from './Home';
 import LeaderBoard from './LeaderBoard';
+import Menu from './Menu';
 import Message from './Message';
 import Notification from './Notification';
 import Onboarding from './Onboarding';
+import PartnerRegister from './PartnerRegister';
 import Personal from './Personal';
 import Profile from './Profile';
 import Settings from './Settings';
@@ -34,5 +36,7 @@ export {
     Support,
     Verification,
     SignInWithOTP,
-    ForgotPassword
+    ForgotPassword,
+    PartnerRegister,
+    Menu
 };

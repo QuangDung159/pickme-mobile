@@ -63,7 +63,7 @@ export default function OtpForm({
         dispatch(setIsSignInOtherDeviceStore(false));
         dispatch(setShowLoaderStore(false));
 
-        SecureStore.setItemAsync('api_token', tokenFromAPI);
+        SecureStore.setItemAsync('api_token', tokenFromAPI.toString());
         navigation.navigate(ScreenName.CREATE_ACCOUNT);
     };
 
@@ -82,8 +82,8 @@ export default function OtpForm({
 
         if (data) {
             onLoginSuccess(data);
-            SecureStore.setItemAsync('username', username);
-            SecureStore.setItemAsync('password', password);
+            SecureStore.setItemAsync('username', username.toString());
+            SecureStore.setItemAsync('password', password.toString());
         }
         dispatch(setShowLoaderStore(false));
     };

@@ -1,5 +1,4 @@
 /* eslint-disable max-len */
-import { BecomePartnerText } from '@components/businessComponents';
 import {
     CenterLoader, CustomButton, CustomInput, CustomText, RadioButton
 } from '@components/uiComponents';
@@ -424,12 +423,6 @@ export default function CreateAccount(props) {
                     bottom: 0
                 }}
             >
-                <BecomePartnerText onPress={
-                    () => navigation.navigate(ScreenName.PARTNER_REGISTER, {
-                        from: ScreenName.SIGN_UP
-                    })
-                }
-                />
                 <CustomButton
                     onPress={() => {
                         dispatch(setToken(''));

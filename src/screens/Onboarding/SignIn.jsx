@@ -152,8 +152,8 @@ export default function SignIn({ navigation, setIsShowSpinner, isRegisterPartner
                 },
                 {
                     text: 'Tiếp tục',
-                    onPress: () => navigation.navigate(ScreenName.PARTNER_REGISTER, {
-                        from: ScreenName.ONBOARDING
+                    onPress: () => navigation.navigate(ScreenName.VERIFICATION, {
+                        navigateFrom: ScreenName.MENU
                     })
                 },
             ],

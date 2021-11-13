@@ -15,10 +15,8 @@ import {
     Onboarding, Personal,
     Profile, Settings, SignInWithOTP, SignUp,
     Support, UpdateInfoAccount,
-    Verification
+    Verification, PartnerRegister, Menu
 } from '@screens/index';
-import Menu from '@screens/Menu';
-import PartnerRegister from '@screens/PartnerRegister';
 import React from 'react';
 
 const Stack = createStackNavigator();
