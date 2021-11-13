@@ -10,7 +10,6 @@ const COLORS = {
     SUCCESS: '#2C8F46',
     INPUT: '#DCDCDC',
     ACTIVE: '#2C8F46',
-    BORDER_COLOR: '#2C8F46',
     LIST_ITEM_BACKGROUND_1: '#ffeee3',
     LIST_ITEM_BACKGROUND_2: '#cdf6ff',
     TRANSPARENT: 'transparent',

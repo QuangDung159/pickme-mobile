@@ -15,7 +15,8 @@ export default function CustomText({ text, style }) {
                 style={[{
                     fontFamily: TEXT_REGULAR,
                     fontSize: SIZES.FONT_H3,
-                    color: COLORS.DEFAULT
+                    color: COLORS.DEFAULT,
+                    marginBottom: 5
                 }, style]}
             >
                 {text}

@@ -1,5 +1,5 @@
 export default {
-    CANCEL: 'Cancel',
+    CANCEL: 'Canceled',
     SCHEDULING: 'Scheduling',
     IS_CONFIRMED: 'Confirmed',
     PAID: 'Paid',

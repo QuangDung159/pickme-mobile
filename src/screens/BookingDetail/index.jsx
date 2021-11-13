@@ -100,7 +100,6 @@ export default function BookingDetail({
         if (data) {
             dispatch(setCurrentBookingRedux(data.data));
         }
-        console.log('data :>> ', data);
 
         setRefreshing(false);
         dispatch(setShowLoaderStore(false));
@@ -182,7 +181,7 @@ export default function BookingDetail({
                                                         {
                                                             color: COLORS.DEFAULT,
                                                             fontSize: SIZES.FONT_H3,
-                                                            marginBottom: 20
+                                                            marginVertical: 15
                                                         }
                                                     ]
                                                 }

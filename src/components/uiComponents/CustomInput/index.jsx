@@ -50,7 +50,7 @@ export default function CustomInput({
             style={
                 [
                     {
-                        borderColor: COLORS.BORDER_COLOR,
+                        borderColor: COLORS.ACTIVE,
                         borderWidth: 1,
                         borderRadius: 20,
                         height: 40,
