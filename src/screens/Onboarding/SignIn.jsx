@@ -144,7 +144,7 @@ export default function SignIn({ navigation, setIsShowSpinner, isRegisterPartner
         dispatch(setCurrentUser(currentUserInfo));
 
         if (isRegisterPartner) {
-            Alert.alert('Bạn vừa chọn đăng ký trở thành host', 'Bạn có muốn tiếp tục?', [
+            Alert.alert('Bạn vừa chọn đăng ký trở thành Host', 'Bạn có muốn tiếp tục?', [
                 {
                     text: 'Huỷ',
                     style: 'cancel',

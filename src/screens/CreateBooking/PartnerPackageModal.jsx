@@ -120,7 +120,7 @@ export default function PartnerPackageModal({
                             marginBottom: 10
                         }}
                     >
-                        {`Lời nhắn từ host: ${packageActive.noted}`}
+                        {`Lời nhắn từ Host: ${packageActive.noted}`}
                     </Text>
                     <View
                         style={{

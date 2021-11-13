@@ -1,5 +1,9 @@
-import { CustomButton, CustomText } from '@components/uiComponents';
+/* eslint-disable max-len */
+import {
+    CustomButton, CustomModal, CustomText, IconCustom, RadioButton
+} from '@components/uiComponents';
 import DocumentType from '@constants/DocumentType';
+import IconFamily from '@constants/IconFamily';
 import Theme from '@constants/Theme';
 import VerificationStatus from '@constants/VerificationStatus';
 import MediaHelpers from '@helpers/MediaHelpers';
@@ -7,7 +11,7 @@ import ToastHelpers from '@helpers/ToastHelpers';
 import { setVerificationStore } from '@redux/Actions';
 import UserServices from '@services/UserServices';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import ImageScalable from 'react-native-scalable-image';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -25,6 +29,8 @@ export default function UploadCodSection({ setIsShowSpinner, navigation }) {
     const [faceUrl, setFaceUrl] = useState('');
     const [frontUrl, setFrontUrl] = useState('');
     const [backUrl, setBackUrl] = useState('');
+    const [isForPartnerVerify, setIsForPartnerVerify] = useState(false);
+    const [modalInfoVisible, setModalInfoVisible] = useState(false);
 
     const currentUser = useSelector((state) => state.userReducer.currentUser);
     const verificationStore = useSelector((state) => state.userReducer.verificationStore);
@@ -191,7 +197,7 @@ export default function UploadCodSection({ setIsShowSpinner, navigation }) {
                 verificationArray.push(verifyItem);
                 if (verificationArray.length === 3) {
                     const result = UserServices.addVerifyDocAsync({
-                        verifyNote: currentUser.earningExpected ? 'Apply for partner' : 'Apply for customer',
+                        verifyNote: isForPartnerVerify ? 'Xác thực tài khoản Host' : 'xác thực tài khoản khách hàng',
                         documents: verificationArray
                     });
                     const { data } = result;
@@ -245,9 +251,7 @@ export default function UploadCodSection({ setIsShowSpinner, navigation }) {
                         marginVertical: 15
                     }}
                 >
-                    <CustomText>
-                        Chưa có ảnh
-                    </CustomText>
+                    <CustomText text="Chưa có ảnh" />
                 </View>
             );
         }
@@ -269,9 +273,92 @@ export default function UploadCodSection({ setIsShowSpinner, navigation }) {
         );
     };
 
+    const renderInfoModal = () => (
+        <CustomModal
+            modalVisible={modalInfoVisible}
+            renderContent={() => (
+                <>
+                    <CustomText
+                        style={{
+                            width: SIZES.WIDTH_BASE * 0.8,
+                            color: COLORS.DEFAULT,
+                        }}
+                        text='Nếu bạn chọn "Xác thực người dùng", bạn sẽ có đầy đủ các tính năng khách hàng của PickMe như nhắn tin, đặt hẹn,...'
+                    />
+                    <CustomText
+                        style={{
+                            width: SIZES.WIDTH_BASE * 0.8,
+                            color: COLORS.DEFAULT,
+                        }}
+                        text='Nếu bạn chọn "Đăng kí Host", bạn sẽ có đầy đủ các tính năng khách hàng của PickMe như nhắn tin, đặt hẹn,..., và các chức năng của Host như nhận đơn hẹn, thêm thu nhập,...'
+                    />
+
+                    <View
+                        style={{
+                            width: SIZES.WIDTH_BASE * 0.8,
+                            marginVertical: 10,
+                            alignSelf: 'center',
+                            alignItems: 'center',
+                        }}
+                    >
+                        <CustomButton
+                            onPress={() => setModalInfoVisible(false)}
+                            buttonStyle={{
+                                width: SIZES.WIDTH_BASE * 0.39
+                            }}
+                            type="default"
+                            label="Tôi đã hiểu"
+                        />
+                    </View>
+                </>
+            )}
+        />
+    );
+
     try {
         return (
-            <>
+            <View
+                style={{
+                    marginTop: 10
+                }}
+            >
+                {renderInfoModal()}
+                <TouchableOpacity
+                    style={{
+                        flexDirection: 'row',
+                        alignItems: 'flex-start'
+                    }}
+                    onPress={() => setModalInfoVisible(true)}
+                >
+                    <CustomText
+                        text="Chọn mục đích: "
+                    />
+                    <IconCustom
+                        name="info-circle"
+                        family={IconFamily.FONT_AWESOME}
+                        size={14}
+                        color={COLORS.ACTIVE}
+                    />
+                </TouchableOpacity>
+
+                <View
+                    style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'center'
+                    }}
+                >
+                    <RadioButton
+                        label="Xác thực người dùng"
+                        selected={!isForPartnerVerify}
+                        onPress={() => setIsForPartnerVerify(false)}
+                    />
+                    <RadioButton
+                        label="Đăng kí Host"
+                        selected={isForPartnerVerify}
+                        onPress={() => setIsForPartnerVerify(true)}
+                    />
+                </View>
                 <View
                     style={{
                         marginTop: 10,
@@ -281,7 +368,7 @@ export default function UploadCodSection({ setIsShowSpinner, navigation }) {
                     {renderDocSection()}
                 </View>
                 {renderButtonPanel()}
-            </>
+            </View>
         );
     } catch (exception) {
         console.log('exception :>> ', exception);

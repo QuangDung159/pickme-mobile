@@ -26,6 +26,6 @@ export default {
     VERIFICATION: 'Xác thực tài khoản',
     SIGN_IN_WITH_OTP: 'Đăng nhập',
     FORGOT_PASSWORD: 'Quên mật khẩu',
-    PARTNER_REGISTER: 'Đăng ký trở thành host',
+    PARTNER_REGISTER: 'Đăng ký trở thành Host',
     CHANGE_PASSWORD: 'Đổi mật khẩu',
 };

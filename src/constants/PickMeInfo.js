@@ -54,7 +54,7 @@ export default {
     ],
     faq: [
         {
-            answer: 'Việc quyết định địa điểm hẹn là do khách hàng và host tự thỏa thuận với nhau.',
+            answer: 'Việc quyết định địa điểm hẹn là do khách hàng và Host tự thỏa thuận với nhau.',
             question: 'Tôi có thể đặt địa điểm hẹn ở những nơi nào?'
         },
         {
@@ -62,8 +62,8 @@ export default {
             question: 'Vậy tôi có thể đặt lịch hẹn xuyên đêm hay không?'
         },
         {
-            answer: 'Bạn vui lòng vào trang chủ của ứng dụng tại địa chỉ. sau đó truy cập vào phần trở thành host.',
-            question: 'Tôi muốnt trở thành host của ứng dụng?'
+            answer: 'Bạn vui lòng vào trang chủ của ứng dụng tại địa chỉ. sau đó truy cập vào phần trở thành Host.',
+            question: 'Tôi muốnt trở thành Host của ứng dụng?'
         },
         {
             answer: 'Bạn vui lòng mở phần trang cá nhân lên. mở phần nạp tiền và làm theo hướng dẫn.',
@@ -82,8 +82,8 @@ export default {
             question: 'Tôi muốn đóng góp ý kiến?'
         },
         {
-            answer: 'Chúng tôi luôn muốn sự an toàn cho cả host và khách hàng nên bạn có thể tham khảo về thông tin cá nhân tại đây',
-            question: 'Thông tin xác thực của các host?'
+            answer: 'Chúng tôi luôn muốn sự an toàn cho cả Host và khách hàng nên bạn có thể tham khảo về thông tin cá nhân tại đây',
+            question: 'Thông tin xác thực của các Host?'
         },
     ]
 };

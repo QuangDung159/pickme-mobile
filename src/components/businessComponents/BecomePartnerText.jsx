@@ -13,7 +13,7 @@ const {
 export default function BecomePartnerText({ onPress }) {
     return (
         <TouchableText
-            text={'Cải thiện thu nhập?\nHãy trở thành host của PickMe'}
+            text={'Cải thiện thu nhập?\nHãy trở thành Host của PickMe'}
             style={{
                 color: COLORS.ACTIVE,
                 fontSize: SIZES.FONT_H3,
