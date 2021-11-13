@@ -109,7 +109,7 @@ export default function PartnerBusyCalendarModal({ listBusyBySelectedDate, modal
                         }}
 
                     >
-                        Đối tác rảnh vào ngày này, đặt hẹn nào!
+                        Host rảnh vào ngày này, đặt hẹn nào!
                     </Text>
                 </View>
             ) : (
@@ -132,7 +132,7 @@ export default function PartnerBusyCalendarModal({ listBusyBySelectedDate, modal
                             fontSize: SIZES.FONT_H2
                         }}
                     >
-                        Lịch bận của đối tác
+                        Lịch bận của host
                     </Text>
                     <View
                         style={{

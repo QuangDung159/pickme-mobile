@@ -53,7 +53,7 @@ export default function CustomInput({
                         borderColor: COLORS.ACTIVE,
                         borderWidth: 1,
                         borderRadius: 20,
-                        height: 40,
+                        height: 36,
                         paddingHorizontal: 10,
                         fontFamily: TEXT_REGULAR,
                         fontSize: SIZES.FONT_H3,
@@ -139,7 +139,7 @@ export default function CustomInput({
                                 fontFamily: TEXT_REGULAR,
                                 fontSize: SIZES.FONT_H3,
                                 color: COLORS.ACTIVE,
-                                marginBottom: 10
+                                marginBottom: 3
                             },
                             labelStyle
                         ]

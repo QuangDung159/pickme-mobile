@@ -184,7 +184,7 @@ export default function PartnerRegister({ navigation }) {
                                         ]
                                     }
                                 >
-                                    Trở thành đối tác
+                                    Trở thành host
                                 </Text>
                             </View>
                             {renderFormByStep()}

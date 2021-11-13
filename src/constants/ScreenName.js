@@ -29,4 +29,5 @@ export default {
     SIGN_IN_WITH_OTP: 'SignInWithOTP',
     FORGOT_PASSWORD: 'ForgotPassword',
     PARTNER_REGISTER: 'PartnerRegister',
+    CHANGE_PASSWORD: 'ChangePassword',
 };

@@ -6,11 +6,9 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import {
     BookingDetailScreen,
-    CashInScreen,
-    ConversationListScreen,
+    CashInScreen, ChangePasswordScreen, ConversationListScreen,
     CreateAccountScreen, CreateBookingScreen,
-    ForgotPasswordScreen, HomeScreen,
-    LeaderBoardScreen, MenuScreen, MessageScreen,
+    ForgotPasswordScreen, HomeScreen, LeaderBoardScreen, MenuScreen, MessageScreen,
     NotificationScreen,
     OnboardingScreen, PartnerRegisterScreen, PersonalScreen,
     ProfileScreen,
@@ -42,6 +40,10 @@ const SignInWithOTPStack = () => (
 const MenuStack = () => (
     <Stack.Navigator mode="card" headerMode="screen">
         {MenuScreen()}
+        {ChangePasswordScreen()}
+        {LeaderBoardScreen()}
+        {SupportScreen()}
+        {SettingsScreen()}
     </Stack.Navigator>
 );
 
@@ -53,8 +55,6 @@ const PersonalStack = () => (
         {BookingDetailScreen()}
         {CreateBookingScreen()}
         {MessageScreen()}
-        {SupportScreen()}
-        {SettingsScreen()}
         {VerificationScreen()}
         {PartnerRegisterScreen()}
     </Stack.Navigator>
@@ -67,7 +67,6 @@ const HomeStack = () => (
         {CreateBookingScreen()}
         {MessageScreen()}
         {SupportScreen()}
-        {SettingsScreen()}
         {PersonalScreen()}
     </Stack.Navigator>
 );
@@ -79,8 +78,6 @@ const NotificationStack = () => (
         {CreateBookingScreen()}
         {PersonalScreen()}
         {CashInScreen()}
-        {SupportScreen()}
-        {SettingsScreen()}
     </Stack.Navigator>
 );
 

@@ -1,6 +1,7 @@
 import { CustomText, IconCustom, Line } from '@components/uiComponents';
 import IconFamily from '@constants/IconFamily';
 import ScreenName from '@constants/ScreenName';
+import ScreenTitle from '@constants/ScreenTitle';
 import Theme from '@constants/Theme';
 import ToastHelpers from '@helpers/ToastHelpers';
 import { resetStoreSignOut } from '@redux/Actions';
@@ -21,23 +22,23 @@ export default function Menu({ navigation }) {
     const dispatch = useDispatch();
 
     const listMenu = [
-        {
-            title: 'Đơn hẹn',
-            icon: {
-                name: 'list-alt',
-                family: IconFamily.FONT_AWESOME,
-                size: 26,
-            },
-            onPress: () => {
-                navigation.navigate(ScreenName.LEADER_BOARD);
-            },
-        },
+        // {
+        //     title: 'Đơn hẹn',
+        //     icon: {
+        //         name: 'list-alt',
+        //         family: IconFamily.FONT_AWESOME,
+        //         size: 26,
+        //     },
+        //     onPress: () => {
+        //         navigation.navigate(ScreenName.LEADER_BOARD);
+        //     },
+        // },
         {
             title: 'Bảng xếp hạng',
             icon: {
                 name: 'award',
                 family: IconFamily.FONT_AWESOME_5,
-                size: SIZES.FONT_H1,
+                size: 26,
             },
             onPress: () => {
                 navigation.navigate(ScreenName.LEADER_BOARD);
@@ -47,7 +48,7 @@ export default function Menu({ navigation }) {
             title: 'Hỗ trợ',
             icon: {
                 family: IconFamily.MATERIAL_ICONS,
-                size: 26,
+                size: 30,
                 name: 'contact-support',
             },
             onPress: () => {
@@ -59,10 +60,21 @@ export default function Menu({ navigation }) {
             icon: {
                 name: 'gear',
                 family: IconFamily.FONT_AWESOME,
-                size: 26,
+                size: 30,
             },
             onPress: () => {
                 navigation.navigate(ScreenName.SETTINGS);
+            },
+        },
+        {
+            title: ScreenTitle.CHANGE_PASSWORD,
+            icon: {
+                name: 'user-lock',
+                family: IconFamily.FONT_AWESOME_5,
+                size: 22,
+            },
+            onPress: () => {
+                navigation.navigate(ScreenName.CHANGE_PASSWORD);
             },
         },
         {

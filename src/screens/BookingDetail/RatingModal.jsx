@@ -56,7 +56,7 @@ export default function RatingModal({
             }}
         >
             <CustomCheckbox
-                label={`Sẽ giới thiệu đối tác với bạn bè ${'<3'}!`}
+                label={`Sẽ giới thiệu host với bạn bè ${'<3'}!`}
                 onChange={(checked) => {
                     setIsRecomendForFriends(checked);
                 }}

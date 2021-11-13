@@ -2,6 +2,7 @@
 import { ScreenName, ScreenTitle, Theme } from '@constants/index';
 import Header from '@containers/Header';
 import { createStackNavigator } from '@react-navigation/stack';
+import ChangePassword from '@screens/ChangePassword';
 // screens
 import {
     BookingDetail,
@@ -273,6 +274,24 @@ export const SettingsScreen = () => (
             header: ({ navigation, scene }) => (
                 <Header
                     title={ScreenTitle.SETTINGS}
+                    options
+                    navigation={navigation}
+                    scene={scene}
+                />
+            ),
+            cardStyle: { backgroundColor: COLORS.BASE }
+        }}
+    />
+);
+
+export const ChangePasswordScreen = () => (
+    <Stack.Screen
+        name={ScreenName.CHANGE_PASSWORD}
+        component={ChangePassword}
+        options={{
+            header: ({ navigation, scene }) => (
+                <Header
+                    title={ScreenTitle.CHANGE_PASSWORD}
                     options
                     navigation={navigation}
                     scene={scene}
