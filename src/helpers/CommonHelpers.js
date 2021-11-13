@@ -1,6 +1,6 @@
 import BookingStatus from '@constants/BookingStatus';
 
-const generateMoneyStr = (moneyText) => `${numberWithCommas(moneyText.toString())}`;
+const generateMoneyStr = (moneyText) => `${numberWithCommas(moneyText.toString().trim())}`;
 
 const numberWithCommas = (x) => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 

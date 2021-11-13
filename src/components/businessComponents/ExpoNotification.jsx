@@ -24,6 +24,7 @@ export default function ExpoNotification() {
     const messageListened = useSelector((state) => state.messageReducer.messageListened);
     const chattingWith = useSelector((state) => state.messageReducer.chattingWith);
     const listConversation = useSelector((state) => state.messageReducer.listConversation);
+    const currentUser = useSelector((state) => state.userReducer.currentUser);
 
     const dispatch = useDispatch();
 
@@ -145,7 +146,10 @@ export default function ExpoNotification() {
 
     const fetchListBooking = async () => {
         const bookingAsCustomer = await BookingServices.fetchListBookingAsync();
-        const bookingAsPartner = await BookingServices.fetchListBookingAsPartnerAsync();
+        let bookingAsPartner = [];
+        if (currentUser.isPartnerVerified) {
+            bookingAsPartner = await BookingServices.fetchListBookingAsPartnerAsync();
+        }
 
         if (bookingAsPartner.data && bookingAsCustomer.data) {
             const listBooking = bookingAsCustomer.data.data.concat(bookingAsPartner.data.data);

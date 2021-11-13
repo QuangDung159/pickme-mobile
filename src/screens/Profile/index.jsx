@@ -57,6 +57,8 @@ export default function Profile({ route, navigation }) {
         setIsShowSpinner(false);
     };
 
+    console.log('currentUser :>> ', currentUser);
+
     try {
         return (
             <>
@@ -69,7 +71,7 @@ export default function Profile({ route, navigation }) {
                         setIsShowSpinner={(showSpinner) => setIsShowSpinner(showSpinner)}
                     />
                 )}
-                {currentUser.id !== route.params.userId && (
+                {currentUser.id !== route.params.userId && currentUser.isCustomerVerified && (
                     <View
                         style={{
                             flexDirection: 'row',

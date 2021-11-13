@@ -111,8 +111,11 @@ export default function Home({ navigation }) {
     );
 
     const fetchListBooking = async () => {
+        let bookingAsPartner = [];
+        if (currentUser.isPartnerVerified) {
+            bookingAsPartner = await BookingServices.fetchListBookingAsPartnerAsync();
+        }
         const bookingAsCustomer = await BookingServices.fetchListBookingAsync();
-        const bookingAsPartner = await BookingServices.fetchListBookingAsPartnerAsync();
 
         if (bookingAsPartner.data && bookingAsCustomer.data) {
             const listBooking = bookingAsCustomer.data.data.concat(bookingAsPartner.data.data);

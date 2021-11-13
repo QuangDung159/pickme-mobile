@@ -26,7 +26,7 @@ export default function ProfileInfoItem({
         >
             <View
                 style={[{
-                    width: 25
+                    width: 25,
                 }, iconContainerStyle]}
             >
                 <IconCustom
@@ -70,7 +70,7 @@ ProfileInfoItem.defaultProps = {
 
 const styles = StyleSheet.create({
     container: {
-        margin: 5,
+        marginBottom: 5,
         flexDirection: 'row',
         alignItems: 'center'
     },

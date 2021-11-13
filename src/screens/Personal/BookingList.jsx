@@ -44,7 +44,10 @@ export default function BookingList({ navigation }) {
 
     const fetchListBooking = async () => {
         const bookingAsCustomer = await BookingServices.fetchListBookingAsync();
-        const bookingAsPartner = await BookingServices.fetchListBookingAsPartnerAsync();
+        let bookingAsPartner = [];
+        if (currentUser.isPartnerVerified) {
+            bookingAsPartner = await BookingServices.fetchListBookingAsPartnerAsync();
+        }
 
         if (bookingAsPartner.data && bookingAsCustomer.data) {
             const listBooking = bookingAsCustomer.data.data.concat(bookingAsPartner.data.data);

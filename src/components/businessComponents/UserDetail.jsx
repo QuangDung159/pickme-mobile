@@ -1,6 +1,6 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
 import { Albums, AvatarPanel } from '@components/businessComponents';
-import { CustomText, IconCustom, Line } from '@components/uiComponents';
+import { IconCustom, Line } from '@components/uiComponents';
 import {
     IconFamily, Rx, ScreenName, Theme, VerificationStatus
 } from '@constants/index';
@@ -16,6 +16,7 @@ import { TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture
 import ImageView from 'react-native-image-viewing';
 import { useDispatch, useSelector } from 'react-redux';
 import PartnerDataSection from './PartnerDataSection';
+import ProfileInfoItem from './ProfileInfoItem';
 import SubInfoProfile from './SubInfoProfile';
 import VerificationStatusPanel from './VerificationStatusPanel';
 
@@ -240,11 +241,12 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
             bookingCompletedCount,
             ratingAvg
         } = userInfo;
+
         return (
             <View
                 style={{
                     width: SIZES.WIDTH_BASE * 0.9,
-                    marginTop: 10
+                    marginTop: 10,
                 }}
             >
                 <PartnerDataSection
@@ -289,7 +291,6 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
             <View
                 style={{
                     width: SIZES.WIDTH_BASE * 0.9,
-                    alignSelf: 'center',
                     flexDirection: 'row',
                     marginBottom: 10
                 }}
@@ -372,27 +373,27 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
 
             <SubInfoProfile user={userInfo} />
 
-            <Line
-                borderColor={COLORS.ACTIVE}
-                width={SIZES.WIDTH_BASE * 0.9}
-            />
-
             <View
                 style={{
-                    alignItems: 'center'
+                    marginTop: 5,
+                    width: '90%'
                 }}
             >
                 {isCurrentUser && (
-                    <CustomText
-                        text={`Số dư: ${userInfo.walletAmount}`}
-                        style={{
-                            fontSize: SIZES.FONT_H3,
-                            fontFamily: TEXT_BOLD,
-                            color: COLORS.ACTIVE,
-                        }}
+                    <ProfileInfoItem
+                        fontSize={SIZES.FONT_H3}
+                        iconName="treasure-chest"
+                        iconFamily={IconFamily.MATERIAL_COMMUNITY_ICONS}
+                        content={`Số dư: ${userInfo.walletAmount}`}
+                        iconSize={18}
                     />
                 )}
-                {renderPartnerDataPanel()}
+
+                {currentUser.isPartnerVerified && (
+                    <>
+                        {renderPartnerDataPanel()}
+                    </>
+                )}
             </View>
 
             {isCurrentUser && (

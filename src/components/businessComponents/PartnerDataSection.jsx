@@ -7,7 +7,7 @@ export default function PartnerDataSection({ listData }) {
         <View
             style={{
                 flexDirection: 'row',
-                justifyContent: 'space-around',
+                justifyContent: 'space-between',
                 alignItems: 'center',
             }}
         >

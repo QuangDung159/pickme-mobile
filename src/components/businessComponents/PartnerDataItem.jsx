@@ -36,7 +36,6 @@ export default function PartnerDataItem({
                         fontFamily: TEXT_BOLD,
                         fontSize: SIZES.FONT_H3,
                         color: COLORS.ACTIVE,
-                        marginLeft: 10
                     }}
                 >
                     {handleValue}
