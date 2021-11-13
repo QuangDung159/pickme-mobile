@@ -6,7 +6,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import {
     BookingDetailScreen,
-    CashInScreen, ChangePasswordScreen, ConversationListScreen,
+    CashInScreen, CashOutScreen, ChangePasswordScreen, ConversationListScreen,
     CreateAccountScreen, CreateBookingScreen,
     ForgotPasswordScreen, HomeScreen, LeaderBoardScreen, MenuScreen, MessageScreen,
     NotificationScreen,
@@ -58,6 +58,7 @@ const PersonalStack = () => (
         {MessageScreen()}
         {VerificationScreen()}
         {PartnerDataScreen()}
+        {CashOutScreen()}
     </Stack.Navigator>
 );
 

@@ -1,5 +1,5 @@
 import {
-    CenterLoader, CustomButton, CustomInput, CustomText, RadioButton
+    CenterLoader, CustomButton, CustomInput
 } from '@components/uiComponents';
 import { Theme } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
@@ -24,175 +24,45 @@ export default function PartnerData() {
 
     useEffect(
         () => {
-            setNewUser({ ...currentUser, dob: currentUser?.dob?.substr(0, 4), isMale: currentUser.isMale });
+            setNewUser({
+                ...currentUser,
+                minimumDuration: currentUser.minimumDuration,
+                isMale: currentUser.earningExpected
+            });
         }, []
     );
 
-    const onChangeName = (nameInput) => {
-        setNewUser({ ...newUser, fullName: nameInput });
+    const onChangeMinimumDuration = (durationInput) => {
+        setNewUser({ ...newUser, minimumDuration: durationInput });
     };
 
-    const onChangeHometown = (hometownInput) => {
-        setNewUser({ ...newUser, homeTown: hometownInput });
+    const onChangeEarningExpected = (input) => {
+        setNewUser({ ...newUser, earningExpected: input });
     };
 
-    const onChangeInterests = (interestsInput) => {
-        setNewUser({ ...newUser, interests: interestsInput });
-    };
-
-    const onChangeDescription = (descriptionInput) => {
-        setNewUser({ ...newUser, description: descriptionInput });
-    };
-
-    const renderInputName = () => (
+    const renderEarningExpected = () => (
         <CustomInput
-            value={newUser.fullName}
-            onChangeText={(input) => onChangeName(input)}
             containerStyle={{
                 marginVertical: 10,
                 width: SIZES.WIDTH_BASE * 0.9
             }}
-            label="Tên hiển thị:"
+            onChangeText={(input) => onChangeEarningExpected(input)}
+            value={newUser?.earningExpected}
+            label="Thu nhập mong muốn (VND/phút):"
         />
     );
 
-    const renderInputHometown = () => (
+    const renderInputMinimumDuration = () => (
         <CustomInput
-            value={newUser.homeTown}
-            onChangeText={(input) => onChangeHometown(input)}
+            value={newUser.minimumDuration}
+            onChangeText={(minimumDuration) => onChangeMinimumDuration(minimumDuration)}
             containerStyle={{
                 marginVertical: 10,
                 width: SIZES.WIDTH_BASE * 0.9
             }}
-            label="Nơi sinh sống:"
+            label="Số phút tối thiểu của buổi hẹn:"
         />
     );
-
-    const renderInputInterests = () => (
-        <CustomInput
-            value={newUser.interests}
-            onChangeText={(input) => onChangeInterests(input)}
-            containerStyle={{
-                marginVertical: 10,
-                width: SIZES.WIDTH_BASE * 0.9
-            }}
-            label="Sở thích:"
-        />
-    );
-
-    const renderInputDescription = () => (
-        <CustomInput
-            multiline
-            value={newUser.description}
-            onChangeText={(input) => onChangeDescription(input)}
-            inputStyle={{
-                height: 60
-            }}
-            containerStyle={{
-                marginVertical: 10,
-                width: SIZES.WIDTH_BASE * 0.9
-            }}
-            label="Mô tả bản thân:"
-        />
-    );
-
-    const renderInputHeightWeight = () => (
-        <View
-            style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                marginVertical: 10,
-                width: '90%'
-            }}
-        >
-
-            <View>
-                <CustomText
-                    style={{
-                        color: COLORS.ACTIVE,
-                        marginBottom: 10
-                    }}
-                    text="Chiều cao (cm):"
-                />
-                <CustomInput
-                    inputStyle={{
-                        width: SIZES.WIDTH_BASE * 0.44
-                    }}
-                    onChangeText={(input) => setNewUser({ ...newUser, height: input })}
-                    value={newUser.height}
-                    placeholder="Chiều cao (cm)..."
-                    keyboardType="number-pad"
-                />
-            </View>
-
-            <View>
-                <CustomText
-                    style={{
-                        color: COLORS.ACTIVE,
-                        marginBottom: 10
-                    }}
-                    text="Cân nặng (kg):"
-                />
-                <CustomInput
-                    inputStyle={{
-                        width: SIZES.WIDTH_BASE * 0.44
-                    }}
-                    onChangeText={(input) => setNewUser({ ...newUser, weight: input })}
-                    value={newUser.weight}
-                    placeholder="Cân nặng (kg)..."
-                    keyboardType="number-pad"
-                />
-            </View>
-        </View>
-    );
-
-    const renderDobGender = () => (
-        <View
-            style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                marginVertical: 10,
-                width: '90%',
-            }}
-        >
-            <CustomInput
-                inputStyle={{
-                    width: SIZES.WIDTH_BASE * 0.44
-                }}
-                onChangeText={(input) => onChangeYear(input)}
-                placeholder="Năm sinh..."
-                value={newUser?.dob?.substr(0, 4)}
-                label="Năm sinh:"
-                keyboardType="number-pad"
-            />
-
-            <View style={{
-                flexDirection: 'row',
-                justifyContent: 'space-around',
-                alignItems: 'center',
-                width: SIZES.WIDTH_BASE * 0.44,
-                marginTop: 30
-            }}
-            >
-                <RadioButton
-                    label="Nam"
-                    selected={newUser.isMale}
-                    onPress={() => setNewUser({ ...newUser, isMale: true })}
-                />
-                <RadioButton
-                    label="Nữ"
-                    selected={!newUser.isMale}
-                    onPress={() => setNewUser({ ...newUser, isMale: false })}
-                />
-            </View>
-        </View>
-    );
-
-    const onChangeYear = (yearInput) => {
-        setNewUser({ ...newUser, dob: yearInput });
-    };
 
     const renderButtonPanel = () => (
         <View
@@ -220,87 +90,29 @@ export default function PartnerData() {
     );
 
     const validate = () => {
-        console.log('newUser :>> ', newUser);
         const validateArr = [
             {
-                fieldName: 'Tên hiển thị',
-                input: newUser.fullName,
+                fieldName: 'Thu nhập mong muốn (VND/phút)',
+                input: newUser.earningExpected,
                 validate: {
                     required: {
                         value: true,
                     },
-                    maxLength: {
-                        value: 255,
-                    },
-                }
-            },
-            {
-                fieldName: 'Năm sinh',
-                input: newUser.dob,
-                validate: {
-                    required: {
-                        value: true,
-                    },
-                    maxLength: {
-                        value: 4,
-                    },
-                    minLength: {
-                        value: 4
+                    equalGreaterThan: {
+                        value: 1
                     }
                 }
             },
             {
-                fieldName: 'Chiều cao',
-                input: newUser.height,
+                fieldName: 'Số phút tối thiểu của buổi hẹn',
+                input: newUser.minimumDuration,
                 validate: {
                     required: {
                         value: true,
                     },
-                }
-            },
-            {
-                fieldName: 'Cân nặng',
-                input: newUser.weight,
-                validate: {
-                    required: {
-                        value: true,
-                    },
-                }
-            },
-            {
-                fieldName: 'Sở thích',
-                input: newUser.interests,
-                validate: {
-                    required: {
-                        value: true,
-                    },
-                    maxLength: {
-                        value: 255,
-                    },
-                }
-            },
-            {
-                fieldName: 'Nơi sinh sống',
-                input: newUser.homeTown,
-                validate: {
-                    required: {
-                        value: true,
-                    },
-                    maxLength: {
-                        value: 255,
-                    },
-                }
-            },
-            {
-                fieldName: 'Mô tả bản thân\n',
-                input: newUser.description,
-                validate: {
-                    required: {
-                        value: true,
-                    },
-                    maxLength: {
-                        value: 255,
-                    },
+                    equalGreaterThan: {
+                        value: 90
+                    }
                 }
             },
         ];
@@ -322,15 +134,8 @@ export default function PartnerData() {
 
     const onSubmitUpdateInfo = async () => {
         const {
-            fullName,
-            description,
-            dob,
-            homeTown,
-            interests,
-            address,
-            url,
-            height, weight,
-            isMale
+            minimumDuration,
+            earningExpected
         } = newUser;
 
         if (!validate()) {
@@ -338,17 +143,9 @@ export default function PartnerData() {
         }
 
         const body = {
-            fullName,
-            description,
-            dob: `${dob}-01-01T14:00:00`,
-            homeTown,
-            interests,
-            address,
-            email: currentUser.userName,
-            IsMale: isMale,
-            url,
-            height: +height,
-            weight: +weight
+            ...currentUser,
+            minimumDuration,
+            earningExpected
         };
 
         setIsShowSpinner(true);
@@ -359,13 +156,8 @@ export default function PartnerData() {
         if (data) {
             const userInfo = {
                 ...currentUser,
-                fullName,
-                dob,
-                homeTown,
-                interests,
-                isMale,
-                height,
-                weight
+                minimumDuration,
+                earningExpected
             };
             dispatch(setCurrentUser(userInfo));
             dispatch(setPersonTabActiveIndex(0));
@@ -393,12 +185,8 @@ export default function PartnerData() {
                     >
                         {newUser && (
                             <>
-                                {renderInputName()}
-                                {renderDobGender()}
-                                {renderInputHeightWeight()}
-                                {renderInputHometown()}
-                                {renderInputInterests()}
-                                {renderInputDescription()}
+                                {renderEarningExpected()}
+                                {renderInputMinimumDuration()}
                                 {renderButtonPanel()}
                             </>
                         )}

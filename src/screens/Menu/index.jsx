@@ -87,7 +87,7 @@ export default function Menu({ navigation }) {
                 size: 28,
             },
             onPress: () => {
-                if (!currentUser.isPartnerVerified) {
+                if (currentUser.isPartnerVerified) {
                     navigation.navigate(ScreenName.PARTNER_DATA);
                 } else {
                     navigation.navigate(ScreenName.VERIFICATION, {

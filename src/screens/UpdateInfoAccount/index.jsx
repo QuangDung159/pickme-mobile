@@ -220,7 +220,6 @@ export default function UpdateInfoAccount() {
     );
 
     const validate = () => {
-        console.log('newUser :>> ', newUser);
         const validateArr = [
             {
                 fieldName: 'Tên hiển thị',

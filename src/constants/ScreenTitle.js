@@ -28,5 +28,6 @@ export default {
     FORGOT_PASSWORD: 'Quên mật khẩu',
     PARTNER_REGISTER: 'Đăng ký trở thành Host',
     CHANGE_PASSWORD: 'Đổi mật khẩu',
-    PARTNER_DATA: 'Thông tin Host'
+    PARTNER_DATA: 'Thông tin Host',
+    CASH_OUT: 'Rút tiền'
 };

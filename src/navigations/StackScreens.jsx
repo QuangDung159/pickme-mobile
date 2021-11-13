@@ -2,6 +2,7 @@
 import { ScreenName, ScreenTitle, Theme } from '@constants/index';
 import Header from '@containers/Header';
 import { createStackNavigator } from '@react-navigation/stack';
+import CashOut from '@screens/CashOut';
 import ChangePassword from '@screens/ChangePassword';
 // screens
 import {
@@ -10,14 +11,12 @@ import {
     ConversationList, CreateAccount, CreateBooking,
     ForgotPassword,
     Home,
-    LeaderBoard,
-    Message, Notification,
-    Onboarding, Personal,
+    LeaderBoard, Menu, Message, Notification,
+    Onboarding, PartnerData, Personal,
     Profile, Settings, SignInWithOTP, SignUp,
     Support, UpdateInfoAccount,
-    Verification, Menu
+    Verification
 } from '@screens/index';
-import PartnerData from '@screens/PartnerData';
 import React from 'react';
 
 const Stack = createStackNavigator();
@@ -33,6 +32,24 @@ export const PersonalScreen = () => (
             header: ({ navigation, scene }) => (
                 <Header
                     title={ScreenTitle.PERSONAL}
+                    options
+                    navigation={navigation}
+                    scene={scene}
+                />
+            ),
+            cardStyle: { backgroundColor: COLORS.BASE }
+        }}
+    />
+);
+
+export const CashOutScreen = () => (
+    <Stack.Screen
+        name={ScreenName.CASH_OUT}
+        component={CashOut}
+        options={{
+            header: ({ navigation, scene }) => (
+                <Header
+                    title={ScreenTitle.CASH_OUT}
                     options
                     navigation={navigation}
                     scene={scene}

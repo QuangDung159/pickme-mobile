@@ -8,6 +8,11 @@ export default {
         SIGN_UP: '/users/RegisterConfirm',
         LOGIN: '/users/Login',
     },
+    BANK: {
+        BANK_ACCOUNTS: '/users/BankAccounts',
+        ADD_UPDATE_BANK_ACCOUNT: '/Users/AddOrUpdateBankAccount',
+        GET_LIST_BANK: '/Banks/Banks',
+    },
     USER: {
         CURRENT_USER_INFO: '/users/CurrentUserInfo',
         UPDATE_USER_INFO: '/users/UpdateUserInfo',
@@ -27,11 +32,6 @@ export default {
         UPDATE_PACKAGE: '/UserPackages/UpdatePackage',
         REPORT_USER: '/Reports/Report',
         UPDATE_PARTNER_INFO: '/users/UpdatePartnerInfo'
-    },
-    BANK: {
-        BANK_ACCOUNTS: '/users/BankAccounts',
-        ADD_BANK_ACCOUNT: '/Users/AddBankAccount',
-        GET_LIST_BANK: '/Settings/Banks',
     },
     BOOKING: {
         SCHEDULE_BOOKING: '/bookings/ScheduleBooking',

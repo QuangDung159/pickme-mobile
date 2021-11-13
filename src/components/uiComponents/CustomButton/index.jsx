@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
     baseButtonStyle: {
         borderWidth: 1,
         borderRadius: 20,
-        height: 40,
+        height: 35,
         alignSelf: 'center',
         justifyContent: 'center',
         alignItems: 'center',
