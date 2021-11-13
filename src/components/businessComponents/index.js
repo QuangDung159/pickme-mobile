@@ -6,7 +6,7 @@ import CardImage from './CardImage';
 import CustomCalendar from './CustomCalendar';
 import ExpoNotification from './ExpoNotification';
 import Listener from './Listener';
-import UploadCodSection from './UploadCodSection';
+import UploadDocSection from './UploadDocSection';
 
 export {
     Listener,
@@ -16,5 +16,5 @@ export {
     AvatarPanel,
     Albums,
     BecomePartnerText,
-    UploadCodSection
+    UploadDocSection
 };

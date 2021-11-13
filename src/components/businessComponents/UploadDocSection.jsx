@@ -25,7 +25,7 @@ const {
 
 let verificationArray = [];
 
-export default function UploadCodSection({ setIsShowSpinner, navigation }) {
+export default function UploadDocSection({ setIsShowSpinner, navigation }) {
     const [faceUrl, setFaceUrl] = useState('');
     const [frontUrl, setFrontUrl] = useState('');
     const [backUrl, setBackUrl] = useState('');

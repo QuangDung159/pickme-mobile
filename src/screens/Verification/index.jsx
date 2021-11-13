@@ -1,4 +1,4 @@
-import { UploadCodSection } from '@components/businessComponents';
+import { UploadDocSection } from '@components/businessComponents';
 import {
     CenterLoader
 } from '@components/uiComponents';
@@ -41,7 +41,7 @@ export default function Verification({ navigation }) {
                             alignSelf: 'center'
                         }}
                     >
-                        <UploadCodSection
+                        <UploadDocSection
                             setIsShowSpinner={(isShow) => setIsShowSpinner(isShow)}
                             navigation={navigation}
                         />
