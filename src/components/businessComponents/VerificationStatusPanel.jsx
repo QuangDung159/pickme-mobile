@@ -14,6 +14,7 @@ const {
 
 export default function VerificationStatusPanel() {
     const currentUser = useSelector((state) => state.userReducer.currentUser);
+    const verificationStore = useSelector((state) => state.userReducer.verificationStore);
 
     const renderStatusInfo = () => {
         switch (currentUser.verifyStatus) {
@@ -61,7 +62,7 @@ export default function VerificationStatusPanel() {
                 return (
                     <>
                         <CustomText
-                            text="Quá trình xác thực đang được tiến hành"
+                            text={`Quá trình ${verificationStore.verifyNote} đang được tiến hành`}
                             style={{
                                 fontFamily: TEXT_BOLD,
                                 fontSize: SIZES.FONT_H4

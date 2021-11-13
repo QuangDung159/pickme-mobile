@@ -43,6 +43,7 @@ const MenuStack = () => (
         {ChangePasswordScreen()}
         {LeaderBoardScreen()}
         {SupportScreen()}
+        {VerificationScreen()}
         {SettingsScreen()}
     </Stack.Navigator>
 );

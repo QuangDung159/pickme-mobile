@@ -2,18 +2,20 @@
 import {
     CustomButton, CustomModal, CustomText, IconCustom, RadioButton
 } from '@components/uiComponents';
-import DocumentType from '@constants/DocumentType';
+import DocumentType, { VERIFY_NOTE } from '@constants/DocumentType';
 import IconFamily from '@constants/IconFamily';
+import ScreenName from '@constants/ScreenName';
 import Theme from '@constants/Theme';
 import VerificationStatus from '@constants/VerificationStatus';
 import MediaHelpers from '@helpers/MediaHelpers';
 import ToastHelpers from '@helpers/ToastHelpers';
-import { setVerificationStore } from '@redux/Actions';
+import { setCurrentUser, setVerificationStore } from '@redux/Actions';
 import UserServices from '@services/UserServices';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import ImageScalable from 'react-native-scalable-image';
 import { useDispatch, useSelector } from 'react-redux';
+import VerificationStatusPanel from './VerificationStatusPanel';
 
 const {
     FONT: {
@@ -25,10 +27,11 @@ const {
 
 let verificationArray = [];
 
-export default function UploadDocSection({ setIsShowSpinner, navigation }) {
+export default function UploadDocSection({ setIsShowSpinner, navigation, route }) {
     const [faceUrl, setFaceUrl] = useState('');
     const [frontUrl, setFrontUrl] = useState('');
     const [backUrl, setBackUrl] = useState('');
+    const [greenUrl, setGreenUrl] = useState('');
     const [isForPartnerVerify, setIsForPartnerVerify] = useState(false);
     const [modalInfoVisible, setModalInfoVisible] = useState(false);
 
@@ -40,6 +43,12 @@ export default function UploadDocSection({ setIsShowSpinner, navigation }) {
 
     useEffect(
         () => {
+            const navigateFrom = route?.params?.navigateFrom;
+
+            if (navigateFrom && navigateFrom === ScreenName.MENU) {
+                setIsForPartnerVerify(true);
+            }
+
             if (!verificationStore?.verificationDocuments || verificationStore.verificationDocuments.length === 0) {
                 fetchVerification();
             } else {
@@ -69,12 +78,16 @@ export default function UploadDocSection({ setIsShowSpinner, navigation }) {
                     setFaceUrl(docImage);
                     break;
                 }
-                case DocumentType.DRIVER_FRONT: {
+                case DocumentType.ID_CARD_FRONT: {
                     setFrontUrl(docImage);
                     break;
                 }
-                case DocumentType.DRIVER_BACK: {
+                case DocumentType.ID_CARD_BACK: {
                     setBackUrl(docImage);
+                    break;
+                }
+                case DocumentType.GREEN_CARD: {
+                    setGreenUrl(docImage);
                     break;
                 }
                 default: {
@@ -102,12 +115,16 @@ export default function UploadDocSection({ setIsShowSpinner, navigation }) {
                 setFaceUrl(uri);
                 break;
             }
-            case DocumentType.DRIVER_FRONT: {
+            case DocumentType.ID_CARD_FRONT: {
                 setFrontUrl(uri);
                 break;
             }
-            case DocumentType.DRIVER_BACK: {
+            case DocumentType.ID_CARD_BACK: {
                 setBackUrl(uri);
+                break;
+            }
+            case DocumentType.GREEN_CARD: {
+                setGreenUrl(uri);
                 break;
             }
             default: {
@@ -152,23 +169,29 @@ export default function UploadDocSection({ setIsShowSpinner, navigation }) {
             }}
         >
             {renderUploadDocForm(DocumentType.FACE_IMAGE, 'Ảnh chụp cá nhân')}
-            {renderDocImageByType(DocumentType.FACE_IMAGE, faceUrl)}
+            {renderDocImage(faceUrl)}
             <View
                 style={styles.docFormContainer}
             >
-                {renderUploadDocForm(DocumentType.DRIVER_FRONT, 'Ảnh chụp cá nhân')}
-                {renderDocImageByType(DocumentType.DRIVER_FRONT, frontUrl)}
+                {renderUploadDocForm(DocumentType.ID_CARD_FRONT, 'Ảnh chụp mặt trước CMND/CCCD')}
+                {renderDocImage(frontUrl)}
             </View>
             <View
                 style={styles.docFormContainer}
             >
-                {renderUploadDocForm(DocumentType.DRIVER_BACK, 'Thẻ xanh COVID')}
-                {renderDocImageByType(DocumentType.DRIVER_BACK, backUrl)}
+                {renderUploadDocForm(DocumentType.ID_CARD_BACK, 'Ảnh chụp mặt sau CMND/CCCD')}
+                {renderDocImage(backUrl)}
+            </View>
+            <View
+                style={styles.docFormContainer}
+            >
+                {renderUploadDocForm(DocumentType.GREEN_CARD, 'Thẻ xanh COVID')}
+                {renderDocImage(greenUrl)}
             </View>
         </View>
     );
     const onSubmitUploadList = () => {
-        if (!(backUrl && faceUrl && frontUrl)) {
+        if (!(backUrl && faceUrl && frontUrl && greenUrl)) {
             ToastHelpers.renderToast('Vui lòng chọn đủ hình ảnh');
             return;
         }
@@ -176,13 +199,23 @@ export default function UploadDocSection({ setIsShowSpinner, navigation }) {
         setIsShowSpinner(true);
         setTimeout(() => {
             navigation.goBack();
-            // onGetCurrentUserData();
             ToastHelpers.renderToast('Tải lên thành công.', 'success');
-        }, 5000);
+        }, 7000);
 
         uploadDoc(DocumentType.FACE_IMAGE, faceUrl);
-        uploadDoc(DocumentType.DRIVER_FRONT, frontUrl);
-        uploadDoc(DocumentType.DRIVER_BACK, backUrl);
+        uploadDoc(DocumentType.ID_CARD_FRONT, frontUrl);
+        uploadDoc(DocumentType.ID_CARD_BACK, backUrl);
+        uploadDoc(DocumentType.GREEN_CARD, greenUrl);
+    };
+
+    const fetchCurrentUserInfo = async () => {
+        const result = await UserServices.fetchCurrentUserInfoAsync();
+        const { data } = result;
+
+        if (data) {
+            const currentUserInfo = await UserServices.mappingCurrentUserInfo(data.data);
+            dispatch(setCurrentUser(currentUserInfo));
+        }
     };
 
     const uploadDoc = (docType, imageLocalUrl) => {
@@ -195,15 +228,16 @@ export default function UploadDocSection({ setIsShowSpinner, navigation }) {
                 };
 
                 verificationArray.push(verifyItem);
-                if (verificationArray.length === 3) {
+                if (verificationArray.length === 4) {
                     const result = UserServices.addVerifyDocAsync({
-                        verifyNote: isForPartnerVerify ? 'Xác thực tài khoản Host' : 'xác thực tài khoản khách hàng',
+                        verifyNote: isForPartnerVerify ? VERIFY_NOTE.FOR_PARTNER : VERIFY_NOTE.FOR_CUSTOMER,
                         documents: verificationArray
                     });
                     const { data } = result;
 
                     if (data) {
                         verificationArray = [];
+                        fetchCurrentUserInfo();
                     }
                 }
             },
@@ -242,7 +276,7 @@ export default function UploadDocSection({ setIsShowSpinner, navigation }) {
         return null;
     };
 
-    const renderDocImageByType = (docType, imageUrl) => {
+    const renderDocImage = (imageUrl) => {
         if (imageUrl === '') {
             return (
                 <View
@@ -283,7 +317,7 @@ export default function UploadDocSection({ setIsShowSpinner, navigation }) {
                             width: SIZES.WIDTH_BASE * 0.8,
                             color: COLORS.DEFAULT,
                         }}
-                        text='Nếu bạn chọn "Xác thực người dùng", bạn sẽ có đầy đủ các tính năng khách hàng của PickMe như nhắn tin, đặt hẹn,...'
+                        text='Nếu bạn chọn "Xác thực khách hàng", bạn sẽ có đầy đủ các tính năng khách hàng của PickMe như nhắn tin, đặt hẹn,...'
                     />
                     <CustomText
                         style={{
@@ -323,42 +357,59 @@ export default function UploadDocSection({ setIsShowSpinner, navigation }) {
                 }}
             >
                 {renderInfoModal()}
-                <TouchableOpacity
-                    style={{
-                        flexDirection: 'row',
-                        alignItems: 'flex-start'
-                    }}
-                    onPress={() => setModalInfoVisible(true)}
-                >
-                    <CustomText
-                        text="Chọn mục đích: "
-                    />
-                    <IconCustom
-                        name="info-circle"
-                        family={IconFamily.FONT_AWESOME}
-                        size={14}
-                        color={COLORS.ACTIVE}
-                    />
-                </TouchableOpacity>
 
-                <View
-                    style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        alignItems: 'center'
-                    }}
-                >
-                    <RadioButton
-                        label="Xác thực người dùng"
-                        selected={!isForPartnerVerify}
-                        onPress={() => setIsForPartnerVerify(false)}
-                    />
-                    <RadioButton
-                        label="Đăng kí Host"
-                        selected={isForPartnerVerify}
-                        onPress={() => setIsForPartnerVerify(true)}
-                    />
-                </View>
+                {(verificationStore.verifyStatus === VerificationStatus.NONE || verificationStore.verifyStatus === VerificationStatus.REJECT) ? (
+                    <>
+                        <TouchableOpacity
+                            style={{
+                                flexDirection: 'row',
+                                alignItems: 'flex-start'
+                            }}
+                            onPress={() => setModalInfoVisible(true)}
+                        >
+                            <CustomText
+                                text="Chọn mục đích: "
+                            />
+                            <IconCustom
+                                name="info-circle"
+                                family={IconFamily.FONT_AWESOME}
+                                size={14}
+                                color={COLORS.ACTIVE}
+                            />
+                        </TouchableOpacity>
+                        <View
+                            style={{
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
+                                alignItems: 'center'
+                            }}
+                        >
+                            <RadioButton
+                                label="Xác thực khách hàng"
+                                selected={!isForPartnerVerify}
+                                onPress={() => setIsForPartnerVerify(false)}
+                            />
+                            <RadioButton
+                                label="Đăng kí Host"
+                                selected={isForPartnerVerify}
+                                onPress={() => setIsForPartnerVerify(true)}
+                            />
+                        </View>
+                    </>
+                ) : (
+                    <View
+                        style={{
+                            width: SIZES.WIDTH_BASE * 0.9,
+                            alignSelf: 'center',
+                            borderWidth: 0.5,
+                            borderColor: COLORS.ACTIVE,
+                            borderRadius: 20
+                        }}
+                    >
+                        <VerificationStatusPanel />
+                    </View>
+                )}
+
                 <View
                     style={{
                         marginTop: 10,

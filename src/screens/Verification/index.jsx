@@ -12,7 +12,7 @@ const {
     SIZES,
 } = Theme;
 
-export default function Verification({ navigation }) {
+export default function Verification({ navigation, route }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
 
     const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
@@ -44,6 +44,7 @@ export default function Verification({ navigation }) {
                         <UploadDocSection
                             setIsShowSpinner={(isShow) => setIsShowSpinner(isShow)}
                             navigation={navigation}
+                            route={route}
                         />
                     </KeyboardAwareScrollView>
                 )}

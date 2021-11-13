@@ -9,7 +9,7 @@ import * as SecureStore from 'expo-secure-store';
 import React from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const {
     SIZES, FONT: {
@@ -20,6 +20,8 @@ const {
 
 export default function Menu({ navigation }) {
     const dispatch = useDispatch();
+
+    const currentUser = useSelector((state) => state.userReducer.currentUser);
 
     const listMenu = [
         // {
@@ -34,7 +36,7 @@ export default function Menu({ navigation }) {
         //     },
         // },
         {
-            title: 'Bảng xếp hạng',
+            title: ScreenTitle.LEADER_BOARD,
             icon: {
                 name: 'award',
                 family: IconFamily.FONT_AWESOME_5,
@@ -45,7 +47,7 @@ export default function Menu({ navigation }) {
             },
         },
         {
-            title: 'Hỗ trợ',
+            title: ScreenTitle.SUPPORT,
             icon: {
                 family: IconFamily.MATERIAL_ICONS,
                 size: 30,
@@ -56,7 +58,7 @@ export default function Menu({ navigation }) {
             },
         },
         {
-            title: 'Cài đặt',
+            title: ScreenTitle.SETTINGS,
             icon: {
                 name: 'gear',
                 family: IconFamily.FONT_AWESOME,
@@ -75,6 +77,25 @@ export default function Menu({ navigation }) {
             },
             onPress: () => {
                 navigation.navigate(ScreenName.CHANGE_PASSWORD);
+            },
+        },
+        {
+            title: currentUser.isPartnerVerified ? 'Thông tin Host' : 'Đăng kí Host',
+            icon: {
+                name: 'star',
+                family: IconFamily.FONT_AWESOME,
+                size: 28,
+            },
+            onPress: () => {
+                if (currentUser.isPartnerVerified) {
+                    navigation.navigate(ScreenName.VERIFICATION, {
+                        navigateFrom: ScreenName.MENU
+                    });
+                } else {
+                    navigation.navigate(ScreenName.VERIFICATION, {
+                        navigateFrom: ScreenName.MENU
+                    });
+                }
             },
         },
         {
