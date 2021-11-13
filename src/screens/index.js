@@ -10,7 +10,6 @@ import Menu from './Menu';
 import Message from './Message';
 import Notification from './Notification';
 import Onboarding from './Onboarding';
-import PartnerRegister from './PartnerRegister';
 import Personal from './Personal';
 import Profile from './Profile';
 import Settings from './Settings';
@@ -20,6 +19,7 @@ import SignUp from './SignUp';
 import Support from './Support';
 import UpdateInfoAccount from './UpdateInfoAccount';
 import Verification from './Verification';
+import PartnerData from './PartnerData';
 
 export {
     Home, Notification, Settings, Onboarding,
@@ -37,6 +37,6 @@ export {
     Verification,
     SignInWithOTP,
     ForgotPassword,
-    PartnerRegister,
+    PartnerData,
     Menu
 };

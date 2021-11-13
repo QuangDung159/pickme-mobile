@@ -10,7 +10,7 @@ import {
     CreateAccountScreen, CreateBookingScreen,
     ForgotPasswordScreen, HomeScreen, LeaderBoardScreen, MenuScreen, MessageScreen,
     NotificationScreen,
-    OnboardingScreen, PartnerRegisterScreen, PersonalScreen,
+    OnboardingScreen, PartnerDataScreen, PersonalScreen,
     ProfileScreen,
     SettingsScreen,
     SignInWithOTPScreen, SignUpScreen,
@@ -27,7 +27,6 @@ const SignUpStack = () => (
     <Stack.Navigator initialRouteName={ScreenName.SIGN_UP} mode="card" headerMode="none">
         {SignUpScreen()}
         {CreateAccountScreen()}
-        {PartnerRegisterScreen()}
     </Stack.Navigator>
 );
 
@@ -45,6 +44,7 @@ const MenuStack = () => (
         {SupportScreen()}
         {VerificationScreen()}
         {SettingsScreen()}
+        {PartnerDataScreen()}
     </Stack.Navigator>
 );
 
@@ -57,7 +57,7 @@ const PersonalStack = () => (
         {CreateBookingScreen()}
         {MessageScreen()}
         {VerificationScreen()}
-        {PartnerRegisterScreen()}
+        {PartnerDataScreen()}
     </Stack.Navigator>
 );
 
@@ -96,7 +96,6 @@ const OnboardingStack = () => (
         {SignInWithOTPScreen()}
         {HomeScreen()}
         {ForgotPasswordScreen()}
-        {PartnerRegisterScreen()}
     </Stack.Navigator>
 );
 

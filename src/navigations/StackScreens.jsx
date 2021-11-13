@@ -15,8 +15,9 @@ import {
     Onboarding, Personal,
     Profile, Settings, SignInWithOTP, SignUp,
     Support, UpdateInfoAccount,
-    Verification, PartnerRegister, Menu
+    Verification, Menu
 } from '@screens/index';
+import PartnerData from '@screens/PartnerData';
 import React from 'react';
 
 const Stack = createStackNavigator();
@@ -321,10 +322,10 @@ export const SignUpScreen = () => (
     />
 );
 
-export const PartnerRegisterScreen = () => (
+export const PartnerDataScreen = () => (
     <Stack.Screen
-        name={ScreenName.PARTNER_REGISTER}
-        component={PartnerRegister}
+        name={ScreenName.PARTNER_DATA}
+        component={PartnerData}
         options={{
             header: ({ navigation, scene }) => (
                 <Header

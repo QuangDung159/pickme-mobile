@@ -22,7 +22,7 @@ const {
     COLORS
 } = Theme;
 
-export default function PartnerRegister({ navigation }) {
+export default function PartnerData({ navigation }) {
     const [partnerForm, setPartnerForm] = useState({
         earningExpected: '',
         bookingMinimum: '',

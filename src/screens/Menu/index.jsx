@@ -88,9 +88,7 @@ export default function Menu({ navigation }) {
             },
             onPress: () => {
                 if (currentUser.isPartnerVerified) {
-                    navigation.navigate(ScreenName.VERIFICATION, {
-                        navigateFrom: ScreenName.MENU
-                    });
+                    navigation.navigate(ScreenName.PARTNER_DATA);
                 } else {
                     navigation.navigate(ScreenName.VERIFICATION, {
                         navigateFrom: ScreenName.MENU
