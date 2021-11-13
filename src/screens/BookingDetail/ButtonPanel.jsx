@@ -63,7 +63,6 @@ export default function ButtonPanel({
 
     const handleShowButtonByStatus = () => {
         const { status, id } = currentBookingRedux;
-        console.log('status :>> ', status);
         // partner confirmed: payment, cancel
         // customer payment: cancel
         // booking is going on: N/A

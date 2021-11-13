@@ -5,7 +5,7 @@ import { ScreenName, Theme } from '@constants/index';
 import BookingProgressFlow from '@containers/BookingProgressFlow';
 import { ToastHelpers } from '@helpers/index';
 import {
-    setCurrentBookingRedux, setListBookingStore, setShowLoaderStore
+    setCurrentBookingRedux, setListBookingStore, setPersonTabActiveIndex, setShowLoaderStore
 } from '@redux/Actions';
 import { BookingServices } from '@services/index';
 import React, { useEffect, useState } from 'react';
@@ -110,6 +110,11 @@ export default function BookingDetail({
         fetchBookingDetailInfo();
     };
 
+    const onSubmitReason = () => {
+        fetchListBooking();
+        dispatch(setPersonTabActiveIndex(2));
+    };
+
     // render \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
     try {
         return (
@@ -150,8 +155,7 @@ export default function BookingDetail({
                                     modalReasonVisible={modalReasonVisible}
                                     setModalReasonVisible={setModalReasonVisible}
                                     bookingId={bookingId}
-                                    navigation={navigation}
-                                    fetchListBooking={() => fetchListBooking()}
+                                    onSubmitReason={() => onSubmitReason()}
                                 />
 
                                 {currentBookingRedux && (

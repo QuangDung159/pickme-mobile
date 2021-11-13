@@ -33,6 +33,8 @@ export default function Personal({ navigation }) {
     const chattingWith = useSelector((state) => state.messageReducer.chattingWith);
     const numberMessageUnread = useSelector((state) => state.messageReducer.numberMessageUnread);
 
+    const navigateFrom = navigation?.params?.navigateFrom;
+
     const dispatch = useDispatch();
 
     useEffect(
@@ -40,6 +42,18 @@ export default function Personal({ navigation }) {
             fetchListNotification();
             fetchListBooking();
             getListConversationFromSocket();
+        }, []
+    );
+
+    useEffect(
+        () => {
+            const onFocus = navigation.addListener('focus', () => {
+                if (navigateFrom && navigateFrom === ScreenName.BOOKING_DETAIL) {
+                    // fetchListBooking();
+                }
+            });
+
+            return onFocus;
         }, []
     );
 
