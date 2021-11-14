@@ -1,7 +1,8 @@
+import { OtpForm, UsernameForm } from '@components/businessComponents';
 import {
     CenterLoader
 } from '@components/uiComponents';
-import { Theme } from '@constants/index';
+import { ScreenName, Theme } from '@constants/index';
 import React, { useState } from 'react';
 import {
     StyleSheet,
@@ -11,8 +12,6 @@ import {
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useSelector } from 'react-redux';
 import ModalDisclaimer from './ModalDisclaimer';
-import OtpForm from './OtpForm';
-import UsernameForm from './UsernameForm';
 
 const {
     FONT: {
@@ -44,6 +43,7 @@ export default function SignUp({ navigation }) {
                         setOtp={(otpCode) => setOtp(otpCode)}
                         setIsEmail={(isEmailLogin) => setIsEmail(isEmailLogin)}
                         setStep={(stepIndex) => setStep(stepIndex)}
+                        renderFrom={ScreenName.SIGN_UP}
                     />
                 );
             }
@@ -57,6 +57,7 @@ export default function SignUp({ navigation }) {
                         setOtp={(otpCode) => setOtp(otpCode)}
                         setPassword={(passwordStr) => setPassword(passwordStr)}
                         isEmail={isEmail}
+                        renderFrom={ScreenName.FORGOT_PASSWORD}
                     />
                 );
             }

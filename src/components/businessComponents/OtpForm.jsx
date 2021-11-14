@@ -25,7 +25,8 @@ export default function OtpForm({
     otp, setOtp, password,
     setPassword, username,
     navigation,
-    isEmail
+    isEmail,
+    renderFrom
 }) {
     const [isShowPassword, setIsShowPassword] = useState(false);
     const [code, setCode] = useState(otp);
@@ -278,7 +279,15 @@ export default function OtpForm({
             }}
             >
                 <CustomButton
-                    onPress={() => onClickSubmitRegister()}
+                    onPress={
+                        () => {
+                            if (renderFrom === ScreenName.FORGOT_PASSWORD) {
+                                onClickSubmitRegister();
+                            } else {
+                                onClickSubmitRegister();
+                            }
+                        }
+                    }
                     buttonStyle={styles.button}
                     type="active"
                     label="Xác nhận"

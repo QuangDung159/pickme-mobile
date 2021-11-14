@@ -166,6 +166,7 @@ export default function Onboarding({ navigation }) {
                         backgroundColor: COLORS.BASE,
                         alignItems: 'center',
                         width: SIZES.WIDTH_BASE,
+                        height: SIZES.HEIGHT_BASE
                     }}
                 >
                     <>
@@ -258,14 +259,14 @@ export default function Onboarding({ navigation }) {
                         <View
                             style={{
                                 position: 'absolute',
-                                bottom: 0,
+                                bottom: 10,
                                 alignSelf: 'center'
                             }}
                         >
                             <Text
                                 style={{
                                     fontFamily: TEXT_REGULAR,
-                                    fontSize: SIZES.FONT_H5,
+                                    fontSize: SIZES.FONT_H5 - 4,
                                     color: COLORS.ACTIVE,
                                 }}
                             >

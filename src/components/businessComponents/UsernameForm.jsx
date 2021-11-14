@@ -1,7 +1,7 @@
 import {
     CustomButton, CustomCheckbox, CustomInput, RadioButton
 } from '@components/uiComponents';
-import { Theme } from '@constants/index';
+import { Theme, ScreenName } from '@constants/index';
 import { ToastHelpers, ValidationHelpers } from '@helpers/index';
 import { setShowLoaderStore } from '@redux/Actions';
 import { UserServices } from '@services/index';
@@ -22,7 +22,7 @@ export default function PhoneForm({
     setUsername,
     setStep, setOtp,
     setModalVisible,
-    isEmail, setIsEmail
+    isEmail, setIsEmail, renderFrom
 }) {
     const [onCheckedDisclaimer, setOnCheckedDisclaimer] = useState(false);
 
@@ -68,9 +68,11 @@ export default function PhoneForm({
     const onClickGetOTP = async () => {
         if (!validate()) return;
 
-        if (!onCheckedDisclaimer) {
-            ToastHelpers.renderToast('Bạn vui lòng đồng ý với các Điều khoản và Điều kiện.', 'error');
-            return;
+        if (renderFrom === ScreenName.SIGN_UP) {
+            if (!onCheckedDisclaimer) {
+                ToastHelpers.renderToast('Bạn vui lòng đồng ý với các Điều khoản và Điều kiện.', 'error');
+                return;
+            }
         }
 
         dispatch(setShowLoaderStore(true));
@@ -96,8 +98,6 @@ export default function PhoneForm({
             justifyContent: 'space-around',
             alignItems: 'center',
             alignSelf: 'center',
-            marginTop: 10,
-            marginBottom: 15,
             width: SIZES.WIDTH_BASE * 0.9
         }}
         >
@@ -124,6 +124,7 @@ export default function PhoneForm({
                 <View
                     style={styles.formInputContainer}
                 >
+                    {renderLoginType()}
                     {isEmail ? (
                         <CustomInput
                             value={username}
@@ -134,8 +135,8 @@ export default function PhoneForm({
                             }}
                             onChangeText={(input) => setUsername(input.trim())}
                             containerStyle={{
-                                marginVertical: 10,
-                                width: SIZES.WIDTH_BASE * 0.9
+                                marginVertical: 20,
+                                width: SIZES.WIDTH_BASE * 0.9,
                             }}
                             placeholder="Nhập email..."
                         />
@@ -150,7 +151,7 @@ export default function PhoneForm({
                             onChangeText={(input) => setUsername(input.trim())}
                             keyboardType="number-pad"
                             containerStyle={{
-                                marginVertical: 10,
+                                marginVertical: 20,
                                 width: SIZES.WIDTH_BASE * 0.9
                             }}
                             placeholder="Nhập số điện thoại..."
@@ -158,17 +159,18 @@ export default function PhoneForm({
                     )}
                 </View>
 
-                {renderLoginType()}
+                {renderFrom === ScreenName.SIGN_UP && (
+                    <CustomCheckbox
+                        label="Tôi đồng ý với các Điều khoản và Điều kiện"
+                        onPressLabel={() => {
+                            setModalVisible(true);
+                        }}
+                        onChange={(checked) => {
+                            setOnCheckedDisclaimer(checked);
+                        }}
+                    />
+                )}
 
-                <CustomCheckbox
-                    label="Tôi đồng ý với các Điều khoản và Điều kiện"
-                    onPressLabel={() => {
-                        setModalVisible(true);
-                    }}
-                    onChange={(checked) => {
-                        setOnCheckedDisclaimer(checked);
-                    }}
-                />
             </View>
 
             <View

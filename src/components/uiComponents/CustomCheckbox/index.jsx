@@ -50,11 +50,11 @@ export default function CustomCheckbox({
                     style={
                         [
                             {
-                                borderWidth: 0.5,
+                                borderWidth: 2,
                                 width: 20,
                                 height: 20,
                                 borderRadius: 2,
-                                borderColor: COLORS.INPUT,
+                                borderColor: active ? COLORS.ACTIVE : COLORS.INPUT,
                                 backgroundColor: background,
                                 marginRight: 5,
                             },
@@ -70,7 +70,7 @@ export default function CustomCheckbox({
                         <IconCustom
                             name="check"
                             family={IconFamily.ENTYPO}
-                            size={18}
+                            size={16}
                             color={COLORS.BASE}
                         />
                     )}
