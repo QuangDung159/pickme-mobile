@@ -158,22 +158,41 @@ export default function Wallet({ navigation }) {
                             color: COLORS.ACTIVE,
                         }}
                     >
-                        {`${currentUser.walletAmountDisplay}`}
+                        {`${currentUser.walletAmount}`}
                     </Text>
                 </View>
             </View>
-            <CustomButton
-                onPress={() => navigation.navigate(ScreenName.CASH_IN)}
-                labelStyle={{
-                    fontSize: SIZES.FONT_H3,
-                    color: COLORS.ACTIVE
+            <View
+                style={{
+                    flexDirection: 'column'
                 }}
-                buttonStyle={{
-                    width: SIZES.WIDTH_BASE * 0.35,
-                    borderColor: COLORS.ACTIVE
-                }}
-                label="Nạp tiền"
-            />
+            >
+                <CustomButton
+                    onPress={() => navigation.navigate(ScreenName.CASH_OUT)}
+                    labelStyle={{
+                        fontSize: SIZES.FONT_H3,
+                        color: COLORS.DEFAULT
+                    }}
+                    buttonStyle={{
+                        width: SIZES.WIDTH_BASE * 0.35,
+                        borderColor: COLORS.DEFAULT,
+                        marginBottom: 5
+                    }}
+                    label="Rút tiền"
+                />
+                <CustomButton
+                    onPress={() => navigation.navigate(ScreenName.CASH_IN)}
+                    labelStyle={{
+                        fontSize: SIZES.FONT_H3,
+                        color: COLORS.ACTIVE
+                    }}
+                    buttonStyle={{
+                        width: SIZES.WIDTH_BASE * 0.35,
+                        borderColor: COLORS.ACTIVE
+                    }}
+                    label="Nạp tiền"
+                />
+            </View>
         </View>
     );
 
@@ -209,7 +228,7 @@ export default function Wallet({ navigation }) {
                 >
                     <FlatList
                         data={listCashHistoryStore}
-                        keyExtractor={(item) => `${item.navigationId}-${item.isIncrease}`}
+                        keyExtractor={(item) => item.traceId}
                         renderItem={({ item }) => renderHistoryItem(item)}
                         showsVerticalScrollIndicator={false}
                         refreshControl={(

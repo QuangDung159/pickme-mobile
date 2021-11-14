@@ -1,5 +1,6 @@
 import * as Localization from 'expo-localization';
 import {
+    SET_COUNTDOWN_SEND_OTP_REDUX,
     SET_DEVICE_LOCALE, SET_DEVICE_TIMEZONE,
     SET_EXPO_TOKEN,
     SET_NAVIGATION,
@@ -14,6 +15,7 @@ const initState = {
     navigationObj: null,
     personTabActiveIndex: 0,
     showLoaderStore: false,
+    countdownSendOtpRedux: 0
 };
 
 const appConfigReducer = (state = initState, action) => {
@@ -36,6 +38,9 @@ const appConfigReducer = (state = initState, action) => {
         }
         case SET_SHOW_LOADER_STORE: {
             return { ...state, showLoaderStore: payload.showLoaderStore };
+        }
+        case SET_COUNTDOWN_SEND_OTP_REDUX: {
+            return { ...state, countdownSendOtpRedux: payload.countdownSendOtpRedux };
         }
         default: {
             return state;

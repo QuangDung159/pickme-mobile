@@ -10,6 +10,8 @@ import ImageLoader from './ImageLoader';
 import IndicatorVerticalLine from './IndicatorVerticalLine';
 import Line from './Line';
 import NoteText from './NoteText';
+import OtpItem from './OtpItem';
+import RadioButton from './RadioButton';
 import StepIndicator from './StepIndicator';
 import Switch from './Switch';
 import TopTabBar from './TopTabBar';
@@ -30,5 +32,7 @@ export {
     CustomCheckbox,
     ImageLoader,
     TouchableText,
-    CustomText
+    CustomText,
+    RadioButton,
+    OtpItem
 };

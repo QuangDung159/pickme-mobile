@@ -1,23 +1,18 @@
 /* eslint-disable no-unused-vars */
-import { Theme, ScreenName } from '@constants/index';
+import { ScreenName, Theme } from '@constants/index';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import {
     BookingDetailScreen,
-    CashInScreen,
-    ConversationListScreen,
+    CashInScreen, CashOutScreen, ChangePasswordScreen, ConversationListScreen,
     CreateAccountScreen, CreateBookingScreen,
-    ForgotPasswordScreen, HomeScreen,
-    LeaderBoardScreen,
-    MessageScreen,
+    ForgotPasswordScreen, HomeScreen, LeaderBoardScreen, MenuScreen, MessageScreen,
     NotificationScreen,
-    OnboardingScreen,
-    PersonalScreen,
+    OnboardingScreen, PartnerDataScreen, PersonalScreen,
     ProfileScreen,
     SettingsScreen,
-    SignInScreen,
     SignInWithOTPScreen, SignUpScreen,
     SupportScreen, UpdateInfoAccountScreen,
     VerificationScreen
@@ -35,26 +30,21 @@ const SignUpStack = () => (
     </Stack.Navigator>
 );
 
-const SignInStack = () => (
-    <Stack.Navigator initialRouteName={ScreenName.SIGN_IN} mode="card" headerMode="none">
-        {SignInScreen()}
-        {SignInWithOTPScreen()}
-        {ForgotPasswordScreen()}
-    </Stack.Navigator>
-);
-
 const SignInWithOTPStack = () => (
-    <Stack.Navigator initialRouteName={ScreenName.SIGN_IN} mode="card" headerMode="none">
+    <Stack.Navigator initialRouteName={ScreenName.SIGN_IN_WITH_OTP} mode="card" headerMode="none">
         {SignInWithOTPScreen()}
     </Stack.Navigator>
 );
 
-const LeaderBoardStack = () => (
+const MenuStack = () => (
     <Stack.Navigator mode="card" headerMode="screen">
+        {MenuScreen()}
+        {ChangePasswordScreen()}
         {LeaderBoardScreen()}
-        {ProfileScreen()}
-        {MessageScreen()}
-        {CreateBookingScreen()}
+        {SupportScreen()}
+        {VerificationScreen()}
+        {SettingsScreen()}
+        {PartnerDataScreen()}
     </Stack.Navigator>
 );
 
@@ -66,9 +56,9 @@ const PersonalStack = () => (
         {BookingDetailScreen()}
         {CreateBookingScreen()}
         {MessageScreen()}
-        {SupportScreen()}
-        {SettingsScreen()}
         {VerificationScreen()}
+        {PartnerDataScreen()}
+        {CashOutScreen()}
     </Stack.Navigator>
 );
 
@@ -79,7 +69,7 @@ const HomeStack = () => (
         {CreateBookingScreen()}
         {MessageScreen()}
         {SupportScreen()}
-        {SettingsScreen()}
+        {PersonalScreen()}
     </Stack.Navigator>
 );
 
@@ -90,8 +80,6 @@ const NotificationStack = () => (
         {CreateBookingScreen()}
         {PersonalScreen()}
         {CashInScreen()}
-        {SupportScreen()}
-        {SettingsScreen()}
     </Stack.Navigator>
 );
 
@@ -160,8 +148,8 @@ const BottomTabMenuStack = () => {
             }}
         >
             <Tab.Screen
-                name={ScreenName.LEADER_BOARD}
-                component={LeaderBoardStack}
+                name={ScreenName.MENU}
+                component={MenuStack}
             />
             <Tab.Screen
                 name={ScreenName.PERSONAL}
@@ -198,7 +186,6 @@ export default function AppStack() {
                 component={BottomTabMenuStack}
             />
             <Stack.Screen name={ScreenName.SIGN_UP} component={SignUpStack} />
-            <Stack.Screen name={ScreenName.SIGN_IN} component={SignInStack} />
             <Stack.Screen name={ScreenName.SIGN_IN_WITH_OTP} component={SignInWithOTPStack} />
         </Stack.Navigator>
     );

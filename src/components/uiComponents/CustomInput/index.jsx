@@ -20,7 +20,8 @@ CustomInput.propTypes = {
     containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
     rightIcon: PropTypes.object,
     onPressRightIcon: PropTypes.func,
-    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    editable: PropTypes.bool
 };
 
 CustomInput.defaultProps = {
@@ -30,7 +31,8 @@ CustomInput.defaultProps = {
     containerStyle: {},
     rightIcon: null,
     onPressRightIcon: null,
-    value: ''
+    value: '',
+    editable: true
 };
 
 export default function CustomInput({
@@ -39,6 +41,8 @@ export default function CustomInput({
     containerStyle,
     onPressRightIcon,
     value,
+    editable,
+    ref,
     rightIcon, ...props
 }) {
     const renderTextInputBase = () => (
@@ -46,21 +50,24 @@ export default function CustomInput({
             style={
                 [
                     {
-                        borderColor: COLORS.BORDER_COLOR,
+                        borderColor: COLORS.ACTIVE,
                         borderWidth: 1,
-                        borderRadius: 8,
-                        height: 50,
+                        borderRadius: 20,
+                        height: 36,
                         paddingHorizontal: 10,
                         fontFamily: TEXT_REGULAR,
                         fontSize: SIZES.FONT_H3,
                         color: COLORS.DEFAULT,
-                        width: SIZES.WIDTH_BASE * 0.9
+                        width: SIZES.WIDTH_BASE * 0.9,
+                        textAlign: 'center',
+                        backgroundColor: editable || COLORS.INPUT
                     },
                     inputStyle,
                 ]
             }
             value={value?.toString() || ''}
             placeholderTextColor={COLORS.PLACE_HOLDER}
+            ref={ref}
             {...props}
         />
     );
@@ -132,7 +139,7 @@ export default function CustomInput({
                                 fontFamily: TEXT_REGULAR,
                                 fontSize: SIZES.FONT_H3,
                                 color: COLORS.ACTIVE,
-                                marginBottom: 10
+                                marginBottom: 3
                             },
                             labelStyle
                         ]

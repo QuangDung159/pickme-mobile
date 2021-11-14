@@ -1,8 +1,8 @@
 import { CustomButton, CustomModal } from '@components/uiComponents';
-import { Theme, ScreenName } from '@constants/index';
+import { Theme } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
 import { Picker } from '@react-native-picker/picker';
-import { setPersonTabActiveIndex, setShowLoaderStore } from '@redux/Actions';
+import { setShowLoaderStore } from '@redux/Actions';
 import { BookingServices } from '@services/index';
 import React, { useState } from 'react';
 import { Platform, Text, View } from 'react-native';
@@ -19,7 +19,7 @@ export default function ReasonCancelBookingModal({
     modalReasonVisible,
     setModalReasonVisible,
     bookingId,
-    navigation,
+    onSubmitReason
 }) {
     const reasonDropdownArr = [
         { label: 'Bận đột xuất', value: 0 },
@@ -76,8 +76,7 @@ export default function ReasonCancelBookingModal({
         const { data } = result;
 
         if (data) {
-            navigation.navigate(ScreenName.PERSONAL);
-            dispatch(setPersonTabActiveIndex(2));
+            onSubmitReason();
             ToastHelpers.renderToast(data.message, 'success');
         }
         dispatch(setShowLoaderStore(false));

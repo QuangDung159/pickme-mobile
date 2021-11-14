@@ -11,9 +11,10 @@ import {
     setListNotification,
     setListPartnerHomeRedux,
     setNumberMessageUnread,
-    setNumberNotificationUnread
+    setNumberNotificationUnread,
+    setVerificationStore
 } from '@redux/Actions';
-import { BookingServices, NotificationServices } from '@services/index';
+import { BookingServices, NotificationServices, UserServices } from '@services/index';
 import { socketRequestUtil } from '@utils/index';
 import React, { useEffect, useState } from 'react';
 import {
@@ -51,6 +52,7 @@ export default function Home({ navigation }) {
             fetchListNotification();
             fetchListBooking();
             getListConversationFromSocket();
+            fetchVerification();
             if (!listPartnerHomeRedux || listPartnerHomeRedux.length === 0) {
                 setIsShowSpinner(true);
                 getListPartner();
@@ -111,10 +113,24 @@ export default function Home({ navigation }) {
     );
 
     const fetchListBooking = async () => {
-        const result = await BookingServices.fetchListBookingAsync();
+        let bookingAsPartner = [];
+        if (currentUser.isPartnerVerified) {
+            bookingAsPartner = await BookingServices.fetchListBookingAsPartnerAsync();
+        }
+        const bookingAsCustomer = await BookingServices.fetchListBookingAsync();
+
+        if (bookingAsPartner.data && bookingAsCustomer.data) {
+            const listBooking = bookingAsCustomer.data.data.concat(bookingAsPartner.data.data);
+            dispatch(setListBookingStore(listBooking));
+        }
+    };
+
+    const fetchVerification = async () => {
+        const result = await UserServices.fetchVerificationAsync();
         const { data } = result;
+
         if (data) {
-            dispatch(setListBookingStore(data.data));
+            dispatch(setVerificationStore(data.data));
         }
     };
 

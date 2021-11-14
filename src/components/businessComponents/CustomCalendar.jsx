@@ -106,7 +106,6 @@ export default function CustomCalendar({ selectedDate, onChangeDate }) {
                 ))}
             </View>
             <Line
-                borderWidth={0.5}
                 borderColor={COLORS.DEFAULT}
                 style={{
                     marginVertical: 10

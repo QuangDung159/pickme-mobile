@@ -50,7 +50,23 @@ const pickImage = async (allowCrop, uploadAspect, callBack, quality = 1) => {
     }
 };
 
+const removeImage = async (removeUrl, onSuccess, onFail) => {
+    const result = await RxUtil(
+        removeUrl,
+        'POST'
+    );
+
+    const { data } = result;
+
+    if (data) {
+        onSuccess(data);
+    } else {
+        onFail(data);
+    }
+};
+
 export default {
     pickImage,
-    imgbbUploadImage
+    imgbbUploadImage,
+    removeImage
 };

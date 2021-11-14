@@ -9,7 +9,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 const { SIZES, COLORS } = Theme;
 
-export default function ChangePasswordForm() {
+export default function ChangePassword() {
     const [currentPassword, setCurrentPassword] = useState('');
     const [reNewPassword, setReNewPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
@@ -124,7 +124,7 @@ export default function ChangePasswordForm() {
                     size: 20,
                     color: COLORS.DEFAULT
                 }}
-                label="Mật khẩu hiện tại"
+                label="Mật khẩu hiện tại:"
                 onPressRightIcon={() => setIsShowCurrentPassword(!isShowCurrentPassword)}
             />
 
@@ -147,7 +147,7 @@ export default function ChangePasswordForm() {
                     size: 20,
                     color: COLORS.DEFAULT
                 }}
-                label="Mật khẩu mới"
+                label="Mật khẩu mới:"
                 onPressRightIcon={() => setIsShowNewPassword(!isShowNewPassword)}
             />
 
@@ -170,7 +170,7 @@ export default function ChangePasswordForm() {
                     size: 20,
                     color: COLORS.DEFAULT
                 }}
-                label="Nhập lại mật khẩu mới"
+                label="Nhập lại mật khẩu mới:"
                 onPressRightIcon={() => setIsShowReNewPassword(!isShowReNewPassword)}
             />
 

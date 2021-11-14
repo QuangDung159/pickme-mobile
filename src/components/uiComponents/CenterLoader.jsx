@@ -16,6 +16,7 @@ export default function ImageLoader({ size }) {
                 bottom: 0,
                 justifyContent: 'center',
                 alignItems: 'center',
+                backgroundColor: COLORS.BASE,
             }}
         >
             <ActivityIndicator

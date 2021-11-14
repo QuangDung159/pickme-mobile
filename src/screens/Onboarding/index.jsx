@@ -1,7 +1,10 @@
-import { CenterLoader, CustomText, TouchableText } from '@components/uiComponents';
+import { BecomePartnerText } from '@components/businessComponents';
+import {
+    CenterLoader, CustomButton, CustomModal, CustomText, TouchableText
+} from '@components/uiComponents';
 import App from '@constants/App';
 import {
-    Images, ScreenName, Theme, Utils
+    Images, ScreenName, Theme
 } from '@constants/index';
 import {
     setCurrentUser, setIsSignInOtherDeviceStore, setListPartnerHomeRedux, setNavigation
@@ -11,15 +14,15 @@ import Constants from 'expo-constants';
 import * as SecureStore from 'expo-secure-store';
 import React, { useEffect, useState } from 'react';
 import {
-    Image,
-    Platform, StyleSheet, Text, View
+    Image, StyleSheet, Text, View
 } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useDispatch, useSelector } from 'react-redux';
 import SignIn from './SignIn';
 
 const {
     FONT: {
-        TEXT_REGULAR,
+        TEXT_REGULAR
     },
     SIZES,
     COLORS
@@ -28,6 +31,8 @@ const {
 export default function Onboarding({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
     const [deviceIdDisplay, setDeviceIdDisplay] = useState('');
+    const [modalVisible, setModalVisible] = useState(false);
+    const [isRegisterPartner, setIsRegisterPartner] = useState(false);
 
     const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
 
@@ -66,7 +71,7 @@ export default function Onboarding({ navigation }) {
     };
 
     const onLogin = async () => {
-        const phoneNumber = await SecureStore.getItemAsync('phoneNumber');
+        const phoneNumber = await SecureStore.getItemAsync('username');
         const password = await SecureStore.getItemAsync('password');
         const apiToken = await SecureStore.getItemAsync('api_token');
         const deviceId = await SecureStore.getItemAsync('deviceId');
@@ -112,115 +117,172 @@ export default function Onboarding({ navigation }) {
         }
     };
 
+    const renderModalRegisterPartner = () => (
+        <CustomModal
+            modalVisible={modalVisible}
+            renderContent={() => (
+                <View>
+                    <CustomText
+                        style={{
+                            textAlign: 'center',
+                            marginBottom: 10,
+                            fontSize: SIZES.FONT_H4
+                        }}
+                        text="Vui lòng đăng nhập để tiếp tục"
+                    />
+
+                    <CustomText
+                        style={{
+                            textAlign: 'center',
+                            marginBottom: 10,
+                            fontSize: SIZES.FONT_H4
+                        }}
+                        text={'Nếu bạn chưa có tài khoản,\nvui lòng đăng ký tài khoản PickMe'}
+                    />
+
+                    <View>
+                        <CustomButton
+                            onPress={() => setModalVisible(!modalVisible)}
+                            buttonStyle={[styles.button, {
+                                width: SIZES.WIDTH_BASE * 0.8
+                            }]}
+                            type="active"
+                            label="Đã hiểu"
+                        />
+                    </View>
+                </View>
+            )}
+        />
+    );
+
     return (
-        <View style={styles.container}>
+        <>
             {isShowSpinner ? (
                 <CenterLoader />
             ) : (
-                <>
-                    <View
-                        style={{
-                            marginTop: SIZES.HEIGHT_BASE * 0.15
-                        }}
-                    >
+                <KeyboardAwareScrollView
+                    showsVerticalScrollIndicator={false}
+                    contentContainerStyle={{
+                        backgroundColor: COLORS.BASE,
+                        alignItems: 'center',
+                        width: SIZES.WIDTH_BASE,
+                        height: SIZES.HEIGHT_BASE
+                    }}
+                >
+                    <>
                         <View
                             style={{
-                                paddingBottom: SIZES.HEIGHT_BASE * 0.1,
+                                position: 'absolute',
+                                top: 40,
+                                zIndex: 99,
                                 alignSelf: 'center',
                                 alignItems: 'center'
                             }}
                         >
-                            <Image
-                                source={Images.Logo}
+                            <CustomText
                                 style={{
-                                    width: SIZES.WIDTH_BASE * 0.9,
-                                    height: 50
+                                    fontSize: SIZES.FONT_H5 - 4
                                 }}
+                                text={`${Constants.manifest.version} (${App.APP_VERSION_OTA})`}
                             />
                             <CustomText
                                 style={{
-                                    color: COLORS.ACTIVE,
-                                    marginTop: 10
+                                    fontSize: SIZES.FONT_H5 - 4
                                 }}
-                                text="Ở đây chúng tôi phát người yêu!"
+                                text={deviceIdDisplay}
                             />
                         </View>
-                    </View>
-                    <SignIn
-                        navigation={navigation}
-                        setIsShowSpinner={(isShow) => setIsShowSpinner(isShow)}
-                    />
-                    <View
-                        style={{
-                            marginTop: 35,
-                            alignSelf: 'center',
-                            alignItems: 'center'
-                        }}
-                    >
-                        <TouchableText
+                        {renderModalRegisterPartner()}
+                        <View
                             style={{
-                                color: COLORS.ACTIVE,
-                            }}
-                            text="Đăng ký"
-                            onPress={() => navigation.navigate(ScreenName.SIGN_UP)}
-                        />
-                        <TouchableText
-                            text="Quên mật khẩu?"
-                            onPress={() => navigation.navigate(ScreenName.FORGOT_PASSWORD)}
-                            style={{
-                                color: COLORS.ACTIVE,
-                                marginTop: 5,
-                                marginBottom: 10
-                            }}
-                        />
-                        <TouchableText
-                            text="Trở thành đối tác của PickMe?"
-                            onPress={() => navigation.navigate(ScreenName.FORGOT_PASSWORD)}
-                            style={{
-                                color: COLORS.ACTIVE,
-                                marginTop: 20,
-                                marginBottom: 10
-                            }}
-                        />
-                        <CustomText
-                            style={{
-                                fontSize: SIZES.FONT_H4 - 4
-                            }}
-                            text={`${Constants.manifest.version} (${App.APP_VERSION_OTA})`}
-                        />
-                        <CustomText
-                            style={{
-                                fontSize: SIZES.FONT_H4 - 4
-                            }}
-                            text={deviceIdDisplay}
-                        />
-                    </View>
-                    <View
-                        style={{
-                            position: 'absolute',
-                            bottom: 30,
-                            alignSelf: 'center'
-                        }}
-                    >
-                        <Text
-                            style={{
-                                fontFamily: TEXT_REGULAR,
-                                fontSize: SIZES.FONT_H5,
-                                color: COLORS.ACTIVE,
+                                marginTop: 130
                             }}
                         >
-                            Powered by DragonC92Team
-                        </Text>
-                    </View>
-                </>
+                            <View
+                                style={{
+                                    paddingBottom: 90,
+                                    alignSelf: 'center',
+                                    alignItems: 'center'
+                                }}
+                            >
+                                <Image
+                                    source={Images.Logo}
+                                    style={{
+                                        width: SIZES.WIDTH_BASE * 0.9,
+                                        height: 50
+                                    }}
+                                />
+                                <CustomText
+                                    style={{
+                                        color: COLORS.ACTIVE,
+                                        marginTop: 10
+                                    }}
+                                    text="Ở đây chúng tôi phát người yêu!"
+                                />
+                            </View>
+                        </View>
+                        <SignIn
+                            navigation={navigation}
+                            setIsShowSpinner={(isShow) => setIsShowSpinner(isShow)}
+                            isRegisterPartner={isRegisterPartner}
+                        />
+                        <View
+                            style={{
+                                marginTop: 40,
+                                alignSelf: 'center',
+                                alignItems: 'center',
+                                marginBottom: 30
+                            }}
+                        >
+                            <TouchableText
+                                style={{
+                                    color: COLORS.ACTIVE,
+                                }}
+                                text="Đăng ký"
+                                onPress={() => navigation.navigate(ScreenName.SIGN_UP)}
+                            />
+                            <TouchableText
+                                text="Quên mật khẩu?"
+                                onPress={() => navigation.navigate(ScreenName.FORGOT_PASSWORD)}
+                                style={{
+                                    color: COLORS.ACTIVE,
+                                    marginTop: 5,
+                                    marginBottom: 10
+                                }}
+                            />
+                            <BecomePartnerText onPress={() => {
+                                setModalVisible(true);
+                                setIsRegisterPartner(true);
+                            }}
+                            />
+                        </View>
+                        <View
+                            style={{
+                                position: 'absolute',
+                                bottom: 10,
+                                alignSelf: 'center'
+                            }}
+                        >
+                            <Text
+                                style={{
+                                    fontFamily: TEXT_REGULAR,
+                                    fontSize: SIZES.FONT_H5 - 4,
+                                    color: COLORS.ACTIVE,
+                                }}
+                            >
+                                Powered by DragonC92Team
+                            </Text>
+                        </View>
+                    </>
+                </KeyboardAwareScrollView>
             )}
-        </View>
+        </>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: Platform.OS === 'android' ? -Utils.HeaderHeight : 0,
+        // marginTop: Platform.OS === 'android' ? -Utils.HeaderHeight : 0,
         backgroundColor: COLORS.BASE,
         flex: 1,
     },
