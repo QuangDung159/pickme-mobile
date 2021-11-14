@@ -1,7 +1,8 @@
 import Theme from '@constants/Theme';
 import React from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import CustomText from './CustomText';
 
 const {
     COLORS, FONT: {
@@ -18,13 +19,12 @@ export default function TouchableText({
             onPress={() => { onPress && onPress(); }}
             disabled={disabled}
         >
-            <Text
+            <CustomText
                 style={[styles.defaultText, style, {
                     color: disabled ? COLORS.PLACE_HOLDER : style.color || styles.defaultText.color
                 }]}
-            >
-                {text}
-            </Text>
+                text={text}
+            />
         </TouchableOpacity>
     );
 }

@@ -1,5 +1,6 @@
 import { CustomButton, CustomText } from '@components/uiComponents';
-import { IconFamily, Theme, BookingStatus } from '@constants/index';
+import TouchableText from '@components/uiComponents/TouchableText';
+import { BookingStatus, IconFamily, Theme } from '@constants/index';
 import { mappingStatusText } from '@helpers/CommonHelpers';
 import { CommonHelpers, ToastHelpers } from '@helpers/index';
 import * as Calendar from 'expo-calendar';
@@ -8,6 +9,7 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import {
     Alert,
+    Linking,
     Platform,
     StyleSheet, View
 } from 'react-native';
@@ -192,6 +194,11 @@ export default function CardBooking({ booking }) {
         .add(minutes, 'minutes')
         .format('HH:mm');
 
+    const createMapUrl = (address) => {
+        const addressStr = address.replace(/ /g, '+');
+        return `https://www.google.com/maps?daddr=${addressStr}`;
+    };
+
     try {
         const {
             startAt,
@@ -305,7 +312,7 @@ export default function CardBooking({ booking }) {
                     />
                 </View>
 
-                <CustomText
+                <TouchableText
                     style={
                         [
                             styles.subInfoCard,
@@ -315,7 +322,10 @@ export default function CardBooking({ booking }) {
                             }
                         ]
                     }
-                    text={`Tại: ${address || 'N/A'}`}
+                    onPress={() => {
+                        Linking.openURL(createMapUrl(address));
+                    }}
+                    text={`Tại: ${address || 'N/A'} (xem chỉ đường)`}
                 />
 
                 <View
