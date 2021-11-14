@@ -1,7 +1,8 @@
+import { OtpForm, UsernameForm } from '@components/businessComponents';
 import {
     CenterLoader
 } from '@components/uiComponents';
-import { Theme } from '@constants/index';
+import { ScreenName, Theme } from '@constants/index';
 import React, { useState } from 'react';
 import {
     StyleSheet,
@@ -11,8 +12,6 @@ import {
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useSelector } from 'react-redux';
 import ModalDisclaimer from './ModalDisclaimer';
-import OtpForm from './OtpForm';
-import PhoneForm from './PhoneForm';
 
 const {
     FONT: {
@@ -25,9 +24,10 @@ const {
 export default function SignUp({ navigation }) {
     const [modalVisible, setModalVisible] = useState(false);
     const [step, setStep] = useState(1);
-    const [phoneNumber, setPhoneNumber] = useState('');
+    const [isEmail, setIsEmail] = useState('');
     const [otp, setOtp] = useState('');
     const [password, setPassword] = useState('');
+    const [username, setUsername] = useState('');
 
     const showLoaderStore = useSelector((state) => state.appConfigReducer.showLoaderStore);
 
@@ -35,12 +35,15 @@ export default function SignUp({ navigation }) {
         switch (step) {
             case 1: {
                 return (
-                    <PhoneForm
-                        phoneNumber={phoneNumber}
+                    <UsernameForm
+                        isEmail={isEmail}
+                        username={username}
+                        setUsername={(usernameInput) => setUsername(usernameInput)}
                         setModalVisible={(isVisible) => setModalVisible(isVisible)}
                         setOtp={(otpCode) => setOtp(otpCode)}
-                        setPhoneNumber={(phoneNum) => setPhoneNumber(phoneNum)}
+                        setIsEmail={(isEmailLogin) => setIsEmail(isEmailLogin)}
                         setStep={(stepIndex) => setStep(stepIndex)}
+                        renderFrom={ScreenName.SIGN_UP}
                     />
                 );
             }
@@ -50,9 +53,11 @@ export default function SignUp({ navigation }) {
                         navigation={navigation}
                         otp={otp}
                         password={password}
-                        phoneNumber={phoneNumber}
+                        username={username}
                         setOtp={(otpCode) => setOtp(otpCode)}
                         setPassword={(passwordStr) => setPassword(passwordStr)}
+                        isEmail={isEmail}
+                        renderFrom={ScreenName.FORGOT_PASSWORD}
                     />
                 );
             }
@@ -93,22 +98,18 @@ export default function SignUp({ navigation }) {
                                             {
                                                 color: COLORS.DEFAULT,
                                                 fontSize: 24,
-                                                height: 100,
-                                                marginTop: SIZES.HEIGHT_BASE * 0.1
+                                                marginTop: SIZES.HEIGHT_BASE * 0.15
                                             }
                                         ]
                                     }
                                 >
-                                    Đăng kí
+                                    Đăng ký
                                 </Text>
                             </View>
-
-                            {/* render from this shit */}
                             {renderSignUpViewByStep()}
                         </View>
                     </KeyboardAwareScrollView>
                 )}
-
             </View>
         </>
     );

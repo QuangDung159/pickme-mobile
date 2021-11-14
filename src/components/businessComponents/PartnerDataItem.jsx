@@ -1,20 +1,17 @@
-import { IconCustom } from '@components/uiComponents';
 import { Theme } from '@constants/index';
 import React from 'react';
 import { Text, View } from 'react-native';
 
 const {
     FONT: {
-        TEXT_REGULAR,
+        TEXT_BOLD,
     },
     SIZES,
     COLORS
 } = Theme;
 
-export default function UserInfoItem({
-    value, icon: {
-        name, family, color, size
-    },
+export default function PartnerDataItem({
+    value
 }) {
     let handleValue = value;
     if (value === undefined || value === null || value.toString() === '') {
@@ -26,21 +23,9 @@ export default function UserInfoItem({
             style={{
                 marginBottom: 10,
                 flexDirection: 'row',
-                alignItems: 'center'
+                alignItems: 'center',
             }}
         >
-            <View
-                style={{
-                    marginRight: 5
-                }}
-            >
-                <IconCustom
-                    name={name}
-                    family={family}
-                    color={color}
-                    size={size}
-                />
-            </View>
             <View
                 style={{
                     flexDirection: 'row'
@@ -48,10 +33,9 @@ export default function UserInfoItem({
             >
                 <Text
                     style={{
-                        fontFamily: TEXT_REGULAR,
-                        fontSize: SIZES.FONT_H2,
-                        color: COLORS.DEFAULT,
-                        marginLeft: 10
+                        fontFamily: TEXT_BOLD,
+                        fontSize: SIZES.FONT_H3,
+                        color: COLORS.ACTIVE,
                     }}
                 >
                     {handleValue}

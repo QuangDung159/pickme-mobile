@@ -19,11 +19,12 @@ import {
 import { useDispatch } from 'react-redux';
 
 const {
-    COLORS
+    COLORS,
+    SIZES
 } = Theme;
 
-export default function SignIn({ navigation, setIsShowSpinner }) {
-    const [phoneNumber, setPhoneNumber] = useState('');
+export default function SignIn({ navigation, setIsShowSpinner, isRegisterPartner }) {
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [deviceIdToSend, setDeviceIdToSend] = useState('');
     const [isShowPassword, setIsShowPassword] = useState(false);
@@ -46,8 +47,8 @@ export default function SignIn({ navigation, setIsShowSpinner }) {
     };
 
     const getLoginInfo = async () => {
-        const phoneNumberLocal = await SecureStore.getItemAsync('phoneNumber');
-        setPhoneNumber(phoneNumberLocal);
+        const usernameLocal = await SecureStore.getItemAsync('username');
+        setUsername(usernameLocal.trim());
 
         const passwordLocal = await SecureStore.getItemAsync('password');
         setPassword(passwordLocal);
@@ -89,7 +90,7 @@ export default function SignIn({ navigation, setIsShowSpinner }) {
         const deviceId = await SecureStore.getItemAsync('deviceId');
         if (validate()) {
             const body = {
-                username: phoneNumber,
+                username: username.toString().trim(),
                 password,
                 deviceId: deviceIdToSend || deviceId
             };
@@ -113,7 +114,7 @@ export default function SignIn({ navigation, setIsShowSpinner }) {
         const validationArr = [
             {
                 fieldName: 'Số điện thoại',
-                input: phoneNumber,
+                input: username,
                 validate: {
                     required: {
                         value: true,
@@ -136,12 +137,33 @@ export default function SignIn({ navigation, setIsShowSpinner }) {
 
     const onLoginSuccess = async (data, status) => {
         SecureStore.setItemAsync('password', `${password}`);
-        SecureStore.setItemAsync('phoneNumber', `${phoneNumber}`);
+        SecureStore.setItemAsync('username', `${username}`);
 
         const currentUserInfo = await UserServices.mappingCurrentUserInfo(data.data);
         SecureStore.setItemAsync('api_token', `${currentUserInfo.token}`);
         dispatch(setCurrentUser(currentUserInfo));
 
+        if (isRegisterPartner) {
+            Alert.alert('Bạn vừa chọn đăng ký trở thành Host', 'Bạn có muốn tiếp tục?', [
+                {
+                    text: 'Huỷ',
+                    style: 'cancel',
+                    onPress: () => handleNavigation(status)
+                },
+                {
+                    text: 'Tiếp tục',
+                    onPress: () => navigation.navigate(ScreenName.VERIFICATION, {
+                        navigateFrom: ScreenName.MENU
+                    })
+                },
+            ],
+            { cancelable: false });
+        } else {
+            handleNavigation(status);
+        }
+    };
+
+    const handleNavigation = (status) => {
         if (status === 200) {
             navigation.reset({
                 index: 0,
@@ -174,10 +196,10 @@ export default function SignIn({ navigation, setIsShowSpinner }) {
                 }}
             >
                 <CustomInput
-                    placeholder="Nhập số điện thoại..."
-                    value={phoneNumber}
+                    placeholder="Nhập tên đăng nhập..."
+                    value={username}
                     onChangeText={
-                        (phoneNumberInput) => setPhoneNumber(phoneNumberInput)
+                        (usernameInput) => setUsername(usernameInput.trim())
                     }
                     containerStyle={{
                         marginVertical: 10,
@@ -217,6 +239,10 @@ export default function SignIn({ navigation, setIsShowSpinner }) {
             </View>
 
             <CustomButton
+                buttonStyle={{
+                    width: SIZES.WIDTH_BASE * 0.9
+                }}
+                type="active"
                 onPress={() => onSubmitLogin()}
                 label="Đăng nhập"
             />

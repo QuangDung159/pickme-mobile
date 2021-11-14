@@ -72,11 +72,13 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "apk": "expo build:android -t apk --release-channel dev",
+    "apk-dev": "expo build:android -t apk --release-channel dev",
+    "apk-uat": "expo build:android -t apk --release-channel uat",
+    "apk-prd": "expo build:android -t apk --release-channel prd",
     "aab": "expo build:android -t app-bundle --release-channel prd",
-    "pub": "expo publish --release-channel dev",
-    "pub-prd": "expo publish --release-channel prd",
-    "store": "sh publish-android-latest.sh"
+    "ota-dev": "expo publish --release-channel dev",
+    "ota-prd": "expo publish --release-channel prd",
+    "publish-play-store": "sh publish-android-latest.sh"
   },
   "private": true
 }

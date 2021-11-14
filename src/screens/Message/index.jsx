@@ -331,7 +331,8 @@ export default function Message({ navigation, route }) {
                     width: SIZES.WIDTH_BASE * 0.9
                 }}
                 inputStyle={{
-                    borderWidth: 0
+                    borderWidth: 0,
+                    textAlign: 'left'
                 }}
             />
 

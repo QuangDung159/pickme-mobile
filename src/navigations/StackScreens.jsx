@@ -1,7 +1,9 @@
 /* eslint-disable no-unused-vars */
-import { Theme, ScreenName, ScreenTitle } from '@constants/index';
+import { ScreenName, ScreenTitle, Theme } from '@constants/index';
 import Header from '@containers/Header';
 import { createStackNavigator } from '@react-navigation/stack';
+import CashOut from '@screens/CashOut';
+import ChangePassword from '@screens/ChangePassword';
 // screens
 import {
     BookingDetail,
@@ -9,10 +11,9 @@ import {
     ConversationList, CreateAccount, CreateBooking,
     ForgotPassword,
     Home,
-    LeaderBoard,
-    Message, Notification,
-    Onboarding, Personal,
-    Profile, Settings, SignIn, SignInWithOTP, SignUp,
+    LeaderBoard, Menu, Message, Notification,
+    Onboarding, PartnerData, Personal,
+    Profile, Settings, SignInWithOTP, SignUp,
     Support, UpdateInfoAccount,
     Verification
 } from '@screens/index';
@@ -31,6 +32,24 @@ export const PersonalScreen = () => (
             header: ({ navigation, scene }) => (
                 <Header
                     title={ScreenTitle.PERSONAL}
+                    options
+                    navigation={navigation}
+                    scene={scene}
+                />
+            ),
+            cardStyle: { backgroundColor: COLORS.BASE }
+        }}
+    />
+);
+
+export const CashOutScreen = () => (
+    <Stack.Screen
+        name={ScreenName.CASH_OUT}
+        component={CashOut}
+        options={{
+            header: ({ navigation, scene }) => (
+                <Header
+                    title={ScreenTitle.CASH_OUT}
                     options
                     navigation={navigation}
                     scene={scene}
@@ -103,6 +122,24 @@ export const LeaderBoardScreen = () => (
             header: ({ navigation, scene }) => (
                 <Header
                     title={ScreenTitle.LEADER_BOARD}
+                    options
+                    navigation={navigation}
+                    scene={scene}
+                />
+            ),
+            cardStyle: { backgroundColor: COLORS.BASE }
+        }}
+    />
+);
+
+export const MenuScreen = () => (
+    <Stack.Screen
+        name={ScreenName.MENU}
+        component={Menu}
+        options={{
+            header: ({ navigation, scene }) => (
+                <Header
+                    title={ScreenTitle.MENU}
                     options
                     navigation={navigation}
                     scene={scene}
@@ -263,6 +300,24 @@ export const SettingsScreen = () => (
     />
 );
 
+export const ChangePasswordScreen = () => (
+    <Stack.Screen
+        name={ScreenName.CHANGE_PASSWORD}
+        component={ChangePassword}
+        options={{
+            header: ({ navigation, scene }) => (
+                <Header
+                    title={ScreenTitle.CHANGE_PASSWORD}
+                    options
+                    navigation={navigation}
+                    scene={scene}
+                />
+            ),
+            cardStyle: { backgroundColor: COLORS.BASE }
+        }}
+    />
+);
+
 export const SignUpScreen = () => (
     <Stack.Screen
         name={ScreenName.SIGN_UP}
@@ -284,23 +339,20 @@ export const SignUpScreen = () => (
     />
 );
 
-export const SignInScreen = () => (
+export const PartnerDataScreen = () => (
     <Stack.Screen
-        name={ScreenName.SIGN_IN}
-        component={SignIn}
+        name={ScreenName.PARTNER_DATA}
+        component={PartnerData}
         options={{
             header: ({ navigation, scene }) => (
                 <Header
-                    title=""
-                    back
-                    white
-                    transparent
+                    title={ScreenTitle.PARTNER_DATA}
+                    options
                     navigation={navigation}
                     scene={scene}
-                    showRight={false}
                 />
             ),
-            headerTransparent: true
+            cardStyle: { backgroundColor: COLORS.BASE }
         }}
     />
 );

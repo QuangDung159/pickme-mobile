@@ -5,7 +5,7 @@ import { ScreenName, Theme } from '@constants/index';
 import BookingProgressFlow from '@containers/BookingProgressFlow';
 import { ToastHelpers } from '@helpers/index';
 import {
-    setCurrentBookingRedux, setListBookingStore, setShowLoaderStore
+    setCurrentBookingRedux, setListBookingStore, setPersonTabActiveIndex, setShowLoaderStore
 } from '@redux/Actions';
 import { BookingServices } from '@services/index';
 import React, { useEffect, useState } from 'react';
@@ -44,6 +44,7 @@ export default function BookingDetail({
     const showLoaderStore = useSelector((state) => state.appConfigReducer.showLoaderStore);
     const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
     const currentBookingRedux = useSelector((state) => state.bookingReducer.currentBookingRedux);
+    const currentUser = useSelector((state) => state.userReducer.currentUser);
 
     const dispatch = useDispatch();
 
@@ -81,17 +82,19 @@ export default function BookingDetail({
     };
 
     const fetchListBooking = async () => {
-        const result = await BookingServices.fetchListBookingAsync();
-        const { data } = result;
-
-        if (data) {
-            dispatch(setListBookingStore(data.data));
-            dispatch(setShowLoaderStore(false));
-            setRefreshing(false);
-        } else {
-            setRefreshing(false);
-            dispatch(setShowLoaderStore(false));
+        const bookingAsCustomer = await BookingServices.fetchListBookingAsync();
+        let bookingAsPartner = [];
+        if (currentUser.isPartnerVerified) {
+            bookingAsPartner = await BookingServices.fetchListBookingAsPartnerAsync();
         }
+
+        if (bookingAsPartner.data && bookingAsCustomer.data) {
+            const listBooking = bookingAsCustomer.data.data.concat(bookingAsPartner.data.data);
+            dispatch(setListBookingStore(listBooking));
+        }
+
+        setRefreshing(false);
+        dispatch(setShowLoaderStore(false));
     };
 
     const fetchBookingDetailInfo = async () => {
@@ -109,6 +112,11 @@ export default function BookingDetail({
     const onSendedRating = () => {
         dispatch(setShowLoaderStore(true));
         fetchBookingDetailInfo();
+    };
+
+    const onSubmitReason = () => {
+        fetchListBooking();
+        dispatch(setPersonTabActiveIndex(2));
     };
 
     // render \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
@@ -151,8 +159,7 @@ export default function BookingDetail({
                                     modalReasonVisible={modalReasonVisible}
                                     setModalReasonVisible={setModalReasonVisible}
                                     bookingId={bookingId}
-                                    navigation={navigation}
-                                    fetchListBooking={() => fetchListBooking()}
+                                    onSubmitReason={() => onSubmitReason()}
                                 />
 
                                 {currentBookingRedux && (
@@ -182,7 +189,7 @@ export default function BookingDetail({
                                                         {
                                                             color: COLORS.DEFAULT,
                                                             fontSize: SIZES.FONT_H3,
-                                                            marginBottom: 20
+                                                            marginVertical: 15
                                                         }
                                                     ]
                                                 }
@@ -191,14 +198,9 @@ export default function BookingDetail({
                                             </Text>
                                         </View>
 
-                                        <BookingProgressFlow
-                                            status={currentBookingRedux.status}
-                                            partner={currentBookingRedux.partner}
-                                            booking={currentBookingRedux}
-                                        />
+                                        <BookingProgressFlow />
 
                                         <ButtonPanel
-                                            booking={currentBookingRedux}
                                             setModalReasonVisible={setModalReasonVisible}
                                             navigation={navigation}
                                             fetchListBooking={fetchListBooking}

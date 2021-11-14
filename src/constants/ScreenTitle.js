@@ -5,11 +5,10 @@ export default {
     CALENDAR: 'Lịch',
     ONBOARDING: 'Onboarding',
     PROFILE: 'Trang cá nhân',
-    REGISTER: 'Đăng kí',
+    REGISTER: 'Đăng ký',
     SETTINGS: 'Cài đặt',
-    SIGN_UP: 'Đăng kí',
+    SIGN_UP: 'Đăng ký',
     WALLET: 'Ví tiền',
-    SIGN_IN: 'Đăng nhập',
     NOTIFICATION: 'Thông báo',
     MENU: 'Menu',
     CREATE_BOOKING: 'Tạo đơn hẹn',
@@ -26,5 +25,9 @@ export default {
     SUPPORT: 'Hỗ trợ',
     VERIFICATION: 'Xác thực tài khoản',
     SIGN_IN_WITH_OTP: 'Đăng nhập',
-    FORGOT_PASSWORD: 'Quên mật khẩu'
+    FORGOT_PASSWORD: 'Quên mật khẩu',
+    PARTNER_REGISTER: 'Đăng ký trở thành Host',
+    CHANGE_PASSWORD: 'Đổi mật khẩu',
+    PARTNER_DATA: 'Thông tin Host',
+    CASH_OUT: 'Rút tiền'
 };

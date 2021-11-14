@@ -10,13 +10,18 @@ const {
     SIZES
 } = Theme;
 
-export default function TouchableText({ onPress, style, text }) {
+export default function TouchableText({
+    onPress, style, text, disabled = false
+}) {
     return (
         <TouchableOpacity
             onPress={() => { onPress && onPress(); }}
+            disabled={disabled}
         >
             <Text
-                style={[styles.defaultText, style]}
+                style={[styles.defaultText, style, {
+                    color: disabled ? COLORS.PLACE_HOLDER : style.color || styles.defaultText.color
+                }]}
             >
                 {text}
             </Text>

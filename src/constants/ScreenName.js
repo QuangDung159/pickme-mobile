@@ -9,7 +9,6 @@ export default {
     SETTINGS: 'Settings',
     SIGN_UP: 'SignUp',
     WALLET: 'Wallet',
-    SIGN_IN: 'SignIn',
     APP: 'App',
     NOTIFICATION: 'Notification',
     MENU: 'Menu',
@@ -28,5 +27,7 @@ export default {
     SUPPORT: 'Support',
     VERIFICATION: 'Verification',
     SIGN_IN_WITH_OTP: 'SignInWithOTP',
-    FORGOT_PASSWORD: 'ForgotPassword'
+    FORGOT_PASSWORD: 'ForgotPassword',
+    PARTNER_DATA: 'PartnerData',
+    CHANGE_PASSWORD: 'ChangePassword',
 };

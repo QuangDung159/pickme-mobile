@@ -6,13 +6,14 @@ import CreateBooking from './CreateBooking';
 import ForgotPassword from './ForgotPassword';
 import Home from './Home';
 import LeaderBoard from './LeaderBoard';
+import Menu from './Menu';
 import Message from './Message';
 import Notification from './Notification';
 import Onboarding from './Onboarding';
+import PartnerData from './PartnerData';
 import Personal from './Personal';
 import Profile from './Profile';
 import Settings from './Settings';
-import SignIn from './SignIn';
 import SignInWithOTP from './SignInWithOTP';
 import SignUp from './SignUp';
 import Support from './Support';
@@ -21,7 +22,7 @@ import Verification from './Verification';
 
 export {
     Home, Notification, Settings, Onboarding,
-    SignIn, SignUp, CreateAccount,
+    SignUp, CreateAccount,
     CreateBooking,
     BookingDetail,
     CashIn,
@@ -34,5 +35,7 @@ export {
     Support,
     Verification,
     SignInWithOTP,
-    ForgotPassword
+    ForgotPassword,
+    PartnerData,
+    Menu
 };
