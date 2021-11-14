@@ -70,6 +70,7 @@ export default function SubInfoProfile({ user }) {
                 iconContainerStyle={{
                     marginTop: 3
                 }}
+                contentTextStyle={{ width: SIZES.WIDTH_BASE * 0.9 - 25 }}
             />
         </View>
     );

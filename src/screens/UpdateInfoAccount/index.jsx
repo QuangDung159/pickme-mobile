@@ -320,34 +320,14 @@ export default function UpdateInfoAccount() {
     };
 
     const onSubmitUpdateInfo = async () => {
-        const {
-            fullName,
-            description,
-            dob,
-            homeTown,
-            interests,
-            address,
-            url,
-            height, weight,
-            isMale
-        } = newUser;
-
         if (!validate()) {
             return;
         }
 
         const body = {
-            fullName,
-            description,
-            dob: `${dob}-01-01T14:00:00`,
-            homeTown,
-            interests,
-            address,
+            ...newUser,
             email: currentUser.userName,
-            IsMale: isMale,
-            url,
-            height: +height,
-            weight: +weight
+            IsMale: newUser.isMale,
         };
 
         setIsShowSpinner(true);
@@ -357,14 +337,9 @@ export default function UpdateInfoAccount() {
 
         if (data) {
             const userInfo = {
-                ...currentUser,
-                fullName,
-                dob,
-                homeTown,
-                interests,
-                isMale,
-                height,
-                weight
+                ...newUser,
+                email: currentUser.userName,
+                IsMale: newUser.isMale,
             };
             dispatch(setCurrentUser(userInfo));
             dispatch(setPersonTabActiveIndex(0));

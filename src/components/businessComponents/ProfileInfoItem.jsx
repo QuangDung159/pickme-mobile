@@ -18,7 +18,8 @@ export default function ProfileInfoItem({
     content,
     fontSize,
     containerStyle,
-    iconContainerStyle
+    iconContainerStyle,
+    contentTextStyle
 }) {
     return (
         <View
@@ -38,13 +39,13 @@ export default function ProfileInfoItem({
             </View>
             <Text
                 muted
-                style={{
+                style={[{
                     fontFamily: TEXT_REGULAR,
                     zIndex: 2,
                     lineHeight: 25,
                     color: COLORS.DEFAULT,
-                    fontSize
-                }}
+                    fontSize,
+                }, contentTextStyle]}
             >
                 {content}
             </Text>

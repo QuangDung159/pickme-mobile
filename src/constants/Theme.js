@@ -15,7 +15,7 @@ const COLORS = {
     TRANSPARENT: 'transparent',
     SELECTED_DATE: '#b3f1ff',
     BASE: '#ffffff',
-    PLACE_HOLDER: '#c4c4c4'
+    PLACE_HOLDER: '#c4c4c4',
 };
 
 const SIZES = {

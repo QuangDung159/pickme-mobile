@@ -190,7 +190,6 @@ export default function ConversationList({ navigation }) {
                 }
                 containerStyle={{
                     backgroundColor: COLORS.BASE,
-                    marginTop: 5
                 }}
             >
                 <View

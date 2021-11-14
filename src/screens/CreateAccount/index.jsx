@@ -91,10 +91,10 @@ export default function CreateAccount(props) {
         const body = {
             fullName,
             description,
-            dob: `${dob}-01-01T14:00:00`,
-            height: +height,
+            dob,
+            height,
             earningExpected,
-            weight: +weight,
+            weight,
             address,
             interests,
             homeTown: hometown,

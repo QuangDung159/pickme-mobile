@@ -116,7 +116,9 @@ const rxSubmitUpdateInfoAsync = async (body, domain = null) => {
 };
 
 const submitUpdateInfoAsync = async (body) => {
-    let result = await rxSubmitUpdateInfoAsync(body);
+    let result = await rxSubmitUpdateInfoAsync({
+        ...body, dob: `${body.dob}-01-01T14:00:00`, weight: +body.weight, height: +body.height
+    });
     const handledResult = await Middlewares.handleResponseStatusMiddleware(result);
     if (handledResult) {
         result = await rxSubmitUpdateInfoAsync(body, handledResult.backupDomain);
