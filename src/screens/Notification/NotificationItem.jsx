@@ -5,16 +5,18 @@ import { NotificationServices } from '@services/index';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {
-    Image, StyleSheet, Text, TouchableWithoutFeedback, View
+    Image,
+    StyleSheet,
+    Text,
+    TouchableWithoutFeedback,
+    View
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 
 const {
-    FONT: {
-        TEXT_REGULAR,
-    },
+    FONT: { TEXT_REGULAR, TEXT_BOLD },
     SIZES,
-    COLORS
+    COLORS,
 } = Theme;
 
 export default function NotificationItem({
@@ -29,7 +31,9 @@ export default function NotificationItem({
         if (isReadAll) {
             result = await NotificationServices.triggerReadAllNotificationAsync();
         } else {
-            result = await NotificationServices.triggerReadNotificationAsync(notiId);
+            result = await NotificationServices.triggerReadNotificationAsync(
+                notiId
+            );
         }
         const { data } = result;
 
@@ -41,7 +45,9 @@ export default function NotificationItem({
     const handleNavigation = (navigationId, navigationType) => {
         switch (navigationType) {
             case 2: {
-                navigation.navigate(ScreenName.BOOKING_DETAIL, { bookingId: navigationId });
+                navigation.navigate(ScreenName.BOOKING_DETAIL, {
+                    bookingId: navigationId,
+                });
                 break;
             }
             case 3: {
@@ -64,9 +70,7 @@ export default function NotificationItem({
 
     const renderNotiContent = () => {
         const {
-            content,
-            id,
-            navigationId, type
+            content, id, navigationId, type
         } = notiItem;
 
         return (
@@ -76,7 +80,7 @@ export default function NotificationItem({
                         marginRight: 15,
                         alignSelf: 'center',
                         alignItems: 'center',
-                        flex: 1
+                        flex: 1,
                     }}
                 >
                     {renderAvatar()}
@@ -84,7 +88,7 @@ export default function NotificationItem({
                 <View
                     style={{
                         justifyContent: 'center',
-                        flex: 8
+                        flex: 8,
                     }}
                 >
                     <TouchableWithoutFeedback
@@ -93,16 +97,19 @@ export default function NotificationItem({
                             onClickRead(false, id);
                         }}
                     >
-                        <View style={{
-                            paddingVertical: 5,
-                        }}
+                        <View
+                            style={{
+                                paddingVertical: 5,
+                            }}
                         >
                             <Text
                                 numberOfLines={2}
                                 style={{
                                     color: COLORS.DEFAULT,
                                     fontSize: 16,
-                                    fontFamily: TEXT_REGULAR,
+                                    fontFamily: !isRead
+                                        ? TEXT_BOLD
+                                        : TEXT_REGULAR,
                                 }}
                             >
                                 {content}
@@ -114,24 +121,20 @@ export default function NotificationItem({
         );
     };
 
-    const {
-        isRead,
-    } = notiItem;
+    const { isRead } = notiItem;
 
     return (
-        <View style={[
-            !isRead
-                ? { backgroundColor: COLORS.BLOCK }
-                : { }, {
-                height: SIZES.HEIGHT_BASE * 0.08
-            }]}
+        <View
+            style={{
+                height: 73,
+            }}
         >
             <View
                 style={{
                     height: SIZES.HEIGHT_BASE * 0.1,
                     marginHorizontal: 10,
                     flexDirection: 'row',
-                    flex: 1
+                    flex: 1,
                 }}
             >
                 {renderNotiContent()}
@@ -143,7 +146,7 @@ export default function NotificationItem({
 NotificationItem.propTypes = {
     onTriggerRead: PropTypes.func.isRequired,
     notiItem: PropTypes.object.isRequired,
-    navigation: PropTypes.object.isRequired
+    navigation: PropTypes.object.isRequired,
 };
 
 const styles = StyleSheet.create({
@@ -151,5 +154,5 @@ const styles = StyleSheet.create({
         borderRadius: 100,
         width: SIZES.WIDTH_BASE * 0.1,
         height: SIZES.WIDTH_BASE * 0.1,
-    }
+    },
 });

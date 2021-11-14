@@ -157,7 +157,8 @@ export default function CreateBooking({ route, navigation }) {
                 ) : (
                     <SafeAreaView
                         style={{
-                            flex: 1
+                            flex: 1,
+                            backgroundColor: COLORS.BASE
                         }}
                     >
                         <KeyboardAwareScrollView
@@ -203,7 +204,7 @@ export default function CreateBooking({ route, navigation }) {
 
                             <View
                                 style={{
-                                    backgroundColor: COLORS.BLOCK,
+                                    backgroundColor: COLORS.BASE,
                                     width: SIZES.WIDTH_BASE
                                 }}
                             >
@@ -233,7 +234,7 @@ export default function CreateBooking({ route, navigation }) {
 
                             <View
                                 style={{
-                                    backgroundColor: COLORS.BLOCK,
+                                    backgroundColor: COLORS.BASE,
                                     width: SIZES.WIDTH_BASE,
                                     marginTop: 5,
                                     paddingBottom: 20,

@@ -1,4 +1,6 @@
-const generateMoneyStr = (moneyText) => `${numberWithCommas(moneyText.toString())}`;
+import BookingStatus from '@constants/BookingStatus';
+
+const generateMoneyStr = (moneyText) => `${numberWithCommas(moneyText.toString().trim())}`;
 
 const numberWithCommas = (x) => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 
@@ -27,6 +29,18 @@ const handleResByStatus = (response) => {
         data: null,
         status
     };
+};
+
+export const mappingStatusText = (status) => {
+    switch (status) {
+        case BookingStatus.SCHEDULING:
+            return 'Chờ xác nhận';
+        case BookingStatus.PAID: return 'Đã được thanh toán';
+        case BookingStatus.IS_CONFIRMED: return 'Đã được xác nhận';
+        case BookingStatus.COMPLETED: return 'Buổi hẹn hoàn tất';
+        default:
+            return 'Đã huỷ';
+    }
 };
 
 export default {

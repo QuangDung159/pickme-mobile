@@ -189,8 +189,7 @@ export default function ConversationList({ navigation }) {
                     () => onLongPressConversationItem(params)
                 }
                 containerStyle={{
-                    backgroundColor: COLORS.BLOCK,
-                    marginTop: 5
+                    backgroundColor: COLORS.BASE,
                 }}
             >
                 <View

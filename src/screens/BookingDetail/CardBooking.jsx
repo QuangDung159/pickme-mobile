@@ -1,11 +1,14 @@
+import { CustomText } from '@components/uiComponents';
+import { Theme } from '@constants/index';
+import { mappingStatusText } from '@helpers/CommonHelpers';
+import { CommonHelpers, ToastHelpers } from '@helpers/index';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {
-    StyleSheet, Text, View
+    StyleSheet, View
 } from 'react-native';
-import { Theme } from '@constants/index';
-import { CommonHelpers, ToastHelpers } from '@helpers/index';
+import { useSelector } from 'react-redux';
 
 const {
     FONT: {
@@ -17,6 +20,7 @@ const {
 } = Theme;
 
 export default function CardBooking({ booking }) {
+    const currentUser = useSelector((state) => state.userReducer.currentUser);
     const convertMinutesToStringHours = (minutes) => moment.utc()
         .startOf('day')
         .add(minutes, 'minutes')
@@ -26,12 +30,14 @@ export default function CardBooking({ booking }) {
         const {
             startAt,
             endAt,
-            partner,
+            partnerName,
             totalAmount,
-            statusValue,
+            status,
             date,
             idReadAble,
-            address
+            address,
+            customerId,
+            customerName
         } = booking;
 
         if (!booking) {
@@ -40,14 +46,15 @@ export default function CardBooking({ booking }) {
 
         const startStr = convertMinutesToStringHours(startAt);
         const endStr = convertMinutesToStringHours(endAt);
-        const { fullName } = partner;
 
         return (
             <View
                 style={{
-                    marginVertical: 20,
+                    marginTop: 10,
                     alignSelf: 'center',
                     width: SIZES.WIDTH_BASE * 0.9,
+                    borderBottomColor: COLORS.ACTIVE,
+                    borderBottomWidth: 0.5
                 }}
             >
                 <View
@@ -56,37 +63,49 @@ export default function CardBooking({ booking }) {
                         width: SIZES.WIDTH_BASE * 0.9,
                         justifyContent: 'space-between',
                         alignItems: 'center',
-                        marginBottom: 15,
                     }}
                 >
-                    <Text
+                    <CustomText
                         style={
                             [
                                 styles.cardTitle,
                                 {
-                                    fontSize: SIZES.FONT_H2,
-                                    color: COLORS.ACTIVE,
+                                    fontSize: SIZES.FONT_H5,
+                                    color: COLORS.DEFAULT,
+                                    fontFamily: TEXT_REGULAR,
+                                    marginBottom: 0
                                 }
                             ]
                         }
-                    >
-                        {`${fullName}`}
-                    </Text>
-                    <Text
+                        text={`${customerId === currentUser.id ? 'Host' : 'Khách hàng'}`}
+                    />
+                    <CustomText
                         style={
                             [
                                 styles.subInfoCard,
                                 {
-                                    fontSize: SIZES.FONT_H4,
+                                    fontSize: SIZES.FONT_H5,
                                     color: COLORS.DEFAULT,
                                     marginBottom: 0,
                                 }
                             ]
                         }
-                    >
-                        {`Mã đơn: #${idReadAble}`}
-                    </Text>
+                        text={`Mã đơn: #${idReadAble}`}
+                    />
                 </View>
+
+                <CustomText
+                    style={
+                        [
+                            styles.cardTitle,
+                            {
+                                fontSize: SIZES.FONT_H2,
+                                color: COLORS.ACTIVE,
+                            }
+                        ]
+                    }
+                    text={`${customerId === currentUser.id ? partnerName : customerName}`}
+                />
 
                 <View
                     style={{
@@ -94,7 +113,7 @@ export default function CardBooking({ booking }) {
                         flexDirection: 'row',
                     }}
                 >
-                    <Text
+                    <CustomText
                         style={
                             [
                                 styles.subInfoCard,
@@ -104,10 +123,9 @@ export default function CardBooking({ booking }) {
                                 }
                             ]
                         }
-                    >
-                        {`Ngày: ${moment(date).format('DD-MM-YYYY')}`}
-                    </Text>
-                    <Text
+                        text={`Ngày: ${moment(date).format('DD-MM-YYYY')}`}
+                    />
+                    <CustomText
                         style={
                             [
                                 styles.subInfoCard,
@@ -117,12 +135,11 @@ export default function CardBooking({ booking }) {
                                 }
                             ]
                         }
-                    >
-                        {`${startStr} - ${endStr}`}
-                    </Text>
+                        text={`${startStr} - ${endStr}`}
+                    />
                 </View>
 
-                <Text
+                <CustomText
                     style={
                         [
                             styles.subInfoCard,
@@ -132,19 +149,16 @@ export default function CardBooking({ booking }) {
                             }
                         ]
                     }
-                >
-                    Tại:
-                    {' '}
-                    {address || 'N/A'}
-                </Text>
+                    text={`Tại: ${address || 'N/A'}`}
+                />
 
                 <View
                     style={{
                         flexDirection: 'row',
-                        justifyContent: 'space-between'
+                        justifyContent: 'space-between',
                     }}
                 >
-                    <Text
+                    <CustomText
                         style={
                             [
                                 styles.subInfoCard,
@@ -154,25 +168,24 @@ export default function CardBooking({ booking }) {
                                 }
                             ]
                         }
-                    >
-                        {`Trạng thái: ${statusValue}`}
-                    </Text>
-                    <View
+                        text={`Trạng thái: ${mappingStatusText(status)}`}
+                    />
+                </View>
+                <View
+                    style={{
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        marginBottom: 10
+                    }}
+                >
+                    <CustomText
                         style={{
-                            flexDirection: 'row'
+                            fontFamily: TEXT_BOLD,
+                            fontSize: SIZES.FONT_H1,
+                            color: COLORS.ACTIVE
                         }}
-                    >
-                        <Text
-                            style={{
-                                fontFamily: TEXT_BOLD,
-                                marginRight: 5,
-                                fontSize: SIZES.FONT_H2,
-                                color: COLORS.ACTIVE
-                            }}
-                        >
-                            {CommonHelpers.generateMoneyStr(totalAmount)}
-                        </Text>
-                    </View>
+                        text={CommonHelpers.generateMoneyStr(totalAmount)}
+                    />
                 </View>
             </View>
         );
@@ -196,6 +209,5 @@ const styles = StyleSheet.create({
     },
     subInfoCard: {
         fontFamily: TEXT_REGULAR,
-        marginBottom: 10
     },
 });

@@ -55,7 +55,7 @@ export default function ModalDisclaimer({ modalVisible, setModalVisible }) {
 
 const styles = StyleSheet.create({
     button: {
-        width: SIZES.WIDTH_BASE * 0.77,
+        width: SIZES.WIDTH_BASE * 0.8,
         marginVertical: 10
     },
     modalText: {

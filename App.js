@@ -1,10 +1,8 @@
 /* eslint-disable global-require */
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
 import { ExpoNotification } from '@components/businessComponents';
-import { IconCustom } from '@components/uiComponents';
-import { IconFamily, Images, Theme } from '@constants/index';
+import { Images, Theme } from '@constants/index';
 import Main from '@containers/Main';
-import { ENV } from '@env';
 import { ToastHelpers } from '@helpers/index';
 import store from '@redux/Store';
 import AppLoading from 'expo-app-loading';
@@ -14,7 +12,7 @@ import * as Updates from 'expo-updates';
 import * as React from 'react';
 import {
     Alert,
-    Image, Platform, StatusBar, StyleSheet, Text, View
+    Image, StatusBar, StyleSheet, Text, View
 } from 'react-native';
 import { MenuProvider } from 'react-native-popup-menu';
 import Toast from 'react-native-toast-message';
@@ -23,7 +21,6 @@ import { Provider } from 'react-redux';
 const {
     FONT: {
         TEXT_BOLD,
-        TEXT_REGULAR
     },
     SIZES,
     COLORS
@@ -61,18 +58,11 @@ const toastConfig = {
                         styles.toastContent,
                         {
                             color: COLORS.SUCCESS,
-                            fontSize: SIZES.FONT_H3
+                            fontSize: SIZES.FONT_H5
                         }
                     ]
                 }
             >
-                <IconCustom
-                    name="check"
-                    family={IconFamily.FONT_AWESOME}
-                    size={15}
-                    color={COLORS.SUCCESS}
-                />
-                {'  '}
                 {internalState.text1}
             </Text>
         </View>
@@ -87,18 +77,11 @@ const toastConfig = {
                         styles.toastContent,
                         {
                             color: COLORS.ERROR,
-                            fontSize: SIZES.FONT_H3
+                            fontSize: SIZES.FONT_H5
                         }
                     ]
                 }
             >
-                <IconCustom
-                    name="remove"
-                    family={IconFamily.FONT_AWESOME}
-                    size={15}
-                    color={COLORS.ERROR}
-                />
-                {'  '}
                 {internalState.text1}
             </Text>
         </View>
@@ -190,7 +173,7 @@ export default function App() {
                 <ExpoNotification />
                 <Main />
                 <Toast config={toastConfig} ref={(ref) => Toast.setRef(ref)} />
-                {ENV !== 'prod' && (
+                {/* {ENV !== 'prod' && (
                     <View
                         style={{
                             position: 'absolute',
@@ -209,7 +192,7 @@ export default function App() {
                             {ENV}
                         </Text>
                     </View>
-                )}
+                )} */}
             </Provider>
         </MenuProvider>
     );
@@ -218,7 +201,7 @@ export default function App() {
 const styles = StyleSheet.create({
     toastContainer: {
         width: SIZES.WIDTH_BASE * 0.85,
-        backgroundColor: COLORS.BLOCK,
+        backgroundColor: COLORS.BASE,
         borderRadius: 30,
         borderColor: COLORS.DEFAULT,
         borderWidth: 0.5,

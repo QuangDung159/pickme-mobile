@@ -158,22 +158,41 @@ export default function Wallet({ navigation }) {
                             color: COLORS.ACTIVE,
                         }}
                     >
-                        {`${currentUser.walletAmountDisplay}`}
+                        {`${currentUser.walletAmount}`}
                     </Text>
                 </View>
             </View>
-            <CustomButton
-                onPress={() => navigation.navigate(ScreenName.CASH_IN)}
-                labelStyle={{
-                    fontSize: SIZES.FONT_H3,
-                    color: COLORS.ACTIVE
+            <View
+                style={{
+                    flexDirection: 'column'
                 }}
-                buttonStyle={{
-                    width: SIZES.WIDTH_BASE * 0.35,
-                    borderColor: COLORS.ACTIVE
-                }}
-                label="Nạp tiền"
-            />
+            >
+                <CustomButton
+                    onPress={() => navigation.navigate(ScreenName.CASH_OUT)}
+                    labelStyle={{
+                        fontSize: SIZES.FONT_H3,
+                        color: COLORS.DEFAULT
+                    }}
+                    buttonStyle={{
+                        width: SIZES.WIDTH_BASE * 0.35,
+                        borderColor: COLORS.DEFAULT,
+                        marginBottom: 5
+                    }}
+                    label="Rút tiền"
+                />
+                <CustomButton
+                    onPress={() => navigation.navigate(ScreenName.CASH_IN)}
+                    labelStyle={{
+                        fontSize: SIZES.FONT_H3,
+                        color: COLORS.ACTIVE
+                    }}
+                    buttonStyle={{
+                        width: SIZES.WIDTH_BASE * 0.35,
+                        borderColor: COLORS.ACTIVE
+                    }}
+                    label="Nạp tiền"
+                />
+            </View>
         </View>
     );
 
@@ -203,13 +222,13 @@ export default function Wallet({ navigation }) {
                 <View
                     style={{
                         flex: 1,
-                        backgroundColor: COLORS.BLOCK,
+                        backgroundColor: COLORS.BASE,
                         marginTop: 5
                     }}
                 >
                     <FlatList
                         data={listCashHistoryStore}
-                        keyExtractor={(item) => `${item.navigationId}-${item.isIncrease}`}
+                        keyExtractor={(item) => item.traceId}
                         renderItem={({ item }) => renderHistoryItem(item)}
                         showsVerticalScrollIndicator={false}
                         refreshControl={(
@@ -266,7 +285,7 @@ export default function Wallet({ navigation }) {
                     <>
                         <View
                             style={{
-                                backgroundColor: COLORS.BLOCK,
+                                backgroundColor: COLORS.BASE,
                                 marginTop: 5
                             }}
                         >
@@ -275,6 +294,8 @@ export default function Wallet({ navigation }) {
                                     height: 120,
                                     width: SIZES.WIDTH_BASE * 0.9,
                                     alignSelf: 'center',
+                                    borderBottomWidth: 0.5,
+                                    borderBottomColor: COLORS.ACTIVE
                                 }}
                             >
                                 {renderWalletAmountPanel()}

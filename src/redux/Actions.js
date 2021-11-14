@@ -1,5 +1,5 @@
 import {
-    RESET_STORE_SIGN_OUT, SET_CHATTING_WITH, SET_CURRENT_BOOKING_REDUX, SET_CURRENT_USER,
+    RESET_STORE_SIGN_OUT, SET_CHATTING_WITH, SET_COUNTDOWN_SEND_OTP_REDUX, SET_CURRENT_BOOKING_REDUX, SET_CURRENT_USER,
     SET_DATA_LISTENED, SET_DEVICE_LOCALE, SET_DEVICE_TIMEZONE,
     SET_EXPO_TOKEN, SET_IS_SIGN_IN_OTHER_DEVICE_STORE, SET_LIST_BANK,
     SET_LIST_BOOKING_LOCATION,
@@ -178,5 +178,12 @@ export const setListPartnerHomeRedux = (listPartnerHomeRedux) => ({
     type: SET_LIST_PARTNER_HOME_REDUX,
     payload: {
         listPartnerHomeRedux
+    }
+});
+
+export const setCountdownSendOtpRedux = (countdownSendOtpRedux) => ({
+    type: SET_COUNTDOWN_SEND_OTP_REDUX,
+    payload: {
+        countdownSendOtpRedux
     }
 });

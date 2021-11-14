@@ -1,4 +1,6 @@
+/* eslint-disable import/no-unresolved */
 import Rx from '@constants/Rx';
+import { API_URL_BACKUP } from '@env';
 import CommonHelpers from '@helpers/CommonHelpers';
 import RxUtil from '@utils/Rx.Util';
 import * as SecureStore from 'expo-secure-store';
@@ -12,21 +14,21 @@ const loginRefreshTokenAsync = async (body) => {
     const { data } = result;
 
     if (data.data) {
-        await SecureStore.setItemAsync('api_token', result.data.data.token);
-        await SecureStore.setItemAsync('phoneNumber', body.username);
-        await SecureStore.setItemAsync('password', body.password);
+        await SecureStore.setItemAsync('api_token', result.data.data.token.toString());
+        await SecureStore.setItemAsync('username', body.username.toString());
+        await SecureStore.setItemAsync('password', body.password.toString());
     } else {
         await SecureStore.deleteItemAsync('api_token');
-        await SecureStore.deleteItemAsync('phoneNumber');
+        await SecureStore.deleteItemAsync('username');
         await SecureStore.deleteItemAsync('password');
     }
 
     return CommonHelpers.handleResByStatus(result);
 };
 
-const handleTokenStatusMiddleware = async (response) => {
+const handleResponseStatusMiddleware = async (response) => {
     if (response.status === 401 && response.headers.tokenexpired) {
-        const phoneNumber = await SecureStore.getItemAsync('phoneNumber');
+        const phoneNumber = await SecureStore.getItemAsync('username');
         const password = await SecureStore.getItemAsync('password');
         const deviceId = await SecureStore.getItemAsync('deviceId');
 
@@ -37,9 +39,13 @@ const handleTokenStatusMiddleware = async (response) => {
         });
         return res;
     }
+
+    if (response.status === 503) {
+        return { backupDomain: API_URL_BACKUP };
+    }
     return null;
 };
 
 export default {
-    handleTokenStatusMiddleware
+    handleResponseStatusMiddleware
 };

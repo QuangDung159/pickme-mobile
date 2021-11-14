@@ -4,7 +4,7 @@ import ToastHelpers from '@helpers/ToastHelpers';
 import { setPersonTabActiveIndex, setShowLoaderStore } from '@redux/Actions';
 import BookingServices from '@services/BookingServices';
 import moment from 'moment';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -14,46 +14,88 @@ const {
 } = Theme;
 
 export default function ButtonPanel({
-    booking, setModalReasonVisible, navigation, fetchListBooking,
+    setModalReasonVisible, navigation, fetchListBooking,
     setModalReportVisible, setModalRatingVisible
 }) {
     const currentUser = useSelector((state) => state.userReducer.currentUser);
+    const currentBookingRedux = useSelector((state) => state.bookingReducer.currentBookingRedux);
+
+    useEffect(
+        () => {}, [currentUser, currentBookingRedux]
+    );
 
     const dispatch = useDispatch();
 
-    const convertMinutesToUnix = (minutes) => moment(booking.date)
+    const convertMinutesToUnix = (minutes) => moment(currentBookingRedux.date)
         .startOf('day')
         .add(minutes, 'minutes')
         .unix();
 
     const isBookingGoingOn = () => {
         const currentUnix = moment().unix();
-        const startTimestamp = convertMinutesToUnix(booking.startAt);
-        const endTimestamp = convertMinutesToUnix(booking.endAt);
+        const startTimestamp = convertMinutesToUnix(currentBookingRedux.startAt);
+        const endTimestamp = convertMinutesToUnix(currentBookingRedux.endAt);
 
         return startTimestamp <= currentUnix && currentUnix <= endTimestamp;
     };
 
     const isBookingDone = () => {
         const currentUnix = moment().unix();
-        const endTimestamp = convertMinutesToUnix(booking.endAt);
+        const endTimestamp = convertMinutesToUnix(currentBookingRedux.endAt);
 
         return endTimestamp < currentUnix;
     };
 
+    const onPartnerConfirmBooking = async () => {
+        dispatch(setShowLoaderStore(true));
+
+        const result = await BookingServices.submitConfirmAcceptAsync(currentBookingRedux.id);
+        const { data } = result;
+
+        if (data) {
+            ToastHelpers.renderToast(data.message || 'Success.', 'success');
+            navigation.navigate(ScreenName.PERSONAL);
+            dispatch(setPersonTabActiveIndex(2));
+        } else {
+            dispatch(setShowLoaderStore(false));
+        }
+    };
+
     const handleShowButtonByStatus = () => {
-        const { status } = booking;
+        const { status, id } = currentBookingRedux;
         // partner confirmed: payment, cancel
         // customer payment: cancel
         // booking is going on: N/A
         // booking done: complete => report/rating
+
         if (isBookingGoingOn() || status === BookingStatus.CANCEL) return null;
 
         if (isBookingDone()) {
             return renderRatingReportBooking();
         }
 
-        if (status === BookingStatus.IS_CONFIRMED) {
+        if (currentBookingRedux.status === BookingStatus.SCHEDULING) {
+            return (
+                <>
+                    <CustomButton
+                        onPress={() => {
+                            setModalReasonVisible(true);
+                        }}
+                        type="default"
+                        label="Huỷ bỏ"
+                    />
+                    <CustomButton
+                        onPress={() => {
+                            onPartnerConfirmBooking(id);
+                        }}
+                        type="active"
+                        label="Xác nhận"
+                    />
+                </>
+            );
+        }
+
+        if (currentBookingRedux.customerId === currentUser.id && status === BookingStatus.IS_CONFIRMED) {
             return (
                 <>
                     {renderCancelBooking(0.44)}
@@ -73,13 +115,13 @@ export default function ButtonPanel({
 
     const onCustomerConfirmPayment = async () => {
         const { walletAmount } = currentUser;
-        if (walletAmount < booking.totalAmount) {
+        if (walletAmount < currentBookingRedux.totalAmount) {
             ToastHelpers.renderToast('Số dư không đủ');
             return;
         }
 
         dispatch(setShowLoaderStore(true));
-        const result = await BookingServices.submitConfirmPaymentAsync(booking.id);
+        const result = await BookingServices.submitConfirmPaymentAsync(currentBookingRedux.id);
         const { data } = result;
 
         if (data) {
@@ -92,7 +134,7 @@ export default function ButtonPanel({
     };
 
     const renderRatingReportBooking = () => {
-        if (booking.isRated) {
+        if (currentBookingRedux.isRated) {
             return renderReportButton(0.9);
         }
         return (
@@ -145,7 +187,7 @@ export default function ButtonPanel({
     const renderConfirmPaymentButton = (width) => (
         <CustomButton
             onPress={() => {
-                onCustomerConfirmPayment(booking.id);
+                onCustomerConfirmPayment(currentBookingRedux.id);
             }}
             buttonStyle={{
                 width: SIZES.WIDTH_BASE * (+width)
@@ -156,29 +198,28 @@ export default function ButtonPanel({
     );
 
     const renderButtonPanel = () => (
-        <>
-            {handleShowButtonByStatus() && (
-                <View
-                    style={{
-                        backgroundColor: COLORS.BLOCK,
-                        marginTop: 5
-                    }}
-                >
-                    <View
-                        style={{
-                            width: SIZES.WIDTH_BASE * 0.9,
-                            alignSelf: 'center',
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                            paddingVertical: 20
-                        }}
-                    >
-                        {handleShowButtonByStatus()}
-                    </View>
-                </View>
-            )}
-        </>
+        <View
+            style={{
+                backgroundColor: COLORS.BASE,
+                marginTop: 5,
+                borderTopWidth: 0.5,
+                borderTopColor: COLORS.ACTIVE
+            }}
+        >
+            <View
+                style={{
+                    width: SIZES.WIDTH_BASE * 0.9,
+                    alignSelf: 'center',
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    paddingVertical: 20
+                }}
+            >
+                {handleShowButtonByStatus()}
+            </View>
+        </View>
     );
+
     return (
         <>
             {renderButtonPanel()}

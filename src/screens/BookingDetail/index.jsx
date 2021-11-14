@@ -5,7 +5,7 @@ import { ScreenName, Theme } from '@constants/index';
 import BookingProgressFlow from '@containers/BookingProgressFlow';
 import { ToastHelpers } from '@helpers/index';
 import {
-    setCurrentBookingRedux, setListBookingStore, setShowLoaderStore
+    setCurrentBookingRedux, setListBookingStore, setPersonTabActiveIndex, setShowLoaderStore
 } from '@redux/Actions';
 import { BookingServices } from '@services/index';
 import React, { useEffect, useState } from 'react';
@@ -22,7 +22,6 @@ import ReportModal from './ReportModal';
 const {
     FONT: {
         TEXT_REGULAR,
-        TEXT_BOLD
     },
     SIZES,
     COLORS
@@ -45,6 +44,7 @@ export default function BookingDetail({
     const showLoaderStore = useSelector((state) => state.appConfigReducer.showLoaderStore);
     const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
     const currentBookingRedux = useSelector((state) => state.bookingReducer.currentBookingRedux);
+    const currentUser = useSelector((state) => state.userReducer.currentUser);
 
     const dispatch = useDispatch();
 
@@ -82,17 +82,19 @@ export default function BookingDetail({
     };
 
     const fetchListBooking = async () => {
-        const result = await BookingServices.fetchListBookingAsync();
-        const { data } = result;
-
-        if (data) {
-            dispatch(setListBookingStore(data.data));
-            dispatch(setShowLoaderStore(false));
-            setRefreshing(false);
-        } else {
-            setRefreshing(false);
-            dispatch(setShowLoaderStore(false));
+        const bookingAsCustomer = await BookingServices.fetchListBookingAsync();
+        let bookingAsPartner = [];
+        if (currentUser.isPartnerVerified) {
+            bookingAsPartner = await BookingServices.fetchListBookingAsPartnerAsync();
         }
+
+        if (bookingAsPartner.data && bookingAsCustomer.data) {
+            const listBooking = bookingAsCustomer.data.data.concat(bookingAsPartner.data.data);
+            dispatch(setListBookingStore(listBooking));
+        }
+
+        setRefreshing(false);
+        dispatch(setShowLoaderStore(false));
     };
 
     const fetchBookingDetailInfo = async () => {
@@ -110,6 +112,11 @@ export default function BookingDetail({
     const onSendedRating = () => {
         dispatch(setShowLoaderStore(true));
         fetchBookingDetailInfo();
+    };
+
+    const onSubmitReason = () => {
+        fetchListBooking();
+        dispatch(setPersonTabActiveIndex(2));
     };
 
     // render \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
@@ -132,9 +139,6 @@ export default function BookingDetail({
                                 tintColor={COLORS.ACTIVE}
                             />
                         )}
-                        contentContainerStyle={{
-                            paddingBottom: 5
-                        }}
                     >
                         {currentBookingRedux && (
                             <>
@@ -155,74 +159,48 @@ export default function BookingDetail({
                                     modalReasonVisible={modalReasonVisible}
                                     setModalReasonVisible={setModalReasonVisible}
                                     bookingId={bookingId}
-                                    navigation={navigation}
-                                    fetchListBooking={() => fetchListBooking()}
+                                    onSubmitReason={() => onSubmitReason()}
                                 />
 
                                 {currentBookingRedux && (
                                     <View
                                         style={{
                                             alignSelf: 'center',
-                                            marginTop: 5,
+
                                         }}
                                     >
-                                        <View
-                                            style={{
-                                                backgroundColor: COLORS.BLOCK,
-                                                width: SIZES.WIDTH_BASE
-                                            }}
-                                        >
-                                            <CardBooking
-                                                booking={currentBookingRedux}
-                                                navigation={navigation}
-                                            />
-                                        </View>
+                                        <CardBooking
+                                            booking={currentBookingRedux}
+                                            navigation={navigation}
+                                        />
 
                                         <View
                                             style={{
-                                                backgroundColor: COLORS.BLOCK,
-                                                marginTop: 5,
-                                                alignContent: 'center'
+                                                width: SIZES.WIDTH_BASE * 0.9,
+                                                alignSelf: 'center',
+                                                borderBottomWidth: 0.5,
+                                                borderBottomColor: COLORS.ACTIVE
                                             }}
                                         >
-                                            <View
-                                                style={{
-                                                    width: SIZES.WIDTH_BASE * 0.9,
-                                                    alignSelf: 'center',
-                                                }}
+                                            <Text
+                                                style={
+                                                    [
+                                                        styles.subTitle,
+                                                        {
+                                                            color: COLORS.DEFAULT,
+                                                            fontSize: SIZES.FONT_H3,
+                                                            marginVertical: 15
+                                                        }
+                                                    ]
+                                                }
                                             >
-                                                <Text
-                                                    style={
-                                                        [
-                                                            styles.subTitle,
-                                                            {
-                                                                color: COLORS.DEFAULT,
-                                                                fontSize: SIZES.FONT_H3,
-                                                                marginVertical: 20
-                                                            }
-                                                        ]
-                                                    }
-                                                >
-                                                    {currentBookingRedux.noted}
-                                                </Text>
-                                            </View>
+                                                {currentBookingRedux.noted || 'N/a'}
+                                            </Text>
                                         </View>
 
-                                        <View
-                                            style={{
-                                                backgroundColor: COLORS.BLOCK,
-                                                marginTop: 5,
-                                            }}
-                                        >
-                                            <BookingProgressFlow
-                                                status={currentBookingRedux.status}
-                                                partner={currentBookingRedux.partner}
-                                                booking={currentBookingRedux}
-                                            />
-                                        </View>
+                                        <BookingProgressFlow />
 
                                         <ButtonPanel
-                                            booking={currentBookingRedux}
                                             setModalReasonVisible={setModalReasonVisible}
                                             navigation={navigation}
                                             fetchListBooking={fetchListBooking}
@@ -248,10 +226,6 @@ export default function BookingDetail({
 }
 
 const styles = StyleSheet.create({
-    title: {
-        fontFamily: TEXT_BOLD,
-        marginBottom: 20
-    },
     subTitle: {
         fontFamily: TEXT_REGULAR,
     },

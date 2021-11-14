@@ -9,7 +9,7 @@ import BookingServices from '@services/BookingServices';
 import moment from 'moment';
 import React from 'react';
 import { Alert, Text, View } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const {
     FONT: {
@@ -31,6 +31,8 @@ export default function Total({
 }) {
     const dispatch = useDispatch();
 
+    const currentUser = useSelector((state) => state.userReducer.currentUser);
+
     const calculateTotalAmount = (start, end) => {
         if (total !== 0) return total;
         const { estimatePricing } = route.params.partner;
@@ -50,11 +52,15 @@ export default function Total({
     };
 
     const getListBooking = async () => {
-        const result = await BookingServices.fetchListBookingAsync();
-        const { data } = result;
+        const bookingAsCustomer = await BookingServices.fetchListBookingAsync();
+        let bookingAsPartner = [];
+        if (currentUser.isPartnerVerified) {
+            bookingAsPartner = await BookingServices.fetchListBookingAsPartnerAsync();
+        }
 
-        if (data) {
-            dispatch(setListBookingStore(data.data));
+        if (bookingAsPartner.data && bookingAsCustomer.data) {
+            const listBooking = bookingAsCustomer.data.data.concat(bookingAsPartner.data.data);
+            dispatch(setListBookingStore(listBooking));
         }
     };
 

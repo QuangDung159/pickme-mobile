@@ -1,3 +1,4 @@
+import BankServices from './BankServices';
 import BookingServices from './BookingServices';
 import CashServices from './CashServices';
 import NotificationServices from './NotificationServices';
@@ -9,5 +10,6 @@ export {
     BookingServices,
     CashServices,
     SystemServices,
-    NotificationServices
+    NotificationServices,
+    BankServices
 };

@@ -80,7 +80,7 @@ export default function LeaderBoadViewByType({
                             style={{
                                 width: 100,
                                 height: 100,
-                                borderRadius: 50,
+                                borderRadius: 80,
                                 zIndex: 99,
                             }}
                         />
@@ -161,7 +161,7 @@ export default function LeaderBoadViewByType({
                     <View
                         style={[
                             {
-                                backgroundColor: !(index % 2 === 0) || COLORS.BLOCK,
+                                backgroundColor: !(index % 2 === 0) || COLORS.BASE,
                                 flexDirection: 'row',
                                 alignSelf: 'center',
                                 width: SIZES.WIDTH_BASE,

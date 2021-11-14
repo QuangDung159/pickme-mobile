@@ -123,7 +123,7 @@ export default function Support({ navigation }) {
     const BugReportFormRoute = () => (
         <View
             style={{
-                backgroundColor: COLORS.BLOCK,
+                backgroundColor: COLORS.BASE,
                 marginTop: 5
             }}
         >
@@ -226,7 +226,7 @@ export default function Support({ navigation }) {
                                     fontFamily: TEXT_REGULAR,
                                     alignSelf: 'flex-start'
                                 }}
-                                backgroundColor={COLORS.BLOCK}
+                                backgroundColor={COLORS.BASE}
                             />
                         </View>
                     )}
@@ -385,7 +385,7 @@ const styles = StyleSheet.create({
         margin: 0
     },
     input: {
-        borderRadius: 5,
+        borderRadius: 8,
         width: SIZES.WIDTH_BASE * 0.9,
     },
     imageReport: {

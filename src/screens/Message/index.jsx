@@ -46,7 +46,7 @@ export default function Message({ navigation, route }) {
 
             setIsShowLoader(true);
 
-            fetchListMessage(toUserId, 1, 12,
+            fetchListMessage(toUserId, 1, 20,
                 (data) => {
                     dispatch(setChattingWith(toUserId));
 
@@ -63,7 +63,7 @@ export default function Message({ navigation, route }) {
                 fetchListMessage(
                     toUserId,
                     1,
-                    12,
+                    20,
                     (data) => {
                         setChattingWith(toUserId);
                         setListMessageFromAPI(data.data.data.messages);
@@ -87,7 +87,7 @@ export default function Message({ navigation, route }) {
                 fetchListMessage(
                     toUserId,
                     1,
-                    12,
+                    20,
                     (data) => {
                         setChattingWith(toUserId);
                         setListMessageFromAPI(data.data.data.messages);
@@ -175,7 +175,7 @@ export default function Message({ navigation, route }) {
             <View
                 style={{
                     marginBottom: 10,
-                    flexDirection
+                    flexDirection,
                 }}
             >
                 <View
@@ -188,7 +188,10 @@ export default function Message({ navigation, route }) {
                         [
                             {
                                 borderRadius: 10,
-                                maxWidth: SIZES.WIDTH_BASE * 0.8
+                                maxWidth: SIZES.WIDTH_BASE * 0.8,
+                                borderColor: COLORS.ACTIVE,
+                                borderWidth: 0.5,
+                                backgroundColor: COLORS.BASE
                             },
                             messageStyle
                         ]
@@ -211,14 +214,28 @@ export default function Message({ navigation, route }) {
         );
     };
 
+    const isCloseToBottom = ({ layoutMeasurement, contentOffset, contentSize }) => {
+        const paddingToBottom = 20;
+        return layoutMeasurement.height + contentOffset.y
+          >= contentSize.height - paddingToBottom;
+    };
+
     const renderListMessage = () => (
         <FlatList
             inverted
-            onEndReached={() => addListMessagePaging()}
             showsVerticalScrollIndicator={false}
             data={listMessageFromAPI}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => renderMessageItem(item)}
+            style={{
+                backgroundColor: COLORS.BASE
+            }}
+            onScroll={({ nativeEvent }) => {
+                if (isCloseToBottom(nativeEvent)) {
+                    addListMessagePaging();
+                }
+            }}
+            scrollEventThrottle={400}
         />
     );
 
@@ -229,20 +246,18 @@ export default function Message({ navigation, route }) {
             }
         } = route;
 
-        setTimeout(() => {
-            fetchListMessage(
-                toUserId,
-                nextPageIndex, 15,
-                (data) => {
-                    const newListMessage = listMessageFromAPI.concat(
-                        data.data.data.messages
-                    );
+        fetchListMessage(
+            toUserId,
+            nextPageIndex, 15,
+            (data) => {
+                const newListMessage = listMessageFromAPI.concat(
+                    data.data.data.messages
+                );
 
-                    setListMessageFromAPI(newListMessage);
-                    setNextPageIndex(nextPageIndex + 1);
-                }
-            );
-        }, 2000);
+                setListMessageFromAPI(newListMessage);
+                setNextPageIndex(nextPageIndex + 1);
+            }
+        );
     };
 
     const addLatestMessage = (messagePayload) => {
@@ -301,8 +316,10 @@ export default function Message({ navigation, route }) {
                 justifyContent: 'space-between',
                 alignSelf: 'center',
                 alignItems: 'center',
-                backgroundColor: COLORS.BLOCK,
-                height: 50
+                backgroundColor: COLORS.BASE,
+                height: 50,
+                borderTopWidth: 0.5,
+                borderTopColor: COLORS.ACTIVE
             }}
         >
             <CustomInput
@@ -314,7 +331,8 @@ export default function Message({ navigation, route }) {
                     width: SIZES.WIDTH_BASE * 0.9
                 }}
                 inputStyle={{
-                    borderWidth: 0
+                    borderWidth: 0,
+                    textAlign: 'left'
                 }}
             />
 
@@ -369,10 +387,10 @@ export default function Message({ navigation, route }) {
 const styles = StyleSheet.create({
     messageRight: {
         alignItems: 'flex-start',
-        backgroundColor: COLORS.BLOCK
+        backgroundColor: COLORS.BASE
     },
     messageLeft: {
         alignItems: 'flex-end',
-        backgroundColor: COLORS.BLOCK
+        backgroundColor: COLORS.BASE
     }
 });

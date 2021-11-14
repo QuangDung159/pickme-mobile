@@ -1,7 +1,8 @@
 import { CenterLoader, Line } from '@components/uiComponents';
 import {
-    BookingStatus, Theme, ScreenName
+    BookingStatus, ScreenName, Theme
 } from '@constants/index';
+import { mappingStatusText } from '@helpers/CommonHelpers';
 import { ToastHelpers } from '@helpers/index';
 import { setListBookingStore } from '@redux/Actions';
 import { BookingServices } from '@services/index';
@@ -28,6 +29,7 @@ export default function BookingList({ navigation }) {
     const [refreshing, setRefreshing] = useState(false);
 
     const listBookingStore = useSelector((state) => state.userReducer.listBookingStore);
+    const currentUser = useSelector((state) => state.userReducer.currentUser);
     const dispatch = useDispatch();
 
     useEffect(
@@ -41,17 +43,19 @@ export default function BookingList({ navigation }) {
     const groupBookingByDate = () => groupBy(listBookingStore, (n) => n.date);
 
     const fetchListBooking = async () => {
-        const result = await BookingServices.fetchListBookingAsync();
-        const { data } = result;
-
-        if (data) {
-            dispatch(setListBookingStore(data.data));
-            setIsShowSpinner(false);
-            setRefreshing(false);
-        } else {
-            setIsShowSpinner(false);
-            setRefreshing(false);
+        const bookingAsCustomer = await BookingServices.fetchListBookingAsync();
+        let bookingAsPartner = [];
+        if (currentUser.isPartnerVerified) {
+            bookingAsPartner = await BookingServices.fetchListBookingAsPartnerAsync();
         }
+
+        if (bookingAsPartner.data && bookingAsCustomer.data) {
+            const listBooking = bookingAsCustomer.data.data.concat(bookingAsPartner.data.data);
+            dispatch(setListBookingStore(listBooking));
+        }
+
+        setIsShowSpinner(false);
+        setRefreshing(false);
     };
 
     const convertMinutesToStringHours = (minutes) => moment.utc()
@@ -61,33 +65,23 @@ export default function BookingList({ navigation }) {
 
     const renderBookingInfo = (booking) => {
         const {
-            partner,
+            partnerName,
             startAt,
             endAt,
-            statusValue,
             status,
             id,
             idReadAble,
-            address
+            address,
+            customerName,
+            customerId
         } = booking;
 
         const startStr = convertMinutesToStringHours(startAt);
         const endStr = convertMinutesToStringHours(endAt);
 
         let colorByStatus = COLORS.ACTIVE;
-
-        switch (status) {
-            case BookingStatus.CANCEL: {
-                colorByStatus = COLORS.DEFAULT;
-                break;
-            }
-            case BookingStatus.PAID: {
-                colorByStatus = COLORS.ACTIVE;
-                break;
-            }
-            default: {
-                break;
-            }
+        if (status === BookingStatus.CANCEL) {
+            colorByStatus = COLORS.PLACE_HOLDER;
         }
 
         return (
@@ -100,9 +94,9 @@ export default function BookingList({ navigation }) {
             >
                 <View
                     style={{
-                        backgroundColor: COLORS.BLOCK,
                         borderRadius: 5,
-                        marginBottom: 5
+                        borderWidth: 1,
+                        borderColor: colorByStatus
                     }}
                 >
                     <View
@@ -110,6 +104,32 @@ export default function BookingList({ navigation }) {
                             padding: 10
                         }}
                     >
+                        <View style={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            alignItems: 'center'
+                        }}
+                        >
+                            <Text
+                                style={{
+                                    fontSize: SIZES.FONT_H5,
+                                    color: colorByStatus,
+                                    fontFamily: TEXT_REGULAR
+                                }}
+                            >
+                                {`${customerId === currentUser.id ? 'Host' : 'Khách hàng'}`}
+                            </Text>
+                            <Text
+                                style={{
+                                    fontFamily: TEXT_REGULAR,
+                                    fontSize: SIZES.FONT_H5,
+                                    color: colorByStatus,
+                                }}
+                            >
+                                {`Mã đơn #${idReadAble}`}
+                            </Text>
+                        </View>
+
                         <Text
                             style={{
                                 fontFamily: TEXT_BOLD,
@@ -117,55 +137,36 @@ export default function BookingList({ navigation }) {
                                 color: colorByStatus,
                             }}
                         >
-                            {partner.fullName}
+                            {customerId === currentUser.id ? partnerName : customerName}
                         </Text>
 
                         <View
                             style={{
                                 flexDirection: 'row',
                                 justifyContent: 'space-between',
-                                alignItems: 'center',
-                                marginBottom: 5,
-                            }}
-                        >
-                            <Text
-                                style={{
-                                    fontFamily: TEXT_REGULAR,
-                                    fontSize: SIZES.FONT_H5,
-                                    color: COLORS.DEFAULT,
-                                }}
-                            >
-                                {`Đơn hẹn #${idReadAble}`}
-                            </Text>
-                            <Text style={{
-                                fontFamily: TEXT_BOLD,
-                                fontSize: SIZES.FONT_H4,
-                                color: colorByStatus
-                            }}
-                            >
-                                {statusValue}
-                            </Text>
-                        </View>
-
-                        <View
-                            style={{
-                                flexDirection: 'row',
-                                justifyContent: 'space-between',
-                                marginBottom: 5
+                                width: '60%'
                             }}
                         >
                             <Text style={{
                                 fontFamily: TEXT_REGULAR,
-                                fontSize: SIZES.FONT_H1 - 8,
-                                color: COLORS.ACTIVE
+                                fontSize: SIZES.FONT_H2,
+                                color: colorByStatus
                             }}
                             >
                                 {startStr}
                             </Text>
                             <Text style={{
                                 fontFamily: TEXT_REGULAR,
-                                fontSize: SIZES.FONT_H1 - 8,
-                                color: COLORS.ACTIVE
+                                fontSize: SIZES.FONT_H2,
+                                color: colorByStatus
+                            }}
+                            >
+                                đến
+                            </Text>
+                            <Text style={{
+                                fontFamily: TEXT_REGULAR,
+                                fontSize: SIZES.FONT_H2,
+                                color: colorByStatus
                             }}
                             >
                                 {endStr}
@@ -175,11 +176,19 @@ export default function BookingList({ navigation }) {
                         <Text style={{
                             fontFamily: TEXT_REGULAR,
                             fontSize: SIZES.FONT_H4,
-                            color: COLORS.DEFAULT,
-                            marginBottom: 5
+                            color: colorByStatus,
                         }}
                         >
                             {address}
+                        </Text>
+
+                        <Text style={{
+                            fontFamily: TEXT_BOLD,
+                            fontSize: SIZES.FONT_H4,
+                            color: colorByStatus
+                        }}
+                        >
+                            {mappingStatusText(status)}
                         </Text>
 
                     </View>
@@ -216,7 +225,6 @@ export default function BookingList({ navigation }) {
                         {dateFragment[2]}
                     </Text>
                     <Line
-                        borderWidth={0.5}
                         borderColor={COLORS.DEFAULT}
                         style={{
                             width: SIZES.WIDTH_BASE * 0.1
@@ -241,6 +249,9 @@ export default function BookingList({ navigation }) {
                     {groupBooking.map((booking) => (
                         <View
                             key={booking.id}
+                            style={{
+                                marginBottom: 5
+                            }}
                         >
                             {renderBookingInfo(booking)}
                         </View>
@@ -321,9 +332,14 @@ export default function BookingList({ navigation }) {
                 {isShowSpinner ? (
                     <CenterLoader />
                 ) : (
-                    <>
+                    <View
+                        style={{
+                            backgroundColor: COLORS.BASE,
+                            flex: 1
+                        }}
+                    >
                         {renderListDateSection()}
-                    </>
+                    </View>
                 )}
             </>
 

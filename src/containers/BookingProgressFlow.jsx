@@ -30,7 +30,7 @@ export default function BookingProgressFlow() {
         },
         {
             type: 'current',
-            content: 'Đối tác xác nhận',
+            content: 'Host xác nhận',
             buttonText: '2'
         },
         {
@@ -62,7 +62,7 @@ export default function BookingProgressFlow() {
                         },
                         {
                             type: 'prev',
-                            content: 'Đối tác xác nhận',
+                            content: 'Host xác nhận',
                             buttonText: '2'
                         },
                         {
@@ -94,7 +94,7 @@ export default function BookingProgressFlow() {
                         },
                         {
                             type: 'prev',
-                            content: 'Đối tác xác nhận',
+                            content: 'Host xác nhận',
                             buttonText: '2'
                         },
                         {
@@ -126,7 +126,7 @@ export default function BookingProgressFlow() {
                         },
                         {
                             type: 'prev',
-                            content: 'Đối tác xác nhận',
+                            content: 'Host xác nhận',
                             buttonText: '2'
                         },
                         {

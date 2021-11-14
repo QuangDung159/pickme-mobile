@@ -1,10 +1,12 @@
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
-import { Rx } from '@constants/index';
-import { API_URL, PICKME_INFO_URL } from '@env';
+import { Rx, Theme } from '@constants/index';
+import { API_URL } from '@env';
 import ToastHelpers from '@helpers/ToastHelpers';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 import slackUtil from './slackUtil';
+
+const { COLORS } = Theme;
 
 const generateLogData = (endpoint, body, headers, res) => {
     const objectStr = JSON.stringify({
@@ -16,26 +18,30 @@ const generateLogData = (endpoint, body, headers, res) => {
     return `${res.status} ${endpoint}:\n ${objectStr}`;
 };
 
-const logMessage = (res, endpoint, headers, body) => {
-    console.log(`${res.status} ${endpoint}`, {
+const logMessage = (res, endpoint, headers, body, method, apiTokenLocal) => {
+    const textColor = res.status === 200 || res.status === 201 ? `color: ${COLORS.SUCCESS}` : `color: ${COLORS.ERROR}`;
+    console.log(`%c${method.toUpperCase()} ${res.status} ${endpoint}`, textColor, {
         headers,
         body,
         response: res
     });
+    console.log(`%c${apiTokenLocal}`, textColor);
 };
 
 export default async (
     endpoint,
     method,
     body = null,
-    domain = API_URL,
+    domain,
     headers = {}
 ) => {
     const apiTokenLocal = await SecureStore.getItemAsync('api_token');
 
-    const url = `${domain}${endpoint}`;
+    const url = `${domain || API_URL}${endpoint}`;
 
-    if (endpoint !== Rx.AUTHENTICATION.LOGIN) {
+    if (endpoint !== Rx.AUTHENTICATION.LOGIN
+        && endpoint !== Rx.USER.GET_OTP_REGISTER
+        && endpoint !== Rx.USER.GET_OTP_FORGOT_PASSWORD) {
         // eslint-disable-next-line no-param-reassign
         headers = {
             Authorization: `Bearer ${apiTokenLocal}`
@@ -45,8 +51,8 @@ export default async (
     if (!apiTokenLocal
         && endpoint !== Rx.AUTHENTICATION.LOGIN
         && endpoint !== Rx.USER.GET_OTP_REGISTER
+        && endpoint !== Rx.USER.GET_OTP_FORGOT_PASSWORD
         && endpoint !== Rx.AUTHENTICATION.SIGN_UP
-        && endpoint !== Rx.USER.GENERATE_OTP_WHEN_FORGOT_PASSWORD
         && endpoint !== Rx.USER.SUBMIT_FORGOT_PASSWORD_CONFIRM
         && endpoint !== Rx.PARTNER.GET_LIST_PARTNER
     ) {
@@ -74,11 +80,11 @@ export default async (
         };
 
         // check domain
-        if (domain === PICKME_INFO_URL) {
-            response.status = res.status;
-        }
+        // if (domain === PICKME_INFO_URL) {
+        //     response.status = res.status;
+        // }
 
-        logMessage(response, endpoint, headers, body);
+        logMessage(response, url, headers, body, method, apiTokenLocal);
 
         if (response.status !== 200 && response.status !== 201) {
             // check token expired
@@ -86,6 +92,8 @@ export default async (
             // if does not have tokenexpired => do not toast
                 ToastHelpers.renderToast(response.data.message || null);
             }
+        } else if (response.status === 503) {
+            return response;
         }
 
         return response;
@@ -94,7 +102,7 @@ export default async (
             response, response: { data }
         } = err;
 
-        logMessage(response, endpoint, headers, body);
+        logMessage(response, url, headers, body, method, apiTokenLocal);
         const logInfo = generateLogData(endpoint, data, headers, response);
         slackUtil('catch', logInfo);
 

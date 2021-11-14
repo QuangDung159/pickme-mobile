@@ -1,12 +1,10 @@
+import { OtpForm, UsernameForm } from '@components/businessComponents';
 import {
     CenterLoader
 } from '@components/uiComponents';
-import {
-    Images, Theme
-} from '@constants/index';
+import { ScreenName, Theme } from '@constants/index';
 import React, { useState } from 'react';
 import {
-    ImageBackground,
     StyleSheet,
     Text,
     View
@@ -14,8 +12,6 @@ import {
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useSelector } from 'react-redux';
 import ModalDisclaimer from './ModalDisclaimer';
-import OtpForm from './OtpForm';
-import PhoneForm from './PhoneForm';
 
 const {
     FONT: {
@@ -28,9 +24,10 @@ const {
 export default function SignUp({ navigation }) {
     const [modalVisible, setModalVisible] = useState(false);
     const [step, setStep] = useState(1);
-    const [phoneNumber, setPhoneNumber] = useState('');
+    const [isEmail, setIsEmail] = useState('');
     const [otp, setOtp] = useState('');
     const [password, setPassword] = useState('');
+    const [username, setUsername] = useState('');
 
     const showLoaderStore = useSelector((state) => state.appConfigReducer.showLoaderStore);
 
@@ -38,12 +35,15 @@ export default function SignUp({ navigation }) {
         switch (step) {
             case 1: {
                 return (
-                    <PhoneForm
-                        phoneNumber={phoneNumber}
+                    <UsernameForm
+                        isEmail={isEmail}
+                        username={username}
+                        setUsername={(usernameInput) => setUsername(usernameInput)}
                         setModalVisible={(isVisible) => setModalVisible(isVisible)}
                         setOtp={(otpCode) => setOtp(otpCode)}
-                        setPhoneNumber={(phoneNum) => setPhoneNumber(phoneNum)}
+                        setIsEmail={(isEmailLogin) => setIsEmail(isEmailLogin)}
                         setStep={(stepIndex) => setStep(stepIndex)}
+                        renderFrom={ScreenName.SIGN_UP}
                     />
                 );
             }
@@ -53,9 +53,11 @@ export default function SignUp({ navigation }) {
                         navigation={navigation}
                         otp={otp}
                         password={password}
-                        phoneNumber={phoneNumber}
+                        username={username}
                         setOtp={(otpCode) => setOtp(otpCode)}
                         setPassword={(passwordStr) => setPassword(passwordStr)}
+                        isEmail={isEmail}
+                        renderFrom={ScreenName.FORGOT_PASSWORD}
                     />
                 );
             }
@@ -73,88 +75,51 @@ export default function SignUp({ navigation }) {
             />
 
             <View
-                style={{
-                    flex: 1,
-                    alignSelf: 'center',
-                    alignItems: 'center'
-                }}
+                style={styles.container}
             >
-                <ImageBackground
-                    source={Images.RegisterBackground}
-                    style={styles.imageBackgroundContainer}
-                    imageStyle={styles.imageBackground}
-                >
-                    {showLoaderStore ? (
-                        <CenterLoader />
-                    ) : (
-                        <KeyboardAwareScrollView>
+                {showLoaderStore ? (
+                    <CenterLoader />
+                ) : (
+                    <KeyboardAwareScrollView>
+                        <View
+                            style={{
+                                flex: 1,
+                                alignSelf: 'center',
+                                alignItems: 'center'
+                            }}
+                        >
                             <View
-                                style={{
-                                    flex: 1,
-                                    alignSelf: 'center',
-                                    alignItems: 'center'
-                                }}
+                                style={styles.stepSessionContainer}
                             >
-                                <View style={styles.registerContainer}>
-                                    <View
-                                        style={styles.stepSessionContainer}
-                                    >
-                                        <Text
-                                            style={
-                                                [
-                                                    styles.title,
-                                                    {
-                                                        color: COLORS.DEFAULT,
-                                                        fontSize: 24,
-                                                        height: 100,
-                                                        marginTop: SIZES.HEIGHT_BASE * 0.1
-                                                    }
-                                                ]
+                                <Text
+                                    style={
+                                        [
+                                            styles.title,
+                                            {
+                                                color: COLORS.DEFAULT,
+                                                fontSize: 24,
+                                                marginTop: SIZES.HEIGHT_BASE * 0.15
                                             }
-                                        >
-                                            Đăng kí
-                                        </Text>
-                                    </View>
-
-                                    {/* render from this shit */}
-                                    {renderSignUpViewByStep()}
-                                </View>
+                                        ]
+                                    }
+                                >
+                                    Đăng ký
+                                </Text>
                             </View>
-                        </KeyboardAwareScrollView>
-                    )}
-
-                </ImageBackground>
+                            {renderSignUpViewByStep()}
+                        </View>
+                    </KeyboardAwareScrollView>
+                )}
             </View>
         </>
     );
 }
 
 const styles = StyleSheet.create({
-    imageBackgroundContainer: {
+    container: {
         width: SIZES.WIDTH_BASE,
         height: SIZES.HEIGHT_BASE,
-        padding: 0,
-        zIndex: 1
-    },
-    imageBackground: {
-        width: SIZES.WIDTH_BASE,
-        height: SIZES.HEIGHT_BASE
-    },
-    registerContainer: {
-        marginTop: 55,
-        width: SIZES.WIDTH_BASE * 0.9,
-        height: SIZES.HEIGHT_BASE < 812 ? SIZES.HEIGHT_BASE * 0.8 : SIZES.HEIGHT_BASE * 0.8,
         backgroundColor: COLORS.BASE,
-        borderRadius: 4,
-        shadowColor: COLORS.BLACK,
-        shadowOffset: {
-            width: 0,
-            height: 4
-        },
-        shadowRadius: 8,
-        shadowOpacity: 0.1,
-        elevation: 1,
-        overflow: 'hidden'
     },
     title: {
         fontFamily: TEXT_BOLD,

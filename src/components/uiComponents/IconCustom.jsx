@@ -13,6 +13,7 @@ import {
     SimpleLineIcons
 } from '@expo/vector-icons';
 import React from 'react';
+import { View } from 'react-native';
 
 const IconNowExtra = createIconSetFromIcoMoon(nowConfig, 'NowExtra');
 
@@ -21,7 +22,8 @@ export default function IconCustom(props) {
         name,
         family,
         color,
-        size
+        size,
+        style
     } = props;
 
     const renderIcon = () => {
@@ -66,8 +68,8 @@ export default function IconCustom(props) {
     };
 
     return (
-        <>
+        <View style={style}>
             {renderIcon()}
-        </>
+        </View>
     );
 }

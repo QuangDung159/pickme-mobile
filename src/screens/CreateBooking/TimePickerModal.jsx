@@ -76,7 +76,7 @@ export default function TimePickerModal({
                 }}
                 wrapperHeight={120}
                 wrapperWidth={150}
-                wrapperBackground={COLORS.BLOCK}
+                wrapperBackground={COLORS.BASE}
                 itemHeight={40}
                 highlightColor={COLORS.BASE}
                 highlightBorderWidth={2}
@@ -102,7 +102,7 @@ export default function TimePickerModal({
                 }}
                 wrapperHeight={120}
                 wrapperWidth={150}
-                wrapperBackground={COLORS.BLOCK}
+                wrapperBackground={COLORS.BASE}
                 itemHeight={40}
                 highlightColor={COLORS.BASE}
                 highlightBorderWidth={2}

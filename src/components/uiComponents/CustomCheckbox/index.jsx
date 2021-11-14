@@ -40,7 +40,7 @@ export default function CustomCheckbox({
                         {
                             flexDirection: 'row',
                             alignSelf: 'center',
-                            width: SIZES.WIDTH_BASE * 0.77,
+                            width: SIZES.WIDTH_BASE * 0.9,
                         },
                         containerStyle
                     ]
@@ -50,13 +50,13 @@ export default function CustomCheckbox({
                     style={
                         [
                             {
-                                borderWidth: 0.5,
+                                borderWidth: 2,
                                 width: 20,
                                 height: 20,
                                 borderRadius: 2,
-                                borderColor: COLORS.INPUT,
+                                borderColor: active ? COLORS.ACTIVE : COLORS.INPUT,
                                 backgroundColor: background,
-                                marginRight: 5
+                                marginRight: 5,
                             },
                             checkboxStyle
                         ]
@@ -70,7 +70,7 @@ export default function CustomCheckbox({
                         <IconCustom
                             name="check"
                             family={IconFamily.ENTYPO}
-                            size={18}
+                            size={16}
                             color={COLORS.BASE}
                         />
                     )}
@@ -80,7 +80,8 @@ export default function CustomCheckbox({
                         if (onPressLabel) onPressLabel();
                     }}
                     style={{
-                        justifyContent: 'center'
+                        justifyContent: 'center',
+                        width: SIZES.WIDTH_BASE * 0.9 - 25,
                     }}
                 >
                     <Text

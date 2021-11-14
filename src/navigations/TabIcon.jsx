@@ -49,10 +49,11 @@ export default class TabIcon extends PureComponent {
                 });
                 break;
             }
-            case ScreenName.LEADER_BOARD: {
+            case ScreenName.MENU: {
                 this.setState({
-                    name: 'award',
-                    family: IconFamily.FONT_AWESOME_5
+                    name: 'md-menu',
+                    family: IconFamily.IONICONS,
+                    size: 38
                 });
                 break;
             }

@@ -79,56 +79,12 @@ export default function Header({
         }
     };
 
-    const renderQnAButton = () => (
-        <View
-            style={{
-                position: 'absolute',
-                bottom: 14,
-                right: 5,
-                zIndex: 99,
-            }}
-        >
-            <TouchableOpacity
-                onPress={() => navigation.navigate(ScreenName.SUPPORT)}
-            >
-                <IconCustom
-                    family={IconFamily.MATERIAL_ICONS}
-                    size={26}
-                    name="contact-support"
-                    color={COLORS.ACTIVE}
-                />
-            </TouchableOpacity>
-        </View>
-    );
-
-    const renderSettingButton = () => (
-        <View
-            style={{
-                position: 'absolute',
-                bottom: 14,
-                right: 35,
-                zIndex: 99,
-            }}
-        >
-            <TouchableOpacity
-                onPress={() => navigation.navigate(ScreenName.SETTINGS)}
-            >
-                <IconCustom
-                    name="gear"
-                    family={IconFamily.FONT_AWESOME}
-                    size={26}
-                    color={COLORS.ACTIVE}
-                />
-            </TouchableOpacity>
-        </View>
-    );
-
     const renderReadAllButton = () => (
         <View
             style={{
                 position: 'absolute',
                 bottom: 14,
-                right: 65,
+                right: 10,
                 zIndex: 99,
             }}
         >
@@ -148,7 +104,7 @@ export default function Header({
     const navbarStyles = [
         styles.navbar,
         {
-            backgroundColor: COLORS.BLOCK
+            backgroundColor: COLORS.BASE
         },
         styles.navbarHeight
     ];
@@ -157,8 +113,6 @@ export default function Header({
         if (showRight) {
             return (
                 <>
-                    {renderQnAButton()}
-                    {renderSettingButton()}
                     {screenNameProp === ScreenName.NOTIFICATION && (
                         <>
                             {renderReadAllButton()}
@@ -217,7 +171,7 @@ export default function Header({
         SecureStore.deleteItemAsync('api_token')
             .then(console.log('api_token was cleaned!'));
 
-        SecureStore.deleteItemAsync('phoneNumber')
+        SecureStore.deleteItemAsync('username')
             .then(console.log('phoneNumber was cleaned!'));
 
         SecureStore.deleteItemAsync('password')
@@ -251,27 +205,6 @@ export default function Header({
                     {...props}
                 />
             </TouchableWithoutFeedback>
-            {/* {screenNameProp && screenNameProp === ScreenName.MESSAGE && (
-                <View
-                    style={{
-                        marginLeft: 10,
-                        marginTop: 0,
-                        zIndex: 99
-                    }}
-                >
-                    <Text
-                        style={{
-                            fontFamily: TEXT_REGULAR,
-                            marginTop: iPhoneX ? -14 : -18,
-                            fontSize: SIZES.FONT_H5 - 2,
-                            color: COLORS.ACTIVE
-                        }}
-                    >
-                        Vừa mới truy cập
-                    </Text>
-                </View>
-            )} */}
-
             {renderHeader()}
             {renderRight()}
         </View>
