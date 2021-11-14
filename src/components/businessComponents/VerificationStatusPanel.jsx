@@ -62,16 +62,15 @@ export default function VerificationStatusPanel() {
                 return (
                     <>
                         <CustomText
-                            text={`Quá trình ${verificationStore?.verifyNote} đang được tiến hành`}
+                            text={`Quá trình ${verificationStore?.verifyNote.toUpperCase()} đang được tiến hành`}
                             style={{
                                 fontFamily: TEXT_BOLD,
-                                fontSize: SIZES.FONT_H4
+                                fontSize: SIZES.FONT_H5
                             }}
                         />
                         <CustomText
                             text="Quá trình này sẽ mất một khoảng thời gian, chúng tôi sẽ sớm có thông báo về tình trạng tài khoản của bạn."
                             style={{
-                                marginTop: 5,
                                 fontSize: SIZES.FONT_H5
                             }}
                         />

@@ -47,6 +47,34 @@ export default function Menu({ navigation }) {
             },
         },
         {
+            title: currentUser.isPartnerVerified ? 'Thông tin Host' : 'Đăng kí Host',
+            icon: {
+                name: 'star',
+                family: IconFamily.FONT_AWESOME,
+                size: 28,
+            },
+            onPress: () => {
+                if (currentUser.isPartnerVerified) {
+                    navigation.navigate(ScreenName.PARTNER_DATA);
+                } else {
+                    navigation.navigate(ScreenName.VERIFICATION, {
+                        navigateFrom: ScreenName.MENU
+                    });
+                }
+            },
+        },
+        {
+            title: ScreenTitle.CHANGE_PASSWORD,
+            icon: {
+                name: 'user-lock',
+                family: IconFamily.FONT_AWESOME_5,
+                size: 22,
+            },
+            onPress: () => {
+                navigation.navigate(ScreenName.CHANGE_PASSWORD);
+            },
+        },
+        {
             title: ScreenTitle.SUPPORT,
             icon: {
                 family: IconFamily.MATERIAL_ICONS,
@@ -66,34 +94,6 @@ export default function Menu({ navigation }) {
             },
             onPress: () => {
                 navigation.navigate(ScreenName.SETTINGS);
-            },
-        },
-        {
-            title: ScreenTitle.CHANGE_PASSWORD,
-            icon: {
-                name: 'user-lock',
-                family: IconFamily.FONT_AWESOME_5,
-                size: 22,
-            },
-            onPress: () => {
-                navigation.navigate(ScreenName.CHANGE_PASSWORD);
-            },
-        },
-        {
-            title: currentUser.isPartnerVerified ? 'Thông tin Host' : 'Đăng kí Host',
-            icon: {
-                name: 'star',
-                family: IconFamily.FONT_AWESOME,
-                size: 28,
-            },
-            onPress: () => {
-                if (currentUser.isPartnerVerified) {
-                    navigation.navigate(ScreenName.PARTNER_DATA);
-                } else {
-                    navigation.navigate(ScreenName.VERIFICATION, {
-                        navigateFrom: ScreenName.MENU
-                    });
-                }
             },
         },
         {

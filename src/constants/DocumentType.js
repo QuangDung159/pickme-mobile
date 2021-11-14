@@ -6,6 +6,6 @@ export default {
 };
 
 export const VERIFY_NOTE = {
-    FOR_CUSTOMER: 'xác thực tài khoản khách hàng',
+    FOR_CUSTOMER: 'Xác thực tài khoản khách hàng',
     FOR_PARTNER: 'Xác thực tài khoản Host'
 };
