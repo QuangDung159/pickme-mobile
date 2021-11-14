@@ -1,6 +1,6 @@
 /* eslint-disable global-require */
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
-import { ExpoNotification } from '@components/businessComponents';
+import { DeepLinkHandler, ExpoNotification } from '@components/businessComponents';
 import { Images, Theme } from '@constants/index';
 import Main from '@containers/Main';
 import { ToastHelpers } from '@helpers/index';
@@ -171,6 +171,7 @@ export default function App() {
             />
             <Provider store={store}>
                 <ExpoNotification />
+                <DeepLinkHandler />
                 <Main />
                 <Toast config={toastConfig} ref={(ref) => Toast.setRef(ref)} />
                 {/* {ENV !== 'prod' && (

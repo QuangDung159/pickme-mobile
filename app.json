@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "PickMe",
-    "scheme": "pickme",
+    "scheme": "pickmecustomer",
     "slug": "customer-pick-me-mobile",
     "version": "stg-0.7.7",
     "sdkVersion": "40.0.0",

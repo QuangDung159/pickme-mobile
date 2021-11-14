@@ -4,12 +4,12 @@ import { BookingStatus, IconFamily, Theme } from '@constants/index';
 import { mappingStatusText } from '@helpers/CommonHelpers';
 import { CommonHelpers, ToastHelpers } from '@helpers/index';
 import * as Calendar from 'expo-calendar';
+import * as Linking from 'expo-linking';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import {
     Alert,
-    Linking,
     Platform,
     StyleSheet, View
 } from 'react-native';
@@ -47,6 +47,15 @@ export default function CardBooking({ booking }) {
             setDeviceCalendars(calendars);
         }
     };
+
+    // const createBookingDetailLink = (bookingId) => {
+    //     const redirectUrl = Linking.createURL('booking-detail', {
+    //         queryParams: { bookingId },
+    //     });
+
+    //     console.log('redirectUrl :>> ', redirectUrl);
+    //     return redirectUrl;
+    // };
 
     const getDefaultCalendarSource = async () => {
         const defaultCalendar = await Calendar.getDefaultCalendarAsync();
