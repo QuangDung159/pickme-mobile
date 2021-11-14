@@ -26,9 +26,12 @@ export default function OtpForm({
     setPassword, username,
     navigation,
     isEmail,
-    renderFrom
+    renderFrom,
+    setRePassword,
+    rePassword
 }) {
     const [isShowPassword, setIsShowPassword] = useState(false);
+    const [isShowRePassword, setIsShowRePassword] = useState('');
     const [code, setCode] = useState(otp);
     const [indexFocus, setIndexFocus] = useState(3);
     const [countdown, setCountdown] = useState(30);
@@ -117,7 +120,31 @@ export default function OtpForm({
             }
         ];
 
-        return ValidationHelpers.validate(validateArr);
+        if (renderFrom === ScreenName.FORGOT_PASSWORD) {
+            validateArr.push({
+                fieldName: 'Nhập lại mật khẩu',
+                input: rePassword,
+                validate: {
+                    required: {
+                        value: true,
+                    },
+                    maxLength: {
+                        value: 50,
+                    },
+                    minLength: {
+                        value: 8,
+                    },
+                }
+            });
+        }
+
+        if (!ValidationHelpers.validate(validateArr)) return false;
+
+        if (renderFrom === ScreenName.FORGOT_PASSWORD) {
+            if (!isPasswordMatch()) return false;
+        }
+
+        return true;
     };
 
     const onClickSubmitRegister = async () => {
@@ -156,16 +183,53 @@ export default function OtpForm({
         setCountdown(30);
         startIntervalCountdown();
 
-        const result = await UserServices.fetchOtpSignUpAsync({
-            username,
-            isEmail: false
-        });
-        const { data } = result;
+        let result = null;
+        if (renderFrom === ScreenName.SIGN_UP) {
+            result = await UserServices.fetchOtpSignUpAsync({
+                username,
+                isEmail
+            });
+        } else {
+            result = await UserServices.fetchOtpForgotPasswordAsync({
+                username,
+                isEmail
+            });
+        }
 
+        const { data } = result;
         if (data) {
             ToastHelpers.renderToast('OTP đã được gửi,\nvui lòng kiểm tra', 'success');
             setOtp(data.message);
         }
+    };
+
+    const onSubmitForgotPassword = async () => {
+        if (!validate()) return;
+
+        dispatch(setShowLoaderStore(true));
+        const body = {
+            username,
+            password,
+            code
+        };
+
+        dispatch(setShowLoaderStore(true));
+        const result = await UserServices.submitForgotPasswordAsync(body);
+        const { data } = result;
+
+        if (data) {
+            navigation.navigate(ScreenName.ONBOARDING);
+            ToastHelpers.renderToast(data.message, 'success');
+        }
+        dispatch(setShowLoaderStore(false));
+    };
+
+    const isPasswordMatch = () => {
+        if (rePassword !== password) {
+            ToastHelpers.renderToast('Mật khẩu không khớp,\nbạn vui lòng kiểm tra lại.', 'error');
+            return false;
+        }
+        return true;
     };
 
     const handleChangeText = (text) => {
@@ -260,6 +324,30 @@ export default function OtpForm({
                         onPressRightIcon={() => setIsShowPassword(!isShowPassword)}
                     />
 
+                    {renderFrom === ScreenName.FORGOT_PASSWORD && (
+                        <CustomInput
+                            value={rePassword}
+                            inputStyle={{
+                                width: SIZES.WIDTH_BASE * 0.9,
+                                textAlign: 'center',
+                            }}
+                            onChangeText={(input) => setRePassword(input)}
+                            containerStyle={{
+                                marginVertical: 10,
+                                width: SIZES.WIDTH_BASE * 0.9
+                            }}
+                            secureTextEntry={!isShowPassword}
+                            placeholder="Nhập lại mật khẩu..."
+                            rightIcon={{
+                                name: 'eye',
+                                family: IconFamily.ENTYPO,
+                                size: 20,
+                                color: COLORS.DEFAULT
+                            }}
+                            onPressRightIcon={() => setIsShowRePassword(!isShowRePassword)}
+                        />
+                    )}
+
                     <TouchableText
                         style={{
                             color: COLORS.ACTIVE,
@@ -282,7 +370,7 @@ export default function OtpForm({
                     onPress={
                         () => {
                             if (renderFrom === ScreenName.FORGOT_PASSWORD) {
-                                onClickSubmitRegister();
+                                onSubmitForgotPassword();
                             } else {
                                 onClickSubmitRegister();
                             }

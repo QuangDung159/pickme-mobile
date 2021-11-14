@@ -1,35 +1,35 @@
 import { OtpForm, UsernameForm } from '@components/businessComponents';
 import {
-    CenterLoader
+    CenterLoader, IconCustom, NoteText
 } from '@components/uiComponents';
-import { ScreenName, Theme } from '@constants/index';
+import { IconFamily, ScreenName, Theme } from '@constants/index';
 import React, { useState } from 'react';
 import {
-    StyleSheet,
-    Text,
-    View
+    StyleSheet, View
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useSelector } from 'react-redux';
 
 const {
     FONT: {
-        TEXT_BOLD
+        TEXT_BOLD,
+        TEXT_REGULAR
     },
     SIZES,
     COLORS
 } = Theme;
 
-export default function SignUp({ navigation }) {
+export default function ForgotPassword({ navigation }) {
     const [step, setStep] = useState(1);
     const [isEmail, setIsEmail] = useState('');
     const [otp, setOtp] = useState('');
     const [password, setPassword] = useState('');
+    const [rePassword, setRePassword] = useState('');
     const [username, setUsername] = useState('');
 
     const showLoaderStore = useSelector((state) => state.appConfigReducer.showLoaderStore);
 
-    const renderSignUpViewByStep = () => {
+    const renderForgotPasswordViewByStep = () => {
         switch (step) {
             case 1: {
                 return (
@@ -50,9 +50,11 @@ export default function SignUp({ navigation }) {
                         navigation={navigation}
                         otp={otp}
                         password={password}
+                        rePassword={rePassword}
                         username={username}
                         setOtp={(otpCode) => setOtp(otpCode)}
-                        setPassword={(passwordStr) => setPassword(passwordStr)}
+                        setPassword={(input) => setPassword(input)}
+                        setRePassword={(input) => setRePassword(input)}
                         isEmail={isEmail}
                         renderFrom={ScreenName.FORGOT_PASSWORD}
                     />
@@ -81,24 +83,39 @@ export default function SignUp({ navigation }) {
                             }}
                         >
                             <View
-                                style={styles.stepSessionContainer}
+                                style={{
+                                    height: SIZES.HEIGHT_BASE * 0.3,
+                                    alignSelf: 'center',
+                                    alignItems: 'center',
+                                }}
                             >
-                                <Text
-                                    style={
-                                        [
-                                            styles.title,
-                                            {
-                                                color: COLORS.DEFAULT,
-                                                fontSize: 24,
-                                                marginTop: SIZES.HEIGHT_BASE * 0.15
-                                            }
-                                        ]
-                                    }
+                                <View
+                                    style={{
+                                        marginTop: SIZES.HEIGHT_BASE * 0.1
+                                    }}
                                 >
-                                    Đăng ký
-                                </Text>
+                                    <NoteText
+                                        width={SIZES.WIDTH_BASE * 0.9}
+                                        title="Bạn đang yêu cầu lấy lại mật khẩu:"
+                                        content="Bạn vui lòng nhập username đã đăng ký để nhận mã xác thực."
+                                        contentStyle={{
+                                            fontSize: SIZES.FONT_H4,
+                                            color: COLORS.ACTIVE,
+                                            fontFamily: TEXT_REGULAR,
+                                            marginTop: 5
+                                        }}
+                                        iconComponent={(
+                                            <IconCustom
+                                                name="info-circle"
+                                                family={IconFamily.FONT_AWESOME}
+                                                size={18}
+                                                color={COLORS.ACTIVE}
+                                            />
+                                        )}
+                                    />
+                                </View>
                             </View>
-                            {renderSignUpViewByStep()}
+                            {renderForgotPasswordViewByStep()}
                         </View>
                     </KeyboardAwareScrollView>
                 )}

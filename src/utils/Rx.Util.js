@@ -40,7 +40,8 @@ export default async (
     const url = `${domain || API_URL}${endpoint}`;
 
     if (endpoint !== Rx.AUTHENTICATION.LOGIN
-        && endpoint !== Rx.USER.GET_OTP_REGISTER) {
+        && endpoint !== Rx.USER.GET_OTP_REGISTER
+        && endpoint !== Rx.USER.GET_OTP_FORGOT_PASSWORD) {
         // eslint-disable-next-line no-param-reassign
         headers = {
             Authorization: `Bearer ${apiTokenLocal}`
@@ -50,8 +51,8 @@ export default async (
     if (!apiTokenLocal
         && endpoint !== Rx.AUTHENTICATION.LOGIN
         && endpoint !== Rx.USER.GET_OTP_REGISTER
+        && endpoint !== Rx.USER.GET_OTP_FORGOT_PASSWORD
         && endpoint !== Rx.AUTHENTICATION.SIGN_UP
-        && endpoint !== Rx.USER.GENERATE_OTP_WHEN_FORGOT_PASSWORD
         && endpoint !== Rx.USER.SUBMIT_FORGOT_PASSWORD_CONFIRM
         && endpoint !== Rx.PARTNER.GET_LIST_PARTNER
     ) {

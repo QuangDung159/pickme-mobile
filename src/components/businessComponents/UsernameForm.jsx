@@ -1,7 +1,7 @@
 import {
     CustomButton, CustomCheckbox, CustomInput, RadioButton
 } from '@components/uiComponents';
-import { Theme, ScreenName } from '@constants/index';
+import { ScreenName, Theme } from '@constants/index';
 import { ToastHelpers, ValidationHelpers } from '@helpers/index';
 import { setShowLoaderStore } from '@redux/Actions';
 import { UserServices } from '@services/index';
@@ -76,10 +76,20 @@ export default function PhoneForm({
         }
 
         dispatch(setShowLoaderStore(true));
-        const result = await UserServices.fetchOtpSignUpAsync({
-            username,
-            isEmail
-        });
+
+        let result = null;
+        if (renderFrom === ScreenName.SIGN_UP) {
+            result = await UserServices.fetchOtpSignUpAsync({
+                username,
+                isEmail
+            });
+        } else {
+            result = await UserServices.fetchOtpForgotPasswordAsync({
+                username,
+                isEmail
+            });
+        }
+
         const { data } = result;
 
         if (data) {

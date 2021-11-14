@@ -24,7 +24,7 @@ const {
 } = Theme;
 
 export default function SignIn({ navigation, setIsShowSpinner, isRegisterPartner }) {
-    const [phoneNumber, setPhoneNumber] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [deviceIdToSend, setDeviceIdToSend] = useState('');
     const [isShowPassword, setIsShowPassword] = useState(false);
@@ -47,8 +47,8 @@ export default function SignIn({ navigation, setIsShowSpinner, isRegisterPartner
     };
 
     const getLoginInfo = async () => {
-        const phoneNumberLocal = await SecureStore.getItemAsync('username');
-        setPhoneNumber(phoneNumberLocal);
+        const usernameLocal = await SecureStore.getItemAsync('username');
+        setUsername(usernameLocal);
 
         const passwordLocal = await SecureStore.getItemAsync('password');
         setPassword(passwordLocal);
@@ -90,7 +90,7 @@ export default function SignIn({ navigation, setIsShowSpinner, isRegisterPartner
         const deviceId = await SecureStore.getItemAsync('deviceId');
         if (validate()) {
             const body = {
-                username: phoneNumber,
+                username: username.toString().trim(),
                 password,
                 deviceId: deviceIdToSend || deviceId
             };
@@ -114,7 +114,7 @@ export default function SignIn({ navigation, setIsShowSpinner, isRegisterPartner
         const validationArr = [
             {
                 fieldName: 'Số điện thoại',
-                input: phoneNumber,
+                input: username,
                 validate: {
                     required: {
                         value: true,
@@ -137,7 +137,7 @@ export default function SignIn({ navigation, setIsShowSpinner, isRegisterPartner
 
     const onLoginSuccess = async (data, status) => {
         SecureStore.setItemAsync('password', `${password}`);
-        SecureStore.setItemAsync('username', `${phoneNumber}`);
+        SecureStore.setItemAsync('username', `${username}`);
 
         const currentUserInfo = await UserServices.mappingCurrentUserInfo(data.data);
         SecureStore.setItemAsync('api_token', `${currentUserInfo.token}`);
@@ -196,10 +196,10 @@ export default function SignIn({ navigation, setIsShowSpinner, isRegisterPartner
                 }}
             >
                 <CustomInput
-                    placeholder="Nhập số điện thoại..."
-                    value={phoneNumber}
+                    placeholder="Nhập tên đăng nhập..."
+                    value={username}
                     onChangeText={
-                        (phoneNumberInput) => setPhoneNumber(phoneNumberInput)
+                        (usernameInput) => setUsername(usernameInput)
                     }
                     containerStyle={{
                         marginVertical: 10,

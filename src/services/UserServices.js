@@ -144,25 +144,6 @@ const submitForgotPasswordAsync = async (body) => {
     return CommonHelpers.handleResByStatus(result);
 };
 
-const rxSubmitGetOtpForgotPasswordAsync = async (body, domain = null) => {
-    const result = await RxUtil(
-        Rx.USER.GENERATE_OTP_WHEN_FORGOT_PASSWORD,
-        'POST',
-        body,
-        domain
-    );
-    return result;
-};
-
-const submitGetOtpForgotPasswordAsync = async (body) => {
-    let result = await rxSubmitGetOtpForgotPasswordAsync(body);
-    const handledResult = await Middlewares.handleResponseStatusMiddleware(result);
-    if (handledResult) {
-        result = await rxSubmitGetOtpForgotPasswordAsync(body, handledResult.backupDomain);
-    }
-    return CommonHelpers.handleResByStatus(result);
-};
-
 const rxSubmitSignUpAsync = async (body, domain = null) => {
     const result = await RxUtil(
         Rx.AUTHENTICATION.SIGN_UP,
@@ -196,6 +177,25 @@ const fetchOtpSignUpAsync = async (body) => {
     const handledResult = await Middlewares.handleResponseStatusMiddleware(result);
     if (handledResult) {
         result = await rxFetchOtpSignUpAsync(body, handledResult.backupDomain);
+    }
+    return CommonHelpers.handleResByStatus(result);
+};
+
+const rxFetchOtpForgotPasswordAsync = async (body, domain = null) => {
+    const result = await RxUtil(
+        Rx.USER.GET_OTP_FORGOT_PASSWORD,
+        'POST',
+        body,
+        domain
+    );
+    return result;
+};
+
+const fetchOtpForgotPasswordAsync = async (body) => {
+    let result = await rxFetchOtpForgotPasswordAsync(body);
+    const handledResult = await Middlewares.handleResponseStatusMiddleware(result);
+    if (handledResult) {
+        result = await rxFetchOtpForgotPasswordAsync(body, handledResult.backupDomain);
     }
     return CommonHelpers.handleResByStatus(result);
 };
@@ -366,7 +366,6 @@ export default {
     submitChangePasswordAsync,
     submitUpdateInfoAsync,
     submitForgotPasswordAsync,
-    submitGetOtpForgotPasswordAsync,
     submitSignUpAsync,
     fetchOtpSignUpAsync,
     fetchUserBusyCalendar,
@@ -377,5 +376,6 @@ export default {
     submitReportUserAsync,
     addUserPostImageAsync,
     addVerifyDocAsync,
-    submitUpdatePartnerInfoAsync
+    submitUpdatePartnerInfoAsync,
+    fetchOtpForgotPasswordAsync
 };

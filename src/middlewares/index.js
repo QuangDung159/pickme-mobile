@@ -14,9 +14,9 @@ const loginRefreshTokenAsync = async (body) => {
     const { data } = result;
 
     if (data.data) {
-        await SecureStore.setItemAsync('api_token', result.data.data.token);
-        await SecureStore.setItemAsync('username', body.username);
-        await SecureStore.setItemAsync('password', body.password);
+        await SecureStore.setItemAsync('api_token', result.data.data.token.toString());
+        await SecureStore.setItemAsync('username', body.username.toString());
+        await SecureStore.setItemAsync('password', body.password.toString());
     } else {
         await SecureStore.deleteItemAsync('api_token');
         await SecureStore.deleteItemAsync('username');
