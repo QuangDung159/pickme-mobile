@@ -1,11 +1,14 @@
-import { CustomText } from '@components/uiComponents';
-import { Theme } from '@constants/index';
+import { CustomButton, CustomText } from '@components/uiComponents';
+import { IconFamily, Theme, BookingStatus } from '@constants/index';
 import { mappingStatusText } from '@helpers/CommonHelpers';
 import { CommonHelpers, ToastHelpers } from '@helpers/index';
+import * as Calendar from 'expo-calendar';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
+    Alert,
+    Platform,
     StyleSheet, View
 } from 'react-native';
 import { useSelector } from 'react-redux';
@@ -20,7 +23,128 @@ const {
 } = Theme;
 
 export default function CardBooking({ booking }) {
+    const [deviceCalendars, setDeviceCalendars] = useState([]);
+
     const currentUser = useSelector((state) => state.userReducer.currentUser);
+    const timezone = useSelector((state) => state.appConfigReducer.timezone);
+
+    useEffect(
+        () => {
+            getDeviceCalendar();
+        }, []
+    );
+
+    // useEffect(
+    //     () => {
+    //         if (!calendarId) {
+    //             checkAppCalendarExisted();
+    //         }
+    //     }, [calendarId]
+    // );
+
+    const getDeviceCalendar = async () => {
+        // await Calendar.deleteCalendarAsync('6');
+
+        const { status } = await Calendar.requestCalendarPermissionsAsync();
+        console.log('status :>> ', status);
+        if (status === 'granted') {
+            const calendars = await Calendar.getCalendarsAsync(Calendar.EntityTypes.EVENT);
+            setDeviceCalendars(calendars);
+        }
+    };
+
+    const getDefaultCalendarSource = async () => {
+        const defaultCalendar = await Calendar.getDefaultCalendarAsync();
+        return defaultCalendar.source;
+    };
+
+    const checkAppCalendarExisted = async () => {
+        if (!deviceCalendars || deviceCalendars.length === 0) {
+            const calendarId = await createCalendar();
+            return calendarId;
+        }
+
+        const appCalendar = deviceCalendars.find((item) => item.name === 'PickMe');
+        if (!appCalendar) {
+            const calendarId = await createCalendar();
+            return calendarId;
+        }
+        return appCalendar.id;
+    };
+
+    const createCalendar = async () => {
+        const defaultCalendarSource = Platform.OS === 'ios'
+            ? await getDefaultCalendarSource()
+            : { isLocalAccount: true, name: 'PickMe' };
+        const newCalendarID = await Calendar.createCalendarAsync({
+            title: 'Lịch PickMe',
+            color: COLORS.ACTIVE,
+            entityType: Calendar.EntityTypes.EVENT,
+            sourceId: defaultCalendarSource.id,
+            source: defaultCalendarSource,
+            name: 'PickMe',
+            ownerAccount: currentUser.userName,
+            accessLevel: Calendar.CalendarAccessLevel.OWNER,
+        });
+        return newCalendarID.toString();
+    };
+
+    const createDatArr = (dateStr, minutes) => {
+        let dateArr = dateStr.toString().split('T');
+        dateArr = dateArr[0].split('-');
+
+        const strHours = convertMinutesToStringHours(minutes).split(':');
+        dateArr = dateArr.concat(strHours);
+        return dateArr;
+    };
+
+    const addBookingToCalendar = async () => {
+        const calendarId = await checkAppCalendarExisted();
+        const startDateArr = createDatArr(booking.date, booking.startAt);
+        const endDateArr = createDatArr(booking.date, booking.endAt);
+
+        const detail = {
+            title: `Hẹn với ${booking.customerId === currentUser?.id
+                ? booking.partnerName
+                : booking.customerName}`,
+            startDate: new Date(startDateArr[0],
+                startDateArr[1],
+                startDateArr[2],
+                startDateArr[3],
+                startDateArr[4],
+                0, 0),
+            endDate: new Date(endDateArr[0],
+                endDateArr[1],
+                endDateArr[2],
+                endDateArr[3],
+                endDateArr[4],
+                0, 0),
+            allDay: false,
+            location: booking.address,
+            notes: booking.noted,
+            timeZone: timezone,
+            alarms: [{ relativeOffset: -60, method: Calendar.AlarmMethod.ALERT }],
+        };
+        const eventId = await Calendar.createEventAsync(calendarId, detail);
+        if (eventId) {
+            Alert.alert('Thêm thành công', '', [
+                {
+                    text: 'Đóng',
+                    style: 'cancel'
+                },
+                {
+                    text: 'Xem lịch',
+                    onPress: () => {
+                        Calendar.openEventInCalendar(eventId);
+                    }
+                }
+            ],
+            { cancelable: false });
+        } else {
+            ToastHelpers.renderToast('Lỗi thêm lịch. Vui lòng thử lại sau');
+        }
+    };
+
     const convertMinutesToStringHours = (minutes) => moment.utc()
         .startOf('day')
         .add(minutes, 'minutes')
@@ -36,8 +160,8 @@ export default function CardBooking({ booking }) {
             date,
             idReadAble,
             address,
-            customerId,
-            customerName
+            customerName,
+            customerId
         } = booking;
 
         if (!booking) {
@@ -77,7 +201,7 @@ export default function CardBooking({ booking }) {
                                 }
                             ]
                         }
-                        text={`${customerId === currentUser.id ? 'Host' : 'Khách hàng'}`}
+                        text={`${customerId === currentUser?.id ? 'Host' : 'Khách hàng'}`}
                     />
                     <CustomText
                         style={
@@ -104,7 +228,7 @@ export default function CardBooking({ booking }) {
                             }
                         ]
                     }
-                    text={`${customerId === currentUser.id ? partnerName : customerName}`}
+                    text={`${customerId === currentUser?.id ? partnerName : customerName}`}
                 />
 
                 <View
@@ -173,9 +297,11 @@ export default function CardBooking({ booking }) {
                 </View>
                 <View
                     style={{
-                        justifyContent: 'center',
+                        justifyContent: 'space-between',
                         alignItems: 'center',
-                        marginBottom: 10
+                        marginBottom: 10,
+                        flexDirection: 'row',
+                        width: '100%',
                     }}
                 >
                     <CustomText
@@ -185,6 +311,43 @@ export default function CardBooking({ booking }) {
                             color: COLORS.ACTIVE
                         }}
                         text={CommonHelpers.generateMoneyStr(totalAmount)}
+                    />
+                    {/* <CustomButton
+                        onPress={() => createCalendar()}
+                        labelStyle={{
+                            fontSize: SIZES.FONT_H3,
+                            color: COLORS.ACTIVE
+                        }}
+                        label="Thêm vào lịch"
+                        leftIcon={{
+                            name: 'calendar',
+                            size: SIZES.FONT_H3,
+                            color: COLORS.ACTIVE,
+                            family: IconFamily.ANT_DESIGN
+                        }}
+                    /> */}
+                    <CustomButton
+                        onPress={() => {
+                            if (booking.status === BookingStatus.CANCEL || booking.status === BookingStatus.COMPLETED) {
+                                return;
+                            }
+                            addBookingToCalendar();
+                        }}
+                        type="active"
+                        label="Thêm vào lịch"
+                        buttonStyle={{
+                            width: 135,
+                        }}
+                        labelStyle={{
+                            fontFamily: TEXT_REGULAR,
+                            fontSize: SIZES.FONT_H4,
+                        }}
+                        leftIcon={{
+                            name: 'calendar',
+                            size: SIZES.FONT_H3,
+                            color: COLORS.ACTIVE,
+                            family: IconFamily.ANT_DESIGN
+                        }}
                     />
                 </View>
             </View>

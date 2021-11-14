@@ -71,6 +71,10 @@ export default function Albums({
                 color: COLORS.ACTIVE
             }}
             label="Thêm ảnh"
+            buttonStyle={{
+                width: 110,
+                alignSelf: 'flex-start'
+            }}
             leftIcon={{
                 name: 'add-a-photo',
                 size: SIZES.FONT_H3,

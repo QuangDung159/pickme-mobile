@@ -145,7 +145,8 @@ export default function CustomButton(
                 <View
                     style={{
                         flexDirection: 'row',
-                        alignItems: 'center'
+                        alignItems: 'center',
+                        justifyContent: 'space-between'
                     }}
                 >
                     <IconCustom
@@ -161,7 +162,6 @@ export default function CustomButton(
                                     fontFamily: TEXT_REGULAR,
                                     fontSize: SIZES.FONT_H3,
                                     color: COLORS.DEFAULT,
-                                    marginLeft: 10
                                 },
                                 labelStyle
                             ]
