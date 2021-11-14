@@ -274,8 +274,6 @@ export default function BookingList({ navigation }) {
     const renderListDateSection = () => {
         const listBookingByDate = groupBookingByDate(listBookingStore);
 
-        console.log('listBookingStore :>> ', listBookingStore);
-
         if (JSON.stringify(listBookingByDate) === JSON.stringify({})) {
             return (
                 <ScrollView
