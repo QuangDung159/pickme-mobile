@@ -57,8 +57,6 @@ export default function Profile({ route, navigation }) {
         setIsShowSpinner(false);
     };
 
-    console.log('currentUser :>> ', currentUser);
-
     try {
         return (
             <>

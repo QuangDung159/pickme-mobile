@@ -268,6 +268,26 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
         );
     };
 
+    const handleShowPartnerDataPanel = () => {
+        if (isCurrentUser) {
+            if (currentUser.isPartnerVerified) {
+                return (
+                    <>
+                        {renderPartnerDataPanel()}
+                    </>
+                );
+            }
+        }
+        if (userInfo.isPartnerVerified) {
+            return (
+                <>
+                    {renderPartnerDataPanel()}
+                </>
+            );
+        }
+        return <></>;
+    };
+
     return (
         <ScrollView
             showsVerticalScrollIndicator={false}
@@ -389,11 +409,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                     />
                 )}
 
-                {currentUser.isPartnerVerified && (
-                    <>
-                        {renderPartnerDataPanel()}
-                    </>
-                )}
+                {handleShowPartnerDataPanel()}
             </View>
 
             {isCurrentUser && (
