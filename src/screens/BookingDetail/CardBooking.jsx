@@ -156,7 +156,7 @@ export default function CardBooking({ booking }) {
                 0, 0),
             allDay: false,
             location: booking.address,
-            notes: `${booking.noted}\n\nMã cuộc hẹn: ${booking.id}`,
+            notes: `${booking.noted}\n\nMã cuộc hẹn:\n${booking.id}`,
             timeZone: timezone,
             alarms: [{ relativeOffset: -60, method: Calendar.AlarmMethod.ALERT }],
         };
@@ -368,6 +368,13 @@ export default function CardBooking({ booking }) {
                         onPress={() => {
                             if (booking.status === BookingStatus.PAID) {
                                 addBookingToCalendar();
+                            } else {
+                                Alert.alert('Đơn hẹn không ở trạng thái "Đã được thanh toán"', '', [
+                                    {
+                                        text: 'Đã hiểu',
+                                        style: 'ok'
+                                    },
+                                ], { cancelable: false });
                             }
                         }}
                         type="active"
