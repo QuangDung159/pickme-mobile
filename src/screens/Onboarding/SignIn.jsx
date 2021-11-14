@@ -48,7 +48,7 @@ export default function SignIn({ navigation, setIsShowSpinner, isRegisterPartner
 
     const getLoginInfo = async () => {
         const usernameLocal = await SecureStore.getItemAsync('username');
-        setUsername(usernameLocal);
+        setUsername(usernameLocal.trim());
 
         const passwordLocal = await SecureStore.getItemAsync('password');
         setPassword(passwordLocal);
@@ -199,7 +199,7 @@ export default function SignIn({ navigation, setIsShowSpinner, isRegisterPartner
                     placeholder="Nhập tên đăng nhập..."
                     value={username}
                     onChangeText={
-                        (usernameInput) => setUsername(usernameInput)
+                        (usernameInput) => setUsername(usernameInput.trim())
                     }
                     containerStyle={{
                         marginVertical: 10,
