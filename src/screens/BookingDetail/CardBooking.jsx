@@ -13,6 +13,8 @@ import {
 } from 'react-native';
 import { useSelector } from 'react-redux';
 
+const v4Regex = /[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}/;
+
 const {
     FONT: {
         TEXT_REGULAR,
@@ -34,19 +36,10 @@ export default function CardBooking({ booking }) {
         }, []
     );
 
-    // useEffect(
-    //     () => {
-    //         if (!calendarId) {
-    //             checkAppCalendarExisted();
-    //         }
-    //     }, [calendarId]
-    // );
-
     const getDeviceCalendar = async () => {
         // await Calendar.deleteCalendarAsync('6');
 
         const { status } = await Calendar.requestCalendarPermissionsAsync();
-        console.log('status :>> ', status);
         if (status === 'granted') {
             const calendars = await Calendar.getCalendarsAsync(Calendar.EntityTypes.EVENT);
             setDeviceCalendars(calendars);
@@ -98,6 +91,46 @@ export default function CardBooking({ booking }) {
         return dateArr;
     };
 
+    const checkEventExisted = async (calendarsId, bookingId) => {
+        const startDateArr = createDatArr(booking.date, booking.startAt);
+        const endDateArr = createDatArr(booking.date, booking.endAt);
+
+        const calendars = await Calendar.getEventsAsync(
+            [calendarsId],
+            new Date(startDateArr[0],
+                startDateArr[1],
+                startDateArr[2],
+                0,
+                0,
+                0, 0),
+            new Date(endDateArr[0],
+                endDateArr[1],
+                endDateArr[2],
+                23,
+                59,
+                59, 0)
+        );
+
+        let bookingIdFromNote = '';
+        let event = null;
+        calendars.forEach((item) => {
+            bookingIdFromNote = getBookingId(item.notes);
+            if (bookingIdFromNote === bookingId) {
+                event = item;
+            }
+        });
+
+        return event;
+    };
+
+    const getBookingId = (note) => {
+        const uuidFromNote = note.match(v4Regex);
+        if (uuidFromNote) {
+            return uuidFromNote[0];
+        }
+        return null;
+    };
+
     const addBookingToCalendar = async () => {
         const calendarId = await checkAppCalendarExisted();
         const startDateArr = createDatArr(booking.date, booking.startAt);
@@ -121,11 +154,20 @@ export default function CardBooking({ booking }) {
                 0, 0),
             allDay: false,
             location: booking.address,
-            notes: booking.noted,
+            notes: `${booking.noted}\n\nMã cuộc hẹn: ${booking.id}`,
             timeZone: timezone,
             alarms: [{ relativeOffset: -60, method: Calendar.AlarmMethod.ALERT }],
         };
-        const eventId = await Calendar.createEventAsync(calendarId, detail);
+
+        const isEventExisted = await checkEventExisted(calendarId, booking.id);
+
+        let eventId = '';
+        if (isEventExisted) {
+            eventId = isEventExisted.id;
+        } else {
+            eventId = await Calendar.createEventAsync(calendarId, detail);
+        }
+
         if (eventId) {
             Alert.alert('Thêm thành công', '', [
                 {
@@ -312,26 +354,11 @@ export default function CardBooking({ booking }) {
                         }}
                         text={CommonHelpers.generateMoneyStr(totalAmount)}
                     />
-                    {/* <CustomButton
-                        onPress={() => createCalendar()}
-                        labelStyle={{
-                            fontSize: SIZES.FONT_H3,
-                            color: COLORS.ACTIVE
-                        }}
-                        label="Thêm vào lịch"
-                        leftIcon={{
-                            name: 'calendar',
-                            size: SIZES.FONT_H3,
-                            color: COLORS.ACTIVE,
-                            family: IconFamily.ANT_DESIGN
-                        }}
-                    /> */}
                     <CustomButton
                         onPress={() => {
-                            if (booking.status === BookingStatus.CANCEL || booking.status === BookingStatus.COMPLETED) {
-                                return;
+                            if (booking.status === BookingStatus.PAID) {
+                                addBookingToCalendar();
                             }
-                            addBookingToCalendar();
                         }}
                         type="active"
                         label="Thêm vào lịch"

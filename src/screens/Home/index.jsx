@@ -119,10 +119,16 @@ export default function Home({ navigation }) {
         }
         const bookingAsCustomer = await BookingServices.fetchListBookingAsync();
 
-        if (bookingAsPartner.data && bookingAsCustomer.data) {
-            const listBooking = bookingAsCustomer.data.data.concat(bookingAsPartner.data.data);
-            dispatch(setListBookingStore(listBooking));
+        let listBooking = [];
+        if (bookingAsCustomer.data) {
+            listBooking = bookingAsCustomer.data.data;
+
+            if (bookingAsPartner.data) {
+                listBooking = listBooking.concat(bookingAsPartner.data.data);
+            }
         }
+
+        dispatch(setListBookingStore(listBooking));
     };
 
     const fetchVerification = async () => {
