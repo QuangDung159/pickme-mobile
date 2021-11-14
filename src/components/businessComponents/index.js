@@ -4,6 +4,7 @@ import AvatarPanel from './AvatarPanel';
 import BecomePartnerText from './BecomePartnerText';
 import CardImage from './CardImage';
 import CustomCalendar from './CustomCalendar';
+import DeepLinkHandler from './DeepLinkHandler';
 import ExpoNotification from './ExpoNotification';
 import Listener from './Listener';
 import OtpForm from './OtpForm';
@@ -20,5 +21,6 @@ export {
     BecomePartnerText,
     UploadDocSection,
     OtpForm,
-    UsernameForm
+    UsernameForm,
+    DeepLinkHandler
 };

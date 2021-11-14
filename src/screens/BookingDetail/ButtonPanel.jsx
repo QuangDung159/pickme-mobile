@@ -74,7 +74,8 @@ export default function ButtonPanel({
             return renderRatingReportBooking();
         }
 
-        if (currentBookingRedux.status === BookingStatus.SCHEDULING) {
+        if (currentBookingRedux.partnerId === currentUser.id
+            && currentBookingRedux.status === BookingStatus.SCHEDULING) {
             return (
                 <>
                     <CustomButton

@@ -171,6 +171,7 @@ export default function App() {
             />
             <Provider store={store}>
                 <ExpoNotification />
+                {/* <DeepLinkHandler /> */}
                 <Main />
                 <Toast config={toastConfig} ref={(ref) => Toast.setRef(ref)} />
                 {/* {ENV !== 'prod' && (
