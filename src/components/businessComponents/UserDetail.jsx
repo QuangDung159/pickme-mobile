@@ -353,7 +353,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                                     textAlign: 'center'
                                 }}
                             >
-                                {`${userInfo.fullName}`}
+                                {`${userInfo.fullName || 'N/a'}`}
                             </Text>
                             {isCurrentUser && (
                                 <IconCustom
@@ -379,7 +379,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                             }}
                         >
                             {'"'}
-                            {userInfo.description}
+                            {userInfo.description || 'N/a'}
                             {'"'}
                         </Text>
                     </View>

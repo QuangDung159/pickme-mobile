@@ -24,7 +24,7 @@ const {
 export default function SignUp({ navigation }) {
     const [modalVisible, setModalVisible] = useState(false);
     const [step, setStep] = useState(1);
-    const [isEmail, setIsEmail] = useState('');
+    const [isEmail, setIsEmail] = useState(false);
     const [otp, setOtp] = useState('');
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
@@ -57,7 +57,7 @@ export default function SignUp({ navigation }) {
                         setOtp={(otpCode) => setOtp(otpCode)}
                         setPassword={(passwordStr) => setPassword(passwordStr)}
                         isEmail={isEmail}
-                        renderFrom={ScreenName.FORGOT_PASSWORD}
+                        renderFrom={ScreenName.SIGN_UP}
                     />
                 );
             }
