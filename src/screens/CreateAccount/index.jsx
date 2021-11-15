@@ -100,7 +100,6 @@ export default function CreateAccount(props) {
             homeTown: hometown,
             email: 'N/a',
             url: imageUrl,
-            // gender: gender || Gender.GENDER_ARRAY[0].value,
             IsMale: isMale
         };
 
@@ -241,6 +240,7 @@ export default function CreateAccount(props) {
                         onChangeText={(input) => setNewUser({ ...newUser, dob: input })}
                         value={newUser.dob}
                         placeholder="Năm sinh..."
+                        keyboardType="number-pad"
                     />
 
                     <RadioButton
@@ -270,6 +270,7 @@ export default function CreateAccount(props) {
                         onChangeText={(input) => setNewUser({ ...newUser, height: input })}
                         value={newUser.height}
                         placeholder="Chiều cao (cm)..."
+                        keyboardType="number-pad"
                     />
 
                     <CustomInput
@@ -279,6 +280,7 @@ export default function CreateAccount(props) {
                         onChangeText={(input) => setNewUser({ ...newUser, weight: input })}
                         value={newUser.weight}
                         placeholder="Cân nặng (kg)..."
+                        keyboardType="number-pad"
                     />
                 </View>
 

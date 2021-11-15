@@ -5,7 +5,7 @@ import {
     IconFamily, ScreenName, Theme
 } from '@constants/index';
 import { ToastHelpers, ValidationHelpers } from '@helpers/index';
-import { setIsSignInOtherDeviceStore, setShowLoaderStore, setToken } from '@redux/Actions';
+import { setIsSignInOtherDeviceStore, setShowLoaderStore } from '@redux/Actions';
 import { UserServices } from '@services/index';
 import * as SecureStore from 'expo-secure-store';
 import React, { useEffect, useRef, useState } from 'react';
@@ -62,12 +62,12 @@ export default function OtpForm({
         };
     }, []);
 
-    const onLoginSuccess = (tokenFromAPI) => {
-        dispatch(setToken(tokenFromAPI));
+    const onLoginSuccess = async (data) => {
+        const currentUserInfo = await UserServices.mappingCurrentUserInfo(data.data);
+        SecureStore.setItemAsync('api_token', `${currentUserInfo.token}`);
         dispatch(setIsSignInOtherDeviceStore(false));
         dispatch(setShowLoaderStore(false));
 
-        SecureStore.setItemAsync('api_token', tokenFromAPI.toString());
         navigation.navigate(ScreenName.CREATE_ACCOUNT);
     };
 
@@ -85,7 +85,7 @@ export default function OtpForm({
         } = result;
 
         if (data) {
-            onLoginSuccess(data);
+            await onLoginSuccess(data);
             SecureStore.setItemAsync('username', username.toString());
             SecureStore.setItemAsync('password', password.toString());
         }
