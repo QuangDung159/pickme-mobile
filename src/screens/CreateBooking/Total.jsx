@@ -1,4 +1,4 @@
-import { CustomButton } from '@components/uiComponents';
+import { CustomButton, CustomInput } from '@components/uiComponents';
 import ScreenName from '@constants/ScreenName';
 import Theme from '@constants/Theme';
 import CommonHelpers from '@helpers/CommonHelpers';
@@ -8,7 +8,7 @@ import { setListBookingStore, setPersonTabActiveIndex } from '@redux/Actions';
 import BookingServices from '@services/BookingServices';
 import moment from 'moment';
 import React from 'react';
-import { Alert, Text, View } from 'react-native';
+import { Alert, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 
 const {
@@ -170,21 +170,24 @@ export default function Total({
                 style={{
                     alignSelf: 'center',
                     width: SIZES.WIDTH_BASE * 0.9,
-                    marginTop: 20,
-                    marginBottom: 15
                 }}
             >
-                <Text
-                    style={{
-                        fontFamily: TEXT_BOLD,
-                        fontSize: 30,
-                        color: COLORS.ACTIVE,
-                        textAlign: 'center',
-                        marginBottom: 10
+                <CustomInput
+                    value={CommonHelpers.generateMoneyStr(calculateTotalAmount(startTimeStr, endTimeStr))}
+                    editable={false}
+                    containerStyle={{
+                        marginVertical: 10,
+                        width: SIZES.WIDTH_BASE * 0.9,
                     }}
-                >
-                    {CommonHelpers.generateMoneyStr(calculateTotalAmount(startTimeStr, endTimeStr))}
-                </Text>
+                    inputStyle={{
+                        height: 50,
+                        fontSize: SIZES.FONT_H1 + 5,
+                        fontFamily: TEXT_BOLD,
+                        backgroundColor: COLORS.ACTIVE,
+                        color: COLORS.BASE
+                    }}
+                    label="Tổng chi phí:"
+                />
 
                 {renderButtonPanel()}
             </View>
