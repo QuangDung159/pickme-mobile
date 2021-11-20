@@ -121,7 +121,6 @@ export default function UpdateInfoAccount() {
                     }}
                     onChangeText={(input) => setNewUser({ ...newUser, height: input })}
                     value={newUser.height}
-                    placeholder="Chiều cao (cm)"
                     keyboardType="number-pad"
                 />
             </View>
@@ -140,7 +139,6 @@ export default function UpdateInfoAccount() {
                     }}
                     onChangeText={(input) => setNewUser({ ...newUser, weight: input })}
                     value={newUser.weight}
-                    placeholder="Cân nặng (kg)"
                     keyboardType="number-pad"
                 />
             </View>
@@ -162,7 +160,6 @@ export default function UpdateInfoAccount() {
                     width: SIZES.WIDTH_BASE * 0.44
                 }}
                 onChangeText={(input) => onChangeYear(input)}
-                placeholder="Năm sinh"
                 value={newUser?.dob?.substr(0, 4)}
                 label="Năm sinh:"
                 keyboardType="number-pad"

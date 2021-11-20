@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { TopTabBar } from '@components/uiComponents';
 import { GraphQueryString, ScreenName } from '@constants/index';
 import {
@@ -12,6 +13,7 @@ import BookingServices from '@services/BookingServices';
 import NotificationServices from '@services/NotificationServices';
 import socketRequestUtil from '@utils/socketRequestUtil';
 import React, { useEffect, useState } from 'react';
+import { Alert } from 'react-native';
 import { SceneMap } from 'react-native-tab-view';
 import { useDispatch, useSelector } from 'react-redux';
 import BookingList from './BookingList';
@@ -42,14 +44,17 @@ export default function Personal({ navigation }) {
             fetchListNotification();
             fetchListBooking();
             getListConversationFromSocket();
+            checkIsFillDataForTheFirstTime();
         }, []
     );
 
     useEffect(
         () => {
             const onFocus = navigation.addListener('focus', () => {
+                checkIsFillDataForTheFirstTime();
+
                 if (navigateFrom && navigateFrom === ScreenName.BOOKING_DETAIL) {
-                    // fetchListBooking();
+                    fetchListBooking();
                 }
             });
 
@@ -108,6 +113,25 @@ export default function Personal({ navigation }) {
             }
         }, [isSignInOtherDeviceStore]
     );
+
+    const checkIsFillDataForTheFirstTime = () => {
+        if (!currentUser.isFillDataFirstTime) {
+            Alert.alert('Thông tin cá nhân',
+                'Tài khoản của bạn chưa được cập nhật thông tin cá nhân.\nVui lòng cập nhật để có được trải nghiệm tốt nhất với PickMe.',
+                [
+                    {
+                        text: 'Đóng',
+                        style: 'cancel'
+                    },
+                    {
+                        text: 'Cập nhật',
+                        onPress: () => {
+                            navigation.navigate(ScreenName.UPDATE_INFO_ACCOUNT);
+                        }
+                    }
+                ],);
+        }
+    };
 
     const setIntervalToUpdateLastActiveOfUserStatus = () => {
         const intervalUpdateLastActive = setInterval(() => {
