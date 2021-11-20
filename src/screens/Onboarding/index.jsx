@@ -241,7 +241,7 @@ export default function Onboarding({ navigation }) {
                                 text="Đăng ký"
                                 onPress={() => navigation.navigate(ScreenName.SIGN_UP)}
                             />
-                            <TouchableText
+                            {/* <TouchableText
                                 text="Quên mật khẩu?"
                                 onPress={() => navigation.navigate(ScreenName.FORGOT_PASSWORD)}
                                 style={{
@@ -249,7 +249,7 @@ export default function Onboarding({ navigation }) {
                                     marginBottom: 10,
                                     fontSize: SIZES.FONT_H3
                                 }}
-                            />
+                            /> */}
                             {/* <BecomePartnerText onPress={() => {
                                 setModalVisible(true);
                                 setIsRegisterPartner(true);
