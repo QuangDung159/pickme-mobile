@@ -222,7 +222,7 @@ export default function CreateAccount(props) {
                         marginVertical: 10,
                         width: SIZES.WIDTH_BASE * 0.9
                     }}
-                    placeholder="Tên hiển thị..."
+                    placeholder="Tên hiển thị"
                 />
 
                 <View
@@ -239,7 +239,7 @@ export default function CreateAccount(props) {
                         }}
                         onChangeText={(input) => setNewUser({ ...newUser, dob: input })}
                         value={newUser.dob}
-                        placeholder="Năm sinh..."
+                        placeholder="Năm sinh"
                         keyboardType="number-pad"
                     />
 
@@ -269,7 +269,7 @@ export default function CreateAccount(props) {
                         }}
                         onChangeText={(input) => setNewUser({ ...newUser, height: input })}
                         value={newUser.height}
-                        placeholder="Chiều cao (cm)..."
+                        placeholder="Chiều cao (cm)"
                         keyboardType="number-pad"
                     />
 
@@ -279,7 +279,7 @@ export default function CreateAccount(props) {
                         }}
                         onChangeText={(input) => setNewUser({ ...newUser, weight: input })}
                         value={newUser.weight}
-                        placeholder="Cân nặng (kg)..."
+                        placeholder="Cân nặng (kg)"
                         keyboardType="number-pad"
                     />
                 </View>
@@ -291,7 +291,7 @@ export default function CreateAccount(props) {
                     }}
                     onChangeText={(input) => setNewUser({ ...newUser, interests: input })}
                     value={newUser.interests}
-                    placeholder="Sở thích..."
+                    placeholder="Sở thích"
                 />
 
                 <CustomInput
@@ -301,7 +301,7 @@ export default function CreateAccount(props) {
                         marginVertical: 10,
                         width: SIZES.WIDTH_BASE * 0.9
                     }}
-                    placeholder="Nơi sinh sống..."
+                    placeholder="Nơi sinh sống"
                 />
 
                 <CustomInput
@@ -315,7 +315,7 @@ export default function CreateAccount(props) {
                     inputStyle={{
                         height: 80,
                     }}
-                    placeholder="Mô tả bản thân..."
+                    placeholder="Mô tả bản thân"
                 />
 
             </View>

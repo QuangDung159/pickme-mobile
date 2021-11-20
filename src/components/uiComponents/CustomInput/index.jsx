@@ -8,6 +8,7 @@ import IconCustom from '../IconCustom';
 const {
     FONT: {
         TEXT_REGULAR,
+        TEXT_BOLD
     },
     SIZES,
     COLORS
@@ -55,7 +56,7 @@ export default function CustomInput({
                         borderRadius: 20,
                         height: 36,
                         paddingHorizontal: 10,
-                        fontFamily: TEXT_REGULAR,
+                        fontFamily: TEXT_BOLD,
                         fontSize: SIZES.FONT_H3,
                         color: COLORS.DEFAULT,
                         width: SIZES.WIDTH_BASE * 0.9,

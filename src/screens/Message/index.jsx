@@ -323,7 +323,7 @@ export default function Message({ navigation, route }) {
             }}
         >
             <CustomInput
-                placeholder="Nhập tin nhắn..."
+                placeholder="Nhập tin nhắn"
                 value={messageFromInput}
                 onChangeText={(input) => onChangeMessageInput(input)}
                 containerStyle={{

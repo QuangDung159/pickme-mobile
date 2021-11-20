@@ -319,7 +319,7 @@ export default function Support({ navigation }) {
     const renderInputBugTitle = () => (
         <CustomInput
             multiline
-            placeholder="Nhập tóm tắt lỗi..."
+            placeholder="Nhập tóm tắt lỗi"
             value={bugReportForm.title}
             onChangeText={(input) => onChangeBugTitle(input)}
             inputStyle={{
@@ -336,7 +336,7 @@ export default function Support({ navigation }) {
     const renderInputBugDescription = () => (
         <CustomInput
             multiline
-            placeholder="Nhập chi tiết lỗi..."
+            placeholder="Nhập chi tiết lỗi"
             value={bugReportForm.description}
             onChangeText={(input) => onChangeDescription(input)}
             inputStyle={{

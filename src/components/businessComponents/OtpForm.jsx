@@ -122,7 +122,7 @@ export default function OtpForm({
 
         if (renderFrom === ScreenName.FORGOT_PASSWORD) {
             validateArr.push({
-                fieldName: 'Nhập lại mật khẩu',
+                fieldName: 'Xác nhận mật khẩu',
                 input: rePassword,
                 validate: {
                     required: {
@@ -273,7 +273,7 @@ export default function OtpForm({
                             marginVertical: 10,
                             width: SIZES.WIDTH_BASE * 0.9,
                         }}
-                        placeholder="Nhập mã xác thực..."
+                        placeholder="Nhập mã xác thực"
                     /> */}
 
                     <TextInput
@@ -314,7 +314,7 @@ export default function OtpForm({
                             width: SIZES.WIDTH_BASE * 0.9
                         }}
                         secureTextEntry={!isShowPassword}
-                        placeholder="Nhập mật khẩu..."
+                        placeholder="Nhập mật khẩu"
                         rightIcon={{
                             name: 'eye',
                             family: IconFamily.ENTYPO,
@@ -337,7 +337,7 @@ export default function OtpForm({
                                 width: SIZES.WIDTH_BASE * 0.9
                             }}
                             secureTextEntry={!isShowPassword}
-                            placeholder="Nhập lại mật khẩu..."
+                            placeholder="Xác nhận mật khẩu"
                             rightIcon={{
                                 name: 'eye',
                                 family: IconFamily.ENTYPO,

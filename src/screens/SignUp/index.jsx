@@ -12,6 +12,7 @@ import {
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useSelector } from 'react-redux';
 import ModalDisclaimer from './ModalDisclaimer';
+import UsernamePasswordForm from './UsernamePasswordForm';
 
 const {
     FONT: {
@@ -106,7 +107,17 @@ export default function SignUp({ navigation }) {
                                     Đăng ký
                                 </Text>
                             </View>
-                            {renderSignUpViewByStep()}
+                            {/* {renderSignUpViewByStep()} */}
+                            <UsernamePasswordForm
+                                isEmail={isEmail}
+                                username={username}
+                                setUsername={(usernameInput) => setUsername(usernameInput)}
+                                setModalVisible={(isVisible) => setModalVisible(isVisible)}
+                                setOtp={(otpCode) => setOtp(otpCode)}
+                                setIsEmail={(isEmailLogin) => setIsEmail(isEmailLogin)}
+                                setStep={(stepIndex) => setStep(stepIndex)}
+                                renderFrom={ScreenName.SIGN_UP}
+                            />
                         </View>
                     </KeyboardAwareScrollView>
                 )}

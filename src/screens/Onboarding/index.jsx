@@ -1,4 +1,3 @@
-import { BecomePartnerText } from '@components/businessComponents';
 import {
     CenterLoader, CustomButton, CustomModal, CustomText, TouchableText
 } from '@components/uiComponents';
@@ -32,7 +31,7 @@ export default function Onboarding({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
     const [deviceIdDisplay, setDeviceIdDisplay] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
-    const [isRegisterPartner, setIsRegisterPartner] = useState(false);
+    // const [isRegisterPartner, setIsRegisterPartner] = useState(false);
 
     const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
 
@@ -224,7 +223,7 @@ export default function Onboarding({ navigation }) {
                         <SignIn
                             navigation={navigation}
                             setIsShowSpinner={(isShow) => setIsShowSpinner(isShow)}
-                            isRegisterPartner={isRegisterPartner}
+                            // isRegisterPartner={isRegisterPartner}
                         />
                         <View
                             style={{
@@ -237,6 +236,7 @@ export default function Onboarding({ navigation }) {
                             <TouchableText
                                 style={{
                                     color: COLORS.ACTIVE,
+                                    fontSize: SIZES.FONT_H3
                                 }}
                                 text="Đăng ký"
                                 onPress={() => navigation.navigate(ScreenName.SIGN_UP)}
@@ -246,15 +246,15 @@ export default function Onboarding({ navigation }) {
                                 onPress={() => navigation.navigate(ScreenName.FORGOT_PASSWORD)}
                                 style={{
                                     color: COLORS.ACTIVE,
-                                    marginTop: 5,
-                                    marginBottom: 10
+                                    marginBottom: 10,
+                                    fontSize: SIZES.FONT_H3
                                 }}
                             />
-                            <BecomePartnerText onPress={() => {
+                            {/* <BecomePartnerText onPress={() => {
                                 setModalVisible(true);
                                 setIsRegisterPartner(true);
                             }}
-                            />
+                            /> */}
                         </View>
                         <View
                             style={{
