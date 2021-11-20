@@ -1,9 +1,11 @@
 import {
     CustomButton, CustomCheckbox, CustomInput
 } from '@components/uiComponents';
-import { ScreenName, Theme, IconFamily } from '@constants/index';
+import { IconFamily, ScreenName, Theme } from '@constants/index';
 import { ToastHelpers, ValidationHelpers } from '@helpers/index';
-import { setShowLoaderStore } from '@redux/Actions';
+import { setIsSignInOtherDeviceStore, setShowLoaderStore } from '@redux/Actions';
+import UserServices from '@services/UserServices';
+import * as SecureStore from 'expo-secure-store';
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useDispatch } from 'react-redux';
@@ -17,8 +19,7 @@ const {
 } = Theme;
 
 export default function UsernamePasswordForm({
-    setModalVisible,
-    isEmail, renderFrom,
+    setModalVisible, navigation
 }) {
     const [onCheckedDisclaimer, setOnCheckedDisclaimer] = useState(false);
     const [isShowPassword, setIsShowPassword] = useState(false);
@@ -28,6 +29,14 @@ export default function UsernamePasswordForm({
     const [username, setUsername] = useState();
 
     const dispatch = useDispatch();
+
+    const isPasswordMatch = () => {
+        if (rePassword !== password) {
+            ToastHelpers.renderToast('Mật khẩu không khớp,\nbạn vui lòng kiểm tra lại.', 'error');
+            return false;
+        }
+        return true;
+    };
 
     const validate = () => {
         const validateArr = [
@@ -39,29 +48,98 @@ export default function UsernamePasswordForm({
                         value: true
                     },
                 }
+            },
+            {
+                fieldName: 'Mật khẩu',
+                input: password,
+                validate: {
+                    required: {
+                        value: true
+                    },
+                    maxLength: {
+                        value: 50,
+                    },
+                    minLength: {
+                        value: 8,
+                    },
+                }
+            },
+            {
+                fieldName: 'Xác nhận mật khẩu',
+                input: rePassword,
+                validate: {
+                    required: {
+                        value: true,
+                    },
+                    maxLength: {
+                        value: 50,
+                    },
+                    minLength: {
+                        value: 8,
+                    },
+                }
             }
         ];
 
-        return ValidationHelpers.validate(validateArr);
+        if (!ValidationHelpers.validate(validateArr)) return false;
+
+        if (!isPasswordMatch()) return false;
+
+        return true;
     };
 
-    const onSubmitSignUp = () => {
+    const onLoginSuccess = async (data) => {
+        const currentUserInfo = await UserServices.mappingCurrentUserInfo(data.data);
+        SecureStore.setItemAsync('api_token', `${currentUserInfo.token}`);
+        dispatch(setIsSignInOtherDeviceStore(false));
+        dispatch(setShowLoaderStore(false));
+
+        navigation.navigate(ScreenName.CREATE_ACCOUNT);
+    };
+
+    const loginWithSignUpInfo = async () => {
+        const deviceId = await SecureStore.getItemAsync('deviceId');
+        const body = {
+            username,
+            password,
+            deviceId
+        };
+
+        const result = await UserServices.loginAsync(body);
+        const {
+            data
+        } = result;
+
+        if (data) {
+            await onLoginSuccess(data);
+            SecureStore.setItemAsync('username', username.toString());
+            SecureStore.setItemAsync('password', password.toString());
+        }
+        dispatch(setShowLoaderStore(false));
+    };
+
+    const onSubmitSignUp = async () => {
         if (!validate()) return;
 
-        if (renderFrom === ScreenName.SIGN_UP) {
-            if (!onCheckedDisclaimer) {
-                ToastHelpers.renderToast('Bạn vui lòng đồng ý với các Điều khoản và Điều kiện.', 'error');
-                return;
-            }
+        if (!onCheckedDisclaimer) {
+            ToastHelpers.renderToast('Bạn vui lòng đồng ý với các Điều khoản và Điều kiện.', 'error');
+            return;
         }
 
         const body = {
             username,
-            isEmail
+            password,
+            referralCode: '1234'
         };
 
         dispatch(setShowLoaderStore(true));
-        // handle
+        const result = await UserServices.submitSignUpAsync(body);
+        console.log('result :>> ', result);
+        const { data } = result;
+
+        if (data) {
+            await loginWithSignUpInfo();
+        }
         dispatch(setShowLoaderStore(false));
     };
 

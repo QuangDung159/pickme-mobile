@@ -7,6 +7,7 @@ export default {
     AUTHENTICATION: {
         SIGN_UP: '/users/RegisterConfirm',
         LOGIN: '/users/Login',
+        SIGN_UP_V2: '/users/RegisterV2'
     },
     BANK: {
         BANK_ACCOUNTS: '/users/BankAccounts',
@@ -31,7 +32,7 @@ export default {
         ADD_PACKAGE: '/UserPackages/AddPackage',
         UPDATE_PACKAGE: '/UserPackages/UpdatePackage',
         REPORT_USER: '/Reports/Report',
-        UPDATE_PARTNER_INFO: '/users/UpdatePartnerInfo'
+        UPDATE_PARTNER_INFO: '/users/UpdatePartnerInfo',
     },
     BOOKING: {
         SCHEDULE_BOOKING: '/bookings/ScheduleBooking',
