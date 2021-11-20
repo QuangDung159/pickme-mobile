@@ -24,7 +24,6 @@ export default function ExpoNotification() {
     const messageListened = useSelector((state) => state.messageReducer.messageListened);
     const chattingWith = useSelector((state) => state.messageReducer.chattingWith);
     const listConversation = useSelector((state) => state.messageReducer.listConversation);
-    const currentUser = useSelector((state) => state.userReducer.currentUser);
 
     const dispatch = useDispatch();
 
@@ -145,22 +144,10 @@ export default function ExpoNotification() {
     };
 
     const fetchListBooking = async () => {
-        const bookingAsCustomer = await BookingServices.fetchListBookingAsync();
-        let bookingAsPartner = [];
-        if (currentUser.isPartnerVerified) {
-            bookingAsPartner = await BookingServices.fetchListBookingAsPartnerAsync();
+        const res = await BookingServices.fetchListBookingAsync();
+        if (res.data) {
+            dispatch(setListBookingStore(res.data.data));
         }
-
-        let listBooking = [];
-        if (bookingAsCustomer.data) {
-            listBooking = bookingAsCustomer.data.data;
-
-            if (bookingAsPartner.data) {
-                listBooking = listBooking.concat(bookingAsPartner.data.data);
-            }
-        }
-
-        dispatch(setListBookingStore(listBooking));
     };
 
     const fetchListHistory = async () => {

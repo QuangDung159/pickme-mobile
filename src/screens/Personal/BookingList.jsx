@@ -43,22 +43,14 @@ export default function BookingList({ navigation }) {
     const groupBookingByDate = () => groupBy(listBookingStore, (n) => n.date);
 
     const fetchListBooking = async () => {
-        const bookingAsCustomer = await BookingServices.fetchListBookingAsync();
-        let bookingAsPartner = [];
-        if (currentUser.isPartnerVerified) {
-            bookingAsPartner = await BookingServices.fetchListBookingAsPartnerAsync();
-        }
-
+        const res = await BookingServices.fetchListBookingAsync();
         let listBooking = [];
-        if (bookingAsCustomer.data) {
-            listBooking = bookingAsCustomer.data.data;
 
-            if (bookingAsPartner.data) {
-                listBooking = listBooking.concat(bookingAsPartner.data.data);
-            }
+        if (res.data) {
+            listBooking = res.data.data;
+            dispatch(setListBookingStore(listBooking));
         }
 
-        dispatch(setListBookingStore(listBooking));
         setIsShowSpinner(false);
         setRefreshing(false);
     };

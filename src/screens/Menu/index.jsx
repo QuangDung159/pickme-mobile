@@ -40,7 +40,7 @@ export default function Menu({ navigation }) {
             icon: {
                 name: 'award',
                 family: IconFamily.FONT_AWESOME_5,
-                size: 26,
+                size: 22,
             },
             onPress: () => {
                 navigation.navigate(ScreenName.LEADER_BOARD);
@@ -51,7 +51,7 @@ export default function Menu({ navigation }) {
             icon: {
                 name: 'star',
                 family: IconFamily.FONT_AWESOME,
-                size: 28,
+                size: 24,
             },
             onPress: () => {
                 if (currentUser.isPartnerVerified) {
@@ -68,7 +68,7 @@ export default function Menu({ navigation }) {
             icon: {
                 name: 'user-lock',
                 family: IconFamily.FONT_AWESOME_5,
-                size: 22,
+                size: 18,
             },
             onPress: () => {
                 navigation.navigate(ScreenName.CHANGE_PASSWORD);
@@ -78,7 +78,7 @@ export default function Menu({ navigation }) {
             title: ScreenTitle.SUPPORT,
             icon: {
                 family: IconFamily.MATERIAL_ICONS,
-                size: 30,
+                size: 26,
                 name: 'contact-support',
             },
             onPress: () => {
@@ -90,7 +90,7 @@ export default function Menu({ navigation }) {
             icon: {
                 name: 'gear',
                 family: IconFamily.FONT_AWESOME,
-                size: 30,
+                size: 26,
             },
             onPress: () => {
                 navigation.navigate(ScreenName.SETTINGS);
@@ -101,7 +101,7 @@ export default function Menu({ navigation }) {
             onPress: () => onSignOut(),
             icon: {
                 name: 'logout',
-                size: SIZES.FONT_H1,
+                size: 20,
                 family: IconFamily.SIMPLE_LINE_ICONS
             },
         },
@@ -131,7 +131,7 @@ export default function Menu({ navigation }) {
                             alignItems: 'center',
                             width: SIZES.WIDTH_BASE * 0.9,
                             alignSelf: 'center',
-                            height: 45
+                            height: 30,
                         }}
                         onPress={() => menuItem.onPress()}
                     >
@@ -149,13 +149,13 @@ export default function Menu({ navigation }) {
                         </View>
                         <View
                             style={{
-                                flex: 8
+                                flex: 9,
                             }}
                         >
                             <CustomText
                                 text={menuItem.title}
                                 style={{
-                                    fontSize: SIZES.FONT_H2,
+                                    fontSize: SIZES.FONT_H3,
                                     fontFamily: TEXT_BOLD
                                 }}
                             />

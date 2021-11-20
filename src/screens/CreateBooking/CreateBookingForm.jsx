@@ -133,16 +133,12 @@ export default function CreateBookingForm({
     const renderInputAddress = () => (
         <CustomInput
             value={booking.address}
-            multiline
             onChangeText={(input) => onChangeAddress(input)}
             containerStyle={{
                 marginVertical: 10,
                 width: SIZES.WIDTH_BASE * 0.9
             }}
             label="Địa điểm:"
-            inputStyle={{
-                height: 80,
-            }}
         />
     );
 

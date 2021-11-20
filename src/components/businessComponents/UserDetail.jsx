@@ -2,7 +2,7 @@
 import { Albums, AvatarPanel } from '@components/businessComponents';
 import { IconCustom, Line } from '@components/uiComponents';
 import {
-    IconFamily, Rx, ScreenName, Theme, VerificationStatus
+    IconFamily, Rx, ScreenName, Theme
 } from '@constants/index';
 import { CommonHelpers, MediaHelpers, ToastHelpers } from '@helpers/index';
 import { setCurrentUser } from '@redux/Actions';
@@ -395,7 +395,6 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
 
             <View
                 style={{
-                    marginTop: 5,
                     width: '90%'
                 }}
             >
@@ -414,7 +413,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
 
             {isCurrentUser && (
                 <>
-                    {userInfo?.verifyStatus !== VerificationStatus.ACCEPTED && (
+                    {!userInfo?.isCustomerVerified && (
                         <TouchableWithoutFeedback
                             onPress={() => {
                                 navigation.navigate(ScreenName.VERIFICATION);

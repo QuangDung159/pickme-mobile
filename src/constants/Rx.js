@@ -44,7 +44,8 @@ export default {
         COMPLETE_BOOKING: '/bookings/CompleteBooking',
         DETAIL_BOOKING: '/bookings/DetailBooking',
         BOOKING_RATE: '/Ratings/Insert',
-        GET_PARTNER_PACKAGE: '/UserPackages/Packages'
+        GET_PARTNER_PACKAGE: '/UserPackages/Packages',
+        GET_ALL_BOOKING: '/bookings/GetBookings'
     },
     PARTNER: {
         LEADER_BOARD_DIAMOND: '/diamon',

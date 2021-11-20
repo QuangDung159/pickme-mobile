@@ -31,9 +31,9 @@ const SIZES = {
 
     // montserrat
     FONT_H1: ResponsiveHelpers.normalize(26),
-    FONT_H2: ResponsiveHelpers.normalize(21),
-    FONT_H3: ResponsiveHelpers.normalize(19),
-    FONT_H4: ResponsiveHelpers.normalize(17),
+    FONT_H2: ResponsiveHelpers.normalize(20),
+    FONT_H3: ResponsiveHelpers.normalize(18),
+    FONT_H4: ResponsiveHelpers.normalize(16),
     FONT_H5: ResponsiveHelpers.normalize(15),
 
     WIDTH_BASE: width,
