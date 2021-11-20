@@ -135,13 +135,13 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
             '',
             [
                 {
-                    text: 'Huỷ',
+                    text: 'Đóng',
                     style: 'cancel'
                 },
                 { text: 'Đặt làm ảnh chính', onPress: () => setImageToPrimary(imageObj.uri) },
                 { text: 'Xoá ảnh', onPress: () => removeImage(imageObj) },
             ],
-            { cancelable: false }
+            { cancelable: true }
         );
     };
 

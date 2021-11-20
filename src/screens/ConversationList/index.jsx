@@ -1,9 +1,9 @@
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 import {
-    CenterLoader
+    CenterLoader, IconCustom
 } from '@components/uiComponents';
 import {
-    GraphQueryString, Images, ScreenName, Theme
+    GraphQueryString, IconFamily, Images, ScreenName, Theme
 } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
 import { setListConversation, setNumberMessageUnread } from '@redux/Actions';
@@ -91,27 +91,6 @@ export default function ConversationList({ navigation }) {
         navigation.navigate(ScreenName.MESSAGE, conversationParams);
     };
 
-    const onLongPressConversationItem = (conversationParams) => {
-        Alert.alert(
-            `${conversationParams.name}`,
-            '',
-            [
-                {
-                    text: 'Huỷ',
-                    style: 'cancel'
-                },
-                {
-                    text: 'Báo cáo người dùng',
-                    onPress: () => {
-                        setModalReasonVisible(true);
-                        setUserId(conversationParams.toUserId);
-                    }
-                },
-            ],
-            { cancelable: false }
-        );
-    };
-
     const getListConversationFromSocket = () => {
         const { token } = currentUser;
         const data = {
@@ -143,6 +122,31 @@ export default function ConversationList({ navigation }) {
     const onRefresh = () => {
         setRefreshing(true);
         getListConversationFromSocket();
+    };
+
+    const onClickMore = (conversationParams) => {
+        Alert.alert(
+            `${conversationParams.name}`,
+            '',
+            [
+                {
+                    text: 'Đóng',
+                    style: 'cancel'
+                },
+                {
+                    text: 'Xem trang cá nhân',
+                    onPress: () => navigation.navigate(ScreenName.PROFILE, { userId: conversationParams.toUserId })
+                },
+                {
+                    text: 'Báo cáo người dùng',
+                    onPress: () => {
+                        setModalReasonVisible(true);
+                        setUserId(conversationParams.toUserId);
+                    }
+                },
+            ],
+            { cancelable: true }
+        );
     };
 
     // render \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
@@ -182,7 +186,8 @@ export default function ConversationList({ navigation }) {
             <View
                 style={{
                     alignItems: 'center',
-                    flexDirection: 'row'
+                    flexDirection: 'row',
+                    width: SIZES.WIDTH_BASE * 0.9,
                 }}
             >
                 <TouchableOpacity
@@ -212,11 +217,12 @@ export default function ConversationList({ navigation }) {
                             onClickConversationItem(params);
                         }
                     }
-                    onLongPress={
-                        () => onLongPressConversationItem(params)
-                    }
                 >
-                    <View>
+                    <View
+                        style={{
+                            width: SIZES.WIDTH_BASE * 0.7
+                        }}
+                    >
                         <Text
                             style={{
                                 fontFamily: conversation?.isRead
@@ -248,6 +254,23 @@ export default function ConversationList({ navigation }) {
                                 {conversation?.content}
                             </Text>
                         </View>
+                    </View>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => onClickMore(params)}
+                >
+                    <View
+                        style={{
+                            marginHorizontal: 10,
+                            paddingVertical: 10
+                        }}
+                    >
+                        <IconCustom
+                            name="more-horizontal"
+                            family={IconFamily.FEATHER}
+                            size={23}
+                            color={COLORS.PLACE_HOLDER}
+                        />
                     </View>
                 </TouchableOpacity>
 
