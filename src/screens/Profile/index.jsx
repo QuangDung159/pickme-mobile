@@ -26,7 +26,7 @@ export default function Profile({ route, navigation }) {
     useEffect(
         () => {
             getPartnerInfo();
-        }, []
+        }, [route?.params?.userId]
     );
 
     useEffect(

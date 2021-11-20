@@ -11,9 +11,9 @@ import { socketRequestUtil } from '@utils/index';
 import React, { useEffect, useState } from 'react';
 import {
     Alert,
-    Image, RefreshControl, Text, View
+    Image, RefreshControl, Text, TouchableOpacity, View
 } from 'react-native';
-import { FlatList, ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import ModalReport from './ModalReport';
 
@@ -179,24 +179,14 @@ export default function ConversationList({ navigation }) {
         }
 
         return (
-            <TouchableWithoutFeedback
-                onPress={
-                    () => {
-                        onClickConversationItem(params);
-                    }
-                }
-                onLongPress={
-                    () => onLongPressConversationItem(params)
-                }
-                containerStyle={{
-                    backgroundColor: COLORS.BASE,
+            <View
+                style={{
+                    alignItems: 'center',
+                    flexDirection: 'row'
                 }}
             >
-                <View
-                    style={{
-                        alignItems: 'center',
-                        flexDirection: 'row'
-                    }}
+                <TouchableOpacity
+                    onPress={() => navigation.navigate(ScreenName.PROFILE, { userId: params.toUserId })}
                 >
                     <View
                         style={{
@@ -215,11 +205,24 @@ export default function ConversationList({ navigation }) {
                             }}
                         />
                     </View>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={
+                        () => {
+                            onClickConversationItem(params);
+                        }
+                    }
+                    onLongPress={
+                        () => onLongPressConversationItem(params)
+                    }
+                >
                     <View>
                         <Text
                             style={{
-                                fontFamily: TEXT_BOLD,
-                                fontSize: SIZES.FONT_H3,
+                                fontFamily: conversation?.isRead
+                                    ? TEXT_REGULAR
+                                    : TEXT_BOLD,
+                                fontSize: SIZES.FONT_H2,
                                 color: COLORS.DEFAULT,
                             }}
 
@@ -236,7 +239,7 @@ export default function ConversationList({ navigation }) {
                                     fontFamily: conversation?.isRead
                                         ? TEXT_REGULAR
                                         : TEXT_BOLD,
-                                    fontSize: SIZES.FONT_H3,
+                                    fontSize: SIZES.FONT_H4,
                                     color: COLORS.DEFAULT,
 
                                 }}
@@ -246,8 +249,9 @@ export default function ConversationList({ navigation }) {
                             </Text>
                         </View>
                     </View>
-                </View>
-            </TouchableWithoutFeedback>
+                </TouchableOpacity>
+
+            </View>
         );
     };
 
