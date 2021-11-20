@@ -323,9 +323,21 @@ export default function CreateAccount(props) {
             <View
                 style={{
                     position: 'absolute',
-                    bottom: 0
+                    bottom: 0,
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    width: SIZES.WIDTH_BASE * 0.9
                 }}
             >
+                <CustomButton
+                    onPress={() => {
+                        dispatch(setToken(''));
+                        navigation.navigate(ScreenName.ONBOARDING);
+                    }}
+                    buttonStyle={styles.button}
+                    type="active"
+                    label="Đăng nhập"
+                />
                 <CustomButton
                     onPress={() => onSubmitAccountCreation(1)}
                     buttonStyle={styles.button}
@@ -431,7 +443,8 @@ export default function CreateAccount(props) {
                         navigation.navigate(ScreenName.ONBOARDING);
                     }}
                     buttonStyle={[styles.button, {
-                        marginTop: 30
+                        marginTop: 30,
+                        width: SIZES.WIDTH_BASE * 0.9
                     }]}
                     type="active"
                     label="Quay về trang đăng nhập"
@@ -493,9 +506,21 @@ export default function CreateAccount(props) {
             <View
                 style={{
                     position: 'absolute',
-                    bottom: 0
+                    bottom: 0,
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    width: SIZES.WIDTH_BASE * 0.9
                 }}
             >
+                <CustomButton
+                    onPress={() => {
+                        dispatch(setToken(''));
+                        navigation.navigate(ScreenName.ONBOARDING);
+                    }}
+                    buttonStyle={styles.button}
+                    type="active"
+                    label="Đăng nhập"
+                />
                 <CustomButton
                     onPress={() => onSubmitAccountCreation(2)}
                     buttonStyle={styles.button}
@@ -529,13 +554,13 @@ export default function CreateAccount(props) {
                                             styles.title,
                                             {
                                                 color: COLORS.DEFAULT,
-                                                fontSize: 24,
+                                                fontSize: SIZES.FONT_H3,
                                                 marginTop: SIZES.HEIGHT_BASE * 0.15
                                             }
                                         ]
                                     }
                                 >
-                                    {step !== arrStep[2] && 'Đăng ký'}
+                                    {step !== arrStep[2] && 'Tạo tài khoản thành công.\nBạn có thể đăng nhập hoặc tiếp tục hoàn thiện thông tin tài khoản.'}
                                 </Text>
                             </View>
 
@@ -598,14 +623,15 @@ const styles = StyleSheet.create({
     stepSessionContainer: {
         height: SIZES.HEIGHT_BASE * 0.3,
         alignSelf: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        width: SIZES.WIDTH_BASE * 0.9
     },
     formContainer: {
         height: SIZES.HEIGHT_BASE * 0.65
     },
     button: {
         marginVertical: 10,
-        width: SIZES.WIDTH_BASE * 0.9
+        width: SIZES.WIDTH_BASE * 0.44
     },
     image: {
         width: SIZES.HEIGHT_BASE * 0.35, height: SIZES.HEIGHT_BASE * 0.35

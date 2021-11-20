@@ -7,7 +7,7 @@ import React from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
-const { SIZES } = Theme;
+const { SIZES, COLORS } = Theme;
 
 export default function AvatarPanel({
     user, image, isPartner = false, onClickAvatar = null
@@ -42,10 +42,15 @@ export default function AvatarPanel({
                     marginTop: 10,
                 }}
             >
-                <CenterLoader />
+                <CenterLoader containerStyle={{
+                    marginRight: 19,
+                    marginBottom: 5
+                }}
+                />
                 <View
                     style={{
-                        zIndex: 99
+                        zIndex: 99,
+                        backgroundColor: COLORS.BASE
                     }}
                 >
                     <TouchableWithoutFeedback

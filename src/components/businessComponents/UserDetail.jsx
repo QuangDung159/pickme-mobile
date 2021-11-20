@@ -88,7 +88,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
     };
 
     const handleOnPickAvatar = (uri) => {
-        setIsShowSpinner(true);
+        // setIsShowSpinner(true);
 
         MediaHelpers.imgbbUploadImage(
             uri,
