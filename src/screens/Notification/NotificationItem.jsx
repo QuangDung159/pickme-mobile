@@ -44,8 +44,7 @@ export default function NotificationItem({
     const handleNavigation = (navigationId, navigationType) => {
         switch (navigationType) {
             case 2: {
-                navigation.navigate(ScreenName.APP, {
-                    screen: ScreenName.PERSONAL,
+                navigation.navigate(ScreenName.BOOKING_DETAIL, {
                     bookingId: navigationId,
                 });
                 break;

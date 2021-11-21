@@ -42,14 +42,14 @@ const MenuStack = () => (
         {ChangePasswordScreen()}
         {LeaderBoardScreen()}
         {SupportScreen()}
-        {/* {VerificationScreen()} */}
+        {VerificationScreen()}
         {SettingsScreen()}
         {/* {PartnerDataScreen()} */}
     </Stack.Navigator>
 );
 
 const PersonalStack = () => (
-    <Stack.Navigator initialRouteName={ScreenName.PERSONAL} mode="card" headerMode="screen">
+    <Stack.Navigator name={ScreenName.PERSONAL} mode="card" headerMode="screen">
         {PersonalScreen()}
         {UpdateInfoAccountScreen()}
         {CashInScreen()}
@@ -73,10 +73,10 @@ const HomeStack = () => (
 const NotificationStack = () => (
     <Stack.Navigator mode="card" headerMode="screen">
         {NotificationScreen()}
-        {/* {BookingDetailScreen()}
+        {BookingDetailScreen()}
         {CreateBookingScreen()}
         {PersonalScreen()}
-        {CashInScreen()} */}
+        {CashInScreen()}
     </Stack.Navigator>
 );
 
