@@ -55,7 +55,6 @@ const PersonalStack = () => (
         {CashInScreen()}
         {BookingDetailScreen()}
         {CreateBookingScreen()}
-        {MessageScreen()}
         {VerificationScreen()}
         {PartnerDataScreen()}
         {CashOutScreen()}
