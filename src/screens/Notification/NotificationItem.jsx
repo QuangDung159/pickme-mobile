@@ -8,8 +8,7 @@ import {
     Image,
     StyleSheet,
     Text,
-    TouchableWithoutFeedback,
-    View
+    TouchableOpacity, View
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 
@@ -45,7 +44,8 @@ export default function NotificationItem({
     const handleNavigation = (navigationId, navigationType) => {
         switch (navigationType) {
             case 2: {
-                navigation.navigate(ScreenName.BOOKING_DETAIL, {
+                navigation.navigate(ScreenName.APP, {
+                    screen: ScreenName.PERSONAL,
                     bookingId: navigationId,
                 });
                 break;
@@ -91,7 +91,7 @@ export default function NotificationItem({
                         flex: 8,
                     }}
                 >
-                    <TouchableWithoutFeedback
+                    <TouchableOpacity
                         onPress={() => {
                             handleNavigation(navigationId, type);
                             onClickRead(false, id);
@@ -115,7 +115,7 @@ export default function NotificationItem({
                                 {content}
                             </Text>
                         </View>
-                    </TouchableWithoutFeedback>
+                    </TouchableOpacity>
                 </View>
             </>
         );
