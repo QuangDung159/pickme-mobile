@@ -1,4 +1,5 @@
 import { CustomButton, CustomModal } from '@components/uiComponents';
+import { DISCLAIMER_CONTENT } from '@constants/Content';
 import { Theme } from '@constants/index';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
@@ -17,25 +18,12 @@ export default function ModalDisclaimer({ modalVisible, setModalVisible }) {
             renderContent={() => (
                 <>
                     <Text style={styles.modalText}>
-                        I agree to the terms and conditions
-                        I agree to the terms and conditions
-                        I agree to the terms and conditions
-                        I agree to the terms and conditions
-                        I agree to the terms and conditions
-                        I agree to the terms and conditions
-                        I agree to the terms and conditions
-                        I agree to the terms and conditions
-                        I agree to the terms and conditions
-                        I agree to the terms and conditions
-                        I agree to the terms and conditions
-                        I agree to the terms and conditions
-                        I agree to the terms and conditions
-                        I agree to the terms and conditions
+                        {DISCLAIMER_CONTENT}
                     </Text>
 
                     <View>
                         <CustomButton
-                            onPress={() => setModalVisible(!modalVisible)}
+                            onPress={() => setModalVisible(false)}
                             buttonStyle={styles.button}
                             type="active"
                             label="Đã hiểu"
@@ -59,8 +47,7 @@ const styles = StyleSheet.create({
         marginVertical: 10
     },
     modalText: {
-        margin: 15,
-        textAlign: 'center',
+        fontSize: SIZES.FONT_H4,
         fontFamily: TEXT_REGULAR,
         color: COLORS.DEFAULT
     },
