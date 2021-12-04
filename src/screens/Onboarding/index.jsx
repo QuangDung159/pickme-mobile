@@ -1,4 +1,4 @@
-import { BecomePartnerText } from '@components/businessComponents';
+/* eslint-disable import/no-unresolved */
 import {
     CenterLoader, CustomButton, CustomModal, CustomText, TouchableText
 } from '@components/uiComponents';
@@ -6,6 +6,7 @@ import App from '@constants/App';
 import {
     Images, ScreenName, Theme
 } from '@constants/index';
+import { ENV } from '@env';
 import {
     setCurrentUser, setIsSignInOtherDeviceStore, setListPartnerHomeRedux, setNavigation
 } from '@redux/Actions';
@@ -22,7 +23,8 @@ import SignIn from './SignIn';
 
 const {
     FONT: {
-        TEXT_REGULAR
+        TEXT_REGULAR,
+        TEXT_BOLD
     },
     SIZES,
     COLORS
@@ -32,7 +34,7 @@ export default function Onboarding({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
     const [deviceIdDisplay, setDeviceIdDisplay] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
-    const [isRegisterPartner, setIsRegisterPartner] = useState(false);
+    // const [isRegisterPartner, setIsRegisterPartner] = useState(false);
 
     const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
 
@@ -179,17 +181,17 @@ export default function Onboarding({ navigation }) {
                                 alignItems: 'center'
                             }}
                         >
-                            <CustomText
+                            {/* <CustomText
                                 style={{
                                     fontSize: SIZES.FONT_H5 - 4
                                 }}
                                 text={`${Constants.manifest.version} (${App.APP_VERSION_OTA})`}
-                            />
+                            /> */}
                             <CustomText
                                 style={{
                                     fontSize: SIZES.FONT_H5 - 4
                                 }}
-                                text={deviceIdDisplay}
+                                text={!deviceIdDisplay || ''}
                             />
                         </View>
                         {renderModalRegisterPartner()}
@@ -224,11 +226,11 @@ export default function Onboarding({ navigation }) {
                         <SignIn
                             navigation={navigation}
                             setIsShowSpinner={(isShow) => setIsShowSpinner(isShow)}
-                            isRegisterPartner={isRegisterPartner}
+                            // isRegisterPartner={isRegisterPartner}
                         />
                         <View
                             style={{
-                                marginTop: 40,
+                                marginTop: 10,
                                 alignSelf: 'center',
                                 alignItems: 'center',
                                 marginBottom: 30
@@ -237,36 +239,46 @@ export default function Onboarding({ navigation }) {
                             <TouchableText
                                 style={{
                                     color: COLORS.ACTIVE,
+                                    fontSize: SIZES.FONT_H3,
+                                    fontFamily: TEXT_BOLD
                                 }}
-                                text="Đăng ký"
+                                text="Đăng ký tài khoản"
                                 onPress={() => navigation.navigate(ScreenName.SIGN_UP)}
                             />
-                            <TouchableText
+                            {/* <TouchableText
                                 text="Quên mật khẩu?"
                                 onPress={() => navigation.navigate(ScreenName.FORGOT_PASSWORD)}
                                 style={{
                                     color: COLORS.ACTIVE,
-                                    marginTop: 5,
-                                    marginBottom: 10
+                                    marginBottom: 10,
+                                    fontSize: SIZES.FONT_H3
                                 }}
-                            />
-                            <BecomePartnerText onPress={() => {
+                            /> */}
+                            {/* <BecomePartnerText onPress={() => {
                                 setModalVisible(true);
                                 setIsRegisterPartner(true);
                             }}
-                            />
+                            /> */}
                         </View>
                         <View
                             style={{
                                 position: 'absolute',
-                                bottom: 10,
+                                bottom: 15,
                                 alignSelf: 'center'
                             }}
                         >
+                            <CustomText
+                                style={{
+                                    fontSize: SIZES.FONT_H5,
+                                    textAlign: 'center',
+                                    marginBottom: 5
+                                }}
+                                text={`${Constants.manifest.version} - ${ENV} (${App.APP_VERSION_OTA})`}
+                            />
                             <Text
                                 style={{
                                     fontFamily: TEXT_REGULAR,
-                                    fontSize: SIZES.FONT_H5 - 4,
+                                    fontSize: SIZES.FONT_H5,
                                     color: COLORS.ACTIVE,
                                 }}
                             >

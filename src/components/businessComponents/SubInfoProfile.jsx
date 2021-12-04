@@ -35,7 +35,9 @@ export default function SubInfoProfile({ user }) {
                     fontSize={SIZES.FONT_H3}
                     iconName="birthday-cake"
                     iconFamily={IconFamily.FONT_AWESOME}
-                    content={moment(user.dob).format('YYYY').toString()}
+                    content={moment(user.dob).format('YYYY').toString().toLowerCase() !== 'invalid date'
+                        ? moment(user.dob).format('YYYY').toString()
+                        : '1990'}
                     iconSize={18}
                 />
                 <ProfileInfoItem
@@ -57,14 +59,14 @@ export default function SubInfoProfile({ user }) {
                 fontSize={SIZES.FONT_H3}
                 iconName="home"
                 iconFamily={IconFamily.FONT_AWESOME_5}
-                content={`${user.homeTown}`}
+                content={`${user.homeTown || 'N/a'}`}
                 iconSize={18}
             />
             <ProfileInfoItem
                 fontSize={SIZES.FONT_H3}
                 iconName="badminton"
                 iconFamily={IconFamily.MATERIAL_COMMUNITY_ICONS}
-                content={`${user.interests}`}
+                content={`${user.interests || 'N/a'}`}
                 iconSize={18}
                 containerStyle={{ alignItems: 'flex-start' }}
                 iconContainerStyle={{

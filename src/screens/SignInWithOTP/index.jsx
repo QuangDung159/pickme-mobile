@@ -195,7 +195,7 @@ export default function SignInWithOTP({ navigation }) {
 
                                         {!otp ? (
                                             <CustomInput
-                                                placeholder="Nhập số điện thoại..."
+                                                placeholder="Nhập số điện thoại"
                                                 value={phoneNumber}
                                                 onChangeText={
                                                     (phoneNumberInput) => setPhoneNumber(phoneNumberInput)
@@ -217,7 +217,7 @@ export default function SignInWithOTP({ navigation }) {
                                                     marginVertical: 10,
                                                     width: SIZES.WIDTH_BASE * 0.9
                                                 }}
-                                                placeholder="Nhập mã xác thực..."
+                                                placeholder="Nhập mã xác thực"
                                             />
                                         )}
                                     </View>

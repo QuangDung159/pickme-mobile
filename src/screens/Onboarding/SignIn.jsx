@@ -20,13 +20,13 @@ import { useDispatch } from 'react-redux';
 
 const {
     COLORS,
-    SIZES
+    SIZES,
 } = Theme;
 
 export default function SignIn({ navigation, setIsShowSpinner, isRegisterPartner }) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [deviceIdToSend, setDeviceIdToSend] = useState('');
+    // const [deviceIdToSend, setDeviceIdToSend] = useState('');
     const [isShowPassword, setIsShowPassword] = useState(false);
 
     // const expoToken = useSelector((state) => state.appConfigReducer.expoToken);
@@ -92,7 +92,8 @@ export default function SignIn({ navigation, setIsShowSpinner, isRegisterPartner
             const body = {
                 username: username.toString().trim(),
                 password,
-                deviceId: deviceIdToSend || deviceId
+                // deviceId: deviceIdToSend || deviceId
+                deviceId
             };
 
             setIsShowSpinner(true);
@@ -196,7 +197,7 @@ export default function SignIn({ navigation, setIsShowSpinner, isRegisterPartner
                 }}
             >
                 <CustomInput
-                    placeholder="Nhập tên đăng nhập..."
+                    placeholder="Nhập tên đăng nhập"
                     value={username}
                     onChangeText={
                         (usernameInput) => setUsername(usernameInput.trim())
@@ -213,7 +214,7 @@ export default function SignIn({ navigation, setIsShowSpinner, isRegisterPartner
                         marginVertical: 10,
                     }}
                     secureTextEntry={!isShowPassword}
-                    placeholder="Nhập mật khẩu..."
+                    placeholder="Nhập mật khẩu"
                     rightIcon={{
                         name: 'eye',
                         family: IconFamily.ENTYPO,
@@ -224,7 +225,7 @@ export default function SignIn({ navigation, setIsShowSpinner, isRegisterPartner
                 />
 
                 {/* for testing */}
-                <CustomInput
+                {/* <CustomInput
                     placeholder="Empty or 'test'"
                     value={deviceIdToSend}
                     onChangeText={
@@ -235,7 +236,7 @@ export default function SignIn({ navigation, setIsShowSpinner, isRegisterPartner
                     containerStyle={{
                         marginVertical: 10,
                     }}
-                />
+                /> */}
             </View>
 
             <CustomButton

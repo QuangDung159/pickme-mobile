@@ -3,13 +3,13 @@ import {
     CenterLoader, IconCustom
 } from '@components/uiComponents';
 import {
-    DateTimeConst, IconFamily, Theme, ScreenName
+    DateTimeConst, IconFamily, ScreenName, Theme
 } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
 import { BookingServices } from '@services/index';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, View } from 'react-native';
+import { View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useSelector } from 'react-redux';
@@ -20,7 +20,6 @@ import TimePickerModal from './TimePickerModal';
 import Total from './Total';
 
 const {
-    SIZES,
     COLORS
 } = Theme;
 
@@ -155,105 +154,82 @@ export default function CreateBooking({ route, navigation }) {
                 {isShowSpinner ? (
                     <CenterLoader />
                 ) : (
-                    <SafeAreaView
-                        style={{
-                            flex: 1,
-                            backgroundColor: COLORS.BASE
+                    <KeyboardAwareScrollView
+                        // keyboardShouldPersistTaps="handled"
+                        showsVerticalScrollIndicator={false}
+                        contentContainerStyle={{
+                            backgroundColor: COLORS.BASE,
+                            marginBottom: 5
                         }}
                     >
-                        <KeyboardAwareScrollView
-                            // keyboardShouldPersistTaps="handled"
-                            showsVerticalScrollIndicator={false}
-                            contentContainerStyle={{
-                                marginTop: 5,
-                            }}
-                        >
-                            <PartnerBusyCalendarModal
-                                listBusyBySelectedDate={listBusyBySelectedDate}
-                                modalVisible={modalVisible}
-                                setModalVisible={setModalVisible}
-                            />
+                        <PartnerBusyCalendarModal
+                            listBusyBySelectedDate={listBusyBySelectedDate}
+                            modalVisible={modalVisible}
+                            setModalVisible={setModalVisible}
+                        />
 
-                            <TimePickerModal
-                                setTotal={setTotal}
-                                modalActiveType={modalActiveType}
-                                startTimeStr={startTimeStr}
-                                setStartTimeStr={setStartTimeStr}
-                                endTimeStr={endTimeStr}
-                                setEndTimeStr={setEndTimeStr}
-                                startHourActive={startHourActive}
-                                endHourActive={endHourActive}
-                                startMinuteActive={startMinuteActive}
-                                endMinuteActive={endMinuteActive}
-                                modalTimePickerVisible={modalTimePickerVisible}
-                                setModalTimePickerVisible={setModalTimePickerVisible}
-                            />
+                        <TimePickerModal
+                            setTotal={setTotal}
+                            modalActiveType={modalActiveType}
+                            startTimeStr={startTimeStr}
+                            setStartTimeStr={setStartTimeStr}
+                            endTimeStr={endTimeStr}
+                            setEndTimeStr={setEndTimeStr}
+                            startHourActive={startHourActive}
+                            endHourActive={endHourActive}
+                            startMinuteActive={startMinuteActive}
+                            endMinuteActive={endMinuteActive}
+                            modalTimePickerVisible={modalTimePickerVisible}
+                            setModalTimePickerVisible={setModalTimePickerVisible}
+                        />
 
-                            <PartnerPackageModal
-                                listPartnerPackage={listPartnerPackage}
-                                packageActive={packageActive}
-                                setPackageActive={setPackageActive}
-                                modalPartnerPackageVisible={modalPartnerPackageVisible}
-                                setModalPartnerPackageVisible={setModalPartnerPackageVisible}
-                                setStartTimeStr={setStartTimeStr}
-                                setEndTimeStr={setEndTimeStr}
-                                setTotal={setTotal}
-                                setBooking={setBooking}
-                                booking={booking}
-                            />
+                        <PartnerPackageModal
+                            listPartnerPackage={listPartnerPackage}
+                            packageActive={packageActive}
+                            setPackageActive={setPackageActive}
+                            modalPartnerPackageVisible={modalPartnerPackageVisible}
+                            setModalPartnerPackageVisible={setModalPartnerPackageVisible}
+                            setStartTimeStr={setStartTimeStr}
+                            setEndTimeStr={setEndTimeStr}
+                            setTotal={setTotal}
+                            setBooking={setBooking}
+                            booking={booking}
+                        />
 
-                            <View
-                                style={{
-                                    backgroundColor: COLORS.BASE,
-                                    width: SIZES.WIDTH_BASE
-                                }}
-                            >
-                                <CreateBookingForm
-                                    route={route}
-                                    busyCalendar={busyCalendar}
-                                    selectedDate={selectedDate}
-                                    setSelectedDate={setSelectedDate}
-                                    setListBusyBySelectedDate={setListBusyBySelectedDate}
-                                    hourArr={hourArr}
-                                    startTimeStr={startTimeStr}
-                                    setStartHourActive={setStartHourActive}
-                                    minuteArr={minuteArr}
-                                    setStartMinuteActive={setStartMinuteActive}
-                                    endTimeStr={endTimeStr}
-                                    setEndHourActive={setEndHourActive}
-                                    setEndMinuteActive={setEndMinuteActive}
-                                    setModalTimePickerVisible={setModalTimePickerVisible}
-                                    setModalActiveType={setModalActiveType}
-                                    listPartnerPackage={listPartnerPackage}
-                                    setModalPartnerPackageVisible={setModalPartnerPackageVisible}
-                                    booking={booking}
-                                    setBooking={setBooking}
-                                    partner={partner}
-                                />
-                            </View>
+                        <CreateBookingForm
+                            route={route}
+                            busyCalendar={busyCalendar}
+                            selectedDate={selectedDate}
+                            setSelectedDate={setSelectedDate}
+                            setListBusyBySelectedDate={setListBusyBySelectedDate}
+                            hourArr={hourArr}
+                            startTimeStr={startTimeStr}
+                            setStartHourActive={setStartHourActive}
+                            minuteArr={minuteArr}
+                            setStartMinuteActive={setStartMinuteActive}
+                            endTimeStr={endTimeStr}
+                            setEndHourActive={setEndHourActive}
+                            setEndMinuteActive={setEndMinuteActive}
+                            setModalTimePickerVisible={setModalTimePickerVisible}
+                            setModalActiveType={setModalActiveType}
+                            listPartnerPackage={listPartnerPackage}
+                            setModalPartnerPackageVisible={setModalPartnerPackageVisible}
+                            booking={booking}
+                            setBooking={setBooking}
+                            partner={partner}
+                        />
 
-                            <View
-                                style={{
-                                    backgroundColor: COLORS.BASE,
-                                    width: SIZES.WIDTH_BASE,
-                                    marginTop: 5,
-                                    paddingBottom: 20,
-                                    marginBottom: 10
-                                }}
-                            >
-                                <Total
-                                    total={total}
-                                    route={route}
-                                    navigation={navigation}
-                                    selectedDate={selectedDate}
-                                    startTimeStr={startTimeStr}
-                                    endTimeStr={endTimeStr}
-                                    booking={booking}
-                                    setIsShowSpinner={setIsShowSpinner}
-                                />
-                            </View>
-                        </KeyboardAwareScrollView>
-                    </SafeAreaView>
+                        <Total
+                            total={total}
+                            route={route}
+                            navigation={navigation}
+                            selectedDate={selectedDate}
+                            startTimeStr={startTimeStr}
+                            endTimeStr={endTimeStr}
+                            booking={booking}
+                            setIsShowSpinner={setIsShowSpinner}
+                        />
+                    </KeyboardAwareScrollView>
                 )}
             </>
         );

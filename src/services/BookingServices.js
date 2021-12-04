@@ -6,7 +6,7 @@ import { RxUtil } from '@utils/index';
 const rxFetchListBookingAsync = async (pageIndex, pageSize, domain = null) => {
     const pagingStr = `?pageIndex=${pageIndex}&pageSize=${pageSize}`;
     const result = await RxUtil(
-        `${Rx.BOOKING.GET_LIST_BOOKING_AS_CUSTOMER}${pagingStr}`,
+        `${Rx.BOOKING.GET_ALL_BOOKING}${pagingStr}`,
         'GET',
         null, domain
     );

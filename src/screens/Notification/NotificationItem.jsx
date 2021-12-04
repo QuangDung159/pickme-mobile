@@ -8,8 +8,7 @@ import {
     Image,
     StyleSheet,
     Text,
-    TouchableWithoutFeedback,
-    View
+    TouchableOpacity, View
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 
@@ -91,7 +90,7 @@ export default function NotificationItem({
                         flex: 8,
                     }}
                 >
-                    <TouchableWithoutFeedback
+                    <TouchableOpacity
                         onPress={() => {
                             handleNavigation(navigationId, type);
                             onClickRead(false, id);
@@ -115,7 +114,7 @@ export default function NotificationItem({
                                 {content}
                             </Text>
                         </View>
-                    </TouchableWithoutFeedback>
+                    </TouchableOpacity>
                 </View>
             </>
         );

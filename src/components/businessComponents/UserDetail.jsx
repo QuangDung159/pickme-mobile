@@ -1,8 +1,9 @@
+/* eslint-disable max-len */
 /* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
 import { Albums, AvatarPanel } from '@components/businessComponents';
 import { IconCustom, Line } from '@components/uiComponents';
 import {
-    IconFamily, Rx, ScreenName, Theme, VerificationStatus
+    IconFamily, Rx, ScreenName, Theme
 } from '@constants/index';
 import { CommonHelpers, MediaHelpers, ToastHelpers } from '@helpers/index';
 import { setCurrentUser } from '@redux/Actions';
@@ -48,8 +49,22 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
 
             if (userInfo.id === currentUser.id) {
                 setIsCurrentUser(true);
+                checkIsFillDataForTheFirstTime();
             }
         }, [userInfo]
+    );
+
+    useEffect(
+        () => {
+            const onFocus = navigation.addListener('focus', () => {
+                if (userInfo.id === currentUser.id) {
+                    setIsCurrentUser(true);
+                    checkIsFillDataForTheFirstTime();
+                }
+            });
+
+            return onFocus;
+        }, []
     );
 
     // handler \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
@@ -88,7 +103,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
     };
 
     const handleOnPickAvatar = (uri) => {
-        setIsShowSpinner(true);
+        // setIsShowSpinner(true);
 
         MediaHelpers.imgbbUploadImage(
             uri,
@@ -135,14 +150,35 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
             '',
             [
                 {
-                    text: 'Huỷ',
+                    text: 'Đóng',
                     style: 'cancel'
                 },
                 { text: 'Đặt làm ảnh chính', onPress: () => setImageToPrimary(imageObj.uri) },
                 { text: 'Xoá ảnh', onPress: () => removeImage(imageObj) },
             ],
-            { cancelable: false }
+            { cancelable: true }
         );
+    };
+
+    const checkIsFillDataForTheFirstTime = () => {
+        if (!currentUser.id) return;
+        if (!currentUser.isFillDataFirstTime) {
+            Alert.alert('Thông tin cá nhân',
+                'Tài khoản của bạn chưa được cập nhật thông tin cá nhân.\nVui lòng cập nhật để có được trải nghiệm tốt nhất với PickMe.',
+                [
+                    {
+                        text: 'Đóng',
+                        style: 'cancel'
+                    },
+                    {
+                        text: 'Cập nhật',
+                        onPress: () => {
+                            navigation.navigate(ScreenName.UPDATE_INFO_ACCOUNT);
+                        },
+                        style: 'cancel'
+                    }
+                ],);
+        }
     };
 
     const setImageToPrimary = async (imageUri) => {
@@ -353,7 +389,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                                     textAlign: 'center'
                                 }}
                             >
-                                {`${userInfo.fullName}`}
+                                {`${userInfo.fullName || 'N/a'}`}
                             </Text>
                             {isCurrentUser && (
                                 <IconCustom
@@ -379,7 +415,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                             }}
                         >
                             {'"'}
-                            {userInfo.description}
+                            {userInfo.description || 'N/a'}
                             {'"'}
                         </Text>
                     </View>
@@ -395,7 +431,6 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
 
             <View
                 style={{
-                    marginTop: 5,
                     width: '90%'
                 }}
             >
@@ -414,7 +449,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
 
             {isCurrentUser && (
                 <>
-                    {userInfo?.verifyStatus !== VerificationStatus.ACCEPTED && (
+                    {!userInfo?.isCustomerVerified && (
                         <TouchableWithoutFeedback
                             onPress={() => {
                                 navigation.navigate(ScreenName.VERIFICATION);

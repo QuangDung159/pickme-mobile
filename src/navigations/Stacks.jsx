@@ -44,18 +44,17 @@ const MenuStack = () => (
         {SupportScreen()}
         {VerificationScreen()}
         {SettingsScreen()}
-        {PartnerDataScreen()}
+        {/* {PartnerDataScreen()} */}
     </Stack.Navigator>
 );
 
 const PersonalStack = () => (
-    <Stack.Navigator initialRouteName={ScreenName.PERSONAL} mode="card" headerMode="screen">
+    <Stack.Navigator name={ScreenName.PERSONAL} mode="card" headerMode="screen">
         {PersonalScreen()}
         {UpdateInfoAccountScreen()}
         {CashInScreen()}
         {BookingDetailScreen()}
         {CreateBookingScreen()}
-        {MessageScreen()}
         {VerificationScreen()}
         {PartnerDataScreen()}
         {CashOutScreen()}
@@ -66,10 +65,8 @@ const HomeStack = () => (
     <Stack.Navigator mode="card" headerMode="screen">
         {HomeScreen()}
         {ProfileScreen()}
-        {CreateBookingScreen()}
-        {MessageScreen()}
-        {SupportScreen()}
-        {PersonalScreen()}
+        {/* {CreateBookingScreen()}
+        {MessageScreen()} */}
     </Stack.Navigator>
 );
 
@@ -87,14 +84,14 @@ const ConversationListStack = () => (
     <Stack.Navigator mode="card" headerMode="screen">
         {ConversationListScreen()}
         {MessageScreen()}
-        {ProfileScreen()}
+        {/* {ProfileScreen()} */}
     </Stack.Navigator>
 );
 
 const OnboardingStack = () => (
     <Stack.Navigator initialRouteName={ScreenName.ONBOARDING} mode="card" headerMode="none">
         {OnboardingScreen()}
-        {SignInWithOTPScreen()}
+        {/* {SignInWithOTPScreen()} */}
         {HomeScreen()}
         {ForgotPasswordScreen()}
     </Stack.Navigator>

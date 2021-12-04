@@ -68,7 +68,7 @@ export default function ReportModal({ modalReportVisible, setModalReportVisible,
                         inputStyle={{
                             height: 80
                         }}
-                        placeholder="Nhập mô tả..."
+                        placeholder="Nhập mô tả"
                     />
                     <View
                         style={{

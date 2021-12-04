@@ -44,7 +44,6 @@ export default function BookingDetail({
     const showLoaderStore = useSelector((state) => state.appConfigReducer.showLoaderStore);
     const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
     const currentBookingRedux = useSelector((state) => state.bookingReducer.currentBookingRedux);
-    const currentUser = useSelector((state) => state.userReducer.currentUser);
 
     const dispatch = useDispatch();
 
@@ -82,22 +81,11 @@ export default function BookingDetail({
     };
 
     const fetchListBooking = async () => {
-        const bookingAsCustomer = await BookingServices.fetchListBookingAsync();
-        let bookingAsPartner = [];
-        if (currentUser.isPartnerVerified) {
-            bookingAsPartner = await BookingServices.fetchListBookingAsPartnerAsync();
+        const res = await BookingServices.fetchListBookingAsync();
+        if (res.data) {
+            dispatch(setListBookingStore(res.data.data));
         }
 
-        let listBooking = [];
-        if (bookingAsCustomer.data) {
-            listBooking = bookingAsCustomer.data.data;
-
-            if (bookingAsPartner.data) {
-                listBooking = listBooking.concat(bookingAsPartner.data.data);
-            }
-        }
-
-        dispatch(setListBookingStore(listBooking));
         setRefreshing(false);
         dispatch(setShowLoaderStore(false));
     };

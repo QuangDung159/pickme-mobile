@@ -4,10 +4,10 @@ import { ActivityIndicator, View } from 'react-native';
 
 const { COLORS } = Theme;
 
-export default function ImageLoader({ size }) {
+export default function ImageLoader({ size, containerStyle }) {
     return (
         <View
-            style={{
+            style={[{
                 zIndex: 1,
                 position: 'absolute',
                 top: 0,
@@ -16,8 +16,8 @@ export default function ImageLoader({ size }) {
                 bottom: 0,
                 justifyContent: 'center',
                 alignItems: 'center',
-                backgroundColor: COLORS.BASE,
-            }}
+                backgroundColor: COLORS.TRANSPARENT,
+            }, containerStyle]}
         >
             <ActivityIndicator
                 size={size || 'small'}

@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { TopTabBar } from '@components/uiComponents';
 import { GraphQueryString, ScreenName } from '@constants/index';
 import {
@@ -49,7 +50,7 @@ export default function Personal({ navigation }) {
         () => {
             const onFocus = navigation.addListener('focus', () => {
                 if (navigateFrom && navigateFrom === ScreenName.BOOKING_DETAIL) {
-                    // fetchListBooking();
+                    fetchListBooking();
                 }
             });
 
@@ -126,22 +127,13 @@ export default function Personal({ navigation }) {
     };
 
     const fetchListBooking = async () => {
-        const bookingAsCustomer = await BookingServices.fetchListBookingAsync();
-        let bookingAsPartner = [];
-        if (currentUser.isPartnerVerified) {
-            bookingAsPartner = await BookingServices.fetchListBookingAsPartnerAsync();
-        }
-
+        const res = await BookingServices.fetchListBookingAsync();
         let listBooking = [];
-        if (bookingAsCustomer.data) {
-            listBooking = bookingAsCustomer.data.data;
 
-            if (bookingAsPartner.data) {
-                listBooking = listBooking.concat(bookingAsPartner.data.data);
-            }
+        if (res.data) {
+            listBooking = res.data.data;
+            dispatch(setListBookingStore(listBooking));
         }
-
-        dispatch(setListBookingStore(listBooking));
     };
 
     const getConversationByMessage = (message, listConversationSource) => {
