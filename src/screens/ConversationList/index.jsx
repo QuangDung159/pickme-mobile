@@ -1,9 +1,9 @@
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 import {
-    CenterLoader
+    CenterLoader, IconCustom
 } from '@components/uiComponents';
 import {
-    GraphQueryString, Images, ScreenName, Theme
+    GraphQueryString, IconFamily, Images, ScreenName, Theme
 } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
 import { setListConversation, setNumberMessageUnread } from '@redux/Actions';
@@ -11,9 +11,9 @@ import { socketRequestUtil } from '@utils/index';
 import React, { useEffect, useState } from 'react';
 import {
     Alert,
-    Image, RefreshControl, Text, View
+    Image, RefreshControl, Text, TouchableOpacity, View
 } from 'react-native';
-import { FlatList, ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import ModalReport from './ModalReport';
 
@@ -91,27 +91,6 @@ export default function ConversationList({ navigation }) {
         navigation.navigate(ScreenName.MESSAGE, conversationParams);
     };
 
-    const onLongPressConversationItem = (conversationParams) => {
-        Alert.alert(
-            `${conversationParams.name}`,
-            '',
-            [
-                {
-                    text: 'Huỷ',
-                    style: 'cancel'
-                },
-                {
-                    text: 'Báo cáo người dùng',
-                    onPress: () => {
-                        setModalReasonVisible(true);
-                        setUserId(conversationParams.toUserId);
-                    }
-                },
-            ],
-            { cancelable: false }
-        );
-    };
-
     const getListConversationFromSocket = () => {
         const { token } = currentUser;
         const data = {
@@ -143,6 +122,31 @@ export default function ConversationList({ navigation }) {
     const onRefresh = () => {
         setRefreshing(true);
         getListConversationFromSocket();
+    };
+
+    const onClickMore = (conversationParams) => {
+        Alert.alert(
+            `${conversationParams.name}`,
+            '',
+            [
+                {
+                    text: 'Đóng',
+                    style: 'cancel'
+                },
+                {
+                    text: 'Xem trang cá nhân',
+                    onPress: () => navigation.navigate(ScreenName.PROFILE, { userId: conversationParams.toUserId })
+                },
+                {
+                    text: 'Báo cáo người dùng',
+                    onPress: () => {
+                        setModalReasonVisible(true);
+                        setUserId(conversationParams.toUserId);
+                    }
+                },
+            ],
+            { cancelable: true }
+        );
     };
 
     // render \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
@@ -179,24 +183,15 @@ export default function ConversationList({ navigation }) {
         }
 
         return (
-            <TouchableWithoutFeedback
-                onPress={
-                    () => {
-                        onClickConversationItem(params);
-                    }
-                }
-                onLongPress={
-                    () => onLongPressConversationItem(params)
-                }
-                containerStyle={{
-                    backgroundColor: COLORS.BASE,
+            <View
+                style={{
+                    alignItems: 'center',
+                    flexDirection: 'row',
+                    width: SIZES.WIDTH_BASE * 0.9,
                 }}
             >
-                <View
-                    style={{
-                        alignItems: 'center',
-                        flexDirection: 'row'
-                    }}
+                <TouchableOpacity
+                    onPress={() => navigation.navigate(ScreenName.PROFILE, { userId: params.toUserId })}
                 >
                     <View
                         style={{
@@ -215,11 +210,25 @@ export default function ConversationList({ navigation }) {
                             }}
                         />
                     </View>
-                    <View>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={
+                        () => {
+                            onClickConversationItem(params);
+                        }
+                    }
+                >
+                    <View
+                        style={{
+                            width: SIZES.WIDTH_BASE * 0.7
+                        }}
+                    >
                         <Text
                             style={{
-                                fontFamily: TEXT_BOLD,
-                                fontSize: SIZES.FONT_H3,
+                                fontFamily: conversation?.isRead
+                                    ? TEXT_REGULAR
+                                    : TEXT_BOLD,
+                                fontSize: SIZES.FONT_H2,
                                 color: COLORS.DEFAULT,
                             }}
 
@@ -236,7 +245,7 @@ export default function ConversationList({ navigation }) {
                                     fontFamily: conversation?.isRead
                                         ? TEXT_REGULAR
                                         : TEXT_BOLD,
-                                    fontSize: SIZES.FONT_H3,
+                                    fontSize: SIZES.FONT_H4,
                                     color: COLORS.DEFAULT,
 
                                 }}
@@ -246,8 +255,26 @@ export default function ConversationList({ navigation }) {
                             </Text>
                         </View>
                     </View>
-                </View>
-            </TouchableWithoutFeedback>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => onClickMore(params)}
+                >
+                    <View
+                        style={{
+                            marginHorizontal: 10,
+                            paddingVertical: 10
+                        }}
+                    >
+                        <IconCustom
+                            name="more-horizontal"
+                            family={IconFamily.FEATHER}
+                            size={23}
+                            color={COLORS.PLACE_HOLDER}
+                        />
+                    </View>
+                </TouchableOpacity>
+
+            </View>
         );
     };
 

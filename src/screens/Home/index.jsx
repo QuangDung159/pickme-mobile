@@ -113,22 +113,10 @@ export default function Home({ navigation }) {
     );
 
     const fetchListBooking = async () => {
-        let bookingAsPartner = [];
-        if (currentUser.isPartnerVerified) {
-            bookingAsPartner = await BookingServices.fetchListBookingAsPartnerAsync();
+        const res = await BookingServices.fetchListBookingAsync();
+        if (res.data) {
+            dispatch(setListBookingStore(res.data.data));
         }
-        const bookingAsCustomer = await BookingServices.fetchListBookingAsync();
-
-        let listBooking = [];
-        if (bookingAsCustomer.data) {
-            listBooking = bookingAsCustomer.data.data;
-
-            if (bookingAsPartner.data) {
-                listBooking = listBooking.concat(bookingAsPartner.data.data);
-            }
-        }
-
-        dispatch(setListBookingStore(listBooking));
     };
 
     const fetchVerification = async () => {

@@ -1,6 +1,6 @@
-import { CustomButton } from '@components/uiComponents';
-import Theme from '@constants/Theme';
+import { CustomButton, CustomInput } from '@components/uiComponents';
 import ScreenName from '@constants/ScreenName';
+import Theme from '@constants/Theme';
 import CommonHelpers from '@helpers/CommonHelpers';
 import ToastHelpers from '@helpers/ToastHelpers';
 import ValidationHelpers from '@helpers/ValidationHelpers';
@@ -8,8 +8,8 @@ import { setListBookingStore, setPersonTabActiveIndex } from '@redux/Actions';
 import BookingServices from '@services/BookingServices';
 import moment from 'moment';
 import React from 'react';
-import { Alert, Text, View } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { Alert, View } from 'react-native';
+import { useDispatch } from 'react-redux';
 
 const {
     FONT: {
@@ -31,8 +31,6 @@ export default function Total({
 }) {
     const dispatch = useDispatch();
 
-    const currentUser = useSelector((state) => state.userReducer.currentUser);
-
     const calculateTotalAmount = (start, end) => {
         if (total !== 0) return total;
         const { estimatePricing } = route.params.partner;
@@ -52,22 +50,11 @@ export default function Total({
     };
 
     const getListBooking = async () => {
-        const bookingAsCustomer = await BookingServices.fetchListBookingAsync();
-        let bookingAsPartner = [];
-        if (currentUser.isPartnerVerified) {
-            bookingAsPartner = await BookingServices.fetchListBookingAsPartnerAsync();
+        const res = await BookingServices.fetchListBookingAsync();
+
+        if (res.data) {
+            dispatch(setListBookingStore(res.data.data));
         }
-
-        let listBooking = [];
-        if (bookingAsCustomer.data) {
-            listBooking = bookingAsCustomer.data.data;
-
-            if (bookingAsPartner.data) {
-                listBooking = listBooking.concat(bookingAsPartner.data.data);
-            }
-        }
-
-        dispatch(setListBookingStore(listBooking));
     };
 
     const validate = () => {
@@ -183,21 +170,24 @@ export default function Total({
                 style={{
                     alignSelf: 'center',
                     width: SIZES.WIDTH_BASE * 0.9,
-                    marginTop: 20,
-                    marginBottom: 15
                 }}
             >
-                <Text
-                    style={{
-                        fontFamily: TEXT_BOLD,
-                        fontSize: 30,
-                        color: COLORS.ACTIVE,
-                        textAlign: 'center',
-                        marginBottom: 10
+                <CustomInput
+                    value={CommonHelpers.generateMoneyStr(calculateTotalAmount(startTimeStr, endTimeStr))}
+                    editable={false}
+                    containerStyle={{
+                        marginVertical: 10,
+                        width: SIZES.WIDTH_BASE * 0.9,
                     }}
-                >
-                    {CommonHelpers.generateMoneyStr(calculateTotalAmount(startTimeStr, endTimeStr))}
-                </Text>
+                    inputStyle={{
+                        height: 50,
+                        fontSize: SIZES.FONT_H1 + 5,
+                        fontFamily: TEXT_BOLD,
+                        backgroundColor: COLORS.ACTIVE,
+                        color: COLORS.BASE
+                    }}
+                    label="Tổng chi phí:"
+                />
 
                 {renderButtonPanel()}
             </View>

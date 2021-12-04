@@ -168,18 +168,18 @@ export default function UploadDocSection({ setIsShowSpinner, navigation, route }
                 marginVertical: 10
             }}
         >
-            {renderUploadDocForm(DocumentType.FACE_IMAGE, 'Ảnh chụp cá nhân')}
+            {renderUploadDocForm(DocumentType.FACE_IMAGE, 'Ảnh chụp chính diện')}
             {renderDocImage(faceUrl)}
             <View
                 style={styles.docFormContainer}
             >
-                {renderUploadDocForm(DocumentType.ID_CARD_FRONT, 'Ảnh chụp mặt trước CMND/CCCD')}
+                {renderUploadDocForm(DocumentType.ID_CARD_FRONT, 'Ảnh chụp nhìn sang phải')}
                 {renderDocImage(frontUrl)}
             </View>
             <View
                 style={styles.docFormContainer}
             >
-                {renderUploadDocForm(DocumentType.ID_CARD_BACK, 'Ảnh chụp mặt sau CMND/CCCD')}
+                {renderUploadDocForm(DocumentType.ID_CARD_BACK, 'Ảnh chụp mặt trước giấy phép lái xe')}
                 {renderDocImage(backUrl)}
             </View>
             <View
@@ -190,6 +190,7 @@ export default function UploadDocSection({ setIsShowSpinner, navigation, route }
             </View>
         </View>
     );
+
     const onSubmitUploadList = () => {
         if (!(backUrl && faceUrl && frontUrl && greenUrl)) {
             ToastHelpers.renderToast('Vui lòng chọn đủ hình ảnh');
@@ -360,41 +361,46 @@ export default function UploadDocSection({ setIsShowSpinner, navigation, route }
 
                 {(verificationStore.verifyStatus === VerificationStatus.NONE || verificationStore.verifyStatus === VerificationStatus.REJECT) ? (
                     <>
-                        <TouchableOpacity
-                            style={{
-                                flexDirection: 'row',
-                                alignItems: 'flex-start'
-                            }}
-                            onPress={() => setModalInfoVisible(true)}
-                        >
-                            <CustomText
-                                text="Chọn mục đích: "
-                            />
-                            <IconCustom
-                                name="info-circle"
-                                family={IconFamily.FONT_AWESOME}
-                                size={14}
-                                color={COLORS.ACTIVE}
-                            />
-                        </TouchableOpacity>
-                        <View
-                            style={{
-                                flexDirection: 'row',
-                                justifyContent: 'space-between',
-                                alignItems: 'center'
-                            }}
-                        >
-                            <RadioButton
-                                label="Xác thực khách hàng"
-                                selected={!isForPartnerVerify}
-                                onPress={() => setIsForPartnerVerify(false)}
-                            />
-                            <RadioButton
-                                label="Đăng kí Host"
-                                selected={isForPartnerVerify}
-                                onPress={() => setIsForPartnerVerify(true)}
-                            />
-                        </View>
+                        {!currentUser.isCustomerVerified && (
+                            <>
+                                <TouchableOpacity
+                                    style={{
+                                        flexDirection: 'row',
+                                        alignItems: 'flex-start'
+                                    }}
+                                    onPress={() => setModalInfoVisible(true)}
+                                >
+                                    <CustomText
+                                        text="Chọn mục đích: "
+                                    />
+                                    <IconCustom
+                                        name="info-circle"
+                                        family={IconFamily.FONT_AWESOME}
+                                        size={14}
+                                        color={COLORS.ACTIVE}
+                                    />
+                                </TouchableOpacity>
+                                <View
+                                    style={{
+                                        flexDirection: 'row',
+                                        justifyContent: 'space-between',
+                                        alignItems: 'center'
+                                    }}
+                                >
+                                    <RadioButton
+                                        label="Xác thực khách hàng"
+                                        selected={!isForPartnerVerify}
+                                        onPress={() => setIsForPartnerVerify(false)}
+                                    />
+                                    <RadioButton
+                                        label="Đăng kí Host"
+                                        selected={isForPartnerVerify}
+                                        onPress={() => setIsForPartnerVerify(true)}
+                                    />
+                                </View>
+                            </>
+                        )}
+
                     </>
                 ) : (
                     <View

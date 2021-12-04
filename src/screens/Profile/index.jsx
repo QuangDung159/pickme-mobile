@@ -26,7 +26,7 @@ export default function Profile({ route, navigation }) {
     useEffect(
         () => {
             getPartnerInfo();
-        }, []
+        }, [route?.params?.userId]
     );
 
     useEffect(
@@ -69,7 +69,7 @@ export default function Profile({ route, navigation }) {
                         setIsShowSpinner={(showSpinner) => setIsShowSpinner(showSpinner)}
                     />
                 )}
-                {currentUser.id !== route.params.userId && currentUser.isCustomerVerified && (
+                {currentUser.id !== route.params.userId && (
                     <View
                         style={{
                             flexDirection: 'row',

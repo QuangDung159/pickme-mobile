@@ -8,7 +8,7 @@ import { setCurrentUser, setPersonTabActiveIndex } from '@redux/Actions';
 import { UserServices } from '@services/index';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
-import { View } from 'react-native';
+import { Text, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -121,7 +121,6 @@ export default function UpdateInfoAccount() {
                     }}
                     onChangeText={(input) => setNewUser({ ...newUser, height: input })}
                     value={newUser.height}
-                    placeholder="Chiều cao (cm)..."
                     keyboardType="number-pad"
                 />
             </View>
@@ -140,7 +139,6 @@ export default function UpdateInfoAccount() {
                     }}
                     onChangeText={(input) => setNewUser({ ...newUser, weight: input })}
                     value={newUser.weight}
-                    placeholder="Cân nặng (kg)..."
                     keyboardType="number-pad"
                 />
             </View>
@@ -162,7 +160,6 @@ export default function UpdateInfoAccount() {
                     width: SIZES.WIDTH_BASE * 0.44
                 }}
                 onChangeText={(input) => onChangeYear(input)}
-                placeholder="Năm sinh..."
                 value={newUser?.dob?.substr(0, 4)}
                 label="Năm sinh:"
                 keyboardType="number-pad"
@@ -336,14 +333,9 @@ export default function UpdateInfoAccount() {
         const { data } = result;
 
         if (data) {
-            const userInfo = {
-                ...newUser,
-                email: currentUser.userName,
-                IsMale: newUser.isMale,
-            };
-            dispatch(setCurrentUser(userInfo));
+            dispatch(setCurrentUser(data.data));
             dispatch(setPersonTabActiveIndex(0));
-            setNewUser(userInfo);
+            setNewUser(data.data);
             ToastHelpers.renderToast(data.message, 'success');
         }
         setIsShowSpinner(false);
@@ -374,6 +366,7 @@ export default function UpdateInfoAccount() {
                                 {renderInputInterests()}
                                 {renderInputDescription()}
                                 {renderButtonPanel()}
+                                <Text>{currentUser.isFillDataFirstTime.toString()}</Text>
                             </>
                         )}
                     </KeyboardAwareScrollView>

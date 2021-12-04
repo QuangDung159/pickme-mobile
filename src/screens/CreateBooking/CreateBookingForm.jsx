@@ -7,11 +7,9 @@ import React from 'react';
 import {
     Platform, StyleSheet, Text, View
 } from 'react-native';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 const {
     FONT: {
-        TEXT_REGULAR,
         TEXT_BOLD
     },
     SIZES,
@@ -34,8 +32,8 @@ export default function CreateBookingForm({
     setEndMinuteActive,
     setModalTimePickerVisible,
     setModalActiveType,
-    listPartnerPackage,
-    setModalPartnerPackageVisible,
+    // listPartnerPackage,
+    // setModalPartnerPackageVisible,
     booking,
     setBooking,
     partner
@@ -133,16 +131,12 @@ export default function CreateBookingForm({
     const renderInputAddress = () => (
         <CustomInput
             value={booking.address}
-            multiline
             onChangeText={(input) => onChangeAddress(input)}
             containerStyle={{
                 marginVertical: 10,
                 width: SIZES.WIDTH_BASE * 0.9
             }}
             label="Địa điểm:"
-            inputStyle={{
-                height: 80,
-            }}
         />
     );
 
@@ -185,7 +179,6 @@ export default function CreateBookingForm({
                 flex: 1,
                 width: SIZES.WIDTH_BASE * 0.9,
                 alignSelf: 'center',
-                paddingBottom: 20
             }}
         >
             <View>
@@ -203,7 +196,7 @@ export default function CreateBookingForm({
                     />
                 </View>
 
-                {listPartnerPackage && listPartnerPackage.length !== 0 && (
+                {/* {listPartnerPackage && listPartnerPackage.length !== 0 && (
                     <TouchableWithoutFeedback
                         containerStyle={{
                             width: SIZES.WIDTH_BASE * 0.9,
@@ -222,7 +215,7 @@ export default function CreateBookingForm({
                             Chọn gói đơn hẹn
                         </Text>
                     </TouchableWithoutFeedback>
-                )}
+                )} */}
 
                 {renderButtonTimePicker()}
 

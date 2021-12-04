@@ -81,7 +81,8 @@
     "aab": "expo build:android -t app-bundle --release-channel prd",
     "ota-dev": "expo publish --release-channel dev",
     "ota-prd": "expo publish --release-channel prd",
-    "publish-play-store": "sh publish-android-latest.sh"
+    "publish-play-store": "sh publish-android-latest.sh",
+    "play-store": "yarn publish-play-store"
   },
   "private": true
 }

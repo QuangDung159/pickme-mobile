@@ -100,7 +100,6 @@ export default function CreateAccount(props) {
             homeTown: hometown,
             email: 'N/a',
             url: imageUrl,
-            // gender: gender || Gender.GENDER_ARRAY[0].value,
             IsMale: isMale
         };
 
@@ -223,7 +222,7 @@ export default function CreateAccount(props) {
                         marginVertical: 10,
                         width: SIZES.WIDTH_BASE * 0.9
                     }}
-                    placeholder="Tên hiển thị..."
+                    placeholder="Tên hiển thị"
                 />
 
                 <View
@@ -240,7 +239,8 @@ export default function CreateAccount(props) {
                         }}
                         onChangeText={(input) => setNewUser({ ...newUser, dob: input })}
                         value={newUser.dob}
-                        placeholder="Năm sinh..."
+                        placeholder="Năm sinh"
+                        keyboardType="number-pad"
                     />
 
                     <RadioButton
@@ -269,7 +269,8 @@ export default function CreateAccount(props) {
                         }}
                         onChangeText={(input) => setNewUser({ ...newUser, height: input })}
                         value={newUser.height}
-                        placeholder="Chiều cao (cm)..."
+                        placeholder="Chiều cao (cm)"
+                        keyboardType="number-pad"
                     />
 
                     <CustomInput
@@ -278,7 +279,8 @@ export default function CreateAccount(props) {
                         }}
                         onChangeText={(input) => setNewUser({ ...newUser, weight: input })}
                         value={newUser.weight}
-                        placeholder="Cân nặng (kg)..."
+                        placeholder="Cân nặng (kg)"
+                        keyboardType="number-pad"
                     />
                 </View>
 
@@ -289,7 +291,7 @@ export default function CreateAccount(props) {
                     }}
                     onChangeText={(input) => setNewUser({ ...newUser, interests: input })}
                     value={newUser.interests}
-                    placeholder="Sở thích..."
+                    placeholder="Sở thích"
                 />
 
                 <CustomInput
@@ -299,7 +301,7 @@ export default function CreateAccount(props) {
                         marginVertical: 10,
                         width: SIZES.WIDTH_BASE * 0.9
                     }}
-                    placeholder="Nơi sinh sống..."
+                    placeholder="Nơi sinh sống"
                 />
 
                 <CustomInput
@@ -313,7 +315,7 @@ export default function CreateAccount(props) {
                     inputStyle={{
                         height: 80,
                     }}
-                    placeholder="Mô tả bản thân..."
+                    placeholder="Mô tả bản thân"
                 />
 
             </View>
@@ -321,9 +323,21 @@ export default function CreateAccount(props) {
             <View
                 style={{
                     position: 'absolute',
-                    bottom: 0
+                    bottom: 0,
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    width: SIZES.WIDTH_BASE * 0.9
                 }}
             >
+                <CustomButton
+                    onPress={() => {
+                        dispatch(setToken(''));
+                        navigation.navigate(ScreenName.ONBOARDING);
+                    }}
+                    buttonStyle={styles.button}
+                    type="active"
+                    label="Đăng nhập"
+                />
                 <CustomButton
                     onPress={() => onSubmitAccountCreation(1)}
                     buttonStyle={styles.button}
@@ -429,7 +443,8 @@ export default function CreateAccount(props) {
                         navigation.navigate(ScreenName.ONBOARDING);
                     }}
                     buttonStyle={[styles.button, {
-                        marginTop: 30
+                        marginTop: 30,
+                        width: SIZES.WIDTH_BASE * 0.9
                     }]}
                     type="active"
                     label="Quay về trang đăng nhập"
@@ -491,9 +506,21 @@ export default function CreateAccount(props) {
             <View
                 style={{
                     position: 'absolute',
-                    bottom: 0
+                    bottom: 0,
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    width: SIZES.WIDTH_BASE * 0.9
                 }}
             >
+                <CustomButton
+                    onPress={() => {
+                        dispatch(setToken(''));
+                        navigation.navigate(ScreenName.ONBOARDING);
+                    }}
+                    buttonStyle={styles.button}
+                    type="active"
+                    label="Đăng nhập"
+                />
                 <CustomButton
                     onPress={() => onSubmitAccountCreation(2)}
                     buttonStyle={styles.button}
@@ -527,13 +554,13 @@ export default function CreateAccount(props) {
                                             styles.title,
                                             {
                                                 color: COLORS.DEFAULT,
-                                                fontSize: 24,
+                                                fontSize: SIZES.FONT_H3,
                                                 marginTop: SIZES.HEIGHT_BASE * 0.15
                                             }
                                         ]
                                     }
                                 >
-                                    {step !== arrStep[2] && 'Đăng ký'}
+                                    {step !== arrStep[2] && 'Tạo tài khoản thành công.\nBạn có thể đăng nhập hoặc tiếp tục hoàn thiện thông tin tài khoản.'}
                                 </Text>
                             </View>
 
@@ -596,14 +623,15 @@ const styles = StyleSheet.create({
     stepSessionContainer: {
         height: SIZES.HEIGHT_BASE * 0.3,
         alignSelf: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        width: SIZES.WIDTH_BASE * 0.9
     },
     formContainer: {
         height: SIZES.HEIGHT_BASE * 0.65
     },
     button: {
         marginVertical: 10,
-        width: SIZES.WIDTH_BASE * 0.9
+        width: SIZES.WIDTH_BASE * 0.44
     },
     image: {
         width: SIZES.HEIGHT_BASE * 0.35, height: SIZES.HEIGHT_BASE * 0.35

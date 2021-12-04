@@ -60,7 +60,7 @@ export default function ModalReport({
                     >
                         <CustomInput
                             multiline
-                            placeholder="Nhập mô tả..."
+                            placeholder="Nhập mô tả"
                             value={reason}
                             onChangeText={(input) => setReason(input)}
                             inputStyle={{

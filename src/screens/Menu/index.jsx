@@ -1,10 +1,14 @@
+/* eslint-disable import/no-unresolved */
 import { CustomText, IconCustom, Line } from '@components/uiComponents';
+import App from '@constants/App';
 import IconFamily from '@constants/IconFamily';
 import ScreenName from '@constants/ScreenName';
 import ScreenTitle from '@constants/ScreenTitle';
 import Theme from '@constants/Theme';
+import { ENV } from '@env';
 import ToastHelpers from '@helpers/ToastHelpers';
 import { resetStoreSignOut } from '@redux/Actions';
+import Constants from 'expo-constants';
 import * as SecureStore from 'expo-secure-store';
 import React from 'react';
 import { TouchableOpacity, View } from 'react-native';
@@ -40,7 +44,7 @@ export default function Menu({ navigation }) {
             icon: {
                 name: 'award',
                 family: IconFamily.FONT_AWESOME_5,
-                size: 26,
+                size: 22,
             },
             onPress: () => {
                 navigation.navigate(ScreenName.LEADER_BOARD);
@@ -51,7 +55,7 @@ export default function Menu({ navigation }) {
             icon: {
                 name: 'star',
                 family: IconFamily.FONT_AWESOME,
-                size: 28,
+                size: 24,
             },
             onPress: () => {
                 if (currentUser.isPartnerVerified) {
@@ -68,7 +72,7 @@ export default function Menu({ navigation }) {
             icon: {
                 name: 'user-lock',
                 family: IconFamily.FONT_AWESOME_5,
-                size: 22,
+                size: 18,
             },
             onPress: () => {
                 navigation.navigate(ScreenName.CHANGE_PASSWORD);
@@ -78,7 +82,7 @@ export default function Menu({ navigation }) {
             title: ScreenTitle.SUPPORT,
             icon: {
                 family: IconFamily.MATERIAL_ICONS,
-                size: 30,
+                size: 26,
                 name: 'contact-support',
             },
             onPress: () => {
@@ -90,7 +94,7 @@ export default function Menu({ navigation }) {
             icon: {
                 name: 'gear',
                 family: IconFamily.FONT_AWESOME,
-                size: 30,
+                size: 26,
             },
             onPress: () => {
                 navigation.navigate(ScreenName.SETTINGS);
@@ -101,7 +105,7 @@ export default function Menu({ navigation }) {
             onPress: () => onSignOut(),
             icon: {
                 name: 'logout',
-                size: SIZES.FONT_H1,
+                size: 20,
                 family: IconFamily.SIMPLE_LINE_ICONS
             },
         },
@@ -131,7 +135,7 @@ export default function Menu({ navigation }) {
                             alignItems: 'center',
                             width: SIZES.WIDTH_BASE * 0.9,
                             alignSelf: 'center',
-                            height: 45
+                            height: 30,
                         }}
                         onPress={() => menuItem.onPress()}
                     >
@@ -149,13 +153,13 @@ export default function Menu({ navigation }) {
                         </View>
                         <View
                             style={{
-                                flex: 8
+                                flex: 9,
                             }}
                         >
                             <CustomText
                                 text={menuItem.title}
                                 style={{
-                                    fontSize: SIZES.FONT_H2,
+                                    fontSize: SIZES.FONT_H3,
                                     fontFamily: TEXT_BOLD
                                 }}
                             />
@@ -177,6 +181,14 @@ export default function Menu({ navigation }) {
                     style={{
                         paddingTop: 10
                     }}
+                />
+                <CustomText
+                    style={{
+                        fontSize: SIZES.FONT_H5,
+                        textAlign: 'center',
+                        marginBottom: 10
+                    }}
+                    text={`${Constants.manifest.version} - ${ENV} (${App.APP_VERSION_OTA})`}
                 />
             </>
         );

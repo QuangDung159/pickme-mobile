@@ -49,7 +49,7 @@ export default function ChangePassword() {
                 }
             },
             {
-                fieldName: 'Nhập lại mật khẩu mới',
+                fieldName: 'Xác nhận mật khẩu mới',
                 input: reNewPassword,
                 validate: {
                     required: {
@@ -117,7 +117,7 @@ export default function ChangePassword() {
                     width: SIZES.WIDTH_BASE * 0.9
                 }}
                 secureTextEntry={!isShowCurrentPassword}
-                placeholder="Nhập mật khẩu hiện tại..."
+                placeholder="Nhập mật khẩu hiện tại"
                 rightIcon={{
                     name: 'eye',
                     family: IconFamily.ENTYPO,
@@ -140,7 +140,7 @@ export default function ChangePassword() {
                     width: SIZES.WIDTH_BASE * 0.9
                 }}
                 secureTextEntry={!isShowNewPassword}
-                placeholder="Nhập mật khẩu mới..."
+                placeholder="Nhập mật khẩu mới"
                 rightIcon={{
                     name: 'eye',
                     family: IconFamily.ENTYPO,
@@ -163,14 +163,14 @@ export default function ChangePassword() {
                     width: SIZES.WIDTH_BASE * 0.9
                 }}
                 secureTextEntry={!isShowReNewPassword}
-                placeholder="Nhập lại mật khẩu mới..."
+                placeholder="Xác nhận mật khẩu mới"
                 rightIcon={{
                     name: 'eye',
                     family: IconFamily.ENTYPO,
                     size: 20,
                     color: COLORS.DEFAULT
                 }}
-                label="Nhập lại mật khẩu mới:"
+                label="Xác nhận mật khẩu mới:"
                 onPressRightIcon={() => setIsShowReNewPassword(!isShowReNewPassword)}
             />
 

@@ -52,10 +52,11 @@ export default async (
         && endpoint !== Rx.AUTHENTICATION.LOGIN
         && endpoint !== Rx.USER.GET_OTP_REGISTER
         && endpoint !== Rx.USER.GET_OTP_FORGOT_PASSWORD
-        && endpoint !== Rx.AUTHENTICATION.SIGN_UP
+        && endpoint !== Rx.AUTHENTICATION.SIGN_UP_V2
         && endpoint !== Rx.USER.SUBMIT_FORGOT_PASSWORD_CONFIRM
         && endpoint !== Rx.PARTNER.GET_LIST_PARTNER
     ) {
+        console.log("%cEndpoint doesn't have permission :>> ", `color: ${COLORS.ERROR}`, endpoint);
         return {
             data: {
                 data: null

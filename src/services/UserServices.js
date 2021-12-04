@@ -146,14 +146,16 @@ const submitForgotPasswordAsync = async (body) => {
 
 const rxSubmitSignUpAsync = async (body, domain = null) => {
     const result = await RxUtil(
-        Rx.AUTHENTICATION.SIGN_UP,
+        Rx.AUTHENTICATION.SIGN_UP_V2,
         'POST',
         body, domain
     );
+    console.log('rxSubmitSignUpAsync :>> ', result);
     return result;
 };
 
 const submitSignUpAsync = async (body) => {
+    console.log('body :>> ', body);
     let result = await rxSubmitSignUpAsync(body);
     const handledResult = await Middlewares.handleResponseStatusMiddleware(result);
     if (handledResult) {
