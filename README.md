@@ -19,5 +19,11 @@
 
 - Install packages with `yarn`.
 - Clone file .env.dev (base on what environment need debug), rename with .env
-- Run `yarn start -c` to start the bundler with clear cache.
+- Run `yarn start -c` to start the bundler with clear cache (you need clean cache after update .env).
 - Run `yarn start` to start the bundler.
+- Install Expo Go to your phone (you can search 'Expo Go' on your App Store/CH Play or use links below):
+  - iOS: [Client iOS](https://itunes.apple.com/app/apple-store/id982107779)
+  - Android: [Client Android](https://play.google.com/store/apps/details?id=host.exp.exponent&referrer=blankexample)
+- On iOS, using phone camera and scan barcode.
+- On Android, open Expo Go and scan barcode.
+- Have fun!
