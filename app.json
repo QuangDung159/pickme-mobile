@@ -3,7 +3,7 @@
     "name": "PickMe",
     "scheme": "pickmecustomer",
     "slug": "customer-pick-me-mobile",
-    "version": "0.7.8",
+    "version": "0.7.9",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "splash": {
@@ -27,7 +27,7 @@
       "package": "com.dragonc92team.pickmecustomer",
       "googleServicesFile": "./google-services.json",
       "useNextNotificationsApi": true,
-      "versionCode": 78
+      "versionCode": 79
     },
     "web": {
       "favicon": "./assets/images/icon.png"
