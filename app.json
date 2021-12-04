@@ -3,7 +3,7 @@
     "name": "PickMe",
     "scheme": "pickmecustomer",
     "slug": "customer-pick-me-mobile",
-    "version": "stg-0.7.8",
+    "version": "0.7.8",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "splash": {

@@ -1,10 +1,14 @@
+/* eslint-disable import/no-unresolved */
 import { CustomText, IconCustom, Line } from '@components/uiComponents';
+import App from '@constants/App';
 import IconFamily from '@constants/IconFamily';
 import ScreenName from '@constants/ScreenName';
 import ScreenTitle from '@constants/ScreenTitle';
 import Theme from '@constants/Theme';
+import { ENV } from '@env';
 import ToastHelpers from '@helpers/ToastHelpers';
 import { resetStoreSignOut } from '@redux/Actions';
+import Constants from 'expo-constants';
 import * as SecureStore from 'expo-secure-store';
 import React from 'react';
 import { TouchableOpacity, View } from 'react-native';
@@ -177,6 +181,14 @@ export default function Menu({ navigation }) {
                     style={{
                         paddingTop: 10
                     }}
+                />
+                <CustomText
+                    style={{
+                        fontSize: SIZES.FONT_H5,
+                        textAlign: 'center',
+                        marginBottom: 10
+                    }}
+                    text={`${Constants.manifest.version} - ${ENV} (${App.APP_VERSION_OTA})`}
                 />
             </>
         );

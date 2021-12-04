@@ -1,8 +1,6 @@
 import { Switch } from '@components/uiComponents';
-import App from '@constants/App';
 import { Theme } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
-import Constants from 'expo-constants';
 import React, { useEffect, useState } from 'react';
 import {
     FlatList,
@@ -91,17 +89,6 @@ export default function Settings() {
                     keyExtractor={(item) => item.id}
                     renderItem={renderItem}
                 />
-                <Text
-                    style={{
-                        fontFamily: TEXT_REGULAR,
-                        fontSize: SIZES.FONT_H5,
-                        color: COLORS.DEFAULT,
-                        textAlign: 'center',
-                        marginTop: 10
-                    }}
-                >
-                    {`PickMe ${Constants.manifest.version} (${App.APP_VERSION_OTA})`}
-                </Text>
             </ScrollView>
         );
     } catch (exception) {
