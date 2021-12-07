@@ -7,8 +7,9 @@ import { setIsSignInOtherDeviceStore, setShowLoaderStore } from '@redux/Actions'
 import UserServices from '@services/UserServices';
 import * as SecureStore from 'expo-secure-store';
 import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Alert } from 'react-native';
 import { useDispatch } from 'react-redux';
+import ModalDisclaimer from './ModalDisclaimer';
 
 const {
     FONT: {
@@ -18,15 +19,13 @@ const {
     COLORS
 } = Theme;
 
-export default function UsernamePasswordForm({
-    setModalVisible, navigation
-}) {
+export default function UsernamePasswordForm({ navigation }) {
     const [onCheckedDisclaimer, setOnCheckedDisclaimer] = useState(false);
     const [isShowPassword, setIsShowPassword] = useState(false);
-    const [isShowRePassword, setIsShowRePassword] = useState('');
     const [password, setPassword] = useState();
     const [rePassword, setRePassword] = useState();
     const [username, setUsername] = useState();
+    const [modalVisible, setModalVisible] = useState(false);
 
     const dispatch = useDispatch();
 
@@ -46,6 +45,12 @@ export default function UsernamePasswordForm({
                 validate: {
                     required: {
                         value: true
+                    },
+                    maxLength: {
+                        value: 50,
+                    },
+                    minLength: {
+                        value: 8,
                     },
                 }
             },
@@ -122,7 +127,7 @@ export default function UsernamePasswordForm({
         if (!validate()) return;
 
         if (!onCheckedDisclaimer) {
-            ToastHelpers.renderToast('Bạn vui lòng đồng ý với các Điều khoản và Điều kiện.', 'error');
+            ToastHelpers.renderToast('Vui lòng tham khảo các Điều khoản và Điều kiện của ứng dụng.', 'error');
             return;
         }
 
@@ -160,7 +165,7 @@ export default function UsernamePasswordForm({
                             marginVertical: 10,
                             width: SIZES.WIDTH_BASE * 0.9
                         }}
-                        placeholder="Nhập tên đăng nhập"
+                        placeholder="Tên đăng nhập"
                     />
 
                     <CustomInput
@@ -175,7 +180,7 @@ export default function UsernamePasswordForm({
                             width: SIZES.WIDTH_BASE * 0.9
                         }}
                         secureTextEntry={!isShowPassword}
-                        placeholder="Nhập mật khẩu"
+                        placeholder="Mật khẩu"
                         rightIcon={{
                             name: 'eye',
                             family: IconFamily.ENTYPO,
@@ -204,34 +209,40 @@ export default function UsernamePasswordForm({
                             size: 20,
                             color: COLORS.DEFAULT
                         }}
-                        onPressRightIcon={() => setIsShowRePassword(!isShowRePassword)}
+                        onPressRightIcon={() => setIsShowPassword(!isShowPassword)}
                     />
                 </View>
 
                 <CustomCheckbox
-                    label="Tôi đồng ý với các Điều khoản và Điều kiện"
+                    label="Tôi đồng ý với tất cả các Điều khoản và Điều kiện."
                     onPressLabel={() => {
-                        setModalVisible(true);
+                        // show modal díclaimer
+                        // Alert.alert('hi there aa' + !onCheckedDisclaimer);
+                        setModalVisible(true)
+                        //setOnCheckedDisclaimer(!onCheckedDisclaimer)
                     }}
-                    onChange={(checked) => {
-                        setOnCheckedDisclaimer(checked);
+                    isChecked={onCheckedDisclaimer}
+                    onChange={(checked) => setOnCheckedDisclaimer(checked)}
+                />
+                
+                <ModalDisclaimer
+                    modalVisible={modalVisible}
+                    setModalVisible={(isVisible) => {
+                        //accept condion
+                        setOnCheckedDisclaimer(true)
+                        // turn off popup
+                        setModalVisible(isVisible)
                     }}
                 />
 
-            </View>
-
-            <View
-                style={{
-                    position: 'absolute',
-                    bottom: 0
-                }}
-            >
-                <CustomButton
-                    onPress={() => onSubmitSignUp()}
-                    buttonStyle={styles.button}
-                    type="active"
-                    label="Xác nhận"
-                />
+                <View>
+                    <CustomButton
+                        onPress={() => onSubmitSignUp()}
+                        buttonStyle={styles.button}
+                        type="active"
+                        label="Tạo tài khoản"
+                    />
+                </View>
             </View>
         </>
     );

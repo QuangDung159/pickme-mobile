@@ -12,31 +12,31 @@ const {
 } = Theme;
 
 export default function ModalDisclaimer({ modalVisible, setModalVisible }) {
-    const renderModalDisclaimer = () => (
-        <CustomModal
-            modalVisible={modalVisible}
-            renderContent={() => (
-                <>
-                    <Text style={styles.modalText}>
-                        {DISCLAIMER_CONTENT}
-                    </Text>
-
-                    <View>
-                        <CustomButton
-                            onPress={() => setModalVisible(false)}
-                            buttonStyle={styles.button}
-                            type="active"
-                            label="Đã hiểu"
-                        />
-                    </View>
-                </>
-            )}
-        />
-    );
-
     return (
         <View>
-            {renderModalDisclaimer()}
+            <CustomModal
+                modalVisible={modalVisible}
+                renderContent={() => (
+                    <>
+                        <Text style={styles.modalText}>
+                            {DISCLAIMER_CONTENT}
+                        </Text>
+
+                        <View>
+                            <CustomButton
+                                onPress={() => {
+                                    if (setModalVisible) {
+                                        setModalVisible(false)
+                                    }
+                                }}
+                                buttonStyle={styles.button}
+                                type="active"
+                                label="Đã hiểu & Đồng ý"
+                            />
+                        </View>
+                    </>
+                )}
+            />
         </View>
     );
 }

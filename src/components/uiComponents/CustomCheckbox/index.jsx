@@ -1,7 +1,7 @@
 import IconCustom from '@components/uiComponents/IconCustom';
 import { IconFamily, Theme } from '@constants/index';
-import React, { useState } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import React from 'react';
+import { Text, TouchableOpacity, View, Alert } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 const {
@@ -18,95 +18,78 @@ export default function CustomCheckbox({
     labelStyle,
     label,
     onChange,
-    defaultChecked, onPressLabel
+    isChecked,
+    onPressLabel
 }) {
-    const [checked, setChecked] = useState(false);
+    const background = isChecked ? COLORS.ACTIVE : COLORS.TRANSPARENT
 
-    const renderCustomerCheckbox = () => {
-        let background = COLORS.BASE;
-        let active = false;
-        if (defaultChecked) {
-            background = defaultChecked || checked ? COLORS.ACTIVE : COLORS.TRANSPARENT;
-            active = defaultChecked || checked;
-        } else {
-            background = checked ? COLORS.ACTIVE : COLORS.TRANSPARENT;
-            active = checked;
-        }
-
-        return (
-            <View
+    return (
+        <View
+            style={
+                [
+                    {
+                        flexDirection: 'row',
+                        alignSelf: 'center',
+                        width: SIZES.WIDTH_BASE * 0.9,
+                    },
+                    containerStyle
+                ]
+            }
+        >
+            <TouchableOpacity
                 style={
                     [
                         {
-                            flexDirection: 'row',
-                            alignSelf: 'center',
-                            width: SIZES.WIDTH_BASE * 0.9,
+                            borderWidth: 2,
+                            width: 20,
+                            height: 20,
+                            borderRadius: 2,
+                            borderColor: isChecked ? COLORS.ACTIVE : COLORS.INPUT,
+                            backgroundColor: background,
+                            marginRight: 5,
                         },
-                        containerStyle
+                        checkboxStyle
                     ]
                 }
+                onPress={() => {
+                    // Alert.alert('before: ' + isChecked)
+                    if (onChange) onChange(!isChecked);
+                }}
             >
-                <TouchableOpacity
+                {isChecked && (
+                    <IconCustom
+                        name="check"
+                        family={IconFamily.ENTYPO}
+                        size={16}
+                        color={COLORS.BASE}
+                    />
+                )}
+            </TouchableOpacity>
+            <TouchableWithoutFeedback
+                onPress={() => {
+                    if (onPressLabel) onPressLabel();
+                }}
+                style={{
+                    justifyContent: 'center',
+                    width: SIZES.WIDTH_BASE * 0.9 - 25,
+                }}
+            >
+                <Text
                     style={
                         [
                             {
-                                borderWidth: 2,
-                                width: 20,
-                                height: 20,
-                                borderRadius: 2,
-                                borderColor: active ? COLORS.ACTIVE : COLORS.INPUT,
-                                backgroundColor: background,
-                                marginRight: 5,
+                                fontFamily: TEXT_REGULAR,
+                                fontSize: SIZES.FONT_H4,
+                                color: COLORS.DEFAULT,
+                                marginLeft: 5,
                             },
-                            checkboxStyle
+                            labelStyle
                         ]
                     }
-                    onPress={() => {
-                        setChecked(!checked);
-                        if (onChange) onChange(!checked);
-                    }}
                 >
-                    {active && (
-                        <IconCustom
-                            name="check"
-                            family={IconFamily.ENTYPO}
-                            size={16}
-                            color={COLORS.BASE}
-                        />
-                    )}
-                </TouchableOpacity>
-                <TouchableWithoutFeedback
-                    onPress={() => {
-                        if (onPressLabel) onPressLabel();
-                    }}
-                    style={{
-                        justifyContent: 'center',
-                        width: SIZES.WIDTH_BASE * 0.9 - 25,
-                    }}
-                >
-                    <Text
-                        style={
-                            [
-                                {
-                                    fontFamily: TEXT_REGULAR,
-                                    fontSize: SIZES.FONT_H4,
-                                    color: COLORS.DEFAULT,
-                                    marginLeft: 5,
-                                },
-                                labelStyle
-                            ]
-                        }
-                    >
-                        {label}
-                    </Text>
-                </TouchableWithoutFeedback>
-            </View>
-        );
-    };
-
-    return (
-        <>
-            {renderCustomerCheckbox()}
-        </>
+                    {label}
+                </Text>
+            </TouchableWithoutFeedback>
+        </View>
     );
 }

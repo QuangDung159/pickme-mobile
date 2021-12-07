@@ -4,6 +4,7 @@ import Header from '@containers/Header';
 import { createStackNavigator } from '@react-navigation/stack';
 import CashOut from '@screens/CashOut';
 import ChangePassword from '@screens/ChangePassword';
+import Policy from '@screens/Policy';
 // screens
 import {
     BookingDetail,
@@ -446,6 +447,24 @@ export const VerificationScreen = () => (
             header: ({ navigation, scene }) => (
                 <Header
                     title={ScreenTitle.VERIFICATION}
+                    options
+                    navigation={navigation}
+                    scene={scene}
+                />
+            ),
+            cardStyle: { backgroundColor: COLORS.BASE }
+        }}
+    />
+);
+
+export const PolicyScreen = () => (
+    <Stack.Screen
+        name={ScreenName.POLICY}
+        component={Policy}
+        options={{
+            header: ({ navigation, scene }) => (
+                <Header
+                    title={ScreenTitle.POLICY}
                     options
                     navigation={navigation}
                     scene={scene}

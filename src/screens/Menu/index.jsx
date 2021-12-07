@@ -40,6 +40,17 @@ export default function Menu({ navigation }) {
         //     },
         // },
         {
+            title: ScreenTitle.POLICY,
+            icon: {
+                name: 'award',
+                family: IconFamily.FONT_AWESOME_5,
+                size: 22,
+            },
+            onPress: () => {
+                navigation.navigate(ScreenName.POLICY);
+            },
+        },
+        {
             title: ScreenTitle.LEADER_BOARD,
             icon: {
                 name: 'award',

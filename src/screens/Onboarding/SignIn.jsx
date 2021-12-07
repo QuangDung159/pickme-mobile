@@ -197,7 +197,7 @@ export default function SignIn({ navigation, setIsShowSpinner, isRegisterPartner
                 }}
             >
                 <CustomInput
-                    placeholder="Nhập tên đăng nhập"
+                    placeholder="Tên đăng nhập"
                     value={username}
                     onChangeText={
                         (usernameInput) => setUsername(usernameInput.trim())
@@ -214,7 +214,7 @@ export default function SignIn({ navigation, setIsShowSpinner, isRegisterPartner
                         marginVertical: 10,
                     }}
                     secureTextEntry={!isShowPassword}
-                    placeholder="Nhập mật khẩu"
+                    placeholder="Mật khẩu"
                     rightIcon={{
                         name: 'eye',
                         family: IconFamily.ENTYPO,

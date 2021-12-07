@@ -15,7 +15,8 @@ import {
     SettingsScreen,
     SignInWithOTPScreen, SignUpScreen,
     SupportScreen, UpdateInfoAccountScreen,
-    VerificationScreen
+    VerificationScreen,
+    PolicyScreen
 } from './StackScreens';
 import TabIcon from './TabIcon';
 
@@ -44,6 +45,7 @@ const MenuStack = () => (
         {SupportScreen()}
         {VerificationScreen()}
         {SettingsScreen()}
+        {PolicyScreen()}
         {/* {PartnerDataScreen()} */}
     </Stack.Navigator>
 );
