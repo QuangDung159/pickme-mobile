@@ -26,7 +26,7 @@ export default function ModalDisclaimer({ modalVisible, setModalVisible }) {
                             <CustomButton
                                 onPress={() => {
                                     if (setModalVisible) {
-                                        setModalVisible(false)
+                                        setModalVisible(false);
                                     }
                                 }}
                                 buttonStyle={styles.button}

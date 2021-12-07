@@ -10,13 +10,11 @@ import {
     CreateAccountScreen, CreateBookingScreen,
     ForgotPasswordScreen, HomeScreen, LeaderBoardScreen, MenuScreen, MessageScreen,
     NotificationScreen,
-    OnboardingScreen, PartnerDataScreen, PersonalScreen,
-    ProfileScreen,
+    OnboardingScreen, PartnerDataScreen, PersonalScreen, PolicyScreen, ProfileScreen,
     SettingsScreen,
     SignInWithOTPScreen, SignUpScreen,
     SupportScreen, UpdateInfoAccountScreen,
-    VerificationScreen,
-    PolicyScreen
+    VerificationScreen
 } from './StackScreens';
 import TabIcon from './TabIcon';
 

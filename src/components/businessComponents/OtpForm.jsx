@@ -287,7 +287,7 @@ export default function OtpForm({
                         }}
                         maxLength={4}
                         onSubmitEditing={() => { }}
-                        autoCapitalize='none'
+                        autoCapitalize="none"
                     />
                     <View style={styles.otp}>
                         {OTP.map((item, index) => (

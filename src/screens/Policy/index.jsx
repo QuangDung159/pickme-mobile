@@ -1,13 +1,9 @@
-import { CenterLoader, CustomButton, CustomInput } from '@components/uiComponents';
-import { IconFamily, Theme } from '@constants/index';
-import { ToastHelpers, ValidationHelpers } from '@helpers/index';
-import { UserServices } from '@services/index';
-import * as SecureStore from 'expo-secure-store';
-import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
 import { DISCLAIMER_CONTENT } from '@constants/Content';
-
+import { Theme } from '@constants/index';
+import { ToastHelpers } from '@helpers/index';
+import React from 'react';
+import { StyleSheet, Text } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const {
     FONT: {
@@ -17,7 +13,6 @@ const {
 } = Theme;
 
 export default function ChangePassword() {
-
     try {
         return (
             <ScrollView

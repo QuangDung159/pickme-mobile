@@ -7,7 +7,7 @@ import { setIsSignInOtherDeviceStore, setShowLoaderStore } from '@redux/Actions'
 import UserServices from '@services/UserServices';
 import * as SecureStore from 'expo-secure-store';
 import React, { useState } from 'react';
-import { StyleSheet, View, Alert } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 import ModalDisclaimer from './ModalDisclaimer';
 
@@ -218,20 +218,20 @@ export default function UsernamePasswordForm({ navigation }) {
                     onPressLabel={() => {
                         // show modal díclaimer
                         // Alert.alert('hi there aa' + !onCheckedDisclaimer);
-                        setModalVisible(true)
-                        //setOnCheckedDisclaimer(!onCheckedDisclaimer)
+                        setModalVisible(true);
+                        // setOnCheckedDisclaimer(!onCheckedDisclaimer)
                     }}
                     isChecked={onCheckedDisclaimer}
                     onChange={(checked) => setOnCheckedDisclaimer(checked)}
                 />
-                
+
                 <ModalDisclaimer
                     modalVisible={modalVisible}
                     setModalVisible={(isVisible) => {
-                        //accept condion
-                        setOnCheckedDisclaimer(true)
+                        // accept condion
+                        setOnCheckedDisclaimer(true);
                         // turn off popup
-                        setModalVisible(isVisible)
+                        setModalVisible(isVisible);
                     }}
                 />
 
