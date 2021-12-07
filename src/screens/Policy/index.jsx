@@ -18,10 +18,11 @@ export default function ChangePassword() {
             <ScrollView
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={{
-                    width: SIZES.WIDTH_BASE,
+                    width: SIZES.WIDTH_BASE * 0.9,
                     alignItems: 'center',
                     backgroundColor: COLORS.BASE,
-                    marginTop: 5
+                    marginTop: 5,
+                    alignSelf: 'center'
                 }}
             >
                 <Text style={styles.modalText}>
