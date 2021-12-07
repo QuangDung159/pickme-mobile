@@ -18,7 +18,7 @@ export default {
     LEADER_BOARD: 'Bảng xếp hạng',
     CREATE_ACCOUNT: 'Tạo tài khoản',
     CASH_IN: 'Nạp tiền',
-    CONVERSATION_LIST: 'Trò chuyện',
+    CONVERSATION_LIST: 'Tin nhắn',
     UPDATE_INFO_ACCOUNT: 'Thông tin cá nhân',
     BANK_ACCOUNT: 'Tài khoản ngân hàng',
     BUSY_CALENDAR: 'Lịch bận',
@@ -29,5 +29,6 @@ export default {
     PARTNER_REGISTER: 'Đăng ký trở thành Host',
     CHANGE_PASSWORD: 'Đổi mật khẩu',
     PARTNER_DATA: 'Thông tin Host',
-    CASH_OUT: 'Rút tiền'
+    CASH_OUT: 'Rút tiền',
+    POLICY: 'Quy định chung',
 };

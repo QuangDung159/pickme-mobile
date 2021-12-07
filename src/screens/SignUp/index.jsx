@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useSelector } from 'react-redux';
-import ModalDisclaimer from './ModalDisclaimer';
 import UsernamePasswordForm from './UsernamePasswordForm';
 
 const {
@@ -22,7 +21,6 @@ const {
 } = Theme;
 
 export default function SignUp({ navigation }) {
-    const [modalVisible, setModalVisible] = useState(false);
     // const [step, setStep] = useState(1);
     // const [isEmail, setIsEmail] = useState(false);
     // const [otp, setOtp] = useState('');
@@ -69,11 +67,6 @@ export default function SignUp({ navigation }) {
 
     return (
         <>
-            <ModalDisclaimer
-                modalVisible={modalVisible}
-                setModalVisible={(isVisible) => setModalVisible(isVisible)}
-            />
-
             <View
                 style={styles.container}
             >
@@ -103,14 +96,11 @@ export default function SignUp({ navigation }) {
                                         ]
                                     }
                                 >
-                                    Đăng ký
+                                    Tạo tài khoản mới
                                 </Text>
                             </View>
                             {/* {renderSignUpViewByStep()} */}
-                            <UsernamePasswordForm
-                                setModalVisible={() => setModalVisible()}
-                                navigation={navigation}
-                            />
+                            <UsernamePasswordForm navigation={navigation} />
                         </View>
                     </KeyboardAwareScrollView>
                 )}
