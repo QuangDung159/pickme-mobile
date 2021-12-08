@@ -8,7 +8,7 @@ import { setCurrentUser, setPersonTabActiveIndex } from '@redux/Actions';
 import { UserServices } from '@services/index';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -366,7 +366,6 @@ export default function UpdateInfoAccount() {
                                 {renderInputInterests()}
                                 {renderInputDescription()}
                                 {renderButtonPanel()}
-                                <Text>{currentUser.isFillDataFirstTime.toString()}</Text>
                             </>
                         )}
                     </KeyboardAwareScrollView>

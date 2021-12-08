@@ -103,7 +103,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
     };
 
     const handleOnPickAvatar = (uri) => {
-        // setIsShowSpinner(true);
+        setIsShowSpinner(true);
 
         MediaHelpers.imgbbUploadImage(
             uri,
@@ -111,7 +111,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                 setIsShowSpinner(false);
                 setImage(uri);
 
-                const newUserInfo = { ...userInfo, url: res.data.url };
+                const newUserInfo = { ...userInfo, url: res.data.url, dob: userInfo?.dob?.substring(0, 3) || '1996' };
                 dispatch(
                     setCurrentUser(newUserInfo)
                 );
