@@ -65,8 +65,8 @@ const HomeStack = () => (
     <Stack.Navigator mode="card" headerMode="screen">
         {HomeScreen()}
         {ProfileScreen()}
-        {/* {CreateBookingScreen()}
-        {MessageScreen()} */}
+        {CreateBookingScreen()}
+        {MessageScreen()}
     </Stack.Navigator>
 );
 
