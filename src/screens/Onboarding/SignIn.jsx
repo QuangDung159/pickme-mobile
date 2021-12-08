@@ -48,7 +48,7 @@ export default function SignIn({ navigation, setIsShowSpinner, isRegisterPartner
 
     const getLoginInfo = async () => {
         const usernameLocal = await SecureStore.getItemAsync('username');
-        setUsername(usernameLocal.trim());
+        setUsername(usernameLocal?.trim() || '');
 
         const passwordLocal = await SecureStore.getItemAsync('password');
         setPassword(passwordLocal);
@@ -90,7 +90,7 @@ export default function SignIn({ navigation, setIsShowSpinner, isRegisterPartner
         const deviceId = await SecureStore.getItemAsync('deviceId');
         if (validate()) {
             const body = {
-                username: username.toString().trim(),
+                username: username?.toString().trim() || '',
                 password,
                 // deviceId: deviceIdToSend || deviceId
                 deviceId
@@ -200,7 +200,7 @@ export default function SignIn({ navigation, setIsShowSpinner, isRegisterPartner
                     placeholder="Tên đăng nhập"
                     value={username}
                     onChangeText={
-                        (usernameInput) => setUsername(usernameInput.trim())
+                        (usernameInput) => setUsername(usernameInput?.trim() || '')
                     }
                     containerStyle={{
                         marginVertical: 10,

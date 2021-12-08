@@ -160,7 +160,7 @@ export default function UsernamePasswordForm({ navigation }) {
                             width: SIZES.WIDTH_BASE * 0.9,
                             textAlign: 'center',
                         }}
-                        onChangeText={(input) => setUsername(input.trim())}
+                        onChangeText={(input) => setUsername(input?.trim() || '')}
                         containerStyle={{
                             marginVertical: 10,
                             width: SIZES.WIDTH_BASE * 0.9
