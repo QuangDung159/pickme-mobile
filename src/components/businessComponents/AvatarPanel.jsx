@@ -1,6 +1,7 @@
 import {
-    CenterLoader
+    CenterLoader, IconCustom
 } from '@components/uiComponents';
+import IconFamily from '@constants/IconFamily';
 import Images from '@constants/Images';
 import Theme from '@constants/Theme';
 import React from 'react';
@@ -10,11 +11,11 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 const { SIZES, COLORS } = Theme;
 
 export default function AvatarPanel({
-    user, image, isPartner = false, onClickAvatar = null
+    user, image, isCurrentUser = false, onClickAvatar = null
 }) {
     // render
     const renderAvatar = () => {
-        if (!isPartner && image) {
+        if (isCurrentUser && image) {
             return (
                 <Image
                     style={styles.avatar}
@@ -23,10 +24,30 @@ export default function AvatarPanel({
             );
         }
         return (
-            <Image
-                style={styles.avatar}
-                source={user.url ? { uri: user.url } : Images.defaultImage}
-            />
+            <>
+                <Image
+                    style={styles.avatar}
+                    source={user.url ? { uri: user.url } : Images.defaultImage}
+                />
+                {isCurrentUser && user.isCustomerVerified && (
+                    <View
+                        style={{
+                            zIndex: 99,
+                            position: 'absolute',
+                            top: 5,
+                            right: 20,
+                        }}
+                    >
+                        <IconCustom
+                            name="check-circle-o"
+                            family={IconFamily.FONT_AWESOME}
+                            size={22}
+                            color={COLORS.ACTIVE}
+                        />
+                    </View>
+                )}
+
+            </>
         );
     };
 
@@ -54,7 +75,7 @@ export default function AvatarPanel({
                     }}
                 >
                     <TouchableWithoutFeedback
-                        onPress={() => !isPartner && onClickAvatar && onClickAvatar()}
+                        onPress={() => isCurrentUser && onClickAvatar && onClickAvatar()}
                     >
                         {renderAvatar()}
                     </TouchableWithoutFeedback>

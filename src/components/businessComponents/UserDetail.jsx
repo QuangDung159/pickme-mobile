@@ -359,6 +359,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                             onClickUpdateAvatar();
                         }
                     }}
+                    isCurrentUser={isCurrentUser}
                 />
 
                 <View style={{
@@ -379,6 +380,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                         <View style={{
                             flexDirection: 'row',
                             justifyContent: 'center',
+                            width: 230
                         }}
                         >
                             <Text
@@ -386,7 +388,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                                     color: COLORS.ACTIVE,
                                     fontSize: SIZES.FONT_H1,
                                     fontFamily: TEXT_BOLD,
-                                    textAlign: 'center'
+                                    textAlign: 'center',
                                 }}
                             >
                                 {`${userInfo.fullName || 'N/a'}`}
