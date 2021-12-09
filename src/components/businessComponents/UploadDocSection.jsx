@@ -231,7 +231,8 @@ export default function UploadDocSection({ setIsShowSpinner, navigation, route }
                 if (verificationArray.length === 4) {
                     const result = UserServices.addVerifyDocAsync({
                         verifyNote: isForPartnerVerify ? VERIFY_NOTE.FOR_PARTNER : VERIFY_NOTE.FOR_CUSTOMER,
-                        documents: verificationArray
+                        documents: verificationArray,
+                        isApplyForPartner: isForPartnerVerify
                     });
                     const { data } = result;
 
@@ -417,7 +418,6 @@ export default function UploadDocSection({ setIsShowSpinner, navigation, route }
                                 </View>
                             </>
                         )}
-
                     </>
                 ) : (
                     <View
