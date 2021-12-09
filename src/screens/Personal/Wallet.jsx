@@ -158,7 +158,7 @@ export default function Wallet({ navigation }) {
                             color: COLORS.ACTIVE,
                         }}
                     >
-                        {`${currentUser.walletAmount}`}
+                        {`${CommonHelpers.generateMoneyStr(currentUser.walletAmount)}`}
                     </Text>
                 </View>
             </View>

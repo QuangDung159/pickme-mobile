@@ -441,7 +441,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                         fontSize={SIZES.FONT_H3}
                         iconName="treasure-chest"
                         iconFamily={IconFamily.MATERIAL_COMMUNITY_ICONS}
-                        content={`Số dư: ${userInfo.walletAmount}`}
+                        content={`Số dư: ${CommonHelpers.generateMoneyStr(userInfo.walletAmount)}`}
                         iconSize={18}
                     />
                 )}
