@@ -1,7 +1,7 @@
 import {
     CenterLoader, CustomButton, CustomInput, CustomText, RadioButton
 } from '@components/uiComponents';
-import { Theme, Interests } from '@constants/index';
+import { Interests, Theme } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
 import ValidationHelpers from '@helpers/ValidationHelpers';
 import { setCurrentUser, setPersonTabActiveIndex } from '@redux/Actions';
@@ -18,7 +18,7 @@ export default function UpdateInfoAccount() {
     const [newUser, setNewUser] = useState({});
     const [isShowSpinner, setIsShowSpinner] = useState(false);
     // const [listInterest, setListInterest] = useState();
-    const [listInterestSelected, setListInterestSelected] = useState();
+    const [listInterestSelected, setListInterestSelected] = useState(Interests);
 
     const currentUser = useSelector((state) => state.userReducer.currentUser);
 
@@ -44,6 +44,18 @@ export default function UpdateInfoAccount() {
 
     const onChangeDescription = (descriptionInput) => {
         setNewUser({ ...newUser, description: descriptionInput });
+    };
+
+    const createInterestStr = () => {
+        let interestStr = '';
+
+        listInterestSelected.forEach((item) => {
+            if (item.selected) {
+                interestStr += `${item.value}, `;
+            }
+        });
+
+        return interestStr;
     };
 
     const renderInputName = () => (
@@ -82,29 +94,10 @@ export default function UpdateInfoAccount() {
         />
     );
 
-    const handlePressInterest = (textValue) => {
-        const list = listInterestSelected || [];
-        const interestIndex = checkInterestInList(textValue);
-
-        if (interestIndex !== false) {
-            list.splice(interestIndex, 1);
-        } else {
-            list.push(textValue);
-        }
-
+    const handlePressInterest = (index) => {
+        const list = [...listInterestSelected];
+        list[index].selected = !list[index].selected;
         setListInterestSelected(list);
-    };
-
-    const checkInterestInList = (textValue) => {
-        if (!listInterestSelected || listInterestSelected.length === 0) {
-            return false;
-        }
-
-        const interest = listInterestSelected.findIndex((item) => item === textValue);
-        if (interest === -1) {
-            return false;
-        }
-        return interest;
     };
 
     const renderOptionInterests = () => (
@@ -131,23 +124,24 @@ export default function UpdateInfoAccount() {
                     flexWrap: 'wrap'
                 }}
             >
-                {Interests.map((item) => (
+                {listInterestSelected.map((item, index) => (
                     <TouchableOpacity
-                        key={item.key}
-                        onPress={() => handlePressInterest(item.value)}
+                        key={item.value}
+                        onPress={() => handlePressInterest(index)}
                         style={{
                             borderColor: COLORS.ACTIVE,
                             borderWidth: 1,
                             borderRadius: 20,
                             marginRight: 10,
                             marginBottom: 10,
+                            backgroundColor: item.selected ? COLORS.ACTIVE : COLORS.BASE
                         }}
                     >
                         <CustomText
                             style={{
                                 paddingHorizontal: 10,
                                 paddingVertical: 5,
-                            // color: COLORS.DEFAULT
+                                color: item.selected ? COLORS.BASE : COLORS.DEFAULT
                             }}
                             text={item.value}
                         />
@@ -335,7 +329,7 @@ export default function UpdateInfoAccount() {
             },
             {
                 fieldName: 'Sở thích',
-                input: newUser.interests,
+                input: createInterestStr(),
                 validate: {
                     required: {
                         value: true,
@@ -395,6 +389,7 @@ export default function UpdateInfoAccount() {
             ...newUser,
             email: currentUser.userName,
             IsMale: newUser.isMale,
+            interests: createInterestStr()
         };
 
         setIsShowSpinner(true);

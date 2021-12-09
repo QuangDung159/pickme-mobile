@@ -1,42 +1,42 @@
 export default [
     {
-        key: 1,
         value: 'Đọc sách',
+        selected: false
     },
     {
-        key: 2,
         value: 'Du lịch',
+        selected: false
     },
     {
-        key: 3,
         value: 'Cà phê',
+        selected: false
     },
     {
-        key: 4,
         value: 'Nấu ăn',
+        selected: false
     },
     {
-        key: 5,
         value: 'Học ngoại ngữ',
+        selected: false
     },
     {
-        key: 6,
         value: 'Diễn xuất',
+        selected: false
     },
     {
-        key: 7,
         value: 'Tìm hiểu công nghệ',
+        selected: true
     },
     {
-        key: 8,
         value: 'Chơi thể thao',
+        selected: false
     },
     {
-        key: 9,
         value: 'Ca hát',
+        selected: false
     },
     {
-        key: 10,
         value: 'Mua sắm',
+        selected: false
     },
 ];
