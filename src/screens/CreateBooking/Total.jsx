@@ -1,4 +1,4 @@
-import { CustomButton, CustomInput } from '@components/uiComponents';
+import { CustomButton, CustomText } from '@components/uiComponents';
 import ScreenName from '@constants/ScreenName';
 import Theme from '@constants/Theme';
 import CommonHelpers from '@helpers/CommonHelpers';
@@ -8,7 +8,7 @@ import { setListBookingStore, setPersonTabActiveIndex } from '@redux/Actions';
 import BookingServices from '@services/BookingServices';
 import moment from 'moment';
 import React from 'react';
-import { Alert, View } from 'react-native';
+import { View } from 'react-native';
 import { useDispatch } from 'react-redux';
 
 const {
@@ -122,46 +122,15 @@ export default function Total({
         setIsShowSpinner(false);
     };
 
-    const renderAlert = () => (
-        Alert.alert(
-            'Huỷ bỏ?',
-            'Bạn có chắc muốn huỷ đặt hẹn?',
-            [
-                {
-                    text: 'Tiếp tục đặt',
-                    style: 'cancel'
-                },
-                {
-                    text: 'Đồng ý huỷ',
-                    onPress: () => {
-                        navigation.navigate(ScreenName.PROFILE, {
-                            user: route.params.partner
-                        });
-                    }
-                }
-            ],
-            { cancelable: false }
-        )
-    );
-
     const renderButtonPanel = () => (
-        <View
-            style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between'
+        <CustomButton
+            onPress={() => onSubmitBooking()}
+            type="active"
+            label="Đặt hẹn"
+            buttonStyle={{
+                width: SIZES.WIDTH_BASE * 0.9
             }}
-        >
-            <CustomButton
-                onPress={() => renderAlert()}
-                type="default"
-                label="Huỷ bỏ"
-            />
-            <CustomButton
-                onPress={() => onSubmitBooking()}
-                type="active"
-                label="Xác nhận"
-            />
-        </View>
+        />
     );
 
     const renderTotal = () => (
@@ -170,23 +139,26 @@ export default function Total({
                 style={{
                     alignSelf: 'center',
                     width: SIZES.WIDTH_BASE * 0.9,
+                    marginTop: 10
                 }}
             >
-                <CustomInput
-                    value={CommonHelpers.generateMoneyStr(calculateTotalAmount(startTimeStr, endTimeStr))}
-                    editable={false}
-                    containerStyle={{
-                        marginVertical: 10,
+                <CustomText
+                    style={{
+                        color: COLORS.ACTIVE,
+                        fontSize: SIZES.FONT_H3,
+                    }}
+                    text="Tổng chi phí:"
+                />
+                <CustomText
+                    style={{
                         width: SIZES.WIDTH_BASE * 0.9,
-                    }}
-                    inputStyle={{
-                        height: 50,
-                        fontSize: SIZES.FONT_H1 + 5,
+                        color: COLORS.ACTIVE,
+                        fontSize: SIZES.FONT_H1 + 10,
                         fontFamily: TEXT_BOLD,
-                        backgroundColor: COLORS.ACTIVE,
-                        color: COLORS.BASE
+                        textAlign: 'center',
+                        marginBottom: 20
                     }}
-                    label="Tổng chi phí:"
+                    text={CommonHelpers.generateMoneyStr(calculateTotalAmount(startTimeStr, endTimeStr))}
                 />
 
                 {renderButtonPanel()}

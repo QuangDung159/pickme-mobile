@@ -68,23 +68,16 @@ export default function PartnerData() {
         <View
             style={{
                 paddingTop: 10,
-                flexDirection: 'row',
-                justifyContent: 'space-between',
                 paddingBottom: 20,
-                width: SIZES.WIDTH_BASE * 0.9
             }}
         >
-            <CustomButton
-                onPress={() => {
-                    setNewUser({ ...currentUser, dob: currentUser?.dob?.substr(0, 4) });
-                }}
-                type="default"
-                label="Huỷ bỏ"
-            />
             <CustomButton
                 onPress={() => onSubmitUpdateInfo()}
                 type="active"
                 label="Xác nhận"
+                buttonStyle={{
+                    width: SIZES.WIDTH_BASE * 0.9
+                }}
             />
         </View>
     );

@@ -42,9 +42,9 @@ export default function Menu({ navigation }) {
         {
             title: ScreenTitle.POLICY,
             icon: {
-                name: 'award',
-                family: IconFamily.FONT_AWESOME_5,
-                size: 22,
+                name: 'legal',
+                family: IconFamily.FONT_AWESOME,
+                size: 20,
             },
             onPress: () => {
                 navigation.navigate(ScreenName.POLICY);
@@ -100,17 +100,17 @@ export default function Menu({ navigation }) {
                 navigation.navigate(ScreenName.SUPPORT);
             },
         },
-        {
-            title: ScreenTitle.SETTINGS,
-            icon: {
-                name: 'gear',
-                family: IconFamily.FONT_AWESOME,
-                size: 26,
-            },
-            onPress: () => {
-                navigation.navigate(ScreenName.SETTINGS);
-            },
-        },
+        // {
+        //     title: ScreenTitle.SETTINGS,
+        //     icon: {
+        //         name: 'gear',
+        //         family: IconFamily.FONT_AWESOME,
+        //         size: 26,
+        //     },
+        //     onPress: () => {
+        //         navigation.navigate(ScreenName.SETTINGS);
+        //     },
+        // },
         {
             title: 'Đăng xuất',
             onPress: () => onSignOut(),

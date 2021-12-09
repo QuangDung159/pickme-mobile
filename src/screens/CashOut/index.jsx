@@ -234,28 +234,17 @@ export default function CashOut() {
                     />
                     <View
                         style={{
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
                             marginBottom: 20,
                             marginTop: 10
                         }}
                     >
                         <CustomButton
-                            onPress={() => {
-                                setCashOutForm({
-                                    bankId: currentUser.bankId,
-                                    bankNum: currentUser.bankNum,
-                                    ownerName: currentUser.ownerName,
-                                    amount: 0
-                                });
-                            }}
-                            type="default"
-                            label="Huỷ bỏ"
-                        />
-                        <CustomButton
                             onPress={() => onSubmitCashOut()}
                             type="active"
                             label="Xác nhận"
+                            buttonStyle={{
+                                width: SIZES.WIDTH_BASE * 0.9
+                            }}
                         />
                     </View>
                 </View>

@@ -177,24 +177,9 @@ export default function Support({ navigation }) {
     const renderButtonPanel = () => (
         <View
             style={{
-                width: SIZES.WIDTH_BASE * 0.9,
                 marginVertical: 10,
-                flexDirection: 'row',
-                justifyContent: 'space-between'
             }}
         >
-            <CustomButton
-                onPress={() => {
-                    setBugReportForm({
-                        title: '',
-                        description: '',
-                        url: ''
-                    });
-                }}
-                buttonStyle={styles.button}
-                type="default"
-                label="Huỷ bỏ"
-            />
             <CustomButton
                 onPress={() => onSubmitBugReport()}
                 buttonStyle={styles.button}
@@ -381,7 +366,7 @@ const styles = StyleSheet.create({
         fontSize: SIZES.FONT_H4
     },
     button: {
-        width: SIZES.WIDTH_BASE * 0.44,
+        width: SIZES.WIDTH_BASE * 0.9,
         margin: 0
     },
     input: {
