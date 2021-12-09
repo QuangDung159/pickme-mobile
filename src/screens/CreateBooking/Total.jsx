@@ -128,7 +128,8 @@ export default function Total({
             type="active"
             label="Đặt hẹn"
             buttonStyle={{
-                width: SIZES.WIDTH_BASE * 0.9
+                width: SIZES.WIDTH_BASE * 0.9,
+                marginBottom: 5
             }}
         />
     );

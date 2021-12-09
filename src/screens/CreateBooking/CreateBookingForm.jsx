@@ -120,6 +120,25 @@ export default function CreateBookingForm({
         const list = [...listNoteOptions];
         list[index].selected = !list[index].selected;
         setListNoteOptions(list);
+
+        let noteStr = '';
+        list.forEach((item) => {
+            if (item.selected) {
+                noteStr += `${item.value}, `;
+            }
+        });
+
+        const noteArr = noteStr.split(', ');
+        if (noteArr.length > 0) {
+            noteArr.splice(noteArr.length - 1, 1);
+        }
+
+        const result = noteArr.join(', ');
+
+        setBooking({
+            ...booking,
+            noted: result,
+        });
     };
 
     const renderNoteOptions = () => (
