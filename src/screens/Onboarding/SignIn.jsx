@@ -23,7 +23,9 @@ const {
     SIZES,
 } = Theme;
 
-export default function SignIn({ navigation, setIsShowSpinner, isRegisterPartner }) {
+export default function SignIn({
+    navigation, setIsShowSpinner, isRegisterPartner, route
+}) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     // const [deviceIdToSend, setDeviceIdToSend] = useState('');
@@ -36,8 +38,11 @@ export default function SignIn({ navigation, setIsShowSpinner, isRegisterPartner
     // handler \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
     useEffect(
         () => {
-            getLoginInfo();
-        }, []
+            const onFocus = navigation.addListener('focus', () => {
+                getLoginInfo();
+            });
+            return onFocus;
+        }
     );
 
     const updateExpoTokenToServer = async (expoTokenFromServer) => {
@@ -50,8 +55,13 @@ export default function SignIn({ navigation, setIsShowSpinner, isRegisterPartner
         const usernameLocal = await SecureStore.getItemAsync('username');
         setUsername(usernameLocal?.trim() || '');
 
-        const passwordLocal = await SecureStore.getItemAsync('password');
-        setPassword(passwordLocal);
+        if (route?.params?.navigateFrom !== ScreenName.SIGN_UP) {
+            console.log('route :>> ', route);
+            const passwordLocal = await SecureStore.getItemAsync('password');
+            setPassword(passwordLocal);
+        } else {
+            setPassword('');
+        }
     };
 
     const registerForPushNotificationsAsync = async () => {

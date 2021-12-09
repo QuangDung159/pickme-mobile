@@ -67,6 +67,7 @@ export default function UpdateInfoAccount() {
                 marginVertical: 10,
                 width: SIZES.WIDTH_BASE * 0.9
             }}
+            autoCapitalize
             label="Tên hiển thị:"
         />
     );
@@ -79,6 +80,7 @@ export default function UpdateInfoAccount() {
                 marginVertical: 10,
                 width: SIZES.WIDTH_BASE * 0.9
             }}
+            autoCapitalize
             label="Nơi sinh sống:"
         />
     );
@@ -171,6 +173,7 @@ export default function UpdateInfoAccount() {
                 marginVertical: 10,
                 width: SIZES.WIDTH_BASE * 0.9
             }}
+            autoCapitalize
             label="Mô tả bản thân:"
         />
     );

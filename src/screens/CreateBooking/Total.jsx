@@ -164,7 +164,7 @@ export default function Total({
                         textAlign: 'center',
                         marginBottom: 10
                     }}
-                    text={CommonHelpers.generateMoneyStr(calculateTotalAmount(startTimeStr, endTimeStr))}
+                    text={CommonHelpers.formatCurrency(calculateTotalAmount(startTimeStr, endTimeStr))}
                 />
 
                 <View

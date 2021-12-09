@@ -136,7 +136,7 @@ export default function PartnerPackageModal({
                                 color: COLORS.ACTIVE
                             }}
                         >
-                            {CommonHelpers.generateMoneyStr(packageActive.estimateAmount)}
+                            {CommonHelpers.formatCurrency(packageActive.estimateAmount)}
                         </Text>
                     </View>
                 </View>

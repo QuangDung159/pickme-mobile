@@ -76,7 +76,7 @@ export default function Wallet({ navigation }) {
             amountChanged,
         } = historyItem;
 
-        const amountChangedDisplay = CommonHelpers.generateMoneyStr(amountChanged);
+        const amountChangedDisplay = CommonHelpers.formatCurrency(amountChanged);
 
         return (
             <View
@@ -158,7 +158,7 @@ export default function Wallet({ navigation }) {
                             color: COLORS.ACTIVE,
                         }}
                     >
-                        {`${CommonHelpers.generateMoneyStr(currentUser.walletAmount)}`}
+                        {`${CommonHelpers.formatCurrency(currentUser.walletAmount)}`}
                     </Text>
                 </View>
             </View>

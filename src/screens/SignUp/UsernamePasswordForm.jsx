@@ -3,7 +3,7 @@ import {
 } from '@components/uiComponents';
 import { IconFamily, ScreenName, Theme } from '@constants/index';
 import { ToastHelpers, ValidationHelpers } from '@helpers/index';
-import { setIsSignInOtherDeviceStore, setShowLoaderStore } from '@redux/Actions';
+import { setShowLoaderStore } from '@redux/Actions';
 import UserServices from '@services/UserServices';
 import * as SecureStore from 'expo-secure-store';
 import React, { useState } from 'react';
@@ -93,35 +93,35 @@ export default function UsernamePasswordForm({ navigation }) {
         return true;
     };
 
-    const onLoginSuccess = async (data) => {
-        const currentUserInfo = await UserServices.mappingCurrentUserInfo(data.data);
-        SecureStore.setItemAsync('api_token', `${currentUserInfo.token}`);
-        dispatch(setIsSignInOtherDeviceStore(false));
-        dispatch(setShowLoaderStore(false));
+    // const onLoginSuccess = async (data) => {
+    //     const currentUserInfo = await UserServices.mappingCurrentUserInfo(data.data);
+    //     SecureStore.setItemAsync('api_token', `${currentUserInfo.token}`);
+    //     dispatch(setIsSignInOtherDeviceStore(false));
+    //     dispatch(setShowLoaderStore(false));
 
-        navigation.navigate(ScreenName.CREATE_ACCOUNT);
-    };
+    //     navigation.navigate(ScreenName.CREATE_ACCOUNT);
+    // };
 
-    const loginWithSignUpInfo = async () => {
-        const deviceId = await SecureStore.getItemAsync('deviceId');
-        const body = {
-            username,
-            password,
-            deviceId
-        };
+    // const loginWithSignUpInfo = async () => {
+    //     const deviceId = await SecureStore.getItemAsync('deviceId');
+    //     const body = {
+    //         username,
+    //         password,
+    //         deviceId
+    //     };
 
-        const result = await UserServices.loginAsync(body);
-        const {
-            data
-        } = result;
+    //     const result = await UserServices.loginAsync(body);
+    //     const {
+    //         data
+    //     } = result;
 
-        if (data) {
-            await onLoginSuccess(data);
-            SecureStore.setItemAsync('username', username.toString());
-            SecureStore.setItemAsync('password', password.toString());
-        }
-        dispatch(setShowLoaderStore(false));
-    };
+    //     if (data) {
+    //         await onLoginSuccess(data);
+    //         SecureStore.setItemAsync('username', username.toString());
+    //         SecureStore.setItemAsync('password', password.toString());
+    //     }
+    //     dispatch(setShowLoaderStore(false));
+    // };
 
     const onSubmitSignUp = async () => {
         if (!validate()) return;
@@ -139,11 +139,16 @@ export default function UsernamePasswordForm({ navigation }) {
 
         dispatch(setShowLoaderStore(true));
         const result = await UserServices.submitSignUpAsync(body);
-        console.log('result :>> ', result);
+
         const { data } = result;
 
         if (data) {
-            await loginWithSignUpInfo();
+            ToastHelpers.renderToast(data.message, 'success');
+
+            await SecureStore.setItemAsync('username', username.toString());
+            await SecureStore.setItemAsync('password', password.toString());
+
+            navigation.navigate(ScreenName.ONBOARDING);
         }
         dispatch(setShowLoaderStore(false));
     };

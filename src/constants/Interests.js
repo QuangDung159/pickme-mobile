@@ -25,7 +25,7 @@ export default [
     },
     {
         value: 'Tìm hiểu công nghệ',
-        selected: true
+        selected: false
     },
     {
         value: 'Chơi thể thao',

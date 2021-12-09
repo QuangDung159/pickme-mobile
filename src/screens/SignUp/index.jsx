@@ -2,7 +2,7 @@ import {
     CenterLoader
 } from '@components/uiComponents';
 import { Theme } from '@constants/index';
-import React, { useState } from 'react';
+import React from 'react';
 import {
     StyleSheet,
     Text,

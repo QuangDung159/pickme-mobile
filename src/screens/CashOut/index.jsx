@@ -235,7 +235,7 @@ export default function CashOut() {
                         }}
                         onEndEditing={
                             (e) => {
-                                setAmountDisplay(CommonHelpers.generateMoneyStr(e.nativeEvent.text));
+                                setAmountDisplay(CommonHelpers.formatCurrency(e.nativeEvent.text));
                             }
                         }
                         inputStyle={{
