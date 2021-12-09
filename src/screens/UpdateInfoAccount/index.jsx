@@ -72,6 +72,19 @@ export default function UpdateInfoAccount() {
         />
     );
 
+    const renderInputPhone = () => (
+        <CustomInput
+            value={newUser.phoneNum}
+            onChangeText={(input) => setNewUser({ ...newUser, phoneNum: input })}
+            containerStyle={{
+                marginVertical: 10,
+                width: SIZES.WIDTH_BASE * 0.9
+            }}
+            keyboardType="number-pad"
+            label="Số điện thoại:"
+        />
+    );
+
     const renderInputHometown = () => (
         <CustomInput
             value={newUser.homeTown}
@@ -306,6 +319,18 @@ export default function UpdateInfoAccount() {
                 }
             },
             {
+                fieldName: 'Tên hiển thị',
+                input: newUser.fullName,
+                validate: {
+                    required: {
+                        value: true,
+                    },
+                    maxLength: {
+                        value: 12,
+                    },
+                }
+            },
+            {
                 fieldName: 'Năm sinh',
                 input: newUser.dob,
                 validate: {
@@ -436,6 +461,7 @@ export default function UpdateInfoAccount() {
                         {newUser && (
                             <>
                                 {renderInputName()}
+                                {renderInputPhone()}
                                 {renderDobGender()}
                                 {renderInputHeightWeight()}
                                 {renderInputHometown()}
