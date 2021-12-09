@@ -31,4 +31,12 @@ export default [
         key: 8,
         value: 'Chơi thể thao',
     },
+    {
+        key: 9,
+        value: 'Ca hát',
+    },
+    {
+        key: 10,
+        value: 'Mua sắm',
+    },
 ];

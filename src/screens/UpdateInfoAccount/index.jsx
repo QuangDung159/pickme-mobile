@@ -1,7 +1,7 @@
 import {
     CenterLoader, CustomButton, CustomInput, CustomText, RadioButton
 } from '@components/uiComponents';
-import { Theme } from '@constants/index';
+import { Theme, Interests } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
 import ValidationHelpers from '@helpers/ValidationHelpers';
 import { setCurrentUser, setPersonTabActiveIndex } from '@redux/Actions';
@@ -17,7 +17,8 @@ const { SIZES, COLORS } = Theme;
 export default function UpdateInfoAccount() {
     const [newUser, setNewUser] = useState({});
     const [isShowSpinner, setIsShowSpinner] = useState(false);
-    const [listInterest, setListInterest] = useState();
+    // const [listInterest, setListInterest] = useState();
+    const [listInterestSelected, setListInterestSelected] = useState();
 
     const currentUser = useSelector((state) => state.userReducer.currentUser);
 
@@ -82,7 +83,7 @@ export default function UpdateInfoAccount() {
     );
 
     const handlePressInterest = (textValue) => {
-        const list = listInterest || [];
+        const list = listInterestSelected || [];
         const interestIndex = checkInterestInList(textValue);
 
         if (interestIndex !== false) {
@@ -91,15 +92,15 @@ export default function UpdateInfoAccount() {
             list.push(textValue);
         }
 
-        setListInterest(list);
+        setListInterestSelected(list);
     };
 
     const checkInterestInList = (textValue) => {
-        if (!listInterest || listInterest.length === 0) {
+        if (!listInterestSelected || listInterestSelected.length === 0) {
             return false;
         }
 
-        const interest = listInterest.findIndex((item) => item === textValue);
+        const interest = listInterestSelected.findIndex((item) => item === textValue);
         if (interest === -1) {
             return false;
         }
@@ -126,230 +127,32 @@ export default function UpdateInfoAccount() {
                     flexDirection: 'row',
                     alignItems: 'center',
                     width: '100%',
-                    marginVertical: 5
+                    marginBottom: 10,
+                    flexWrap: 'wrap'
                 }}
             >
-                <TouchableOpacity
-                    onPress={() => handlePressInterest('Chơi thể thao')}
-                    style={{
-                        borderColor: COLORS.ACTIVE,
-                        borderWidth: 1,
-                        borderRadius: 20,
-                        marginRight: 10,
-                        backgroundColor:
-                        checkInterestInList('Chơi thể thao', listInterest) !== false ? COLORS.BASE : COLORS.ACTIVE
-                    }}
-                >
-                    <CustomText
+                {Interests.map((item) => (
+                    <TouchableOpacity
+                        key={item.key}
+                        onPress={() => handlePressInterest(item.value)}
                         style={{
-                            paddingHorizontal: 10,
-                            paddingVertical: 5,
-                            color: COLORS.BASE
+                            borderColor: COLORS.ACTIVE,
+                            borderWidth: 1,
+                            borderRadius: 20,
+                            marginRight: 10,
+                            marginBottom: 10,
                         }}
-                        text="Chơi thể thao"
-                    />
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                    onPress={() => handlePressInterest('Du lịch')}
-                    style={{
-                        borderColor: COLORS.ACTIVE,
-                        borderWidth: 1,
-                        borderRadius: 20,
-                        marginRight: 10
-                    }}
-                >
-                    <CustomText
-                        style={{
-                            paddingHorizontal: 10,
-                            paddingVertical: 5
-                        }}
-                        text="Du lịch"
-                    />
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={() => handlePressInterest('Chụp ảnh')}
-                    style={{
-                        borderColor: COLORS.ACTIVE,
-                        borderWidth: 1,
-                        borderRadius: 20,
-                        marginRight: 10
-                    }}
-                >
-                    <CustomText
-                        style={{
-                            paddingHorizontal: 10,
-                            paddingVertical: 5
-                        }}
-                        text="Chụp ảnh"
-                    />
-                </TouchableOpacity>
-            </View>
-            <View
-                style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    width: '100%',
-                    marginVertical: 5
-                }}
-            >
-                <TouchableOpacity
-                    onPress={() => handlePressInterest('Đọc sách')}
-                    style={{
-                        borderColor: COLORS.ACTIVE,
-                        borderWidth: 1,
-                        borderRadius: 20,
-                        marginRight: 10
-                    }}
-                >
-                    <CustomText
-                        style={{
-                            paddingHorizontal: 10,
-                            paddingVertical: 5
-                        }}
-                        text="Đọc sách"
-                    />
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                    onPress={() => handlePressInterest('Học ngoại ngữ')}
-                    style={{
-                        borderColor: COLORS.ACTIVE,
-                        borderWidth: 1,
-                        borderRadius: 20,
-                        marginRight: 10
-                    }}
-                >
-                    <CustomText
-                        style={{
-                            paddingHorizontal: 10,
-                            paddingVertical: 5
-                        }}
-                        text="Học ngoại ngữ"
-                    />
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={() => handlePressInterest('Cà phê')}
-                    style={{
-                        borderColor: COLORS.ACTIVE,
-                        borderWidth: 1,
-                        borderRadius: 20,
-                        marginRight: 10
-                    }}
-                >
-                    <CustomText
-                        style={{
-                            paddingHorizontal: 10,
-                            paddingVertical: 5
-                        }}
-                        text="Cà phê"
-                    />
-                </TouchableOpacity>
-            </View>
-            <View
-                style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    width: '100%',
-                    marginVertical: 5
-                }}
-            >
-                <TouchableOpacity
-                    onPress={() => handlePressInterest('Nấu ăn')}
-                    style={{
-                        borderColor: COLORS.ACTIVE,
-                        borderWidth: 1,
-                        borderRadius: 20,
-                        marginRight: 10
-                    }}
-                >
-                    <CustomText
-                        style={{
-                            paddingHorizontal: 10,
-                            paddingVertical: 5
-                        }}
-                        text="Nấu ăn"
-                    />
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                    onPress={() => handlePressInterest('Tìm hiểu công nghệ')}
-                    style={{
-                        borderColor: COLORS.ACTIVE,
-                        borderWidth: 1,
-                        borderRadius: 20,
-                        marginRight: 10
-                    }}
-                >
-                    <CustomText
-                        style={{
-                            paddingHorizontal: 10,
-                            paddingVertical: 5
-                        }}
-                        text="Tìm hiểu công nghệ"
-                    />
-                </TouchableOpacity>
-            </View>
-            <View
-                style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    width: '100%',
-                    marginVertical: 5
-                }}
-            >
-                <TouchableOpacity
-                    onPress={() => handlePressInterest('Diễn xuất')}
-                    style={{
-                        borderColor: COLORS.ACTIVE,
-                        borderWidth: 1,
-                        borderRadius: 20,
-                        marginRight: 10
-                    }}
-                >
-                    <CustomText
-                        style={{
-                            paddingHorizontal: 10,
-                            paddingVertical: 5
-                        }}
-                        text="Diễn xuất"
-                    />
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                    onPress={() => handlePressInterest('Ca hát')}
-                    style={{
-                        borderColor: COLORS.ACTIVE,
-                        borderWidth: 1,
-                        borderRadius: 20,
-                        marginRight: 10
-                    }}
-                >
-                    <CustomText
-                        style={{
-                            paddingHorizontal: 10,
-                            paddingVertical: 5
-                        }}
-                        text="Ca hát"
-                    />
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={() => handlePressInterest('Làm đẹp')}
-                    style={{
-                        borderColor: COLORS.ACTIVE,
-                        borderWidth: 1,
-                        borderRadius: 20,
-                        marginRight: 10
-                    }}
-                >
-                    <CustomText
-                        style={{
-                            paddingHorizontal: 10,
-                            paddingVertical: 5
-                        }}
-                        text="Làm đẹp"
-                    />
-                </TouchableOpacity>
+                    >
+                        <CustomText
+                            style={{
+                                paddingHorizontal: 10,
+                                paddingVertical: 5,
+                            // color: COLORS.DEFAULT
+                            }}
+                            text={item.value}
+                        />
+                    </TouchableOpacity>
+                ))}
             </View>
         </View>
     );
