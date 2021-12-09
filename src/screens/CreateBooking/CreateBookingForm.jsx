@@ -1,9 +1,12 @@
 import { CustomCalendar } from '@components/businessComponents';
-import { CustomButton, CustomInput } from '@components/uiComponents';
+import {
+    CustomButton, CustomInput, CustomText, OptionItem
+} from '@components/uiComponents';
+import BookingNoteOptions from '@constants/BookingNoteOptions';
 import Theme from '@constants/Theme';
 import ToastHelpers from '@helpers/ToastHelpers';
 import moment from 'moment';
-import React from 'react';
+import React, { useState } from 'react';
 import {
     Platform, StyleSheet, Text, View
 } from 'react-native';
@@ -38,6 +41,7 @@ export default function CreateBookingForm({
     setBooking,
     partner
 }) {
+    const [listNoteOptions, setListNoteOptions] = useState(BookingNoteOptions);
     const onChangeDateCalendar = (date) => {
         const result = busyCalendar.find(
             (item) => date === moment(item.date).format('DD-MM-YYYY')
@@ -109,6 +113,49 @@ export default function CreateBookingForm({
             />
 
             {/* {renderIconShowModal()} */}
+        </View>
+    );
+
+    const handlePressNoteOption = (index) => {
+        const list = [...listNoteOptions];
+        list[index].selected = !list[index].selected;
+        setListNoteOptions(list);
+    };
+
+    const renderNoteOptions = () => (
+        <View
+            style={{
+                alignItems: 'flex-start',
+                width: SIZES.WIDTH_BASE * 0.9,
+                marginTop: 10
+            }}
+        >
+            <CustomText
+                text="Ghi chú:"
+                style={{
+                    color: COLORS.ACTIVE,
+                    fontSize: SIZES.FONT_H3,
+                }}
+            />
+            <View
+                style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    width: '100%',
+                    marginBottom: 10,
+                    flexWrap: 'wrap'
+                }}
+            >
+                {listNoteOptions.map((item, index) => (
+                    <OptionItem
+                        item={item}
+                        index={index}
+                        handlePressItem={() => {
+                            handlePressNoteOption(index);
+                        }}
+                    />
+                ))}
+            </View>
         </View>
     );
 
@@ -218,10 +265,9 @@ export default function CreateBookingForm({
                 )} */}
 
                 {renderButtonTimePicker()}
-
                 {renderInputAddress()}
-
                 {renderInputNote()}
+                {renderNoteOptions()}
             </View>
         </View>
     );

@@ -1,5 +1,5 @@
 import {
-    CenterLoader, CustomButton, CustomInput, CustomText, RadioButton
+    CenterLoader, CustomButton, CustomInput, CustomText, OptionItem, RadioButton
 } from '@components/uiComponents';
 import { Interests, Theme } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
@@ -8,7 +8,7 @@ import { setCurrentUser, setPersonTabActiveIndex } from '@redux/Actions';
 import { UserServices } from '@services/index';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import { View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -147,27 +147,13 @@ export default function UpdateInfoAccount() {
                 }}
             >
                 {listInterestSelected.map((item, index) => (
-                    <TouchableOpacity
-                        key={item.value}
-                        onPress={() => handlePressInterest(index)}
-                        style={{
-                            borderColor: COLORS.ACTIVE,
-                            borderWidth: 1,
-                            borderRadius: 20,
-                            marginRight: 10,
-                            marginBottom: 10,
-                            backgroundColor: item.selected ? COLORS.ACTIVE : COLORS.BASE
+                    <OptionItem
+                        item={item}
+                        index={index}
+                        handlePressItem={() => {
+                            handlePressInterest(index);
                         }}
-                    >
-                        <CustomText
-                            style={{
-                                paddingHorizontal: 10,
-                                paddingVertical: 5,
-                                color: item.selected ? COLORS.BASE : COLORS.DEFAULT
-                            }}
-                            text={item.value}
-                        />
-                    </TouchableOpacity>
+                    />
                 ))}
             </View>
         </View>

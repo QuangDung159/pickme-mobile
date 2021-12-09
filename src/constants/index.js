@@ -1,3 +1,4 @@
+import BookingNoteOptions from './BookingNoteOptions';
 import BookingStatus from './BookingStatus';
 import DateTimeConst from './DateTimeConst';
 import DocumentType from './DocumentType';
@@ -31,5 +32,6 @@ export {
     ValidationMessageTemplate,
     Gender,
     PickMeInfo,
-    Interests
+    Interests,
+    BookingNoteOptions
 };
