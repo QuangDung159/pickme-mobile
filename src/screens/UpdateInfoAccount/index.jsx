@@ -27,6 +27,7 @@ export default function UpdateInfoAccount() {
     useEffect(
         () => {
             setNewUser({ ...currentUser, dob: currentUser?.dob?.substr(0, 4), isMale: currentUser.isMale });
+            handleListInterestFromAPI();
         }, []
     );
 
@@ -38,9 +39,9 @@ export default function UpdateInfoAccount() {
         setNewUser({ ...newUser, homeTown: hometownInput });
     };
 
-    const onChangeInterests = (interestsInput) => {
-        setNewUser({ ...newUser, interests: interestsInput });
-    };
+    // const onChangeInterests = (interestsInput) => {
+    //     setNewUser({ ...newUser, interests: interestsInput });
+    // };
 
     const onChangeDescription = (descriptionInput) => {
         setNewUser({ ...newUser, description: descriptionInput });
@@ -82,22 +83,43 @@ export default function UpdateInfoAccount() {
         />
     );
 
-    const renderInputInterests = () => (
-        <CustomInput
-            value={newUser.interests}
-            onChangeText={(input) => onChangeInterests(input)}
-            containerStyle={{
-                marginVertical: 10,
-                width: SIZES.WIDTH_BASE * 0.9
-            }}
-            label="Sở thích:"
-        />
-    );
+    // const renderInputInterests = () => (
+    //     <CustomInput
+    //         value={newUser.interests}
+    //         onChangeText={(input) => onChangeInterests(input)}
+    //         containerStyle={{
+    //             marginVertical: 10,
+    //             width: SIZES.WIDTH_BASE * 0.9
+    //         }}
+    //         label="Sở thích:"
+    //     />
+    // );
 
     const handlePressInterest = (index) => {
         const list = [...listInterestSelected];
         list[index].selected = !list[index].selected;
         setListInterestSelected(list);
+    };
+
+    const handleListInterestFromAPI = () => {
+        const list = currentUser?.interests ? currentUser.interests.split(', ') : [];
+
+        if (list.length === 0) {
+            return;
+        }
+
+        list.splice(list.length - 1, 1);
+        const listResult = [...listInterestSelected];
+
+        list.forEach((itemFromAPI) => {
+            listResult.forEach((item, index) => {
+                if (itemFromAPI === item.value) {
+                    listResult[index].selected = true;
+                }
+            });
+        });
+
+        setListInterestSelected(listResult);
     };
 
     const renderOptionInterests = () => (
@@ -428,15 +450,9 @@ export default function UpdateInfoAccount() {
                                 {renderDobGender()}
                                 {renderInputHeightWeight()}
                                 {renderInputHometown()}
-                                {renderInputInterests()}
+                                {/* {renderInputInterests()} */}
                                 {renderOptionInterests()}
                                 {renderInputDescription()}
-                                <CustomText
-                                    style={{
-                                        paddingHorizontal: 10,
-                                        paddingVertical: 5
-                                    }}
-                                />
                                 {renderButtonPanel()}
                             </>
                         )}
