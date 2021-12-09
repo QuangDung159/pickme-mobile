@@ -1,4 +1,8 @@
-import { CustomButton, CustomText } from '@components/uiComponents';
+/* eslint-disable max-len */
+import {
+    CustomButton, CustomText, IconCustom, NoteText
+} from '@components/uiComponents';
+import IconFamily from '@constants/IconFamily';
 import ScreenName from '@constants/ScreenName';
 import Theme from '@constants/Theme';
 import CommonHelpers from '@helpers/CommonHelpers';
@@ -13,7 +17,8 @@ import { useDispatch } from 'react-redux';
 
 const {
     FONT: {
-        TEXT_BOLD
+        TEXT_BOLD,
+        TEXT_REGULAR
     },
     SIZES,
     COLORS
@@ -140,7 +145,7 @@ export default function Total({
                 style={{
                     alignSelf: 'center',
                     width: SIZES.WIDTH_BASE * 0.9,
-                    marginTop: 10
+                    marginTop: 5
                 }}
             >
                 <CustomText
@@ -157,10 +162,35 @@ export default function Total({
                         fontSize: SIZES.FONT_H1 + 10,
                         fontFamily: TEXT_BOLD,
                         textAlign: 'center',
-                        marginBottom: 20
+                        marginBottom: 10
                     }}
                     text={CommonHelpers.generateMoneyStr(calculateTotalAmount(startTimeStr, endTimeStr))}
                 />
+
+                <View
+                    style={{
+                        marginBottom: 10
+                    }}
+                >
+                    <NoteText
+                        width={SIZES.WIDTH_BASE * 0.9}
+                        title="Lưu ý:"
+                        content="Tổng phí chỉ là chi phí trên ứng dụng và không bao gồm các loại phí khác như: ăn, uống, vé xem phim... Vui lòng thảo luận trước về chi phí đối với Host."
+                        contentStyle={{
+                            fontSize: SIZES.FONT_H4,
+                            color: COLORS.ACTIVE,
+                            fontFamily: TEXT_REGULAR,
+                        }}
+                        iconComponent={(
+                            <IconCustom
+                                name="info-circle"
+                                family={IconFamily.FONT_AWESOME}
+                                size={18}
+                                color={COLORS.ACTIVE}
+                            />
+                        )}
+                    />
+                </View>
 
                 {renderButtonPanel()}
             </View>
