@@ -54,6 +54,16 @@ export default function NotificationItem({
                 dispatch(setPersonTabActiveIndex(1));
                 break;
             }
+            case 4: {
+                navigation.navigate(ScreenName.PERSONAL);
+                dispatch(setPersonTabActiveIndex(1));
+                break;
+            }
+            case 5: {
+                navigation.navigate(ScreenName.PERSONAL);
+                dispatch(setPersonTabActiveIndex(0));
+                break;
+            }
             default: {
                 break;
             }
@@ -69,7 +79,7 @@ export default function NotificationItem({
 
     const renderNotiContent = () => {
         const {
-            content, id, navigationId, type
+            content, id, navigationId, type, title
         } = notiItem;
 
         return (
@@ -102,10 +112,22 @@ export default function NotificationItem({
                             }}
                         >
                             <Text
+                                numberOfLines={1}
+                                style={{
+                                    color: COLORS.DEFAULT,
+                                    fontSize: SIZES.FONT_H4,
+                                    fontFamily: !isRead
+                                        ? TEXT_BOLD
+                                        : TEXT_REGULAR,
+                                }}
+                            >
+                                {title}
+                            </Text>
+                            <Text
                                 numberOfLines={2}
                                 style={{
                                     color: COLORS.DEFAULT,
-                                    fontSize: 16,
+                                    fontSize: SIZES.FONT_H4,
                                     fontFamily: !isRead
                                         ? TEXT_BOLD
                                         : TEXT_REGULAR,
