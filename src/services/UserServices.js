@@ -354,7 +354,7 @@ const mappingCurrentUserInfo = async (data) => {
 
     const currentUserInfo = {
         ...data,
-        token: apiToken
+        token: data?.token || apiToken
     };
 
     return currentUserInfo;
