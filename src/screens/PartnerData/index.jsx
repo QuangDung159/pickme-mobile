@@ -55,6 +55,9 @@ export default function PartnerData() {
                     setAmountDisplay(CommonHelpers.formatCurrency(e.nativeEvent.text));
                 }
             }
+            onFocus={() => {
+                setAmountDisplay(newUser.earningExpected);
+            }}
         />
     );
 

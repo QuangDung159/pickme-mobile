@@ -38,10 +38,9 @@ export default function CashOut() {
             fetchListBankByStore();
 
             const { bankId, bankNum, ownerName } = currentUser;
-            if (!bankNum) return;
 
             setCashOutForm({
-                bankId,
+                bankId: bankId || listBank[0].id,
                 bankNum,
                 ownerName,
                 amount: 0
@@ -238,6 +237,9 @@ export default function CashOut() {
                                 setAmountDisplay(CommonHelpers.formatCurrency(e.nativeEvent.text));
                             }
                         }
+                        onFocus={() => {
+                            setAmountDisplay(cashOutForm.amount);
+                        }}
                         inputStyle={{
                             fontFamily: TEXT_BOLD,
                             color: COLORS.ACTIVE,
