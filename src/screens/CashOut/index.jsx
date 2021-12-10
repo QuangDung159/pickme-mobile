@@ -24,7 +24,7 @@ export default function CashOut() {
         bankNum: '',
         ownerName: '',
         bankId: '',
-        amount: 0
+        amount: ''
     });
     const [amountDisplay, setAmountDisplay] = useState('');
 
@@ -43,7 +43,7 @@ export default function CashOut() {
                 bankId: bankId || listBank[0].id,
                 bankNum,
                 ownerName,
-                amount: 0
+                amount: ''
             });
         }, []
     );
