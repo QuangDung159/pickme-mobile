@@ -11,9 +11,8 @@ import { UserServices } from '@services/index';
 import React, { useEffect, useState } from 'react';
 import {
     Alert, RefreshControl,
-    ScrollView, Text, View
+    ScrollView, Text, TouchableOpacity, View
 } from 'react-native';
-import { TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import ImageView from 'react-native-image-viewing';
 import { useDispatch, useSelector } from 'react-redux';
 import PartnerDataSection from './PartnerDataSection';
@@ -452,7 +451,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
             {isCurrentUser && (
                 <>
                     {!userInfo?.isCustomerVerified && (
-                        <TouchableWithoutFeedback
+                        <TouchableOpacity
                             onPress={() => {
                                 navigation.navigate(ScreenName.VERIFICATION);
                             }}
@@ -469,7 +468,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                             >
                                 <VerificationStatusPanel />
                             </View>
-                        </TouchableWithoutFeedback>
+                        </TouchableOpacity>
                     )}
                 </>
             )}

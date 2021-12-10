@@ -134,7 +134,7 @@ export default function Total({
             label="Đặt hẹn"
             buttonStyle={{
                 width: SIZES.WIDTH_BASE * 0.9,
-                marginBottom: 5
+                marginVertical: 15
             }}
         />
     );
@@ -145,31 +145,23 @@ export default function Total({
                 style={{
                     alignSelf: 'center',
                     width: SIZES.WIDTH_BASE * 0.9,
-                    marginTop: 5
                 }}
             >
                 <CustomText
                     style={{
                         color: COLORS.ACTIVE,
-                        fontSize: SIZES.FONT_H3,
-                    }}
-                    text="Tổng chi phí:"
-                />
-                <CustomText
-                    style={{
-                        width: SIZES.WIDTH_BASE * 0.9,
-                        color: COLORS.ACTIVE,
-                        fontSize: SIZES.FONT_H1 + 10,
+                        fontSize: SIZES.FONT_H1,
                         fontFamily: TEXT_BOLD,
-                        textAlign: 'center',
-                        marginBottom: 10
+                        textAlign: 'center'
                     }}
-                    text={CommonHelpers.formatCurrency(calculateTotalAmount(startTimeStr, endTimeStr))}
+                    text={`Tổng chi phí: ${CommonHelpers.formatCurrency(calculateTotalAmount(startTimeStr, endTimeStr))}`}
                 />
+
+                {renderButtonPanel()}
 
                 <View
                     style={{
-                        marginBottom: 10
+                        marginBottom: 5
                     }}
                 >
                     <NoteText
@@ -191,8 +183,6 @@ export default function Total({
                         )}
                     />
                 </View>
-
-                {renderButtonPanel()}
             </View>
 
         </View>

@@ -85,36 +85,75 @@ export default function CreateBookingForm({
     };
 
     const renderButtonTimePicker = () => (
-        <View
-            style={{
-                marginBottom: 10,
-                width: SIZES.WIDTH_BASE * 0.9,
-                flexDirection: 'row',
-                justifyContent: 'space-between'
-            }}
-        >
-            <CustomButton
-                onPress={() => {
-                    setModalTimePickerVisible(true);
-                    setModalActiveType('start');
-                    onClickTriggerTimePicker('start');
+        <>
+            <View
+                style={{
+                    width: SIZES.WIDTH_BASE * 0.9,
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center'
                 }}
-                type="active"
-                label={startTimeStr}
-            />
+            >
+                <View
+                    style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'center'
+                    }}
+                >
+                    <CustomText
+                        style={{
+                            color: COLORS.ACTIVE,
+                            marginRight: 10
+                        }}
+                        text="Bắt đầu:"
+                    />
+                    <CustomButton
+                        onPress={() => {
+                            setModalTimePickerVisible(true);
+                            setModalActiveType('start');
+                            onClickTriggerTimePicker('start');
+                        }}
+                        type="active"
+                        label={startTimeStr}
+                        buttonStyle={{
+                            width: 80
+                        }}
+                    />
+                </View>
 
-            <CustomButton
-                onPress={() => {
-                    setModalActiveType('end');
-                    setModalTimePickerVisible(true);
-                    onClickTriggerTimePicker('end');
-                }}
-                type="active"
-                label={endTimeStr}
-            />
+                <View
+                    style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'center'
+                    }}
+                >
+                    <CustomText
+                        style={{
+                            color: COLORS.ACTIVE,
+                            marginRight: 10
+                        }}
+                        text="Kết thúc:"
+                    />
+                    <CustomButton
+                        onPress={() => {
+                            setModalActiveType('end');
+                            setModalTimePickerVisible(true);
+                            onClickTriggerTimePicker('end');
+                        }}
+                        type="active"
+                        label={endTimeStr}
+                        buttonStyle={{
+                            width: 80
+                        }}
+                    />
 
-            {/* {renderIconShowModal()} */}
-        </View>
+                </View>
+
+                {/* {renderIconShowModal()} */}
+            </View>
+        </>
     );
 
     const handlePressNoteOption = (index) => {
@@ -195,7 +234,7 @@ export default function CreateBookingForm({
                 width: SIZES.WIDTH_BASE * 0.9
             }}
             inputStyle={{
-                height: 80,
+                height: 60,
             }}
         />
     );
@@ -222,7 +261,6 @@ export default function CreateBookingForm({
         return (
             <View
                 style={{
-                    marginVertical: 15,
                     alignSelf: 'center',
                     alignItems: 'center',
                 }}
@@ -251,7 +289,7 @@ export default function CreateBookingForm({
                 style={{
                     color: COLORS.ACTIVE,
                     fontSize: SIZES.FONT_H3,
-                    marginTop: 10
+                    marginTop: 5
                 }}
             />
             {isShowNoteInput && (

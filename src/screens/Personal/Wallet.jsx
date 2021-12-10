@@ -3,7 +3,7 @@ import {
     IconFamily, ScreenName, Theme
 } from '@constants/index';
 import { CommonHelpers, ToastHelpers } from '@helpers/index';
-import { setCurrentUser, setListCashHistoryStore } from '@redux/Actions';
+import { setListCashHistoryStore } from '@redux/Actions';
 import { CashServices } from '@services/index';
 import React, { useEffect, useState } from 'react';
 import { RefreshControl, Text, View } from 'react-native';
@@ -204,12 +204,13 @@ export default function Wallet({ navigation }) {
             const history = data.data;
             if (history && history.length !== 0) {
                 dispatch(setListCashHistoryStore(history));
-                const latestUpdatedAmount = history[0].updatedWalletAmount;
+                // const latestUpdatedAmount = history[0].updatedWalletAmount;
+                // console.log('latestUpdatedAmount :>> ', latestUpdatedAmount);
 
-                dispatch(setCurrentUser({
-                    ...currentUser,
-                    walletAmount: latestUpdatedAmount
-                }));
+                // dispatch(setCurrentUser({
+                //     ...currentUser,
+                //     walletAmount: latestUpdatedAmount
+                // }));
             }
         }
         setIsShowSpinner(false);

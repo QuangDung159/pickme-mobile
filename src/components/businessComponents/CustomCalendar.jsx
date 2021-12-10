@@ -70,8 +70,7 @@ export default function CustomCalendar({ selectedDate, onChangeDate }) {
     return (
         <View
             style={{
-                height: SIZES.HEIGHT_BASE * 0.1,
-                marginBottom: 10
+                height: SIZES.HEIGHT_BASE * 0.08,
             }}
         >
             <View
@@ -108,7 +107,7 @@ export default function CustomCalendar({ selectedDate, onChangeDate }) {
             <Line
                 borderColor={COLORS.DEFAULT}
                 style={{
-                    marginVertical: 10
+                    marginVertical: 5
                 }}
             />
             {/* render date */}
@@ -121,7 +120,7 @@ export default function CustomCalendar({ selectedDate, onChangeDate }) {
                     let borderWidth = 0;
                     let borderColor = '';
                     if (item === selectedDateState) {
-                        borderWidth = 0.5;
+                        borderWidth = 1;
                         borderColor = COLORS.ACTIVE;
                     }
 
@@ -144,9 +143,9 @@ export default function CustomCalendar({ selectedDate, onChangeDate }) {
                             <CustomButton
                                 onPress={() => { onClickDate(item); }}
                                 buttonStyle={{
-                                    width: 34,
-                                    height: 34,
-                                    borderRadius: 17,
+                                    width: 30,
+                                    height: 30,
+                                    borderRadius: 15,
                                     borderColor,
                                     borderWidth
                                 }}
