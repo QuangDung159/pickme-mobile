@@ -191,8 +191,7 @@ export default function CardBooking({ booking }) {
                         Calendar.openEventInCalendar(eventId);
                     }
                 }
-            ],
-            { cancelable: false });
+            ]);
         } else {
             ToastHelpers.renderToast('Lỗi thêm lịch. Vui lòng thử lại sau');
         }
@@ -383,7 +382,7 @@ export default function CardBooking({ booking }) {
                                         text: 'Đã hiểu',
                                         style: 'ok'
                                     },
-                                ], { cancelable: false });
+                                ], { cancelable: true });
                             }
                         }}
                         type="active"

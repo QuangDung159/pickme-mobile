@@ -1,5 +1,5 @@
 import {
-    CenterLoader, CustomButton, CustomInput
+    CenterLoader, CustomButton, CustomInput, CustomText
 } from '@components/uiComponents';
 import { Theme } from '@constants/index';
 import { CommonHelpers, ToastHelpers, ValidationHelpers } from '@helpers/index';
@@ -117,7 +117,7 @@ export default function CashOut() {
                         value: true,
                     },
                     equalGreaterThan: {
-                        value: 500000
+                        value: 100000
                     },
                 }
             },
@@ -139,9 +139,10 @@ export default function CashOut() {
             const { data } = result;
 
             if (data) {
-                setCashOutForm(data);
+                // setCashOutForm(data);
                 getCurrentUser();
                 ToastHelpers.renderToast(data.message, 'success');
+                setAmountDisplay('');
             }
             setIsShowSpinner(false);
         }
@@ -179,6 +180,27 @@ export default function CashOut() {
                         marginTop: Platform.OS === 'ios' ? 0 : 10
                     }}
                 >
+                    <View
+                        style={{
+                            width: '100%',
+                            borderColor: COLORS.ACTIVE,
+                            borderRadius: 20,
+                            borderWidth: 1,
+                            height: 35,
+                            justifyContent: 'center'
+                        }}
+                    >
+                        <CustomText
+                            style={{
+                                fontFamily: TEXT_BOLD,
+                                fontSize: SIZES.FONT_H3,
+                                color: COLORS.ACTIVE,
+                                textAlign: 'center'
+                            }}
+                            text={`Số dư: ${CommonHelpers.formatCurrency(currentUser.walletAmount)}`}
+                        />
+                    </View>
+
                     <Picker
                         selectedValue={bankId}
                         onChangeText={(input) => setCashOutForm({ ...cashOutForm, bankId: input })}

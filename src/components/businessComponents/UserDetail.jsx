@@ -442,6 +442,10 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                         iconFamily={IconFamily.MATERIAL_COMMUNITY_ICONS}
                         content={`Số dư: ${CommonHelpers.formatCurrency(userInfo.walletAmount)}`}
                         iconSize={18}
+                        contentTextStyle={{
+                            fontFamily: TEXT_BOLD,
+                            color: COLORS.ACTIVE
+                        }}
                     />
                 )}
 
