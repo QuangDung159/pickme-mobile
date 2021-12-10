@@ -1,6 +1,0 @@
-echo Process build apk...
-expo build:android -t apk --release-channel prd
-echo Done
-echo Process acessing FCM server key...
-expo push:android:upload --api-key AAAAonYFK3w:APA91bFfxV28Bl_aqUeknQ5yefd7isjB81KsOW7S5MKDeD5moj1cZwYqourtNp6nzc3HNenl4EjfmrwV8uj6raIZtEqZizAbVwswvEGYZWaCABgg37Sbv1Op-e8ouH3qtKFXDCDM6KCh
-echo Done
