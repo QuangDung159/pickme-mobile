@@ -56,7 +56,6 @@ export default function SignIn({
         setUsername(usernameLocal?.trim() || '');
 
         if (route?.params?.navigateFrom !== ScreenName.SIGN_UP) {
-            console.log('route :>> ', route);
             const passwordLocal = await SecureStore.getItemAsync('password');
             setPassword(passwordLocal);
         } else {
@@ -97,13 +96,13 @@ export default function SignIn({
     };
 
     const onSubmitLogin = async () => {
-        const deviceId = await SecureStore.getItemAsync('deviceId');
+        // const deviceId = await SecureStore.getItemAsync('deviceId');
         if (validate()) {
             const body = {
                 username: username?.toString().trim() || '',
                 password,
                 // deviceId: deviceIdToSend || deviceId
-                deviceId
+                deviceId: 'deviceId'
             };
 
             setIsShowSpinner(true);
