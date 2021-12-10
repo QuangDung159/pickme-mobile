@@ -30,4 +30,5 @@ export default {
     FORGOT_PASSWORD: 'ForgotPassword',
     PARTNER_DATA: 'PartnerData',
     CHANGE_PASSWORD: 'ChangePassword',
+    POLICY: 'Policy',
 };

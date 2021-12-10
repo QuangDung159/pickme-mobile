@@ -242,7 +242,7 @@ export default function Onboarding({ navigation }) {
                                     fontSize: SIZES.FONT_H3,
                                     fontFamily: TEXT_BOLD
                                 }}
-                                text="Đăng ký tài khoản"
+                                text="Đăng ký"
                                 onPress={() => navigation.navigate(ScreenName.SIGN_UP)}
                             />
                             {/* <TouchableText

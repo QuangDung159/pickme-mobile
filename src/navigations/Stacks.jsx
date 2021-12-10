@@ -10,8 +10,7 @@ import {
     CreateAccountScreen, CreateBookingScreen,
     ForgotPasswordScreen, HomeScreen, LeaderBoardScreen, MenuScreen, MessageScreen,
     NotificationScreen,
-    OnboardingScreen, PartnerDataScreen, PersonalScreen,
-    ProfileScreen,
+    OnboardingScreen, PartnerDataScreen, PersonalScreen, PolicyScreen, ProfileScreen,
     SettingsScreen,
     SignInWithOTPScreen, SignUpScreen,
     SupportScreen, UpdateInfoAccountScreen,
@@ -44,6 +43,7 @@ const MenuStack = () => (
         {SupportScreen()}
         {VerificationScreen()}
         {SettingsScreen()}
+        {PolicyScreen()}
         {/* {PartnerDataScreen()} */}
     </Stack.Navigator>
 );
@@ -65,8 +65,8 @@ const HomeStack = () => (
     <Stack.Navigator mode="card" headerMode="screen">
         {HomeScreen()}
         {ProfileScreen()}
-        {/* {CreateBookingScreen()}
-        {MessageScreen()} */}
+        {CreateBookingScreen()}
+        {MessageScreen()}
     </Stack.Navigator>
 );
 

@@ -1,14 +1,14 @@
 import {
-    CenterLoader, CustomButton, CustomInput, CustomText, RadioButton
+    CenterLoader, CustomButton, CustomInput, CustomText, OptionItem, RadioButton
 } from '@components/uiComponents';
-import { Theme } from '@constants/index';
+import { Interests, Theme } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
 import ValidationHelpers from '@helpers/ValidationHelpers';
 import { setCurrentUser, setPersonTabActiveIndex } from '@redux/Actions';
 import { UserServices } from '@services/index';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -17,6 +17,8 @@ const { SIZES, COLORS } = Theme;
 export default function UpdateInfoAccount() {
     const [newUser, setNewUser] = useState({});
     const [isShowSpinner, setIsShowSpinner] = useState(false);
+    // const [listInterest, setListInterest] = useState();
+    const [listInterestSelected, setListInterestSelected] = useState(Interests);
 
     const currentUser = useSelector((state) => state.userReducer.currentUser);
 
@@ -25,6 +27,7 @@ export default function UpdateInfoAccount() {
     useEffect(
         () => {
             setNewUser({ ...currentUser, dob: currentUser?.dob?.substr(0, 4), isMale: currentUser.isMale });
+            handleListInterestFromAPI();
         }, []
     );
 
@@ -36,12 +39,24 @@ export default function UpdateInfoAccount() {
         setNewUser({ ...newUser, homeTown: hometownInput });
     };
 
-    const onChangeInterests = (interestsInput) => {
-        setNewUser({ ...newUser, interests: interestsInput });
-    };
+    // const onChangeInterests = (interestsInput) => {
+    //     setNewUser({ ...newUser, interests: interestsInput });
+    // };
 
     const onChangeDescription = (descriptionInput) => {
         setNewUser({ ...newUser, description: descriptionInput });
+    };
+
+    const createInterestStr = () => {
+        let interestStr = '';
+
+        listInterestSelected.forEach((item) => {
+            if (item.selected) {
+                interestStr += `${item.value}, `;
+            }
+        });
+
+        return interestStr;
     };
 
     const renderInputName = () => (
@@ -52,7 +67,21 @@ export default function UpdateInfoAccount() {
                 marginVertical: 10,
                 width: SIZES.WIDTH_BASE * 0.9
             }}
+            autoCapitalize
             label="Tên hiển thị:"
+        />
+    );
+
+    const renderInputPhone = () => (
+        <CustomInput
+            value={newUser.phoneNum}
+            onChangeText={(input) => setNewUser({ ...newUser, phoneNum: input })}
+            containerStyle={{
+                marginVertical: 10,
+                width: SIZES.WIDTH_BASE * 0.9
+            }}
+            keyboardType="number-pad"
+            label="Số điện thoại:"
         />
     );
 
@@ -64,20 +93,85 @@ export default function UpdateInfoAccount() {
                 marginVertical: 10,
                 width: SIZES.WIDTH_BASE * 0.9
             }}
+            autoCapitalize
             label="Nơi sinh sống:"
         />
     );
 
-    const renderInputInterests = () => (
-        <CustomInput
-            value={newUser.interests}
-            onChangeText={(input) => onChangeInterests(input)}
-            containerStyle={{
-                marginVertical: 10,
-                width: SIZES.WIDTH_BASE * 0.9
+    // const renderInputInterests = () => (
+    //     <CustomInput
+    //         value={newUser.interests}
+    //         onChangeText={(input) => onChangeInterests(input)}
+    //         containerStyle={{
+    //             marginVertical: 10,
+    //             width: SIZES.WIDTH_BASE * 0.9
+    //         }}
+    //         label="Sở thích:"
+    //     />
+    // );
+
+    const handlePressInterest = (index) => {
+        const list = [...listInterestSelected];
+        list[index].selected = !list[index].selected;
+        setListInterestSelected(list);
+    };
+
+    const handleListInterestFromAPI = () => {
+        const list = currentUser?.interests ? currentUser.interests.split(', ') : [];
+
+        if (list.length === 0) {
+            return;
+        }
+
+        list.splice(list.length - 1, 1);
+        const listResult = [...listInterestSelected];
+
+        list.forEach((itemFromAPI) => {
+            listResult.forEach((item, index) => {
+                if (itemFromAPI === item.value) {
+                    listResult[index].selected = true;
+                }
+            });
+        });
+
+        setListInterestSelected(listResult);
+    };
+
+    const renderOptionInterests = () => (
+        <View
+            style={{
+                alignItems: 'flex-start',
+                width: SIZES.WIDTH_BASE * 0.9,
+                marginTop: 10
             }}
-            label="Sở thích:"
-        />
+        >
+            <CustomText
+                text="Sở thích:"
+                style={{
+                    color: COLORS.ACTIVE,
+                    fontSize: SIZES.FONT_H3,
+                }}
+            />
+            <View
+                style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    width: '100%',
+                    marginBottom: 10,
+                    flexWrap: 'wrap'
+                }}
+            >
+                {listInterestSelected.map((item, index) => (
+                    <OptionItem
+                        item={item}
+                        index={index}
+                        handlePressItem={() => {
+                            handlePressInterest(index);
+                        }}
+                    />
+                ))}
+            </View>
+        </View>
     );
 
     const renderInputDescription = () => (
@@ -92,6 +186,7 @@ export default function UpdateInfoAccount() {
                 marginVertical: 10,
                 width: SIZES.WIDTH_BASE * 0.9
             }}
+            autoCapitalize
             label="Mô tả bản thân:"
         />
     );
@@ -195,23 +290,16 @@ export default function UpdateInfoAccount() {
         <View
             style={{
                 paddingTop: 10,
-                flexDirection: 'row',
-                justifyContent: 'space-between',
                 paddingBottom: 20,
-                width: SIZES.WIDTH_BASE * 0.9
             }}
         >
-            <CustomButton
-                onPress={() => {
-                    setNewUser({ ...currentUser, dob: currentUser?.dob?.substr(0, 4) });
-                }}
-                type="default"
-                label="Huỷ bỏ"
-            />
             <CustomButton
                 onPress={() => onSubmitUpdateInfo()}
                 type="active"
                 label="Xác nhận"
+                buttonStyle={{
+                    width: SIZES.WIDTH_BASE * 0.9
+                }}
             />
         </View>
     );
@@ -227,6 +315,18 @@ export default function UpdateInfoAccount() {
                     },
                     maxLength: {
                         value: 255,
+                    },
+                }
+            },
+            {
+                fieldName: 'Tên hiển thị',
+                input: newUser.fullName,
+                validate: {
+                    required: {
+                        value: true,
+                    },
+                    maxLength: {
+                        value: 12,
                     },
                 }
             },
@@ -265,7 +365,7 @@ export default function UpdateInfoAccount() {
             },
             {
                 fieldName: 'Sở thích',
-                input: newUser.interests,
+                input: createInterestStr(),
                 validate: {
                     required: {
                         value: true,
@@ -325,6 +425,7 @@ export default function UpdateInfoAccount() {
             ...newUser,
             email: currentUser.userName,
             IsMale: newUser.isMale,
+            interests: createInterestStr()
         };
 
         setIsShowSpinner(true);
@@ -360,13 +461,14 @@ export default function UpdateInfoAccount() {
                         {newUser && (
                             <>
                                 {renderInputName()}
+                                {renderInputPhone()}
                                 {renderDobGender()}
                                 {renderInputHeightWeight()}
                                 {renderInputHometown()}
-                                {renderInputInterests()}
+                                {/* {renderInputInterests()} */}
+                                {renderOptionInterests()}
                                 {renderInputDescription()}
                                 {renderButtonPanel()}
-                                <Text>{currentUser.isFillDataFirstTime.toString()}</Text>
                             </>
                         )}
                     </KeyboardAwareScrollView>

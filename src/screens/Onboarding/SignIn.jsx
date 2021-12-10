@@ -23,7 +23,9 @@ const {
     SIZES,
 } = Theme;
 
-export default function SignIn({ navigation, setIsShowSpinner, isRegisterPartner }) {
+export default function SignIn({
+    navigation, setIsShowSpinner, isRegisterPartner, route
+}) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     // const [deviceIdToSend, setDeviceIdToSend] = useState('');
@@ -36,8 +38,11 @@ export default function SignIn({ navigation, setIsShowSpinner, isRegisterPartner
     // handler \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
     useEffect(
         () => {
-            getLoginInfo();
-        }, []
+            const onFocus = navigation.addListener('focus', () => {
+                getLoginInfo();
+            });
+            return onFocus;
+        }
     );
 
     const updateExpoTokenToServer = async (expoTokenFromServer) => {
@@ -48,10 +53,14 @@ export default function SignIn({ navigation, setIsShowSpinner, isRegisterPartner
 
     const getLoginInfo = async () => {
         const usernameLocal = await SecureStore.getItemAsync('username');
-        setUsername(usernameLocal.trim());
+        setUsername(usernameLocal?.trim() || '');
 
-        const passwordLocal = await SecureStore.getItemAsync('password');
-        setPassword(passwordLocal);
+        if (route?.params?.navigateFrom !== ScreenName.SIGN_UP) {
+            const passwordLocal = await SecureStore.getItemAsync('password');
+            setPassword(passwordLocal);
+        } else {
+            setPassword('');
+        }
     };
 
     const registerForPushNotificationsAsync = async () => {
@@ -87,13 +96,13 @@ export default function SignIn({ navigation, setIsShowSpinner, isRegisterPartner
     };
 
     const onSubmitLogin = async () => {
-        const deviceId = await SecureStore.getItemAsync('deviceId');
+        // const deviceId = await SecureStore.getItemAsync('deviceId');
         if (validate()) {
             const body = {
-                username: username.toString().trim(),
+                username: username?.toString().trim() || '',
                 password,
                 // deviceId: deviceIdToSend || deviceId
-                deviceId
+                deviceId: 'deviceId'
             };
 
             setIsShowSpinner(true);
@@ -197,10 +206,10 @@ export default function SignIn({ navigation, setIsShowSpinner, isRegisterPartner
                 }}
             >
                 <CustomInput
-                    placeholder="Nhập tên đăng nhập"
+                    placeholder="Tên đăng nhập"
                     value={username}
                     onChangeText={
-                        (usernameInput) => setUsername(usernameInput.trim())
+                        (usernameInput) => setUsername(usernameInput?.trim() || '')
                     }
                     containerStyle={{
                         marginVertical: 10,
@@ -214,7 +223,7 @@ export default function SignIn({ navigation, setIsShowSpinner, isRegisterPartner
                         marginVertical: 10,
                     }}
                     secureTextEntry={!isShowPassword}
-                    placeholder="Nhập mật khẩu"
+                    placeholder="Mật khẩu"
                     rightIcon={{
                         name: 'eye',
                         family: IconFamily.ENTYPO,

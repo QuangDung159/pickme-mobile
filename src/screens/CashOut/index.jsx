@@ -2,10 +2,10 @@ import {
     CenterLoader, CustomButton, CustomInput
 } from '@components/uiComponents';
 import { Theme } from '@constants/index';
-import { ToastHelpers, ValidationHelpers } from '@helpers/index';
+import { CommonHelpers, ToastHelpers, ValidationHelpers } from '@helpers/index';
 import { Picker } from '@react-native-picker/picker';
 import { setCurrentUser, setListBank } from '@redux/Actions';
-import { BankServices, UserServices, CashServices } from '@services/index';
+import { BankServices, CashServices, UserServices } from '@services/index';
 import React, { useEffect, useState } from 'react';
 import { Platform, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -26,6 +26,7 @@ export default function CashOut() {
         bankId: '',
         amount: 0
     });
+    const [amountDisplay, setAmountDisplay] = useState('');
 
     const listBank = useSelector((state) => state.bankReducer.listBank);
     const currentUser = useSelector((state) => state.userReducer.currentUser);
@@ -123,6 +124,11 @@ export default function CashOut() {
             },
         ];
 
+        if (cashOutForm.amount > currentUser.walletAmount) {
+            ToastHelpers.renderToast('Số tiền rút vượt quá số dư trong rương');
+            return false;
+        }
+
         return ValidationHelpers.validate(validationArr);
     };
 
@@ -147,7 +153,6 @@ export default function CashOut() {
             ownerName,
             bankNum,
             bankId,
-            amount
         } = cashOutForm;
 
         const listBankFinal = [];
@@ -218,13 +223,21 @@ export default function CashOut() {
                     />
                     <CustomInput
                         label="Số tiền rút"
-                        value={amount}
+                        value={amountDisplay}
                         keyboardType="number-pad"
-                        onChangeText={(input) => setCashOutForm({ ...cashOutForm, amount: input })}
+                        onChangeText={(input) => {
+                            setCashOutForm({ ...cashOutForm, amount: input });
+                            setAmountDisplay(input);
+                        }}
                         containerStyle={{
                             marginVertical: 10,
                             width: (SIZES.WIDTH_BASE * 0.9) - 58,
                         }}
+                        onEndEditing={
+                            (e) => {
+                                setAmountDisplay(CommonHelpers.formatCurrency(e.nativeEvent.text));
+                            }
+                        }
                         inputStyle={{
                             fontFamily: TEXT_BOLD,
                             color: COLORS.ACTIVE,
@@ -234,28 +247,17 @@ export default function CashOut() {
                     />
                     <View
                         style={{
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
                             marginBottom: 20,
                             marginTop: 10
                         }}
                     >
                         <CustomButton
-                            onPress={() => {
-                                setCashOutForm({
-                                    bankId: currentUser.bankId,
-                                    bankNum: currentUser.bankNum,
-                                    ownerName: currentUser.ownerName,
-                                    amount: 0
-                                });
-                            }}
-                            type="default"
-                            label="Huỷ bỏ"
-                        />
-                        <CustomButton
                             onPress={() => onSubmitCashOut()}
                             type="active"
                             label="Xác nhận"
+                            buttonStyle={{
+                                width: SIZES.WIDTH_BASE * 0.9
+                            }}
                         />
                     </View>
                 </View>

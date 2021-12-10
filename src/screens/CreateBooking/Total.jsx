@@ -1,4 +1,8 @@
-import { CustomButton, CustomInput } from '@components/uiComponents';
+/* eslint-disable max-len */
+import {
+    CustomButton, CustomText, IconCustom, NoteText
+} from '@components/uiComponents';
+import IconFamily from '@constants/IconFamily';
 import ScreenName from '@constants/ScreenName';
 import Theme from '@constants/Theme';
 import CommonHelpers from '@helpers/CommonHelpers';
@@ -8,12 +12,13 @@ import { setListBookingStore, setPersonTabActiveIndex } from '@redux/Actions';
 import BookingServices from '@services/BookingServices';
 import moment from 'moment';
 import React from 'react';
-import { Alert, View } from 'react-native';
+import { View } from 'react-native';
 import { useDispatch } from 'react-redux';
 
 const {
     FONT: {
-        TEXT_BOLD
+        TEXT_BOLD,
+        TEXT_REGULAR
     },
     SIZES,
     COLORS
@@ -122,46 +127,16 @@ export default function Total({
         setIsShowSpinner(false);
     };
 
-    const renderAlert = () => (
-        Alert.alert(
-            'Huỷ bỏ?',
-            'Bạn có chắc muốn huỷ đặt hẹn?',
-            [
-                {
-                    text: 'Tiếp tục đặt',
-                    style: 'cancel'
-                },
-                {
-                    text: 'Đồng ý huỷ',
-                    onPress: () => {
-                        navigation.navigate(ScreenName.PROFILE, {
-                            user: route.params.partner
-                        });
-                    }
-                }
-            ],
-            { cancelable: false }
-        )
-    );
-
     const renderButtonPanel = () => (
-        <View
-            style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between'
+        <CustomButton
+            onPress={() => onSubmitBooking()}
+            type="active"
+            label="Đặt hẹn"
+            buttonStyle={{
+                width: SIZES.WIDTH_BASE * 0.9,
+                marginVertical: 15
             }}
-        >
-            <CustomButton
-                onPress={() => renderAlert()}
-                type="default"
-                label="Huỷ bỏ"
-            />
-            <CustomButton
-                onPress={() => onSubmitBooking()}
-                type="active"
-                label="Xác nhận"
-            />
-        </View>
+        />
     );
 
     const renderTotal = () => (
@@ -172,24 +147,42 @@ export default function Total({
                     width: SIZES.WIDTH_BASE * 0.9,
                 }}
             >
-                <CustomInput
-                    value={CommonHelpers.generateMoneyStr(calculateTotalAmount(startTimeStr, endTimeStr))}
-                    editable={false}
-                    containerStyle={{
-                        marginVertical: 10,
-                        width: SIZES.WIDTH_BASE * 0.9,
-                    }}
-                    inputStyle={{
-                        height: 50,
-                        fontSize: SIZES.FONT_H1 + 5,
+                <CustomText
+                    style={{
+                        color: COLORS.ACTIVE,
+                        fontSize: SIZES.FONT_H1,
                         fontFamily: TEXT_BOLD,
-                        backgroundColor: COLORS.ACTIVE,
-                        color: COLORS.BASE
+                        textAlign: 'center'
                     }}
-                    label="Tổng chi phí:"
+                    text={`Tổng chi phí: ${CommonHelpers.formatCurrency(calculateTotalAmount(startTimeStr, endTimeStr))}`}
                 />
 
                 {renderButtonPanel()}
+
+                <View
+                    style={{
+                        marginBottom: 5
+                    }}
+                >
+                    <NoteText
+                        width={SIZES.WIDTH_BASE * 0.9}
+                        title="Lưu ý:"
+                        content="Tổng phí chỉ là chi phí trên ứng dụng và không bao gồm các loại phí khác như: ăn, uống, vé xem phim... Vui lòng thảo luận trước về chi phí đối với Host."
+                        contentStyle={{
+                            fontSize: SIZES.FONT_H4,
+                            color: COLORS.ACTIVE,
+                            fontFamily: TEXT_REGULAR,
+                        }}
+                        iconComponent={(
+                            <IconCustom
+                                name="info-circle"
+                                family={IconFamily.FONT_AWESOME}
+                                size={18}
+                                color={COLORS.ACTIVE}
+                            />
+                        )}
+                    />
+                </View>
             </View>
 
         </View>

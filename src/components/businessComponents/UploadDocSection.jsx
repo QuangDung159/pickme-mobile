@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import {
-    CustomButton, CustomModal, CustomText, IconCustom, RadioButton
+    CustomButton, CustomModal, CustomText, IconCustom, NoteText, RadioButton
 } from '@components/uiComponents';
 import DocumentType, { VERIFY_NOTE } from '@constants/DocumentType';
 import IconFamily from '@constants/IconFamily';
@@ -38,13 +38,12 @@ export default function UploadDocSection({ setIsShowSpinner, navigation, route }
     const currentUser = useSelector((state) => state.userReducer.currentUser);
     const verificationStore = useSelector((state) => state.userReducer.verificationStore);
     // const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
+    const navigateFrom = route?.params?.navigateFrom;
 
     const dispatch = useDispatch();
 
     useEffect(
         () => {
-            const navigateFrom = route?.params?.navigateFrom;
-
             if (navigateFrom && navigateFrom === ScreenName.MENU) {
                 setIsForPartnerVerify(true);
             }
@@ -232,7 +231,8 @@ export default function UploadDocSection({ setIsShowSpinner, navigation, route }
                 if (verificationArray.length === 4) {
                     const result = UserServices.addVerifyDocAsync({
                         verifyNote: isForPartnerVerify ? VERIFY_NOTE.FOR_PARTNER : VERIFY_NOTE.FOR_CUSTOMER,
-                        documents: verificationArray
+                        documents: verificationArray,
+                        isApplyForPartner: isForPartnerVerify
                     });
                     const { data } = result;
 
@@ -260,16 +260,12 @@ export default function UploadDocSection({ setIsShowSpinner, navigation, route }
                     }}
                 >
                     <CustomButton
-                        onPress={() => {
-                            navigation.goBack();
-                        }}
-                        type="default"
-                        label="Huỷ bỏ"
-                    />
-                    <CustomButton
                         onPress={() => onSubmitUploadList()}
                         type="active"
                         label="Xác nhận"
+                        buttonStyle={{
+                            width: SIZES.WIDTH_BASE * 0.9
+                        }}
                     />
                 </View>
             );
@@ -359,6 +355,28 @@ export default function UploadDocSection({ setIsShowSpinner, navigation, route }
             >
                 {renderInfoModal()}
 
+                {navigateFrom === ScreenName.MENU && (
+                    <NoteText
+                        width={SIZES.WIDTH_BASE * 0.9}
+                        title="Đăng kí trở thành Host:"
+                        content="Bạn vui lòng tải lên các ảnh để xác thực."
+                        contentStyle={{
+                            fontSize: SIZES.FONT_H4,
+                            color: COLORS.ACTIVE,
+                            fontFamily: TEXT_REGULAR,
+                            marginTop: 5
+                        }}
+                        iconComponent={(
+                            <IconCustom
+                                name="info-circle"
+                                family={IconFamily.FONT_AWESOME}
+                                size={18}
+                                color={COLORS.ACTIVE}
+                            />
+                        )}
+                    />
+                )}
+
                 {(verificationStore.verifyStatus === VerificationStatus.NONE || verificationStore.verifyStatus === VerificationStatus.REJECT) ? (
                     <>
                         {!currentUser.isCustomerVerified && (
@@ -400,7 +418,6 @@ export default function UploadDocSection({ setIsShowSpinner, navigation, route }
                                 </View>
                             </>
                         )}
-
                     </>
                 ) : (
                     <View

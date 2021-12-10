@@ -1,3 +1,4 @@
+import BookingNoteOptions from './BookingNoteOptions';
 import BookingStatus from './BookingStatus';
 import DateTimeConst from './DateTimeConst';
 import DocumentType from './DocumentType';
@@ -5,6 +6,8 @@ import Gender from './Gender';
 import GraphQueryString from './GraphQueryString';
 import IconFamily from './IconFamily';
 import Images from './Images';
+import Interests from './Interests';
+import PickMeInfo from './PickMeInfo';
 import Rx from './Rx';
 import ScreenName from './ScreenName';
 import ScreenTitle from './ScreenTitle';
@@ -12,7 +15,6 @@ import Theme from './Theme';
 import Utils from './Utils';
 import ValidationMessageTemplate from './ValidationMessageTemplate';
 import VerificationStatus from './VerificationStatus';
-import PickMeInfo from './PickMeInfo';
 
 export {
     Images,
@@ -29,5 +31,7 @@ export {
     DocumentType,
     ValidationMessageTemplate,
     Gender,
-    PickMeInfo
+    PickMeInfo,
+    Interests,
+    BookingNoteOptions
 };
