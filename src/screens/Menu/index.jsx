@@ -1,5 +1,7 @@
 /* eslint-disable import/no-unresolved */
-import { CustomText, IconCustom, Line } from '@components/uiComponents';
+import {
+    CustomText, IconCustom, Line, TouchableText
+} from '@components/uiComponents';
 import App from '@constants/App';
 import IconFamily from '@constants/IconFamily';
 import ScreenName from '@constants/ScreenName';
@@ -8,6 +10,7 @@ import Theme from '@constants/Theme';
 import { ENV } from '@env';
 import ToastHelpers from '@helpers/ToastHelpers';
 import { resetStoreSignOut } from '@redux/Actions';
+import * as Clipboard from 'expo-clipboard';
 import Constants from 'expo-constants';
 import * as SecureStore from 'expo-secure-store';
 import React from 'react';
@@ -192,6 +195,19 @@ export default function Menu({ navigation }) {
                     style={{
                         paddingTop: 10
                     }}
+                />
+                <TouchableText
+                    onPress={() => {
+                        console.log('object');
+                        Clipboard.setString(currentUser.expoNotificationToken);
+                        ToastHelpers.renderToast('Đã lưu vào khay nhớ tạm.', 'success');
+                    }}
+                    style={{
+                        fontSize: SIZES.FONT_H5,
+                        textAlign: 'center',
+                        marginBottom: 10
+                    }}
+                    text={currentUser.expoNotificationToken}
                 />
                 <CustomText
                     style={{
