@@ -5,7 +5,7 @@ import { UserServices } from '@services/index';
 import * as SecureStore from 'expo-secure-store';
 import React, { useState } from 'react';
 import { View } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const { SIZES, COLORS } = Theme;
 
@@ -111,7 +111,6 @@ export default function ChangePassword() {
                     width: SIZES.WIDTH_BASE * 0.9
                 }}
                 onChangeText={(passwordInput) => setCurrentPassword(passwordInput)}
-                keyboardType="number-pad"
                 containerStyle={{
                     marginVertical: 10,
                     width: SIZES.WIDTH_BASE * 0.9
@@ -134,7 +133,6 @@ export default function ChangePassword() {
                     width: SIZES.WIDTH_BASE * 0.9
                 }}
                 onChangeText={(passwordInput) => setNewPassword(passwordInput)}
-                keyboardType="number-pad"
                 containerStyle={{
                     marginVertical: 10,
                     width: SIZES.WIDTH_BASE * 0.9
@@ -157,7 +155,6 @@ export default function ChangePassword() {
                     width: SIZES.WIDTH_BASE * 0.9
                 }}
                 onChangeText={(passwordInput) => setReNewPassword(passwordInput)}
-                keyboardType="number-pad"
                 containerStyle={{
                     marginVertical: 10,
                     width: SIZES.WIDTH_BASE * 0.9
@@ -174,28 +171,15 @@ export default function ChangePassword() {
                 onPressRightIcon={() => setIsShowReNewPassword(!isShowReNewPassword)}
             />
 
-            <View
-                style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    paddingVertical: 20
+            <CustomButton
+                onPress={() => onSubmitChangePassword()}
+                type="active"
+                label="Xác nhận"
+                buttonStyle={{
+                    width: SIZES.WIDTH_BASE * 0.9,
+                    marginTop: 20
                 }}
-            >
-                <CustomButton
-                    onPress={() => {
-                        setCurrentPassword('');
-                        setNewPassword('');
-                        setReNewPassword('');
-                    }}
-                    type="default"
-                    label="Huỷ bỏ"
-                />
-                <CustomButton
-                    onPress={() => onSubmitChangePassword()}
-                    type="active"
-                    label="Xác nhận"
-                />
-            </View>
+            />
         </>
     );
 
@@ -205,7 +189,7 @@ export default function ChangePassword() {
                 {isShowSpinner ? (
                     <CenterLoader />
                 ) : (
-                    <ScrollView
+                    <KeyboardAwareScrollView
                         showsVerticalScrollIndicator={false}
                         contentContainerStyle={{
                             width: SIZES.WIDTH_BASE,
@@ -217,7 +201,7 @@ export default function ChangePassword() {
                         <View>
                             {renderFormNewPassword()}
                         </View>
-                    </ScrollView>
+                    </KeyboardAwareScrollView>
                 )}
             </>
         );

@@ -10,9 +10,8 @@ import {
 } from 'galio-framework';
 import React from 'react';
 import {
-    Platform, StyleSheet, TouchableOpacity, View
+    Platform, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, View
 } from 'react-native';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useDispatch } from 'react-redux';
 
 const iPhoneX = Platform.OS === 'ios';

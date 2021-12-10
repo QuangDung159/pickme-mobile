@@ -1,7 +1,7 @@
 import { NoteText } from '@components/uiComponents';
 import { ScreenName, Theme } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
-import Clipboard from 'expo-clipboard';
+import * as Clipboard from 'expo-clipboard';
 import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';

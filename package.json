@@ -76,13 +76,14 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "apk-dev": "expo build:android -t apk --release-channel dev",
-    "apk-uat": "expo build:android -t apk --release-channel uat",
+    "apk-stg": "expo build:android -t apk --release-channel stg",
     "apk-prd": "expo build:android -t apk --release-channel prd",
     "aab": "expo build:android -t app-bundle --release-channel prd",
     "ota-dev": "expo publish --release-channel dev",
     "ota-prd": "expo publish --release-channel prd",
     "publish-play-store": "sh publish-android-latest.sh",
-    "play-store": "yarn publish-play-store"
+    "play-store": "yarn publish-play-store",
+    "android-upload-api-key": "sh android-upload-api-key.sh"
   },
   "private": true
 }

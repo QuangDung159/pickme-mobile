@@ -58,32 +58,32 @@ export default {
             question: 'Tôi có thể đặt địa điểm hẹn ở những nơi nào?'
         },
         {
-            answer: 'Hiện tại thì chúng tôi chưa hỗ trợ dịch vụ như trên.',
-            question: 'Vậy tôi có thể đặt lịch hẹn xuyên đêm hay không?'
+            answer: 'Truy cập vào phần trở thành Host ở Menu',
+            question: 'Tôi muốn trở thành Host?'
         },
         {
-            answer: 'Bạn vui lòng vào trang chủ của ứng dụng tại địa chỉ. sau đó truy cập vào phần trở thành Host.',
-            question: 'Tôi muốnt trở thành Host của ứng dụng?'
+            answer: 'Anh/Chị có thể cân nhắc việc trở thành Host để gia tăng thu nhập và tạo ra giá trị.',
+            question: 'Tôi muốn gia tăng thu nhập?'
         },
         {
-            answer: 'Bạn vui lòng mở phần trang cá nhân lên. mở phần nạp tiền và làm theo hướng dẫn.',
-            question: 'Làm sao tôi có thể thanh toán?'
+            answer: 'Truy cập trang cá nhân => chọn tab ví tiền => nạp tiền.',
+            question: 'Làm sao tôi có thể nạp tiền?'
         },
         {
-            answer: 'Ứng dụng là hoàn toàn miễn phí cho mọi người.',
+            answer: 'Truy cập trang cá nhân => chọn tab ví tiền => rút tiền.',
+            question: 'Làm sao tôi có thể rút tiền?'
+        },
+        {
+            answer: 'Ứng dụng là hoàn toàn miễn phí cho mọi người. Nếu như bạn sử dụng dịch vụ thì sẽ thanh toán phí tương ứng.',
             question: 'Tôi có mất khoản chi phí nào khi tham gia ứng dụng này hay không?'
         },
         {
-            answer: 'Chúng tôi có chính sách hoàn tiền lại cho khách hàng. bạn vui lòng tham khảo chính sách này tại đây',
+            answer: 'Có nếu như buổi hẹn bạn đã thanh toán trước đó sẽ được hoàn tiền vào ví.',
             question: 'Nếu như buổi hẹn bị hủy tôi có được hoàn tiền lại không?'
         },
         {
-            answer: 'Cảm ơn bạn chúng tôi rất mong nhận được sự đóng góp phản hồi của bạn qua email: huyxvd@gmail.com hoặc hotline 0352221769',
+            answer: 'Cảm ơn bạn chúng tôi rất mong nhận được sự đóng góp phản hồi của bạn qua email: hotro.dichvuthuebangai@gmail.com',
             question: 'Tôi muốn đóng góp ý kiến?'
-        },
-        {
-            answer: 'Chúng tôi luôn muốn sự an toàn cho cả Host và khách hàng nên bạn có thể tham khảo về thông tin cá nhân tại đây',
-            question: 'Thông tin xác thực của các Host?'
         },
     ]
 };

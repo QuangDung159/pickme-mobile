@@ -371,7 +371,7 @@ export default function CardBooking({ booking }) {
                             fontSize: SIZES.FONT_H1,
                             color: COLORS.ACTIVE
                         }}
-                        text={CommonHelpers.generateMoneyStr(totalAmount)}
+                        text={CommonHelpers.formatCurrency(totalAmount)}
                     />
                     <CustomButton
                         onPress={() => {

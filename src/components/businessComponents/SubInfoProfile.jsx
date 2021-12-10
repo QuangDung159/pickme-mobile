@@ -10,6 +10,16 @@ const {
 } = Theme;
 
 export default function SubInfoProfile({ user }) {
+    const handleInterestFromAPI = () => {
+        if (!user?.interests) {
+            return 'N/a';
+        }
+
+        const result = user.interests.split(', ');
+        result.splice(result.length - 1, 1);
+        return result.join(', ');
+    };
+
     return (
         <View
             style={{
@@ -66,7 +76,7 @@ export default function SubInfoProfile({ user }) {
                 fontSize={SIZES.FONT_H3}
                 iconName="badminton"
                 iconFamily={IconFamily.MATERIAL_COMMUNITY_ICONS}
-                content={`${user.interests || 'N/a'}`}
+                content={`${handleInterestFromAPI()}`}
                 iconSize={18}
                 containerStyle={{ alignItems: 'flex-start' }}
                 iconContainerStyle={{

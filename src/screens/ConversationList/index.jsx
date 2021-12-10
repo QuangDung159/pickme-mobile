@@ -10,10 +10,8 @@ import { setListConversation, setNumberMessageUnread } from '@redux/Actions';
 import { socketRequestUtil } from '@utils/index';
 import React, { useEffect, useState } from 'react';
 import {
-    Alert,
-    Image, RefreshControl, Text, TouchableOpacity, View
+    Alert, FlatList, Image, RefreshControl, ScrollView, Text, TouchableOpacity, View
 } from 'react-native';
-import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import ModalReport from './ModalReport';
 

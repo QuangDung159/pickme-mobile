@@ -7,6 +7,35 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:697764752252:android:70a9a75a0523c4f41cd2f9",
+        "android_client_info": {
+          "package_name": "com.dragonc92team.pickmeadmin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "697764752252-4neghq5nc95t6pudqh9fsh0l696snplv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJ9U8rGuTx3x4aR_Na_pj9Zku-AP1LmsM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "697764752252-4neghq5nc95t6pudqh9fsh0l696snplv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:697764752252:android:ad5f8a962d8958ca1cd2f9",
         "android_client_info": {
           "package_name": "com.dragonc92team.pickmecustomer"

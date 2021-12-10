@@ -1,9 +1,11 @@
 import { CustomCalendar } from '@components/businessComponents';
-import { CustomButton, CustomInput } from '@components/uiComponents';
-import Theme from '@constants/Theme';
+import {
+    CustomButton, CustomInput, CustomText, OptionItem
+} from '@components/uiComponents';
+import { BookingNoteOptions, Theme } from '@constants/index';
 import ToastHelpers from '@helpers/ToastHelpers';
 import moment from 'moment';
-import React from 'react';
+import React, { useState } from 'react';
 import {
     Platform, StyleSheet, Text, View
 } from 'react-native';
@@ -38,6 +40,9 @@ export default function CreateBookingForm({
     setBooking,
     partner
 }) {
+    const [listNoteOptions, setListNoteOptions] = useState(BookingNoteOptions);
+    const [isShowNoteInput, setIsShowNoteInput] = useState(false);
+
     const onChangeDateCalendar = (date) => {
         const result = busyCalendar.find(
             (item) => date === moment(item.date).format('DD-MM-YYYY')
@@ -80,35 +85,142 @@ export default function CreateBookingForm({
     };
 
     const renderButtonTimePicker = () => (
+        <>
+            <View
+                style={{
+                    width: SIZES.WIDTH_BASE * 0.9,
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center'
+                }}
+            >
+                <View
+                    style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'center'
+                    }}
+                >
+                    <CustomText
+                        style={{
+                            color: COLORS.ACTIVE,
+                            marginRight: 10
+                        }}
+                        text="Bắt đầu:"
+                    />
+                    <CustomButton
+                        onPress={() => {
+                            setModalTimePickerVisible(true);
+                            setModalActiveType('start');
+                            onClickTriggerTimePicker('start');
+                        }}
+                        type="active"
+                        label={startTimeStr}
+                        buttonStyle={{
+                            width: 80
+                        }}
+                    />
+                </View>
+
+                <View
+                    style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'center'
+                    }}
+                >
+                    <CustomText
+                        style={{
+                            color: COLORS.ACTIVE,
+                            marginRight: 10
+                        }}
+                        text="Kết thúc:"
+                    />
+                    <CustomButton
+                        onPress={() => {
+                            setModalActiveType('end');
+                            setModalTimePickerVisible(true);
+                            onClickTriggerTimePicker('end');
+                        }}
+                        type="active"
+                        label={endTimeStr}
+                        buttonStyle={{
+                            width: 80
+                        }}
+                    />
+
+                </View>
+
+                {/* {renderIconShowModal()} */}
+            </View>
+        </>
+    );
+
+    const handlePressNoteOption = (index) => {
+        const list = [...listNoteOptions];
+
+        if (index === listNoteOptions.length - 1) {
+            setIsShowNoteInput(true);
+            const listTemp = [];
+
+            list.forEach((item) => {
+                listTemp.push({
+                    value: item.value,
+                    selected: false
+                });
+            });
+
+            setListNoteOptions(listTemp);
+            setBooking({
+                ...booking,
+                noted: '',
+            });
+            return;
+        }
+        setIsShowNoteInput(false);
+
+        list[index].selected = !list[index].selected;
+        setListNoteOptions(list);
+
+        let noteStr = '';
+        list.forEach((item) => {
+            if (item.selected) {
+                noteStr += `${item.value}, `;
+            }
+        });
+
+        const noteArr = noteStr.split(', ');
+        if (noteArr.length > 0) {
+            noteArr.splice(noteArr.length - 1, 1);
+        }
+
+        const result = noteArr.join(', ');
+
+        setBooking({
+            ...booking,
+            noted: result,
+        });
+    };
+
+    const renderNoteOptions = () => (
         <View
             style={{
-                marginBottom: 10,
-                width: SIZES.WIDTH_BASE * 0.9,
                 flexDirection: 'row',
-                justifyContent: 'space-between'
+                alignItems: 'center',
+                width: '100%',
+                marginBottom: 10,
+                flexWrap: 'wrap'
             }}
         >
-            <CustomButton
-                onPress={() => {
-                    setModalTimePickerVisible(true);
-                    setModalActiveType('start');
-                    onClickTriggerTimePicker('start');
-                }}
-                type="active"
-                label={startTimeStr}
-            />
-
-            <CustomButton
-                onPress={() => {
-                    setModalActiveType('end');
-                    setModalTimePickerVisible(true);
-                    onClickTriggerTimePicker('end');
-                }}
-                type="active"
-                label={endTimeStr}
-            />
-
-            {/* {renderIconShowModal()} */}
+            {listNoteOptions.map((item, index) => (
+                <OptionItem
+                    item={item}
+                    index={index}
+                    handlePressItem={() => {
+                        handlePressNoteOption(index);
+                    }}
+                />
+            ))}
         </View>
     );
 
@@ -118,12 +230,11 @@ export default function CreateBookingForm({
             multiline
             onChangeText={(input) => onChangeNote(input)}
             containerStyle={{
-                marginVertical: 10,
+                marginVertical: 5,
                 width: SIZES.WIDTH_BASE * 0.9
             }}
-            label="Ghi chú:"
             inputStyle={{
-                height: 80,
+                height: 60,
             }}
         />
     );
@@ -150,7 +261,6 @@ export default function CreateBookingForm({
         return (
             <View
                 style={{
-                    marginVertical: 15,
                     alignSelf: 'center',
                     alignItems: 'center',
                 }}
@@ -171,6 +281,25 @@ export default function CreateBookingForm({
             </View>
         );
     };
+
+    const renderNoteSection = () => (
+        <>
+            <CustomText
+                text="Ghi chú:"
+                style={{
+                    color: COLORS.ACTIVE,
+                    fontSize: SIZES.FONT_H3,
+                    marginTop: 5
+                }}
+            />
+            {isShowNoteInput && (
+                <>
+                    {renderInputNote()}
+                </>
+            )}
+            {renderNoteOptions()}
+        </>
+    );
 
     const renderFormView = () => (
         <View
@@ -218,10 +347,8 @@ export default function CreateBookingForm({
                 )} */}
 
                 {renderButtonTimePicker()}
-
                 {renderInputAddress()}
-
-                {renderInputNote()}
+                {renderNoteSection()}
             </View>
         </View>
     );

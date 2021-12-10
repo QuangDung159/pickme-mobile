@@ -1,5 +1,7 @@
 /* eslint-disable import/no-unresolved */
-import { CustomText, IconCustom, Line } from '@components/uiComponents';
+import {
+    CustomText, IconCustom, Line
+} from '@components/uiComponents';
 import App from '@constants/App';
 import IconFamily from '@constants/IconFamily';
 import ScreenName from '@constants/ScreenName';
@@ -11,8 +13,7 @@ import { resetStoreSignOut } from '@redux/Actions';
 import Constants from 'expo-constants';
 import * as SecureStore from 'expo-secure-store';
 import React from 'react';
-import { TouchableOpacity, View } from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
+import { FlatList, TouchableOpacity, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 const {
@@ -39,6 +40,17 @@ export default function Menu({ navigation }) {
         //         navigation.navigate(ScreenName.LEADER_BOARD);
         //     },
         // },
+        {
+            title: ScreenTitle.POLICY,
+            icon: {
+                name: 'legal',
+                family: IconFamily.FONT_AWESOME,
+                size: 20,
+            },
+            onPress: () => {
+                navigation.navigate(ScreenName.POLICY);
+            },
+        },
         {
             title: ScreenTitle.LEADER_BOARD,
             icon: {
@@ -89,17 +101,17 @@ export default function Menu({ navigation }) {
                 navigation.navigate(ScreenName.SUPPORT);
             },
         },
-        {
-            title: ScreenTitle.SETTINGS,
-            icon: {
-                name: 'gear',
-                family: IconFamily.FONT_AWESOME,
-                size: 26,
-            },
-            onPress: () => {
-                navigation.navigate(ScreenName.SETTINGS);
-            },
-        },
+        // {
+        //     title: ScreenTitle.SETTINGS,
+        //     icon: {
+        //         name: 'gear',
+        //         family: IconFamily.FONT_AWESOME,
+        //         size: 26,
+        //     },
+        //     onPress: () => {
+        //         navigation.navigate(ScreenName.SETTINGS);
+        //     },
+        // },
         {
             title: 'Đăng xuất',
             onPress: () => onSignOut(),
@@ -182,6 +194,19 @@ export default function Menu({ navigation }) {
                         paddingTop: 10
                     }}
                 />
+                {/* <TouchableText
+                    onPress={() => {
+                        console.log('object');
+                        Clipboard.setString(currentUser.expoNotificationToken);
+                        ToastHelpers.renderToast('Đã lưu vào khay nhớ tạm.', 'success');
+                    }}
+                    style={{
+                        fontSize: SIZES.FONT_H5,
+                        textAlign: 'center',
+                        marginBottom: 10
+                    }}
+                    text={currentUser.expoNotificationToken}
+                /> */}
                 <CustomText
                     style={{
                         fontSize: SIZES.FONT_H5,

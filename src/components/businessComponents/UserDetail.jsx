@@ -11,9 +11,8 @@ import { UserServices } from '@services/index';
 import React, { useEffect, useState } from 'react';
 import {
     Alert, RefreshControl,
-    ScrollView, Text, View
+    ScrollView, Text, TouchableOpacity, View
 } from 'react-native';
-import { TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import ImageView from 'react-native-image-viewing';
 import { useDispatch, useSelector } from 'react-redux';
 import PartnerDataSection from './PartnerDataSection';
@@ -103,7 +102,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
     };
 
     const handleOnPickAvatar = (uri) => {
-        // setIsShowSpinner(true);
+        setIsShowSpinner(true);
 
         MediaHelpers.imgbbUploadImage(
             uri,
@@ -111,7 +110,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                 setIsShowSpinner(false);
                 setImage(uri);
 
-                const newUserInfo = { ...userInfo, url: res.data.url };
+                const newUserInfo = { ...userInfo, url: res.data.url, dob: userInfo?.dob?.substring(0, 3) || '1996' };
                 dispatch(
                     setCurrentUser(newUserInfo)
                 );
@@ -289,7 +288,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                     listData={
                         [
                             {
-                                value: earningExpected && `${CommonHelpers.generateMoneyStr(earningExpected)}/phút`,
+                                value: earningExpected && `${CommonHelpers.formatCurrency(earningExpected)}/phút`,
                             },
                             {
                                 value: `${bookingCompletedCount} đơn hẹn`,
@@ -359,6 +358,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                             onClickUpdateAvatar();
                         }
                     }}
+                    isCurrentUser={isCurrentUser}
                 />
 
                 <View style={{
@@ -379,6 +379,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                         <View style={{
                             flexDirection: 'row',
                             justifyContent: 'center',
+                            width: 230
                         }}
                         >
                             <Text
@@ -386,7 +387,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                                     color: COLORS.ACTIVE,
                                     fontSize: SIZES.FONT_H1,
                                     fontFamily: TEXT_BOLD,
-                                    textAlign: 'center'
+                                    textAlign: 'center',
                                 }}
                             >
                                 {`${userInfo.fullName || 'N/a'}`}
@@ -439,7 +440,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                         fontSize={SIZES.FONT_H3}
                         iconName="treasure-chest"
                         iconFamily={IconFamily.MATERIAL_COMMUNITY_ICONS}
-                        content={`Số dư: ${userInfo.walletAmount}`}
+                        content={`Số dư: ${CommonHelpers.formatCurrency(userInfo.walletAmount)}`}
                         iconSize={18}
                     />
                 )}
@@ -450,7 +451,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
             {isCurrentUser && (
                 <>
                     {!userInfo?.isCustomerVerified && (
-                        <TouchableWithoutFeedback
+                        <TouchableOpacity
                             onPress={() => {
                                 navigation.navigate(ScreenName.VERIFICATION);
                             }}
@@ -467,7 +468,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                             >
                                 <VerificationStatusPanel />
                             </View>
-                        </TouchableWithoutFeedback>
+                        </TouchableOpacity>
                     )}
                 </>
             )}
