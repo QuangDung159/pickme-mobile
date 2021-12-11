@@ -326,7 +326,7 @@ export default function CreateBookingForm({
                 </View>
 
                 {/* {listPartnerPackage && listPartnerPackage.length !== 0 && (
-                    <TouchableWithoutFeedback
+                    <TouchableOpacity
                         containerStyle={{
                             width: SIZES.WIDTH_BASE * 0.9,
                             alignSelf: 'center',
@@ -343,7 +343,7 @@ export default function CreateBookingForm({
                         >
                             Chọn gói đơn hẹn
                         </Text>
-                    </TouchableWithoutFeedback>
+                    </TouchableOpacity>
                 )} */}
 
                 {renderButtonTimePicker()}

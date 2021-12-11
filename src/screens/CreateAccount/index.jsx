@@ -12,9 +12,8 @@ import React, { useEffect, useState } from 'react';
 import {
     Alert, Image, Platform,
     StyleSheet,
-    Text, View
+    Text, TouchableOpacity, View
 } from 'react-native';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -463,7 +462,7 @@ export default function CreateAccount(props) {
                         <CenterLoader />
                     )
                     : (
-                        <TouchableWithoutFeedback
+                        <TouchableOpacity
                             onPress={() => onClickUploadProfileImage()}
                         >
                             <View
@@ -499,7 +498,7 @@ export default function CreateAccount(props) {
                                     fontFamily: TEXT_BOLD
                                 }}
                             />
-                        </TouchableWithoutFeedback>
+                        </TouchableOpacity>
                     )}
             </View>
 

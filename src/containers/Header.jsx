@@ -10,7 +10,7 @@ import {
 } from 'galio-framework';
 import React from 'react';
 import {
-    Platform, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, View
+    Platform, StyleSheet, TouchableOpacity, View
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 
@@ -182,7 +182,7 @@ export default function Header({
 
     return (
         <View style={headerStyles}>
-            <TouchableWithoutFeedback
+            <TouchableOpacity
                 onLongPress={() => clearAllCache()}
             >
                 <NavBar
@@ -203,7 +203,7 @@ export default function Header({
                     ]}
                     {...props}
                 />
-            </TouchableWithoutFeedback>
+            </TouchableOpacity>
             {renderHeader()}
             {renderRight()}
         </View>

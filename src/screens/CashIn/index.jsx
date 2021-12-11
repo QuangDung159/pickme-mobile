@@ -8,8 +8,7 @@ import {
 import { ToastHelpers } from '@helpers/index';
 import * as Clipboard from 'expo-clipboard';
 import React, { useEffect, useState } from 'react';
-import { View } from 'react-native';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { TouchableOpacity, View } from 'react-native';
 import ImageScalable from 'react-native-scalable-image';
 import { useSelector } from 'react-redux';
 
@@ -89,7 +88,7 @@ export default function CashIn(props) {
                             marginTop: 10
                         }}
                     >
-                        <TouchableWithoutFeedback
+                        <TouchableOpacity
                             onPress={() => copyToClipboard('01860423701')}
                         >
                             <NoteText
@@ -114,7 +113,7 @@ export default function CashIn(props) {
                                     />
                                 )}
                             />
-                        </TouchableWithoutFeedback>
+                        </TouchableOpacity>
                     </View>
 
                     <View
@@ -140,7 +139,7 @@ export default function CashIn(props) {
                             marginTop: 10
                         }}
                     >
-                        <TouchableWithoutFeedback
+                        <TouchableOpacity
                             onPress={() => copyToClipboard('Lư Quảng Dũng')}
                         >
                             <NoteText
@@ -164,7 +163,7 @@ export default function CashIn(props) {
                                     />
                                 )}
                             />
-                        </TouchableWithoutFeedback>
+                        </TouchableOpacity>
 
                     </View>
 
@@ -173,7 +172,7 @@ export default function CashIn(props) {
                             marginTop: 10
                         }}
                     >
-                        <TouchableWithoutFeedback
+                        <TouchableOpacity
                             onPress={() => copyToClipboard(moneyTransferContent)}
                         >
                             <NoteText
@@ -197,7 +196,7 @@ export default function CashIn(props) {
                                     />
                                 )}
                             />
-                        </TouchableWithoutFeedback>
+                        </TouchableOpacity>
                     </View>
                     <TouchableText
                         style={{

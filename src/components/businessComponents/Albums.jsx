@@ -3,7 +3,7 @@ import IconFamily from '@constants/IconFamily';
 import Theme from '@constants/Theme';
 import React from 'react';
 import {
-    Image, StyleSheet, Text, TouchableWithoutFeedback, View
+    Image, StyleSheet, Text, TouchableOpacity, View
 } from 'react-native';
 import uuid from 'react-native-uuid';
 
@@ -30,7 +30,7 @@ export default function Albums({
             <View
                 key={key}
             >
-                <TouchableWithoutFeedback
+                <TouchableOpacity
                     onPress={() => {
                         setVisible(true);
                         setImageIndex(index);
@@ -58,7 +58,7 @@ export default function Albums({
                             />
                         </View>
                     </View>
-                </TouchableWithoutFeedback>
+                </TouchableOpacity>
             </View>
         );
     };

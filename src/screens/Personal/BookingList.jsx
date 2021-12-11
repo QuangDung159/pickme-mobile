@@ -10,9 +10,8 @@ import groupBy from 'lodash/groupBy';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import {
-    RefreshControl, Text, View
+    RefreshControl, ScrollView, Text, TouchableOpacity, View
 } from 'react-native';
-import { ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 
 const {
@@ -82,7 +81,7 @@ export default function BookingList({ navigation }) {
         }
 
         return (
-            <TouchableWithoutFeedback
+            <TouchableOpacity
                 onPress={() => {
                     navigation.navigate(ScreenName.BOOKING_DETAIL, {
                         bookingId: id,
@@ -190,7 +189,7 @@ export default function BookingList({ navigation }) {
 
                     </View>
                 </View>
-            </TouchableWithoutFeedback>
+            </TouchableOpacity>
         );
     };
 
