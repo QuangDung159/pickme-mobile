@@ -217,9 +217,9 @@ export default function Onboarding({ navigation }) {
                                 <CustomText
                                     style={{
                                         color: COLORS.ACTIVE,
-                                        marginTop: 10
+                                        fontSize: SIZES.FONT_H2
                                     }}
-                                    text="Ở đây chúng tôi phát người yêu!"
+                                    text="Trò chuyện với người lạ"
                                 />
                             </View>
                         </View>
