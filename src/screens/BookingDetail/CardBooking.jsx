@@ -68,7 +68,7 @@ export default function CardBooking({ booking }) {
             return calendarId;
         }
 
-        const appCalendar = deviceCalendars.find((item) => item.name === 'PickMe');
+        const appCalendar = deviceCalendars.find((item) => item.name === '2SeeYou');
         if (!appCalendar) {
             const calendarId = await createCalendar();
             return calendarId;
@@ -79,14 +79,14 @@ export default function CardBooking({ booking }) {
     const createCalendar = async () => {
         const defaultCalendarSource = Platform.OS === 'ios'
             ? await getDefaultCalendarSource()
-            : { isLocalAccount: true, name: 'PickMe' };
+            : { isLocalAccount: true, name: '2SeeYou' };
         const newCalendarID = await Calendar.createCalendarAsync({
-            title: 'Lịch PickMe',
+            title: 'Lịch 2SeeYou',
             color: COLORS.ACTIVE,
             entityType: Calendar.EntityTypes.EVENT,
             sourceId: defaultCalendarSource.id,
             source: defaultCalendarSource,
-            name: 'PickMe',
+            name: '2SeeYou',
             ownerAccount: currentUser.userName,
             accessLevel: Calendar.CalendarAccessLevel.OWNER,
         });

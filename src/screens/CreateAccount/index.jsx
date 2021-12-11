@@ -421,7 +421,7 @@ export default function CreateAccount(props) {
                     />
 
                     <CustomText
-                        text={'Chúc bạn có những trải nghiệm tuyệt vời\ncùng với PickMe'}
+                        text={'Chúc bạn có những trải nghiệm tuyệt vời\ncùng với 2SeeYou'}
                         style={{
                             color: COLORS.ACTIVE,
                             fontSize: SIZES.FONT_H3,

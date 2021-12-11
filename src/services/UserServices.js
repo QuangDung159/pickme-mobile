@@ -116,8 +116,13 @@ const rxSubmitUpdateInfoAsync = async (body, domain = null) => {
 };
 
 const submitUpdateInfoAsync = async (body) => {
+    let dobToSend = body.dob;
+    if (body.dob.length > 4) {
+        dobToSend = body.dob.substr(0, 4);
+    }
+
     let result = await rxSubmitUpdateInfoAsync({
-        ...body, dob: `${body.dob}-01-01T14:00:00`, weight: +body.weight, height: +body.height
+        ...body, dob: `${dobToSend}-01-01T14:00:00`, weight: +body.weight, height: +body.height
     });
     const handledResult = await Middlewares.handleResponseStatusMiddleware(result);
     if (handledResult) {

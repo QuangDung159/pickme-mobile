@@ -163,7 +163,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
         if (!currentUser.id) return;
         if (!currentUser.isFillDataFirstTime) {
             Alert.alert('Thông tin cá nhân',
-                'Tài khoản của bạn chưa được cập nhật thông tin cá nhân.\nVui lòng cập nhật để có được trải nghiệm tốt nhất với PickMe.',
+                'Tài khoản của bạn chưa được cập nhật thông tin cá nhân.\nVui lòng cập nhật để có được trải nghiệm tốt nhất với 2SeeYou.',
                 [
                     {
                         text: 'Đóng',

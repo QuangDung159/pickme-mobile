@@ -1,7 +1,7 @@
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 import { CenterLoader, CustomInput, IconCustom } from '@components/uiComponents';
 import {
-    GraphQueryString, IconFamily, Theme, ScreenName
+    GraphQueryString, IconFamily, ScreenName, Theme
 } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
 import { setChattingWith, setNumberMessageUnread } from '@redux/Actions';
@@ -9,9 +9,9 @@ import { socketRequestUtil } from '@utils/index';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import {
-    KeyboardAvoidingView, Platform, StyleSheet, Text, View
+    FlatList, KeyboardAvoidingView, Platform, StyleSheet, Text, TouchableWithoutFeedback, View
 } from 'react-native';
-import { FlatList, TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 
 const {

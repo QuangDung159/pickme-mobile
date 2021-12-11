@@ -5,9 +5,8 @@ import {
 } from '@constants/index';
 import React from 'react';
 import {
-    Image, StyleSheet, Text, View
+    FlatList, Image, StyleSheet, Text, TouchableWithoutFeedback, View
 } from 'react-native';
-import { FlatList, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 const {
     FONT: {

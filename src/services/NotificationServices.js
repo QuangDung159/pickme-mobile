@@ -5,7 +5,7 @@ import { RxUtil } from '@utils/index';
 
 const rxFetchListNotificationAsync = async (domain = null) => {
     const result = await RxUtil(
-        Rx.NOTIFICATION.GET_MY_NOTIFICATION,
+        `${Rx.NOTIFICATION.GET_MY_NOTIFICATION}?pageIndex=1&pageSize=30`,
         'GET',
         null, domain
     );
