@@ -1,8 +1,8 @@
 {
   "expo": {
     "name": "2SeeYou",
-    "scheme": "pickmecustomer",
-    "slug": "customer-pick-me-mobile",
+    "scheme": "mobile-2seeyou",
+    "slug": "mobile-2seeyou",
     "version": "0.8.1",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
