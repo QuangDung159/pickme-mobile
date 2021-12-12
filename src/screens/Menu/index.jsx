@@ -52,6 +52,17 @@ export default function Menu({ navigation }) {
             },
         },
         {
+            title: ScreenTitle.GUIDE,
+            icon: {
+                name: 'guide',
+                family: IconFamily.FONT_AWESOME,
+                size: 20,
+            },
+            onPress: () => {
+                navigation.navigate(ScreenName.GUIDE);
+            },
+        },
+        {
             title: ScreenTitle.LEADER_BOARD,
             icon: {
                 name: 'award',

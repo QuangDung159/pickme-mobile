@@ -31,4 +31,5 @@ export default {
     PARTNER_DATA: 'Thông tin Host',
     CASH_OUT: 'Rút tiền',
     POLICY: 'Quy định chung',
+    GUIDE: 'Hướng dẫn',
 };
