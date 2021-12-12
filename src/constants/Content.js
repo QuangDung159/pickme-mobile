@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 /* eslint-disable max-len */
 export const DISCLAIMER_CONTENT = `I. Nguyên tắc chung
-Ứng dụng 2SeeYou là ứng dụng di động cung cấp dịch vụ sàn giao dịch thương mại điện tử (“TMĐT”) thuê nhân lực.
+Ứng dụng 2SeeYou là ứng dụng di động cung cấp dịch vụ sàn giao dịch thương mại điện tử ("TMĐT") thuê nhân lực.
 
 Ứng dụng giúp kết nối giữa nhà cung cấp dịch vụ và người có nhu cầu sử dụng dịch vụ, bao gồm các loại hình:
 
