@@ -1,5 +1,7 @@
 import { CustomButton, CustomText, IconCustom } from '@components/uiComponents';
-import { BookingStatus, IconFamily, Theme } from '@constants/index';
+import {
+    BookingStatus, IconFamily, Theme, OutsideApp
+} from '@constants/index';
 import { mappingStatusText } from '@helpers/CommonHelpers';
 import { CommonHelpers, ToastHelpers } from '@helpers/index';
 import * as Calendar from 'expo-calendar';
@@ -24,6 +26,13 @@ const {
     SIZES,
     COLORS
 } = Theme;
+
+const {
+    SKYPE,
+    ZALO,
+    MESSENGER,
+    GOOGLE_MAP
+} = OutsideApp;
 
 export default function CardBooking({ booking }) {
     const [deviceCalendars, setDeviceCalendars] = useState([]);
@@ -205,7 +214,23 @@ export default function CardBooking({ booking }) {
 
     const createMapUrl = (address) => {
         const addressStr = address.replace(/ /g, '+');
-        return `https://www.google.com/maps?daddr=${addressStr}`;
+        return `${GOOGLE_MAP.deepLink}${addressStr}`;
+    };
+
+    const checkPlatformByAddress = () => {
+        if (booking.address.includes(ZALO.deepLink)) {
+            return ZALO.name;
+        }
+
+        if (booking.address.includes(SKYPE.deepLink)) {
+            return SKYPE.name;
+        }
+
+        if (booking.address.includes(MESSENGER.deepLink)) {
+            return MESSENGER.name;
+        }
+
+        return booking.address;
     };
 
     const createOpenAppText = () => {
@@ -216,7 +241,7 @@ export default function CardBooking({ booking }) {
                     name: 'phone',
                     family: IconFamily.ENTYPO,
                     size: 18
-                }
+                },
             });
         } else {
             setOpenAppText({
@@ -225,7 +250,7 @@ export default function CardBooking({ booking }) {
                     name: 'map',
                     family: IconFamily.ENTYPO,
                     size: 18
-                }
+                },
             });
         }
     };
@@ -239,7 +264,6 @@ export default function CardBooking({ booking }) {
             status,
             date,
             idReadAble,
-            address,
             customerName,
             customerId
         } = booking;
@@ -347,7 +371,16 @@ export default function CardBooking({ booking }) {
 
                 <TouchableOpacity
                     onPress={() => {
-                        openAppText?.action();
+                        if (booking.status === BookingStatus.PAID) {
+                            openAppText?.action();
+                        } else {
+                            Alert.alert('Đơn hẹn không ở trạng thái "Đã được thanh toán"', '', [
+                                {
+                                    text: 'Đã hiểu',
+                                    style: 'ok'
+                                },
+                            ], { cancelable: true });
+                        }
                     }}
                 >
                     <View
@@ -366,7 +399,7 @@ export default function CardBooking({ booking }) {
                                     }
                                 ]
                             }
-                            text={`Tại: ${address || 'N/A'}`}
+                            text={`Tại: ${checkPlatformByAddress()}`}
                         />
                         <IconCustom
                             name={openAppText?.icon.name}

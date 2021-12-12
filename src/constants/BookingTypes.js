@@ -23,4 +23,10 @@ export default [
         key: 'zalo',
         type: 'online'
     },
+    {
+        value: 'Chơi game',
+        selected: false,
+        key: 'zalo',
+        type: 'online'
+    },
 ];

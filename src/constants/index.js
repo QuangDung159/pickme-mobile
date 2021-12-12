@@ -9,6 +9,7 @@ import IconFamily from './IconFamily';
 import Images from './Images';
 import Interests from './Interests';
 import PickMeInfo from './PickMeInfo';
+import OutsideApp from './OutsideApp';
 import Rx from './Rx';
 import ScreenName from './ScreenName';
 import ScreenTitle from './ScreenTitle';
@@ -35,5 +36,6 @@ export {
     PickMeInfo,
     Interests,
     BookingNoteOptions,
-    BookingTypes
+    BookingTypes,
+    OutsideApp
 };

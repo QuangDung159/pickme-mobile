@@ -1,6 +1,6 @@
 import { CenterLoader, Line } from '@components/uiComponents';
 import {
-    BookingStatus, ScreenName, Theme
+    BookingStatus, OutsideApp, ScreenName, Theme
 } from '@constants/index';
 import { mappingStatusText } from '@helpers/CommonHelpers';
 import { ToastHelpers } from '@helpers/index';
@@ -23,6 +23,12 @@ const {
     COLORS
 } = Theme;
 
+const {
+    SKYPE,
+    ZALO,
+    MESSENGER
+} = OutsideApp;
+
 export default function BookingList({ navigation }) {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
@@ -38,6 +44,22 @@ export default function BookingList({ navigation }) {
             }
         }, []
     );
+
+    const checkPlatformByAddress = (address) => {
+        if (address.includes(ZALO.deepLink)) {
+            return ZALO.name;
+        }
+
+        if (address.includes(SKYPE.deepLink)) {
+            return SKYPE.name;
+        }
+
+        if (address.includes(MESSENGER.deepLink)) {
+            return MESSENGER.name;
+        }
+
+        return address;
+    };
 
     const groupBookingByDate = () => groupBy(listBookingStore, (n) => n.date);
 
@@ -175,7 +197,7 @@ export default function BookingList({ navigation }) {
                             color: colorByStatus,
                         }}
                         >
-                            {address}
+                            {checkPlatformByAddress(address)}
                         </Text>
 
                         <Text style={{

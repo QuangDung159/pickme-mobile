@@ -2,7 +2,9 @@ import { CustomCalendar } from '@components/businessComponents';
 import {
     CustomButton, CustomInput, CustomText, OptionItem
 } from '@components/uiComponents';
-import { BookingNoteOptions, BookingTypes, Theme } from '@constants/index';
+import {
+    BookingNoteOptions, BookingTypes, OutsideApp, Theme
+} from '@constants/index';
 import ToastHelpers from '@helpers/ToastHelpers';
 import moment from 'moment';
 import React, { useState } from 'react';
@@ -17,6 +19,12 @@ const {
     SIZES,
     COLORS
 } = Theme;
+
+const {
+    SKYPE,
+    ZALO,
+    MESSENGER
+} = OutsideApp;
 
 export default function CreateBookingForm({
     route,
@@ -74,14 +82,14 @@ export default function CreateBookingForm({
 
     const getPlatformId = (bookingType) => {
         switch (bookingType.key) {
-            case 'skype': {
-                return `skype:${partner.skype}`;
+            case SKYPE.key: {
+                return `${SKYPE.deepLink}${partner.skype}`;
             }
-            case 'zalo': {
-                return `https://zalo.me/${partner.zalo}`;
+            case ZALO.key: {
+                return `${ZALO.deepLink}${partner.zalo}`;
             }
             default: {
-                return `http://m.me/${partner.messenger}`;
+                return `${MESSENGER.deepLink}${partner.messenger}`;
             }
         }
     };
