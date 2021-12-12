@@ -16,7 +16,8 @@ const { SIZES, COLORS } = Theme;
 export default function PartnerData() {
     const [newUser, setNewUser] = useState({});
     const [isShowSpinner, setIsShowSpinner] = useState(false);
-    const [amountDisplay, setAmountDisplay] = useState('0');
+    const [amountDisplay, setAmountDisplay] = useState('');
+    const [amountDisplayOnline, setAmountDisplayOnline] = useState('');
 
     const currentUser = useSelector((state) => state.userReducer.currentUser);
 
@@ -49,7 +50,7 @@ export default function PartnerData() {
             }}
             onChangeText={(input) => onChangeEarningExpected(input)}
             value={amountDisplay}
-            label="Thu nhập mong muốn (VND/phút):"
+            label="Thu nhập mong muốn (UCoin/phút):"
             onEndEditing={
                 (e) => {
                     setAmountDisplay(CommonHelpers.formatCurrency(e.nativeEvent.text));
@@ -70,6 +71,41 @@ export default function PartnerData() {
                 width: SIZES.WIDTH_BASE * 0.9
             }}
             label="Số phút tối thiểu của buổi hẹn:"
+        />
+    );
+
+    const renderEarningExpectedOnline = () => (
+        <CustomInput
+            containerStyle={{
+                marginVertical: 10,
+                width: SIZES.WIDTH_BASE * 0.9
+            }}
+            onChangeText={(input) => {
+                setNewUser({ ...newUser, onlineEarningExpected: input });
+                setAmountDisplayOnline(input);
+            }}
+            value={amountDisplayOnline}
+            label="Thu nhập mong muốn (online) (UCoin/phút):"
+            onEndEditing={
+                (e) => {
+                    setAmountDisplayOnline(CommonHelpers.formatCurrency(e.nativeEvent.text));
+                }
+            }
+            onFocus={() => {
+                setAmountDisplayOnline(newUser.onlineEarningExpected);
+            }}
+        />
+    );
+
+    const renderInputMinimumDurationOnline = () => (
+        <CustomInput
+            value={newUser.onlineMinimumDuration}
+            onChangeText={(input) => setNewUser({ ...newUser, onlineMinimumDuration: input })}
+            containerStyle={{
+                marginVertical: 10,
+                width: SIZES.WIDTH_BASE * 0.9
+            }}
+            label="Số phút tối thiểu của buổi hẹn (online):"
         />
     );
 
@@ -94,7 +130,7 @@ export default function PartnerData() {
     const validate = () => {
         const validateArr = [
             {
-                fieldName: 'Thu nhập mong muốn (VND/phút)',
+                fieldName: 'Thu nhập mong muốn',
                 input: newUser.earningExpected,
                 validate: {
                     required: {
@@ -108,6 +144,30 @@ export default function PartnerData() {
             {
                 fieldName: 'Số phút tối thiểu của buổi hẹn',
                 input: newUser.minimumDuration,
+                validate: {
+                    required: {
+                        value: true,
+                    },
+                    equalGreaterThan: {
+                        value: 90
+                    }
+                }
+            },
+            {
+                fieldName: 'Thu nhập mong muốn (online)',
+                input: newUser.onlineEarningExpected,
+                validate: {
+                    required: {
+                        value: true,
+                    },
+                    equalGreaterThan: {
+                        value: 600
+                    }
+                }
+            },
+            {
+                fieldName: 'Số phút tối thiểu của buổi hẹn (online)',
+                input: newUser.onlineMinimumDuration,
                 validate: {
                     required: {
                         value: true,
@@ -137,7 +197,9 @@ export default function PartnerData() {
     const onSubmitUpdateInfo = async () => {
         const {
             minimumDuration,
-            earningExpected
+            earningExpected,
+            onlineEarningExpected,
+            onlineMinimumDuration
         } = newUser;
 
         if (!validate()) {
@@ -148,6 +210,8 @@ export default function PartnerData() {
             imageUrl: currentUser.url,
             minimumDuration: +minimumDuration,
             earningExpected: +earningExpected,
+            onlineMinimumDuration: +onlineMinimumDuration,
+            onlineEarningExpected: +onlineEarningExpected
         };
 
         setIsShowSpinner(true);
@@ -159,7 +223,9 @@ export default function PartnerData() {
             const userInfo = {
                 ...currentUser,
                 minimumDuration,
-                earningExpected
+                earningExpected,
+                onlineEarningExpected,
+                onlineMinimumDuration
             };
             dispatch(setCurrentUser(userInfo));
             dispatch(setPersonTabActiveIndex(0));
@@ -189,6 +255,8 @@ export default function PartnerData() {
                             <>
                                 {renderEarningExpected()}
                                 {renderInputMinimumDuration()}
+                                {renderEarningExpectedOnline()}
+                                {renderInputMinimumDurationOnline()}
                                 {renderButtonPanel()}
                             </>
                         )}
