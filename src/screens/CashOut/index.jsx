@@ -37,15 +37,26 @@ export default function CashOut() {
         () => {
             fetchListBankByStore();
 
-            const { bankId, bankNum, ownerName } = currentUser;
-
+            const { bankNum, ownerName } = currentUser;
             setCashOutForm({
-                bankId: bankId || listBank[0]?.id,
+                ...cashOutForm,
                 bankNum,
                 ownerName,
                 amount: ''
             });
         }, []
+    );
+
+    useEffect(
+        () => {
+            if (listBank && listBank.length > 0) {
+                const { bankId } = currentUser;
+                setCashOutForm({
+                    ...cashOutForm,
+                    bankId: bankId || listBank[0].id,
+                });
+            }
+        }, [listBank]
     );
 
     const fetchListBankByStore = () => {
@@ -263,10 +274,7 @@ export default function CashOut() {
                             setAmountDisplay(cashOutForm.amount);
                         }}
                         inputStyle={{
-                            fontFamily: TEXT_BOLD,
                             color: COLORS.ACTIVE,
-                            textAlign: 'center',
-                            fontSize: SIZES.FONT_H1
                         }}
                     />
                     <View
