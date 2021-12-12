@@ -370,7 +370,7 @@ export default function UpdateInfoAccount() {
             },
             {
                 fieldName: 'Năm sinh',
-                input: newUser.dob,
+                input: newUser.dob.length > 0 ? newUser.dob.substr(0, 4) : newUser.dob,
                 validate: {
                     required: {
                         value: true,
