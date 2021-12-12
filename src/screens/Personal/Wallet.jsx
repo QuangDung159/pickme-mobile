@@ -6,8 +6,9 @@ import { CommonHelpers, ToastHelpers } from '@helpers/index';
 import { setListCashHistoryStore } from '@redux/Actions';
 import { CashServices } from '@services/index';
 import React, { useEffect, useState } from 'react';
-import { RefreshControl, Text, View } from 'react-native';
-import { FlatList, ScrollView } from 'react-native-gesture-handler';
+import {
+    FlatList, RefreshControl, ScrollView, Text, View
+} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 const {

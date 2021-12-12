@@ -2,8 +2,7 @@ import { DISCLAIMER_CONTENT } from '@constants/Content';
 import { Theme } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
 import React from 'react';
-import { StyleSheet, Text } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { ScrollView, StyleSheet, Text } from 'react-native';
 
 const {
     FONT: {

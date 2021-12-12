@@ -1,4 +1,4 @@
-# PickMe - DragonC92Team
+# 2SeeYou - DragonC92Team
 
 <p>
   <!-- iOS -->

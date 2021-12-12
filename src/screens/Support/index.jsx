@@ -10,9 +10,8 @@ import { MediaHelpers, ToastHelpers } from '@helpers/index';
 import { SystemServices } from '@services/index';
 import React, { useEffect, useState } from 'react';
 import {
-    Image, SafeAreaView, StyleSheet, Text, View
+    FlatList, Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View
 } from 'react-native';
-import { FlatList, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import ImageView from 'react-native-image-viewing';
 import { SceneMap } from 'react-native-tab-view';
 import { useSelector } from 'react-redux';
@@ -137,7 +136,7 @@ export default function Support({ navigation }) {
     });
 
     const renderImageReport = () => (
-        <TouchableWithoutFeedback
+        <TouchableOpacity
             onPress={() => {
                 setVisible(true);
                 setListImageReview([{ url: bugReportForm.url }]);
@@ -149,7 +148,7 @@ export default function Support({ navigation }) {
                     source={{ uri: image }}
                 />
             )}
-        </TouchableWithoutFeedback>
+        </TouchableOpacity>
     );
 
     const renderImageView = () => {
@@ -261,7 +260,7 @@ export default function Support({ navigation }) {
                     Ảnh chụp màn hình:
                 </Text>
 
-                <TouchableWithoutFeedback
+                <TouchableOpacity
                     onPress={() => onClickUploadImageReport()}
                     containerStyle={{
                         justifyContent: 'center',
@@ -274,7 +273,7 @@ export default function Support({ navigation }) {
                         color={COLORS.DEFAULT}
                         size={20}
                     />
-                </TouchableWithoutFeedback>
+                </TouchableOpacity>
             </View>
         </View>
     );

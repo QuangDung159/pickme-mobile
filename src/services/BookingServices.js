@@ -225,7 +225,7 @@ const submitCancelBookingAsync = async (bookingId, body) => {
 
 const rxFetchListPartnerAsync = async (domain = null) => {
     const result = await RxUtil(
-        Rx.PARTNER.GET_LIST_PARTNER,
+        `${Rx.PARTNER.GET_LIST_PARTNER}?pageIndex=1&pageSize=50`,
         'GET', null, domain
     );
     return result;

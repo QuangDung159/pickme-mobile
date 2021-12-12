@@ -1,10 +1,10 @@
 import { CenterLoader } from '@components/uiComponents';
-import { Theme, ScreenName } from '@constants/index';
+import { ScreenName, Theme } from '@constants/index';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import {
     Image,
-    StyleSheet, Text, TouchableWithoutFeedback, View
+    StyleSheet, Text, TouchableOpacity, View
 } from 'react-native';
 import ImageView from 'react-native-image-viewing';
 import ImageScalable from 'react-native-scalable-image';
@@ -53,7 +53,7 @@ export default function CardImage({
                         flexDirection: 'row'
                     }}
                 >
-                    <TouchableWithoutFeedback
+                    <TouchableOpacity
                         onPress={() => handleOnClickCard(user, currentUser, navigation)}
                     >
                         <View
@@ -70,7 +70,7 @@ export default function CardImage({
                                 }}
                             />
                         </View>
-                    </TouchableWithoutFeedback>
+                    </TouchableOpacity>
 
                     <View
                         style={{
@@ -86,7 +86,7 @@ export default function CardImage({
                                 flexDirection: 'row'
                             }}
                         >
-                            <TouchableWithoutFeedback
+                            <TouchableOpacity
                                 onPress={() => handleOnClickCard(user, currentUser, navigation)}
                             >
                                 <Text
@@ -98,7 +98,7 @@ export default function CardImage({
                                 >
                                     {user.fullName}
                                 </Text>
-                            </TouchableWithoutFeedback>
+                            </TouchableOpacity>
                         </View>
                         <View>
                             <Text
@@ -123,7 +123,7 @@ export default function CardImage({
                     ]
                 }
             >
-                <TouchableWithoutFeedback
+                <TouchableOpacity
                     onPress={() => {
                         setVisible(true);
                     }}
@@ -135,7 +135,7 @@ export default function CardImage({
                         width={SIZES.WIDTH_BASE}
                         source={{ uri: imageUrl }}
                     />
-                </TouchableWithoutFeedback>
+                </TouchableOpacity>
                 <CenterLoader />
             </View>
         </View>

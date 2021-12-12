@@ -167,7 +167,7 @@ export default function SignIn({
                     })
                 },
             ],
-            { cancelable: false });
+            { cancelable: true });
         } else {
             handleNavigation(status);
         }

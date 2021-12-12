@@ -55,6 +55,9 @@ export default function PartnerData() {
                     setAmountDisplay(CommonHelpers.formatCurrency(e.nativeEvent.text));
                 }
             }
+            onFocus={() => {
+                setAmountDisplay(newUser.earningExpected);
+            }}
         />
     );
 
@@ -142,15 +145,14 @@ export default function PartnerData() {
         }
 
         const body = {
-            ...currentUser,
-            minimumDuration,
-            earningExpected,
-            dob: currentUser?.dob?.substr(0, 4)
+            imageUrl: currentUser.url,
+            minimumDuration: +minimumDuration,
+            earningExpected: +earningExpected,
         };
 
         setIsShowSpinner(true);
 
-        const result = await UserServices.submitUpdateInfoAsync(body);
+        const result = await UserServices.submitUpdatePartnerInfoAsync(body);
         const { data } = result;
 
         if (data) {

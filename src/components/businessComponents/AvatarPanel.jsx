@@ -5,8 +5,9 @@ import IconFamily from '@constants/IconFamily';
 import Images from '@constants/Images';
 import Theme from '@constants/Theme';
 import React from 'react';
-import { Image, StyleSheet, View } from 'react-native';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import {
+    Image, StyleSheet, TouchableOpacity, View
+} from 'react-native';
 
 const { SIZES, COLORS } = Theme;
 
@@ -74,11 +75,11 @@ export default function AvatarPanel({
                         backgroundColor: COLORS.BASE
                     }}
                 >
-                    <TouchableWithoutFeedback
+                    <TouchableOpacity
                         onPress={() => isCurrentUser && onClickAvatar && onClickAvatar()}
                     >
                         {renderAvatar()}
-                    </TouchableWithoutFeedback>
+                    </TouchableOpacity>
                 </View>
             </View>
         </View>

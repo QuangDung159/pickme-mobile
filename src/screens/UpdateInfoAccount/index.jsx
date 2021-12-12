@@ -26,7 +26,7 @@ export default function UpdateInfoAccount() {
 
     useEffect(
         () => {
-            setNewUser({ ...currentUser, dob: currentUser?.dob?.substr(0, 4), isMale: currentUser.isMale });
+            setNewUser({ ...currentUser, isMale: currentUser.isMale });
             handleListInterestFromAPI();
         }, []
     );
