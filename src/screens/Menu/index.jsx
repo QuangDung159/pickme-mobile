@@ -54,7 +54,7 @@ export default function Menu({ navigation }) {
         {
             title: ScreenTitle.GUIDE,
             icon: {
-                name: 'guide',
+                name: 'book',
                 family: IconFamily.FONT_AWESOME,
                 size: 20,
             },
