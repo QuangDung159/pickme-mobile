@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import CashOut from '@screens/CashOut';
 import ChangePassword from '@screens/ChangePassword';
 import Policy from '@screens/Policy';
+import Guide from '@screens/Guide';
 // screens
 import {
     BookingDetail,
@@ -474,3 +475,23 @@ export const PolicyScreen = () => (
         }}
     />
 );
+
+
+export const GuideScreen = () => (
+    <Stack.Screen
+        name={ScreenName.GUIDE}
+        component={Guide}
+        options={{
+            header: ({ navigation, scene }) => (
+                <Header
+                    title={ScreenTitle.GUIDE}
+                    options
+                    navigation={navigation}
+                    scene={scene}
+                />
+            ),
+            cardStyle: { backgroundColor: COLORS.BASE }
+        }}
+    />
+);
+
