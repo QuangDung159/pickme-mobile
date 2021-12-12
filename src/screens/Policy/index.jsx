@@ -11,7 +11,7 @@ const {
     COLORS
 } = Theme;
 
-export default function ChangePassword() {
+export default function Policy() {
     try {
         return (
             <ScrollView
