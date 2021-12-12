@@ -39,11 +39,13 @@ export default function Total({
 
     const calculateTotalAmount = (start, end) => {
         if (total !== 0) return total;
-        const { estimatePricing } = route.params.partner;
+        const { estimatePricing, onlineEstimatePricing } = route.params.partner;
+        const unitPrice = booking.isOnline ? onlineEstimatePricing : estimatePricing;
+
         const startMinutesNumber = convertStringHoursToMinutes(start) || 0;
         const endMinutesNumber = convertStringHoursToMinutes(end) || 0;
         if (startMinutesNumber < endMinutesNumber) {
-            return (endMinutesNumber - startMinutesNumber) * estimatePricing;
+            return (endMinutesNumber - startMinutesNumber) * unitPrice;
         }
         return 0;
     };
@@ -82,8 +84,6 @@ export default function Total({
         return ValidationHelpers.validate(validationArr);
     };
 
-    const calculateTotalByBookingType = (totalAmount) => (booking.isOnline ? totalAmount / 2 : totalAmount);
-
     const onSubmitBooking = async () => {
         if (!booking.isOnline) {
             if (!currentUser.isCustomerVerified) {
@@ -118,7 +118,7 @@ export default function Total({
             Latitude: booking.latitude || 0,
             Description: 'Không có mô tả',
             Noted: booking.noted || 'Không có ghi chú',
-            totalAmount: calculateTotalByBookingType(total !== 0 ? total : calculateTotalAmount(startTimeStr, endTimeStr)),
+            totalAmount: total !== 0 ? total : calculateTotalAmount(startTimeStr, endTimeStr),
             IsOnline: booking.isOnline
         };
 
@@ -165,7 +165,7 @@ export default function Total({
                         fontFamily: TEXT_BOLD,
                         textAlign: 'center'
                     }}
-                    text={`Tổng chi phí: ${CommonHelpers.formatCurrency(calculateTotalByBookingType(calculateTotalAmount(startTimeStr, endTimeStr)))}`}
+                    text={`Tổng chi phí: ${CommonHelpers.formatCurrency(calculateTotalAmount(startTimeStr, endTimeStr))}`}
                 />
 
                 {renderButtonPanel()}
