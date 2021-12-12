@@ -5,9 +5,8 @@ import {
 } from '@constants/index';
 import React from 'react';
 import {
-    Image, StyleSheet, Text, View
+    FlatList, Image, StyleSheet, Text, TouchableOpacity, View
 } from 'react-native';
-import { FlatList, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 const {
     FONT: {
@@ -59,7 +58,7 @@ export default function LeaderBoadViewByType({
                     height: 230,
                 }}
             >
-                <TouchableWithoutFeedback
+                <TouchableOpacity
                     onPress={
                         () => navigation.navigate(
                             ScreenName.PROFILE,
@@ -101,7 +100,7 @@ export default function LeaderBoadViewByType({
                             />
                         </View>
                     </View>
-                </TouchableWithoutFeedback>
+                </TouchableOpacity>
 
                 <View
                     style={{
@@ -155,7 +154,7 @@ export default function LeaderBoadViewByType({
     const renderLeaderBoardItem = (leaderBoardItem, index) => {
         if (index !== 0) {
             return (
-                <TouchableWithoutFeedback
+                <TouchableOpacity
                     onPress={() => navigation.navigate(ScreenName.PROFILE, { userId: leaderBoardItem.userId })}
                 >
                     <View
@@ -245,7 +244,7 @@ export default function LeaderBoadViewByType({
                             </View>
                         </View>
                     </View>
-                </TouchableWithoutFeedback>
+                </TouchableOpacity>
             );
         } return null;
     };

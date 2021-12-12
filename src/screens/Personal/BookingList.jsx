@@ -10,9 +10,8 @@ import groupBy from 'lodash/groupBy';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import {
-    RefreshControl, Text, View
+    RefreshControl, ScrollView, Text, TouchableOpacity, View
 } from 'react-native';
-import { ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 
 const {
@@ -82,7 +81,7 @@ export default function BookingList({ navigation }) {
         }
 
         return (
-            <TouchableWithoutFeedback
+            <TouchableOpacity
                 onPress={() => {
                     navigation.navigate(ScreenName.BOOKING_DETAIL, {
                         bookingId: id,
@@ -190,7 +189,7 @@ export default function BookingList({ navigation }) {
 
                     </View>
                 </View>
-            </TouchableWithoutFeedback>
+            </TouchableOpacity>
         );
     };
 
@@ -215,8 +214,8 @@ export default function BookingList({ navigation }) {
                     <Text
                         style={{
                             fontFamily: TEXT_BOLD,
-                            fontSize: SIZES.FONT_H1 - 5,
-                            color: COLORS.ACTIVE
+                            fontSize: SIZES.FONT_H1,
+                            color: COLORS.ACTIVE,
                         }}
                     >
                         {dateFragment[2]}
@@ -224,17 +223,18 @@ export default function BookingList({ navigation }) {
                     <Line
                         borderColor={COLORS.DEFAULT}
                         style={{
-                            width: SIZES.WIDTH_BASE * 0.1
+                            width: SIZES.WIDTH_BASE * 0.1,
+                            marginVertical: 5
                         }}
                     />
                     <Text
                         style={{
-                            fontFamily: TEXT_REGULAR,
-                            fontSize: SIZES.FONT_H1 - 5,
+                            fontFamily: TEXT_BOLD,
+                            fontSize: SIZES.FONT_H1,
                             color: COLORS.DEFAULT
                         }}
                     >
-                        {dateFragment[1]}
+                        {`${dateFragment[1]}`}
                     </Text>
                 </View>
                 <View

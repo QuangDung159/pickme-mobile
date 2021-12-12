@@ -1,7 +1,6 @@
 import Theme from '@constants/Theme';
 import React from 'react';
-import { Text, View } from 'react-native';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { Text, TouchableOpacity, View } from 'react-native';
 
 const {
     COLORS, SIZES, FONT: {
@@ -13,7 +12,7 @@ export default function RadioButton({
     selected, style, label, onPress
 }) {
     return (
-        <TouchableWithoutFeedback
+        <TouchableOpacity
             style={{
                 flexDirection: 'row',
                 alignItems: 'center',
@@ -54,6 +53,6 @@ export default function RadioButton({
                     {label}
                 </Text>
             )}
-        </TouchableWithoutFeedback>
+        </TouchableOpacity>
     );
 }

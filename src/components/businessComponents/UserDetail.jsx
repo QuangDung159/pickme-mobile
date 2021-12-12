@@ -163,7 +163,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
         if (!currentUser.id) return;
         if (!currentUser.isFillDataFirstTime) {
             Alert.alert('Thông tin cá nhân',
-                'Tài khoản của bạn chưa được cập nhật thông tin cá nhân.\nVui lòng cập nhật để có được trải nghiệm tốt nhất với PickMe.',
+                'Tài khoản của bạn chưa được cập nhật thông tin cá nhân.\nVui lòng cập nhật để có được trải nghiệm tốt nhất với 2SeeYou.',
                 [
                     {
                         text: 'Đóng',
@@ -442,6 +442,10 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                         iconFamily={IconFamily.MATERIAL_COMMUNITY_ICONS}
                         content={`Số dư: ${CommonHelpers.formatCurrency(userInfo.walletAmount)}`}
                         iconSize={18}
+                        contentTextStyle={{
+                            fontFamily: TEXT_BOLD,
+                            color: COLORS.ACTIVE
+                        }}
                     />
                 )}
 

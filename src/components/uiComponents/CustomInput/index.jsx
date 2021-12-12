@@ -1,8 +1,9 @@
 import { IconFamily, Theme } from '@constants/index';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Text, TextInput, View } from 'react-native';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import {
+    Text, TextInput, TouchableOpacity, View
+} from 'react-native';
 import IconCustom from '../IconCustom';
 
 const {
@@ -103,7 +104,7 @@ export default function CustomInput({
                             flex: 1,
                         }}
                     >
-                        <TouchableWithoutFeedback
+                        <TouchableOpacity
                             onPress={() => {
                                 if (onPressRightIcon) onPressRightIcon();
                             }}
@@ -114,7 +115,7 @@ export default function CustomInput({
                                 name={name || 'home'}
                                 family={family || IconFamily.FONT_AWESOME}
                             />
-                        </TouchableWithoutFeedback>
+                        </TouchableOpacity>
                     </View>
                 </View>
             );

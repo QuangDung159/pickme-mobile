@@ -1,5 +1,5 @@
 import {
-    CenterLoader, CustomButton, CustomInput
+    CenterLoader, CustomButton, CustomInput, CustomText
 } from '@components/uiComponents';
 import { Theme } from '@constants/index';
 import { CommonHelpers, ToastHelpers, ValidationHelpers } from '@helpers/index';
@@ -24,7 +24,7 @@ export default function CashOut() {
         bankNum: '',
         ownerName: '',
         bankId: '',
-        amount: 0
+        amount: ''
     });
     const [amountDisplay, setAmountDisplay] = useState('');
 
@@ -38,13 +38,12 @@ export default function CashOut() {
             fetchListBankByStore();
 
             const { bankId, bankNum, ownerName } = currentUser;
-            if (!bankNum) return;
 
             setCashOutForm({
-                bankId,
+                bankId: bankId || listBank[0].id,
                 bankNum,
                 ownerName,
-                amount: 0
+                amount: ''
             });
         }, []
     );
@@ -118,7 +117,7 @@ export default function CashOut() {
                         value: true,
                     },
                     equalGreaterThan: {
-                        value: 500000
+                        value: 100000
                     },
                 }
             },
@@ -140,9 +139,10 @@ export default function CashOut() {
             const { data } = result;
 
             if (data) {
-                setCashOutForm(data);
+                // setCashOutForm(data);
                 getCurrentUser();
                 ToastHelpers.renderToast(data.message, 'success');
+                setAmountDisplay('');
             }
             setIsShowSpinner(false);
         }
@@ -180,6 +180,27 @@ export default function CashOut() {
                         marginTop: Platform.OS === 'ios' ? 0 : 10
                     }}
                 >
+                    <View
+                        style={{
+                            width: '100%',
+                            borderColor: COLORS.ACTIVE,
+                            borderRadius: 20,
+                            borderWidth: 1,
+                            height: 35,
+                            justifyContent: 'center'
+                        }}
+                    >
+                        <CustomText
+                            style={{
+                                fontFamily: TEXT_BOLD,
+                                fontSize: SIZES.FONT_H3,
+                                color: COLORS.ACTIVE,
+                                textAlign: 'center'
+                            }}
+                            text={`Số dư: ${CommonHelpers.formatCurrency(currentUser.walletAmount)}`}
+                        />
+                    </View>
+
                     <Picker
                         selectedValue={bankId}
                         onChangeText={(input) => setCashOutForm({ ...cashOutForm, bankId: input })}
@@ -238,6 +259,9 @@ export default function CashOut() {
                                 setAmountDisplay(CommonHelpers.formatCurrency(e.nativeEvent.text));
                             }
                         }
+                        onFocus={() => {
+                            setAmountDisplay(cashOutForm.amount);
+                        }}
                         inputStyle={{
                             fontFamily: TEXT_BOLD,
                             color: COLORS.ACTIVE,

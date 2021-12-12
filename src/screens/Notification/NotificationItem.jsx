@@ -127,7 +127,7 @@ export default function NotificationItem({
                                 numberOfLines={2}
                                 style={{
                                     color: COLORS.DEFAULT,
-                                    fontSize: SIZES.FONT_H4,
+                                    fontSize: SIZES.FONT_H5,
                                     fontFamily: !isRead
                                         ? TEXT_BOLD
                                         : TEXT_REGULAR,

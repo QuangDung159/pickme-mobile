@@ -5,9 +5,8 @@ import { setListNotification, setNumberNotificationUnread } from '@redux/Actions
 import { NotificationServices } from '@services/index';
 import React, { useEffect, useState } from 'react';
 import {
-    RefreshControl, SafeAreaView, Text, View
+    RefreshControl, SafeAreaView, Text, View, FlatList, ScrollView
 } from 'react-native';
-import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import NotificationItem from './NotificationItem';
 

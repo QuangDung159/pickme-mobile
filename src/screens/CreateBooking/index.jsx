@@ -9,8 +9,7 @@ import { ToastHelpers } from '@helpers/index';
 import { BookingServices } from '@services/index';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
-import { View } from 'react-native';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { TouchableOpacity, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useSelector } from 'react-redux';
 import CreateBookingForm from './CreateBookingForm';
@@ -127,7 +126,7 @@ export default function CreateBooking({ route, navigation }) {
                 alignItems: 'center'
             }}
         >
-            <TouchableWithoutFeedback
+            <TouchableOpacity
                 onPress={() => {
                     setModalVisible(true);
                 }}
@@ -138,7 +137,7 @@ export default function CreateBooking({ route, navigation }) {
                     size={23}
                     color={COLORS.ACTIVE}
                 />
-            </TouchableWithoutFeedback>
+            </TouchableOpacity>
         </View>
     );
 

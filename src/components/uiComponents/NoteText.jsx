@@ -16,6 +16,7 @@ export default class NoteText extends PureComponent {
             title, content, width, iconComponent,
             backgroundColor,
             contentStyle,
+            iconComponentRight
         } = this.props;
 
         return (
@@ -52,6 +53,7 @@ export default class NoteText extends PureComponent {
                                 {title}
                             </Text>
                         )}
+                        {iconComponentRight}
                     </View>
                     <Text
                         style={

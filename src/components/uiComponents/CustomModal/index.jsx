@@ -2,8 +2,9 @@ import { Theme } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
 import { BlurView } from 'expo-blur';
 import React from 'react';
-import { Modal, StyleSheet, View } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import {
+    Modal, ScrollView, StyleSheet, View
+} from 'react-native';
 
 const { SIZES, COLORS } = Theme;
 

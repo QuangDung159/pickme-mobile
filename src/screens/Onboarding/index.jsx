@@ -139,7 +139,7 @@ export default function Onboarding({ navigation }) {
                             marginBottom: 10,
                             fontSize: SIZES.FONT_H4
                         }}
-                        text={'Nếu bạn chưa có tài khoản,\nvui lòng đăng ký tài khoản PickMe'}
+                        text={'Nếu bạn chưa có tài khoản,\nvui lòng đăng ký tài khoản 2SeeYou'}
                     />
 
                     <View>
@@ -217,9 +217,9 @@ export default function Onboarding({ navigation }) {
                                 <CustomText
                                     style={{
                                         color: COLORS.ACTIVE,
-                                        marginTop: 10
+                                        fontSize: SIZES.FONT_H2
                                     }}
-                                    text="Ở đây chúng tôi phát người yêu!"
+                                    text="Trò chuyện với người lạ"
                                 />
                             </View>
                         </View>
