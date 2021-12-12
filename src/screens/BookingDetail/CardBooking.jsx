@@ -1,6 +1,6 @@
 import { CustomButton, CustomText, IconCustom } from '@components/uiComponents';
 import {
-    BookingStatus, IconFamily, Theme, OutsideApp
+    BookingStatus, IconFamily, Theme, OutsideApp, ScreenName
 } from '@constants/index';
 import { mappingStatusText } from '@helpers/CommonHelpers';
 import { CommonHelpers, ToastHelpers } from '@helpers/index';
@@ -31,10 +31,11 @@ const {
     SKYPE,
     ZALO,
     MESSENGER,
-    GOOGLE_MAP
+    GOOGLE_MAP,
+    GAMING
 } = OutsideApp;
 
-export default function CardBooking({ booking }) {
+export default function CardBooking({ booking, navigation }) {
     const [deviceCalendars, setDeviceCalendars] = useState([]);
     const [openAppText, setOpenAppText] = useState();
 
@@ -230,19 +231,41 @@ export default function CardBooking({ booking }) {
             return MESSENGER.name;
         }
 
+        if (booking.address.includes(GAMING.deepLink)) {
+            return GAMING.name;
+        }
+
         return booking.address;
     };
 
     const createOpenAppText = () => {
         if (booking.isOnline) {
-            setOpenAppText({
-                action: () => Linking.openURL(booking.address),
-                icon: {
-                    name: 'phone',
-                    family: IconFamily.ENTYPO,
-                    size: 18
-                },
-            });
+            if (booking.address.includes(GAMING.deepLink)) {
+                setOpenAppText({
+                    action: () => {
+                        navigation.navigate(ScreenName.MESSAGE, {
+                            name: booking.partnerName,
+                            userStatus: 'Vừa mới truy cập',
+                            toUserId: booking.partnerId,
+                            // userInfo: partnerInfo
+                        });
+                    },
+                    icon: {
+                        name: 'gamepad',
+                        family: IconFamily.FONT_AWESOME,
+                        size: 18
+                    },
+                });
+            } else {
+                setOpenAppText({
+                    action: () => Linking.openURL(booking.address),
+                    icon: {
+                        name: 'phone',
+                        family: IconFamily.ENTYPO,
+                        size: 18
+                    },
+                });
+            }
         } else {
             setOpenAppText({
                 action: () => Linking.openURL(createMapUrl(booking.address)),

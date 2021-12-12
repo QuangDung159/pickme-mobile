@@ -26,7 +26,7 @@ export default [
     {
         value: 'Chơi game',
         selected: false,
-        key: 'zalo',
+        key: 'choi_game',
         type: 'online'
     },
 ];

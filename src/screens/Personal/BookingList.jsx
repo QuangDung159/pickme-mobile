@@ -26,7 +26,8 @@ const {
 const {
     SKYPE,
     ZALO,
-    MESSENGER
+    MESSENGER,
+    GAMING
 } = OutsideApp;
 
 export default function BookingList({ navigation }) {
@@ -56,6 +57,10 @@ export default function BookingList({ navigation }) {
 
         if (address.includes(MESSENGER.deepLink)) {
             return MESSENGER.name;
+        }
+
+        if (address.includes(GAMING.deepLink)) {
+            return GAMING.name;
         }
 
         return address;

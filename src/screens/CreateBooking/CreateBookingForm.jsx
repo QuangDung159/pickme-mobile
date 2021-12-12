@@ -11,6 +11,7 @@ import React, { useState } from 'react';
 import {
     Platform, StyleSheet, Text, View
 } from 'react-native';
+import { useSelector } from 'react-redux';
 
 const {
     FONT: {
@@ -23,7 +24,8 @@ const {
 const {
     SKYPE,
     ZALO,
-    MESSENGER
+    MESSENGER,
+    GAMING
 } = OutsideApp;
 
 export default function CreateBookingForm({
@@ -54,6 +56,8 @@ export default function CreateBookingForm({
     const [isShowInputOptions, setIsShowInputOptions] = useState(true);
     const [isShowAddress, setIsShowAddress] = useState(true);
     const [selectedBookingType, setSelectedBookingType] = useState(BookingTypes[0]);
+
+    const currentUser = useSelector((state) => state.userReducer.currentUser);
 
     const onChangeDateCalendar = (date) => {
         const result = busyCalendar.find(
@@ -88,6 +92,9 @@ export default function CreateBookingForm({
             case ZALO.key: {
                 return `${ZALO.deepLink}${partner.zalo}`;
             }
+            case GAMING.key: {
+                return `${GAMING.deepLink}`;
+            }
             default: {
                 return `${MESSENGER.deepLink}${partner.messenger}`;
             }
@@ -117,7 +124,8 @@ export default function CreateBookingForm({
                     width: SIZES.WIDTH_BASE * 0.9,
                     flexDirection: 'row',
                     justifyContent: 'space-between',
-                    alignItems: 'center'
+                    alignItems: 'center',
+                    marginBottom: 5
                 }}
             >
                 <View
@@ -253,6 +261,64 @@ export default function CreateBookingForm({
         }
     };
 
+    const handleShowOnlineOption = () => {
+        console.log('object');
+        return (
+            <>
+                {listBookingTypes.map((item, index) => {
+                    if (currentUser.isDatingOffline && item.key === 'truc_tiep') {
+                        return (
+                            <OptionItem
+                                item={item}
+                                index={index}
+                                handlePressItem={() => {
+                                    handlePressBookingType(item);
+                                }}
+                                isSelected={selectedBookingType.key === item.key}
+                            />
+                        );
+                    }
+
+                    if (currentUser.isDatingOnline) {
+                        if ((currentUser.skype && item.key === SKYPE.key)
+                            || (currentUser.facebook && item.key === MESSENGER.key)
+                            || (currentUser.zalo && item.key === ZALO.key)
+                        ) {
+                            return (
+                                <OptionItem
+                                    item={item}
+                                    index={index}
+                                    handlePressItem={() => {
+                                        handlePressBookingType(item);
+                                    }}
+                                    isSelected={selectedBookingType.key === item.key}
+                                />
+                            );
+                        }
+
+                        if (item.key === 'choi_game') {
+                            return (
+                                <OptionItem
+                                    item={item}
+                                    index={index}
+                                    handlePressItem={() => {
+                                        handlePressBookingType(item);
+                                    }}
+                                    isSelected={selectedBookingType.key === item.key}
+                                />
+                            );
+                        }
+                    }
+
+                    return <></>;
+                })}
+            </>
+        );
+    };
+
+    // if (!currentUser.facebook && !currentUser.zalo && !currentUser.skype) {
+    //     return <></>;
+    // }
     const renderBookingTypes = () => (
         <>
             <CustomText
@@ -260,7 +326,7 @@ export default function CreateBookingForm({
                 style={{
                     color: COLORS.ACTIVE,
                     fontSize: SIZES.FONT_H3,
-                    marginTop: 20
+                    marginTop: 5
                 }}
             />
             <View
@@ -272,16 +338,7 @@ export default function CreateBookingForm({
                     flexWrap: 'wrap'
                 }}
             >
-                {listBookingTypes.map((item, index) => (
-                    <OptionItem
-                        item={item}
-                        index={index}
-                        handlePressItem={() => {
-                            handlePressBookingType(item);
-                        }}
-                        isSelected={selectedBookingType.key === item.key}
-                    />
-                ))}
+                {handleShowOnlineOption()}
             </View>
         </>
     );
@@ -331,7 +388,8 @@ export default function CreateBookingForm({
                     value={booking.address}
                     onChangeText={(input) => onChangeAddress(input)}
                     containerStyle={{
-                        marginVertical: 10,
+                        marginBottom: 10,
+                        marginTop: 5,
                         width: SIZES.WIDTH_BASE * 0.9
                     }}
                     label="Địa điểm:"
@@ -379,7 +437,7 @@ export default function CreateBookingForm({
                 style={{
                     color: COLORS.ACTIVE,
                     fontSize: SIZES.FONT_H3,
-                    marginTop: 10
+                    marginTop: 5
                 }}
             />
             {isShowNoteInput && (

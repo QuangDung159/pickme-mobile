@@ -59,6 +59,7 @@ const PersonalStack = () => (
         {VerificationScreen()}
         {PartnerDataScreen()}
         {CashOutScreen()}
+        {MessageScreen()}
     </Stack.Navigator>
 );
 

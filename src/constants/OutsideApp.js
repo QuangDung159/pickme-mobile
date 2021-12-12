@@ -19,4 +19,9 @@ export default {
         key: 'google_map',
         name: 'Google Map'
     },
+    GAMING: {
+        deepLink: 'game:',
+        key: 'choi_game',
+        name: 'Game'
+    },
 };
