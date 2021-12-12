@@ -301,6 +301,7 @@ export default function CardBooking({ booking }) {
                                 {
                                     fontSize: SIZES.FONT_H2,
                                     color: COLORS.ACTIVE,
+                                    fontFamily: TEXT_BOLD
                                 }
                             ]
                         }
@@ -313,6 +314,7 @@ export default function CardBooking({ booking }) {
                                 {
                                     fontSize: SIZES.FONT_H2,
                                     color: COLORS.ACTIVE,
+                                    fontFamily: TEXT_BOLD
                                 }
                             ]
                         }
@@ -421,8 +423,10 @@ CardBooking.propTypes = {
 const styles = StyleSheet.create({
     cardTitle: {
         fontFamily: TEXT_BOLD,
+        marginBottom: 5
     },
     subInfoCard: {
         fontFamily: TEXT_REGULAR,
+        marginBottom: 5
     },
 });

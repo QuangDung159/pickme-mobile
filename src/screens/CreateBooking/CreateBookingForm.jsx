@@ -42,8 +42,10 @@ export default function CreateBookingForm({
 }) {
     const [listNoteOptions, setListNoteOptions] = useState(BookingNoteOptions);
     const [isShowNoteInput, setIsShowNoteInput] = useState(false);
-    const [listBookingTypes, setListBookingTypes] = useState(BookingTypes);
+    const [listBookingTypes] = useState(BookingTypes);
     const [isShowInputOptions, setIsShowInputOptions] = useState(true);
+    const [isShowAddress, setIsShowAddress] = useState(true);
+    const [selectedBookingType, setSelectedBookingType] = useState(BookingTypes[0]);
 
     const onChangeDateCalendar = (date) => {
         const result = busyCalendar.find(
@@ -204,30 +206,29 @@ export default function CreateBookingForm({
         });
     };
 
-    const handlePressBookingType = (selectedBookingType) => {
-        const list = [...listBookingTypes];
+    const handlePressBookingType = (typeObj) => {
+        setSelectedBookingType(typeObj);
 
-        list.forEach((item, index) => {
-            if (item.key === selectedBookingType.key) {
-                list[index].selected = true;
-            } else {
-                list[index].selected = false;
-            }
-        });
-
-        if (selectedBookingType.type === 'online') {
+        if (typeObj.type === 'online') {
             setIsShowNoteInput(true);
             setIsShowInputOptions(false);
             setBooking({
                 ...booking,
-                noted: ''
+                noted: '',
+                isOnline: true,
+                address: `${typeObj.value}:roomId`
             });
+            setIsShowAddress(false);
         } else {
             setIsShowNoteInput(false);
             setIsShowInputOptions(true);
+            setIsShowAddress(true);
+            setBooking({
+                ...booking,
+                isOnline: false,
+                address: ''
+            });
         }
-
-        setListBookingTypes(list);
     };
 
     const renderBookingTypes = () => (
@@ -256,6 +257,7 @@ export default function CreateBookingForm({
                         handlePressItem={() => {
                             handlePressBookingType(item);
                         }}
+                        isSelected={selectedBookingType.key === item.key}
                     />
                 ))}
             </View>
@@ -279,6 +281,7 @@ export default function CreateBookingForm({
                     handlePressItem={() => {
                         handlePressNoteOption(index);
                     }}
+                    isSelected={item.selected}
                 />
             ))}
         </View>
@@ -300,15 +303,20 @@ export default function CreateBookingForm({
     );
 
     const renderInputAddress = () => (
-        <CustomInput
-            value={booking.address}
-            onChangeText={(input) => onChangeAddress(input)}
-            containerStyle={{
-                marginVertical: 10,
-                width: SIZES.WIDTH_BASE * 0.9
-            }}
-            label="Địa điểm:"
-        />
+        <>
+            {isShowAddress && (
+                <CustomInput
+                    value={booking.address}
+                    onChangeText={(input) => onChangeAddress(input)}
+                    containerStyle={{
+                        marginVertical: 10,
+                        width: SIZES.WIDTH_BASE * 0.9
+                    }}
+                    label="Địa điểm:"
+                />
+            )}
+        </>
+
     );
 
     const renderInfoView = () => {

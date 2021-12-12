@@ -5,7 +5,9 @@ import CustomText from './CustomText';
 
 const { COLORS, SIZES } = Theme;
 
-export default function OptionItem({ item, index, handlePressItem }) {
+export default function OptionItem({
+    item, index, handlePressItem, isSelected
+}) {
     return (
         <TouchableOpacity
             key={item.value}
@@ -16,14 +18,14 @@ export default function OptionItem({ item, index, handlePressItem }) {
                 borderRadius: 20,
                 marginRight: 5,
                 marginBottom: 5,
-                backgroundColor: item.selected ? COLORS.ACTIVE : COLORS.BASE
+                backgroundColor: isSelected ? COLORS.ACTIVE : COLORS.BASE
             }}
         >
             <CustomText
                 style={{
                     paddingHorizontal: 10,
                     paddingVertical: 5,
-                    color: item.selected ? COLORS.BASE : COLORS.DEFAULT,
+                    color: isSelected ? COLORS.BASE : COLORS.DEFAULT,
                     fontSize: SIZES.FONT_H4
                 }}
                 text={item.value}

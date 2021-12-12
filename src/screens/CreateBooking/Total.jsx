@@ -81,6 +81,8 @@ export default function Total({
         return ValidationHelpers.validate(validationArr);
     };
 
+    const calculateTotalByBookingType = (totalAmount) => (booking.isOnline ? totalAmount / 2 : totalAmount);
+
     const onSubmitBooking = async () => {
         if (!validate()) return;
 
@@ -106,9 +108,10 @@ export default function Total({
             Address: booking.address || 'N/a',
             Longtitude: booking.longtitude || 0,
             Latitude: booking.latitude || 0,
-            Description: 'N/a',
-            Noted: booking.noted || 'N/a',
-            totalAmount: total !== 0 ? total : calculateTotalAmount(startTimeStr, endTimeStr)
+            Description: 'Không có mô tả',
+            Noted: booking.noted || 'Không có ghi chú',
+            totalAmount: calculateTotalByBookingType(total !== 0 ? total : calculateTotalAmount(startTimeStr, endTimeStr)),
+            IsOnline: booking.isOnline
         };
 
         setIsShowSpinner(true);
@@ -154,7 +157,7 @@ export default function Total({
                         fontFamily: TEXT_BOLD,
                         textAlign: 'center'
                     }}
-                    text={`Tổng chi phí: ${CommonHelpers.formatCurrency(calculateTotalAmount(startTimeStr, endTimeStr))}`}
+                    text={`Tổng chi phí: ${CommonHelpers.formatCurrency(calculateTotalByBookingType(calculateTotalAmount(startTimeStr, endTimeStr)))}`}
                 />
 
                 {renderButtonPanel()}
