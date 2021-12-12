@@ -75,13 +75,13 @@ export default function CreateBookingForm({
     const getPlatformId = (bookingType) => {
         switch (bookingType.key) {
             case 'skype': {
-                return partner.skype;
+                return `skype:${partner.skype}`;
             }
             case 'zalo': {
-                return partner.zalo;
+                return `https://zalo.me/${partner.zalo}`;
             }
             default: {
-                return partner.messenger;
+                return `http://m.me/${partner.messenger}`;
             }
         }
     };
@@ -230,7 +230,7 @@ export default function CreateBookingForm({
                 ...booking,
                 noted: '',
                 isOnline: true,
-                address: `${typeObj.key}:${getPlatformId(typeObj)}`
+                address: getPlatformId(typeObj)
             });
             setIsShowAddress(false);
         } else {

@@ -211,7 +211,7 @@ export default function CardBooking({ booking }) {
     const createOpenAppText = () => {
         if (booking.isOnline) {
             setOpenAppText({
-                action: () => Linking.openURL(`${booking.address}`),
+                action: () => Linking.openURL(booking.address),
                 icon: {
                     name: 'phone',
                     family: IconFamily.ENTYPO,
