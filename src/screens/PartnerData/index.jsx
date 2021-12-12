@@ -28,8 +28,10 @@ export default function PartnerData() {
             setNewUser({
                 ...currentUser,
                 minimumDuration: currentUser.minimumDuration,
+                onlineMinimumDuration: currentUser.onlineMinimumDuration,
             });
             setAmountDisplay(CommonHelpers.formatCurrency(currentUser.earningExpected));
+            setAmountDisplayOnline(CommonHelpers.formatCurrency(currentUser.onlineEarningExpected));
         }, []
     );
 
