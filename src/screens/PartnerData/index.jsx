@@ -1,5 +1,5 @@
 import {
-    CenterLoader, CustomButton, CustomInput
+    CenterLoader, CustomButton, CustomCheckbox, CustomInput, CustomText
 } from '@components/uiComponents';
 import { Theme } from '@constants/index';
 import { CommonHelpers, ToastHelpers, ValidationHelpers } from '@helpers/index';
@@ -11,13 +11,19 @@ import { View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useDispatch, useSelector } from 'react-redux';
 
-const { SIZES, COLORS } = Theme;
+const {
+    SIZES, COLORS, FONT: {
+        TEXT_BOLD
+    }
+} = Theme;
 
 export default function PartnerData() {
     const [newUser, setNewUser] = useState({});
     const [isShowSpinner, setIsShowSpinner] = useState(false);
     const [amountDisplay, setAmountDisplay] = useState('');
     const [amountDisplayOnline, setAmountDisplayOnline] = useState('');
+    const [isOnline, setIsOnline] = useState(false);
+    const [isOffline, setIsOffline] = useState(true);
 
     const currentUser = useSelector((state) => state.userReducer.currentUser);
 
@@ -111,6 +117,58 @@ export default function PartnerData() {
         />
     );
 
+    const renderGetBookingType = () => (
+        <View
+            style={{
+                width: SIZES.WIDTH_BASE * 0.9,
+                marginBottom: 5
+            }}
+        >
+            <CustomText
+                style={{
+                    color: COLORS.ACTIVE,
+                    marginVertical: 5,
+                }}
+                text="Hình thức buổi hẹn:"
+            />
+            <View style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between'
+            }}
+            >
+                <CustomCheckbox
+                    label="Trực tiếp"
+                    onChange={(checked) => {
+                        setIsOffline(checked);
+                    }}
+                    containerStyle={{
+                        width: SIZES.WIDTH_BASE * 0.3,
+                    }}
+                    labelStyle={{
+                        fontFamily: TEXT_BOLD
+                    }}
+                    isChecked={isOffline}
+                />
+                <CustomCheckbox
+                    label="Online"
+                    onChange={(checked) => {
+                        setIsOnline(checked);
+                    }}
+                    containerStyle={{
+                        width: SIZES.WIDTH_BASE * 0.3
+                    }}
+                    labelStyle={{
+                        fontFamily: TEXT_BOLD
+                    }}
+                    isChecked={isOnline}
+                />
+            </View>
+
+        </View>
+
+    );
+
     const renderButtonPanel = () => (
         <View
             style={{
@@ -130,56 +188,70 @@ export default function PartnerData() {
     );
 
     const validate = () => {
-        const validateArr = [
-            {
-                fieldName: 'Thu nhập mong muốn',
-                input: newUser.earningExpected,
-                validate: {
-                    required: {
-                        value: true,
-                    },
-                    equalGreaterThan: {
-                        value: 1
+        let validateArr = [];
+
+        if (isOffline) {
+            validateArr = [
+                {
+                    fieldName: 'Thu nhập mong muốn',
+                    input: newUser.earningExpected,
+                    validate: {
+                        required: {
+                            value: true,
+                        },
+                        equalGreaterThan: {
+                            value: 1
+                        }
+                    }
+                },
+                {
+                    fieldName: 'Số phút tối thiểu của buổi hẹn',
+                    input: newUser.minimumDuration,
+                    validate: {
+                        required: {
+                            value: true,
+                        },
+                        equalGreaterThan: {
+                            value: 90
+                        }
                     }
                 }
-            },
-            {
-                fieldName: 'Số phút tối thiểu của buổi hẹn',
-                input: newUser.minimumDuration,
-                validate: {
-                    required: {
-                        value: true,
-                    },
-                    equalGreaterThan: {
-                        value: 90
+            ];
+        }
+
+        if (isOnline) {
+            validateArr = validateArr.concat([
+                {
+                    fieldName: 'Thu nhập mong muốn (online)',
+                    input: newUser.onlineEarningExpected,
+                    validate: {
+                        required: {
+                            value: true,
+                        },
+                        equalGreaterThan: {
+                            value: 600
+                        }
                     }
-                }
-            },
-            {
-                fieldName: 'Thu nhập mong muốn (online)',
-                input: newUser.onlineEarningExpected,
-                validate: {
-                    required: {
-                        value: true,
-                    },
-                    equalGreaterThan: {
-                        value: 600
+                },
+                {
+                    fieldName: 'Số phút tối thiểu của buổi hẹn (online)',
+                    input: newUser.onlineMinimumDuration,
+                    validate: {
+                        required: {
+                            value: true,
+                        },
+                        equalGreaterThan: {
+                            value: 90
+                        }
                     }
-                }
-            },
-            {
-                fieldName: 'Số phút tối thiểu của buổi hẹn (online)',
-                input: newUser.onlineMinimumDuration,
-                validate: {
-                    required: {
-                        value: true,
-                    },
-                    equalGreaterThan: {
-                        value: 90
-                    }
-                }
-            },
-        ];
+                },
+            ]);
+        }
+
+        if (!isOnline && !isOffline) {
+            ToastHelpers.renderToast('Bạn vui lòng chọn hình thức buổi hẹn!', 'error');
+            return false;
+        }
 
         if (!validateYearsOld(newUser.dob)) {
             ToastHelpers.renderToast('Bạn phải đủ 16 tuổi!', 'error');
@@ -213,7 +285,9 @@ export default function PartnerData() {
             minimumDuration: +minimumDuration,
             earningExpected: +earningExpected,
             onlineMinimumDuration: +onlineMinimumDuration,
-            onlineEarningExpected: +onlineEarningExpected
+            onlineEarningExpected: +onlineEarningExpected,
+            IsDatingOnline: isOnline,
+            IsDatingOffline: isOffline
         };
 
         setIsShowSpinner(true);
@@ -255,10 +329,21 @@ export default function PartnerData() {
                     >
                         {newUser && (
                             <>
-                                {renderEarningExpected()}
-                                {renderInputMinimumDuration()}
-                                {renderEarningExpectedOnline()}
-                                {renderInputMinimumDurationOnline()}
+                                {renderGetBookingType()}
+
+                                {isOffline && (
+                                    <>
+                                        {renderEarningExpected()}
+                                        {renderInputMinimumDuration()}
+                                    </>
+                                )}
+
+                                {isOnline && (
+                                    <>
+                                        {renderEarningExpectedOnline()}
+                                        {renderInputMinimumDurationOnline()}
+                                    </>
+                                )}
                                 {renderButtonPanel()}
                             </>
                         )}

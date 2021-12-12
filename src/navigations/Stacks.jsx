@@ -45,7 +45,7 @@ const MenuStack = () => (
         {SettingsScreen()}
         {PolicyScreen()}
         {GuideScreen()}
-        {/* {PartnerDataScreen()} */}
+        {PartnerDataScreen()}
     </Stack.Navigator>
 );
 
