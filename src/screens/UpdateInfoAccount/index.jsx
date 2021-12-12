@@ -98,6 +98,43 @@ export default function UpdateInfoAccount() {
         />
     );
 
+    const renderInputZalo = () => (
+        <CustomInput
+            value={newUser.zalo}
+            onChangeText={(input) => setNewUser({ ...newUser, zalo: input })}
+            containerStyle={{
+                marginVertical: 10,
+                width: SIZES.WIDTH_BASE * 0.9
+            }}
+            keyboardType="number-pad"
+            label="SĐT đăng kí Zalo:"
+        />
+    );
+
+    const renderInputSkype = () => (
+        <CustomInput
+            value={newUser.skype}
+            onChangeText={(input) => setNewUser({ ...newUser, skype: input })}
+            containerStyle={{
+                marginVertical: 10,
+                width: SIZES.WIDTH_BASE * 0.9
+            }}
+            label="ID Skype:"
+        />
+    );
+
+    const renderInputMessenger = () => (
+        <CustomInput
+            value={newUser.facebook}
+            onChangeText={(input) => setNewUser({ ...newUser, facebook: input })}
+            containerStyle={{
+                marginVertical: 10,
+                width: SIZES.WIDTH_BASE * 0.9
+            }}
+            label="ID Messenger:"
+        />
+    );
+
     // const renderInputInterests = () => (
     //     <CustomInput
     //         value={newUser.interests}
@@ -469,6 +506,9 @@ export default function UpdateInfoAccount() {
                                 {/* {renderInputInterests()} */}
                                 {renderOptionInterests()}
                                 {renderInputDescription()}
+                                {renderInputZalo()}
+                                {renderInputSkype()}
+                                {renderInputMessenger()}
                                 {renderButtonPanel()}
                             </>
                         )}
