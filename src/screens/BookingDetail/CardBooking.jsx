@@ -1,5 +1,4 @@
-import { CustomButton, CustomText } from '@components/uiComponents';
-import TouchableText from '@components/uiComponents/TouchableText';
+import { CustomButton, CustomText, IconCustom } from '@components/uiComponents';
 import { BookingStatus, IconFamily, Theme } from '@constants/index';
 import { mappingStatusText } from '@helpers/CommonHelpers';
 import { CommonHelpers, ToastHelpers } from '@helpers/index';
@@ -11,7 +10,7 @@ import React, { useEffect, useState } from 'react';
 import {
     Alert,
     Platform,
-    StyleSheet, View
+    StyleSheet, TouchableOpacity, View
 } from 'react-native';
 import { useSelector } from 'react-redux';
 
@@ -213,12 +212,20 @@ export default function CardBooking({ booking }) {
         if (booking.isOnline) {
             setOpenAppText({
                 action: () => Linking.openURL(`${booking.address}`),
-                text: ''
+                icon: {
+                    name: 'phone',
+                    family: IconFamily.ENTYPO,
+                    size: 18
+                }
             });
         } else {
             setOpenAppText({
                 action: () => Linking.openURL(createMapUrl(booking.address)),
-                text: '(xem chỉ đường)'
+                icon: {
+                    name: 'map',
+                    family: IconFamily.ENTYPO,
+                    size: 18
+                }
             });
         }
     };
@@ -338,21 +345,41 @@ export default function CardBooking({ booking }) {
                     />
                 </View>
 
-                <TouchableText
-                    style={
-                        [
-                            styles.subInfoCard,
-                            {
-                                fontSize: SIZES.FONT_H3,
-                                color: COLORS.DEFAULT,
-                            }
-                        ]
-                    }
+                <TouchableOpacity
                     onPress={() => {
                         openAppText?.action();
                     }}
-                    text={`Tại: ${address || 'N/A'} ${openAppText?.text}`}
-                />
+                >
+                    <View
+                        style={{
+                            flexDirection: 'row',
+                            alignItems: 'center'
+                        }}
+                    >
+                        <CustomText
+                            style={
+                                [
+                                    styles.subInfoCard,
+                                    {
+                                        fontSize: SIZES.FONT_H3,
+                                        color: COLORS.DEFAULT,
+                                    }
+                                ]
+                            }
+                            text={`Tại: ${address || 'N/A'}`}
+                        />
+                        <IconCustom
+                            name={openAppText?.icon.name}
+                            family={openAppText?.icon.family}
+                            size={openAppText?.icon.size}
+                            color={COLORS.ACTIVE}
+                            style={{
+                                marginBottom: 5,
+                                marginLeft: 5
+                            }}
+                        />
+                    </View>
+                </TouchableOpacity>
 
                 <View
                     style={{
