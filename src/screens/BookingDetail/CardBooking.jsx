@@ -28,6 +28,7 @@ const {
 
 export default function CardBooking({ booking }) {
     const [deviceCalendars, setDeviceCalendars] = useState([]);
+    const [openAppText, setOpenAppText] = useState();
 
     const currentUser = useSelector((state) => state.userReducer.currentUser);
     const timezone = useSelector((state) => state.appConfigReducer.timezone);
@@ -35,6 +36,7 @@ export default function CardBooking({ booking }) {
     useEffect(
         () => {
             getDeviceCalendar();
+            createOpenAppText();
         }, []
     );
 
@@ -207,6 +209,20 @@ export default function CardBooking({ booking }) {
         return `https://www.google.com/maps?daddr=${addressStr}`;
     };
 
+    const createOpenAppText = () => {
+        if (booking.isOnline) {
+            setOpenAppText({
+                action: () => Linking.openURL(`${booking.address}`),
+                text: ''
+            });
+        } else {
+            setOpenAppText({
+                action: () => Linking.openURL(createMapUrl(booking.address)),
+                text: '(xem chỉ đường)'
+            });
+        }
+    };
+
     try {
         const {
             startAt,
@@ -333,9 +349,9 @@ export default function CardBooking({ booking }) {
                         ]
                     }
                     onPress={() => {
-                        Linking.openURL(createMapUrl(address));
+                        openAppText?.action();
                     }}
-                    text={`Tại: ${address || 'N/A'} (xem chỉ đường)`}
+                    text={`Tại: ${address || 'N/A'} ${openAppText?.text}`}
                 />
 
                 <View

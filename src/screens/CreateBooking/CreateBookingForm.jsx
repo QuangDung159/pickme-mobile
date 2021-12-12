@@ -72,6 +72,20 @@ export default function CreateBookingForm({
         });
     };
 
+    const getPlatformId = (bookingType) => {
+        switch (bookingType.key) {
+            case 'skype': {
+                return partner.skype;
+            }
+            case 'zalo': {
+                return partner.zalo;
+            }
+            default: {
+                return partner.messenger;
+            }
+        }
+    };
+
     const onClickTriggerTimePicker = (modalType) => {
         if (modalType === 'start') {
             const hourIndex = hourArr.findIndex((item) => item === startTimeStr.split(':')[0]);
@@ -216,7 +230,7 @@ export default function CreateBookingForm({
                 ...booking,
                 noted: '',
                 isOnline: true,
-                address: `${typeObj.value}:roomId`
+                address: `${typeObj.key}:${getPlatformId(typeObj)}`
             });
             setIsShowAddress(false);
         } else {
