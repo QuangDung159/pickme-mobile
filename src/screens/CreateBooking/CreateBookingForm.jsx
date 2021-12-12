@@ -2,7 +2,7 @@ import { CustomCalendar } from '@components/businessComponents';
 import {
     CustomButton, CustomInput, CustomText, OptionItem
 } from '@components/uiComponents';
-import { BookingNoteOptions, Theme } from '@constants/index';
+import { BookingNoteOptions, BookingTypes, Theme } from '@constants/index';
 import ToastHelpers from '@helpers/ToastHelpers';
 import moment from 'moment';
 import React, { useState } from 'react';
@@ -42,6 +42,8 @@ export default function CreateBookingForm({
 }) {
     const [listNoteOptions, setListNoteOptions] = useState(BookingNoteOptions);
     const [isShowNoteInput, setIsShowNoteInput] = useState(false);
+    const [listBookingTypes, setListBookingTypes] = useState(BookingTypes);
+    const [isShowInputOptions, setIsShowInputOptions] = useState(true);
 
     const onChangeDateCalendar = (date) => {
         const result = busyCalendar.find(
@@ -165,7 +167,7 @@ export default function CreateBookingForm({
 
             list.forEach((item) => {
                 listTemp.push({
-                    value: item.value,
+                    ...item,
                     selected: false
                 });
             });
@@ -201,6 +203,64 @@ export default function CreateBookingForm({
             noted: result,
         });
     };
+
+    const handlePressBookingType = (selectedBookingType) => {
+        const list = [...listBookingTypes];
+
+        list.forEach((item, index) => {
+            if (item.key === selectedBookingType.key) {
+                list[index].selected = true;
+            } else {
+                list[index].selected = false;
+            }
+        });
+
+        if (selectedBookingType.type === 'online') {
+            setIsShowNoteInput(true);
+            setIsShowInputOptions(false);
+            setBooking({
+                ...booking,
+                noted: ''
+            });
+        } else {
+            setIsShowNoteInput(false);
+            setIsShowInputOptions(true);
+        }
+
+        setListBookingTypes(list);
+    };
+
+    const renderBookingTypes = () => (
+        <>
+            <CustomText
+                text="Hình thức:"
+                style={{
+                    color: COLORS.ACTIVE,
+                    fontSize: SIZES.FONT_H3,
+                    marginTop: 20
+                }}
+            />
+            <View
+                style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    width: '100%',
+                    marginBottom: 10,
+                    flexWrap: 'wrap'
+                }}
+            >
+                {listBookingTypes.map((item, index) => (
+                    <OptionItem
+                        item={item}
+                        index={index}
+                        handlePressItem={() => {
+                            handlePressBookingType(item);
+                        }}
+                    />
+                ))}
+            </View>
+        </>
+    );
 
     const renderNoteOptions = () => (
         <View
@@ -297,7 +357,11 @@ export default function CreateBookingForm({
                     {renderInputNote()}
                 </>
             )}
-            {renderNoteOptions()}
+            {isShowInputOptions && (
+                <>
+                    {renderNoteOptions()}
+                </>
+            )}
         </>
     );
 
@@ -347,6 +411,7 @@ export default function CreateBookingForm({
                 )} */}
 
                 {renderButtonTimePicker()}
+                {renderBookingTypes()}
                 {renderInputAddress()}
                 {renderNoteSection()}
             </View>

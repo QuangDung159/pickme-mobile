@@ -3,7 +3,7 @@ import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import CustomText from './CustomText';
 
-const { COLORS } = Theme;
+const { COLORS, SIZES } = Theme;
 
 export default function OptionItem({ item, index, handlePressItem }) {
     return (
@@ -14,8 +14,8 @@ export default function OptionItem({ item, index, handlePressItem }) {
                 borderColor: COLORS.ACTIVE,
                 borderWidth: 1,
                 borderRadius: 20,
-                marginRight: 10,
-                marginBottom: 10,
+                marginRight: 5,
+                marginBottom: 5,
                 backgroundColor: item.selected ? COLORS.ACTIVE : COLORS.BASE
             }}
         >
@@ -23,7 +23,8 @@ export default function OptionItem({ item, index, handlePressItem }) {
                 style={{
                     paddingHorizontal: 10,
                     paddingVertical: 5,
-                    color: item.selected ? COLORS.BASE : COLORS.DEFAULT
+                    color: item.selected ? COLORS.BASE : COLORS.DEFAULT,
+                    fontSize: SIZES.FONT_H4
                 }}
                 text={item.value}
             />

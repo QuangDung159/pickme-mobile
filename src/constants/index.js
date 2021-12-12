@@ -1,5 +1,6 @@
 import BookingNoteOptions from './BookingNoteOptions';
 import BookingStatus from './BookingStatus';
+import BookingTypes from './BookingTypes';
 import DateTimeConst from './DateTimeConst';
 import DocumentType from './DocumentType';
 import Gender from './Gender';
@@ -33,5 +34,6 @@ export {
     Gender,
     PickMeInfo,
     Interests,
-    BookingNoteOptions
+    BookingNoteOptions,
+    BookingTypes
 };
