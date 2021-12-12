@@ -54,7 +54,7 @@ export default async (
         && endpoint !== Rx.USER.GET_OTP_FORGOT_PASSWORD
         && endpoint !== Rx.AUTHENTICATION.SIGN_UP_V2
         && endpoint !== Rx.USER.SUBMIT_FORGOT_PASSWORD_CONFIRM
-        && endpoint !== Rx.PARTNER.GET_LIST_PARTNER
+        && endpoint !== `${Rx.PARTNER.GET_LIST_PARTNER}?pageIndex=1&pageSize=50`
     ) {
         console.log("%cEndpoint doesn't have permission :>> ", `color: ${COLORS.ERROR}`, endpoint);
         return {
