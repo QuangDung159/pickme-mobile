@@ -87,16 +87,16 @@ export default function CreateBookingForm({
     const getPlatformId = (bookingType) => {
         switch (bookingType.key) {
             case SKYPE.key: {
-                return `${SKYPE.deepLink}${partner.skype}`;
+                return `${SKYPE.deepLink}${currentUser.skype}`;
             }
             case ZALO.key: {
-                return `${ZALO.deepLink}${partner.zalo}`;
+                return `${ZALO.deepLink}${currentUser.zalo}`;
             }
             case GAMING.key: {
                 return `${GAMING.deepLink}`;
             }
             default: {
-                return `${MESSENGER.deepLink}${partner.messenger}`;
+                return `${MESSENGER.deepLink}${currentUser.messenger}`;
             }
         }
     };
@@ -262,11 +262,11 @@ export default function CreateBookingForm({
     };
 
     const handleShowOnlineOption = () => {
-        console.log('object');
+        console.log('partner :>> ', partner);
         return (
             <>
                 {listBookingTypes.map((item, index) => {
-                    if (currentUser.isDatingOffline && item.key === 'truc_tiep') {
+                    if (partner.isDatingOffline && item.key === 'truc_tiep') {
                         return (
                             <OptionItem
                                 item={item}
@@ -279,7 +279,7 @@ export default function CreateBookingForm({
                         );
                     }
 
-                    if (currentUser.isDatingOnline) {
+                    if (partner.isDatingOnline) {
                         if ((currentUser.skype && item.key === SKYPE.key)
                             || (currentUser.facebook && item.key === MESSENGER.key)
                             || (currentUser.zalo && item.key === ZALO.key)
