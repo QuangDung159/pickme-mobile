@@ -40,7 +40,7 @@ export default function CashOut() {
             const { bankId, bankNum, ownerName } = currentUser;
 
             setCashOutForm({
-                bankId: bankId || listBank[0].id,
+                bankId: bankId || listBank[0]?.id,
                 bankNum,
                 ownerName,
                 amount: ''
@@ -229,7 +229,7 @@ export default function CashOut() {
                             marginVertical: 10,
                             width: SIZES.WIDTH_BASE * 0.9
                         }}
-                        label="Số tài khoản"
+                        label="Số tài khoản:*"
                         keyboardType="number-pad"
                     />
 
@@ -240,10 +240,10 @@ export default function CashOut() {
                             marginVertical: 10,
                             width: SIZES.WIDTH_BASE * 0.9
                         }}
-                        label="Chủ tài khoản"
+                        label="Chủ tài khoản:*"
                     />
                     <CustomInput
-                        label="Số tiền rút"
+                        label="Số tiền rút:*"
                         value={amountDisplay}
                         keyboardType="number-pad"
                         onChangeText={(input) => {

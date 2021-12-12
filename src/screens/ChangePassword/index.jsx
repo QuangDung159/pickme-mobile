@@ -123,7 +123,7 @@ export default function ChangePassword() {
                     size: 20,
                     color: COLORS.DEFAULT
                 }}
-                label="Mật khẩu hiện tại:"
+                label="Mật khẩu hiện tại:*"
                 onPressRightIcon={() => setIsShowCurrentPassword(!isShowCurrentPassword)}
             />
 
@@ -145,7 +145,7 @@ export default function ChangePassword() {
                     size: 20,
                     color: COLORS.DEFAULT
                 }}
-                label="Mật khẩu mới:"
+                label="Mật khẩu mới:*"
                 onPressRightIcon={() => setIsShowNewPassword(!isShowNewPassword)}
             />
 
@@ -167,7 +167,7 @@ export default function ChangePassword() {
                     size: 20,
                     color: COLORS.DEFAULT
                 }}
-                label="Xác nhận mật khẩu mới:"
+                label="Xác nhận mật khẩu mới:*"
                 onPressRightIcon={() => setIsShowReNewPassword(!isShowReNewPassword)}
             />
 

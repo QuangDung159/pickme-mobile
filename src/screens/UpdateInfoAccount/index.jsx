@@ -71,7 +71,7 @@ export default function UpdateInfoAccount() {
                 width: SIZES.WIDTH_BASE * 0.9
             }}
             autoCapitalize
-            label="Tên hiển thị:"
+            label="Tên hiển thị:*"
         />
     );
 
@@ -84,7 +84,7 @@ export default function UpdateInfoAccount() {
                 width: SIZES.WIDTH_BASE * 0.9
             }}
             keyboardType="number-pad"
-            label="Số điện thoại:"
+            label="Số điện thoại:*"
         />
     );
 
@@ -97,7 +97,7 @@ export default function UpdateInfoAccount() {
                 width: SIZES.WIDTH_BASE * 0.9
             }}
             autoCapitalize
-            label="Nơi sinh sống:"
+            label="Nơi sinh sống:*"
         />
     );
 
@@ -198,7 +198,7 @@ export default function UpdateInfoAccount() {
             }}
         >
             <CustomText
-                text="Sở thích:"
+                text="Sở thích:*"
                 style={{
                     color: COLORS.ACTIVE,
                     fontSize: SIZES.FONT_H3,
@@ -240,7 +240,7 @@ export default function UpdateInfoAccount() {
                 width: SIZES.WIDTH_BASE * 0.9
             }}
             autoCapitalize
-            label="Mô tả bản thân:"
+            label="Mô tả bản thân:*"
         />
     );
 
@@ -261,7 +261,7 @@ export default function UpdateInfoAccount() {
                         color: COLORS.ACTIVE,
                         marginBottom: 10
                     }}
-                    text="Chiều cao (cm):"
+                    text="Chiều cao (cm):*"
                 />
                 <CustomInput
                     inputStyle={{
@@ -279,7 +279,7 @@ export default function UpdateInfoAccount() {
                         color: COLORS.ACTIVE,
                         marginBottom: 10
                     }}
-                    text="Cân nặng (kg):"
+                    text="Cân nặng (kg):*"
                 />
                 <CustomInput
                     inputStyle={{
@@ -309,7 +309,7 @@ export default function UpdateInfoAccount() {
                 }}
                 onChangeText={(input) => onChangeYear(input)}
                 value={newUser?.dob?.substr(0, 4)}
-                label="Năm sinh:"
+                label="Năm sinh:*"
                 keyboardType="number-pad"
             />
 
@@ -372,8 +372,8 @@ export default function UpdateInfoAccount() {
                 }
             },
             {
-                fieldName: 'Tên hiển thị',
-                input: newUser.fullName,
+                fieldName: 'Số điện thoại',
+                input: newUser.phoneNum,
                 validate: {
                     required: {
                         value: true,
