@@ -96,7 +96,7 @@ export default function CreateBookingForm({
                 return `${GAMING.deepLink}`;
             }
             default: {
-                return `${MESSENGER.deepLink}${currentUser.messenger}`;
+                return `${MESSENGER.deepLink}${currentUser.facebook}`;
             }
         }
     };

@@ -122,6 +122,9 @@ export default function Total({
             IsOnline: booking.isOnline
         };
 
+        // console.log('bookingToSubmit :>> ', bookingToSubmit);
+        // return;
+
         setIsShowSpinner(true);
         const result = await BookingServices.submitScheduleBookingAsync(partner.id, bookingToSubmit);
         const { data } = result;
