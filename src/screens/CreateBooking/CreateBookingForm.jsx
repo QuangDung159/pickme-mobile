@@ -371,7 +371,7 @@ export default function CreateBookingForm({
                 style={{
                     color: COLORS.ACTIVE,
                     fontSize: SIZES.FONT_H3,
-                    marginTop: 5
+                    marginTop: 10
                 }}
             />
             {isShowNoteInput && (

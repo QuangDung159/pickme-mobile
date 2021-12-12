@@ -168,6 +168,7 @@ export default function UpdateInfoAccount() {
                         handlePressItem={() => {
                             handlePressInterest(index);
                         }}
+                        isSelected={item.selected}
                     />
                 ))}
             </View>

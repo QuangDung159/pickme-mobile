@@ -98,10 +98,6 @@ export default function Profile({ route, navigation }) {
                         />
                         <CustomButton
                             onPress={() => {
-                                if (!currentUser.isCustomerVerified) {
-                                    ToastHelpers.renderToast('Tài khoản của bạn chưa được xác thực');
-                                    return;
-                                }
                                 navigation.navigate(ScreenName.CREATE_BOOKING, {
                                     partner: partnerInfo,
                                     from: ScreenName.PROFILE

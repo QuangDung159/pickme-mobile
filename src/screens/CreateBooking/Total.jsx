@@ -13,7 +13,7 @@ import BookingServices from '@services/BookingServices';
 import moment from 'moment';
 import React from 'react';
 import { View } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const {
     FONT: {
@@ -34,6 +34,7 @@ export default function Total({
     booking,
     setIsShowSpinner
 }) {
+    const currentUser = useSelector((state) => state.userReducer.currentUser);
     const dispatch = useDispatch();
 
     const calculateTotalAmount = (start, end) => {
@@ -84,6 +85,13 @@ export default function Total({
     const calculateTotalByBookingType = (totalAmount) => (booking.isOnline ? totalAmount / 2 : totalAmount);
 
     const onSubmitBooking = async () => {
+        if (!booking.isOnline) {
+            if (!currentUser.isCustomerVerified) {
+                ToastHelpers.renderToast('Tài khoản của bạn chưa được xác thực');
+                return;
+            }
+        }
+
         if (!validate()) return;
 
         const {

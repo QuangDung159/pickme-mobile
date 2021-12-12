@@ -24,9 +24,9 @@ export default function VerificationStatusPanel() {
                         <CustomText
                             style={{
                                 fontFamily: TEXT_BOLD,
-                                fontSize: SIZES.FONT_H4
+                                fontSize: SIZES.FONT_H5
                             }}
-                            text="Tài khoản của bạn chưa được xác thực"
+                            text="Tài khoản của bạn chưa được xác thực:"
                         />
                         <CustomText
                             style={{
@@ -44,14 +44,14 @@ export default function VerificationStatusPanel() {
                         <CustomText
                             style={{
                                 fontFamily: TEXT_BOLD,
-                                fontSize: SIZES.FONT_H4
+                                fontSize: SIZES.FONT_H5
                             }}
-                            text="Tài khoản của bạn chưa được xác thực"
+                            text="Tài khoản của bạn chưa được xác thực:"
                         />
                         <CustomText
                             text={'Tài khoản chưa được xác thực sẽ bị hạn chế một số chức năng.\nVui lòng nhấp vào đây để hoàn tất quá trình xác thực tài khoản.'}
                             style={{
-                                marginTop: 15,
+                                marginTop: 5,
                                 fontSize: SIZES.FONT_H5
                             }}
                         />
