@@ -200,7 +200,7 @@ export default function PartnerData() {
                             value: true,
                         },
                         equalGreaterThan: {
-                            value: 1
+                            value: 600
                         }
                     }
                 },
@@ -241,7 +241,7 @@ export default function PartnerData() {
                             value: true,
                         },
                         equalGreaterThan: {
-                            value: 90
+                            value: 30
                         }
                     }
                 },
