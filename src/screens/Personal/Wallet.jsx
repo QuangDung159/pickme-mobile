@@ -145,7 +145,7 @@ export default function Wallet({ navigation }) {
                         color: COLORS.DEFAULT
                     }}
                 >
-                    Số dư trong ví
+                    UCoin Hiện Có
                 </Text>
                 <View
                     style={{
@@ -172,14 +172,14 @@ export default function Wallet({ navigation }) {
                     onPress={() => navigation.navigate(ScreenName.CASH_OUT)}
                     labelStyle={{
                         fontSize: SIZES.FONT_H3,
-                        color: COLORS.DEFAULT
+                        color: COLORS.ACTIVE
                     }}
                     buttonStyle={{
                         width: SIZES.WIDTH_BASE * 0.35,
-                        borderColor: COLORS.DEFAULT,
+                        borderColor: COLORS.ACTIVE,
                         marginBottom: 5
                     }}
-                    label="Rút tiền"
+                    label="Rút"
                 />
                 <CustomButton
                     onPress={() => navigation.navigate(ScreenName.CASH_IN)}
@@ -191,7 +191,7 @@ export default function Wallet({ navigation }) {
                         width: SIZES.WIDTH_BASE * 0.35,
                         borderColor: COLORS.ACTIVE
                     }}
-                    label="Nạp tiền"
+                    label="Nạp"
                 />
             </View>
         </View>

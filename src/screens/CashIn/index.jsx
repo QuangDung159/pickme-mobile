@@ -178,7 +178,7 @@ export default function CashIn(props) {
                             <NoteText
                                 width={SIZES.WIDTH_BASE * 0.9}
                                 title="Nội dung chuyển khoản: "
-                                content="[Tên đăng nhập] - 2SeeYou"
+                                content={moneyTransferContent}
                                 contentStyle={{
                                     fontSize: SIZES.FONT_H2,
                                     paddingVertical: 15,
@@ -197,6 +197,18 @@ export default function CashIn(props) {
                                 )}
                             />
                         </TouchableOpacity>
+                    </View>
+                    <View>
+                        <NoteText
+                            width={SIZES.WIDTH_BASE * 0.9}
+                            title="Giá trị quy đổi: "
+                            content="1 VND = 1 UCoin"
+                            contentStyle={{
+                                fontSize: SIZES.FONT_H2,
+                                paddingVertical: 15,
+                                color: COLORS.ACTIVE,
+                            }}
+                        />
                     </View>
                     <TouchableText
                         style={{

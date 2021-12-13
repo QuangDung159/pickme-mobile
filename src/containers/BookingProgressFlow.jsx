@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 
 const {
     FONT: {
-        TEXT_REGULAR,
+        TEXT_REGULAR
     },
     SIZES,
     COLORS
@@ -15,7 +15,11 @@ const {
 export default function BookingProgressFlow() {
     const currentBookingRedux = useSelector((state) => state.bookingReducer.currentBookingRedux);
     const {
-        status
+        status,
+        partnerId,
+        customerId,
+        canceledBy,
+        canceledReason,
     } = currentBookingRedux;
 
     useEffect(() => {
@@ -30,17 +34,17 @@ export default function BookingProgressFlow() {
         },
         {
             type: 'current',
-            content: 'Host xác nhận',
+            content: ' Chờ Host xác nhận',
             buttonText: '2'
         },
         {
             type: 'next',
-            content: 'Chờ thanh toán',
+            content: 'Thanh toán',
             buttonText: '3'
         },
         {
             type: 'next',
-            content: 'Cuộc hẹn sắp diễn ra',
+            content: 'Cuộc hẹn bắt đầu',
             buttonText: '4'
         },
         {
@@ -67,12 +71,12 @@ export default function BookingProgressFlow() {
                         },
                         {
                             type: 'prev',
-                            content: 'Chờ thanh toán',
+                            content: 'Thanh toán thành công',
                             buttonText: '3'
                         },
                         {
                             type: 'current',
-                            content: 'Cuộc hẹn sắp diễn ra',
+                            content: 'Cuộc hẹn bắt đầu',
                             buttonText: '4'
                         },
                         {
@@ -99,12 +103,12 @@ export default function BookingProgressFlow() {
                         },
                         {
                             type: 'prev',
-                            content: 'Chờ thanh toán',
+                            content: 'Thanh toán thành công.',
                             buttonText: '3'
                         },
                         {
                             type: 'prev',
-                            content: 'Cuộc hẹn sắp diễn ra',
+                            content: 'Cuộc hẹn bắt đầu',
                             buttonText: '4'
                         },
                         {
@@ -136,7 +140,7 @@ export default function BookingProgressFlow() {
                         },
                         {
                             type: 'next',
-                            content: 'Cuộc hẹn sắp diễn ra',
+                            content: 'Cuộc hẹn bắt đầu',
                             buttonText: '4'
                         },
                         {
@@ -197,7 +201,8 @@ export default function BookingProgressFlow() {
                             fontSize: SIZES.FONT_H2
                         }}
                     >
-                        Xin lỗi! Đơn hẹn đã bị huỷ
+                        {`Đơn hẹn đã bị huỷ bởi: ${canceledBy === partnerId ? "Host" : canceledBy === customerId ? "Khách" : "Hệ Thống"}`}
+                        {`\nLý do: ${canceledReason}`}
                     </Text>
                 </View>
             )}
