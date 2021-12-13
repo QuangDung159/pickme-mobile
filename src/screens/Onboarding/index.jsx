@@ -167,8 +167,8 @@ export default function Onboarding({ navigation }) {
                     contentContainerStyle={{
                         backgroundColor: COLORS.BASE,
                         alignItems: 'center',
-                        width: SIZES.WIDTH_BASE,
-                        height: SIZES.HEIGHT_BASE
+                        width: '100%',
+                        height: '100%'
                     }}
                 >
                     <>
@@ -293,11 +293,6 @@ export default function Onboarding({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        // marginTop: Platform.OS === 'android' ? -Utils.HeaderHeight : 0,
-        backgroundColor: COLORS.BASE,
-        flex: 1,
-    },
     padded: {
         zIndex: 3,
         position: 'absolute',
