@@ -424,7 +424,7 @@ export default function UploadDocSection({ setIsShowSpinner, navigation, route }
                         style={{
                             width: SIZES.WIDTH_BASE * 0.9,
                             alignSelf: 'center',
-                            borderWidth: 0.5,
+                            borderWidth: 1,
                             borderColor: COLORS.ACTIVE,
                             borderRadius: 20
                         }}

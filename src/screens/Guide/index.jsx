@@ -1,4 +1,4 @@
-import { DISCLAIMER_CONTENT } from '@constants/Content';
+import { GUIDE_CONTENT } from '@constants/Guide';
 import { Theme } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
 import React from 'react';
@@ -11,7 +11,7 @@ const {
     COLORS
 } = Theme;
 
-export default function Policy() {
+export default function Guide() {
     try {
         return (
             <ScrollView
@@ -25,7 +25,7 @@ export default function Policy() {
                 }}
             >
                 <Text style={styles.modalText}>
-                    {DISCLAIMER_CONTENT}
+                    {GUIDE_CONTENT}
                 </Text>
             </ScrollView>
         );

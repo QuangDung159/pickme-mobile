@@ -146,7 +146,7 @@ export default function PhoneForm({
                                 marginVertical: 20,
                                 width: SIZES.WIDTH_BASE * 0.9,
                             }}
-                            placeholder="Nhập email"
+                            placeholder="Nhập email*"
                         />
                     ) : (
                         <CustomInput
@@ -162,7 +162,7 @@ export default function PhoneForm({
                                 marginVertical: 20,
                                 width: SIZES.WIDTH_BASE * 0.9
                             }}
-                            placeholder="Nhập số điện thoại"
+                            placeholder="Nhập số điện thoại*"
                         />
                     )}
                 </View>

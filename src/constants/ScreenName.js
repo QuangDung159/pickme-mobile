@@ -31,4 +31,5 @@ export default {
     PARTNER_DATA: 'PartnerData',
     CHANGE_PASSWORD: 'ChangePassword',
     POLICY: 'Policy',
+    GUIDE: 'Guide',
 };

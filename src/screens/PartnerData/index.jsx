@@ -1,5 +1,5 @@
 import {
-    CenterLoader, CustomButton, CustomInput
+    CenterLoader, CustomButton, CustomCheckbox, CustomInput, CustomText
 } from '@components/uiComponents';
 import { Theme } from '@constants/index';
 import { CommonHelpers, ToastHelpers, ValidationHelpers } from '@helpers/index';
@@ -11,12 +11,19 @@ import { View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useDispatch, useSelector } from 'react-redux';
 
-const { SIZES, COLORS } = Theme;
+const {
+    SIZES, COLORS, FONT: {
+        TEXT_BOLD
+    }
+} = Theme;
 
 export default function PartnerData() {
     const [newUser, setNewUser] = useState({});
     const [isShowSpinner, setIsShowSpinner] = useState(false);
-    const [amountDisplay, setAmountDisplay] = useState('0');
+    const [amountDisplay, setAmountDisplay] = useState('');
+    const [amountDisplayOnline, setAmountDisplayOnline] = useState('');
+    const [isOnline, setIsOnline] = useState(false);
+    const [isOffline, setIsOffline] = useState(true);
 
     const currentUser = useSelector((state) => state.userReducer.currentUser);
 
@@ -27,8 +34,10 @@ export default function PartnerData() {
             setNewUser({
                 ...currentUser,
                 minimumDuration: currentUser.minimumDuration,
+                onlineMinimumDuration: currentUser.onlineMinimumDuration,
             });
             setAmountDisplay(CommonHelpers.formatCurrency(currentUser.earningExpected));
+            setAmountDisplayOnline(CommonHelpers.formatCurrency(currentUser.onlineEarningExpected));
         }, []
     );
 
@@ -49,7 +58,7 @@ export default function PartnerData() {
             }}
             onChangeText={(input) => onChangeEarningExpected(input)}
             value={amountDisplay}
-            label="Thu nhập mong muốn (VND/phút):"
+            label="Thu nhập mong muốn (UCoin/phút):*"
             onEndEditing={
                 (e) => {
                     setAmountDisplay(CommonHelpers.formatCurrency(e.nativeEvent.text));
@@ -69,8 +78,95 @@ export default function PartnerData() {
                 marginVertical: 10,
                 width: SIZES.WIDTH_BASE * 0.9
             }}
-            label="Số phút tối thiểu của buổi hẹn:"
+            label="Số phút tối thiểu của buổi hẹn:*"
         />
+    );
+
+    const renderEarningExpectedOnline = () => (
+        <CustomInput
+            containerStyle={{
+                marginVertical: 10,
+                width: SIZES.WIDTH_BASE * 0.9
+            }}
+            onChangeText={(input) => {
+                setNewUser({ ...newUser, onlineEarningExpected: input });
+                setAmountDisplayOnline(input);
+            }}
+            value={amountDisplayOnline}
+            label="Thu nhập mong muốn (online) (UCoin/phút):*"
+            onEndEditing={
+                (e) => {
+                    setAmountDisplayOnline(CommonHelpers.formatCurrency(e.nativeEvent.text));
+                }
+            }
+            onFocus={() => {
+                setAmountDisplayOnline(newUser.onlineEarningExpected);
+            }}
+        />
+    );
+
+    const renderInputMinimumDurationOnline = () => (
+        <CustomInput
+            value={newUser.onlineMinimumDuration}
+            onChangeText={(input) => setNewUser({ ...newUser, onlineMinimumDuration: input })}
+            containerStyle={{
+                marginVertical: 10,
+                width: SIZES.WIDTH_BASE * 0.9
+            }}
+            label="Số phút tối thiểu của buổi hẹn (online):*"
+        />
+    );
+
+    const renderGetBookingType = () => (
+        <View
+            style={{
+                width: SIZES.WIDTH_BASE * 0.9,
+                marginBottom: 5
+            }}
+        >
+            <CustomText
+                style={{
+                    color: COLORS.ACTIVE,
+                    marginVertical: 5,
+                }}
+                text="Hình thức buổi hẹn:"
+            />
+            <View style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between'
+            }}
+            >
+                <CustomCheckbox
+                    label="Trực tiếp"
+                    onChange={(checked) => {
+                        setIsOffline(checked);
+                    }}
+                    containerStyle={{
+                        width: SIZES.WIDTH_BASE * 0.3,
+                    }}
+                    labelStyle={{
+                        fontFamily: TEXT_BOLD
+                    }}
+                    isChecked={isOffline}
+                />
+                <CustomCheckbox
+                    label="Online"
+                    onChange={(checked) => {
+                        setIsOnline(checked);
+                    }}
+                    containerStyle={{
+                        width: SIZES.WIDTH_BASE * 0.3
+                    }}
+                    labelStyle={{
+                        fontFamily: TEXT_BOLD
+                    }}
+                    isChecked={isOnline}
+                />
+            </View>
+
+        </View>
+
     );
 
     const renderButtonPanel = () => (
@@ -92,32 +188,70 @@ export default function PartnerData() {
     );
 
     const validate = () => {
-        const validateArr = [
-            {
-                fieldName: 'Thu nhập mong muốn (VND/phút)',
-                input: newUser.earningExpected,
-                validate: {
-                    required: {
-                        value: true,
-                    },
-                    equalGreaterThan: {
-                        value: 1
+        let validateArr = [];
+
+        if (isOffline) {
+            validateArr = [
+                {
+                    fieldName: 'Thu nhập mong muốn',
+                    input: newUser.earningExpected,
+                    validate: {
+                        required: {
+                            value: true,
+                        },
+                        equalGreaterThan: {
+                            value: 600
+                        }
+                    }
+                },
+                {
+                    fieldName: 'Số phút tối thiểu của buổi hẹn',
+                    input: newUser.minimumDuration,
+                    validate: {
+                        required: {
+                            value: true,
+                        },
+                        equalGreaterThan: {
+                            value: 90
+                        }
                     }
                 }
-            },
-            {
-                fieldName: 'Số phút tối thiểu của buổi hẹn',
-                input: newUser.minimumDuration,
-                validate: {
-                    required: {
-                        value: true,
-                    },
-                    equalGreaterThan: {
-                        value: 90
+            ];
+        }
+
+        if (isOnline) {
+            validateArr = validateArr.concat([
+                {
+                    fieldName: 'Thu nhập mong muốn (online)',
+                    input: newUser.onlineEarningExpected,
+                    validate: {
+                        required: {
+                            value: true,
+                        },
+                        equalGreaterThan: {
+                            value: 600
+                        }
                     }
-                }
-            },
-        ];
+                },
+                {
+                    fieldName: 'Số phút tối thiểu của buổi hẹn (online)',
+                    input: newUser.onlineMinimumDuration,
+                    validate: {
+                        required: {
+                            value: true,
+                        },
+                        equalGreaterThan: {
+                            value: 30
+                        }
+                    }
+                },
+            ]);
+        }
+
+        if (!isOnline && !isOffline) {
+            ToastHelpers.renderToast('Bạn vui lòng chọn hình thức buổi hẹn!', 'error');
+            return false;
+        }
 
         if (!validateYearsOld(newUser.dob)) {
             ToastHelpers.renderToast('Bạn phải đủ 16 tuổi!', 'error');
@@ -137,7 +271,9 @@ export default function PartnerData() {
     const onSubmitUpdateInfo = async () => {
         const {
             minimumDuration,
-            earningExpected
+            earningExpected,
+            onlineEarningExpected,
+            onlineMinimumDuration
         } = newUser;
 
         if (!validate()) {
@@ -148,6 +284,10 @@ export default function PartnerData() {
             imageUrl: currentUser.url,
             minimumDuration: +minimumDuration,
             earningExpected: +earningExpected,
+            onlineMinimumDuration: +onlineMinimumDuration,
+            onlineEarningExpected: +onlineEarningExpected,
+            IsDatingOnline: isOnline,
+            IsDatingOffline: isOffline
         };
 
         setIsShowSpinner(true);
@@ -159,7 +299,9 @@ export default function PartnerData() {
             const userInfo = {
                 ...currentUser,
                 minimumDuration,
-                earningExpected
+                earningExpected,
+                onlineEarningExpected,
+                onlineMinimumDuration
             };
             dispatch(setCurrentUser(userInfo));
             dispatch(setPersonTabActiveIndex(0));
@@ -187,8 +329,21 @@ export default function PartnerData() {
                     >
                         {newUser && (
                             <>
-                                {renderEarningExpected()}
-                                {renderInputMinimumDuration()}
+                                {renderGetBookingType()}
+
+                                {isOffline && (
+                                    <>
+                                        {renderEarningExpected()}
+                                        {renderInputMinimumDuration()}
+                                    </>
+                                )}
+
+                                {isOnline && (
+                                    <>
+                                        {renderEarningExpectedOnline()}
+                                        {renderInputMinimumDurationOnline()}
+                                    </>
+                                )}
                                 {renderButtonPanel()}
                             </>
                         )}

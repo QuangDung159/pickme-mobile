@@ -2,13 +2,16 @@ import { CustomCalendar } from '@components/businessComponents';
 import {
     CustomButton, CustomInput, CustomText, OptionItem
 } from '@components/uiComponents';
-import { BookingNoteOptions, Theme } from '@constants/index';
+import {
+    BookingNoteOptions, BookingTypes, OutsideApp, Theme
+} from '@constants/index';
 import ToastHelpers from '@helpers/ToastHelpers';
 import moment from 'moment';
 import React, { useState } from 'react';
 import {
     Platform, StyleSheet, Text, View
 } from 'react-native';
+import { useSelector } from 'react-redux';
 
 const {
     FONT: {
@@ -17,6 +20,13 @@ const {
     SIZES,
     COLORS
 } = Theme;
+
+const {
+    SKYPE,
+    ZALO,
+    MESSENGER,
+    GAMING
+} = OutsideApp;
 
 export default function CreateBookingForm({
     route,
@@ -42,6 +52,12 @@ export default function CreateBookingForm({
 }) {
     const [listNoteOptions, setListNoteOptions] = useState(BookingNoteOptions);
     const [isShowNoteInput, setIsShowNoteInput] = useState(false);
+    const [listBookingTypes] = useState(BookingTypes);
+    const [isShowInputOptions, setIsShowInputOptions] = useState(true);
+    const [isShowAddress, setIsShowAddress] = useState(true);
+    const [selectedBookingType, setSelectedBookingType] = useState(BookingTypes[0]);
+
+    const currentUser = useSelector((state) => state.userReducer.currentUser);
 
     const onChangeDateCalendar = (date) => {
         const result = busyCalendar.find(
@@ -68,6 +84,23 @@ export default function CreateBookingForm({
         });
     };
 
+    const getPlatformId = (bookingType) => {
+        switch (bookingType.key) {
+            case SKYPE.key: {
+                return `${SKYPE.deepLink}${currentUser.skype}`;
+            }
+            case ZALO.key: {
+                return `${ZALO.deepLink}${currentUser.zalo}`;
+            }
+            case GAMING.key: {
+                return `${GAMING.deepLink}`;
+            }
+            default: {
+                return `${MESSENGER.deepLink}${currentUser.facebook}`;
+            }
+        }
+    };
+
     const onClickTriggerTimePicker = (modalType) => {
         if (modalType === 'start') {
             const hourIndex = hourArr.findIndex((item) => item === startTimeStr.split(':')[0]);
@@ -91,7 +124,8 @@ export default function CreateBookingForm({
                     width: SIZES.WIDTH_BASE * 0.9,
                     flexDirection: 'row',
                     justifyContent: 'space-between',
-                    alignItems: 'center'
+                    alignItems: 'center',
+                    marginBottom: 5
                 }}
             >
                 <View
@@ -104,9 +138,9 @@ export default function CreateBookingForm({
                     <CustomText
                         style={{
                             color: COLORS.ACTIVE,
-                            marginRight: 10
+                            marginRight: 5
                         }}
-                        text="Bắt đầu:"
+                        text="Bắt đầu:*"
                     />
                     <CustomButton
                         onPress={() => {
@@ -132,9 +166,9 @@ export default function CreateBookingForm({
                     <CustomText
                         style={{
                             color: COLORS.ACTIVE,
-                            marginRight: 10
+                            marginRight: 5
                         }}
-                        text="Kết thúc:"
+                        text="Kết thúc:*"
                     />
                     <CustomButton
                         onPress={() => {
@@ -165,7 +199,7 @@ export default function CreateBookingForm({
 
             list.forEach((item) => {
                 listTemp.push({
-                    value: item.value,
+                    ...item,
                     selected: false
                 });
             });
@@ -202,6 +236,113 @@ export default function CreateBookingForm({
         });
     };
 
+    const handlePressBookingType = (typeObj) => {
+        setSelectedBookingType(typeObj);
+
+        if (typeObj.type === 'online') {
+            setIsShowNoteInput(true);
+            setIsShowInputOptions(false);
+            setBooking({
+                ...booking,
+                noted: '',
+                isOnline: true,
+                address: getPlatformId(typeObj)
+            });
+            setIsShowAddress(false);
+        } else {
+            setIsShowNoteInput(false);
+            setIsShowInputOptions(true);
+            setIsShowAddress(true);
+            setBooking({
+                ...booking,
+                isOnline: false,
+                address: ''
+            });
+        }
+    };
+
+    const handleShowOnlineOption = () => {
+        console.log('partner :>> ', partner);
+        return (
+            <>
+                {listBookingTypes.map((item, index) => {
+                    if (partner.isDatingOffline && item.key === 'truc_tiep') {
+                        return (
+                            <OptionItem
+                                item={item}
+                                index={index}
+                                handlePressItem={() => {
+                                    handlePressBookingType(item);
+                                }}
+                                isSelected={selectedBookingType.key === item.key}
+                            />
+                        );
+                    }
+
+                    if (partner.isDatingOnline) {
+                        if ((currentUser.skype && item.key === SKYPE.key)
+                            || (currentUser.facebook && item.key === MESSENGER.key)
+                            || (currentUser.zalo && item.key === ZALO.key)
+                        ) {
+                            return (
+                                <OptionItem
+                                    item={item}
+                                    index={index}
+                                    handlePressItem={() => {
+                                        handlePressBookingType(item);
+                                    }}
+                                    isSelected={selectedBookingType.key === item.key}
+                                />
+                            );
+                        }
+
+                        if (item.key === 'choi_game') {
+                            return (
+                                <OptionItem
+                                    item={item}
+                                    index={index}
+                                    handlePressItem={() => {
+                                        handlePressBookingType(item);
+                                    }}
+                                    isSelected={selectedBookingType.key === item.key}
+                                />
+                            );
+                        }
+                    }
+
+                    return <></>;
+                })}
+            </>
+        );
+    };
+
+    // if (!currentUser.facebook && !currentUser.zalo && !currentUser.skype) {
+    //     return <></>;
+    // }
+    const renderBookingTypes = () => (
+        <>
+            <CustomText
+                text="Hình thức:*"
+                style={{
+                    color: COLORS.ACTIVE,
+                    fontSize: SIZES.FONT_H3,
+                    marginTop: 5
+                }}
+            />
+            <View
+                style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    width: '100%',
+                    marginBottom: 10,
+                    flexWrap: 'wrap'
+                }}
+            >
+                {handleShowOnlineOption()}
+            </View>
+        </>
+    );
+
     const renderNoteOptions = () => (
         <View
             style={{
@@ -219,6 +360,7 @@ export default function CreateBookingForm({
                     handlePressItem={() => {
                         handlePressNoteOption(index);
                     }}
+                    isSelected={item.selected}
                 />
             ))}
         </View>
@@ -240,15 +382,21 @@ export default function CreateBookingForm({
     );
 
     const renderInputAddress = () => (
-        <CustomInput
-            value={booking.address}
-            onChangeText={(input) => onChangeAddress(input)}
-            containerStyle={{
-                marginVertical: 10,
-                width: SIZES.WIDTH_BASE * 0.9
-            }}
-            label="Địa điểm:"
-        />
+        <>
+            {isShowAddress && (
+                <CustomInput
+                    value={booking.address}
+                    onChangeText={(input) => onChangeAddress(input)}
+                    containerStyle={{
+                        marginBottom: 10,
+                        marginTop: 5,
+                        width: SIZES.WIDTH_BASE * 0.9
+                    }}
+                    label="Địa điểm:*"
+                />
+            )}
+        </>
+
     );
 
     const renderInfoView = () => {
@@ -285,7 +433,7 @@ export default function CreateBookingForm({
     const renderNoteSection = () => (
         <>
             <CustomText
-                text="Ghi chú:"
+                text="Ghi chú:*"
                 style={{
                     color: COLORS.ACTIVE,
                     fontSize: SIZES.FONT_H3,
@@ -297,7 +445,11 @@ export default function CreateBookingForm({
                     {renderInputNote()}
                 </>
             )}
-            {renderNoteOptions()}
+            {isShowInputOptions && (
+                <>
+                    {renderNoteOptions()}
+                </>
+            )}
         </>
     );
 
@@ -347,6 +499,7 @@ export default function CreateBookingForm({
                 )} */}
 
                 {renderButtonTimePicker()}
+                {renderBookingTypes()}
                 {renderInputAddress()}
                 {renderNoteSection()}
             </View>

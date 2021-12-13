@@ -170,7 +170,7 @@ export default function UsernamePasswordForm({ navigation }) {
                             marginVertical: 10,
                             width: SIZES.WIDTH_BASE * 0.9
                         }}
-                        placeholder="Tên đăng nhập"
+                        placeholder="Tên đăng nhập*"
                     />
 
                     <CustomInput
@@ -185,7 +185,7 @@ export default function UsernamePasswordForm({ navigation }) {
                             width: SIZES.WIDTH_BASE * 0.9
                         }}
                         secureTextEntry={!isShowPassword}
-                        placeholder="Mật khẩu"
+                        placeholder="Mật khẩu*"
                         rightIcon={{
                             name: 'eye',
                             family: IconFamily.ENTYPO,
@@ -207,7 +207,7 @@ export default function UsernamePasswordForm({ navigation }) {
                             width: SIZES.WIDTH_BASE * 0.9
                         }}
                         secureTextEntry={!isShowPassword}
-                        placeholder="Xác nhận mật khẩu"
+                        placeholder="Xác nhận mật khẩu*"
                         rightIcon={{
                             name: 'eye',
                             family: IconFamily.ENTYPO,

@@ -1,6 +1,7 @@
-import { CustomButton, CustomText } from '@components/uiComponents';
-import TouchableText from '@components/uiComponents/TouchableText';
-import { BookingStatus, IconFamily, Theme } from '@constants/index';
+import { CustomButton, CustomText, IconCustom } from '@components/uiComponents';
+import {
+    BookingStatus, IconFamily, Theme, OutsideApp, ScreenName
+} from '@constants/index';
 import { mappingStatusText } from '@helpers/CommonHelpers';
 import { CommonHelpers, ToastHelpers } from '@helpers/index';
 import * as Calendar from 'expo-calendar';
@@ -11,7 +12,7 @@ import React, { useEffect, useState } from 'react';
 import {
     Alert,
     Platform,
-    StyleSheet, View
+    StyleSheet, TouchableOpacity, View
 } from 'react-native';
 import { useSelector } from 'react-redux';
 
@@ -26,8 +27,17 @@ const {
     COLORS
 } = Theme;
 
-export default function CardBooking({ booking }) {
+const {
+    SKYPE,
+    ZALO,
+    MESSENGER,
+    GOOGLE_MAP,
+    GAMING
+} = OutsideApp;
+
+export default function CardBooking({ booking, navigation }) {
     const [deviceCalendars, setDeviceCalendars] = useState([]);
+    const [openAppText, setOpenAppText] = useState();
 
     const currentUser = useSelector((state) => state.userReducer.currentUser);
     const timezone = useSelector((state) => state.appConfigReducer.timezone);
@@ -35,6 +45,7 @@ export default function CardBooking({ booking }) {
     useEffect(
         () => {
             getDeviceCalendar();
+            createOpenAppText();
         }, []
     );
 
@@ -204,7 +215,67 @@ export default function CardBooking({ booking }) {
 
     const createMapUrl = (address) => {
         const addressStr = address.replace(/ /g, '+');
-        return `https://www.google.com/maps?daddr=${addressStr}`;
+        return `${GOOGLE_MAP.deepLink}${addressStr}`;
+    };
+
+    const checkPlatformByAddress = () => {
+        if (booking.address.includes(ZALO.deepLink)) {
+            return ZALO.name;
+        }
+
+        if (booking.address.includes(SKYPE.deepLink)) {
+            return SKYPE.name;
+        }
+
+        if (booking.address.includes(MESSENGER.deepLink)) {
+            return MESSENGER.name;
+        }
+
+        if (booking.address.includes(GAMING.deepLink)) {
+            return GAMING.name;
+        }
+
+        return booking.address;
+    };
+
+    const createOpenAppText = () => {
+        if (booking.isOnline) {
+            if (booking.address.includes(GAMING.deepLink)) {
+                setOpenAppText({
+                    action: () => {
+                        navigation.navigate(ScreenName.MESSAGE, {
+                            name: booking.partnerName,
+                            userStatus: 'Vừa mới truy cập',
+                            toUserId: booking.partnerId,
+                            // userInfo: partnerInfo
+                        });
+                    },
+                    icon: {
+                        name: 'gamepad',
+                        family: IconFamily.FONT_AWESOME,
+                        size: 18
+                    },
+                });
+            } else {
+                setOpenAppText({
+                    action: () => Linking.openURL(booking.address),
+                    icon: {
+                        name: 'phone',
+                        family: IconFamily.ENTYPO,
+                        size: 18
+                    },
+                });
+            }
+        } else {
+            setOpenAppText({
+                action: () => Linking.openURL(createMapUrl(booking.address)),
+                icon: {
+                    name: 'map',
+                    family: IconFamily.ENTYPO,
+                    size: 18
+                },
+            });
+        }
     };
 
     try {
@@ -216,7 +287,6 @@ export default function CardBooking({ booking }) {
             status,
             date,
             idReadAble,
-            address,
             customerName,
             customerId
         } = booking;
@@ -301,6 +371,7 @@ export default function CardBooking({ booking }) {
                                 {
                                     fontSize: SIZES.FONT_H2,
                                     color: COLORS.ACTIVE,
+                                    fontFamily: TEXT_BOLD
                                 }
                             ]
                         }
@@ -313,6 +384,7 @@ export default function CardBooking({ booking }) {
                                 {
                                     fontSize: SIZES.FONT_H2,
                                     color: COLORS.ACTIVE,
+                                    fontFamily: TEXT_BOLD
                                 }
                             ]
                         }
@@ -320,21 +392,50 @@ export default function CardBooking({ booking }) {
                     />
                 </View>
 
-                <TouchableText
-                    style={
-                        [
-                            styles.subInfoCard,
-                            {
-                                fontSize: SIZES.FONT_H3,
-                                color: COLORS.DEFAULT,
-                            }
-                        ]
-                    }
+                <TouchableOpacity
                     onPress={() => {
-                        Linking.openURL(createMapUrl(address));
+                        if (booking.status === BookingStatus.PAID) {
+                            openAppText?.action();
+                        } else {
+                            Alert.alert('Đơn hẹn không ở trạng thái "Đã được thanh toán"', '', [
+                                {
+                                    text: 'Đã hiểu',
+                                    style: 'ok'
+                                },
+                            ], { cancelable: true });
+                        }
                     }}
-                    text={`Tại: ${address || 'N/A'} (xem chỉ đường)`}
-                />
+                >
+                    <View
+                        style={{
+                            flexDirection: 'row',
+                            alignItems: 'center'
+                        }}
+                    >
+                        <CustomText
+                            style={
+                                [
+                                    styles.subInfoCard,
+                                    {
+                                        fontSize: SIZES.FONT_H3,
+                                        color: COLORS.DEFAULT,
+                                    }
+                                ]
+                            }
+                            text={`Tại: ${checkPlatformByAddress()}`}
+                        />
+                        <IconCustom
+                            name={openAppText?.icon.name}
+                            family={openAppText?.icon.family}
+                            size={openAppText?.icon.size}
+                            color={COLORS.ACTIVE}
+                            style={{
+                                marginBottom: 5,
+                                marginLeft: 5
+                            }}
+                        />
+                    </View>
+                </TouchableOpacity>
 
                 <View
                     style={{
@@ -421,8 +522,10 @@ CardBooking.propTypes = {
 const styles = StyleSheet.create({
     cardTitle: {
         fontFamily: TEXT_BOLD,
+        marginBottom: 5
     },
     subInfoCard: {
         fontFamily: TEXT_REGULAR,
+        marginBottom: 5
     },
 });

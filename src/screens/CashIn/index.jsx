@@ -43,7 +43,7 @@ export default function CashIn(props) {
         }, [isSignInOtherDeviceStore]
     );
 
-    const renderModalRegisterPartner = () => (
+    const renderModalGuide = () => (
         <CustomModal
             modalVisible={modalVisible}
             renderContent={() => (
@@ -209,7 +209,7 @@ export default function CashIn(props) {
                         onPress={() => setModalVisible(true)}
                     />
                 </View>
-                {renderModalRegisterPartner()}
+                {renderModalGuide()}
             </View>
         );
     } catch (exception) {

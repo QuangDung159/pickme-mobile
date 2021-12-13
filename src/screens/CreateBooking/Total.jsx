@@ -13,7 +13,7 @@ import BookingServices from '@services/BookingServices';
 import moment from 'moment';
 import React from 'react';
 import { View } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const {
     FONT: {
@@ -34,15 +34,18 @@ export default function Total({
     booking,
     setIsShowSpinner
 }) {
+    const currentUser = useSelector((state) => state.userReducer.currentUser);
     const dispatch = useDispatch();
 
     const calculateTotalAmount = (start, end) => {
         if (total !== 0) return total;
-        const { estimatePricing } = route.params.partner;
+        const { estimatePricing, onlineEstimatePricing } = route.params.partner;
+        const unitPrice = booking.isOnline ? onlineEstimatePricing : estimatePricing;
+
         const startMinutesNumber = convertStringHoursToMinutes(start) || 0;
         const endMinutesNumber = convertStringHoursToMinutes(end) || 0;
         if (startMinutesNumber < endMinutesNumber) {
-            return (endMinutesNumber - startMinutesNumber) * estimatePricing;
+            return (endMinutesNumber - startMinutesNumber) * unitPrice;
         }
         return 0;
     };
@@ -82,6 +85,13 @@ export default function Total({
     };
 
     const onSubmitBooking = async () => {
+        if (!booking.isOnline) {
+            if (!currentUser.isCustomerVerified) {
+                ToastHelpers.renderToast('Tài khoản của bạn chưa được xác thực');
+                return;
+            }
+        }
+
         if (!validate()) return;
 
         const {
@@ -106,10 +116,14 @@ export default function Total({
             Address: booking.address || 'N/a',
             Longtitude: booking.longtitude || 0,
             Latitude: booking.latitude || 0,
-            Description: 'N/a',
-            Noted: booking.noted || 'N/a',
-            totalAmount: total !== 0 ? total : calculateTotalAmount(startTimeStr, endTimeStr)
+            Description: 'Không có mô tả',
+            Noted: booking.noted || 'Không có ghi chú',
+            totalAmount: total !== 0 ? total : calculateTotalAmount(startTimeStr, endTimeStr),
+            IsOnline: booking.isOnline
         };
+
+        // console.log('bookingToSubmit :>> ', bookingToSubmit);
+        // return;
 
         setIsShowSpinner(true);
         const result = await BookingServices.submitScheduleBookingAsync(partner.id, bookingToSubmit);

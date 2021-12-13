@@ -1,24 +1,27 @@
 import {
-    CenterLoader, CustomButton, CustomInput, CustomText, OptionItem, RadioButton
+    CenterLoader, CustomButton, CustomInput, CustomModal, CustomText, OptionItem, RadioButton
 } from '@components/uiComponents';
-import { Interests, Theme } from '@constants/index';
+import { Images, Interests, Theme } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
 import ValidationHelpers from '@helpers/ValidationHelpers';
 import { setCurrentUser, setPersonTabActiveIndex } from '@redux/Actions';
 import { UserServices } from '@services/index';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
-import { View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import ImageScalable from 'react-native-scalable-image';
 import { useDispatch, useSelector } from 'react-redux';
 
-const { SIZES, COLORS } = Theme;
+const { SIZES, COLORS, FONT: { TEXT_BOLD } } = Theme;
 
 export default function UpdateInfoAccount() {
     const [newUser, setNewUser] = useState({});
     const [isShowSpinner, setIsShowSpinner] = useState(false);
     // const [listInterest, setListInterest] = useState();
     const [listInterestSelected, setListInterestSelected] = useState(Interests);
+    const [isModalMessengerVisible, setIsModalMessengerVisible] = useState(false);
+    const [isModalSkypeVisible, setIsModalSkypeVisible] = useState(false);
 
     const currentUser = useSelector((state) => state.userReducer.currentUser);
 
@@ -68,7 +71,7 @@ export default function UpdateInfoAccount() {
                 width: SIZES.WIDTH_BASE * 0.9
             }}
             autoCapitalize
-            label="Tên hiển thị:"
+            label="Tên hiển thị:*"
         />
     );
 
@@ -81,7 +84,7 @@ export default function UpdateInfoAccount() {
                 width: SIZES.WIDTH_BASE * 0.9
             }}
             keyboardType="number-pad"
-            label="Số điện thoại:"
+            label="Số điện thoại:*"
         />
     );
 
@@ -94,8 +97,57 @@ export default function UpdateInfoAccount() {
                 width: SIZES.WIDTH_BASE * 0.9
             }}
             autoCapitalize
-            label="Nơi sinh sống:"
+            label="Nơi sinh sống:*"
         />
+    );
+
+    const renderInputZalo = () => (
+        <CustomInput
+            value={newUser.zalo}
+            onChangeText={(input) => setNewUser({ ...newUser, zalo: input })}
+            containerStyle={{
+                marginVertical: 10,
+                width: SIZES.WIDTH_BASE * 0.9
+            }}
+            keyboardType="number-pad"
+            label="SĐT đăng kí Zalo:"
+        />
+    );
+
+    const renderInputSkype = () => (
+        <TouchableOpacity
+            onPress={() => {
+                setIsModalSkypeVisible(true);
+            }}
+        >
+            <CustomInput
+                value={newUser.skype}
+                onChangeText={(input) => setNewUser({ ...newUser, skype: input })}
+                containerStyle={{
+                    marginVertical: 10,
+                    width: SIZES.WIDTH_BASE * 0.9
+                }}
+                label="ID Skype: (hướng dẫn)"
+            />
+        </TouchableOpacity>
+    );
+
+    const renderInputMessenger = () => (
+        <TouchableOpacity
+            onPress={() => {
+                setIsModalMessengerVisible(true);
+            }}
+        >
+            <CustomInput
+                value={newUser.facebook}
+                onChangeText={(input) => setNewUser({ ...newUser, facebook: input })}
+                containerStyle={{
+                    marginVertical: 10,
+                    width: SIZES.WIDTH_BASE * 0.9
+                }}
+                label="ID Messenger: (hướng dẫn)"
+            />
+        </TouchableOpacity>
     );
 
     // const renderInputInterests = () => (
@@ -146,7 +198,7 @@ export default function UpdateInfoAccount() {
             }}
         >
             <CustomText
-                text="Sở thích:"
+                text="Sở thích:*"
                 style={{
                     color: COLORS.ACTIVE,
                     fontSize: SIZES.FONT_H3,
@@ -168,6 +220,7 @@ export default function UpdateInfoAccount() {
                         handlePressItem={() => {
                             handlePressInterest(index);
                         }}
+                        isSelected={item.selected}
                     />
                 ))}
             </View>
@@ -187,7 +240,7 @@ export default function UpdateInfoAccount() {
                 width: SIZES.WIDTH_BASE * 0.9
             }}
             autoCapitalize
-            label="Mô tả bản thân:"
+            label="Mô tả bản thân:*"
         />
     );
 
@@ -208,7 +261,7 @@ export default function UpdateInfoAccount() {
                         color: COLORS.ACTIVE,
                         marginBottom: 10
                     }}
-                    text="Chiều cao (cm):"
+                    text="Chiều cao (cm):*"
                 />
                 <CustomInput
                     inputStyle={{
@@ -226,7 +279,7 @@ export default function UpdateInfoAccount() {
                         color: COLORS.ACTIVE,
                         marginBottom: 10
                     }}
-                    text="Cân nặng (kg):"
+                    text="Cân nặng (kg):*"
                 />
                 <CustomInput
                     inputStyle={{
@@ -256,7 +309,7 @@ export default function UpdateInfoAccount() {
                 }}
                 onChangeText={(input) => onChangeYear(input)}
                 value={newUser?.dob?.substr(0, 4)}
-                label="Năm sinh:"
+                label="Năm sinh:*"
                 keyboardType="number-pad"
             />
 
@@ -319,8 +372,8 @@ export default function UpdateInfoAccount() {
                 }
             },
             {
-                fieldName: 'Tên hiển thị',
-                input: newUser.fullName,
+                fieldName: 'Số điện thoại',
+                input: newUser.phoneNum,
                 validate: {
                     required: {
                         value: true,
@@ -332,7 +385,7 @@ export default function UpdateInfoAccount() {
             },
             {
                 fieldName: 'Năm sinh',
-                input: newUser.dob,
+                input: newUser.dob.length > 0 ? newUser.dob.substr(0, 4) : newUser.dob,
                 validate: {
                     required: {
                         value: true,
@@ -442,6 +495,290 @@ export default function UpdateInfoAccount() {
         setIsShowSpinner(false);
     };
 
+    const renderModalGuideMessenger = () => (
+        <CustomModal
+            modalVisible={isModalMessengerVisible}
+            renderContent={() => (
+                <View
+                    style={{
+                        width: SIZES.WIDTH_BASE * 0.9
+                    }}
+                >
+                    <CustomText
+                        text="Mở ứng dụng Facebook:"
+                        style={{
+                            color: COLORS.ACTIVE,
+                            fontFamily: TEXT_BOLD,
+                            fontSize: SIZES.FONT_H3,
+                            marginBottom: 5,
+                            marginLeft: 10
+                        }}
+                    />
+
+                    <ImageScalable
+                        source={Images.Mess1}
+                        style={{
+                            zIndex: 99,
+                            marginBottom: 10
+                        }}
+                        width={SIZES.WIDTH_BASE * 0.9}
+                    />
+
+                    <CustomText
+                        text="Chọn account:"
+                        style={{
+                            color: COLORS.ACTIVE,
+                            fontFamily: TEXT_BOLD,
+                            fontSize: SIZES.FONT_H3,
+                            marginBottom: 5,
+                            marginLeft: 10
+                        }}
+                    />
+
+                    <ImageScalable
+                        source={Images.Mess2}
+                        style={{
+                            zIndex: 99,
+                            marginBottom: 10
+                        }}
+                        width={SIZES.WIDTH_BASE * 0.9}
+                    />
+
+                    <CustomText
+                        text="Chọn chi tiết:"
+                        style={{
+                            color: COLORS.ACTIVE,
+                            fontFamily: TEXT_BOLD,
+                            fontSize: SIZES.FONT_H3,
+                            marginBottom: 5,
+                            marginLeft: 10
+                        }}
+                    />
+
+                    <ImageScalable
+                        source={Images.Mess3}
+                        style={{
+                            zIndex: 99,
+                            marginBottom: 10
+                        }}
+                        width={SIZES.WIDTH_BASE * 0.9}
+                    />
+
+                    <CustomText
+                        text='Chọn "Sao chép liên kết":'
+                        style={{
+                            color: COLORS.ACTIVE,
+                            fontFamily: TEXT_BOLD,
+                            fontSize: SIZES.FONT_H3,
+                            marginBottom: 5,
+                            marginLeft: 10
+                        }}
+                    />
+
+                    <ImageScalable
+                        source={Images.Mess4}
+                        style={{
+                            zIndex: 99,
+                            marginBottom: 10
+                        }}
+                        width={SIZES.WIDTH_BASE * 0.9}
+                    />
+
+                    <CustomText
+                        text="Dán liên kết vào ô nhập:"
+                        style={{
+                            color: COLORS.ACTIVE,
+                            fontFamily: TEXT_BOLD,
+                            fontSize: SIZES.FONT_H3,
+                            marginBottom: 5,
+                            marginLeft: 10
+                        }}
+                    />
+
+                    <ImageScalable
+                        source={Images.Mess5}
+                        style={{
+                            zIndex: 99,
+                            marginBottom: 10
+                        }}
+                        width={SIZES.WIDTH_BASE * 0.9}
+                    />
+
+                    <CustomText
+                        text='Xoá "https://www.facebook.com/":'
+                        style={{
+                            color: COLORS.ACTIVE,
+                            fontFamily: TEXT_BOLD,
+                            fontSize: SIZES.FONT_H3,
+                            marginBottom: 5,
+                            marginLeft: 10
+                        }}
+                    />
+
+                    <ImageScalable
+                        source={Images.Mess6}
+                        style={{
+                            zIndex: 99,
+                            marginBottom: 10
+                        }}
+                        width={SIZES.WIDTH_BASE * 0.9}
+                    />
+
+                    <View>
+                        <CustomButton
+                            onPress={() => setIsModalMessengerVisible(false)}
+                            buttonStyle={{ width: SIZES.WIDTH_BASE * 0.8 }}
+                            type="active"
+                            label="Đã hiểu"
+                        />
+                    </View>
+                </View>
+            )}
+        />
+    );
+
+    const renderModalGuideSkype = () => (
+        <CustomModal
+            modalVisible={isModalSkypeVisible}
+            renderContent={() => (
+                <View
+                    style={{
+                        width: SIZES.WIDTH_BASE * 0.9
+                    }}
+                >
+                    <CustomText
+                        text="Mở ứng dụng Skype:"
+                        style={{
+                            color: COLORS.ACTIVE,
+                            fontFamily: TEXT_BOLD,
+                            fontSize: SIZES.FONT_H3,
+                            marginBottom: 5,
+                            marginLeft: 10
+                        }}
+                    />
+
+                    <ImageScalable
+                        source={Images.Skype1}
+                        style={{
+                            zIndex: 99,
+                            marginBottom: 10
+                        }}
+                        width={SIZES.WIDTH_BASE * 0.9}
+                    />
+
+                    <CustomText
+                        text="Chọn account:"
+                        style={{
+                            color: COLORS.ACTIVE,
+                            fontFamily: TEXT_BOLD,
+                            fontSize: SIZES.FONT_H3,
+                            marginBottom: 5,
+                            marginLeft: 10
+                        }}
+                    />
+
+                    <ImageScalable
+                        source={Images.Skype2}
+                        style={{
+                            zIndex: 99,
+                            marginBottom: 10
+                        }}
+                        width={SIZES.WIDTH_BASE * 0.9}
+                    />
+
+                    <CustomText
+                        text='Chọn "Hồ sơ Skype":'
+                        style={{
+                            color: COLORS.ACTIVE,
+                            fontFamily: TEXT_BOLD,
+                            fontSize: SIZES.FONT_H3,
+                            marginBottom: 5,
+                            marginLeft: 10
+                        }}
+                    />
+
+                    <ImageScalable
+                        source={Images.Skype3}
+                        style={{
+                            zIndex: 99,
+                            marginBottom: 10
+                        }}
+                        width={SIZES.WIDTH_BASE * 0.9}
+                    />
+
+                    <CustomText
+                        text='Chọn "Tên Skype":'
+                        style={{
+                            color: COLORS.ACTIVE,
+                            fontFamily: TEXT_BOLD,
+                            fontSize: SIZES.FONT_H3,
+                            marginBottom: 5,
+                            marginLeft: 10
+                        }}
+                    />
+
+                    <ImageScalable
+                        source={Images.Skype4}
+                        style={{
+                            zIndex: 99,
+                            marginBottom: 10
+                        }}
+                        width={SIZES.WIDTH_BASE * 0.9}
+                    />
+
+                    <CustomText
+                        text='Chọn "Sao chép":'
+                        style={{
+                            color: COLORS.ACTIVE,
+                            fontFamily: TEXT_BOLD,
+                            fontSize: SIZES.FONT_H3,
+                            marginBottom: 5,
+                            marginLeft: 10
+                        }}
+                    />
+
+                    <ImageScalable
+                        source={Images.Skype5}
+                        style={{
+                            zIndex: 99,
+                            marginBottom: 10
+                        }}
+                        width={SIZES.WIDTH_BASE * 0.9}
+                    />
+
+                    <CustomText
+                        text="Dán tên Skype đã sao chép vào ô nhập:"
+                        style={{
+                            color: COLORS.ACTIVE,
+                            fontFamily: TEXT_BOLD,
+                            fontSize: SIZES.FONT_H3,
+                            marginBottom: 5,
+                            marginLeft: 10
+                        }}
+                    />
+
+                    <ImageScalable
+                        source={Images.Skype6}
+                        style={{
+                            zIndex: 99,
+                            marginBottom: 10
+                        }}
+                        width={SIZES.WIDTH_BASE * 0.9}
+                    />
+
+                    <View>
+                        <CustomButton
+                            onPress={() => setIsModalSkypeVisible(false)}
+                            buttonStyle={{ width: SIZES.WIDTH_BASE * 0.8 }}
+                            type="active"
+                            label="Đã hiểu"
+                        />
+                    </View>
+                </View>
+            )}
+        />
+    );
+
     try {
         return (
             <>
@@ -468,9 +805,14 @@ export default function UpdateInfoAccount() {
                                 {/* {renderInputInterests()} */}
                                 {renderOptionInterests()}
                                 {renderInputDescription()}
+                                {renderInputZalo()}
+                                {renderInputSkype()}
+                                {renderInputMessenger()}
                                 {renderButtonPanel()}
                             </>
                         )}
+                        {renderModalGuideMessenger()}
+                        {renderModalGuideSkype()}
                     </KeyboardAwareScrollView>
                 )}
             </>

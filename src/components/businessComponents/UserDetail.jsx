@@ -465,7 +465,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                                     marginVertical: 10,
                                     width: SIZES.WIDTH_BASE * 0.9,
                                     alignSelf: 'center',
-                                    borderWidth: 0.5,
+                                    borderWidth: 1,
                                     borderColor: COLORS.ACTIVE,
                                     borderRadius: 20
                                 }}

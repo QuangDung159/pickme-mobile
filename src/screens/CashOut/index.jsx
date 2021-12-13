@@ -37,15 +37,26 @@ export default function CashOut() {
         () => {
             fetchListBankByStore();
 
-            const { bankId, bankNum, ownerName } = currentUser;
-
+            const { bankNum, ownerName } = currentUser;
             setCashOutForm({
-                bankId: bankId || listBank[0].id,
+                ...cashOutForm,
                 bankNum,
                 ownerName,
                 amount: ''
             });
         }, []
+    );
+
+    useEffect(
+        () => {
+            if (listBank && listBank.length > 0) {
+                const { bankId } = currentUser;
+                setCashOutForm({
+                    ...cashOutForm,
+                    bankId: bankId || listBank[0].id,
+                });
+            }
+        }, [listBank]
     );
 
     const fetchListBankByStore = () => {
@@ -229,7 +240,7 @@ export default function CashOut() {
                             marginVertical: 10,
                             width: SIZES.WIDTH_BASE * 0.9
                         }}
-                        label="Số tài khoản"
+                        label="Số tài khoản:*"
                         keyboardType="number-pad"
                     />
 
@@ -240,10 +251,10 @@ export default function CashOut() {
                             marginVertical: 10,
                             width: SIZES.WIDTH_BASE * 0.9
                         }}
-                        label="Chủ tài khoản"
+                        label="Chủ tài khoản:*"
                     />
                     <CustomInput
-                        label="Số tiền rút"
+                        label="Số tiền rút:*"
                         value={amountDisplay}
                         keyboardType="number-pad"
                         onChangeText={(input) => {
@@ -263,10 +274,7 @@ export default function CashOut() {
                             setAmountDisplay(cashOutForm.amount);
                         }}
                         inputStyle={{
-                            fontFamily: TEXT_BOLD,
                             color: COLORS.ACTIVE,
-                            textAlign: 'center',
-                            fontSize: SIZES.FONT_H1
                         }}
                     />
                     <View

@@ -315,7 +315,7 @@ export default function OtpForm({
                             width: SIZES.WIDTH_BASE * 0.9
                         }}
                         secureTextEntry={!isShowPassword}
-                        placeholder="Nhập mật khẩu"
+                        placeholder="Nhập mật khẩu*"
                         rightIcon={{
                             name: 'eye',
                             family: IconFamily.ENTYPO,
@@ -338,7 +338,7 @@ export default function OtpForm({
                                 width: SIZES.WIDTH_BASE * 0.9
                             }}
                             secureTextEntry={!isShowPassword}
-                            placeholder="Xác nhận mật khẩu"
+                            placeholder="Xác nhận mật khẩu*"
                             rightIcon={{
                                 name: 'eye',
                                 family: IconFamily.ENTYPO,

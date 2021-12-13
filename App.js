@@ -112,7 +112,7 @@ export default function App() {
                 if (otaObj.isNew) {
                     Alert.alert(
                         'Bạn có bản cập nhật mới',
-                        '',
+                        'Vui lòng cập nhật để có những trải nghiệm tốt nhất với 2SeeYou',
                         [
                             { text: 'Cập nhật', onPress: () => Updates.reloadAsync() },
                         ],
