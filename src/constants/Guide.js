@@ -15,6 +15,6 @@ export const GUIDE_CONTENT = `I. Lên lịch hẹn
 
 II. Nạp/Rút Coin
 1 / Vào trang cá nhân
-2 / Vào mục Ví Tiền
+2 / Vào mục Ví
 3 / Chọn Nạp/Rút và làm theo hướng dẫn
 `;

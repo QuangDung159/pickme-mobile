@@ -22,7 +22,7 @@ import Wallet from './Wallet';
 export default function Personal({ navigation }) {
     const [routes] = React.useState([
         { key: 'userInformation', title: 'Cá nhân' },
-        { key: 'wallet', title: 'Ví tiền' },
+        { key: 'wallet', title: 'Ví' },
         { key: 'bookingList', title: 'Đơn hẹn' },
     ]);
 
