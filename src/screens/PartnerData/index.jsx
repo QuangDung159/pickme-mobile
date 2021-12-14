@@ -184,9 +184,17 @@ export default function PartnerData() {
             }}
         >
             <CustomButton
-                onPress={async () => {
+                onPress={() => {
+                    if (!validate()) {
+                        return;
+                    }
+
                     setIsShowSpinner(true);
-                    await uploadImage();
+                    if (isChangeImage) {
+                        uploadImage();
+                    } else {
+                        onSubmitUpdateInfo(newUser);
+                    }
                 }}
                 type="active"
                 label="Xác nhận"
@@ -258,6 +266,11 @@ export default function PartnerData() {
             ]);
         }
 
+        if (!newUser.imageUrl) {
+            ToastHelpers.renderToast('Vui lòng chọn ảnh hiển thị!', 'error');
+            return false;
+        }
+
         if (!newUser.isDatingOnline && !newUser.isDatingOffline) {
             ToastHelpers.renderToast('Bạn vui lòng chọn hình thức buổi hẹn!', 'error');
             return false;
@@ -288,10 +301,6 @@ export default function PartnerData() {
             isDatingOffline,
             imageUrl
         } = updateInfo;
-
-        if (!validate()) {
-            return;
-        }
 
         const body = {
             imageUrl,
