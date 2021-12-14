@@ -8,7 +8,7 @@ import {
 import { ToastHelpers } from '@helpers/index';
 import * as Clipboard from 'expo-clipboard';
 import React, { useEffect, useState } from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import { ScrollView, TouchableOpacity, View } from 'react-native';
 import ImageScalable from 'react-native-scalable-image';
 import { useSelector } from 'react-redux';
 
@@ -71,7 +71,7 @@ export default function CashIn(props) {
 
     try {
         return (
-            <View
+            <ScrollView
                 style={{
                     width: SIZES.WIDTH_BASE * 0.9,
                     alignSelf: 'center',
@@ -99,7 +99,7 @@ export default function CashIn(props) {
                                     fontSize: SIZES.FONT_H1,
                                     color: COLORS.ACTIVE,
                                     fontFamily: TEXT_BOLD,
-                                    paddingVertical: 15,
+                                    paddingVertical: 5,
                                 }}
                                 iconComponentRight={(
                                     <IconCustom
@@ -127,7 +127,7 @@ export default function CashIn(props) {
                             content="TMCP Tiên Phong - TPBank"
                             contentStyle={{
                                 fontSize: SIZES.FONT_H2,
-                                paddingVertical: 15,
+                                paddingVertical: 5,
                                 color: COLORS.ACTIVE,
                                 textAlign: 'center'
                             }}
@@ -148,7 +148,7 @@ export default function CashIn(props) {
                                 content="Lư Quảng Dũng"
                                 contentStyle={{
                                     fontSize: SIZES.FONT_H2,
-                                    paddingVertical: 15,
+                                    paddingVertical: 5,
                                     color: COLORS.ACTIVE,
                                 }}
                                 iconComponentRight={(
@@ -181,7 +181,7 @@ export default function CashIn(props) {
                                 content="[Tên đăng nhập] - 2SeeYou"
                                 contentStyle={{
                                     fontSize: SIZES.FONT_H2,
-                                    paddingVertical: 15,
+                                    paddingVertical: 5,
                                     color: COLORS.ACTIVE,
                                 }}
                                 iconComponentRight={(
@@ -208,9 +208,16 @@ export default function CashIn(props) {
                         text="Ví dụ"
                         onPress={() => setModalVisible(true)}
                     />
+                    <ImageScalable
+                        source={Images.BankTransfer}
+                        style={{
+                            zIndex: 99
+                        }}
+                        width={SIZES.WIDTH_BASE * 0.9}
+                    />
                 </View>
                 {renderModalGuide()}
-            </View>
+            </ScrollView>
         );
     } catch (exception) {
         console.log('exception :>> ', exception);

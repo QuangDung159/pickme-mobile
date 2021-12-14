@@ -2,18 +2,22 @@ import {
     CenterLoader, CustomButton, CustomCheckbox, CustomInput, CustomText
 } from '@components/uiComponents';
 import { Theme } from '@constants/index';
-import { CommonHelpers, ToastHelpers, ValidationHelpers } from '@helpers/index';
+import {
+    CommonHelpers, MediaHelpers, ToastHelpers, ValidationHelpers
+} from '@helpers/index';
 import { setCurrentUser, setPersonTabActiveIndex } from '@redux/Actions';
 import { UserServices } from '@services/index';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import ImageScalable from 'react-native-scalable-image';
 import { useDispatch, useSelector } from 'react-redux';
 
 const {
     SIZES, COLORS, FONT: {
-        TEXT_BOLD
+        TEXT_BOLD,
+        TEXT_REGULAR
     }
 } = Theme;
 
@@ -22,8 +26,8 @@ export default function PartnerData() {
     const [isShowSpinner, setIsShowSpinner] = useState(false);
     const [amountDisplay, setAmountDisplay] = useState('');
     const [amountDisplayOnline, setAmountDisplayOnline] = useState('');
-    const [isOnline, setIsOnline] = useState(false);
-    const [isOffline, setIsOffline] = useState(true);
+    const [imageUri, setImageUri] = useState();
+    const [isChangeImage, setIsChangeImage] = useState(false);
 
     const currentUser = useSelector((state) => state.userReducer.currentUser);
 
@@ -31,11 +35,7 @@ export default function PartnerData() {
 
     useEffect(
         () => {
-            setNewUser({
-                ...currentUser,
-                minimumDuration: currentUser.minimumDuration,
-                onlineMinimumDuration: currentUser.onlineMinimumDuration,
-            });
+            setNewUser(currentUser);
             setAmountDisplay(CommonHelpers.formatCurrency(currentUser.earningExpected));
             setAmountDisplayOnline(CommonHelpers.formatCurrency(currentUser.onlineEarningExpected));
         }, []
@@ -121,7 +121,8 @@ export default function PartnerData() {
         <View
             style={{
                 width: SIZES.WIDTH_BASE * 0.9,
-                marginBottom: 5
+                marginBottom: 5,
+                marginTop: 15
             }}
         >
             <CustomText
@@ -140,7 +141,10 @@ export default function PartnerData() {
                 <CustomCheckbox
                     label="Trực tiếp"
                     onChange={(checked) => {
-                        setIsOffline(checked);
+                        setNewUser({
+                            ...newUser,
+                            isDatingOffline: checked
+                        });
                     }}
                     containerStyle={{
                         width: SIZES.WIDTH_BASE * 0.3,
@@ -148,12 +152,15 @@ export default function PartnerData() {
                     labelStyle={{
                         fontFamily: TEXT_BOLD
                     }}
-                    isChecked={isOffline}
+                    isChecked={newUser.isDatingOffline}
                 />
                 <CustomCheckbox
                     label="Online"
                     onChange={(checked) => {
-                        setIsOnline(checked);
+                        setNewUser({
+                            ...newUser,
+                            isDatingOnline: checked
+                        });
                     }}
                     containerStyle={{
                         width: SIZES.WIDTH_BASE * 0.3
@@ -161,7 +168,7 @@ export default function PartnerData() {
                     labelStyle={{
                         fontFamily: TEXT_BOLD
                     }}
-                    isChecked={isOnline}
+                    isChecked={newUser.isDatingOnline}
                 />
             </View>
 
@@ -177,7 +184,10 @@ export default function PartnerData() {
             }}
         >
             <CustomButton
-                onPress={() => onSubmitUpdateInfo()}
+                onPress={async () => {
+                    setIsShowSpinner(true);
+                    await uploadImage();
+                }}
                 type="active"
                 label="Xác nhận"
                 buttonStyle={{
@@ -190,7 +200,7 @@ export default function PartnerData() {
     const validate = () => {
         let validateArr = [];
 
-        if (isOffline) {
+        if (newUser.isDatingOffline) {
             validateArr = [
                 {
                     fieldName: 'Thu nhập mong muốn',
@@ -219,7 +229,7 @@ export default function PartnerData() {
             ];
         }
 
-        if (isOnline) {
+        if (newUser.isDatingOnline) {
             validateArr = validateArr.concat([
                 {
                     fieldName: 'Thu nhập mong muốn (online)',
@@ -248,7 +258,7 @@ export default function PartnerData() {
             ]);
         }
 
-        if (!isOnline && !isOffline) {
+        if (!newUser.isDatingOnline && !newUser.isDatingOffline) {
             ToastHelpers.renderToast('Bạn vui lòng chọn hình thức buổi hẹn!', 'error');
             return false;
         }
@@ -268,27 +278,34 @@ export default function PartnerData() {
         return !(years < 16);
     };
 
-    const onSubmitUpdateInfo = async () => {
+    const onSubmitUpdateInfo = async (updateInfo) => {
         const {
             minimumDuration,
             earningExpected,
             onlineEarningExpected,
-            onlineMinimumDuration
-        } = newUser;
+            onlineMinimumDuration,
+            isDatingOnline,
+            isDatingOffline,
+            imageUrl
+        } = updateInfo;
 
         if (!validate()) {
             return;
         }
 
         const body = {
-            imageUrl: currentUser.url,
+            imageUrl,
             minimumDuration: +minimumDuration,
             earningExpected: +earningExpected,
             onlineMinimumDuration: +onlineMinimumDuration,
             onlineEarningExpected: +onlineEarningExpected,
-            IsDatingOnline: isOnline,
-            IsDatingOffline: isOffline
+            IsDatingOnline: isDatingOnline,
+            IsDatingOffline: isDatingOffline
         };
+
+        // console.log('body :>> ', body);
+        // setIsShowSpinner(false);
+        // return;
 
         setIsShowSpinner(true);
 
@@ -301,7 +318,10 @@ export default function PartnerData() {
                 minimumDuration,
                 earningExpected,
                 onlineEarningExpected,
-                onlineMinimumDuration
+                onlineMinimumDuration,
+                isDatingOnline,
+                isDatingOffline,
+                imageUrl
             };
             dispatch(setCurrentUser(userInfo));
             dispatch(setPersonTabActiveIndex(0));
@@ -309,6 +329,109 @@ export default function PartnerData() {
             ToastHelpers.renderToast(data.message, 'success');
         }
         setIsShowSpinner(false);
+    };
+
+    const uploadImage = async () => {
+        MediaHelpers.imgbbUploadImage(
+            imageUri.uri,
+            (res) => {
+                const { url } = res.data;
+
+                const updateInfo = {
+                    ...newUser,
+                    imageUrl: url
+                };
+
+                onSubmitUpdateInfo(updateInfo);
+            },
+            () => {
+                ToastHelpers.renderToast();
+                setIsShowSpinner(false);
+            }
+        );
+    };
+
+    const onPickImage = () => {
+        MediaHelpers.pickImage(
+            false,
+            [4, 3],
+            (result) => {
+                setImageUri(result);
+                setIsChangeImage(true);
+            },
+            1
+        );
+    };
+
+    const renderButtonUploadImage = (buttonText) => (
+        <View style={{
+            alignItems: 'center',
+        }}
+        >
+            <CustomButton
+                onPress={() => onPickImage()}
+                type="active"
+                label={buttonText}
+                buttonStyle={{
+                    width: SIZES.WIDTH_BASE * 0.9,
+                    marginBottom: 10,
+                    marginTop: 5
+                }}
+                labelStyle={{
+                    fontFamily: TEXT_REGULAR,
+                    fontSize: SIZES.FONT_H4
+                }}
+            />
+        </View>
+    );
+
+    const renderImage = () => {
+        if (isChangeImage) {
+            if (imageUri) {
+                return (
+                    <View
+                        style={{
+                            alignSelf: 'center'
+                        }}
+                    >
+                        <ImageScalable
+                            style={{
+                                zIndex: 99
+                            }}
+                            width={SIZES.WIDTH_BASE * 0.9}
+                            source={imageUri}
+                        />
+                    </View>
+                );
+            }
+        }
+        if (currentUser.imageUrl) {
+            return (
+                <View
+                    style={{
+                        alignSelf: 'center'
+                    }}
+                >
+                    <ImageScalable
+                        style={{
+                            zIndex: 99
+                        }}
+                        width={SIZES.WIDTH_BASE * 0.9}
+                        source={{ uri: currentUser.imageUrl }}
+                    />
+                </View>
+            );
+        }
+        return (
+            <View
+                style={{
+                    alignItems: 'center',
+                    marginVertical: 15
+                }}
+            >
+                <CustomText text="Chưa có ảnh" />
+            </View>
+        );
     };
 
     try {
@@ -329,21 +452,24 @@ export default function PartnerData() {
                     >
                         {newUser && (
                             <>
+                                {renderButtonUploadImage('Ảnh hiển thị trang chủ')}
+                                {renderImage()}
                                 {renderGetBookingType()}
 
-                                {isOffline && (
+                                {newUser.isDatingOffline && (
                                     <>
                                         {renderEarningExpected()}
                                         {renderInputMinimumDuration()}
                                     </>
                                 )}
 
-                                {isOnline && (
+                                {newUser.isDatingOnline && (
                                     <>
                                         {renderEarningExpectedOnline()}
                                         {renderInputMinimumDurationOnline()}
                                     </>
                                 )}
+
                                 {renderButtonPanel()}
                             </>
                         )}
