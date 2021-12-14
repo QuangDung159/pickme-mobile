@@ -16,7 +16,7 @@ export default class NoteText extends PureComponent {
             title, content, width, iconComponent,
             backgroundColor,
             contentStyle,
-            iconComponentRight
+            iconComponentRight, titleStyle
         } = this.props;
 
         return (
@@ -32,7 +32,8 @@ export default class NoteText extends PureComponent {
             >
                 <View
                     style={{
-                        margin: 10,
+                        marginVertical: 5,
+                        marginHorizontal: 10
                     }}
                 >
                     <View
@@ -43,11 +44,13 @@ export default class NoteText extends PureComponent {
                         {iconComponent}
                         {title && (
                             <Text
-                                style={{
-                                    fontFamily: TEXT_BOLD,
-                                    color: COLORS.DEFAULT,
-                                    fontSize: SIZES.FONT_H3
-                                }}
+                                style={[
+                                    {
+                                        fontFamily: TEXT_BOLD,
+                                        color: COLORS.DEFAULT,
+                                        fontSize: SIZES.FONT_H3
+                                    }, titleStyle
+                                ]}
                             >
                                 {iconComponent && ' '}
                                 {title}
