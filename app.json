@@ -27,6 +27,7 @@
       "package": "com.dragonc92team.mobile2seeyou",
       "googleServicesFile": "./google-services.json",
       "useNextNotificationsApi": true,
+      "softwareKeyboardLayoutMode": "pan",
       "versionCode": 3
     },
     "web": {
