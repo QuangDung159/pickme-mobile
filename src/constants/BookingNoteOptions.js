@@ -29,22 +29,22 @@ export default [
         key: 'other',
         isOnline: false
     },
-    // {
-    //     value: 'Gọi thoại',
-    //     selected: false,
-    //     key: 'goi_thoai',
-    //     isOnline: true
-    // },
-    // {
-    //     value: 'Gọi video',
-    //     selected: false,
-    //     key: 'goi_video',
-    //     isOnline: true
-    // },
-    // {
-    //     value: 'Chơi game',
-    //     selected: false,
-    //     key: 'choi_game',
-    //     isOnline: true
-    // },
+    {
+        value: 'Gọi thoại',
+        selected: false,
+        key: 'goi_thoai',
+        isOnline: true
+    },
+    {
+        value: 'Gọi video',
+        selected: false,
+        key: 'goi_video',
+        isOnline: true
+    },
+    {
+        value: 'Chơi game',
+        selected: false,
+        key: 'choi_game',
+        isOnline: true
+    },
 ];
