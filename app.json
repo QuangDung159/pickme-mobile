@@ -1,9 +1,9 @@
 {
   "expo": {
     "name": "2SeeYou",
-    "scheme": "mobile-2seeyou",
-    "slug": "mobile-2seeyou",
-    "version": "0.0.3",
+    "scheme": "mobile2seeyou",
+    "slug": "customer-pick-me-mobile",
+    "version": "0.9.4",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "splash": {
@@ -24,11 +24,11 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/icon.png"
       },
-      "package": "com.dragonc92team.mobile2seeyou",
+      "package": "com.dragonc92team.pickmecustomer",
       "googleServicesFile": "./google-services.json",
       "useNextNotificationsApi": true,
       "softwareKeyboardLayoutMode": "pan",
-      "versionCode": 3
+      "versionCode": 94
     },
     "web": {
       "favicon": "./assets/images/icon.png"
