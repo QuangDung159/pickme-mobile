@@ -66,20 +66,20 @@ export default {
             question: 'Tôi muốn gia tăng thu nhập?'
         },
         {
-            answer: 'Truy cập trang cá nhân => chọn tab ví tiền => nạp tiền.',
-            question: 'Làm sao tôi có thể nạp tiền?'
+            answer: 'Truy cập trang cá nhân => chọn tab Ví => Nạp UCoin',
+            question: 'Làm sao tôi có thể nạp UCoin?'
         },
         {
-            answer: 'Truy cập trang cá nhân => chọn tab ví tiền => rút tiền.',
-            question: 'Làm sao tôi có thể rút tiền?'
+            answer: 'Truy cập trang cá nhân => chọn tab Ví => Rút UCoin',
+            question: 'Làm sao tôi có thể rút UCoin?'
         },
         {
             answer: 'Ứng dụng là hoàn toàn miễn phí cho mọi người. Nếu như bạn sử dụng dịch vụ thì sẽ thanh toán phí tương ứng.',
             question: 'Tôi có mất khoản chi phí nào khi tham gia ứng dụng này hay không?'
         },
         {
-            answer: 'Có nếu như buổi hẹn bạn đã thanh toán trước đó sẽ được hoàn tiền vào ví.',
-            question: 'Nếu như buổi hẹn bị hủy tôi có được hoàn tiền lại không?'
+            answer: 'Có nếu như buổi hẹn bạn đã thanh toán trước đó sẽ được hoàn UCoin vào ví.',
+            question: 'Nếu như buổi hẹn bị hủy tôi có được hoàn UCoin lại không?'
         },
         {
             answer: 'Cảm ơn bạn chúng tôi rất mong nhận được sự đóng góp phản hồi của bạn qua email: hotro.dichvuthuebangai@gmail.com',

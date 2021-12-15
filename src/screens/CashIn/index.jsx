@@ -1,6 +1,6 @@
 import {
     CustomButton,
-    CustomModal, IconCustom, NoteText, TouchableText
+    CustomModal, IconCustom, NoteText
 } from '@components/uiComponents';
 import {
     IconFamily, Images, ScreenName, Theme
@@ -8,7 +8,7 @@ import {
 import { ToastHelpers } from '@helpers/index';
 import * as Clipboard from 'expo-clipboard';
 import React, { useEffect, useState } from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import { ScrollView, TouchableOpacity, View } from 'react-native';
 import ImageScalable from 'react-native-scalable-image';
 import { useSelector } from 'react-redux';
 
@@ -71,11 +71,12 @@ export default function CashIn(props) {
 
     try {
         return (
-            <View
+            <ScrollView
                 style={{
                     width: SIZES.WIDTH_BASE * 0.9,
                     alignSelf: 'center',
                 }}
+                showsVerticalScrollIndicator={false}
             >
                 <View
                     style={{
@@ -85,7 +86,7 @@ export default function CashIn(props) {
                 >
                     <View
                         style={{
-                            marginTop: 10
+                            marginTop: 2
                         }}
                     >
                         <TouchableOpacity
@@ -99,7 +100,6 @@ export default function CashIn(props) {
                                     fontSize: SIZES.FONT_H1,
                                     color: COLORS.ACTIVE,
                                     fontFamily: TEXT_BOLD,
-                                    paddingVertical: 15,
                                 }}
                                 iconComponentRight={(
                                     <IconCustom
@@ -126,8 +126,7 @@ export default function CashIn(props) {
                             title="Ngân hàng: "
                             content="TMCP Tiên Phong - TPBank"
                             contentStyle={{
-                                fontSize: SIZES.FONT_H2,
-                                paddingVertical: 15,
+                                fontSize: SIZES.FONT_H3,
                                 color: COLORS.ACTIVE,
                                 textAlign: 'center'
                             }}
@@ -144,11 +143,10 @@ export default function CashIn(props) {
                         >
                             <NoteText
                                 width={SIZES.WIDTH_BASE * 0.9}
-                                title="Người thụ hưởng/chủ tài khoản: "
+                                title="Người thụ hưởng: "
                                 content="Lư Quảng Dũng"
                                 contentStyle={{
-                                    fontSize: SIZES.FONT_H2,
-                                    paddingVertical: 15,
+                                    fontSize: SIZES.FONT_H3,
                                     color: COLORS.ACTIVE,
                                 }}
                                 iconComponentRight={(
@@ -164,7 +162,6 @@ export default function CashIn(props) {
                                 )}
                             />
                         </TouchableOpacity>
-
                     </View>
 
                     <View
@@ -178,10 +175,9 @@ export default function CashIn(props) {
                             <NoteText
                                 width={SIZES.WIDTH_BASE * 0.9}
                                 title="Nội dung chuyển khoản: "
-                                content="[Tên đăng nhập] - 2SeeYou"
+                                content={moneyTransferContent}
                                 contentStyle={{
-                                    fontSize: SIZES.FONT_H2,
-                                    paddingVertical: 15,
+                                    fontSize: SIZES.FONT_H3,
                                     color: COLORS.ACTIVE,
                                 }}
                                 iconComponentRight={(
@@ -198,7 +194,22 @@ export default function CashIn(props) {
                             />
                         </TouchableOpacity>
                     </View>
-                    <TouchableText
+                    <View
+                        style={{
+                            marginTop: 10,
+                        }}
+                    >
+                        <NoteText
+                            width={SIZES.WIDTH_BASE * 0.9}
+                            title="Giá trị quy đổi: "
+                            content="1 VND = 1 UCoin"
+                            contentStyle={{
+                                fontSize: SIZES.FONT_H3,
+                                color: COLORS.ACTIVE,
+                            }}
+                        />
+                    </View>
+                    {/* <TouchableText
                         style={{
                             color: COLORS.ACTIVE,
                             fontSize: SIZES.FONT_H3,
@@ -207,10 +218,18 @@ export default function CashIn(props) {
                         }}
                         text="Ví dụ"
                         onPress={() => setModalVisible(true)}
+                    /> */}
+                    <ImageScalable
+                        source={Images.BankTransfer}
+                        style={{
+                            marginTop: 5,
+                            alignSelf: 'center'
+                        }}
+                        width={SIZES.WIDTH_BASE * 0.6}
                     />
                 </View>
                 {renderModalGuide()}
-            </View>
+            </ScrollView>
         );
     } catch (exception) {
         console.log('exception :>> ', exception);
