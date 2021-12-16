@@ -24,7 +24,7 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/icon.png"
       },
-      "package": "com.dragonc92team.pickmecustomer",
+      "package": "com.dragonc92team.mobile2seeyou",
       "googleServicesFile": "./google-services.json",
       "useNextNotificationsApi": true,
       "softwareKeyboardLayoutMode": "pan",
