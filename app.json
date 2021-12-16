@@ -3,7 +3,7 @@
     "name": "2SeeYou",
     "scheme": "mobile2seeyou",
     "slug": "customer-pick-me-mobile",
-    "version": "0.9.4",
+    "version": "0.9.6",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "splash": {
@@ -28,7 +28,7 @@
       "googleServicesFile": "./google-services.json",
       "useNextNotificationsApi": true,
       "softwareKeyboardLayoutMode": "pan",
-      "versionCode": 94
+      "versionCode": 96
     },
     "web": {
       "favicon": "./assets/images/icon.png"
