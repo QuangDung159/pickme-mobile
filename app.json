@@ -1,9 +1,9 @@
 {
   "expo": {
     "name": "2SeeYou",
-    "scheme": "mobile2seeyou",
-    "slug": "customer-pick-me-mobile",
-    "version": "0.9.6",
+    "scheme": "mobile-2seeyou",
+    "slug": "mobile-2seeyou",
+    "version": "0.0.5",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "splash": {
@@ -28,7 +28,7 @@
       "googleServicesFile": "./google-services.json",
       "useNextNotificationsApi": true,
       "softwareKeyboardLayoutMode": "pan",
-      "versionCode": 96
+      "versionCode": 5
     },
     "web": {
       "favicon": "./assets/images/icon.png"

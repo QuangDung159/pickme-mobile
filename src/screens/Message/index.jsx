@@ -333,6 +333,7 @@ export default function Message({ navigation, route }) {
                     borderWidth: 0,
                     textAlign: 'left'
                 }}
+                autoCapitalize
             />
 
             <TouchableOpacity
