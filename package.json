@@ -83,7 +83,8 @@
     "ota-prd": "expo publish --release-channel prd",
     "publish-play-store": "sh publish-android-latest.sh",
     "play-store": "yarn publish-play-store",
-    "android-upload-api-key": "sh android-upload-api-key.sh"
+    "android-upload-api-key": "sh android-upload-api-key.sh",
+    "compress-images": "sh webp.sh"
   },
   "private": true
 }
