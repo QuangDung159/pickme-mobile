@@ -37,7 +37,7 @@ const rxSubmitLoginAsync = async (body, domain = null) => {
 };
 
 const submitLoginAsync = async (body) => {
-    let result = await rxSubmitLoginAsync();
+    let result = await rxSubmitLoginAsync(body);
 
     const handledResult = await Middlewares.handleResponseStatusMiddleware(result);
     if (handledResult) {
