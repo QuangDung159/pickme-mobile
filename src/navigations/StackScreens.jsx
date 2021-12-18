@@ -476,7 +476,6 @@ export const PolicyScreen = () => (
     />
 );
 
-
 export const GuideScreen = () => (
     <Stack.Screen
         name={ScreenName.GUIDE}
@@ -494,4 +493,3 @@ export const GuideScreen = () => (
         }}
     />
 );
-
