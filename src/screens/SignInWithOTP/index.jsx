@@ -69,7 +69,7 @@ export default function SignInWithOTP({ navigation }) {
         };
 
         setIsShowSpinner(true);
-        const result = await UserServices.loginAsync(body);
+        const result = await UserServices.submitLoginAsync(body);
         const { data } = result;
 
         if (data) {
