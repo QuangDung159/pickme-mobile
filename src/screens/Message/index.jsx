@@ -64,7 +64,7 @@ export default function Message({ navigation, route }) {
                     1,
                     20,
                     (data) => {
-                        setChattingWith(toUserId);
+                        dispatch(setChattingWith(toUserId));
                         setListMessageFromAPI(data.data.data.messages);
                         calculateNumberOfNumberMessageUnread(data.data.data.messages);
                     }
@@ -88,7 +88,7 @@ export default function Message({ navigation, route }) {
                     1,
                     20,
                     (data) => {
-                        setChattingWith(toUserId);
+                        dispatch(setChattingWith(toUserId));
                         setListMessageFromAPI(data.data.data.messages);
                     }
                 );
