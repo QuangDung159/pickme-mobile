@@ -1,4 +1,3 @@
-/* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
 import { IconCustom, TopTabBar } from '@components/uiComponents';
 import {
     IconFamily, Rx, ScreenName, Theme

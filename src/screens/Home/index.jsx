@@ -1,5 +1,4 @@
 /* eslint no-underscore-dangle: ["error", { "allow": ["_isMounted", "_id"] }] */
-/* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
 import { CenterLoader } from '@components/uiComponents';
 import {
     GraphQueryString, Images, ScreenName, Theme

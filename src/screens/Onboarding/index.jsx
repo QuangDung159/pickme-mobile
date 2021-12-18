@@ -6,7 +6,7 @@ import App from '@constants/App';
 import {
     Images, ScreenName, Theme
 } from '@constants/index';
-import { ENV } from '@env';
+import { ENV } from '@constants/Config';
 import {
     setCurrentUser, setIsSignInOtherDeviceStore, setListPartnerHomeRedux, setNavigation
 } from '@redux/Actions';

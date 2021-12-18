@@ -1,6 +1,5 @@
-/* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
 import { Rx, Theme } from '@constants/index';
-import { API_URL } from '@env';
+import { API_URL } from '@constants/Config';
 import ToastHelpers from '@helpers/ToastHelpers';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';

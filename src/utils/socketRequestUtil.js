@@ -1,6 +1,5 @@
-/* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
 import Theme from '@constants/Theme';
-import { SOCKET_URL } from '@env';
+import { SOCKET_URL } from '@constants/Config';
 import axios from 'axios';
 
 const { COLORS } = Theme;

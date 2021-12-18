@@ -1,4 +1,3 @@
-/* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
 import { Rx } from '@constants/index';
 import { CommonHelpers } from '@helpers/index';
 import Middlewares from '@middlewares/index';

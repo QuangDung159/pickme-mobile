@@ -1,5 +1,4 @@
 /* eslint-disable max-len */
-/* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
 import { Albums, AvatarPanel } from '@components/businessComponents';
 import { IconCustom, Line } from '@components/uiComponents';
 import {

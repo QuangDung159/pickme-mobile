@@ -1,4 +1,3 @@
-/* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
 /* eslint-disable no-shadow */
 import {
     ApolloClient, ApolloProvider, HttpLink, InMemoryCache, split
@@ -7,7 +6,7 @@ import { WebSocketLink } from '@apollo/client/link/ws';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { Listener } from '@components/businessComponents';
 import ScreenName from '@constants/ScreenName';
-import { SOCKET_URL } from '@env';
+import { SOCKET_URL } from '@constants/Config';
 import Stacks from '@navigations/Stacks';
 import { NavigationContainer } from '@react-navigation/native';
 import {
