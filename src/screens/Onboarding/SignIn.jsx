@@ -26,6 +26,8 @@ const {
 export default function SignIn({
     navigation, setIsShowSpinner, isRegisterPartner, route
 }) {
+    // const [username, setUsername] = useState('dunglq');
+    // const [password, setPassword] = useState('0000');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     // const [deviceIdToSend, setDeviceIdToSend] = useState('');
@@ -106,7 +108,7 @@ export default function SignIn({
             };
 
             setIsShowSpinner(true);
-            const result = await UserServices.loginAsync(body);
+            const result = await UserServices.submitLoginAsync(body);
 
             const {
                 data, status

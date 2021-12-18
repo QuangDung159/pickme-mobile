@@ -109,7 +109,9 @@ export default async (
 
         // check token expired
         if (!response.headers?.tokenexpired) {
-            ToastHelpers.renderToast(data.message || null);
+            if (response.status !== 503) {
+                ToastHelpers.renderToast(data.message || null);
+            }
         }
 
         return response;

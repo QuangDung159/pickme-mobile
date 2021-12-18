@@ -79,7 +79,7 @@ export default function OtpForm({
             deviceId
         };
 
-        const result = await UserServices.loginAsync(body);
+        const result = await UserServices.submitLoginAsync(body);
         const {
             data
         } = result;

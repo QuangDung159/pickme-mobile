@@ -110,7 +110,7 @@ export default function UsernamePasswordForm({ navigation }) {
     //         deviceId
     //     };
 
-    //     const result = await UserServices.loginAsync(body);
+    //     const result = await UserServices.submitLoginAsync(body);
     //     const {
     //         data
     //     } = result;

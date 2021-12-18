@@ -5,25 +5,56 @@ import Middlewares from '@middlewares/index';
 import { RxUtil } from '@utils/index';
 import * as SecureStore from 'expo-secure-store';
 
-const loginAsync = async (body) => {
+// const loginAsync = async (body) => {
+//     const result = await RxUtil(
+//         Rx.AUTHENTICATION.LOGIN,
+//         'POST',
+//         body
+//     );
+
+//     const { data } = result;
+
+//     if (data.data) {
+//         await SecureStore.setItemAsync('api_token', result.data.data.token);
+//         await SecureStore.setItemAsync('username', body.username);
+//         await SecureStore.setItemAsync('password', body.password);
+//     } else {
+//         await SecureStore.deleteItemAsync('api_token');
+//         await SecureStore.deleteItemAsync('username');
+//         await SecureStore.deleteItemAsync('password');
+//     }
+
+//     return CommonHelpers.handleResByStatus(result);
+// };
+
+const rxSubmitLoginAsync = async (body, domain = null) => {
     const result = await RxUtil(
         Rx.AUTHENTICATION.LOGIN,
         'POST',
-        body
+        body, domain
     );
+    return result;
+};
 
-    const { data } = result;
+const submitLoginAsync = async (body) => {
+    let result = await rxSubmitLoginAsync();
 
-    if (data.data) {
-        await SecureStore.setItemAsync('api_token', result.data.data.token);
-        await SecureStore.setItemAsync('username', body.username);
-        await SecureStore.setItemAsync('password', body.password);
-    } else {
-        await SecureStore.deleteItemAsync('api_token');
-        await SecureStore.deleteItemAsync('username');
-        await SecureStore.deleteItemAsync('password');
+    const handledResult = await Middlewares.handleResponseStatusMiddleware(result);
+    if (handledResult) {
+        result = await rxSubmitLoginAsync(body, handledResult.backupDomain);
+
+        const { data } = result;
+
+        if (data.data) {
+            await SecureStore.setItemAsync('api_token', result.data.data.token);
+            await SecureStore.setItemAsync('username', body.username);
+            await SecureStore.setItemAsync('password', body.password);
+        } else {
+            await SecureStore.deleteItemAsync('api_token');
+            await SecureStore.deleteItemAsync('username');
+            await SecureStore.deleteItemAsync('password');
+        }
     }
-
     return CommonHelpers.handleResByStatus(result);
 };
 
@@ -366,7 +397,7 @@ const mappingCurrentUserInfo = async (data) => {
 };
 
 export default {
-    loginAsync,
+    // loginAsync,
     fetchCurrentUserInfoAsync,
     fetchVerificationAsync,
     submitVerificationAsync,
@@ -384,5 +415,6 @@ export default {
     addUserPostImageAsync,
     addVerifyDocAsync,
     submitUpdatePartnerInfoAsync,
-    fetchOtpForgotPasswordAsync
+    fetchOtpForgotPasswordAsync,
+    submitLoginAsync
 };
