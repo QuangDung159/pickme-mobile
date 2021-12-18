@@ -12,7 +12,7 @@ import React from 'react';
 import {
     Platform, StyleSheet, TouchableOpacity, View
 } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const iPhoneX = Platform.OS === 'ios';
 const {
@@ -44,6 +44,8 @@ export default function Header({
         !noShadow ? styles.shadow : null,
         transparent ? { backgroundColor: 'rgba(0,0,0,0)' } : null
     ];
+
+    const chattingWith = useSelector((state) => state.messageReducer.chattingWith);
 
     const dispatch = useDispatch();
 
@@ -184,6 +186,11 @@ export default function Header({
         <View style={headerStyles}>
             <TouchableOpacity
                 onLongPress={() => clearAllCache()}
+                onPress={() => {
+                    if (chattingWith) {
+                        navigation.navigate(ScreenName.PROFILE, { userId: chattingWith });
+                    }
+                }}
             >
                 <NavBar
                     back={false}
@@ -192,7 +199,7 @@ export default function Header({
                     transparent={transparent}
                     rightStyle={{ alignItems: 'center' }}
                     leftStyle={{
-                        flex: 0.2,
+                        flex: 0.3,
                     }}
                     titleStyle={[
                         styles.title,
@@ -225,14 +232,14 @@ const styles = StyleSheet.create({
         fontFamily: TEXT_BOLD,
         marginLeft: -70,
         color: COLORS.DEFAULT,
-        marginTop: iPhoneX ? 5 : 20
+        marginTop: iPhoneX ? 5 : 26
     },
     navbar: {
         paddingTop: iPhoneX ? SIZES.HEIGHT_BASE * 0.05 : null,
         zIndex: 5
     },
     navbarHeight: {
-        height: 80,
+        height: 70,
     },
     shadow: {
         backgroundColor: COLORS.BASE,

@@ -69,7 +69,7 @@ export default function Profile({ route, navigation }) {
                         setIsShowSpinner={(showSpinner) => setIsShowSpinner(showSpinner)}
                     />
                 )}
-                {currentUser.id !== route.params.userId && (
+                {currentUser.id !== route.params.userId && partnerInfo.isPartnerVerified && (
                     <View
                         style={{
                             flexDirection: 'row',

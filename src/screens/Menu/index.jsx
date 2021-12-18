@@ -13,8 +13,12 @@ import { resetStoreSignOut } from '@redux/Actions';
 import Constants from 'expo-constants';
 import * as SecureStore from 'expo-secure-store';
 import React from 'react';
-import { FlatList, TouchableOpacity, View } from 'react-native';
+import {
+    FlatList, Platform, TouchableOpacity, View
+} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import * as Linking from 'expo-linking';
+import OutsideApp from '@constants/OutsideApp';
 
 const {
     SIZES, FONT: {
@@ -56,23 +60,23 @@ export default function Menu({ navigation }) {
             icon: {
                 name: 'book',
                 family: IconFamily.FONT_AWESOME,
-                size: 20,
+                size: 22,
             },
             onPress: () => {
                 navigation.navigate(ScreenName.GUIDE);
             },
         },
-        {
-            title: ScreenTitle.LEADER_BOARD,
-            icon: {
-                name: 'award',
-                family: IconFamily.FONT_AWESOME_5,
-                size: 22,
-            },
-            onPress: () => {
-                navigation.navigate(ScreenName.LEADER_BOARD);
-            },
-        },
+        // {
+        //     title: ScreenTitle.LEADER_BOARD,
+        //     icon: {
+        //         name: 'award',
+        //         family: IconFamily.FONT_AWESOME_5,
+        //         size: 22,
+        //     },
+        //     onPress: () => {
+        //         navigation.navigate(ScreenName.LEADER_BOARD);
+        //     },
+        // },
         {
             title: currentUser.isPartnerVerified ? 'Thông tin Host' : 'Đăng kí Host',
             icon: {
@@ -123,6 +127,41 @@ export default function Menu({ navigation }) {
         //         navigation.navigate(ScreenName.SETTINGS);
         //     },
         // },
+        {
+            title: 'Fanpage',
+            icon: {
+                name: 'facebook-square',
+                family: IconFamily.FONT_AWESOME,
+                size: 24,
+            },
+            onPress: () => {
+                Linking.openURL(`${OutsideApp.FACEBOOK.deepLink}`);
+            },
+        },
+        {
+            title: 'Đánh giá ứng dụng',
+            // icon: {
+            //     name: 'facebook-square',
+            //     family: IconFamily.FONT_AWESOME,
+            //     size: 24,
+            // },
+            icon: Platform.OS === 'ios' ? {
+                name: 'logo-apple-appstore',
+                family: IconFamily.IONICONS,
+                size: 24,
+            } : {
+                name: 'google-play',
+                family: IconFamily.ENTYPO,
+                size: 24,
+            },
+            onPress: () => {
+                if (Platform.OS === 'ios') {
+                    //
+                } else {
+                    Linking.openURL(OutsideApp.GOOGLE_PLAY_STORE.deepLink);
+                }
+            },
+        },
         {
             title: 'Đăng xuất',
             onPress: () => onSignOut(),
