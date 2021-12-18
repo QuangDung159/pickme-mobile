@@ -1,4 +1,3 @@
-/* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
 import { Images, ScreenName, Theme } from '@constants/index';
 import { setPersonTabActiveIndex } from '@redux/Actions';
 import { NotificationServices } from '@services/index';

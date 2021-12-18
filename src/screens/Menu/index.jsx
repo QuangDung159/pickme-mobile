@@ -7,7 +7,7 @@ import IconFamily from '@constants/IconFamily';
 import ScreenName from '@constants/ScreenName';
 import ScreenTitle from '@constants/ScreenTitle';
 import Theme from '@constants/Theme';
-import { ENV } from '@env';
+import { ENV } from '@constants/Config';
 import ToastHelpers from '@helpers/ToastHelpers';
 import { resetStoreSignOut } from '@redux/Actions';
 import Constants from 'expo-constants';

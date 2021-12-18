@@ -1,4 +1,3 @@
-/* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
 import { IconCustom } from '@components/uiComponents';
 import {
     IconFamily, Images, PickMeInfo, ScreenName, Theme

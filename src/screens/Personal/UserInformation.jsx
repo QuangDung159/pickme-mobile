@@ -1,4 +1,3 @@
-/* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
 import UserDetail from '@components/businessComponents/UserDetail';
 import {
     CenterLoader

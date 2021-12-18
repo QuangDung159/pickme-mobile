@@ -1,5 +1,4 @@
-/* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
-import { IMAGE_STORAGE_URL, IMGBB_API_KEY } from '@env';
+import { IMAGE_STORAGE_URL, IMGBB_API_KEY } from '@constants/Config';
 import { RxUtil } from '@utils/index';
 import * as ImagePicker from 'expo-image-picker';
 import FormData from 'form-data';

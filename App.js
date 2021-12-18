@@ -1,5 +1,4 @@
 /* eslint-disable global-require */
-/* eslint import/no-unresolved: [2, { ignore: ['@env'] }] */
 import { ExpoNotification } from '@components/businessComponents';
 import { Images, Theme } from '@constants/index';
 import Main from '@containers/Main';
