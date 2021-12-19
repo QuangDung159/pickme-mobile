@@ -9,6 +9,7 @@ const {
     FONT: {
         TEXT_BOLD
     },
+    COLORS,
     SIZES,
 } = Theme;
 
@@ -86,14 +87,29 @@ export default function VerificationStatusPanel() {
     };
 
     return (
-        <View
-            style={{
-                marginVertical: 10,
-                width: SIZES.WIDTH_BASE * 0.8,
-                alignSelf: 'center'
-            }}
-        >
-            {renderStatusInfo()}
-        </View>
+        <>
+            {currentUser?.verifyStatus !== VerificationStatus.ACCEPTED && (
+                <View
+                    style={{
+                        width: SIZES.WIDTH_BASE * 0.9,
+                        alignSelf: 'center',
+                        borderWidth: 1,
+                        borderColor: COLORS.ACTIVE,
+                        borderRadius: 20
+                    }}
+                >
+                    <View
+                        style={{
+                            marginVertical: 10,
+                            width: SIZES.WIDTH_BASE * 0.8,
+                            alignSelf: 'center'
+                        }}
+                    >
+                        {renderStatusInfo()}
+                    </View>
+                </View>
+            )}
+        </>
+
     );
 }

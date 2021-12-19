@@ -420,17 +420,7 @@ export default function UploadDocSection({ setIsShowSpinner, navigation, route }
                         )}
                     </>
                 ) : (
-                    <View
-                        style={{
-                            width: SIZES.WIDTH_BASE * 0.9,
-                            alignSelf: 'center',
-                            borderWidth: 1,
-                            borderColor: COLORS.ACTIVE,
-                            borderRadius: 20
-                        }}
-                    >
-                        <VerificationStatusPanel />
-                    </View>
+                    <VerificationStatusPanel />
                 )}
 
                 <View

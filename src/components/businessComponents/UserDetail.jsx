@@ -459,18 +459,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                                 navigation.navigate(ScreenName.VERIFICATION);
                             }}
                         >
-                            <View
-                                style={{
-                                    marginVertical: 10,
-                                    width: SIZES.WIDTH_BASE * 0.9,
-                                    alignSelf: 'center',
-                                    borderWidth: 1,
-                                    borderColor: COLORS.ACTIVE,
-                                    borderRadius: 20
-                                }}
-                            >
-                                <VerificationStatusPanel />
-                            </View>
+                            <VerificationStatusPanel />
                         </TouchableOpacity>
                     )}
                 </>
