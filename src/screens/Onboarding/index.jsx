@@ -295,21 +295,7 @@ export default function Onboarding({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-    padded: {
-        zIndex: 3,
-        position: 'absolute',
-        bottom: SIZES.HEIGHT_BASE * 0.17,
-        alignSelf: 'center',
-        width: SIZES.WIDTH_BASE,
-        backgroundColor: COLORS.BASE
-    },
     button: {
         marginTop: 10
     },
-    text: {
-        fontFamily: TEXT_REGULAR,
-        fontSize: SIZES.FONT_H4,
-        color: COLORS.ACTIVE,
-        marginTop: 10
-    }
 });
