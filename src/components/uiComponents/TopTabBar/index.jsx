@@ -30,9 +30,9 @@ export default function TopTabBar({
                 [
                     {
                         backgroundColor: COLORS.BASE,
-                        height: 50,
+                        height: 40,
                         padding: 0,
-                        justifyContent: 'center'
+                        justifyContent: 'center',
                     },
                     tabButtonStyle
                 ]
@@ -50,6 +50,7 @@ export default function TopTabBar({
                             fontFamily: TEXT_BOLD,
                             fontSize: SIZES.FONT_H4,
                             textAlign: 'center',
+                            marginBottom: 10
                         },
                         labelStyle
                     ]
