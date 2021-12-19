@@ -42,6 +42,7 @@ export default function Home({ navigation }) {
     const chattingWith = useSelector((state) => state.messageReducer.chattingWith);
     const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
     const listPartnerHomeRedux = useSelector((state) => state.bookingReducer.listPartnerHomeRedux);
+    const [pageIndex, setPageIndex] = useState(1);
 
     const dispatch = useDispatch();
 
@@ -53,7 +54,7 @@ export default function Home({ navigation }) {
             fetchVerification();
             if (!listPartnerHomeRedux || listPartnerHomeRedux.length === 0) {
                 setIsShowSpinner(true);
-                getListPartner();
+                getListPartner(pageIndex);
             }
         }, []
     );
@@ -192,12 +193,13 @@ export default function Home({ navigation }) {
         dispatch(setNumberMessageUnread(count));
     };
 
-    const getListPartner = async () => {
-        const result = await BookingServices.fetchListPartnerAsync();
+    const getListPartner = async (newPageIndex) => {
+        const result = await BookingServices.fetchListPartnerAsync({ pageIndex: newPageIndex });
         const { data } = result;
 
         if (data) {
             dispatch(setListPartnerHomeRedux(data.data));
+            setPageIndex(newPageIndex);
         }
         setRefreshing(false);
         setIsShowSpinner(false);
@@ -221,7 +223,7 @@ export default function Home({ navigation }) {
 
     const onRefresh = () => {
         setRefreshing(true);
-        getListPartner();
+        getListPartner(pageIndex);
     };
 
     const renderArticles = () => (
@@ -241,6 +243,10 @@ export default function Home({ navigation }) {
                     {renderImage(item)}
                 </>
             )}
+            onEndReached={() => {
+                const newPageIndex = pageIndex + 1;
+                getListPartner(newPageIndex);
+            }}
         />
     );
 

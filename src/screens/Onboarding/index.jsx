@@ -66,7 +66,7 @@ export default function Onboarding({ navigation }) {
     );
 
     const getListPartner = async () => {
-        const result = await BookingServices.fetchListPartnerAsync();
+        const result = await BookingServices.fetchListPartnerAsync({ pageIndex: 1 });
         const { data } = result;
 
         if (data) {

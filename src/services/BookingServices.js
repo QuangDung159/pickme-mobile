@@ -223,20 +223,21 @@ const submitCancelBookingAsync = async (bookingId, body) => {
     return CommonHelpers.handleResByStatus(result);
 };
 
-const rxFetchListPartnerAsync = async (domain = null) => {
+const rxFetchListPartnerAsync = async (params, domain = null) => {
+    const { pageIndex, pageSize } = params;
     const result = await RxUtil(
-        `${Rx.PARTNER.GET_LIST_PARTNER}?pageIndex=1&pageSize=50`,
+        `${Rx.PARTNER.GET_LIST_PARTNER}?pageIndex=${pageIndex || 1}&pageSize=${pageSize || 50}`,
         'GET', null, domain
     );
     return result;
 };
 
-const fetchListPartnerAsync = async () => {
-    let result = await rxFetchListPartnerAsync();
+const fetchListPartnerAsync = async (params) => {
+    let result = await rxFetchListPartnerAsync(params);
 
     const handledResult = await Middlewares.handleResponseStatusMiddleware(result);
     if (handledResult) {
-        result = await rxFetchListPartnerAsync(handledResult.backupDomain);
+        result = await rxFetchListPartnerAsync(params, handledResult.backupDomain);
     }
 
     return CommonHelpers.handleResByStatus(result);
