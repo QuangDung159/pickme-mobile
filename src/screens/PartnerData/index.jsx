@@ -58,7 +58,7 @@ export default function PartnerData() {
             }}
             onChangeText={(input) => onChangeEarningExpected(input)}
             value={amountDisplay}
-            label="Thu nhập mong muốn (UCoin/phút):*"
+            label="Thu nhập mong muốn (Xu/phút):*"
             onEndEditing={
                 (e) => {
                     setAmountDisplay(CommonHelpers.formatCurrency(e.nativeEvent.text));
@@ -93,7 +93,7 @@ export default function PartnerData() {
                 setAmountDisplayOnline(input);
             }}
             value={amountDisplayOnline}
-            label="Thu nhập mong muốn (online) (UCoin/phút):*"
+            label="Thu nhập mong muốn (online) (Xu/phút):*"
             onEndEditing={
                 (e) => {
                     setAmountDisplayOnline(CommonHelpers.formatCurrency(e.nativeEvent.text));

@@ -216,6 +216,7 @@ export default function CreateBooking({ route, navigation }) {
                             booking={booking}
                             setBooking={setBooking}
                             partner={partner}
+                            navigation={navigation}
                         />
 
                         <Total

@@ -471,7 +471,7 @@ export default function CardBooking({ booking, navigation }) {
                             fontSize: SIZES.FONT_H1,
                             color: COLORS.ACTIVE
                         }}
-                        text={`UCoin: ${CommonHelpers.formatCurrency(totalAmount)}`}
+                        text={`Xu: ${CommonHelpers.formatCurrency(totalAmount)}`}
                     />
                     <CustomButton
                         onPress={() => {

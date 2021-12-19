@@ -202,7 +202,7 @@ export default function CashIn(props) {
                         <NoteText
                             width={SIZES.WIDTH_BASE * 0.9}
                             title="Giá trị quy đổi: "
-                            content="1 VND = 1 UCoin"
+                            content="1 VND = 1 Xu"
                             contentStyle={{
                                 fontSize: SIZES.FONT_H3,
                                 color: COLORS.ACTIVE,

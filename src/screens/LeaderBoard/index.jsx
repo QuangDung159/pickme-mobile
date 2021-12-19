@@ -14,7 +14,7 @@ const {
 
 const tabArr = [
     { key: 'booking', title: 'Đơn hẹn' },
-    { key: 'earningExpected', title: 'UCoin' },
+    { key: 'earningExpected', title: 'Xu' },
 ];
 
 export default function LeaderBoard({ navigation }) {

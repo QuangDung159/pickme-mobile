@@ -1,14 +1,16 @@
+/* eslint-disable max-len */
 import { CustomCalendar } from '@components/businessComponents';
 import {
     CustomButton, CustomInput, CustomText, OptionItem
 } from '@components/uiComponents';
 import {
-    BookingNoteOptions, BookingTypes, OutsideApp, Theme
+    BookingNoteOptions, BookingTypes, OutsideApp, Theme, ScreenName
 } from '@constants/index';
 import ToastHelpers from '@helpers/ToastHelpers';
 import moment from 'moment';
 import React, { useState } from 'react';
 import {
+    Alert,
     Platform, StyleSheet, Text, View
 } from 'react-native';
 import { useSelector } from 'react-redux';
@@ -48,7 +50,8 @@ export default function CreateBookingForm({
     // setModalPartnerPackageVisible,
     booking,
     setBooking,
-    partner
+    partner,
+    navigation
 }) {
     const [listNoteOptions, setListNoteOptions] = useState(BookingNoteOptions);
     const [isShowNoteInput, setIsShowNoteInput] = useState(false);
@@ -237,6 +240,58 @@ export default function CreateBookingForm({
     };
 
     const handlePressBookingType = (typeObj) => {
+        if (typeObj.type === 'online') {
+            if (typeObj.key === OutsideApp.SKYPE.key) {
+                if (!currentUser.skype) {
+                    Alert.alert('', 'Để thuận tiện cho việc thực hiện cuộc hẹn, bạn có thể cung cấp thông tin SkypeID trong phần cập nhật thông tin cá nhân', [
+                        {
+                            text: 'Cập nhật thông tin',
+                            style: 'cancel',
+                            onPress: () => navigation.navigate(
+                                ScreenName.UPDATE_INFO_ACCOUNT
+                            )
+                        },
+                        {
+                            text: 'Tiếp tục'
+                        },
+                    ]);
+                }
+            }
+
+            if (typeObj.key === OutsideApp.ZALO.key) {
+                if (!currentUser.zalo) {
+                    Alert.alert('', 'Để thuận tiện cho việc thực hiện cuộc hẹn, bạn có thể cung cấp thông tin Zalo trong phần cập nhật thông tin cá nhân', [
+                        {
+                            text: 'Cập nhật thông tin',
+                            style: 'cancel',
+                            onPress: () => navigation.navigate(
+                                ScreenName.UPDATE_INFO_ACCOUNT
+                            )
+                        },
+                        {
+                            text: 'Tiếp tục'
+                        },
+                    ]);
+                }
+            }
+
+            if (typeObj.key === OutsideApp.MESSENGER.key) {
+                if (!currentUser.facebook) {
+                    Alert.alert('', 'Để thuận tiện cho việc thực hiện cuộc hẹn, bạn có thể cung cấp thông tin SkypeID trong phần cập nhật thông tin cá nhân', [
+                        {
+                            text: 'Cập nhật thông tin',
+                            style: 'cancel',
+                            onPress: () => navigation.navigate(
+                                ScreenName.UPDATE_INFO_ACCOUNT
+                            )
+                        },
+                        {
+                            text: 'Tiếp tục'
+                        },
+                    ]);
+                }
+            }
+        }
         setSelectedBookingType(typeObj);
 
         if (typeObj.type === 'online') {
@@ -280,34 +335,45 @@ export default function CreateBookingForm({
                     }
 
                     if (partner.isDatingOnline) {
-                        if ((currentUser.skype && item.key === SKYPE.key)
-                            || (currentUser.facebook && item.key === MESSENGER.key)
-                            || (currentUser.zalo && item.key === ZALO.key)
-                        ) {
-                            return (
-                                <OptionItem
-                                    item={item}
-                                    index={index}
-                                    handlePressItem={() => {
-                                        handlePressBookingType(item);
-                                    }}
-                                    isSelected={selectedBookingType.key === item.key}
-                                />
-                            );
-                        }
+                        // if ((currentUser.skype && item.key === SKYPE.key)
+                        //     || (currentUser.facebook && item.key === MESSENGER.key)
+                        //     || (currentUser.zalo && item.key === ZALO.key)
+                        // ) {
+                        //     return (
+                        //         <OptionItem
+                        //             item={item}
+                        //             index={index}
+                        //             handlePressItem={() => {
+                        //                 handlePressBookingType(item);
+                        //             }}
+                        //             isSelected={selectedBookingType.key === item.key}
+                        //         />
+                        //     );
+                        // }
 
-                        if (item.key === 'choi_game') {
-                            return (
-                                <OptionItem
-                                    item={item}
-                                    index={index}
-                                    handlePressItem={() => {
-                                        handlePressBookingType(item);
-                                    }}
-                                    isSelected={selectedBookingType.key === item.key}
-                                />
-                            );
-                        }
+                        // if (item.key === 'choi_game') {
+                        //     return (
+                        //         <OptionItem
+                        //             item={item}
+                        //             index={index}
+                        //             handlePressItem={() => {
+                        //                 handlePressBookingType(item);
+                        //             }}
+                        //             isSelected={selectedBookingType.key === item.key}
+                        //         />
+                        //     );
+                        // }
+
+                        return (
+                            <OptionItem
+                                item={item}
+                                index={index}
+                                handlePressItem={() => {
+                                    handlePressBookingType(item);
+                                }}
+                                isSelected={selectedBookingType.key === item.key}
+                            />
+                        );
                     }
 
                     return <></>;

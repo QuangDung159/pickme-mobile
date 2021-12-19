@@ -145,7 +145,7 @@ export default function Wallet({ navigation }) {
                         color: COLORS.DEFAULT
                     }}
                 >
-                    UCoin Hiện Có
+                    Xu Hiện Có
                 </Text>
                 <View
                     style={{

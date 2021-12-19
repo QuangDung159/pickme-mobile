@@ -17,7 +17,7 @@ export default {
     PERSONAL: 'Trang cá nhân',
     LEADER_BOARD: 'Bảng xếp hạng',
     CREATE_ACCOUNT: 'Tạo tài khoản',
-    CASH_IN: 'Nạp UCoin',
+    CASH_IN: 'Nạp Xu',
     CONVERSATION_LIST: 'Tin nhắn',
     UPDATE_INFO_ACCOUNT: 'Thông tin cá nhân',
     BANK_ACCOUNT: 'Tài khoản ngân hàng',
@@ -29,7 +29,7 @@ export default {
     PARTNER_REGISTER: 'Đăng ký trở thành Host',
     CHANGE_PASSWORD: 'Đổi mật khẩu',
     PARTNER_DATA: 'Thông tin Host',
-    CASH_OUT: 'Rút UCoin',
+    CASH_OUT: 'Rút Xu',
     POLICY: 'Quy định chung',
     GUIDE: 'Hướng dẫn',
 };

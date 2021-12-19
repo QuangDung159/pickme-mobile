@@ -439,7 +439,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                         fontSize={SIZES.FONT_H3}
                         iconName="treasure-chest"
                         iconFamily={IconFamily.MATERIAL_COMMUNITY_ICONS}
-                        content={`UCoin: ${CommonHelpers.formatCurrency(userInfo.walletAmount)}`}
+                        content={`Xu: ${CommonHelpers.formatCurrency(userInfo.walletAmount)}`}
                         iconSize={18}
                         contentTextStyle={{
                             fontFamily: TEXT_BOLD,

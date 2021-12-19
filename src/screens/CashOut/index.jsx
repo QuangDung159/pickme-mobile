@@ -121,7 +121,7 @@ export default function CashOut() {
                 }
             },
             {
-                fieldName: 'Số UCoin',
+                fieldName: 'Số Xu',
                 input: cashOutForm.amount,
                 validate: {
                     required: {
@@ -135,7 +135,7 @@ export default function CashOut() {
         ];
 
         if (cashOutForm.amount > currentUser.walletAmount) {
-            ToastHelpers.renderToast('Số UCoin rút vượt quá số dư trong Ví');
+            ToastHelpers.renderToast('Số Xu rút vượt quá số dư trong Ví');
             return false;
         }
 
@@ -208,7 +208,7 @@ export default function CashOut() {
                                 color: COLORS.ACTIVE,
                                 textAlign: 'center'
                             }}
-                            text={`UCoin: ${CommonHelpers.formatCurrency(currentUser.walletAmount)}`}
+                            text={`Xu: ${CommonHelpers.formatCurrency(currentUser.walletAmount)}`}
                         />
                     </View>
 
@@ -254,7 +254,7 @@ export default function CashOut() {
                         label="Chủ tài khoản:*"
                     />
                     <CustomInput
-                        label="Số UCoin rút: (1 UCoin = 1 VND)"
+                        label="Số Xu rút: (1 Xu = 1 VND)"
                         value={amountDisplay}
                         keyboardType="number-pad"
                         onChangeText={(input) => {

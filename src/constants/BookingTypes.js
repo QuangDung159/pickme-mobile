@@ -6,6 +6,12 @@ export default [
         type: 'offline'
     },
     {
+        value: 'Chơi game',
+        selected: false,
+        key: 'choi_game',
+        type: 'online'
+    },
+    {
         value: 'Skype',
         selected: false,
         key: 'skype',
@@ -21,12 +27,6 @@ export default [
         value: 'Zalo',
         selected: false,
         key: 'zalo',
-        type: 'online'
-    },
-    {
-        value: 'Chơi game',
-        selected: false,
-        key: 'choi_game',
         type: 'online'
     },
 ];

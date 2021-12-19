@@ -69,6 +69,7 @@ const HomeStack = () => (
         {ProfileScreen()}
         {CreateBookingScreen()}
         {MessageScreen()}
+        {UpdateInfoAccountScreen()}
     </Stack.Navigator>
 );
 
