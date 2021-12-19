@@ -275,7 +275,7 @@ export default function Onboarding({ navigation }) {
                                     textAlign: 'center',
                                     marginBottom: 5
                                 }}
-                                text={`${Constants.manifest.version} - ${ENV} (${App.APP_VERSION_OTA})`}
+                                text={`${ENV} - ${Constants.manifest.version} (${App.APP_VERSION_OTA})`}
                             />
                             <Text
                                 style={{
