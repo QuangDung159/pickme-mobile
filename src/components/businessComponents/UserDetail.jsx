@@ -48,7 +48,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
 
             if (userInfo.id === currentUser.id) {
                 setIsCurrentUser(true);
-                checkIsFillDataForTheFirstTime();
+                // checkIsFillDataForTheFirstTime();
             }
         }, [userInfo]
     );
@@ -174,7 +174,6 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                         onPress: () => {
                             navigation.navigate(ScreenName.UPDATE_INFO_ACCOUNT);
                         },
-                        style: 'cancel'
                     }
                 ],);
         }
