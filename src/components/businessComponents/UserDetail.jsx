@@ -109,7 +109,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                 setIsShowSpinner(false);
                 setImage(uri);
 
-                const newUserInfo = { ...userInfo, url: res.data.url, dob: userInfo?.dob?.substring(0, 3) || '1996' };
+                const newUserInfo = { ...userInfo, url: res.data.url, dob: userInfo?.dob?.substring(0, 4) || '1996' };
                 dispatch(
                     setCurrentUser(newUserInfo)
                 );
