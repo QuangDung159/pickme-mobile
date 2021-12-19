@@ -16,19 +16,21 @@ export default class NoteText extends PureComponent {
             title, content, width, iconComponent,
             backgroundColor,
             contentStyle,
-            iconComponentRight, titleStyle
+            iconComponentRight, titleStyle, containerStyle
         } = this.props;
 
         return (
             <View
-                style={{
-                    backgroundColor: backgroundColor || COLORS.BASE,
-                    width,
-                    alignSelf: 'center',
-                    borderRadius: 8,
-                    borderWidth: 1,
-                    borderColor: COLORS.ACTIVE
-                }}
+                style={[
+                    {
+                        backgroundColor: backgroundColor || COLORS.BASE,
+                        width,
+                        alignSelf: 'center',
+                        borderRadius: 8,
+                        borderWidth: 1,
+                        borderColor: COLORS.ACTIVE
+                    }, containerStyle
+                ]}
             >
                 <View
                     style={{

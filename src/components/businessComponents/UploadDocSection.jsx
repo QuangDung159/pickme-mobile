@@ -12,7 +12,9 @@ import ToastHelpers from '@helpers/ToastHelpers';
 import { setCurrentUser, setVerificationStore } from '@redux/Actions';
 import UserServices from '@services/UserServices';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import {
+    Alert, StyleSheet, TouchableOpacity, View
+} from 'react-native';
 import ImageScalable from 'react-native-scalable-image';
 import { useDispatch, useSelector } from 'react-redux';
 import VerificationStatusPanel from './VerificationStatusPanel';
@@ -221,7 +223,7 @@ export default function UploadDocSection({ setIsShowSpinner, navigation, route }
     const uploadDoc = (docType, imageLocalUrl) => {
         MediaHelpers.imgbbUploadImage(
             imageLocalUrl,
-            (res) => {
+            async (res) => {
                 const verifyItem = {
                     url: res.data.url,
                     type: docType
@@ -229,11 +231,12 @@ export default function UploadDocSection({ setIsShowSpinner, navigation, route }
 
                 verificationArray.push(verifyItem);
                 if (verificationArray.length === 4) {
-                    const result = UserServices.addVerifyDocAsync({
+                    const result = await UserServices.addVerifyDocAsync({
                         verifyNote: isForPartnerVerify ? VERIFY_NOTE.FOR_PARTNER : VERIFY_NOTE.FOR_CUSTOMER,
                         documents: verificationArray,
                         isApplyForPartner: isForPartnerVerify
                     });
+
                     const { data } = result;
 
                     if (data) {
@@ -270,6 +273,36 @@ export default function UploadDocSection({ setIsShowSpinner, navigation, route }
                 </View>
             );
         }
+
+        if (isForPartnerVerify) {
+            return (
+                <View
+                    style={{
+                        paddingVertical: 10,
+                        flexDirection: 'row',
+                        justifyContent: 'space-between'
+                    }}
+                >
+                    <CustomButton
+                        onPress={() => {
+                            if (currentUser.isCustomerVerified) {
+                                onSubmitUploadList();
+                            } else {
+                                Alert.alert(
+                                    '', 'Vui lòng đợi quá trình xác thực tài khoản khách hàng hoàn thành.'
+                                );
+                            }
+                        }}
+                        type="active"
+                        label="Xác nhận trở thành Host"
+                        buttonStyle={{
+                            width: SIZES.WIDTH_BASE * 0.9
+                        }}
+                    />
+                </View>
+            );
+        }
+
         return null;
     };
 
@@ -355,16 +388,16 @@ export default function UploadDocSection({ setIsShowSpinner, navigation, route }
             >
                 {renderInfoModal()}
 
-                {navigateFrom === ScreenName.MENU && (
+                {navigateFrom === ScreenName.MENU && currentUser.isCustomerVerified && (
                     <NoteText
                         width={SIZES.WIDTH_BASE * 0.9}
                         title="Đăng kí trở thành Host:"
-                        content="Bạn vui lòng tải lên các ảnh để xác thực."
+                        content="Trở thành Host để gia tăng thu nhập"
                         contentStyle={{
                             fontSize: SIZES.FONT_H4,
                             color: COLORS.ACTIVE,
                             fontFamily: TEXT_REGULAR,
-                            marginTop: 5
+                            marginTop: 5,
                         }}
                         iconComponent={(
                             <IconCustom
