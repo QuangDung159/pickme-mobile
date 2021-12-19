@@ -51,8 +51,8 @@ export default class TabIcon extends PureComponent {
             }
             case ScreenName.MENU: {
                 this.setState({
-                    name: 'md-menu',
-                    family: IconFamily.IONICONS,
+                    name: 'menu',
+                    family: IconFamily.ENTYPO,
                     size: 38
                 });
                 break;

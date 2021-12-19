@@ -288,7 +288,12 @@ export default function Message({ navigation, route }) {
         socketRequestUtil(
             'POST',
             data,
-            token
+            token,
+            null,
+            null,
+            () => {
+                ToastHelpers.renderToast('Có lỗi xảy ra, vui lòng đăng xuất và đăng nhập trở lại.');
+            }
         );
 
         const messagePayload = {

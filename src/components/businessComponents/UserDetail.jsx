@@ -407,10 +407,11 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                             {isCurrentUser && (
                                 <IconCustom
                                     style={{
-                                        marginTop: 9
+                                        marginTop: 9,
+                                        marginLeft: 2
                                     }}
-                                    name="edit"
-                                    family={IconFamily.ENTYPO}
+                                    name="pencil-alt"
+                                    family={IconFamily.FONT_AWESOME_5}
                                     size={10}
                                     color={COLORS.DEFAULT}
                                 />

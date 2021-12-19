@@ -84,7 +84,7 @@ export default function Header({
         <View
             style={{
                 position: 'absolute',
-                bottom: 14,
+                bottom: 6,
                 right: 10,
                 zIndex: 99,
             }}
@@ -93,9 +93,9 @@ export default function Header({
                 onPress={() => triggerReadAllNotification()}
             >
                 <IconCustom
-                    name="mark-email-read"
-                    family={IconFamily.MATERIAL_ICONS}
-                    size={26}
+                    name="notification-clear-all"
+                    family={IconFamily.MATERIAL_COMMUNITY_ICONS}
+                    size={30}
                     color={COLORS.ACTIVE}
                 />
             </TouchableOpacity>
