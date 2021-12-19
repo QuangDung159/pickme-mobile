@@ -11,10 +11,10 @@ const {
 } = Theme;
 
 export default function PartnerDataItem({
-    value
+    dataRow
 }) {
-    let handleValue = value;
-    if (value === undefined || value === null || value.toString() === '') {
+    let handleValue = dataRow.value;
+    if (dataRow.value === undefined || dataRow.value === null || dataRow.value.toString() === '') {
         handleValue = 'N/a';
     }
 
@@ -28,9 +28,18 @@ export default function PartnerDataItem({
         >
             <View
                 style={{
-                    flexDirection: 'row'
+                    alignItems: 'center'
                 }}
             >
+                <Text
+                    style={{
+                        fontFamily: TEXT_BOLD,
+                        fontSize: SIZES.FONT_H3,
+                        color: COLORS.ACTIVE,
+                    }}
+                >
+                    {dataRow.label}
+                </Text>
                 <Text
                     style={{
                         fontFamily: TEXT_BOLD,

@@ -27,7 +27,7 @@ export default function ProfileInfoItem({
         >
             <View
                 style={[{
-                    width: 25,
+                    width: 20,
                 }, iconContainerStyle]}
             >
                 <IconCustom
@@ -38,7 +38,6 @@ export default function ProfileInfoItem({
                 />
             </View>
             <Text
-                muted
                 style={[{
                     fontFamily: TEXT_REGULAR,
                     zIndex: 2,

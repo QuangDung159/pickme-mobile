@@ -17,7 +17,7 @@ import { BookingServices, NotificationServices, UserServices } from '@services/i
 import { socketRequestUtil } from '@utils/index';
 import React, { useEffect, useState } from 'react';
 import {
-    FlatList, Image, RefreshControl, SafeAreaView, StyleSheet, Text, TouchableOpacity, View
+    FlatList, Image, RefreshControl, SafeAreaView, StyleSheet, Text, TouchableNativeFeedback, View
 } from 'react-native';
 import ImageScalable from 'react-native-scalable-image';
 import { useDispatch, useSelector } from 'react-redux';
@@ -245,7 +245,7 @@ export default function Home({ navigation }) {
     );
 
     const renderImage = (item) => (
-        <TouchableOpacity
+        <TouchableNativeFeedback
             onPress={() => navigation.navigate(ScreenName.PROFILE, { userId: item.id })}
         >
             <View
@@ -327,7 +327,7 @@ export default function Home({ navigation }) {
                     />
                 </View>
             </View>
-        </TouchableOpacity>
+        </TouchableNativeFeedback>
     );
 
     try {

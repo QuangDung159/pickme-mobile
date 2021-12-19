@@ -76,7 +76,6 @@ export default function SignUp({ navigation }) {
                     <KeyboardAwareScrollView>
                         <View
                             style={{
-                                flex: 1,
                                 alignSelf: 'center',
                                 alignItems: 'center'
                             }}
@@ -112,7 +111,7 @@ export default function SignUp({ navigation }) {
 const styles = StyleSheet.create({
     container: {
         width: SIZES.WIDTH_BASE,
-        height: SIZES.HEIGHT_BASE,
+        height: '100%',
         backgroundColor: COLORS.BASE,
     },
     title: {

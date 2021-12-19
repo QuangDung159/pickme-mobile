@@ -72,6 +72,14 @@ export const getConfigByEnv = () => {
     }
 };
 
+export const correctFullNameDisplay = (fullName) => {
+    const nameArr = fullName?.trim().split(' ');
+    if (nameArr && nameArr.length === 4) {
+        return `${nameArr[0]} ${nameArr[1]}\n${nameArr[2]} ${nameArr[3]}`;
+    }
+    return fullName?.trim();
+};
+
 export default {
     generateMoneyStr,
     formatNumberWithSeparator,

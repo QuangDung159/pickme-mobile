@@ -4,6 +4,7 @@ import { IconCustom, Line } from '@components/uiComponents';
 import {
     IconFamily, Rx, ScreenName, Theme
 } from '@constants/index';
+import { correctFullNameDisplay } from '@helpers/CommonHelpers';
 import { CommonHelpers, MediaHelpers, ToastHelpers } from '@helpers/index';
 import { setCurrentUser } from '@redux/Actions';
 import { UserServices } from '@services/index';
@@ -280,7 +281,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
             <View
                 style={{
                     width: SIZES.WIDTH_BASE * 0.9,
-                    marginTop: 10,
+                    marginTop: 5,
                 }}
             >
                 <PartnerDataSection
@@ -288,12 +289,18 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                         [
                             {
                                 value: earningExpected && `${CommonHelpers.formatCurrency(earningExpected)}/phút`,
+                                type: 'earningExpected',
+                                label: 'Phí hẹn',
                             },
                             {
-                                value: `${bookingCompletedCount} đơn hẹn`,
+                                value: `${bookingCompletedCount}`,
+                                type: 'booking',
+                                label: 'Đơn hẹn',
                             },
                             {
-                                value: `${ratingAvg}/5 đánh giá`,
+                                value: `${ratingAvg}/5`,
+                                type: 'rating',
+                                label: 'Đánh giá',
                             },
                         ]
                     }
@@ -375,30 +382,36 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                             }
                         }}
                     >
-                        <View style={{
-                            flexDirection: 'row',
-                            justifyContent: 'center',
-                            width: 230
-                        }}
+                        <View style={[
+                            {
+                                flexDirection: 'row',
+                                justifyContent: 'center',
+                                width: '98%',
+                                alignSelf: 'center',
+                            },
+                            isCurrentUser && {
+                                marginLeft: 10
+                            }
+                        ]}
                         >
                             <Text
                                 style={{
                                     color: COLORS.ACTIVE,
-                                    fontSize: SIZES.FONT_H1,
+                                    fontSize: SIZES.FONT_H2,
                                     fontFamily: TEXT_BOLD,
                                     textAlign: 'center',
                                 }}
                             >
-                                {`${userInfo.fullName || 'N/a'}`}
+                                {`${correctFullNameDisplay(userInfo.fullName) || 'N/a'}`}
                             </Text>
                             {isCurrentUser && (
                                 <IconCustom
                                     style={{
-                                        marginTop: 10, marginLeft: 5
+                                        marginTop: 9
                                     }}
-                                    name="edit-2"
-                                    family={IconFamily.FEATHER}
-                                    size={12}
+                                    name="edit"
+                                    family={IconFamily.ENTYPO}
+                                    size={10}
                                     color={COLORS.DEFAULT}
                                 />
                             )}
@@ -435,17 +448,19 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                 }}
             >
                 {isCurrentUser && (
-                    <ProfileInfoItem
-                        fontSize={SIZES.FONT_H3}
-                        iconName="treasure-chest"
-                        iconFamily={IconFamily.MATERIAL_COMMUNITY_ICONS}
-                        content={`Xu: ${CommonHelpers.formatCurrency(userInfo.walletAmount)}`}
-                        iconSize={18}
-                        contentTextStyle={{
-                            fontFamily: TEXT_BOLD,
-                            color: COLORS.ACTIVE
-                        }}
-                    />
+                    <View>
+                        <ProfileInfoItem
+                            fontSize={SIZES.FONT_H3}
+                            iconName="treasure-chest"
+                            iconFamily={IconFamily.MATERIAL_COMMUNITY_ICONS}
+                            content={`Xu: ${CommonHelpers.formatCurrency(userInfo.walletAmount)}`}
+                            iconSize={18}
+                            contentTextStyle={{
+                                fontFamily: TEXT_BOLD,
+                                color: COLORS.ACTIVE
+                            }}
+                        />
+                    </View>
                 )}
 
                 {handleShowPartnerDataPanel()}

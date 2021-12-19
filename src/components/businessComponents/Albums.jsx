@@ -68,11 +68,13 @@ export default function Albums({
             onPress={() => onClickUploadProfileImage && onClickUploadProfileImage()}
             labelStyle={{
                 fontSize: SIZES.FONT_H3,
-                color: COLORS.ACTIVE
+                color: COLORS.ACTIVE,
+                marginLeft: 5
             }}
             label="Thêm ảnh"
             buttonStyle={{
                 width: 110,
+                alignItems: 'flex-start',
                 alignSelf: 'flex-start'
             }}
             leftIcon={{

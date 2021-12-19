@@ -39,7 +39,7 @@ export default function SubInfoProfile({ user }) {
                     iconName={user.isMale ? 'male' : 'female'}
                     iconFamily={IconFamily.FONTISTO}
                     content={`${user.isMale ? 'Nam' : 'Nữ'}`}
-                    iconSize={18}
+                    iconSize={16}
                 />
                 <ProfileInfoItem
                     fontSize={SIZES.FONT_H3}
@@ -48,21 +48,21 @@ export default function SubInfoProfile({ user }) {
                     content={moment(user.dob).format('YYYY').toString().toLowerCase() !== 'invalid date'
                         ? moment(user.dob).format('YYYY').toString()
                         : '1990'}
-                    iconSize={18}
+                    iconSize={16}
                 />
                 <ProfileInfoItem
                     fontSize={SIZES.FONT_H3}
                     iconName="weight"
                     iconFamily={IconFamily.FONT_AWESOME_5}
                     content={`${user.weight} kg`}
-                    iconSize={18}
+                    iconSize={16}
                 />
                 <ProfileInfoItem
                     fontSize={SIZES.FONT_H3}
                     iconName="human-male-height"
                     iconFamily={IconFamily.MATERIAL_COMMUNITY_ICONS}
                     content={`${user.height} cm`}
-                    iconSize={18}
+                    iconSize={16}
                 />
             </View>
             <ProfileInfoItem
@@ -70,17 +70,17 @@ export default function SubInfoProfile({ user }) {
                 iconName="home"
                 iconFamily={IconFamily.FONT_AWESOME_5}
                 content={`${user.homeTown || 'N/a'}`}
-                iconSize={18}
+                iconSize={16}
             />
             <ProfileInfoItem
                 fontSize={SIZES.FONT_H3}
                 iconName="badminton"
                 iconFamily={IconFamily.MATERIAL_COMMUNITY_ICONS}
                 content={`${handleInterestFromAPI()}`}
-                iconSize={18}
+                iconSize={16}
                 containerStyle={{ alignItems: 'flex-start' }}
                 iconContainerStyle={{
-                    marginTop: 3
+                    marginTop: 6
                 }}
                 contentTextStyle={{ width: SIZES.WIDTH_BASE * 0.9 - 25 }}
             />

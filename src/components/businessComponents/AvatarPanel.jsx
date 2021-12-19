@@ -35,7 +35,7 @@ export default function AvatarPanel({
                         style={{
                             zIndex: 99,
                             position: 'absolute',
-                            top: 5,
+                            top: SIZES.HEIGHT_BASE * 0.001,
                             right: 20,
                         }}
                     >

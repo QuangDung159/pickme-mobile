@@ -11,8 +11,8 @@ export default function PartnerDataSection({ listData }) {
                 alignItems: 'center',
             }}
         >
-            {listData?.map(({ value }) => (
-                <PartnerDataItem value={value} key={`${value}${Date()}`} />
+            {listData?.map((item) => (
+                <PartnerDataItem dataRow={item} key={`${item.type}`} />
             ))}
         </View>
     );
