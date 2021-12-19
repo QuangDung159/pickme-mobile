@@ -58,6 +58,16 @@ export default function UploadDocSection({ setIsShowSpinner, navigation, route }
         }, []
     );
 
+    // useEffect(
+    //     () => {
+    //         const onFocus = navigation.addListener('focus', () => {
+    //             fetchVerification();
+    //         });
+
+    //         return onFocus;
+    //     }, []
+    // );
+
     const fetchVerification = async () => {
         const result = await UserServices.fetchVerificationAsync();
         const { data } = result;
@@ -220,6 +230,26 @@ export default function UploadDocSection({ setIsShowSpinner, navigation, route }
         }
     };
 
+    const submitVerification = async (listDocUrl) => {
+        const body = {
+            verifyNote: isForPartnerVerify ? VERIFY_NOTE.FOR_PARTNER : VERIFY_NOTE.FOR_CUSTOMER,
+            documents: listDocUrl,
+            isApplyForPartner: isForPartnerVerify
+        };
+
+        setIsShowSpinner(true);
+        const result = await UserServices.addVerifyDocAsync(body);
+        setIsShowSpinner(false);
+
+        const { data } = result;
+
+        if (data) {
+            verificationArray = [];
+            fetchCurrentUserInfo();
+            fetchVerification();
+        }
+    };
+
     const uploadDoc = (docType, imageLocalUrl) => {
         MediaHelpers.imgbbUploadImage(
             imageLocalUrl,
@@ -231,18 +261,7 @@ export default function UploadDocSection({ setIsShowSpinner, navigation, route }
 
                 verificationArray.push(verifyItem);
                 if (verificationArray.length === 4) {
-                    const result = await UserServices.addVerifyDocAsync({
-                        verifyNote: isForPartnerVerify ? VERIFY_NOTE.FOR_PARTNER : VERIFY_NOTE.FOR_CUSTOMER,
-                        documents: verificationArray,
-                        isApplyForPartner: isForPartnerVerify
-                    });
-
-                    const { data } = result;
-
-                    if (data) {
-                        verificationArray = [];
-                        fetchCurrentUserInfo();
-                    }
+                    submitVerification(verificationArray);
                 }
             },
             () => {
@@ -274,7 +293,7 @@ export default function UploadDocSection({ setIsShowSpinner, navigation, route }
             );
         }
 
-        if (isForPartnerVerify) {
+        if (!verificationStore.isApplyForPartner) {
             return (
                 <View
                     style={{
@@ -286,7 +305,7 @@ export default function UploadDocSection({ setIsShowSpinner, navigation, route }
                     <CustomButton
                         onPress={() => {
                             if (currentUser.isCustomerVerified) {
-                                onSubmitUploadList();
+                                submitVerification(verificationStore.verificationDocuments);
                             } else {
                                 Alert.alert(
                                     '', 'Vui lòng đợi quá trình xác thực tài khoản khách hàng hoàn thành.'

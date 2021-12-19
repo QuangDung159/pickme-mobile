@@ -95,7 +95,8 @@ export default function VerificationStatusPanel() {
                         alignSelf: 'center',
                         borderWidth: 1,
                         borderColor: COLORS.ACTIVE,
-                        borderRadius: 20
+                        borderRadius: 20,
+                        marginTop: 5
                     }}
                 >
                     <View
