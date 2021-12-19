@@ -18,9 +18,9 @@
 ## 🚀 How to use
 
 - Install packages with `yarn`.
-- Clone file src/constants/ConfigDev.js (or ConfigPrd.js, ConfigStg.js base on what environment need debug), rename to ConfigDev.js
-- Run `yarn start -c` to start the bundler with clear cache (optional).
-- Run `yarn start` to start the bundler.
+- Go to file src/constants/App.js, update prop ENV base on what env want to debug.
+- Run `yarn start` to start the bundle.
+- Run `yarn start -c` to start the bundle with clear cache (optional).
 - Install Expo Go to your phone (you can search 'Expo Go' on your App Store/CH Play or use links below):
   - iOS: [Client iOS](https://itunes.apple.com/app/apple-store/id982107779)
   - Android: [Client Android](https://play.google.com/store/apps/details?id=host.exp.exponent&referrer=blankexample)

@@ -1,6 +1,8 @@
 import Theme from '@constants/Theme';
-import { SOCKET_URL } from '@constants/Config';
+import { getConfigByEnv } from '@helpers/CommonHelpers';
 import axios from 'axios';
+
+const { SOCKET_URL } = getConfigByEnv();
 
 const { COLORS } = Theme;
 

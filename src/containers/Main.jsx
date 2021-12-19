@@ -6,7 +6,7 @@ import { WebSocketLink } from '@apollo/client/link/ws';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { Listener } from '@components/businessComponents';
 import ScreenName from '@constants/ScreenName';
-import { SOCKET_URL } from '@constants/Config';
+import { getConfigByEnv } from '@helpers/CommonHelpers';
 import Stacks from '@navigations/Stacks';
 import { NavigationContainer } from '@react-navigation/native';
 import {
@@ -17,6 +17,8 @@ import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import uuid from 'react-native-uuid';
 import { useDispatch, useSelector } from 'react-redux';
+
+const { SOCKET_URL } = getConfigByEnv();
 
 export default function Main() {
     const notificationReceivedRedux = useSelector((state) => state.notificationReducer.notificationReceivedRedux);

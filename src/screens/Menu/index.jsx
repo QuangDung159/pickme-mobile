@@ -4,21 +4,23 @@ import {
 } from '@components/uiComponents';
 import App from '@constants/App';
 import IconFamily from '@constants/IconFamily';
+import OutsideApp from '@constants/OutsideApp';
 import ScreenName from '@constants/ScreenName';
 import ScreenTitle from '@constants/ScreenTitle';
 import Theme from '@constants/Theme';
-import { ENV } from '@constants/Config';
+import { getConfigByEnv } from '@helpers/CommonHelpers';
 import ToastHelpers from '@helpers/ToastHelpers';
 import { resetStoreSignOut } from '@redux/Actions';
 import Constants from 'expo-constants';
+import * as Linking from 'expo-linking';
 import * as SecureStore from 'expo-secure-store';
 import React from 'react';
 import {
     FlatList, Platform, TouchableOpacity, View
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import * as Linking from 'expo-linking';
-import OutsideApp from '@constants/OutsideApp';
+
+const { ENV } = getConfigByEnv();
 
 const {
     SIZES, FONT: {

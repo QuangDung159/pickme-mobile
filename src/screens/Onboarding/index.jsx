@@ -6,7 +6,7 @@ import App from '@constants/App';
 import {
     Images, ScreenName, Theme
 } from '@constants/index';
-import { ENV } from '@constants/Config';
+import { getConfigByEnv } from '@helpers/CommonHelpers';
 import {
     setCurrentUser, setIsSignInOtherDeviceStore, setListPartnerHomeRedux, setNavigation
 } from '@redux/Actions';
@@ -20,6 +20,8 @@ import {
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useDispatch, useSelector } from 'react-redux';
 import SignIn from './SignIn';
+
+const { ENV } = getConfigByEnv();
 
 const {
     FONT: {

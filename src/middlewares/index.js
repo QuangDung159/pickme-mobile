@@ -1,9 +1,10 @@
 /* eslint-disable import/no-unresolved */
 import Rx from '@constants/Rx';
-import { API_URL_BACKUP } from '@constants/Config';
-import CommonHelpers from '@helpers/CommonHelpers';
+import CommonHelpers, { getConfigByEnv } from '@helpers/CommonHelpers';
 import RxUtil from '@utils/Rx.Util';
 import * as SecureStore from 'expo-secure-store';
+
+const { API_URL_BACKUP } = getConfigByEnv();
 
 const loginRefreshTokenAsync = async (body) => {
     const result = await RxUtil(

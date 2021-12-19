@@ -1,5 +1,5 @@
 import { Theme } from '@constants/index';
-import { MAP_API_KEY } from '@constants/Config';
+import { getConfigByEnv } from '@helpers/CommonHelpers';
 import React, { useEffect, useRef } from 'react';
 import { Text, View } from 'react-native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
@@ -11,6 +11,8 @@ const {
     SIZES,
     COLORS
 } = Theme;
+
+const { MAP_API_KEY } = getConfigByEnv();
 
 export default function GooglePlacesInput({ onChangeAddress, addressInput, label }) {
     const ref = useRef();

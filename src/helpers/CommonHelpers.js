@@ -1,4 +1,6 @@
+import App from '@constants/App';
 import BookingStatus from '@constants/BookingStatus';
+import { dev, prd, stg } from '@constants/Config';
 import moment from 'moment';
 
 const generateMoneyStr = (moneyText) => `${formatNumberWithSeparator(moneyText.toString().trim())}`;
@@ -56,6 +58,18 @@ export const mappingStatusText = (status) => {
 export const formatTime = (timeString, format = 'HH:mm:ss DD-MM-YYYY') => {
     const timestamp = new Date(timeString);
     return moment(timestamp).format(format);
+};
+
+export const getConfigByEnv = () => {
+    switch (App.ENV) {
+        case 'dev':
+            return dev;
+        case 'prd': {
+            return prd;
+        }
+        default:
+            return stg;
+    }
 };
 
 export default {

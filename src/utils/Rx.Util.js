@@ -1,9 +1,11 @@
 import { Rx, Theme } from '@constants/index';
-import { API_URL } from '@constants/Config';
+import { getConfigByEnv } from '@helpers/CommonHelpers';
 import ToastHelpers from '@helpers/ToastHelpers';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 import slackUtil from './slackUtil';
+
+const { API_URL } = getConfigByEnv();
 
 const { COLORS } = Theme;
 
