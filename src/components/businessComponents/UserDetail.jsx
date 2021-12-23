@@ -287,20 +287,20 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                     listData={
                         [
                             {
-                                value: earningExpected && `${CommonHelpers.formatCurrency(earningExpected)}/phút`,
+                                value: earningExpected && `${CommonHelpers.formatCurrency(earningExpected)}Xu/Phút`,
                                 type: 'earningExpected',
-                                label: 'Phí hẹn',
+                                label: 'Phí mời',
                             },
                             {
                                 value: `${bookingCompletedCount}`,
                                 type: 'booking',
-                                label: 'Đơn hẹn',
+                                label: 'Được mời',
                             },
-                            {
-                                value: `${ratingAvg}/5`,
-                                type: 'rating',
-                                label: 'Đánh giá',
-                            },
+                            // {
+                            //     value: `${ratingAvg}/5`,
+                            //     type: 'rating',
+                            //     label: 'Đánh giá',
+                            // },
                         ]
                     }
                 />

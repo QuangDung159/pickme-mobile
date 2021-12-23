@@ -221,10 +221,7 @@ export default function UsernamePasswordForm({ navigation }) {
                 <CustomCheckbox
                     label="Tôi đồng ý với tất cả các Điều khoản và Điều kiện."
                     onPressLabel={() => {
-                        // show modal díclaimer
-                        // Alert.alert('hi there aa' + !onCheckedDisclaimer);
                         setModalVisible(true);
-                        // setOnCheckedDisclaimer(!onCheckedDisclaimer)
                     }}
                     isChecked={onCheckedDisclaimer}
                     onChange={(checked) => setOnCheckedDisclaimer(checked)}

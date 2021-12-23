@@ -181,7 +181,7 @@ export default function Total({
                     <NoteText
                         width={SIZES.WIDTH_BASE * 0.9}
                         title="Lưu ý:"
-                        content="Tổng phí chỉ là chi phí trên ứng dụng và không bao gồm các loại phí khác như: ăn, uống, vé xem phim... Vui lòng thảo luận trước về chi phí đối với Host."
+                        content="Tổng phí chỉ là chi phí trên ứng dụng và không bao gồm phụ phí khác như: cafe, vé xem phim... Vui lòng thảo luận trước về chi phí đối với Host."
                         contentStyle={{
                             fontSize: SIZES.FONT_H4,
                             color: COLORS.ACTIVE,

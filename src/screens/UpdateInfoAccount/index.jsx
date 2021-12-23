@@ -1,5 +1,5 @@
 import {
-    CenterLoader, CustomButton, CustomInput, CustomModal, CustomText, OptionItem, RadioButton
+    CenterLoader, CustomButton, CustomInput, CustomModal, CustomText, OptionItem, RadioButton, CustomCheckbox
 } from '@components/uiComponents';
 import { Images, Interests, Theme } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
@@ -8,22 +8,29 @@ import { setCurrentUser, setPersonTabActiveIndex } from '@redux/Actions';
 import { UserServices } from '@services/index';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View, Text, Alert } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import ImageScalable from 'react-native-scalable-image';
 import { useDispatch, useSelector } from 'react-redux';
+import MediaHelpers from '@helpers/MediaHelpers';
+import { HOST_CONTENT } from '@constants/HostContent';
 
-const { SIZES, COLORS, FONT: { TEXT_BOLD } } = Theme;
+const { SIZES, COLORS, FONT: { TEXT_BOLD, TEXT_REGULAR } } = Theme;
 
 export default function UpdateInfoAccount() {
+    const currentUser = useSelector((state) => state.userReducer.currentUser);
     const [newUser, setNewUser] = useState({});
     const [isShowSpinner, setIsShowSpinner] = useState(false);
     // const [listInterest, setListInterest] = useState();
     const [listInterestSelected, setListInterestSelected] = useState(Interests);
     const [isModalMessengerVisible, setIsModalMessengerVisible] = useState(false);
     const [isModalSkypeVisible, setIsModalSkypeVisible] = useState(false);
+    const [isModalZaloVisible, setIsModalZaloVisible] = useState(false);
+    const [isModalInviteCoffeeVisible, setModalInviteCoffeeVisible] = useState(false);
+    const [isAcceptInviteCoffeeVisible, setAcceptInviteCoffeeVisible] = useState(currentUser.isHost);
+    const [imageUrl, setImageUrl] = useState(currentUser.imageUrl);
+    const [imagePath, setImagePath] = useState(currentUser.imageUrl);
 
-    const currentUser = useSelector((state) => state.userReducer.currentUser);
 
     const dispatch = useDispatch();
 
@@ -65,26 +72,32 @@ export default function UpdateInfoAccount() {
     const renderInputName = () => (
         <CustomInput
             value={newUser.fullName}
+            inputStyle={{ width: 280 }}
             onChangeText={(input) => onChangeName(input)}
             containerStyle={{
-                marginVertical: 10,
-                width: SIZES.WIDTH_BASE * 0.9
+                marginVertical: 5,
+                width: SIZES.WIDTH_BASE * 0.9,
+                flexDirection: 'row',
+                justifyContent: 'space-between'
             }}
             autoCapitalize
-            label="Tên hiển thị:*"
+            label="Họ Tên"
         />
     );
 
     const renderInputPhone = () => (
         <CustomInput
             value={newUser.phoneNum}
+            inputStyle={{ width: 280 }}
             onChangeText={(input) => setNewUser({ ...newUser, phoneNum: input })}
             containerStyle={{
                 marginVertical: 10,
-                width: SIZES.WIDTH_BASE * 0.9
+                width: SIZES.WIDTH_BASE * 0.9,
+                flexDirection: 'row',
+                justifyContent: 'space-between'
             }}
             keyboardType="number-pad"
-            label="Số điện thoại:*"
+            label="SĐT"
         />
     );
 
@@ -93,25 +106,34 @@ export default function UpdateInfoAccount() {
             value={newUser.homeTown}
             onChangeText={(input) => onChangeHometown(input)}
             containerStyle={{
-                marginVertical: 10,
-                width: SIZES.WIDTH_BASE * 0.9
+                width: SIZES.WIDTH_BASE * 0.9,
+                flexDirection: 'row',
+                justifyContent: 'space-between'
             }}
+            inputStyle={{ width: 280 }}
             autoCapitalize
-            label="Nơi sinh sống:*"
+            label="Nơi ở"
         />
     );
 
     const renderInputZalo = () => (
-        <CustomInput
-            value={newUser.zalo}
-            onChangeText={(input) => setNewUser({ ...newUser, zalo: input })}
-            containerStyle={{
-                marginVertical: 10,
-                width: SIZES.WIDTH_BASE * 0.9
+        <TouchableOpacity
+            onPress={() => {
+                setIsModalZaloVisible(true);
             }}
-            keyboardType="number-pad"
-            label="SĐT đăng kí Zalo:"
-        />
+        >
+            <CustomInput
+                value={newUser.zalo}
+                onChangeText={(input) => setNewUser({ ...newUser, zalo: input })}
+                inputStyle={{ width: 200 }}
+                containerStyle={{
+                    width: SIZES.WIDTH_BASE * 0.9,
+                    flexDirection: 'row',
+                    justifyContent: 'space-between'
+                }}
+                label="Zalo Username"
+            />
+        </TouchableOpacity>
     );
 
     const renderInputSkype = () => (
@@ -123,11 +145,14 @@ export default function UpdateInfoAccount() {
             <CustomInput
                 value={newUser.skype}
                 onChangeText={(input) => setNewUser({ ...newUser, skype: input })}
+                inputStyle={{ width: 200 }}
                 containerStyle={{
                     marginVertical: 10,
-                    width: SIZES.WIDTH_BASE * 0.9
+                    width: SIZES.WIDTH_BASE * 0.9,
+                    flexDirection: 'row',
+                    justifyContent: 'space-between'
                 }}
-                label="ID Skype: (hướng dẫn)"
+                label="Skype Id"
             />
         </TouchableOpacity>
     );
@@ -141,11 +166,13 @@ export default function UpdateInfoAccount() {
             <CustomInput
                 value={newUser.facebook}
                 onChangeText={(input) => setNewUser({ ...newUser, facebook: input })}
+                inputStyle={{ width: 200 }}
                 containerStyle={{
-                    marginVertical: 10,
-                    width: SIZES.WIDTH_BASE * 0.9
+                    width: SIZES.WIDTH_BASE * 0.9,
+                    flexDirection: 'row',
+                    justifyContent: 'space-between'
                 }}
-                label="ID Messenger: (hướng dẫn)"
+                label="Facebook Id"
             />
         </TouchableOpacity>
     );
@@ -209,7 +236,6 @@ export default function UpdateInfoAccount() {
                     flexDirection: 'row',
                     alignItems: 'center',
                     width: '100%',
-                    marginBottom: 10,
                     flexWrap: 'wrap'
                 }}
             >
@@ -232,15 +258,13 @@ export default function UpdateInfoAccount() {
             multiline
             value={newUser.description}
             onChangeText={(input) => onChangeDescription(input)}
-            inputStyle={{
-                height: 60
-            }}
+
             containerStyle={{
                 marginVertical: 10,
                 width: SIZES.WIDTH_BASE * 0.9
             }}
             autoCapitalize
-            label="Mô tả bản thân:*"
+            label="Mô tả ngắn"
         />
     );
 
@@ -259,9 +283,9 @@ export default function UpdateInfoAccount() {
                 <CustomText
                     style={{
                         color: COLORS.ACTIVE,
-                        marginBottom: 10
+                        marginBottom: 5
                     }}
-                    text="Chiều cao (cm):*"
+                    text="Cao (cm)"
                 />
                 <CustomInput
                     inputStyle={{
@@ -277,9 +301,9 @@ export default function UpdateInfoAccount() {
                 <CustomText
                     style={{
                         color: COLORS.ACTIVE,
-                        marginBottom: 10
+                        marginBottom: 5
                     }}
-                    text="Cân nặng (kg):*"
+                    text="Nặng (kg)"
                 />
                 <CustomInput
                     inputStyle={{
@@ -295,21 +319,26 @@ export default function UpdateInfoAccount() {
 
     const renderDobGender = () => (
         <View
-            style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                marginVertical: 10,
-                width: '90%',
-            }}
+        // style={{
+        //     flexDirection: 'row',
+        //     justifyContent: 'space-between',
+        //     alignItems: 'center',
+        //     marginVertical: 10,
+        //     width: '90%',
+        // }}
         >
             <CustomInput
                 inputStyle={{
                     width: SIZES.WIDTH_BASE * 0.44
                 }}
+                containerStyle={{
+                    width: SIZES.WIDTH_BASE * 0.9,
+                    flexDirection: 'row',
+                    justifyContent: 'space-between'
+                }}
                 onChangeText={(input) => onChangeYear(input)}
                 value={newUser?.dob?.substr(0, 4)}
-                label="Năm sinh:*"
+                label="Năm Sinh"
                 keyboardType="number-pad"
             />
 
@@ -318,7 +347,7 @@ export default function UpdateInfoAccount() {
                 justifyContent: 'space-around',
                 alignItems: 'center',
                 width: SIZES.WIDTH_BASE * 0.44,
-                marginTop: 30
+                marginTop: 10
             }}
             >
                 <RadioButton
@@ -399,7 +428,7 @@ export default function UpdateInfoAccount() {
                 }
             },
             {
-                fieldName: 'Chiều cao',
+                fieldName: 'Cao',
                 input: newUser.height,
                 validate: {
                     required: {
@@ -408,7 +437,7 @@ export default function UpdateInfoAccount() {
                 }
             },
             {
-                fieldName: 'Cân nặng',
+                fieldName: 'Nặng',
                 input: newUser.weight,
                 validate: {
                     required: {
@@ -429,7 +458,7 @@ export default function UpdateInfoAccount() {
                 }
             },
             {
-                fieldName: 'Nơi sinh sống',
+                fieldName: 'Nơi ở',
                 input: newUser.homeTown,
                 validate: {
                     required: {
@@ -462,6 +491,89 @@ export default function UpdateInfoAccount() {
         return ValidationHelpers.validate(validateArr);
     };
 
+    const onChooseImage = () => {
+        MediaHelpers.pickImage(
+            false,
+            [4, 3],
+            (result) => {
+                setImagePath(result.uri);
+            },
+            0.6
+        );
+        // upload image after choose. should do spin & upload only when user click button
+        MediaHelpers.imgbbUploadImage(
+            imagePath,
+            async (res) => {
+                setImageUrl(res.data.url);
+            },
+        );
+    }
+
+    const checkBoxLetOtherInviteCoffee = () => {
+        return (
+            <View
+                style={{
+                    paddingTop: 10,
+                }}
+            >
+                <CustomCheckbox
+                    label="Trở thành HOST"
+                    onPressLabel={() => {
+                        setModalInviteCoffeeVisible(true);
+                    }}
+                    isChecked={isAcceptInviteCoffeeVisible}
+                    onChange={() => {
+                        if (!isAcceptInviteCoffeeVisible) {
+                            setModalInviteCoffeeVisible(true);
+                        }
+                        setAcceptInviteCoffeeVisible(!isAcceptInviteCoffeeVisible)
+                    }}
+                />
+                {renderImageUrl()}
+            </View>
+        )
+    }
+
+    const renderImageUrl = () => {
+        return (
+            isAcceptInviteCoffeeVisible &&
+            <View
+                style={{
+                    marginTop: 10,
+                    alignSelf: 'center'
+                }}
+            >
+                <CustomButton
+                    onPress={() => onChooseImage()}
+                    type="active"
+                    label='Chọn ảnh'
+                    buttonStyle={{
+                        width: SIZES.WIDTH_BASE * 0.9,
+                    }}
+                    labelStyle={{
+                        fontFamily: TEXT_REGULAR,
+                        fontSize: SIZES.FONT_H4
+                    }}
+                />
+                <View
+                    style={{
+                        marginTop: 10,
+                        alignSelf: 'center'
+                    }}
+                >
+                    <ImageScalable
+                        style={{
+                            zIndex: 99
+                        }}
+                        width={SIZES.WIDTH_BASE * 0.9}
+                        source={{ uri: imagePath }}
+                    />
+                </View>
+            </View>
+
+        );
+    };
+
     const validateYearsOld = (dob) => {
         const dateString = moment(dob).format('YYYY-MM-DD');
         const years = moment().diff(dateString, 'years');
@@ -474,11 +586,13 @@ export default function UpdateInfoAccount() {
             return;
         }
 
-        const body = {
+        let body = {
             ...newUser,
             email: currentUser.userName,
             IsMale: newUser.isMale,
-            interests: createInterestStr()
+            interests: createInterestStr(),
+            isHost: isAcceptInviteCoffeeVisible,
+            imageUrl: imageUrl
         };
 
         setIsShowSpinner(true);
@@ -779,6 +893,185 @@ export default function UpdateInfoAccount() {
         />
     );
 
+    const renderModalGuideZalo = () => (
+        <CustomModal
+            modalVisible={isModalZaloVisible}
+            renderContent={() => (
+                <View
+                    style={{
+                        width: SIZES.WIDTH_BASE * 0.9
+                    }}
+                >
+                    <CustomText
+                        text="Mở ứng dụng Zalo chọn vào cá nhân"
+                        style={{
+                            color: COLORS.ACTIVE,
+                            fontFamily: TEXT_BOLD,
+                            fontSize: SIZES.FONT_H3,
+                            marginBottom: 5,
+                            marginLeft: 10
+                        }}
+                    />
+
+                    <ImageScalable
+                        source={Images.Zalo1}
+                        style={{
+                            zIndex: 99,
+                            marginBottom: 10
+                        }}
+                        width={SIZES.WIDTH_BASE * 0.9}
+                    />
+
+                    <CustomText
+                        text="Xem trang cá nhân"
+                        style={{
+                            color: COLORS.ACTIVE,
+                            fontFamily: TEXT_BOLD,
+                            fontSize: SIZES.FONT_H3,
+                            marginBottom: 5,
+                            marginLeft: 10
+                        }}
+                    />
+
+                    <ImageScalable
+                        source={Images.Zalo2}
+                        style={{
+                            zIndex: 99,
+                            marginBottom: 10
+                        }}
+                        width={SIZES.WIDTH_BASE * 0.9}
+                    />
+
+                    <CustomText
+                        text='Chọn vào dấu 3 chấm góc phải'
+                        style={{
+                            color: COLORS.ACTIVE,
+                            fontFamily: TEXT_BOLD,
+                            fontSize: SIZES.FONT_H3,
+                            marginBottom: 5,
+                            marginLeft: 10
+                        }}
+                    />
+
+                    <ImageScalable
+                        source={Images.Zalo3}
+                        style={{
+                            zIndex: 99,
+                            marginBottom: 10
+                        }}
+                        width={SIZES.WIDTH_BASE * 0.9}
+                    />
+
+                    <CustomText
+                        text='Chọn "Thôn tin"'
+                        style={{
+                            color: COLORS.ACTIVE,
+                            fontFamily: TEXT_BOLD,
+                            fontSize: SIZES.FONT_H3,
+                            marginBottom: 5,
+                            marginLeft: 10
+                        }}
+                    />
+
+                    <ImageScalable
+                        source={Images.Zalo4}
+                        style={{
+                            zIndex: 99,
+                            marginBottom: 10
+                        }}
+                        width={SIZES.WIDTH_BASE * 0.9}
+                    />
+
+                    <CustomText
+                        text='Username chính là zalo Id. Nếu chưa có bạn có thể tạo'
+                        style={{
+                            color: COLORS.ACTIVE,
+                            fontFamily: TEXT_BOLD,
+                            fontSize: SIZES.FONT_H3,
+                            marginBottom: 5,
+                            marginLeft: 10
+                        }}
+                    />
+
+                    <ImageScalable
+                        source={Images.Zalo5}
+                        style={{
+                            zIndex: 99,
+                            marginBottom: 10
+                        }}
+                        width={SIZES.WIDTH_BASE * 0.9}
+                    />
+
+                    <CustomText
+                        text="Copy Username và đưa vào Zalo Id"
+                        style={{
+                            color: COLORS.ACTIVE,
+                            fontFamily: TEXT_BOLD,
+                            fontSize: SIZES.FONT_H3,
+                            marginBottom: 5,
+                            marginLeft: 10
+                        }}
+                    />
+
+                    <View>
+                        <CustomButton
+                            onPress={() => setIsModalZaloVisible(false)}
+                            buttonStyle={{ width: SIZES.WIDTH_BASE * 0.8 }}
+                            type="active"
+                            label="Đã hiểu"
+                        />
+                    </View>
+                </View>
+            )}
+        />
+    );
+
+    const renderModalInviteCoffee = () => (
+        <CustomModal
+            modalVisible={isModalInviteCoffeeVisible}
+            renderContent={() => (
+                <View
+                    style={{
+                        width: SIZES.WIDTH_BASE * 0.9
+                    }}
+                >
+                    <CustomText
+                        text="Lưu ý"
+                        style={{
+                            color: COLORS.ACTIVE,
+                            fontFamily: TEXT_BOLD,
+                            fontSize: SIZES.FONT_H3,
+                            marginBottom: 5,
+                            marginLeft: 10
+                        }}
+                    />
+
+                    <Text style={{
+                        fontSize: SIZES.FONT_H4,
+                        marginLeft: 10,
+                        marginRight: 10,
+                        fontFamily: TEXT_REGULAR,
+                        color: COLORS.DEFAULT
+                    }}>
+                        {HOST_CONTENT}
+                    </Text>
+
+                    <View>
+                        <CustomButton
+                            onPress={() => {
+                                setModalInviteCoffeeVisible(false);
+                                setAcceptInviteCoffeeVisible(true);
+                            }}
+                            buttonStyle={{ width: SIZES.WIDTH_BASE * 0.8 }}
+                            type="active"
+                            label="Đã hiểu"
+                        />
+                    </View>
+                </View>
+            )}
+        />
+    );
+
     try {
         return (
             <>
@@ -802,6 +1095,7 @@ export default function UpdateInfoAccount() {
                                 {renderDobGender()}
                                 {renderInputHeightWeight()}
                                 {renderInputHometown()}
+                                {checkBoxLetOtherInviteCoffee()}
                                 {/* {renderInputInterests()} */}
                                 {renderOptionInterests()}
                                 {renderInputDescription()}
@@ -813,6 +1107,8 @@ export default function UpdateInfoAccount() {
                         )}
                         {renderModalGuideMessenger()}
                         {renderModalGuideSkype()}
+                        {renderModalGuideZalo()}
+                        {renderModalInviteCoffee()}
                     </KeyboardAwareScrollView>
                 )}
             </>

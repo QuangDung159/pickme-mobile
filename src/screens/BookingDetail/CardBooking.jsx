@@ -284,6 +284,7 @@ export default function CardBooking({ booking, navigation }) {
             endAt,
             partnerName,
             totalAmount,
+            partnerFee,
             status,
             date,
             idReadAble,
@@ -294,6 +295,8 @@ export default function CardBooking({ booking, navigation }) {
         if (!booking) {
             return null;
         }
+        
+        const xuDisplay = customerId === currentUser?.id ? totalAmount : partnerFee;
 
         const startStr = convertMinutesToStringHours(startAt);
         const endStr = convertMinutesToStringHours(endAt);
@@ -328,7 +331,7 @@ export default function CardBooking({ booking, navigation }) {
                                 }
                             ]
                         }
-                        text={`${customerId === currentUser?.id ? 'Host' : 'Khách hàng'}`}
+                        text={`${customerId === currentUser?.id ? 'Host' : 'Khách'}`}
                     />
                     <CustomText
                         style={
@@ -341,7 +344,7 @@ export default function CardBooking({ booking, navigation }) {
                                 }
                             ]
                         }
-                        text={`Mã đơn: #${idReadAble}`}
+                        text={`Hẹn: #${idReadAble}`}
                     />
                 </View>
 
@@ -471,7 +474,7 @@ export default function CardBooking({ booking, navigation }) {
                             fontSize: SIZES.FONT_H1,
                             color: COLORS.ACTIVE
                         }}
-                        text={`Xu: ${CommonHelpers.formatCurrency(totalAmount)}`}
+                        text={`Xu: ${CommonHelpers.formatCurrency(xuDisplay)}`}
                     />
                     <CustomButton
                         onPress={() => {
