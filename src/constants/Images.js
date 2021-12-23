@@ -20,11 +20,11 @@ const Skype3 = require('../../assets/images/guideImages/skype-3.webp');
 const Skype4 = require('../../assets/images/guideImages/skype-4.webp');
 const Skype5 = require('../../assets/images/guideImages/skype-5.webp');
 const Skype6 = require('../../assets/images/guideImages/skype-6.webp');
-const Zalo1 = require('../../assets/images/guideImages/zalo-1.jpg');
-const Zalo2 = require('../../assets/images/guideImages/zalo-2.jpg');
-const Zalo3 = require('../../assets/images/guideImages/zalo-3.jpg');
-const Zalo4 = require('../../assets/images/guideImages/zalo-4.jpg');
-const Zalo5 = require('../../assets/images/guideImages/zalo-5.jpg');
+const Zalo1 = require('../../assets/images/guideImages/zalo-1.webp');
+const Zalo2 = require('../../assets/images/guideImages/zalo-2.webp');
+const Zalo3 = require('../../assets/images/guideImages/zalo-3.webp');
+const Zalo4 = require('../../assets/images/guideImages/zalo-4.webp');
+const Zalo5 = require('../../assets/images/guideImages/zalo-5.webp');
 
 export default {
     Onboarding,

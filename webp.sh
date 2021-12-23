@@ -1,7 +1,7 @@
 #! /bin/bash
 
 # for f in assets/images/*.jpeg; do
-# for f in assets/images/guideImages/*.png; do
+for f in assets/images/guideImages/*.jpg; do
 # for f in assets/images/*.jpeg; do
   echo "Converting $f"
   ff=${f%????}  

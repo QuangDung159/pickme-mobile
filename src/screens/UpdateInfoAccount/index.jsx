@@ -1,19 +1,19 @@
 import {
-    CenterLoader, CustomButton, CustomInput, CustomModal, CustomText, OptionItem, RadioButton, CustomCheckbox
+    CenterLoader, CustomButton, CustomCheckbox, CustomInput, CustomModal, CustomText, OptionItem, RadioButton
 } from '@components/uiComponents';
+import { HOST_CONTENT } from '@constants/HostContent';
 import { Images, Interests, Theme } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
+import MediaHelpers from '@helpers/MediaHelpers';
 import ValidationHelpers from '@helpers/ValidationHelpers';
 import { setCurrentUser, setPersonTabActiveIndex } from '@redux/Actions';
 import { UserServices } from '@services/index';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
-import { TouchableOpacity, View, Text, Alert } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import ImageScalable from 'react-native-scalable-image';
 import { useDispatch, useSelector } from 'react-redux';
-import MediaHelpers from '@helpers/MediaHelpers';
-import { HOST_CONTENT } from '@constants/HostContent';
 
 const { SIZES, COLORS, FONT: { TEXT_BOLD, TEXT_REGULAR } } = Theme;
 
@@ -30,7 +30,6 @@ export default function UpdateInfoAccount() {
     const [isAcceptInviteCoffeeVisible, setAcceptInviteCoffeeVisible] = useState(currentUser.isHost);
     const [imageUrl, setImageUrl] = useState(currentUser.imageUrl);
     const [imagePath, setImagePath] = useState(currentUser.imageUrl);
-
 
     const dispatch = useDispatch();
 
@@ -78,10 +77,11 @@ export default function UpdateInfoAccount() {
                 marginVertical: 5,
                 width: SIZES.WIDTH_BASE * 0.9,
                 flexDirection: 'row',
-                justifyContent: 'space-between'
+                justifyContent: 'space-between',
+                alignItems: 'center'
             }}
             autoCapitalize
-            label="Họ Tên"
+            label="Họ tên:*"
         />
     );
 
@@ -94,10 +94,11 @@ export default function UpdateInfoAccount() {
                 marginVertical: 10,
                 width: SIZES.WIDTH_BASE * 0.9,
                 flexDirection: 'row',
-                justifyContent: 'space-between'
+                justifyContent: 'space-between',
+                alignItems: 'center'
             }}
             keyboardType="number-pad"
-            label="SĐT"
+            label="SĐT:*"
         />
     );
 
@@ -108,11 +109,12 @@ export default function UpdateInfoAccount() {
             containerStyle={{
                 width: SIZES.WIDTH_BASE * 0.9,
                 flexDirection: 'row',
-                justifyContent: 'space-between'
+                justifyContent: 'space-between',
+                alignItems: 'center'
             }}
             inputStyle={{ width: 280 }}
             autoCapitalize
-            label="Nơi ở"
+            label="Nơi ở:*"
         />
     );
 
@@ -129,9 +131,10 @@ export default function UpdateInfoAccount() {
                 containerStyle={{
                     width: SIZES.WIDTH_BASE * 0.9,
                     flexDirection: 'row',
-                    justifyContent: 'space-between'
+                    justifyContent: 'space-between',
+                    alignItems: 'center'
                 }}
-                label="Zalo Username"
+                label="Zalo Username:"
             />
         </TouchableOpacity>
     );
@@ -150,9 +153,10 @@ export default function UpdateInfoAccount() {
                     marginVertical: 10,
                     width: SIZES.WIDTH_BASE * 0.9,
                     flexDirection: 'row',
-                    justifyContent: 'space-between'
+                    justifyContent: 'space-between',
+                    alignItems: 'center'
                 }}
-                label="Skype Id"
+                label="Skype Id:"
             />
         </TouchableOpacity>
     );
@@ -170,9 +174,10 @@ export default function UpdateInfoAccount() {
                 containerStyle={{
                     width: SIZES.WIDTH_BASE * 0.9,
                     flexDirection: 'row',
-                    justifyContent: 'space-between'
+                    justifyContent: 'space-between',
+                    alignItems: 'center'
                 }}
-                label="Facebook Id"
+                label="Facebook Id:"
             />
         </TouchableOpacity>
     );
@@ -258,13 +263,15 @@ export default function UpdateInfoAccount() {
             multiline
             value={newUser.description}
             onChangeText={(input) => onChangeDescription(input)}
-
             containerStyle={{
                 marginVertical: 10,
-                width: SIZES.WIDTH_BASE * 0.9
+                width: SIZES.WIDTH_BASE * 0.9,
+            }}
+            inputStyle={{
+                height: 60
             }}
             autoCapitalize
-            label="Mô tả ngắn"
+            label="Mô tả ngắn:"
         />
     );
 
@@ -285,7 +292,7 @@ export default function UpdateInfoAccount() {
                         color: COLORS.ACTIVE,
                         marginBottom: 5
                     }}
-                    text="Cao (cm)"
+                    text="Cao (cm):*"
                 />
                 <CustomInput
                     inputStyle={{
@@ -303,7 +310,7 @@ export default function UpdateInfoAccount() {
                         color: COLORS.ACTIVE,
                         marginBottom: 5
                     }}
-                    text="Nặng (kg)"
+                    text="Nặng (kg):*"
                 />
                 <CustomInput
                     inputStyle={{
@@ -318,15 +325,7 @@ export default function UpdateInfoAccount() {
     );
 
     const renderDobGender = () => (
-        <View
-        // style={{
-        //     flexDirection: 'row',
-        //     justifyContent: 'space-between',
-        //     alignItems: 'center',
-        //     marginVertical: 10,
-        //     width: '90%',
-        // }}
-        >
+        <View>
             <CustomInput
                 inputStyle={{
                     width: SIZES.WIDTH_BASE * 0.44
@@ -334,11 +333,12 @@ export default function UpdateInfoAccount() {
                 containerStyle={{
                     width: SIZES.WIDTH_BASE * 0.9,
                     flexDirection: 'row',
-                    justifyContent: 'space-between'
+                    justifyContent: 'space-between',
+                    alignItems: 'center'
                 }}
                 onChangeText={(input) => onChangeYear(input)}
                 value={newUser?.dob?.substr(0, 4)}
-                label="Năm Sinh"
+                label="Năm Sinh:*"
                 keyboardType="number-pad"
             />
 
@@ -507,72 +507,70 @@ export default function UpdateInfoAccount() {
                 setImageUrl(res.data.url);
             },
         );
-    }
+    };
 
-    const checkBoxLetOtherInviteCoffee = () => {
-        return (
-            <View
-                style={{
-                    paddingTop: 10,
+    const checkBoxLetOtherInviteCoffee = () => (
+        <View
+            style={{
+                paddingTop: 10,
+            }}
+        >
+            <CustomCheckbox
+                label="Trở thành HOST"
+                onPressLabel={() => {
+                    setModalInviteCoffeeVisible(true);
                 }}
-            >
-                <CustomCheckbox
-                    label="Trở thành HOST"
-                    onPressLabel={() => {
+                isChecked={isAcceptInviteCoffeeVisible}
+                onChange={() => {
+                    if (!isAcceptInviteCoffeeVisible) {
                         setModalInviteCoffeeVisible(true);
-                    }}
-                    isChecked={isAcceptInviteCoffeeVisible}
-                    onChange={() => {
-                        if (!isAcceptInviteCoffeeVisible) {
-                            setModalInviteCoffeeVisible(true);
-                        }
-                        setAcceptInviteCoffeeVisible(!isAcceptInviteCoffeeVisible)
-                    }}
-                />
-                {renderImageUrl()}
-            </View>
-        )
-    }
-
-    const renderImageUrl = () => {
-        return (
-            isAcceptInviteCoffeeVisible &&
-            <View
-                style={{
-                    marginTop: 10,
-                    alignSelf: 'center'
+                    }
+                    setAcceptInviteCoffeeVisible(!isAcceptInviteCoffeeVisible);
                 }}
-            >
-                <CustomButton
-                    onPress={() => onChooseImage()}
-                    type="active"
-                    label='Chọn ảnh'
-                    buttonStyle={{
-                        width: SIZES.WIDTH_BASE * 0.9,
-                    }}
-                    labelStyle={{
-                        fontFamily: TEXT_REGULAR,
-                        fontSize: SIZES.FONT_H4
-                    }}
-                />
+            />
+            {renderImageUrl()}
+        </View>
+    );
+
+    const renderImageUrl = () => (
+        isAcceptInviteCoffeeVisible
+            && (
                 <View
                     style={{
                         marginTop: 10,
                         alignSelf: 'center'
                     }}
                 >
-                    <ImageScalable
-                        style={{
-                            zIndex: 99
+                    <CustomButton
+                        onPress={() => onChooseImage()}
+                        type="active"
+                        label="Chọn ảnh"
+                        buttonStyle={{
+                            width: SIZES.WIDTH_BASE * 0.9,
                         }}
-                        width={SIZES.WIDTH_BASE * 0.9}
-                        source={{ uri: imagePath }}
+                        labelStyle={{
+                            fontFamily: TEXT_REGULAR,
+                            fontSize: SIZES.FONT_H4
+                        }}
                     />
+                    <View
+                        style={{
+                            marginTop: 10,
+                            alignSelf: 'center'
+                        }}
+                    >
+                        <ImageScalable
+                            style={{
+                                zIndex: 99
+                            }}
+                            width={SIZES.WIDTH_BASE * 0.9}
+                            source={{ uri: imagePath }}
+                        />
+                    </View>
                 </View>
-            </View>
+            )
 
-        );
-    };
+    );
 
     const validateYearsOld = (dob) => {
         const dateString = moment(dob).format('YYYY-MM-DD');
@@ -586,13 +584,13 @@ export default function UpdateInfoAccount() {
             return;
         }
 
-        let body = {
+        const body = {
             ...newUser,
             email: currentUser.userName,
             IsMale: newUser.isMale,
             interests: createInterestStr(),
             isHost: isAcceptInviteCoffeeVisible,
-            imageUrl: imageUrl
+            imageUrl
         };
 
         setIsShowSpinner(true);
@@ -943,7 +941,7 @@ export default function UpdateInfoAccount() {
                     />
 
                     <CustomText
-                        text='Chọn vào dấu 3 chấm góc phải'
+                        text="Chọn vào dấu 3 chấm góc phải"
                         style={{
                             color: COLORS.ACTIVE,
                             fontFamily: TEXT_BOLD,
@@ -983,7 +981,7 @@ export default function UpdateInfoAccount() {
                     />
 
                     <CustomText
-                        text='Username chính là zalo Id. Nếu chưa có bạn có thể tạo'
+                        text="Username chính là zalo Id. Nếu chưa có bạn có thể tạo"
                         style={{
                             color: COLORS.ACTIVE,
                             fontFamily: TEXT_BOLD,
@@ -1052,7 +1050,8 @@ export default function UpdateInfoAccount() {
                         marginRight: 10,
                         fontFamily: TEXT_REGULAR,
                         color: COLORS.DEFAULT
-                    }}>
+                    }}
+                    >
                         {HOST_CONTENT}
                     </Text>
 

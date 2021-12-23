@@ -273,7 +273,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
         const {
             earningExpected,
             bookingCompletedCount,
-            ratingAvg
+            // ratingAvg
         } = userInfo;
 
         return (
