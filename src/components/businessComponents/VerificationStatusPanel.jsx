@@ -93,7 +93,7 @@ export default function VerificationStatusPanel() {
                     style={{
                         width: SIZES.WIDTH_BASE * 0.9,
                         alignSelf: 'center',
-                        borderWidth: 1,
+                        borderWidth: 0.5,
                         borderColor: COLORS.ACTIVE,
                         borderRadius: 20,
                         marginTop: 5

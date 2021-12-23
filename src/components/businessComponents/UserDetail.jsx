@@ -310,7 +310,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
 
     const handleShowPartnerDataPanel = () => {
         if (isCurrentUser) {
-            if (currentUser.isPartnerVerified) {
+            if (currentUser.isHost) {
                 return (
                     <>
                         {renderPartnerDataPanel()}
@@ -318,7 +318,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                 );
             }
         }
-        if (userInfo.isPartnerVerified) {
+        if (userInfo.isHost) {
             return (
                 <>
                     {renderPartnerDataPanel()}
@@ -422,7 +422,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                         <Text
                             style={{
                                 fontFamily: TEXT_REGULAR,
-                                fontSize: SIZES.FONT_H3,
+                                fontSize: SIZES.FONT_H4 - 1,
                                 color: COLORS.DEFAULT,
                                 textAlign: 'center'
                             }}

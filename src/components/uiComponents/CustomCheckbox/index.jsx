@@ -1,13 +1,11 @@
 import IconCustom from '@components/uiComponents/IconCustom';
 import { IconFamily, Theme } from '@constants/index';
 import React from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
+import CustomText from '../CustomText';
 
 const {
     COLORS,
-    FONT: {
-        TEXT_REGULAR
-    },
     SIZES
 } = Theme;
 
@@ -28,8 +26,9 @@ export default function CustomCheckbox({
                 [
                     {
                         flexDirection: 'row',
-                        alignSelf: 'center',
                         width: SIZES.WIDTH_BASE * 0.9,
+                        justifyContent: 'center',
+                        alignItems: 'center'
                     },
                     containerStyle
                 ]
@@ -51,7 +50,6 @@ export default function CustomCheckbox({
                     ]
                 }
                 onPress={() => {
-                    // Alert.alert('before: ' + isChecked)
                     if (onChange) onChange(!isChecked);
                 }}
             >
@@ -69,25 +67,21 @@ export default function CustomCheckbox({
                     if (onPressLabel) onPressLabel();
                 }}
                 style={{
-                    justifyContent: 'center',
                     width: SIZES.WIDTH_BASE * 0.9 - 25,
                 }}
             >
-                <Text
+                <CustomText
+                    text={label}
                     style={
                         [
                             {
-                                fontFamily: TEXT_REGULAR,
-                                fontSize: SIZES.FONT_H4,
-                                color: COLORS.DEFAULT,
                                 marginLeft: 5,
+                                fontSize: SIZES.FONT_H4
                             },
                             labelStyle
                         ]
                     }
-                >
-                    {label}
-                </Text>
+                />
             </TouchableOpacity>
         </View>
     );

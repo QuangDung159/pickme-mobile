@@ -1,5 +1,5 @@
 import {
-    CenterLoader, CustomButton, CustomCheckbox, CustomInput, CustomModal, CustomText, OptionItem, RadioButton
+    CenterLoader, CustomButton, CustomCheckbox, CustomInput, CustomModal, CustomText, OptionItem
 } from '@components/uiComponents';
 import { HOST_CONTENT } from '@constants/HostContent';
 import { Images, Interests, Theme } from '@constants/index';
@@ -28,7 +28,6 @@ export default function UpdateInfoAccount() {
     const [isModalZaloVisible, setIsModalZaloVisible] = useState(false);
     const [isModalInviteCoffeeVisible, setModalInviteCoffeeVisible] = useState(false);
     const [isAcceptInviteCoffeeVisible, setAcceptInviteCoffeeVisible] = useState(currentUser.isHost);
-    const [imageUrl, setImageUrl] = useState(currentUser.imageUrl);
     const [imagePath, setImagePath] = useState(currentUser.imageUrl);
 
     const dispatch = useDispatch();
@@ -74,14 +73,16 @@ export default function UpdateInfoAccount() {
             inputStyle={{ width: 280 }}
             onChangeText={(input) => onChangeName(input)}
             containerStyle={{
-                marginVertical: 5,
                 width: SIZES.WIDTH_BASE * 0.9,
                 flexDirection: 'row',
                 justifyContent: 'space-between',
-                alignItems: 'center'
+                alignItems: 'center',
+                marginBottom: 10,
+                marginTop: 5
             }}
             autoCapitalize
             label="Họ tên:*"
+            maxLength={35}
         />
     );
 
@@ -91,7 +92,7 @@ export default function UpdateInfoAccount() {
             inputStyle={{ width: 280 }}
             onChangeText={(input) => setNewUser({ ...newUser, phoneNum: input })}
             containerStyle={{
-                marginVertical: 10,
+                marginBottom: 10,
                 width: SIZES.WIDTH_BASE * 0.9,
                 flexDirection: 'row',
                 justifyContent: 'space-between',
@@ -99,6 +100,7 @@ export default function UpdateInfoAccount() {
             }}
             keyboardType="number-pad"
             label="SĐT:*"
+            maxLength={12}
         />
     );
 
@@ -110,11 +112,12 @@ export default function UpdateInfoAccount() {
                 width: SIZES.WIDTH_BASE * 0.9,
                 flexDirection: 'row',
                 justifyContent: 'space-between',
-                alignItems: 'center'
+                alignItems: 'center',
             }}
             inputStyle={{ width: 280 }}
             autoCapitalize
             label="Nơi ở:*"
+            maxLength={35}
         />
     );
 
@@ -135,6 +138,7 @@ export default function UpdateInfoAccount() {
                     alignItems: 'center'
                 }}
                 label="Zalo Username:"
+                maxLength={35}
             />
         </TouchableOpacity>
     );
@@ -157,6 +161,7 @@ export default function UpdateInfoAccount() {
                     alignItems: 'center'
                 }}
                 label="Skype Id:"
+                maxLength={35}
             />
         </TouchableOpacity>
     );
@@ -178,6 +183,7 @@ export default function UpdateInfoAccount() {
                     alignItems: 'center'
                 }}
                 label="Facebook Id:"
+                maxLength={100}
             />
         </TouchableOpacity>
     );
@@ -271,7 +277,8 @@ export default function UpdateInfoAccount() {
                 height: 60
             }}
             autoCapitalize
-            label="Mô tả ngắn:"
+            label="Mô tả ngắn:*"
+            maxLength={100}
         />
     );
 
@@ -301,6 +308,7 @@ export default function UpdateInfoAccount() {
                     onChangeText={(input) => setNewUser({ ...newUser, height: input })}
                     value={newUser.height}
                     keyboardType="number-pad"
+                    maxLength={3}
                 />
             </View>
 
@@ -319,50 +327,127 @@ export default function UpdateInfoAccount() {
                     onChangeText={(input) => setNewUser({ ...newUser, weight: input })}
                     value={newUser.weight}
                     keyboardType="number-pad"
+                    maxLength={3}
                 />
             </View>
         </View>
     );
 
-    const renderDobGender = () => (
-        <View>
-            <CustomInput
-                inputStyle={{
+    const renderDOB = () => (
+        <CustomInput
+            inputStyle={{
+                width: SIZES.WIDTH_BASE * 0.44
+            }}
+            containerStyle={{
+                width: SIZES.WIDTH_BASE * 0.9,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center'
+            }}
+            onChangeText={(input) => onChangeYear(input)}
+            value={newUser?.dob?.substr(0, 4)}
+            label="Năm Sinh:*"
+            keyboardType="number-pad"
+            maxLength={4}
+        />
+    );
+
+    const renderGender = () => (
+        <View style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            width: SIZES.WIDTH_BASE * 0.9,
+            marginBottom: 5
+        }}
+        >
+            <OptionItem
+                item={{ value: 'Nam' }}
+                index={0}
+                handlePressItem={() => setNewUser({ ...newUser, isMale: true })}
+                isSelected={newUser.isMale}
+                containerStyle={{
                     width: SIZES.WIDTH_BASE * 0.44
                 }}
-                containerStyle={{
-                    width: SIZES.WIDTH_BASE * 0.9,
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    alignItems: 'center'
+                titleStyle={{
+                    fontFamily: TEXT_BOLD,
+                    textAlign: 'center'
                 }}
-                onChangeText={(input) => onChangeYear(input)}
-                value={newUser?.dob?.substr(0, 4)}
-                label="Năm Sinh:*"
-                keyboardType="number-pad"
             />
-
-            <View style={{
-                flexDirection: 'row',
-                justifyContent: 'space-around',
-                alignItems: 'center',
-                width: SIZES.WIDTH_BASE * 0.44,
-                marginTop: 10
-            }}
-            >
-                <RadioButton
-                    label="Nam"
-                    selected={newUser.isMale}
-                    onPress={() => setNewUser({ ...newUser, isMale: true })}
-                />
-                <RadioButton
-                    label="Nữ"
-                    selected={!newUser.isMale}
-                    onPress={() => setNewUser({ ...newUser, isMale: false })}
-                />
-            </View>
+            <OptionItem
+                item={{ value: 'Nữ' }}
+                index={1}
+                handlePressItem={() => setNewUser({ ...newUser, isMale: false })}
+                isSelected={!newUser.isMale}
+                containerStyle={{
+                    width: SIZES.WIDTH_BASE * 0.44,
+                    marginRight: 0
+                }}
+                titleStyle={{
+                    fontFamily: TEXT_BOLD,
+                    textAlign: 'center'
+                }}
+            />
         </View>
     );
+
+    // const renderDobGender = () => (
+    //     <View>
+    //         <CustomInput
+    //             inputStyle={{
+    //                 width: SIZES.WIDTH_BASE * 0.44
+    //             }}
+    //             containerStyle={{
+    //                 width: SIZES.WIDTH_BASE * 0.9,
+    //                 flexDirection: 'row',
+    //                 justifyContent: 'space-between',
+    //                 alignItems: 'center'
+    //             }}
+    //             onChangeText={(input) => onChangeYear(input)}
+    //             value={newUser?.dob?.substr(0, 4)}
+    //             label="Năm Sinh:*"
+    //             keyboardType="number-pad"
+    //         />
+
+    //         <View style={{
+    //             flexDirection: 'row',
+    //             justifyContent: 'space-between',
+    //             alignItems: 'center',
+    //             width: SIZES.WIDTH_BASE * 0.9,
+    //             marginTop: 10
+    //         }}
+    //         >
+
+    //             <OptionItem
+    //                 item={{ value: 'Nam' }}
+    //                 index={0}
+    //                 handlePressItem={() => setNewUser({ ...newUser, isMale: true })}
+    //                 isSelected={newUser.isMale}
+    //                 containerStyle={{
+    //                     width: SIZES.WIDTH_BASE * 0.44
+    //                 }}
+    //                 titleStyle={{
+    //                     fontFamily: TEXT_BOLD,
+    //                     textAlign: 'center'
+    //                 }}
+    //             />
+    //             <OptionItem
+    //                 item={{ value: 'Nữ' }}
+    //                 index={1}
+    //                 handlePressItem={() => setNewUser({ ...newUser, isMale: false })}
+    //                 isSelected={!newUser.isMale}
+    //                 containerStyle={{
+    //                     width: SIZES.WIDTH_BASE * 0.44,
+    //                     marginRight: 0
+    //                 }}
+    //                 titleStyle={{
+    //                     fontFamily: TEXT_BOLD,
+    //                     textAlign: 'center'
+    //                 }}
+    //             />
+    //         </View>
+    //     </View>
+    // );
 
     const onChangeYear = (yearInput) => {
         setNewUser({ ...newUser, dob: yearInput });
@@ -500,19 +585,12 @@ export default function UpdateInfoAccount() {
             },
             0.6
         );
-        // upload image after choose. should do spin & upload only when user click button
-        MediaHelpers.imgbbUploadImage(
-            imagePath,
-            async (res) => {
-                setImageUrl(res.data.url);
-            },
-        );
     };
 
     const checkBoxLetOtherInviteCoffee = () => (
         <View
             style={{
-                paddingTop: 10,
+                paddingBottom: 10,
             }}
         >
             <CustomCheckbox
@@ -548,10 +626,6 @@ export default function UpdateInfoAccount() {
                         buttonStyle={{
                             width: SIZES.WIDTH_BASE * 0.9,
                         }}
-                        labelStyle={{
-                            fontFamily: TEXT_REGULAR,
-                            fontSize: SIZES.FONT_H4
-                        }}
                     />
                     <View
                         style={{
@@ -559,17 +633,28 @@ export default function UpdateInfoAccount() {
                             alignSelf: 'center'
                         }}
                     >
-                        <ImageScalable
-                            style={{
-                                zIndex: 99
-                            }}
-                            width={SIZES.WIDTH_BASE * 0.9}
-                            source={{ uri: imagePath }}
-                        />
+                        {imagePath ? (
+                            <ImageScalable
+                                style={{
+                                    zIndex: 99
+                                }}
+                                width={SIZES.WIDTH_BASE * 0.9}
+                                source={{ uri: imagePath }}
+                            />
+                        ) : (
+                            <View
+                                style={{
+                                    alignItems: 'center',
+                                    marginVertical: 5
+                                }}
+                            >
+                                <CustomText text="Chưa có ảnh" />
+                            </View>
+                        )}
+
                     </View>
                 </View>
             )
-
     );
 
     const validateYearsOld = (dob) => {
@@ -579,21 +664,22 @@ export default function UpdateInfoAccount() {
         return !(years < 16);
     };
 
-    const onSubmitUpdateInfo = async () => {
-        if (!validate()) {
-            return;
-        }
+    const uploadImage = (callback) => {
+        MediaHelpers.imgbbUploadImage(
+            imagePath,
+            async (res) => callback(res),
+        );
+    };
 
+    const submitUpdateInfo = async (url) => {
         const body = {
             ...newUser,
             email: currentUser.userName,
             IsMale: newUser.isMale,
             interests: createInterestStr(),
             isHost: isAcceptInviteCoffeeVisible,
-            imageUrl
+            imageUrl: url
         };
-
-        setIsShowSpinner(true);
 
         const result = await UserServices.submitUpdateInfoAsync(body);
         const { data } = result;
@@ -605,6 +691,15 @@ export default function UpdateInfoAccount() {
             ToastHelpers.renderToast(data.message, 'success');
         }
         setIsShowSpinner(false);
+    };
+
+    const onSubmitUpdateInfo = async () => {
+        if (!validate()) {
+            return;
+        }
+
+        setIsShowSpinner(true);
+        uploadImage((image) => submitUpdateInfo(image.data.url));
     };
 
     const renderModalGuideMessenger = () => (
@@ -1091,13 +1186,15 @@ export default function UpdateInfoAccount() {
                             <>
                                 {renderInputName()}
                                 {renderInputPhone()}
-                                {renderDobGender()}
-                                {renderInputHeightWeight()}
                                 {renderInputHometown()}
-                                {checkBoxLetOtherInviteCoffee()}
+                                {renderInputHeightWeight()}
+                                {renderGender()}
+                                {renderDOB()}
+                                {/* {renderDobGender()} */}
                                 {/* {renderInputInterests()} */}
                                 {renderOptionInterests()}
                                 {renderInputDescription()}
+                                {checkBoxLetOtherInviteCoffee()}
                                 {renderInputZalo()}
                                 {renderInputSkype()}
                                 {renderInputMessenger()}

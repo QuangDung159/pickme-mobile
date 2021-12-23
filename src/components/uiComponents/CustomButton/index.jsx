@@ -64,7 +64,7 @@ export default function CustomButton(
                         {
                             fontFamily: TEXT_BOLD,
                             fontSize: SIZES.FONT_H3,
-                            color: COLORS.ACTIVE
+                            color: COLORS.ACTIVE,
                         },
                         labelStyle
                     ]
@@ -191,7 +191,7 @@ export default function CustomButton(
 
 const styles = StyleSheet.create({
     baseButtonStyle: {
-        borderWidth: 1,
+        borderWidth: 0.5,
         borderRadius: 20,
         height: 35,
         alignSelf: 'center',
