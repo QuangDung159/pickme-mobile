@@ -26,7 +26,7 @@ const {
 
 export default function Support({ navigation }) {
     const [routes] = React.useState([
-        { key: 'listFaq', title: 'Câu hỏi\nthường gặp' },
+        { key: 'listFaq', title: 'Câu hỏi' },
         { key: 'bugReportForm', title: 'Báo lỗi' },
     ]);
 

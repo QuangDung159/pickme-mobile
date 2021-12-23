@@ -54,23 +54,23 @@ export default {
     ],
     faq: [
         {
-            answer: 'Việc quyết định địa điểm hẹn là do khách hàng và Host tự thỏa thuận với nhau. Để đảm bảo tính minh bạch cũng như sự an toàn của cả Host và Khách nên đặt địa điểm tại những nơi công cộng, đông người qua lại, như trung tâm mua sắm, quán cafe, quán ăn, phố đi bộ..v.v',
-            question: 'Tôi có thể đặt địa điểm hẹn ở những nơi nào?'
+            answer: 'Việc quyết định địa điểm cà phê là do Host & Khách thỏa thuận với nhau. Để đảm bảo tính minh bạch cũng như sự an toàn của cả Host và Khách nên đặt địa điểm tại những nơi công cộng, đông người qua lại, như trung tâm mua sắm, quán cafe, quán ăn, phố đi bộ..v.v',
+            question: 'Địa điểm hẹn ở đâu?'
         },
         {
-            answer: 'Đầu tiên bạn phải tạo tài khoản. Sau đó vào menu đăng ký trở thành host. Cung cấp toàn bộ thông tin theo yêu cầu và chờ phản hồi trong vòng 24 giờ.',
-            question: 'Trở thành Host cần những điều gì?'
+            answer: 'Trong mục sửa thông tin cá nhân nhấn chọn "Trở thành HOST". Bạn chỉ cần có 1 tinh thần chính trực thích lắng nghe chia sẻ cùng người khác và chỉ vậy thôi.',
+            question: 'Trở thành Host?'
         },
         {
-            answer: 'Bạn sẽ có thể gia tăng thu nhập của bản thân. Chỉnh sửa thông tin liên quan đến thu nhập. Có thể tham gia cuộc hẹn hoặc trò chuyện online để gia tăng số Xu',
+            answer: 'Bạn sẽ có thể gia tăng thu nhập. Biết thêm nhiều người bạn mới và trong tương lai sẽ còn rất nhiều điều thú vị mà bạn có thể cống hiến.',
             question: 'Quyền lợi của Host?'
         },
         {
-            answer: 'Truy cập trang cá nhân => chọn tab Ví => Nạp Xu',
+            answer: 'Truy cập trang cá nhân => chọn tab Ví => Nạp',
             question: 'Làm sao tôi có thể nạp Xu?'
         },
         {
-            answer: 'Truy cập trang cá nhân => chọn tab Ví => Rút Xu',
+            answer: 'Truy cập trang cá nhân => chọn tab Ví => Rút',
             question: 'Làm sao tôi có thể rút Xu?'
         },
         {
@@ -78,11 +78,11 @@ export default {
             question: 'Chi phí nào khi tham gia ứng dụng?'
         },
         {
-            answer: 'Có nếu như buổi hẹn bạn đã thanh toán trước đó sẽ được hoàn Xu vào ví.',
+            answer: 'Có nếu như buổi hẹn bạn đã thanh toán trước đó sẽ được hoàn Xu vào Ví.',
             question: 'Nếu như buổi hẹn bị hủy tôi có được hoàn Xu lại không?'
         },
         {
-            answer: 'Cảm ơn bạn chúng tôi rất mong nhận được sự đóng góp phản hồi của bạn qua email: hotro.dichvuthuebangai@gmail.com',
+            answer: 'Cảm ơn bạn chúng tôi rất mong nhận được sự đóng góp phản hồi của bạn qua email: hotro.dichvuthuebangai@gmail.com hoặc gọi trực tiếp cho mình qua sđt: 0327575204',
             question: 'Tôi muốn đóng góp ý kiến?'
         },
     ]

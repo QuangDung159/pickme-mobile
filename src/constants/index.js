@@ -37,5 +37,5 @@ export {
     Interests,
     BookingNoteOptions,
     BookingTypes,
-    OutsideApp
+    OutsideApp,
 };

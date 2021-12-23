@@ -79,23 +79,23 @@ export default function Menu({ navigation }) {
         //         navigation.navigate(ScreenName.LEADER_BOARD);
         //     },
         // },
-        {
-            title: currentUser.isPartnerVerified ? 'Thông tin Host' : 'Đăng kí Host',
-            icon: {
-                name: 'star',
-                family: IconFamily.FONT_AWESOME,
-                size: 24,
-            },
-            onPress: () => {
-                if (currentUser.isPartnerVerified) {
-                    navigation.navigate(ScreenName.PARTNER_DATA);
-                } else {
-                    navigation.navigate(ScreenName.VERIFICATION, {
-                        navigateFrom: ScreenName.MENU
-                    });
-                }
-            },
-        },
+        // {
+        //     title: currentUser.isPartnerVerified ? 'Thông tin Host' : 'Đăng kí Host',
+        //     icon: {
+        //         name: 'star',
+        //         family: IconFamily.FONT_AWESOME,
+        //         size: 24,
+        //     },
+        //     onPress: () => {
+        //         if (currentUser.isPartnerVerified) {
+        //             navigation.navigate(ScreenName.PARTNER_DATA);
+        //         } else {
+        //             navigation.navigate(ScreenName.VERIFICATION, {
+        //                 navigateFrom: ScreenName.MENU
+        //             });
+        //         }
+        //     },
+        // },
         {
             title: ScreenTitle.CHANGE_PASSWORD,
             icon: {

@@ -1,5 +1,5 @@
 import {
-    CenterLoader, CustomButton, CustomInput, CustomText
+    CenterLoader, CustomButton, CustomInput, CustomText, NoteText, IconCustom
 } from '@components/uiComponents';
 import { Theme } from '@constants/index';
 import { CommonHelpers, ToastHelpers, ValidationHelpers } from '@helpers/index';
@@ -9,73 +9,33 @@ import { BankServices, CashServices, UserServices } from '@services/index';
 import React, { useEffect, useState } from 'react';
 import { Platform, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import IconFamily from '@constants/IconFamily';
 
 const {
     SIZES,
     COLORS,
     FONT: {
-        TEXT_BOLD
+        TEXT_BOLD,
+        TEXT_REGULAR
     }
 } = Theme;
 
 export default function CashOut() {
-    const [isShowSpinner, setIsShowSpinner] = useState(false);
-    const [cashOutForm, setCashOutForm] = useState({
-        bankNum: '',
-        ownerName: '',
-        bankId: '',
-        amount: ''
-    });
-    const [amountDisplay, setAmountDisplay] = useState('');
-
-    const listBank = useSelector((state) => state.bankReducer.listBank);
     const currentUser = useSelector((state) => state.userReducer.currentUser);
 
     const dispatch = useDispatch();
 
-    useEffect(
-        () => {
-            fetchListBankByStore();
-
-            const { bankNum, ownerName } = currentUser;
-            setCashOutForm({
-                ...cashOutForm,
-                bankNum,
-                ownerName,
-                amount: ''
-            });
-        }, []
-    );
-
-    useEffect(
-        () => {
-            if (listBank && listBank.length > 0) {
-                const { bankId } = currentUser;
-                setCashOutForm({
-                    ...cashOutForm,
-                    bankId: bankId || listBank[0].id,
-                });
-            }
-        }, [listBank]
-    );
-
-    const fetchListBankByStore = () => {
-        if (!listBank || listBank.length === 0) {
-            setIsShowSpinner(true);
-            fetchListBank();
-        }
-    };
-
-    const fetchListBank = async () => {
-        const result = await BankServices.fetchListBankAsync();
-        const { data } = result;
-
-        if (data) {
-            const listBankFetched = data.data;
-            dispatch(setListBank(listBankFetched));
-        }
-        setIsShowSpinner(false);
-    };
+    const { bankName, bankShortName, bankBranch, bankNum, ownerName } = currentUser;
+    const [isShowSpinner, setIsShowSpinner] = useState(false);
+    const [cashOutForm, setCashOutForm] = useState({
+        bankName,
+        bankShortName,
+        bankBranch,
+        bankNum,
+        ownerName,
+        amount: ''
+    });
+    const [amountDisplay, setAmountDisplay] = useState('');
 
     const getCurrentUser = async () => {
         const result = await UserServices.fetchCurrentUserInfoAsync();
@@ -90,6 +50,51 @@ export default function CashOut() {
 
     const validate = () => {
         const validationArr = [
+            {
+                fieldName: 'Ngân hàng',
+                input: cashOutForm.bankName,
+                validate: {
+                    required: {
+                        value: true,
+                    },
+                    maxLength: {
+                        value: 300,
+                    },
+                    minLength: {
+                        value: 5,
+                    },
+                }
+            },
+            {
+                fieldName: 'Viết tắt',
+                input: cashOutForm.bankShortName,
+                validate: {
+                    required: {
+                        value: true,
+                    },
+                    maxLength: {
+                        value: 20,
+                    },
+                    minLength: {
+                        value: 2,
+                    },
+                }
+            },
+            {
+                fieldName: 'Chi nhánh',
+                input: cashOutForm.bankBranch,
+                validate: {
+                    required: {
+                        value: true,
+                    },
+                    maxLength: {
+                        value: 50,
+                    },
+                    minLength: {
+                        value: 5,
+                    },
+                }
+            },
             {
                 fieldName: 'Số tài khoản',
                 input: cashOutForm.bankNum,
@@ -161,21 +166,12 @@ export default function CashOut() {
 
     const renderCashOutForm = () => {
         const {
-            ownerName,
+            bankName,
+            bankShortName,
+            bankBranch,
             bankNum,
-            bankId,
+            ownerName,
         } = cashOutForm;
-
-        const listBankFinal = [];
-
-        if (listBank) {
-            listBank.forEach((item) => {
-                const bank = { ...item };
-                bank.label = `${item.codeName} - ${item.name}`;
-                bank.value = item.id;
-                listBankFinal.push(bank);
-            });
-        }
 
         return (
             <View
@@ -191,12 +187,75 @@ export default function CashOut() {
                         marginTop: Platform.OS === 'ios' ? 0 : 10
                     }}
                 >
+                    <CustomInput
+                        value={bankName}
+                        onChangeText={(input) => setCashOutForm({ ...cashOutForm, bankName: input })}
+                        containerStyle={{
+                            marginVertical: 10,
+                            width: SIZES.WIDTH_BASE * 0.9
+                        }}
+                        label="Ngân hàng"
+                    />
+
+                    <CustomInput
+                        value={bankShortName}
+                        inputStyle={{ width: 200 }}
+                        onChangeText={(input) => setCashOutForm({ ...cashOutForm, bankShortName: input })}
+                        containerStyle={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            marginVertical: 10,
+                            width: SIZES.WIDTH_BASE * 0.9
+                        }}
+                        label="Viết tắt"
+                    />
+
+                    <CustomInput
+                        value={bankBranch}
+                        inputStyle={{ width: 200 }}
+                        onChangeText={(input) => setCashOutForm({ ...cashOutForm, bankBranch: input })}
+                        containerStyle={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            marginVertical: 10,
+                            width: SIZES.WIDTH_BASE * 0.9
+                        }}
+                        label="Chi nhanh"
+                    />
+
+                    <CustomInput
+                        value={bankNum}
+                        inputStyle={{ width: 200 }}
+                        onChangeText={(input) => setCashOutForm({ ...cashOutForm, bankNum: input })}
+                        containerStyle={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            marginVertical: 10,
+                            width: SIZES.WIDTH_BASE * 0.9
+                        }}
+                        label="Số tài khoản:*"
+                        keyboardType="number-pad"
+                    />
+
+                    <CustomInput
+                        value={ownerName}
+                        inputStyle={{ width: 200 }}
+                        onChangeText={(input) => setCashOutForm({ ...cashOutForm, ownerName: input })}
+                        containerStyle={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            marginVertical: 10,
+                            width: SIZES.WIDTH_BASE * 0.9
+                        }}
+                        label="Chủ tài khoản:*"
+                    />
+
                     <View
                         style={{
                             width: '100%',
-                            borderColor: COLORS.ACTIVE,
-                            borderRadius: 20,
-                            borderWidth: 1,
+                            // borderColor: COLORS.ACTIVE,
+                            // borderRadius: 20,
+                            // borderWidth: 1,
                             height: 35,
                             justifyContent: 'center'
                         }}
@@ -208,51 +267,10 @@ export default function CashOut() {
                                 color: COLORS.ACTIVE,
                                 textAlign: 'center'
                             }}
-                            text={`Xu: ${CommonHelpers.formatCurrency(currentUser.walletAmount)}`}
+                            text={`Tổng Xu: ${CommonHelpers.formatCurrency(currentUser.walletAmount)}`}
                         />
                     </View>
 
-                    <Picker
-                        selectedValue={bankId}
-                        onChangeText={(input) => setCashOutForm({ ...cashOutForm, bankId: input })}
-                        itemStyle={{
-                            fontSize: SIZES.FONT_H3,
-                            textAlign: 'left',
-                            color: COLORS.DEFAULT
-                        }}
-                        mode="dropdown"
-                        dropdownIconColor={COLORS.ACTIVE}
-                        style={{
-                            fontSize: SIZES.FONT_H2,
-                            color: COLORS.ACTIVE
-                        }}
-                    >
-                        {
-                            listBankFinal.map((item) => (
-                                <Picker.Item label={`   ${item.label}`} value={item.value} key={item.value} />
-                            ))
-                        }
-                    </Picker>
-                    <CustomInput
-                        value={bankNum}
-                        onChangeText={(input) => setCashOutForm({ ...cashOutForm, bankNum: input })}
-                        containerStyle={{
-                            marginVertical: 10,
-                            width: SIZES.WIDTH_BASE * 0.9
-                        }}
-                        label="Số tài khoản:*"
-                        keyboardType="number-pad"
-                    />
-
-                    <CustomInput
-                        value={ownerName}
-                        onChangeText={(input) => setCashOutForm({ ...cashOutForm, ownerName: input })}
-                        containerStyle={{
-                            marginVertical: 10,
-                            width: SIZES.WIDTH_BASE * 0.9
-                        }}
-                        label="Chủ tài khoản:*"
-                    />
                     <CustomInput
                         label="Số Xu rút: (1 Xu = 1 VND)"
                         value={amountDisplay}
@@ -290,6 +308,31 @@ export default function CashOut() {
                             buttonStyle={{
                                 width: SIZES.WIDTH_BASE * 0.9
                             }}
+                        />
+                    </View>
+
+                    <View
+                        style={{
+                            marginBottom: 5
+                        }}
+                    >
+                        <NoteText
+                            width={SIZES.WIDTH_BASE * 0.9}
+                            title="Lưu ý:"
+                            content="Nếu chuyển tiền giữa các ngân hàng mất phí thì chi phí này sẽ do người rút chi trả."
+                            contentStyle={{
+                                fontSize: SIZES.FONT_H4,
+                                color: COLORS.ACTIVE,
+                                fontFamily: TEXT_REGULAR,
+                            }}
+                            iconComponent={(
+                                <IconCustom
+                                    name="info-circle"
+                                    family={IconFamily.FONT_AWESOME}
+                                    size={18}
+                                    color={COLORS.ACTIVE}
+                                />
+                            )}
                         />
                     </View>
                 </View>
