@@ -70,7 +70,7 @@ export default function UpdateInfoAccount() {
     const renderInputName = () => (
         <CustomInput
             value={newUser.fullName}
-            inputStyle={{ width: 280 }}
+            inputStyle={{ width: SIZES.WIDTH_BASE * 0.7 }}
             onChangeText={(input) => onChangeName(input)}
             containerStyle={{
                 width: SIZES.WIDTH_BASE * 0.9,
@@ -89,7 +89,7 @@ export default function UpdateInfoAccount() {
     const renderInputPhone = () => (
         <CustomInput
             value={newUser.phoneNum}
-            inputStyle={{ width: 280 }}
+            inputStyle={{ width: SIZES.WIDTH_BASE * 0.7 }}
             onChangeText={(input) => setNewUser({ ...newUser, phoneNum: input })}
             containerStyle={{
                 marginBottom: 10,
@@ -114,7 +114,7 @@ export default function UpdateInfoAccount() {
                 justifyContent: 'space-between',
                 alignItems: 'center',
             }}
-            inputStyle={{ width: 280 }}
+            inputStyle={{ width: SIZES.WIDTH_BASE * 0.7 }}
             autoCapitalize
             label="Nơi ở:*"
             maxLength={35}
@@ -130,7 +130,7 @@ export default function UpdateInfoAccount() {
             <CustomInput
                 value={newUser.zalo}
                 onChangeText={(input) => setNewUser({ ...newUser, zalo: input })}
-                inputStyle={{ width: 200 }}
+                inputStyle={{ width: SIZES.WIDTH_BASE * 0.5 }}
                 containerStyle={{
                     width: SIZES.WIDTH_BASE * 0.9,
                     flexDirection: 'row',
@@ -152,7 +152,7 @@ export default function UpdateInfoAccount() {
             <CustomInput
                 value={newUser.skype}
                 onChangeText={(input) => setNewUser({ ...newUser, skype: input })}
-                inputStyle={{ width: 200 }}
+                inputStyle={{ width: SIZES.WIDTH_BASE * 0.5 }}
                 containerStyle={{
                     marginVertical: 10,
                     width: SIZES.WIDTH_BASE * 0.9,
@@ -175,7 +175,7 @@ export default function UpdateInfoAccount() {
             <CustomInput
                 value={newUser.facebook}
                 onChangeText={(input) => setNewUser({ ...newUser, facebook: input })}
-                inputStyle={{ width: 200 }}
+                inputStyle={{ width: SIZES.WIDTH_BASE * 0.5 }}
                 containerStyle={{
                     width: SIZES.WIDTH_BASE * 0.9,
                     flexDirection: 'row',

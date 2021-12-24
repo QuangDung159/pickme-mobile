@@ -105,11 +105,11 @@ export default function Albums({
                         <Text
                             style={{
                                 fontFamily: TEXT_REGULAR,
-                                fontSize: SIZES.FONT_H2,
+                                fontSize: SIZES.FONT_H3,
                                 color: COLORS.DEFAULT
                             }}
                         >
-                            {`${isCurrentUser ? 'Bạn chưa có ảnh' : 'Không có gì để hiển thị'}`}
+                            {`${isCurrentUser ? 'Bạn chưa có ảnh' : ''}`}
                         </Text>
                     </View>
                 ) : (
