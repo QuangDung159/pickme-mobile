@@ -18,7 +18,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import PartnerDataSection from './PartnerDataSection';
 import ProfileInfoItem from './ProfileInfoItem';
 import SubInfoProfile from './SubInfoProfile';
-import VerificationStatusPanel from './VerificationStatusPanel';
 
 const {
     FONT: {
@@ -396,7 +395,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                             <Text
                                 style={{
                                     color: COLORS.ACTIVE,
-                                    fontSize: SIZES.FONT_H2,
+                                    fontSize: SIZES.FONT_H3,
                                     fontFamily: TEXT_BOLD,
                                     textAlign: 'center',
                                 }}
@@ -406,7 +405,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                             {isCurrentUser && (
                                 <IconCustom
                                     style={{
-                                        marginTop: 9,
+                                        marginTop: 11,
                                         marginLeft: 2
                                     }}
                                     name="pencil-alt"
@@ -466,7 +465,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                 {handleShowPartnerDataPanel()}
             </View>
 
-            {isCurrentUser && (
+            {/* {isCurrentUser && (
                 <>
                     {!userInfo?.isCustomerVerified && (
                         <TouchableOpacity
@@ -478,7 +477,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                         </TouchableOpacity>
                     )}
                 </>
-            )}
+            )} */}
 
             <Line
                 borderColor={COLORS.ACTIVE}
