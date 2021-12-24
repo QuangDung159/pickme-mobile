@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 import { CenterLoader, CustomInput, IconCustom } from '@components/uiComponents';
 import {
@@ -9,9 +10,11 @@ import { socketRequestUtil } from '@utils/index';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import {
+    Alert,
     FlatList, KeyboardAvoidingView, Platform, StyleSheet, Text, TouchableOpacity, View
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import uuid from 'react-native-uuid';
 
 const {
     FONT: {
@@ -33,16 +36,16 @@ export default function Message({ navigation, route }) {
     const numberMessageUnread = useSelector((state) => state.messageReducer.numberMessageUnread);
     const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
 
+    const {
+        params: {
+            toUserId
+        }
+    } = route;
+
     const dispatch = useDispatch();
 
     useEffect(
         () => {
-            const {
-                params: {
-                    toUserId
-                }
-            } = route;
-
             setIsShowLoader(true);
 
             fetchListMessage(toUserId, 1, 20,
@@ -110,11 +113,6 @@ export default function Message({ navigation, route }) {
     );
 
     const calculateNumberOfNumberMessageUnread = (listMessage) => {
-        const {
-            params: {
-                toUserId
-            }
-        } = route;
         const latestMessage = listMessage[0];
 
         if (latestMessage.from !== currentUser.id && !latestMessage.isRead) {
@@ -224,7 +222,7 @@ export default function Message({ navigation, route }) {
             inverted
             showsVerticalScrollIndicator={false}
             data={listMessageFromAPI}
-            keyExtractor={(item) => item.id}
+            keyExtractor={() => uuid.v4()}
             renderItem={({ item }) => renderMessageItem(item)}
             style={{
                 backgroundColor: COLORS.BASE
@@ -239,12 +237,6 @@ export default function Message({ navigation, route }) {
     );
 
     const addListMessagePaging = () => {
-        const {
-            params: {
-                toUserId
-            }
-        } = route;
-
         fetchListMessage(
             toUserId,
             nextPageIndex, 15,
@@ -306,11 +298,26 @@ export default function Message({ navigation, route }) {
         setMessageFromInput('');
     };
 
-    const {
-        params: {
-            toUserId
+    const checkIsFillDataForTheFirstTime = () => {
+        if (!currentUser.isFillDataFirstTime) {
+            Alert.alert('Thông tin cá nhân',
+                'Tài khoản của bạn chưa được cập nhật thông tin cá nhân.\nVui lòng cập nhật để có được trải nghiệm tốt nhất với 2SeeYou.',
+                [
+                    {
+                        text: 'Đóng',
+                        style: 'cancel'
+                    },
+                    {
+                        text: 'Cập nhật',
+                        onPress: () => {
+                            navigation.navigate(ScreenName.UPDATE_INFO_ACCOUNT);
+                        },
+                    }
+                ]);
+            return true;
         }
-    } = route;
+        return false;
+    };
 
     const renderInputMessage = () => (
         <View
@@ -344,7 +351,9 @@ export default function Message({ navigation, route }) {
             <TouchableOpacity
                 onPress={() => {
                     if (messageFromInput !== '') {
-                        triggerSendMessage();
+                        if (!checkIsFillDataForTheFirstTime()) {
+                            triggerSendMessage();
+                        }
                     }
                 }}
                 style={{

@@ -77,7 +77,7 @@ export const correctFullNameDisplay = (fullName) => {
     if (nameArr && nameArr.length === 4) {
         return `${nameArr[0]} ${nameArr[1]}\n${nameArr[2]} ${nameArr[3]}`;
     }
-    return fullName?.trim();
+    return fullName?.trim().toUpperCase();
 };
 
 export default {

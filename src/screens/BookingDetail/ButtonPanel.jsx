@@ -83,7 +83,7 @@ export default function ButtonPanel({
                             setModalReasonVisible(true);
                         }}
                         type="default"
-                        label="Huỷ bỏ"
+                        label="Huỷ hẹn"
                     />
                     <CustomButton
                         onPress={() => {

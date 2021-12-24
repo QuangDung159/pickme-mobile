@@ -152,7 +152,7 @@ export default function BookingDetail({
                                     modalReasonVisible={modalReasonVisible}
                                     setModalReasonVisible={setModalReasonVisible}
                                     bookingId={bookingId}
-                                    onSubmitReason={() => onSubmitReason()}
+                                    onSubmitReason={onSubmitReason}
                                 />
 
                                 {currentBookingRedux && (

@@ -120,7 +120,7 @@ export default function CustomCalendar({ selectedDate, onChangeDate }) {
                     let borderWidth = 0;
                     let borderColor = '';
                     if (item === selectedDateState) {
-                        borderWidth = 1;
+                        borderWidth = 1.5;
                         borderColor = COLORS.ACTIVE;
                     }
 
@@ -143,9 +143,9 @@ export default function CustomCalendar({ selectedDate, onChangeDate }) {
                             <CustomButton
                                 onPress={() => { onClickDate(item); }}
                                 buttonStyle={{
-                                    width: 30,
-                                    height: 30,
-                                    borderRadius: 15,
+                                    width: 32,
+                                    height: 32,
+                                    borderRadius: 16,
                                     borderColor,
                                     borderWidth
                                 }}

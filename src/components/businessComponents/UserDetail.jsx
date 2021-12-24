@@ -159,7 +159,6 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
     };
 
     const checkIsFillDataForTheFirstTime = () => {
-        if (!currentUser.id) return;
         if (!currentUser.isFillDataFirstTime) {
             Alert.alert('Thông tin cá nhân',
                 'Tài khoản của bạn chưa được cập nhật thông tin cá nhân.\nVui lòng cập nhật để có được trải nghiệm tốt nhất với 2SeeYou.',
@@ -174,8 +173,10 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                             navigation.navigate(ScreenName.UPDATE_INFO_ACCOUNT);
                         },
                     }
-                ],);
+                ]);
+            return true;
         }
+        return false;
     };
 
     const setImageToPrimary = async (imageUri) => {
@@ -405,7 +406,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                             {isCurrentUser && (
                                 <IconCustom
                                     style={{
-                                        marginTop: 11,
+                                        marginTop: 10,
                                         marginLeft: 2
                                     }}
                                     name="pencil-alt"

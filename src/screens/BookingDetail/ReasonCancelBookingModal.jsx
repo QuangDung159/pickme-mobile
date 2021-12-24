@@ -1,18 +1,16 @@
-import { CustomButton, CustomModal } from '@components/uiComponents';
+import { CustomButton, CustomInput, CustomModal } from '@components/uiComponents';
 import { Theme } from '@constants/index';
-import { ToastHelpers } from '@helpers/index';
-import { Picker } from '@react-native-picker/picker';
+import { ToastHelpers, ValidationHelpers } from '@helpers/index';
 import { setShowLoaderStore } from '@redux/Actions';
 import { BookingServices } from '@services/index';
 import React, { useState } from 'react';
-import { Platform, Text, View } from 'react-native';
+import { View } from 'react-native';
 import { useDispatch } from 'react-redux';
 
 const {
     FONT: {
-        TEXT_REGULAR,
+        TEXT_BOLD
     }, SIZES,
-    COLORS
 } = Theme;
 
 export default function ReasonCancelBookingModal({
@@ -21,60 +19,40 @@ export default function ReasonCancelBookingModal({
     bookingId,
     onSubmitReason
 }) {
-    const reasonDropdownArr = [
-        { label: 'Bận đột xuất', value: 0 },
-        { label: 'Sai thông tin', value: 1 },
-        { label: 'Lý do khác', value: 2 }
-    ];
-
-    const [reason, setReason] = useState(reasonDropdownArr[0]);
+    const [reason, setReason] = useState();
     const dispatch = useDispatch();
 
-    const onChangeReason = (reasonValueInput) => {
-        const reasonInput = reasonDropdownArr.find((item) => item.value === reasonValueInput);
-        if (reasonInput) {
-            setReason(reasonInput);
-        }
-    };
-
-    const renderReasonDropdown = () => (
-        <View
-            style={{
+    const renderReasonInput = () => (
+        <CustomInput
+            value={reason}
+            inputStyle={{
                 width: SIZES.WIDTH_BASE * 0.8,
-                marginTop: Platform.OS === 'ios' ? -20 : -10,
-                marginBottom: Platform.OS === 'ios' || 10
+                textAlign: 'center',
+                fontFamily: TEXT_BOLD
             }}
-        >
-            <Picker
-                selectedValue={reason.value}
-                onValueChange={(itemValue) => onChangeReason(itemValue)}
-                fontFamily={TEXT_REGULAR}
-                itemStyle={{
-                    fontSize: SIZES.FONT_H2,
-                    color: COLORS.DEFAULT,
-                    fontFamily: TEXT_REGULAR
-                }}
-                mode="dropdown"
-                dropdownIconColor={COLORS.ACTIVE}
-                style={{
-                    fontSize: SIZES.FONT_H2,
-                    color: COLORS.ACTIVE
-                }}
-            >
-                {reasonDropdownArr.map((item) => (
-                    <Picker.Item value={item.value} label={item.label} key={item.value} />
-                ))}
-            </Picker>
-        </View>
+            onChangeText={(input) => setReason(input)}
+            containerStyle={{
+                marginVertical: 20,
+                width: SIZES.WIDTH_BASE * 0.9,
+                alignItems: 'center'
+            }}
+            autocapitalize
+            placeholder="Nhập lý do huỷ..."
+        />
     );
 
     const sendRequestToCancelBooking = async () => {
+        if (!validate()) {
+            return;
+        }
+
+        setModalReasonVisible(false);
         dispatch(setShowLoaderStore(true));
         const result = await BookingServices.submitCancelBookingAsync(bookingId, {
-            rejectReason: reason.label
+            rejectReason: reason
         });
-        const { data } = result;
 
+        const { data } = result;
         if (data) {
             onSubmitReason();
             ToastHelpers.renderToast(data.message, 'success');
@@ -82,22 +60,34 @@ export default function ReasonCancelBookingModal({
         dispatch(setShowLoaderStore(false));
     };
 
+    const validate = () => {
+        const validationArr = [
+            {
+                fieldName: 'Lý do huỷ',
+                input: reason,
+                validate: {
+                    required: {
+                        value: true,
+                    },
+                    maxLength: {
+                        value: 300,
+                    },
+                    minLength: {
+                        value: 5,
+                    },
+                }
+            },
+        ];
+
+        return ValidationHelpers.validate(validationArr);
+    };
+
     const renderReasonCancelBookingModal = () => (
         <CustomModal
             modalVisible={modalReasonVisible}
             renderContent={() => (
                 <>
-                    <Text
-                        style={{
-                            fontFamily: TEXT_REGULAR,
-                            marginVertical: 10,
-                            fontSize: SIZES.FONT_H2,
-                            color: COLORS.DEFAULT
-                        }}
-                    >
-                        Vui lòng chọn lý do
-                    </Text>
-                    {renderReasonDropdown()}
+                    {renderReasonInput()}
                     <View
                         style={{
                             width: SIZES.WIDTH_BASE * 0.8,
@@ -113,7 +103,7 @@ export default function ReasonCancelBookingModal({
                                 setModalReasonVisible(false);
                             }}
                             type="default"
-                            label="Quay lại"
+                            label="Đóng"
                             buttonStyle={{
                                 width: SIZES.WIDTH_BASE * 0.39
                             }}
@@ -121,7 +111,6 @@ export default function ReasonCancelBookingModal({
                         <CustomButton
                             onPress={() => {
                                 sendRequestToCancelBooking();
-                                setModalReasonVisible(false);
                             }}
                             type="active"
                             label="Xác nhận huỷ"

@@ -10,7 +10,6 @@ import * as Font from 'expo-font';
 import * as Updates from 'expo-updates';
 import * as React from 'react';
 import {
-    Alert,
     Image, StatusBar, StyleSheet, Text, View
 } from 'react-native';
 import { MenuProvider } from 'react-native-popup-menu';
@@ -109,13 +108,14 @@ export default function App() {
             const fetchUpdateOTA = Updates.addListener(async () => {
                 const otaObj = await Updates.fetchUpdateAsync();
                 if (otaObj.isNew) {
-                    Alert.alert(
-                        'Bạn có bản cập nhật mới',
-                        'Vui lòng cập nhật để có những trải nghiệm tốt nhất với 2SeeYou',
-                        [
-                            { text: 'Cập nhật', onPress: () => Updates.reloadAsync() },
-                        ],
-                    );
+                    // Alert.alert(
+                    //     'Bạn có bản cập nhật mới',
+                    //     'Vui lòng cập nhật để có những trải nghiệm tốt nhất với 2SeeYou',
+                    //     [
+                    //         { text: 'Cập nhật', onPress: () => Updates.reloadAsync() },
+                    //     ],
+                    // );
+                    Updates.reloadAsync();
                 }
             });
 
@@ -148,7 +148,11 @@ export default function App() {
 
     const handleFinishLoading = () => {
         if (fontLoaded) {
-            setIsLoadingComplete(true);
+            setTimeout(
+                () => {
+                    setIsLoadingComplete(true);
+                }, 2000
+            );
         }
     };
 

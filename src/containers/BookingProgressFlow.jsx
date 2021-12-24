@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import { IndicatorVerticalLine, StepIndicator } from '@components/uiComponents';
 import { BookingStatus, Theme } from '@constants/index';
 import React, { useEffect, useState } from 'react';
@@ -198,10 +199,14 @@ export default function BookingProgressFlow() {
                         style={{
                             fontFamily: TEXT_REGULAR,
                             color: COLORS.DEFAULT,
-                            fontSize: SIZES.FONT_H2
+                            fontSize: SIZES.FONT_H3
                         }}
                     >
-                        {`Đơn hẹn đã bị huỷ bởi: ${canceledBy === partnerId ? "Host" : canceledBy === customerId ? "Khách" : "Hệ Thống"}`}
+                        {`Đơn hẹn đã bị huỷ bởi ${canceledBy === partnerId
+                            ? 'Host'
+                            : canceledBy === customerId
+                                ? 'khách'
+                                : 'hệ thống'}`}
                         {`\nLý do: ${canceledReason}`}
                     </Text>
                 </View>
