@@ -97,6 +97,7 @@ const OnboardingStack = () => (
         {/* {SignInWithOTPScreen()} */}
         {HomeScreen()}
         {ForgotPasswordScreen()}
+        {PolicyScreen()}
     </Stack.Navigator>
 );
 

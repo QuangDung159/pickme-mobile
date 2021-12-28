@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable import/no-unresolved */
 import {
     CenterLoader, CustomButton, CustomModal, CustomText, TouchableText
@@ -261,6 +262,16 @@ export default function Onboarding({ navigation }) {
                                 setIsRegisterPartner(true);
                             }}
                             /> */}
+                            <TouchableText
+                                style={{
+                                    fontSize: SIZES.FONT_H5 - 3,
+                                    marginTop: 10,
+                                    textAlign: 'center',
+                                    width: SIZES.WIDTH_BASE * 0.9,
+                                }}
+                                text={'Bằng việc đăng nhập vào ứng dụng,\nbạn đã đồng ý với "Điều khoản người dùng" của ứng dụng'}
+                                onPress={() => navigation.navigate(ScreenName.POLICY)}
+                            />
                         </View>
                         <View
                             style={{
