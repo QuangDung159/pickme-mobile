@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 /* eslint-disable max-len */
-export const DISCLAIMER_CONTENT = `\n\nChính sách bảo mật - Điều khoản người dùng
+export const DISCLAIMER_CONTENT = `\n\nChính sách bảo mật - Điều khoản sử dụng
 
 I. Nguyên tắc chung
 

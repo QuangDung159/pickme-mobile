@@ -269,7 +269,7 @@ export default function Onboarding({ navigation }) {
                                     textAlign: 'center',
                                     width: SIZES.WIDTH_BASE * 0.9,
                                 }}
-                                text={'Bằng việc đăng nhập vào ứng dụng,\nbạn đã đồng ý với "Điều khoản người dùng" của ứng dụng'}
+                                text={'Bằng việc đăng nhập vào ứng dụng,\nbạn đã đồng ý với "Điều khoản sử dụng" của ứng dụng'}
                                 onPress={() => navigation.navigate(ScreenName.POLICY)}
                             />
                         </View>
