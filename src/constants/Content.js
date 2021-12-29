@@ -4,9 +4,11 @@ export const DISCLAIMER_CONTENT = `\n\nChính sách bảo mật - Điều khoả
 
 I. Nguyên tắc chung
 
+Ứng dụng 2SeeYou không phải là dịch vụ hẹn hò.
+
 Ứng dụng 2SeeYou là ứng dụng di động cung cấp dịch vụ sàn giao dịch thương mại điện tử ("TMĐT") thuê nhân lực.
 
-Ứng dụng giúp kết nối giữa nhà cung cấp dịch vụ và người có nhu cầu sử dụng dịch vụ, bao gồm các loại hình: Đặt lịch hẹn đi chơi, cà phê, hoặc trò chuyện online, chơi game..v.v
+Ứng dụng giúp kết nối giữa nhà cung cấp dịch vụ và người có nhu cầu sử dụng dịch vụ, bao gồm các loại hình: Đặt lịch đi chơi, cà phê, hoặc trò chuyện online, chơi game..v.v.
 
 Thành viên trên sàn giao dịch điện tử là các thương nhân, tổ chức, cá nhân có hoạt động thương mại hợp pháp được Công ty chính thức công nhận và được phép sử dụng dịch vụ do Ứng dụng 2SeeYou.
 
@@ -16,7 +18,7 @@ Thương nhân, tổ chức, cá nhân tham gia giao dịch tại Ứng dụng 2
 
 Hoạt động mua bán, cung cấp sản phẩm dịch vụ qua Ứng dụng 2SeeYou phải được thực hiện công khai, minh bạch, đảm bảo quyền lợi người tiêu dùng.
 
-Tất cả các nội dung trong bản Quy chế này tuân thủ theo hệ thống pháp luật hiện hành của Việt Nam. Thành viên khi tham gia, sử dụng Ứng dụng 2SeeYou phải tự tìm hiểu trách nhiệm pháp lý của mình đối với luật pháp hiện hành của Việt Nam và cam kết thực hiện đúng những nội dung trong Quy chế quản lý hoạt động của Ứng dụng 2SeeYou.
+Tất cả các nội dung trong bản Quy chế này tuân thủ theo hệ thống pháp luật hiện hành Nhà nước CHXHCN Việt Nam. Thành viên khi tham gia, sử dụng Ứng dụng 2SeeYou phải tự tìm hiểu trách nhiệm pháp lý của mình đối với luật pháp hiện hành của Nhà nước CHXHCN Việt Nam và cam kết thực hiện đúng những nội dung trong Quy chế quản lý hoạt động của Ứng dụng 2SeeYou.
 
 II. Quy định chung
 
@@ -164,7 +166,7 @@ Cam kết không thay đổi, chỉnh sửa, sao chép, truyền bá, phân ph�
 
 Không được hành động gây mất uy tín của sàn giao dịch TMĐT 2SeeYou dưới mọi hình thức, bao gồm nhưng không giới hạn, việc gây mất đoàn kết giữa các thành viên bằng cách sử dụng tên đăng ký thứ hai, thông qua một bên thứ ba, hoặc tuyên truyền, phổ biến những thông tin không có lợi cho uy tín của 2SeeYou;
 
-Về nội dung người dùng, không được phép tải lên ảnh có nội dung phản cảm, ảnh khoả thân, ảnh bạo lực, ảnh tôn giáo, chính trị, ảnh có biểu tượng Đức Quốc Xã, ảnh gây khó chịu hoặc ám ảnh, ảnh không phù hợp với luật pháp nước CHXHCN Việt Nam. Với những vi phạm này, tuỳ theo mức độ nghiệm trọng, chúng tôi có quyền khoá tài khoản người dùng hoặc xử lý theo pháp luật.
+Về nội dung người dùng, không được phép tải lên ảnh có nội dung phản cảm, ảnh khoả thân, ảnh bạo lực, ảnh tôn giáo, chính trị, ảnh có biểu tượng Đức Quốc Xã, ảnh gây khó chịu hoặc ám ảnh, ảnh không phù hợp với luật pháp của Nhà nước CHXHCN Việt Nam. Với những vi phạm này, tuỳ theo mức độ nghiệm trọng, chúng tôi có quyền khoá tài khoản người dùng hoặc xử lý theo pháp luật.
 
 X. Điều khoản áp dụng
 
