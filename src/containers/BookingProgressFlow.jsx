@@ -193,6 +193,7 @@ export default function BookingProgressFlow() {
                     style={{
                         alignItems: 'center',
                         paddingVertical: 20,
+                        width: SIZES.WIDTH_BASE * 0.9
                     }}
                 >
                     <Text

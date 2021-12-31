@@ -295,7 +295,7 @@ export default function CardBooking({ booking, navigation }) {
         if (!booking) {
             return null;
         }
-        
+
         const xuDisplay = customerId === currentUser?.id ? totalAmount : partnerFee;
 
         const startStr = convertMinutesToStringHours(startAt);
