@@ -28,7 +28,7 @@
       "googleServicesFile": "./google-services.json",
       "useNextNotificationsApi": true,
       "softwareKeyboardLayoutMode": "pan",
-      "versionCode": 3
+      "versionCode": 13
     },
     "web": {
       "favicon": "./assets/images/icon.png"
