@@ -109,6 +109,7 @@ export default function BookingDetail({
 
     const onSubmitReason = () => {
         fetchListBooking();
+        fetchBookingDetailInfo();
         dispatch(setPersonTabActiveIndex(2));
     };
 
@@ -199,6 +200,7 @@ export default function BookingDetail({
                                             fetchListBooking={fetchListBooking}
                                             setModalReportVisible={setModalReportVisible}
                                             setModalRatingVisible={setModalRatingVisible}
+                                            bookingId={bookingId}
                                         />
                                     </View>
                                 )}

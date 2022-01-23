@@ -1,10 +1,10 @@
 import { CustomButton } from '@components/uiComponents';
-import { BookingStatus, ScreenName, Theme } from '@constants/index';
+import { BookingStatus, Theme } from '@constants/index';
 import ToastHelpers from '@helpers/ToastHelpers';
-import { setPersonTabActiveIndex, setShowLoaderStore } from '@redux/Actions';
+import { setCurrentBookingRedux, setShowLoaderStore } from '@redux/Actions';
 import BookingServices from '@services/BookingServices';
 import moment from 'moment';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -14,15 +14,11 @@ const {
 } = Theme;
 
 export default function ButtonPanel({
-    setModalReasonVisible, navigation, fetchListBooking,
+    setModalReasonVisible, bookingId,
     setModalReportVisible, setModalRatingVisible
 }) {
     const currentUser = useSelector((state) => state.userReducer.currentUser);
     const currentBookingRedux = useSelector((state) => state.bookingReducer.currentBookingRedux);
-
-    useEffect(
-        () => {}, [currentUser, currentBookingRedux]
-    );
 
     const dispatch = useDispatch();
 
@@ -46,6 +42,16 @@ export default function ButtonPanel({
         return endTimestamp < currentUnix;
     };
 
+    const fetchBookingDetailInfo = async () => {
+        const result = await BookingServices.fetchBookingDetailAsync(bookingId);
+        const { data } = result;
+
+        if (data) {
+            dispatch(setCurrentBookingRedux(data.data));
+        }
+        dispatch(setShowLoaderStore(false));
+    };
+
     const onPartnerConfirmBooking = async () => {
         dispatch(setShowLoaderStore(true));
 
@@ -53,18 +59,22 @@ export default function ButtonPanel({
         const { data } = result;
 
         if (data) {
-            ToastHelpers.renderToast(data.message || 'Success.', 'success');
-            navigation.navigate(ScreenName.PERSONAL);
-            dispatch(setPersonTabActiveIndex(2));
-        } else {
-            dispatch(setShowLoaderStore(false));
+            ToastHelpers.renderToast(data.message || 'Xác nhận thành công.', 'success');
+            fetchBookingDetailInfo();
         }
+        dispatch(setShowLoaderStore(false));
     };
 
     const handleShowButtonByStatus = () => {
         const { status, id } = currentBookingRedux;
-        // partner confirmed: payment, cancel
-        // customer payment: cancel
+
+        // is host
+        // booking scheduled: confirm/cancel
+        // booking is going on: N/A
+        // booking done: complete => report/rating
+
+        // is customer
+        // booking scheduled: cancel
         // booking is going on: N/A
         // booking done: complete => report/rating
 
@@ -75,7 +85,7 @@ export default function ButtonPanel({
         }
 
         if (currentBookingRedux.partnerId === currentUser.id
-            && currentBookingRedux.status === BookingStatus.SCHEDULING) {
+            && currentBookingRedux.status === BookingStatus.SCHEDULED) {
             return (
                 <>
                     <CustomButton
@@ -96,43 +106,45 @@ export default function ButtonPanel({
             );
         }
 
-        if (currentBookingRedux.customerId === currentUser.id && status === BookingStatus.IS_CONFIRMED) {
-            return (
-                <>
-                    {renderCancelBooking(0.44)}
-                    {renderConfirmPaymentButton(0.44)}
-                </>
-            );
-        }
+        return renderCancelBooking(0.9);
 
-        if (status === BookingStatus.PAID) {
-            return (
-                renderCancelBooking(0.9)
-            );
-        }
+        // if (currentBookingRedux.customerId === currentUser.id && status === BookingStatus.CONFIRMED) {
+        //     return (
+        //         <>
+        //             {renderCancelBooking(0.44)}
+        //             {renderConfirmPaymentButton(0.44)}
+        //         </>
+        //     );
+        // }
 
-        return null;
+        // if (status === BookingStatus.PAID) {
+        //     return (
+        //         renderCancelBooking(0.9)
+        //     );
+        // }
+
+        // return null;
     };
 
-    const onCustomerConfirmPayment = async () => {
-        const { walletAmount } = currentUser;
-        if (walletAmount < currentBookingRedux.totalAmount) {
-            ToastHelpers.renderToast('Số dư không đủ');
-            return;
-        }
+    // const onCustomerConfirmPayment = async () => {
+    //     const { walletAmount } = currentUser;
+    //     if (walletAmount < currentBookingRedux.totalAmount) {
+    //         ToastHelpers.renderToast('Số dư không đủ');
+    //         return;
+    //     }
 
-        dispatch(setShowLoaderStore(true));
-        const result = await BookingServices.submitConfirmPaymentAsync(currentBookingRedux.id);
-        const { data } = result;
+    //     dispatch(setShowLoaderStore(true));
+    //     const result = await BookingServices.submitConfirmPaymentAsync(currentBookingRedux.id);
+    //     const { data } = result;
 
-        if (data) {
-            navigation.navigate(ScreenName.PERSONAL);
-            dispatch(setPersonTabActiveIndex(2));
-            fetchListBooking();
-            ToastHelpers.renderToast(data.message || 'Thao tác thành công.', 'success');
-        }
-        dispatch(setShowLoaderStore(false));
-    };
+    //     if (data) {
+    //         navigation.navigate(ScreenName.PERSONAL);
+    //         dispatch(setPersonTabActiveIndex(2));
+    //         fetchListBooking();
+    //         ToastHelpers.renderToast(data.message || 'Thao tác thành công.', 'success');
+    //     }
+    //     dispatch(setShowLoaderStore(false));
+    // };
 
     const renderRatingReportBooking = () => {
         if (currentBookingRedux.isRated) {
@@ -185,18 +197,18 @@ export default function ButtonPanel({
         />
     );
 
-    const renderConfirmPaymentButton = (width) => (
-        <CustomButton
-            onPress={() => {
-                onCustomerConfirmPayment(currentBookingRedux.id);
-            }}
-            buttonStyle={{
-                width: SIZES.WIDTH_BASE * (+width)
-            }}
-            type="active"
-            label="Thanh toán"
-        />
-    );
+    // const renderConfirmPaymentButton = (width) => (
+    //     <CustomButton
+    //         onPress={() => {
+    //             onCustomerConfirmPayment(currentBookingRedux.id);
+    //         }}
+    //         buttonStyle={{
+    //             width: SIZES.WIDTH_BASE * (+width)
+    //         }}
+    //         type="active"
+    //         label="Thanh toán"
+    //     />
+    // );
 
     const renderButtonPanel = () => (
         <View

@@ -44,10 +44,10 @@ const handleResByStatus = (response) => {
 
 export const mappingStatusText = (status) => {
     switch (status) {
-        case BookingStatus.SCHEDULING:
+        case BookingStatus.SCHEDULED:
             return 'Chờ xác nhận';
         case BookingStatus.PAID: return 'Đã được thanh toán';
-        case BookingStatus.IS_CONFIRMED: return 'Đã được xác nhận';
+        case BookingStatus.CONFIRMED: return 'Đã được xác nhận';
         case BookingStatus.COMPLETED: return 'Buổi hẹn hoàn tất';
         default:
             return 'Đã huỷ';

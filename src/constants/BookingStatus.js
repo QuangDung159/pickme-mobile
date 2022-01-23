@@ -1,7 +1,7 @@
 export default {
     CANCEL: 'Canceled',
-    SCHEDULING: 'Scheduling',
-    IS_CONFIRMED: 'Confirmed',
+    SCHEDULED: 'Scheduled',
+    CONFIRMED: 'Confirmed',
     PAID: 'Paid',
     COMPLETED: 'Completed',
 };

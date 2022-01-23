@@ -27,37 +27,168 @@ export default function BookingProgressFlow() {
         handleActiveStepByStatus();
     }, [currentBookingRedux]);
 
-    const [stepArr, setStepArr] = useState([
-        {
-            type: 'prev',
-            content: 'Đơn hẹn được tạo',
-            buttonText: '1'
-        },
-        {
-            type: 'current',
-            content: ' Chờ Host xác nhận',
-            buttonText: '2'
-        },
-        {
-            type: 'next',
-            content: 'Thanh toán',
-            buttonText: '3'
-        },
-        {
-            type: 'next',
-            content: 'Cuộc hẹn bắt đầu',
-            buttonText: '4'
-        },
-        {
-            type: 'next',
-            content: 'Hoàn tất',
-            buttonText: '5'
-        },
-    ]);
+    const [stepArr, setStepArr] = useState([]);
+
+    // const [stepArr, setStepArr] = useState([
+    //     {
+    //         type: 'prev',
+    //         content: 'Đơn hẹn được tạo',
+    //         buttonText: '1'
+    //     },
+    //     {
+    //         type: 'current',
+    //         content: ' Chờ Host xác nhận',
+    //         buttonText: '2'
+    //     },
+    //     {
+    //         type: 'next',
+    //         content: 'Thanh toán',
+    //         buttonText: '3'
+    //     },
+    //     {
+    //         type: 'next',
+    //         content: 'Cuộc hẹn bắt đầu',
+    //         buttonText: '4'
+    //     },
+    //     {
+    //         type: 'next',
+    //         content: 'Hoàn tất',
+    //         buttonText: '5'
+    //     },
+    // ]);
+
+    // const handleActiveStepByStatus = () => {
+    //     switch (status) {
+    //         case BookingStatus.PAID: {
+    //             setStepArr(
+    //                 [
+    //                     {
+    //                         type: 'prev',
+    //                         content: 'Đơn hẹn được tạo',
+    //                         buttonText: '1'
+    //                     },
+    //                     {
+    //                         type: 'prev',
+    //                         content: 'Host xác nhận',
+    //                         buttonText: '2'
+    //                     },
+    //                     {
+    //                         type: 'prev',
+    //                         content: 'Thanh toán thành công',
+    //                         buttonText: '3'
+    //                     },
+    //                     {
+    //                         type: 'current',
+    //                         content: 'Cuộc hẹn bắt đầu',
+    //                         buttonText: '4'
+    //                     },
+    //                     {
+    //                         type: 'next',
+    //                         content: 'Hoàn tất',
+    //                         buttonText: '5'
+    //                     }
+    //                 ]
+    //             );
+    //             break;
+    //         }
+    //         case BookingStatus.COMPLETED: {
+    //             setStepArr(
+    //                 [
+    //                     {
+    //                         type: 'prev',
+    //                         content: 'Đơn hẹn được tạo',
+    //                         buttonText: '1'
+    //                     },
+    //                     {
+    //                         type: 'prev',
+    //                         content: 'Host xác nhận',
+    //                         buttonText: '2'
+    //                     },
+    //                     {
+    //                         type: 'prev',
+    //                         content: 'Thanh toán thành công.',
+    //                         buttonText: '3'
+    //                     },
+    //                     {
+    //                         type: 'prev',
+    //                         content: 'Cuộc hẹn bắt đầu',
+    //                         buttonText: '4'
+    //                     },
+    //                     {
+    //                         type: 'prev',
+    //                         content: 'Hoàn tất',
+    //                         buttonText: '5'
+    //                     }
+    //                 ]
+    //             );
+    //             break;
+    //         }
+    //         case BookingStatus.CONFIRMED: {
+    //             setStepArr(
+    //                 [
+    //                     {
+    //                         type: 'prev',
+    //                         content: 'Đơn hẹn được tạo',
+    //                         buttonText: '1'
+    //                     },
+    //                     {
+    //                         type: 'prev',
+    //                         content: 'Host xác nhận',
+    //                         buttonText: '2'
+    //                     },
+    //                     {
+    //                         type: 'current',
+    //                         content: 'Chờ thanh toán',
+    //                         buttonText: '3'
+    //                     },
+    //                     {
+    //                         type: 'next',
+    //                         content: 'Cuộc hẹn bắt đầu',
+    //                         buttonText: '4'
+    //                     },
+    //                     {
+    //                         type: 'next',
+    //                         content: 'Hoàn tất',
+    //                         buttonText: '5'
+    //                     }
+    //                 ]
+    //             );
+    //             break;
+    //         }
+    //         default: {
+    //             break;
+    //         }
+    //     }
+    // };
 
     const handleActiveStepByStatus = () => {
         switch (status) {
-            case BookingStatus.PAID: {
+            case BookingStatus.SCHEDULED: {
+                setStepArr([
+                    {
+                        type: 'prev',
+                        content: 'Đơn hẹn được tạo',
+                        buttonText: '1'
+                    },
+                    {
+                        type: 'current',
+                        content: ' Chờ xác nhận',
+                        buttonText: '2'
+                    },
+                    {
+                        type: 'next',
+                        content: 'Cuộc hẹn bắt đầu',
+                        buttonText: '3'
+                    },
+                    {
+                        type: 'next',
+                        content: 'Hoàn tất',
+                        buttonText: '4'
+                    },
+                ]);
+                break;
+            }
+            case BookingStatus.CONFIRMED: {
                 setStepArr(
                     [
                         {
@@ -71,19 +202,14 @@ export default function BookingProgressFlow() {
                             buttonText: '2'
                         },
                         {
-                            type: 'prev',
-                            content: 'Thanh toán thành công',
-                            buttonText: '3'
-                        },
-                        {
                             type: 'current',
                             content: 'Cuộc hẹn bắt đầu',
-                            buttonText: '4'
+                            buttonText: '3'
                         },
                         {
                             type: 'next',
                             content: 'Hoàn tất',
-                            buttonText: '5'
+                            buttonText: '4'
                         }
                     ]
                 );
@@ -104,50 +230,13 @@ export default function BookingProgressFlow() {
                         },
                         {
                             type: 'prev',
-                            content: 'Thanh toán thành công.',
-                            buttonText: '3'
-                        },
-                        {
-                            type: 'prev',
                             content: 'Cuộc hẹn bắt đầu',
-                            buttonText: '4'
-                        },
-                        {
-                            type: 'prev',
-                            content: 'Hoàn tất',
-                            buttonText: '5'
-                        }
-                    ]
-                );
-                break;
-            }
-            case BookingStatus.IS_CONFIRMED: {
-                setStepArr(
-                    [
-                        {
-                            type: 'prev',
-                            content: 'Đơn hẹn được tạo',
-                            buttonText: '1'
-                        },
-                        {
-                            type: 'prev',
-                            content: 'Host xác nhận',
-                            buttonText: '2'
+                            buttonText: '3'
                         },
                         {
                             type: 'current',
-                            content: 'Chờ thanh toán',
-                            buttonText: '3'
-                        },
-                        {
-                            type: 'next',
-                            content: 'Cuộc hẹn bắt đầu',
-                            buttonText: '4'
-                        },
-                        {
-                            type: 'next',
                             content: 'Hoàn tất',
-                            buttonText: '5'
+                            buttonText: '4'
                         }
                     ]
                 );
