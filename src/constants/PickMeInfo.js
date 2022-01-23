@@ -1,3 +1,5 @@
+import { EMAIL_CONTACT, MOBILE_CONTACT } from './Content';
+
 /* eslint-disable max-len */
 export default {
     booking: [
@@ -82,7 +84,7 @@ export default {
             question: 'Nếu như buổi hẹn bị hủy tôi có được hoàn Xu lại không?'
         },
         {
-            answer: 'Cảm ơn bạn chúng tôi rất mong nhận được sự đóng góp phản hồi của bạn qua email: hotro.dichvuthuebangai@gmail.com hoặc gọi trực tiếp cho mình qua sđt: 0327575204',
+            answer: `Cảm ơn bạn chúng tôi rất mong nhận được sự đóng góp phản hồi của bạn qua email: ${EMAIL_CONTACT} hoặc gọi trực tiếp cho mình qua sđt: ${MOBILE_CONTACT}}`,
             question: 'Tôi muốn đóng góp ý kiến?'
         },
     ]

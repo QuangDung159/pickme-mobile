@@ -66,7 +66,7 @@ Cách 1: Khiếu nại trực tiếp với nhà cung cấp
 Người mua có thể khiếu nại về dịch vụ của nhà cung cấp trực tiếp với nhà cung cấp. Trong trường hợp này, nhà cung cấp có trách nhiệm giải quyết khiếu nại và trả lời người mua.
 
 Cách 2: Khiếu nại với Công ty
-Bạn có thể gửi thư trực tiếp đến email huyxvd@gmail.com chúng tôi sẽ phản hồi trong vòng 02 ngày làm việc.
+Bạn có thể gửi thư trực tiếp đến email ${EMAIL_CONTACT} chúng tôi sẽ phản hồi trong vòng 02 ngày làm việc.
 
 VI. Đảm bảo an toàn giao dịch
 
@@ -178,5 +178,11 @@ XI. Điều khoản cam kết
 
 Mọi thành viên khi sử dụng Ứng dụng 2SeeYou để thực hiện các giao dịch mua bán trực tuyến có nghĩa là thành viên đó đã đọc, hiểu và chấp thuận tuân theo Quy chế này.
 
-Mọi thắc mắc của khách hàng xin vui lòng liên hệ với 2SeeYou theo thông tin dưới đây để giải đáp: huyxvd@gmail.com
+Mọi thắc mắc của khách hàng xin vui lòng liên hệ với 2SeeYou theo thông tin dưới đây để giải đáp: ${EMAIL_CONTACT}
 `;
+
+export const BANK_NUMBER_2SEEYOU = '01860415201';
+
+export const MOBILE_CONTACT = '0352221769';
+
+export const EMAIL_CONTACT = 'huyxvd@gmail.com';

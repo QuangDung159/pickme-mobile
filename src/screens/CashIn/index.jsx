@@ -2,6 +2,7 @@ import {
     CustomButton,
     CustomModal, IconCustom, NoteText
 } from '@components/uiComponents';
+import { BANK_NUMBER_2SEEYOU } from '@constants/Content';
 import {
     IconFamily, Images, ScreenName, Theme
 } from '@constants/index';
@@ -90,12 +91,12 @@ export default function CashIn(props) {
                         }}
                     >
                         <TouchableOpacity
-                            onPress={() => copyToClipboard('01860423701')}
+                            onPress={() => copyToClipboard(BANK_NUMBER_2SEEYOU)}
                         >
                             <NoteText
                                 width={SIZES.WIDTH_BASE * 0.9}
                                 title="Số tài khoản: "
-                                content="01860423701"
+                                content={BANK_NUMBER_2SEEYOU}
                                 contentStyle={{
                                     fontSize: SIZES.FONT_H1,
                                     color: COLORS.ACTIVE,
