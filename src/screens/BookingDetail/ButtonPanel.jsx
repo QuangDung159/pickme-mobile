@@ -78,7 +78,7 @@ export default function ButtonPanel({
         // booking is going on: N/A
         // booking done: complete => report/rating
 
-        if (isBookingGoingOn() || status === BookingStatus.CANCEL) return null;
+        if (isBookingGoingOn() || status === BookingStatus.CANCELED) return null;
 
         if (isBookingDone()) {
             return renderRatingReportBooking();

@@ -103,7 +103,7 @@ export default function BookingList({ navigation }) {
         const endStr = convertMinutesToStringHours(endAt);
 
         let colorByStatus = COLORS.ACTIVE;
-        if (status === BookingStatus.CANCEL) {
+        if (status === BookingStatus.CANCELED) {
             colorByStatus = COLORS.PLACE_HOLDER;
         }
 

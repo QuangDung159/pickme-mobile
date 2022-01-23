@@ -254,7 +254,7 @@ export default function BookingProgressFlow() {
                 paddingVertical: 20,
             }}
         >
-            {status !== BookingStatus.CANCEL ? (
+            {status !== BookingStatus.CANCELED ? (
                 <View
                     style={{
                         width: SIZES.WIDTH_BASE * 0.9,
