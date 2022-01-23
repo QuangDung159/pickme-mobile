@@ -1,6 +1,6 @@
 import { CustomButton, CustomText, IconCustom } from '@components/uiComponents';
 import {
-    BookingStatus, IconFamily, Theme, OutsideApp, ScreenName
+    IconFamily, OutsideApp, ScreenName, Theme
 } from '@constants/index';
 import { mappingStatusText } from '@helpers/CommonHelpers';
 import { CommonHelpers, ToastHelpers } from '@helpers/index';
@@ -397,16 +397,17 @@ export default function CardBooking({ booking, navigation }) {
 
                 <TouchableOpacity
                     onPress={() => {
-                        if (booking.status === BookingStatus.PAID) {
-                            openAppText?.action();
-                        } else {
-                            Alert.alert('Đơn hẹn không ở trạng thái "Đã được thanh toán"', '', [
-                                {
-                                    text: 'Đã hiểu',
-                                    style: 'ok'
-                                },
-                            ], { cancelable: true });
-                        }
+                        openAppText?.action();
+                        // if (booking.status === BookingStatus.PAID) {
+                        //     openAppText?.action();
+                        // } else {
+                        //     Alert.alert('Đơn hẹn không ở trạng thái "Đã được thanh toán"', '', [
+                        //         {
+                        //             text: 'Đã hiểu',
+                        //             style: 'ok'
+                        //         },
+                        //     ], { cancelable: true });
+                        // }
                     }}
                 >
                     <View
@@ -478,16 +479,17 @@ export default function CardBooking({ booking, navigation }) {
                     />
                     <CustomButton
                         onPress={() => {
-                            if (booking.status === BookingStatus.PAID) {
-                                addBookingToCalendar();
-                            } else {
-                                Alert.alert('Đơn hẹn không ở trạng thái "Đã được thanh toán"', '', [
-                                    {
-                                        text: 'Đã hiểu',
-                                        style: 'ok'
-                                    },
-                                ], { cancelable: true });
-                            }
+                            addBookingToCalendar();
+                            // if (booking.status === BookingStatus.PAID) {
+                            //     addBookingToCalendar();
+                            // } else {
+                            //     Alert.alert('Đơn hẹn không ở trạng thái "Đã được thanh toán"', '', [
+                            //         {
+                            //             text: 'Đã hiểu',
+                            //             style: 'ok'
+                            //         },
+                            //     ], { cancelable: true });
+                            // }
                         }}
                         type="active"
                         label="Thêm vào lịch"
