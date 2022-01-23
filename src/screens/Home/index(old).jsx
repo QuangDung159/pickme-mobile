@@ -1,8 +1,7 @@
 /* eslint no-underscore-dangle: ["error", { "allow": ["_isMounted", "_id"] }] */
-import ProfileInfoItem from '@components/businessComponents/ProfileInfoItem';
 import { CenterLoader } from '@components/uiComponents';
 import {
-    GraphQueryString, IconFamily, Images, ScreenName, Theme
+    GraphQueryString, Images, ScreenName, Theme
 } from '@constants/index';
 import { ToastHelpers } from '@helpers/index';
 import {
@@ -16,10 +15,9 @@ import {
 } from '@redux/Actions';
 import { BookingServices, NotificationServices, UserServices } from '@services/index';
 import { socketRequestUtil } from '@utils/index';
-import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import {
-    FlatList, RefreshControl, StyleSheet, Text, TouchableNativeFeedback, View
+    FlatList, Image, RefreshControl, SafeAreaView, StyleSheet, Text, TouchableNativeFeedback, View
 } from 'react-native';
 import ImageScalable from 'react-native-scalable-image';
 import { useDispatch, useSelector } from 'react-redux';
@@ -249,152 +247,116 @@ export default function Home({ navigation }) {
                 const newPageIndex = pageIndex + 1;
                 getListPartner(newPageIndex);
             }}
-            contentContainerStyle={{
-                paddingTop: 10,
-            }}
         />
     );
 
-    const renderImage = (item) => {
-        const amountDisplay = item.id === currentUser.id ? item.earningExpected : item.estimatePricing;
-
-        return (
-            <TouchableNativeFeedback
-                onPress={() => navigation.navigate(ScreenName.PROFILE, { userId: item.id })}
+    const renderImage = (item) => (
+        <TouchableNativeFeedback
+            onPress={() => navigation.navigate(ScreenName.PROFILE, { userId: item.id })}
+        >
+            <View
+                style={{
+                    backgroundColor: COLORS.BASE,
+                    marginBottom: 10
+                }}
             >
                 <View
                     style={{
-                        backgroundColor: COLORS.BASE,
-                        marginBottom: 10
+                        alignItems: 'center',
+                        marginHorizontal: 10,
+                        flexDirection: 'row',
+                        paddingVertical: 5
                     }}
                 >
                     <View
                         style={{
-                            flexDirection: 'row',
-                            width: SIZES.WIDTH_BASE * 0.95,
+                            marginRight: 10
                         }}
                     >
-                        <View style={styles.imageContainer}>
-                            <ImageScalable
-                                style={{
-                                    zIndex: 99,
-                                    borderRadius: 10
-                                }}
-                                width={SIZES.WIDTH_BASE * 0.4 - 5}
-                                source={item.url ? { uri: item.url } : Images.defaultImage}
-                            />
-                        </View>
+                        <Image
+                            source={item.url ? { uri: item.url } : Images.defaultImage}
+                            style={{
+                                width: 45,
+                                height: 45,
+                                borderRadius: 25
+                            }}
+                        />
+                    </View>
+                    <View
+                        style={{
+                            justifyContent: 'center',
+                        }}
+                    >
                         <View
                             style={{
-                                width: SIZES.WIDTH_BASE * 0.55,
-                                marginTop: -5
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
+                                width: SIZES.WIDTH_BASE * 0.8,
+                                flexDirection: 'row'
                             }}
                         >
                             <Text
                                 style={{
                                     fontSize: SIZES.FONT_H2,
                                     color: COLORS.ACTIVE,
-                                    fontFamily: TEXT_BOLD,
-                                    marginBottom: 5
+                                    fontFamily: TEXT_BOLD
                                 }}
                             >
                                 {item.fullName}
                             </Text>
-                            <ProfileInfoItem
-                                fontSize={SIZES.FONT_H3}
-                                iconName="home"
-                                iconFamily={IconFamily.FONT_AWESOME_5}
-                                content={`${item.homeTown || 'N/a'}`}
-                                iconSize={16}
-                            />
-                            <View
-                                style={{
-                                    flexDirection: 'row',
-                                    alignItems: 'center'
-                                }}
-                            >
-                                <View
-                                    style={{
-                                        width: '50%'
-                                    }}
-                                >
-                                    <ProfileInfoItem
-                                        fontSize={SIZES.FONT_H3}
-                                        iconName="birthday-cake"
-                                        iconFamily={IconFamily.FONT_AWESOME}
-                                        content={
-                                            moment(item.dob).format('YYYY').toString().toLowerCase() !== 'invalid date'
-                                                ? moment(item.dob).format('YYYY').toString()
-                                                : '1990'
-                                        }
-                                        iconSize={16}
-                                    />
-                                </View>
-
-                                <ProfileInfoItem
-                                    fontSize={SIZES.FONT_H3}
-                                    iconName={item.isMale ? 'male' : 'female'}
-                                    iconFamily={IconFamily.FONTISTO}
-                                    content={`${item.isMale ? 'Nam' : 'Nữ'}`}
-                                    iconSize={16}
-                                />
-                            </View>
-
-                            <View
-                                style={{
-                                    flexDirection: 'row',
-                                    alignItems: 'center'
-                                }}
-                            >
-                                <View
-                                    style={{
-                                        width: '50%'
-                                    }}
-                                >
-                                    <Text
-                                        style={{
-                                            fontSize: SIZES.FONT_H2,
-                                            color: COLORS.ACTIVE,
-                                            fontFamily: TEXT_BOLD,
-                                        }}
-                                    >
-                                        Phí mời:
-                                    </Text>
-                                </View>
-
-                                <Text
-                                    style={{
-                                        fontSize: SIZES.FONT_H2,
-                                        color: COLORS.ACTIVE,
-                                        fontFamily: TEXT_BOLD,
-                                    }}
-                                >
-                                    {`${amountDisplay} Xu`}
-                                </Text>
-                            </View>
                         </View>
+                        {/* <View>
+                            <Text
+                                style={
+                                    [
+                                        styles.subInfoCard,
+                                        {
+                                            fontSize: SIZES.FONT_H4,
+                                            color: COLORS.DEFAULT,
+                                        }
+                                    ]
+                                }
+                            >
+                                {item.homeTown}
+                            </Text>
+                        </View> */}
                     </View>
                 </View>
-            </TouchableNativeFeedback>
-        );
-    };
+
+                <View style={styles.imageContainer}>
+                    <ImageScalable
+                        style={{
+                            zIndex: 99
+                        }}
+                        width={SIZES.WIDTH_BASE}
+                        source={item.imageUrl ? { uri: item.imageUrl } : Images.defaultImage}
+                    />
+                </View>
+            </View>
+        </TouchableNativeFeedback>
+    );
 
     try {
         return (
-            <>
+            <SafeAreaView
+                style={{
+                    flex: 1,
+                }}
+            >
                 {isShowSpinner ? (
                     <CenterLoader />
                 ) : (
                     <View
                         style={{
                             backgroundColor: COLORS.BASE,
-                            alignSelf: 'center',
+                            alignSelf: 'center'
                         }}
                     >
                         {renderArticles()}
                     </View>
                 )}
-            </>
+            </SafeAreaView>
+
         );
     } catch (exception) {
         console.log('exception :>> ', exception);

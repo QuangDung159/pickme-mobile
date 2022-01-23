@@ -587,6 +587,7 @@ export default function UpdateInfoAccount() {
         );
     };
 
+    // eslint-disable-next-line no-unused-vars
     const checkBoxLetOtherInviteCoffee = () => (
         <View
             style={{
@@ -1194,7 +1195,7 @@ export default function UpdateInfoAccount() {
                                 {/* {renderInputInterests()} */}
                                 {renderOptionInterests()}
                                 {renderInputDescription()}
-                                {checkBoxLetOtherInviteCoffee()}
+                                {/* {checkBoxLetOtherInviteCoffee()} */}
                                 {renderInputZalo()}
                                 {renderInputSkype()}
                                 {renderInputMessenger()}

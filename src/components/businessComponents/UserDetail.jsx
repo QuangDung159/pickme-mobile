@@ -147,12 +147,12 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
             'Ảnh của bạn',
             '',
             [
+                { text: 'Xoá ảnh', onPress: () => removeImage(imageObj) },
                 {
                     text: 'Đóng',
                     style: 'cancel'
                 },
-                { text: 'Đặt làm ảnh chính', onPress: () => setImageToPrimary(imageObj.uri) },
-                { text: 'Xoá ảnh', onPress: () => removeImage(imageObj) },
+                // { text: 'Đặt làm ảnh chính', onPress: () => setImageToPrimary(imageObj.uri) },
             ],
             { cancelable: true }
         );
@@ -179,6 +179,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
         return false;
     };
 
+    // eslint-disable-next-line no-unused-vars
     const setImageToPrimary = async (imageUri) => {
         setIsShowSpinner(true);
         const newUser = { ...userInfo };
@@ -274,7 +275,10 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
             earningExpected,
             bookingCompletedCount,
             // ratingAvg
+            estimatePricing
         } = userInfo;
+
+        const amountDisplay = isCurrentUser ? earningExpected : estimatePricing;
 
         return (
             <View
@@ -287,7 +291,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                     listData={
                         [
                             {
-                                value: earningExpected && `${CommonHelpers.formatCurrency(earningExpected)}Xu/Phút`,
+                                value: amountDisplay && `${CommonHelpers.formatCurrency(amountDisplay)}Xu/Phút`,
                                 type: 'earningExpected',
                                 label: 'Phí mời',
                             },
