@@ -64,11 +64,11 @@ export default function ModalReport({
                             value={reason}
                             onChangeText={(input) => setReason(input)}
                             inputStyle={{
-                                height: 60
+                                height: 60,
+                                width: SIZES.WIDTH_BASE * 0.8,
                             }}
                             containerStyle={{
                                 marginVertical: 10,
-                                width: SIZES.WIDTH_BASE * 0.8
                             }}
                         />
                     </View>

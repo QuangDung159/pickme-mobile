@@ -1,4 +1,5 @@
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
+import { ModalReport } from '@components/businessComponents';
 import {
     CenterLoader, IconCustom
 } from '@components/uiComponents';
@@ -13,7 +14,6 @@ import {
     Alert, FlatList, Image, RefreshControl, ScrollView, Text, TouchableOpacity, View
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import ModalReport from './ModalReport';
 
 const {
     FONT: {

@@ -10,6 +10,7 @@ import Listener from './Listener';
 import OtpForm from './OtpForm';
 import UploadDocSection from './UploadDocSection';
 import UsernameForm from './UsernameForm';
+import ModalReport from './ModalReport';
 
 export {
     Listener,
@@ -22,5 +23,6 @@ export {
     UploadDocSection,
     OtpForm,
     UsernameForm,
-    DeepLinkHandler
+    DeepLinkHandler,
+    ModalReport
 };

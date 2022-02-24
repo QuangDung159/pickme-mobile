@@ -21,7 +21,8 @@ CustomButton.propTypes = {
     buttonStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
     leftIcon: PropTypes.object,
     onPressLeftIcon: PropTypes.func,
-    type: PropTypes.oneOf(['active', 'default'])
+    type: PropTypes.oneOf(['active', 'default']),
+    leftIconStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
 };
 
 CustomButton.defaultProps = {
@@ -30,7 +31,8 @@ CustomButton.defaultProps = {
     buttonStyle: {},
     leftIcon: null,
     onPressLeftIcon: null,
-    type: null
+    type: null,
+    leftIconStyle: {}
 };
 
 export default function CustomButton(
@@ -41,6 +43,7 @@ export default function CustomButton(
         leftIcon,
         onPressLeftIcon,
         type,
+        leftIconStyle,
         ...props
     }
 ) {
@@ -154,6 +157,7 @@ export default function CustomButton(
                         family={family || IconFamily.FONT_AWESOME}
                         size={size || 24}
                         color={color || COLORS.DEFAULT}
+                        style={leftIconStyle}
                     />
                     <Text
                         style={

@@ -62,51 +62,54 @@ export default function Profile({ route, navigation }) {
                 {isShowSpinner ? (
                     <CenterLoader />
                 ) : (
-                    <UserDetail
-                        navigation={navigation}
-                        userInfo={partnerInfo}
-                        setIsShowSpinner={(showSpinner) => setIsShowSpinner(showSpinner)}
-                    />
-                )}
-                {currentUser.id !== route.params.userId && partnerInfo.isHost && (
-                    <View
-                        style={{
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                            width: SIZES.WIDTH_BASE * 0.9,
-                            alignSelf: 'center',
-                            position: 'absolute',
-                            bottom: 10
-                        }}
-                    >
-                        <CustomButton
-                            onPress={() => {
-                                navigation.navigate(ScreenName.MESSAGE, {
-                                    name: partnerInfo.fullName,
-                                    userStatus: 'Vừa mới truy cập',
-                                    toUserId: partnerInfo.id,
-                                    userInfo: partnerInfo
-                                });
-                            }}
-                            type="default"
-                            label="Nhắn tin"
-                            buttonStyle={{
-                                backgroundColor: COLORS.BASE
-                            }}
+                    <>
+                        <UserDetail
+                            navigation={navigation}
+                            userInfo={partnerInfo}
+                            setIsShowSpinner={(showSpinner) => setIsShowSpinner(showSpinner)}
                         />
-                        <CustomButton
-                            onPress={() => {
-                                navigation.navigate(ScreenName.CREATE_BOOKING, {
-                                    partner: partnerInfo,
-                                    from: ScreenName.PROFILE
-                                });
-                            }}
-                            type="active"
-                            label="Đặt hẹn"
-                        />
-                    </View>
+                        {currentUser.id !== route.params.userId && partnerInfo.isHost && (
+                            <View
+                                style={{
+                                    flexDirection: 'row',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center',
+                                    width: SIZES.WIDTH_BASE * 0.9,
+                                    alignSelf: 'center',
+                                    position: 'absolute',
+                                    bottom: 10
+                                }}
+                            >
+                                <CustomButton
+                                    onPress={() => {
+                                        navigation.navigate(ScreenName.MESSAGE, {
+                                            name: partnerInfo.fullName,
+                                            userStatus: 'Vừa mới truy cập',
+                                            toUserId: partnerInfo.id,
+                                            userInfo: partnerInfo
+                                        });
+                                    }}
+                                    type="default"
+                                    label="Nhắn tin"
+                                    buttonStyle={{
+                                        backgroundColor: COLORS.BASE
+                                    }}
+                                />
+                                <CustomButton
+                                    onPress={() => {
+                                        navigation.navigate(ScreenName.CREATE_BOOKING, {
+                                            partner: partnerInfo,
+                                            from: ScreenName.PROFILE
+                                        });
+                                    }}
+                                    type="active"
+                                    label="Đặt hẹn"
+                                />
+                            </View>
+                        )}
+                    </>
                 )}
+
             </>
         );
     } catch (exception) {

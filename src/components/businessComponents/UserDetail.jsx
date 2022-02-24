@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
-import { Albums, AvatarPanel } from '@components/businessComponents';
-import { IconCustom, Line } from '@components/uiComponents';
+import { Albums, AvatarPanel, ModalReport } from '@components/businessComponents';
+import { CustomButton, IconCustom, Line } from '@components/uiComponents';
 import {
     IconFamily, Rx, ScreenName, Theme
 } from '@constants/index';
@@ -36,6 +36,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
     const [image, setImage] = useState('');
     const [refreshing, setRefreshing] = useState(false);
     const [isCurrentUser, setIsCurrentUser] = useState(false);
+    const [modalReasonVisible, setModalReasonVisible] = useState(false);
 
     const currentUser = useSelector((state) => state.userReducer.currentUser);
 
@@ -332,145 +333,200 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
         return <></>;
     };
 
-    return (
-        <ScrollView
-            showsVerticalScrollIndicator={false}
-            refreshControl={(
-                <RefreshControl
-                    refreshing={refreshing}
-                    onRefresh={() => {
-                        if (isCurrentUser) {
-                            onRefresh();
-                        }
-                    }}
-                    tintColor={COLORS.ACTIVE}
-                />
-            )}
-            contentContainerStyle={{
-                paddingBottom: isCurrentUser ? 30 : 60,
-                alignItems: 'center'
+    const renderButtonOption = () => (
+        <View
+            style={{
+                width: SIZES.WIDTH_BASE * 0.9,
+                alignSelf: 'center',
+                flex: 1,
+                justifyContent: 'center',
             }}
         >
-            {renderImageView()}
-            <View
-                style={{
-                    width: SIZES.WIDTH_BASE * 0.9,
-                    flexDirection: 'row',
-                    marginBottom: 10
+            <CustomButton
+                onPress={() => onClickMore()}
+                labelStyle={{
+                    fontSize: SIZES.FONT_H3,
+                    color: COLORS.ACTIVE,
+                    marginLeft: 5
                 }}
-            >
-                <AvatarPanel
-                    user={userInfo}
-                    image={image}
-                    onClickAvatar={() => {
-                        if (isCurrentUser) {
-                            onClickUpdateAvatar();
-                        }
-                    }}
-                    isCurrentUser={isCurrentUser}
-                />
+                label="Tuỳ chọn"
+                buttonStyle={{
+                    width: 110,
+                    alignSelf: 'flex-start'
+                }}
+                leftIcon={{
+                    name: 'menu',
+                    size: 23,
+                    color: COLORS.ACTIVE,
+                    family: IconFamily.ENTYPO
+                }}
+                leftIconStyle={{
+                    marginTop: 3
+                }}
+            />
+        </View>
+    );
 
-                <View style={{
-                    width: SIZES.WIDTH_BASE * 0.6,
-                    justifyContent: 'center',
-                    marginTop: 10
-                }}
-                >
-                    <TouchableOpacity
-                        onPress={() => {
+    const onClickMore = () => {
+        Alert.alert(
+            `${userInfo.fullName}`,
+            '',
+            [
+                {
+                    text: 'Đóng',
+                    style: 'cancel'
+                },
+                {
+                    text: 'Báo cáo người dùng',
+                    onPress: () => {
+                        setModalReasonVisible(true);
+                    }
+                },
+            ],
+            { cancelable: true }
+        );
+    };
+
+    return (
+        <>
+            <ScrollView
+                showsVerticalScrollIndicator={false}
+                refreshControl={(
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={() => {
                             if (isCurrentUser) {
-                                navigation.navigate(
-                                    ScreenName.UPDATE_INFO_ACCOUNT
-                                );
+                                onRefresh();
                             }
                         }}
-                    >
-                        <View style={[
-                            {
-                                flexDirection: 'row',
-                                justifyContent: 'center',
-                                width: '98%',
-                                alignSelf: 'center',
-                            },
-                            isCurrentUser && {
-                                marginLeft: 10
-                            }
-                        ]}
-                        >
-                            <Text
-                                style={{
-                                    color: COLORS.ACTIVE,
-                                    fontSize: SIZES.FONT_H3,
-                                    fontFamily: TEXT_BOLD,
-                                    textAlign: 'center',
-                                }}
-                            >
-                                {`${correctFullNameDisplay(userInfo.fullName) || 'N/a'}`}
-                            </Text>
-                            {isCurrentUser && (
-                                <IconCustom
-                                    style={{
-                                        marginTop: 10,
-                                        marginLeft: 2
-                                    }}
-                                    name="pencil-alt"
-                                    family={IconFamily.FONT_AWESOME_5}
-                                    size={10}
-                                    color={COLORS.DEFAULT}
-                                />
-                            )}
-                        </View>
-                    </TouchableOpacity>
-
-                    <View>
-                        <Text
-                            style={{
-                                fontFamily: TEXT_REGULAR,
-                                fontSize: SIZES.FONT_H4 - 1,
-                                color: COLORS.DEFAULT,
-                                textAlign: 'center'
-                            }}
-                        >
-                            {'"'}
-                            {userInfo.description || 'N/a'}
-                            {'"'}
-                        </Text>
-                    </View>
-                </View>
-            </View>
-
-            <Line
-                borderColor={COLORS.ACTIVE}
-                width={SIZES.WIDTH_BASE * 0.9}
-            />
-
-            <SubInfoProfile user={userInfo} />
-
-            <View
-                style={{
-                    width: '90%'
+                        tintColor={COLORS.ACTIVE}
+                    />
+                )}
+                contentContainerStyle={{
+                    paddingBottom: isCurrentUser ? 30 : 60,
+                    alignItems: 'center'
                 }}
             >
-                {isCurrentUser && (
-                    <View>
-                        <ProfileInfoItem
-                            fontSize={SIZES.FONT_H3}
-                            iconName="treasure-chest"
-                            iconFamily={IconFamily.MATERIAL_COMMUNITY_ICONS}
-                            content={`Xu: ${CommonHelpers.formatCurrency(userInfo.walletAmount)}`}
-                            iconSize={18}
-                            contentTextStyle={{
-                                fontFamily: TEXT_BOLD,
-                                color: COLORS.ACTIVE
+                {renderImageView()}
+                <View
+                    style={{
+                        width: SIZES.WIDTH_BASE * 0.9,
+                        flexDirection: 'row',
+                        marginBottom: 10
+                    }}
+                >
+                    <AvatarPanel
+                        user={userInfo}
+                        image={image}
+                        onClickAvatar={() => {
+                            if (isCurrentUser) {
+                                onClickUpdateAvatar();
+                            }
+                        }}
+                        isCurrentUser={isCurrentUser}
+                    />
+
+                    <View style={{
+                        width: SIZES.WIDTH_BASE * 0.6,
+                        justifyContent: 'center',
+                        marginTop: 10
+                    }}
+                    >
+                        <TouchableOpacity
+                            onPress={() => {
+                                if (isCurrentUser) {
+                                    navigation.navigate(
+                                        ScreenName.UPDATE_INFO_ACCOUNT
+                                    );
+                                }
                             }}
-                        />
+                        >
+                            <View style={[
+                                {
+                                    flexDirection: 'row',
+                                    justifyContent: 'center',
+                                    width: '98%',
+                                    alignSelf: 'center',
+                                },
+                                isCurrentUser && {
+                                    marginLeft: 10
+                                }
+                            ]}
+                            >
+                                <Text
+                                    style={{
+                                        color: COLORS.ACTIVE,
+                                        fontSize: SIZES.FONT_H3,
+                                        fontFamily: TEXT_BOLD,
+                                        textAlign: 'center',
+                                    }}
+                                >
+                                    {`${correctFullNameDisplay(userInfo.fullName) || 'N/a'}`}
+                                </Text>
+                                {isCurrentUser && (
+                                    <IconCustom
+                                        style={{
+                                            marginTop: 10,
+                                            marginLeft: 2
+                                        }}
+                                        name="pencil-alt"
+                                        family={IconFamily.FONT_AWESOME_5}
+                                        size={10}
+                                        color={COLORS.DEFAULT}
+                                    />
+                                )}
+                            </View>
+                        </TouchableOpacity>
+
+                        <View>
+                            <Text
+                                style={{
+                                    fontFamily: TEXT_REGULAR,
+                                    fontSize: SIZES.FONT_H4 - 1,
+                                    color: COLORS.DEFAULT,
+                                    textAlign: 'center'
+                                }}
+                            >
+                                {'"'}
+                                {userInfo.description || 'N/a'}
+                                {'"'}
+                            </Text>
+                        </View>
                     </View>
-                )}
+                </View>
 
-                {handleShowPartnerDataPanel()}
-            </View>
+                <Line
+                    borderColor={COLORS.ACTIVE}
+                    width={SIZES.WIDTH_BASE * 0.9}
+                />
 
-            {/* {isCurrentUser && (
+                <SubInfoProfile user={userInfo} />
+
+                <View
+                    style={{
+                        width: '90%'
+                    }}
+                >
+                    {isCurrentUser && (
+                        <View>
+                            <ProfileInfoItem
+                                fontSize={SIZES.FONT_H3}
+                                iconName="treasure-chest"
+                                iconFamily={IconFamily.MATERIAL_COMMUNITY_ICONS}
+                                content={`Xu: ${CommonHelpers.formatCurrency(userInfo.walletAmount)}`}
+                                iconSize={18}
+                                contentTextStyle={{
+                                    fontFamily: TEXT_BOLD,
+                                    color: COLORS.ACTIVE
+                                }}
+                            />
+                        </View>
+                    )}
+
+                    {handleShowPartnerDataPanel()}
+                </View>
+
+                {/* {isCurrentUser && (
                 <>
                     {!userInfo?.isCustomerVerified && (
                         <TouchableOpacity
@@ -484,28 +540,36 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                 </>
             )} */}
 
-            <Line
-                borderColor={COLORS.ACTIVE}
-                width={SIZES.WIDTH_BASE * 0.9}
-            />
+                <Line
+                    borderColor={COLORS.ACTIVE}
+                    width={SIZES.WIDTH_BASE * 0.9}
+                />
 
-            <Albums
-                isCurrentUser={isCurrentUser}
-                user={userInfo}
-                listImageDisplay={listImageDisplay}
-                onLongPressImage={(imageItem) => {
-                    if (isCurrentUser) {
-                        onLongPressImage(imageItem);
-                    }
-                }}
-                setImageIndex={(index) => setImageIndex(index)}
-                setVisible={(value) => setVisible(value)}
-                onClickUploadProfileImage={() => {
-                    if (isCurrentUser) {
-                        onClickUploadProfileImage();
-                    }
-                }}
+                <Albums
+                    isCurrentUser={isCurrentUser}
+                    user={userInfo}
+                    listImageDisplay={listImageDisplay}
+                    onLongPressImage={(imageItem) => {
+                        if (isCurrentUser) {
+                            onLongPressImage(imageItem);
+                        }
+                    }}
+                    setImageIndex={(index) => setImageIndex(index)}
+                    setVisible={(value) => setVisible(value)}
+                    onClickUploadProfileImage={() => {
+                        if (isCurrentUser) {
+                            onClickUploadProfileImage();
+                        }
+                    }}
+                />
+                {renderButtonOption()}
+            </ScrollView>
+            <ModalReport
+                modalReasonVisible={modalReasonVisible}
+                setModalReasonVisible={(modalVisible) => setModalReasonVisible(modalVisible)}
+                setIsShowSpinner={(showSpinner) => setIsShowSpinner(showSpinner)}
+                userId={userInfo.id}
             />
-        </ScrollView>
+        </>
     );
 }
