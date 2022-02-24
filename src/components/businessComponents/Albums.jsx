@@ -109,7 +109,7 @@ export default function Albums({
                                 color: COLORS.DEFAULT
                             }}
                         >
-                            {`${isCurrentUser ? 'Bạn chưa có ảnh' : ''}`}
+                            {`${isCurrentUser ? 'Bạn chưa có ảnh' : 'Không có ảnh'}`}
                         </Text>
                     </View>
                 ) : (

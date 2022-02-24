@@ -562,7 +562,12 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                         }
                     }}
                 />
-                {renderButtonOption()}
+                {!isCurrentUser && (
+                    <>
+                        {renderButtonOption()}
+                    </>
+                )}
+
             </ScrollView>
             <ModalReport
                 modalReasonVisible={modalReasonVisible}

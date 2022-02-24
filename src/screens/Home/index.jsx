@@ -287,7 +287,6 @@ export default function Home({ navigation }) {
                         <View
                             style={{
                                 width: SIZES.WIDTH_BASE * 0.55,
-                                marginTop: -5
                             }}
                         >
                             <Text
@@ -353,7 +352,7 @@ export default function Home({ navigation }) {
                                 >
                                     <Text
                                         style={{
-                                            fontSize: SIZES.FONT_H2,
+                                            fontSize: SIZES.FONT_H3,
                                             color: COLORS.ACTIVE,
                                             fontFamily: TEXT_BOLD,
                                         }}
@@ -364,7 +363,7 @@ export default function Home({ navigation }) {
 
                                 <Text
                                     style={{
-                                        fontSize: SIZES.FONT_H2,
+                                        fontSize: SIZES.FONT_H3,
                                         color: COLORS.ACTIVE,
                                         fontFamily: TEXT_BOLD,
                                     }}
