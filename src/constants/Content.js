@@ -1,5 +1,11 @@
 /* eslint-disable import/prefer-default-export */
 /* eslint-disable max-len */
+export const BANK_NUMBER_2SEEYOU = '01860415201';
+
+export const MOBILE_CONTACT = '0352221769';
+
+export const EMAIL_CONTACT = 'huyxvd@gmail.com';
+
 export const DISCLAIMER_CONTENT = `\n\nChính sách bảo mật - Điều khoản sử dụng
 
 I. Nguyên tắc chung
@@ -180,9 +186,3 @@ Mọi thành viên khi sử dụng Ứng dụng 2SeeYou để thực hiện các
 
 Mọi thắc mắc của khách hàng xin vui lòng liên hệ với 2SeeYou theo thông tin dưới đây để giải đáp: ${EMAIL_CONTACT}
 `;
-
-export const BANK_NUMBER_2SEEYOU = '01860415201';
-
-export const MOBILE_CONTACT = '0352221769';
-
-export const EMAIL_CONTACT = 'huyxvd@gmail.com';

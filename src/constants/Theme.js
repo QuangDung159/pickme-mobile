@@ -22,13 +22,6 @@ const SIZES = {
     BASE: 16,
     OPACITY: 0.8,
 
-    // non-montserrat
-    // FONT_H1: 25,
-    // FONT_H2: 21,
-    // FONT_H3: 19,
-    // FONT_H4: 17,
-    // FONT_H5: 15,
-
     // montserrat
     FONT_H1: ResponsiveHelpers.normalize(26),
     FONT_H2: ResponsiveHelpers.normalize(21),
@@ -41,8 +34,8 @@ const SIZES = {
 };
 
 const FONT = {
-    TEXT_REGULAR: App.FONT.montserratRegular,
-    TEXT_BOLD: App.FONT.montserratBold
+    TEXT_REGULAR: App.FONT.robotoRegular,
+    TEXT_BOLD: App.FONT.robotoBold
 };
 
 export default {
