@@ -233,7 +233,7 @@ export default function CashOut() {
                             marginVertical: 10,
                             width: SIZES.WIDTH_BASE * 0.9
                         }}
-                        label="Số tài khoản:*"
+                        label="Số tài khoản:"
                         keyboardType="number-pad"
                     />
 
@@ -247,7 +247,7 @@ export default function CashOut() {
                             marginVertical: 10,
                             width: SIZES.WIDTH_BASE * 0.9
                         }}
-                        label="Chủ tài khoản:*"
+                        label="Chủ tài khoản:"
                     />
 
                     <View

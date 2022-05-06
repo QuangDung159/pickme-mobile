@@ -58,7 +58,7 @@ export default function PartnerData() {
             }}
             onChangeText={(input) => onChangeEarningExpected(input)}
             value={amountDisplay}
-            label="Thu nhập mong muốn (Xu/phút):*"
+            label="Thu nhập mong muốn (Xu/phút):"
             onEndEditing={
                 (e) => {
                     setAmountDisplay(CommonHelpers.formatCurrency(e.nativeEvent.text));
@@ -78,7 +78,7 @@ export default function PartnerData() {
                 marginVertical: 10,
                 width: SIZES.WIDTH_BASE * 0.9
             }}
-            label="Số phút tối thiểu của buổi hẹn:*"
+            label="Số phút tối thiểu của buổi hẹn:"
         />
     );
 
@@ -93,7 +93,7 @@ export default function PartnerData() {
                 setAmountDisplayOnline(input);
             }}
             value={amountDisplayOnline}
-            label="Thu nhập mong muốn (online) (Xu/phút):*"
+            label="Thu nhập mong muốn (online) (Xu/phút):"
             onEndEditing={
                 (e) => {
                     setAmountDisplayOnline(CommonHelpers.formatCurrency(e.nativeEvent.text));
@@ -113,7 +113,7 @@ export default function PartnerData() {
                 marginVertical: 10,
                 width: SIZES.WIDTH_BASE * 0.9
             }}
-            label="Số phút tối thiểu của buổi hẹn (online):*"
+            label="Số phút tối thiểu của buổi hẹn (online):"
         />
     );
 

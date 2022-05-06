@@ -91,9 +91,8 @@ export default function UpdateInfoAccount({ navigation }) {
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                marginTop: 15
+                marginTop: 10
             }}
-            autoCapitalize
             label="Tên hiển thị:"
             maxLength={35}
         />

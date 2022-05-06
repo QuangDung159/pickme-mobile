@@ -143,7 +143,7 @@ export default function CreateBookingForm({
                             color: COLORS.ACTIVE,
                             marginRight: 5
                         }}
-                        text="Bắt đầu:*"
+                        text="Bắt đầu:"
                     />
                     <CustomButton
                         onPress={() => {
@@ -171,7 +171,7 @@ export default function CreateBookingForm({
                             color: COLORS.ACTIVE,
                             marginRight: 5
                         }}
-                        text="Kết thúc:*"
+                        text="Kết thúc:"
                     />
                     <CustomButton
                         onPress={() => {
@@ -388,7 +388,7 @@ export default function CreateBookingForm({
     const renderBookingTypes = () => (
         <>
             <CustomText
-                text="Hình thức:*"
+                text="Hình thức:"
                 style={{
                     color: COLORS.ACTIVE,
                     fontSize: SIZES.FONT_H3,
@@ -458,7 +458,7 @@ export default function CreateBookingForm({
                         marginTop: 5,
                         width: SIZES.WIDTH_BASE * 0.9
                     }}
-                    label="Địa điểm:*"
+                    label="Địa điểm:"
                 />
             )}
         </>
@@ -499,7 +499,7 @@ export default function CreateBookingForm({
     const renderNoteSection = () => (
         <>
             <CustomText
-                text="Ghi chú:*"
+                text="Ghi chú:"
                 style={{
                     color: COLORS.ACTIVE,
                     fontSize: SIZES.FONT_H3,

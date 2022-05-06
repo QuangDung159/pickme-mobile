@@ -275,7 +275,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
         const {
             earningExpected,
             bookingCompletedCount,
-            // ratingAvg
+            ratingAvg,
             estimatePricing
         } = userInfo;
 
@@ -297,15 +297,15 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                                 label: 'Phí mời',
                             },
                             {
-                                value: `${bookingCompletedCount}`,
+                                value: `${bookingCompletedCount} lần`,
                                 type: 'booking',
                                 label: 'Được mời',
                             },
-                            // {
-                            //     value: `${ratingAvg}/5`,
-                            //     type: 'rating',
-                            //     label: 'Đánh giá',
-                            // },
+                            {
+                                value: `${ratingAvg}/5 sao`,
+                                type: 'rating',
+                                label: 'Đánh giá',
+                            },
                         ]
                     }
                 />
