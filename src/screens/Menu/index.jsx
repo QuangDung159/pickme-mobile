@@ -241,7 +241,7 @@ export default function Menu({ navigation }) {
                 <FlatList
                     data={listMenu}
                     renderItem={({ item, index }) => renderMenuItem(item, index)}
-                    keyExtractor={(item) => item.title}
+                    keyExtractor={(item) => item?.title}
                     style={{
                         paddingTop: 10
                     }}

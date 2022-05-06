@@ -1,9 +1,11 @@
 /* eslint-disable no-unused-vars */
 import {
-    CenterLoader, CustomButton, CustomCheckbox, CustomInput, CustomModal, CustomText, OptionItem
+    CenterLoader, CustomButton, CustomCheckbox, CustomInput, CustomModal, CustomText, OptionItem, TouchableText
 } from '@components/uiComponents';
 import { HOST_CONTENT } from '@constants/HostContent';
-import { Images, Interests, Theme } from '@constants/index';
+import {
+    Images, Interests, ScreenName, Theme
+} from '@constants/index';
 import { CommonHelpers, ToastHelpers } from '@helpers/index';
 import MediaHelpers from '@helpers/MediaHelpers';
 import ValidationHelpers from '@helpers/ValidationHelpers';
@@ -18,7 +20,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const { SIZES, COLORS, FONT: { TEXT_BOLD, TEXT_REGULAR } } = Theme;
 
-export default function UpdateInfoAccount() {
+export default function UpdateInfoAccount({ navigation }) {
     const currentUser = useSelector((state) => state.userReducer.currentUser);
     const [newUser, setNewUser] = useState({});
     const [isShowSpinner, setIsShowSpinner] = useState(false);
@@ -734,6 +736,7 @@ export default function UpdateInfoAccount() {
                     setAcceptInviteCoffeeVisible(!isAcceptInviteCoffeeVisible);
                 }}
             />
+
             {renderImageUrl()}
         </View>
     );
@@ -741,47 +744,70 @@ export default function UpdateInfoAccount() {
     const renderImageUrl = () => (
         isAcceptInviteCoffeeVisible
             && (
-                <View
-                    style={{
-                        marginTop: 10,
-                        alignSelf: 'center'
-                    }}
-                >
-                    <CustomButton
-                        onPress={() => onChooseImage()}
-                        type="active"
-                        label="Chọn ảnh"
-                        buttonStyle={{
-                            width: SIZES.WIDTH_BASE * 0.9,
-                        }}
-                    />
-                    <View
-                        style={{
-                            marginTop: 10,
-                            alignSelf: 'center'
-                        }}
-                    >
-                        {imagePath ? (
-                            <ImageScalable
-                                style={{
-                                    zIndex: 99
+                <>
+                    {currentUser?.isPartnerVerified ? (
+                        <View
+                            style={{
+                                marginTop: 10,
+                                alignSelf: 'center'
+                            }}
+                        >
+                            <CustomButton
+                                onPress={() => onChooseImage()}
+                                type="active"
+                                label="Chọn ảnh"
+                                buttonStyle={{
+                                    width: SIZES.WIDTH_BASE * 0.9,
                                 }}
-                                width={SIZES.WIDTH_BASE * 0.9}
-                                source={{ uri: imagePath }}
                             />
-                        ) : (
                             <View
                                 style={{
-                                    alignItems: 'center',
-                                    marginVertical: 5
+                                    marginTop: 10,
+                                    alignSelf: 'center'
                                 }}
                             >
-                                <CustomText text="Chưa có ảnh" />
-                            </View>
-                        )}
+                                {imagePath ? (
+                                    <ImageScalable
+                                        style={{
+                                            zIndex: 99
+                                        }}
+                                        width={SIZES.WIDTH_BASE * 0.9}
+                                        source={{ uri: imagePath }}
+                                    />
+                                ) : (
+                                    <View
+                                        style={{
+                                            alignItems: 'center',
+                                            marginVertical: 5
+                                        }}
+                                    >
+                                        <CustomText text="Chưa có ảnh" />
+                                    </View>
+                                )}
 
-                    </View>
-                </View>
+                            </View>
+
+                            {renderEarningExpected()}
+                            {renderInputMinimumDuration()}
+                        </View>
+                    ) : (
+                        <TouchableText
+                            style={{
+                                fontSize: SIZES.FONT_H5 - 3,
+                                marginTop: 10,
+                                textAlign: 'center',
+                                width: SIZES.WIDTH_BASE * 0.9,
+                            }}
+                            // eslint-disable-next-line max-len
+                            text={'Bằng việc đăng nhập vào ứng dụng,\nbạn đã đồng ý với "Điều khoản sử dụng" của ứng dụng'}
+                            onPress={() => {
+                                navigation.navigate(ScreenName.VERIFICATION, {
+                                    navigateFrom: ScreenName.MENU
+                                });
+                            }}
+                        />
+                    )}
+                </>
             )
     );
 
@@ -1344,13 +1370,7 @@ export default function UpdateInfoAccount() {
                                 {/* {renderInputInterests()} */}
                                 {renderOptionInterests()}
                                 {renderInputDescription()}
-                                {currentUser?.isPartnerVerified && (
-                                    <>
-                                        {checkBoxLetOtherInviteCoffee()}
-                                        {renderEarningExpected()}
-                                        {renderInputMinimumDuration()}
-                                    </>
-                                )}
+                                {checkBoxLetOtherInviteCoffee()}
                                 {/* {renderInputZalo()}
                                 {renderInputSkype()}
                                 {renderInputMessenger()} */}
