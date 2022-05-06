@@ -18,6 +18,7 @@ export default function OptionItem({
                 borderRadius: 20,
                 marginRight: 5,
                 marginBottom: 5,
+                height: 36,
                 backgroundColor: isSelected ? COLORS.ACTIVE : COLORS.BASE
             }, containerStyle]}
         >

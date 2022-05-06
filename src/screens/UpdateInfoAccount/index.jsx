@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import {
     CenterLoader, CustomButton, CustomCheckbox, CustomInput, CustomModal, CustomText, OptionItem
 } from '@components/uiComponents';
@@ -70,18 +71,17 @@ export default function UpdateInfoAccount() {
     const renderInputName = () => (
         <CustomInput
             value={newUser.fullName}
-            inputStyle={{ width: SIZES.WIDTH_BASE * 0.68 }}
+            inputStyle={{ width: SIZES.WIDTH_BASE * 0.65 }}
             onChangeText={(input) => onChangeName(input)}
             containerStyle={{
                 width: SIZES.WIDTH_BASE * 0.9,
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                marginBottom: 10,
-                marginTop: 5
+                marginTop: 15
             }}
             autoCapitalize
-            label="Họ tên:*"
+            label="Họ tên:"
             maxLength={35}
         />
     );
@@ -89,17 +89,17 @@ export default function UpdateInfoAccount() {
     const renderInputPhone = () => (
         <CustomInput
             value={newUser.phoneNum}
-            inputStyle={{ width: SIZES.WIDTH_BASE * 0.68 }}
+            inputStyle={{ width: SIZES.WIDTH_BASE * 0.65 }}
             onChangeText={(input) => setNewUser({ ...newUser, phoneNum: input })}
             containerStyle={{
-                marginBottom: 10,
                 width: SIZES.WIDTH_BASE * 0.9,
                 flexDirection: 'row',
                 justifyContent: 'space-between',
-                alignItems: 'center'
+                alignItems: 'center',
+                marginTop: 10
             }}
             keyboardType="number-pad"
-            label="SĐT:*"
+            label="SĐT:"
             maxLength={12}
         />
     );
@@ -113,10 +113,11 @@ export default function UpdateInfoAccount() {
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 alignItems: 'center',
+                marginTop: 10
             }}
-            inputStyle={{ width: SIZES.WIDTH_BASE * 0.68 }}
+            inputStyle={{ width: SIZES.WIDTH_BASE * 0.65 }}
             autoCapitalize
-            label="Nơi ở:*"
+            label="Nơi ở:"
             maxLength={35}
         />
     );
@@ -236,7 +237,7 @@ export default function UpdateInfoAccount() {
             }}
         >
             <CustomText
-                text="Sở thích:*"
+                text="Sở thích:"
                 style={{
                     color: COLORS.ACTIVE,
                     fontSize: SIZES.FONT_H3,
@@ -258,6 +259,9 @@ export default function UpdateInfoAccount() {
                             handlePressInterest(index);
                         }}
                         isSelected={item.selected}
+                        containerStyle={{
+                            marginBottom: 10
+                        }}
                     />
                 ))}
             </View>
@@ -277,8 +281,44 @@ export default function UpdateInfoAccount() {
                 height: 60
             }}
             autoCapitalize
-            label="Mô tả ngắn:*"
+            label="Mô tả ngắn:"
             maxLength={100}
+        />
+    );
+
+    const renderInputHeight = () => (
+        <CustomInput
+            inputStyle={{ width: SIZES.WIDTH_BASE * 0.65 }}
+            label="Chiều cao:"
+            onChangeText={(input) => setNewUser({ ...newUser, height: input })}
+            value={newUser.height}
+            keyboardType="number-pad"
+            maxLength={3}
+            containerStyle={{
+                width: SIZES.WIDTH_BASE * 0.9,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginTop: 10
+            }}
+        />
+    );
+
+    const renderInputWeight = () => (
+        <CustomInput
+            inputStyle={{ width: SIZES.WIDTH_BASE * 0.65 }}
+            label="Cân nặng:"
+            onChangeText={(input) => setNewUser({ ...newUser, weight: input })}
+            value={newUser.weight}
+            keyboardType="number-pad"
+            maxLength={3}
+            containerStyle={{
+                width: SIZES.WIDTH_BASE * 0.9,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginTop: 10
+            }}
         />
     );
 
@@ -292,14 +332,13 @@ export default function UpdateInfoAccount() {
                 width: '90%'
             }}
         >
-
             <View>
                 <CustomText
                     style={{
                         color: COLORS.ACTIVE,
                         marginBottom: 5
                     }}
-                    text="Cao (cm):*"
+                    text="Chiều cao:"
                 />
                 <CustomInput
                     inputStyle={{
@@ -318,7 +357,7 @@ export default function UpdateInfoAccount() {
                         color: COLORS.ACTIVE,
                         marginBottom: 5
                     }}
-                    text="Nặng (kg):*"
+                    text="Cân nặng:"
                 />
                 <CustomInput
                     inputStyle={{
@@ -335,18 +374,17 @@ export default function UpdateInfoAccount() {
 
     const renderDOB = () => (
         <CustomInput
-            inputStyle={{
-                width: SIZES.WIDTH_BASE * 0.44
-            }}
+            inputStyle={{ width: SIZES.WIDTH_BASE * 0.65 }}
             containerStyle={{
                 width: SIZES.WIDTH_BASE * 0.9,
                 flexDirection: 'row',
                 justifyContent: 'space-between',
-                alignItems: 'center'
+                alignItems: 'center',
+                marginTop: 10
             }}
             onChangeText={(input) => onChangeYear(input)}
             value={newUser?.dob?.substr(0, 4)}
-            label="Năm Sinh:*"
+            label="Năm Sinh:"
             keyboardType="number-pad"
             maxLength={4}
         />
@@ -358,36 +396,53 @@ export default function UpdateInfoAccount() {
             justifyContent: 'space-between',
             alignItems: 'center',
             width: SIZES.WIDTH_BASE * 0.9,
-            marginBottom: 5
+            marginTop: 10,
         }}
         >
-            <OptionItem
-                item={{ value: 'Nam' }}
-                index={0}
-                handlePressItem={() => setNewUser({ ...newUser, isMale: true })}
-                isSelected={newUser.isMale}
-                containerStyle={{
-                    width: SIZES.WIDTH_BASE * 0.44
+            <CustomText
+                style={{
+                    color: COLORS.ACTIVE,
                 }}
-                titleStyle={{
-                    fontFamily: TEXT_BOLD,
-                    textAlign: 'center'
-                }}
+                text="Giới tính:"
             />
-            <OptionItem
-                item={{ value: 'Nữ' }}
-                index={1}
-                handlePressItem={() => setNewUser({ ...newUser, isMale: false })}
-                isSelected={!newUser.isMale}
-                containerStyle={{
-                    width: SIZES.WIDTH_BASE * 0.44,
-                    marginRight: 0
+            <View
+                style={{
+                    width: SIZES.WIDTH_BASE * 0.65,
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
                 }}
-                titleStyle={{
-                    fontFamily: TEXT_BOLD,
-                    textAlign: 'center'
-                }}
-            />
+            >
+                <OptionItem
+                    item={{ value: 'Nam' }}
+                    index={0}
+                    handlePressItem={() => setNewUser({ ...newUser, isMale: true })}
+                    isSelected={newUser.isMale}
+                    containerStyle={{
+                        width: '49%',
+                        marginBottom: 0
+                    }}
+                    titleStyle={{
+                        fontFamily: TEXT_BOLD,
+                        textAlign: 'center'
+                    }}
+                />
+                <OptionItem
+                    item={{ value: 'Nữ' }}
+                    index={1}
+                    handlePressItem={() => setNewUser({ ...newUser, isMale: false })}
+                    isSelected={!newUser.isMale}
+                    containerStyle={{
+                        width: '49%',
+                        marginRight: 0,
+                        marginBottom: 0
+                    }}
+                    titleStyle={{
+                        fontFamily: TEXT_BOLD,
+                        textAlign: 'center'
+                    }}
+                />
+            </View>
         </View>
     );
 
@@ -405,7 +460,7 @@ export default function UpdateInfoAccount() {
     //             }}
     //             onChangeText={(input) => onChangeYear(input)}
     //             value={newUser?.dob?.substr(0, 4)}
-    //             label="Năm Sinh:*"
+    //             label="Năm Sinh:"
     //             keyboardType="number-pad"
     //         />
 
@@ -513,7 +568,7 @@ export default function UpdateInfoAccount() {
                 }
             },
             {
-                fieldName: 'Cao',
+                fieldName: 'Chiều cao',
                 input: newUser.height,
                 validate: {
                     required: {
@@ -522,7 +577,7 @@ export default function UpdateInfoAccount() {
                 }
             },
             {
-                fieldName: 'Nặng',
+                fieldName: 'Cân nặng',
                 input: newUser.weight,
                 validate: {
                     required: {
@@ -595,7 +650,7 @@ export default function UpdateInfoAccount() {
             }}
         >
             <CustomCheckbox
-                label="Trở thành HOST"
+                label="Tôi muốn trở thành Host"
                 onPressLabel={() => {
                     setModalInviteCoffeeVisible(true);
                 }}
@@ -1188,7 +1243,9 @@ export default function UpdateInfoAccount() {
                                 {renderInputName()}
                                 {renderInputPhone()}
                                 {renderInputHometown()}
-                                {renderInputHeightWeight()}
+                                {renderInputHeight()}
+                                {renderInputWeight()}
+                                {/* {renderInputHeightWeight()} */}
                                 {renderGender()}
                                 {renderDOB()}
                                 {/* {renderDobGender()} */}
