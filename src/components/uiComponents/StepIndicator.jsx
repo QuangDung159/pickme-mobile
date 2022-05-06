@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 5,
         backgroundColor: COLORS.TRANSPARENT,
         borderColor: COLORS.ACTIVE,
-        borderWidth: 3,
+        borderWidth: 2,
     },
     stepIndicatorNext: {
         width: 30,

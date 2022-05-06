@@ -1,6 +1,6 @@
 import { CustomButton, CustomText, IconCustom } from '@components/uiComponents';
 import {
-    BookingStatus, IconFamily, OutsideApp, ScreenName, Theme
+    BookingStatus, IconFamily, OutsideApp, Theme
 } from '@constants/index';
 import { mappingStatusText } from '@helpers/CommonHelpers';
 import { CommonHelpers, ToastHelpers } from '@helpers/index';
@@ -28,14 +28,10 @@ const {
 } = Theme;
 
 const {
-    SKYPE,
-    ZALO,
-    MESSENGER,
     GOOGLE_MAP,
-    GAMING
 } = OutsideApp;
 
-export default function CardBooking({ booking, navigation }) {
+export default function CardBooking({ booking }) {
     const [deviceCalendars, setDeviceCalendars] = useState([]);
     const [openAppText, setOpenAppText] = useState();
 
@@ -218,64 +214,15 @@ export default function CardBooking({ booking, navigation }) {
         return `${GOOGLE_MAP.deepLink}${addressStr}`;
     };
 
-    const checkPlatformByAddress = () => {
-        if (booking.address.includes(ZALO.deepLink)) {
-            return ZALO.name;
-        }
-
-        if (booking.address.includes(SKYPE.deepLink)) {
-            return SKYPE.name;
-        }
-
-        if (booking.address.includes(MESSENGER.deepLink)) {
-            return MESSENGER.name;
-        }
-
-        if (booking.address.includes(GAMING.deepLink)) {
-            return GAMING.name;
-        }
-
-        return booking.address;
-    };
-
     const createOpenAppText = () => {
-        if (booking.isOnline) {
-            if (booking.address.includes(GAMING.deepLink)) {
-                setOpenAppText({
-                    action: () => {
-                        navigation.navigate(ScreenName.MESSAGE, {
-                            name: booking.partnerName,
-                            userStatus: 'Vừa mới truy cập',
-                            toUserId: booking.partnerId,
-                            // userInfo: partnerInfo
-                        });
-                    },
-                    icon: {
-                        name: 'gamepad',
-                        family: IconFamily.FONT_AWESOME,
-                        size: 18
-                    },
-                });
-            } else {
-                setOpenAppText({
-                    action: () => Linking.openURL(booking.address),
-                    icon: {
-                        name: 'phone',
-                        family: IconFamily.ENTYPO,
-                        size: 18
-                    },
-                });
-            }
-        } else {
-            setOpenAppText({
-                action: () => Linking.openURL(createMapUrl(booking.address)),
-                icon: {
-                    name: 'map',
-                    family: IconFamily.ENTYPO,
-                    size: 12
-                },
-            });
-        }
+        setOpenAppText({
+            action: () => Linking.openURL(createMapUrl(booking.address)),
+            icon: {
+                name: 'map',
+                family: IconFamily.ENTYPO,
+                size: 12
+            },
+        });
     };
 
     try {
@@ -426,7 +373,7 @@ export default function CardBooking({ booking, navigation }) {
                                     }
                                 ]
                             }
-                            text={`Tại: ${checkPlatformByAddress()}`}
+                            text={`Tại: ${booking.address}`}
                         />
                         <IconCustom
                             name={openAppText?.icon.name}

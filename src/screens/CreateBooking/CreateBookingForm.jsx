@@ -206,10 +206,6 @@ export default function CreateBookingForm({
         });
     };
 
-    // if (!currentUser.facebook && !currentUser.zalo && !currentUser.skype) {
-    //     return <></>;
-    // }
-
     const renderNoteOptions = () => (
         <View
             style={{
