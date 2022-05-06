@@ -34,7 +34,7 @@ CustomInput.defaultProps = {
     rightIcon: null,
     onPressRightIcon: null,
     value: '',
-    editable: true
+    editable: true,
 };
 
 export default function CustomInput({
@@ -45,6 +45,7 @@ export default function CustomInput({
     value,
     editable,
     ref,
+    autoCapitalize = 'none',
     rightIcon, ...props
 }) {
     const renderTextInputBase = () => (
@@ -70,7 +71,7 @@ export default function CustomInput({
             value={value?.toString() || ''}
             placeholderTextColor={COLORS.PLACE_HOLDER}
             ref={ref}
-            autoCapitalize="none"
+            autoCapitalize={autoCapitalize}
             {...props}
         />
     );

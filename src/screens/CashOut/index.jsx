@@ -180,7 +180,7 @@ export default function CashOut() {
                 }}
             >
                 <CustomInput
-                    value={bankName}
+                    value={cashOutForm.bankName}
                     onChangeText={(input) => setCashOutForm({ ...cashOutForm, bankName: input })}
                     containerStyle={{
                         width: SIZES.WIDTH_MAIN,
@@ -190,7 +190,8 @@ export default function CashOut() {
                 />
 
                 <CustomInput
-                    value={bankShortName}
+                    autoCapitalize="characters"
+                    value={cashOutForm.bankShortName}
                     inputStyle={{ width: SIZES.WIDTH_BASE * 0.65 }}
                     label="Viết tắt:"
                     onChangeText={(input) => setCashOutForm({ ...cashOutForm, bankShortName: input })}
@@ -204,7 +205,7 @@ export default function CashOut() {
                 />
 
                 <CustomInput
-                    value={bankBranch}
+                    value={cashOutForm.bankBranch}
                     inputStyle={{ width: SIZES.WIDTH_BASE * 0.65 }}
                     onChangeText={(input) => setCashOutForm({ ...cashOutForm, bankBranch: input })}
                     containerStyle={{
@@ -218,7 +219,7 @@ export default function CashOut() {
                 />
 
                 <CustomInput
-                    value={bankNum}
+                    value={cashOutForm.bankNum}
                     inputStyle={{ width: SIZES.WIDTH_BASE * 0.65 }}
                     onChangeText={(input) => setCashOutForm({ ...cashOutForm, bankNum: input })}
                     containerStyle={{
@@ -233,7 +234,7 @@ export default function CashOut() {
                 />
 
                 <CustomInput
-                    value={ownerName}
+                    value={cashOutForm.ownerName}
                     inputStyle={{ width: SIZES.WIDTH_BASE * 0.65 }}
                     onChangeText={(input) => setCashOutForm({ ...cashOutForm, ownerName: input })}
                     containerStyle={{
@@ -263,7 +264,7 @@ export default function CashOut() {
                             color: COLORS.ACTIVE,
                             textAlign: 'center'
                         }}
-                        text={`Tổng Xu: ${CommonHelpers.formatCurrency(currentUser.walletAmount)}`}
+                        text={`Xu trong ví: ${CommonHelpers.formatCurrency(currentUser.walletAmount)}`}
                     />
                 </View>
 
@@ -277,7 +278,6 @@ export default function CashOut() {
                     }}
                     containerStyle={{
                         marginVertical: 10,
-                        width: (SIZES.WIDTH_MAIN) - 58,
                     }}
                     onEndEditing={
                         (e) => {
@@ -286,9 +286,6 @@ export default function CashOut() {
                     }
                     onFocus={() => {
                         setAmountDisplay(cashOutForm.amount);
-                    }}
-                    inputStyle={{
-                        color: COLORS.ACTIVE,
                     }}
                 />
                 <View
