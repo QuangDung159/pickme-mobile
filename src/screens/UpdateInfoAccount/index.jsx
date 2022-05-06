@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import {
-    CenterLoader, CustomButton, CustomCheckbox, CustomInput, CustomModal, CustomText, OptionItem, TouchableText
+    CenterLoader, CustomButton, CustomCheckbox, CustomInput, CustomModal, CustomText, Line, OptionItem, TouchableText
 } from '@components/uiComponents';
 import { HOST_CONTENT } from '@constants/HostContent';
 import {
@@ -84,7 +84,7 @@ export default function UpdateInfoAccount({ navigation }) {
     const renderInputName = () => (
         <CustomInput
             value={newUser.fullName}
-            inputStyle={{ width: SIZES.WIDTH_BASE * 0.65 }}
+            inputStyle={{ width: SIZES.WIDTH_BASE * 0.55 }}
             onChangeText={(input) => onChangeName(input)}
             containerStyle={{
                 width: SIZES.WIDTH_BASE * 0.9,
@@ -94,7 +94,7 @@ export default function UpdateInfoAccount({ navigation }) {
                 marginTop: 15
             }}
             autoCapitalize
-            label="Họ tên:"
+            label="Tên hiển thị:"
             maxLength={35}
         />
     );
@@ -102,7 +102,7 @@ export default function UpdateInfoAccount({ navigation }) {
     const renderInputPhone = () => (
         <CustomInput
             value={newUser.phoneNum}
-            inputStyle={{ width: SIZES.WIDTH_BASE * 0.65 }}
+            inputStyle={{ width: SIZES.WIDTH_BASE * 0.55 }}
             onChangeText={(input) => setNewUser({ ...newUser, phoneNum: input })}
             containerStyle={{
                 width: SIZES.WIDTH_BASE * 0.9,
@@ -112,7 +112,7 @@ export default function UpdateInfoAccount({ navigation }) {
                 marginTop: 10
             }}
             keyboardType="number-pad"
-            label="SĐT:"
+            label="Số điện thoại:"
             maxLength={12}
         />
     );
@@ -128,9 +128,9 @@ export default function UpdateInfoAccount({ navigation }) {
                 alignItems: 'center',
                 marginTop: 10
             }}
-            inputStyle={{ width: SIZES.WIDTH_BASE * 0.65 }}
+            inputStyle={{ width: SIZES.WIDTH_BASE * 0.55 }}
             autoCapitalize
-            label="Nơi ở:"
+            label="Nơi ở hiện tại:"
             maxLength={35}
         />
     );
@@ -301,8 +301,8 @@ export default function UpdateInfoAccount({ navigation }) {
 
     const renderInputHeight = () => (
         <CustomInput
-            inputStyle={{ width: SIZES.WIDTH_BASE * 0.65 }}
-            label="Chiều cao:"
+            inputStyle={{ width: SIZES.WIDTH_BASE * 0.55 }}
+            label="Chiều cao (cm):"
             onChangeText={(input) => setNewUser({ ...newUser, height: input })}
             value={newUser.height}
             keyboardType="number-pad"
@@ -319,8 +319,8 @@ export default function UpdateInfoAccount({ navigation }) {
 
     const renderInputWeight = () => (
         <CustomInput
-            inputStyle={{ width: SIZES.WIDTH_BASE * 0.65 }}
-            label="Cân nặng:"
+            inputStyle={{ width: SIZES.WIDTH_BASE * 0.55 }}
+            label="Cân nặng (kg):"
             onChangeText={(input) => setNewUser({ ...newUser, weight: input })}
             value={newUser.weight}
             keyboardType="number-pad"
@@ -419,7 +419,7 @@ export default function UpdateInfoAccount({ navigation }) {
 
     const renderDOB = () => (
         <CustomInput
-            inputStyle={{ width: SIZES.WIDTH_BASE * 0.65 }}
+            inputStyle={{ width: SIZES.WIDTH_BASE * 0.55 }}
             containerStyle={{
                 width: SIZES.WIDTH_BASE * 0.9,
                 flexDirection: 'row',
@@ -452,7 +452,7 @@ export default function UpdateInfoAccount({ navigation }) {
             />
             <View
                 style={{
-                    width: SIZES.WIDTH_BASE * 0.65,
+                    width: SIZES.WIDTH_BASE * 0.55,
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                     alignItems: 'center',
@@ -721,10 +721,15 @@ export default function UpdateInfoAccount({ navigation }) {
         <View
             style={{
                 paddingBottom: 10,
+                paddingTop: 5
             }}
         >
             <CustomCheckbox
                 label="Tôi muốn trở thành Host"
+                labelStyle={{
+                    color: COLORS.ACTIVE,
+                    fontSize: SIZES.FONT_H3
+                }}
                 onPressLabel={() => {
                     setModalInviteCoffeeVisible(true);
                 }}
@@ -793,13 +798,13 @@ export default function UpdateInfoAccount({ navigation }) {
                     ) : (
                         <TouchableText
                             style={{
-                                fontSize: SIZES.FONT_H5 - 3,
+                                fontSize: SIZES.FONT_H5,
                                 marginTop: 10,
                                 textAlign: 'center',
                                 width: SIZES.WIDTH_BASE * 0.9,
                             }}
                             // eslint-disable-next-line max-len
-                            text={'Bằng việc đăng nhập vào ứng dụng,\nbạn đã đồng ý với "Điều khoản sử dụng" của ứng dụng'}
+                            text="Tài khoản của bạn chưa được xác thực, vui lòng nhấn vào đây để tiến hành xác thực tài khoản"
                             onPress={() => {
                                 navigation.navigate(ScreenName.VERIFICATION, {
                                     navigateFrom: ScreenName.MENU
@@ -1370,6 +1375,7 @@ export default function UpdateInfoAccount({ navigation }) {
                                 {/* {renderInputInterests()} */}
                                 {renderOptionInterests()}
                                 {renderInputDescription()}
+                                <Line />
                                 {checkBoxLetOtherInviteCoffee()}
                                 {/* {renderInputZalo()}
                                 {renderInputSkype()}

@@ -23,4 +23,20 @@ export default [
         value: 'Thể thao',
         selected: false
     },
+    {
+        value: 'Kinh tế',
+        selected: false
+    },
+    {
+        value: 'Nhiếp ảnh',
+        selected: false
+    },
+    {
+        value: 'Ca hát',
+        selected: false
+    },
+    {
+        value: 'Diễn xuất',
+        selected: false
+    },
 ];
