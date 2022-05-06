@@ -1,15 +1,14 @@
 import {
-    CenterLoader, CustomButton, CustomInput, CustomText, NoteText, IconCustom
+    CenterLoader, CustomButton, CustomInput, CustomText, IconCustom, NoteText
 } from '@components/uiComponents';
+import IconFamily from '@constants/IconFamily';
 import { Theme } from '@constants/index';
 import { CommonHelpers, ToastHelpers, ValidationHelpers } from '@helpers/index';
-import { Picker } from '@react-native-picker/picker';
-import { setCurrentUser, setListBank } from '@redux/Actions';
-import { BankServices, CashServices, UserServices } from '@services/index';
-import React, { useEffect, useState } from 'react';
+import { setCurrentUser } from '@redux/Actions';
+import { CashServices, UserServices } from '@services/index';
+import React, { useState } from 'react';
 import { Platform, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import IconFamily from '@constants/IconFamily';
 
 const {
     SIZES,
@@ -25,7 +24,9 @@ export default function CashOut() {
 
     const dispatch = useDispatch();
 
-    const { bankName, bankShortName, bankBranch, bankNum, ownerName } = currentUser;
+    const {
+        bankName, bankShortName, bankBranch, bankNum, ownerName
+    } = currentUser;
     const [isShowSpinner, setIsShowSpinner] = useState(false);
     const [cashOutForm, setCashOutForm] = useState({
         bankName,
@@ -164,181 +165,175 @@ export default function CashOut() {
         }
     };
 
-    const renderCashOutForm = () => {
-        const {
-            bankName,
-            bankShortName,
-            bankBranch,
-            bankNum,
-            ownerName,
-        } = cashOutForm;
-
-        return (
+    const renderCashOutForm = () => (
+        <View
+            style={{
+                backgroundColor: COLORS.BASE,
+                width: SIZES.WIDTH_BASE
+            }}
+        >
             <View
                 style={{
-                    backgroundColor: COLORS.BASE,
-                    width: SIZES.WIDTH_BASE
+                    width: SIZES.WIDTH_MAIN,
+                    alignSelf: 'center',
+                    marginTop: Platform.OS === 'ios' ? 0 : 10
                 }}
             >
+                <CustomInput
+                    value={bankName}
+                    onChangeText={(input) => setCashOutForm({ ...cashOutForm, bankName: input })}
+                    containerStyle={{
+                        width: SIZES.WIDTH_MAIN,
+                        marginTop: 10
+                    }}
+                    label="Tên ngân hàng:"
+                />
+
+                <CustomInput
+                    value={bankShortName}
+                    inputStyle={{ width: SIZES.WIDTH_BASE * 0.65 }}
+                    label="Viết tắt:"
+                    onChangeText={(input) => setCashOutForm({ ...cashOutForm, bankShortName: input })}
+                    containerStyle={{
+                        width: SIZES.WIDTH_MAIN,
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        marginTop: 10
+                    }}
+                />
+
+                <CustomInput
+                    value={bankBranch}
+                    inputStyle={{ width: SIZES.WIDTH_BASE * 0.65 }}
+                    onChangeText={(input) => setCashOutForm({ ...cashOutForm, bankBranch: input })}
+                    containerStyle={{
+                        width: SIZES.WIDTH_MAIN,
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        marginTop: 10
+                    }}
+                    label="Chi nhánh:"
+                />
+
+                <CustomInput
+                    value={bankNum}
+                    inputStyle={{ width: SIZES.WIDTH_BASE * 0.65 }}
+                    onChangeText={(input) => setCashOutForm({ ...cashOutForm, bankNum: input })}
+                    containerStyle={{
+                        width: SIZES.WIDTH_MAIN,
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        marginTop: 10
+                    }}
+                    label="Số tài khoản:"
+                    keyboardType="number-pad"
+                />
+
+                <CustomInput
+                    value={ownerName}
+                    inputStyle={{ width: SIZES.WIDTH_BASE * 0.65 }}
+                    onChangeText={(input) => setCashOutForm({ ...cashOutForm, ownerName: input })}
+                    containerStyle={{
+                        width: SIZES.WIDTH_MAIN,
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        marginVertical: 10
+                    }}
+                    label="Chủ tài khoản:"
+                />
+
                 <View
                     style={{
-                        width: SIZES.WIDTH_MAIN,
-                        alignSelf: 'center',
-                        marginTop: Platform.OS === 'ios' ? 0 : 10
+                        width: '100%',
+                        // borderColor: COLORS.ACTIVE,
+                        // borderRadius: 20,
+                        // borderWidth: 1,
+                        height: 35,
+                        justifyContent: 'center'
                     }}
                 >
-                    <CustomInput
-                        value={bankName}
-                        onChangeText={(input) => setCashOutForm({ ...cashOutForm, bankName: input })}
-                        containerStyle={{
-                            marginVertical: 10,
-                            width: SIZES.WIDTH_MAIN
-                        }}
-                        label="Ngân hàng"
-                    />
-
-                    <CustomInput
-                        value={bankShortName}
-                        inputStyle={{ width: 200 }}
-                        onChangeText={(input) => setCashOutForm({ ...cashOutForm, bankShortName: input })}
-                        containerStyle={{
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                            marginVertical: 10,
-                            width: SIZES.WIDTH_MAIN
-                        }}
-                        label="Viết tắt"
-                    />
-
-                    <CustomInput
-                        value={bankBranch}
-                        inputStyle={{ width: 200 }}
-                        onChangeText={(input) => setCashOutForm({ ...cashOutForm, bankBranch: input })}
-                        containerStyle={{
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                            marginVertical: 10,
-                            width: SIZES.WIDTH_MAIN
-                        }}
-                        label="Chi nhanh"
-                    />
-
-                    <CustomInput
-                        value={bankNum}
-                        inputStyle={{ width: 200 }}
-                        onChangeText={(input) => setCashOutForm({ ...cashOutForm, bankNum: input })}
-                        containerStyle={{
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                            marginVertical: 10,
-                            width: SIZES.WIDTH_MAIN
-                        }}
-                        label="Số tài khoản:"
-                        keyboardType="number-pad"
-                    />
-
-                    <CustomInput
-                        value={ownerName}
-                        inputStyle={{ width: 200 }}
-                        onChangeText={(input) => setCashOutForm({ ...cashOutForm, ownerName: input })}
-                        containerStyle={{
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                            marginVertical: 10,
-                            width: SIZES.WIDTH_MAIN
-                        }}
-                        label="Chủ tài khoản:"
-                    />
-
-                    <View
+                    <CustomText
                         style={{
-                            width: '100%',
-                            // borderColor: COLORS.ACTIVE,
-                            // borderRadius: 20,
-                            // borderWidth: 1,
-                            height: 35,
-                            justifyContent: 'center'
-                        }}
-                    >
-                        <CustomText
-                            style={{
-                                fontFamily: TEXT_BOLD,
-                                fontSize: SIZES.FONT_H3,
-                                color: COLORS.ACTIVE,
-                                textAlign: 'center'
-                            }}
-                            text={`Tổng Xu: ${CommonHelpers.formatCurrency(currentUser.walletAmount)}`}
-                        />
-                    </View>
-
-                    <CustomInput
-                        label="Số Xu rút: (1 Xu = 1 VND)"
-                        value={amountDisplay}
-                        keyboardType="number-pad"
-                        onChangeText={(input) => {
-                            setCashOutForm({ ...cashOutForm, amount: input });
-                            setAmountDisplay(input);
-                        }}
-                        containerStyle={{
-                            marginVertical: 10,
-                            width: (SIZES.WIDTH_MAIN) - 58,
-                        }}
-                        onEndEditing={
-                            (e) => {
-                                setAmountDisplay(CommonHelpers.formatCurrency(e.nativeEvent.text));
-                            }
-                        }
-                        onFocus={() => {
-                            setAmountDisplay(cashOutForm.amount);
-                        }}
-                        inputStyle={{
+                            fontFamily: TEXT_BOLD,
+                            fontSize: SIZES.FONT_H3,
                             color: COLORS.ACTIVE,
+                            textAlign: 'center'
+                        }}
+                        text={`Tổng Xu: ${CommonHelpers.formatCurrency(currentUser.walletAmount)}`}
+                    />
+                </View>
+
+                <CustomInput
+                    label="Số Xu rút: (1 Xu = 1 VND)"
+                    value={amountDisplay}
+                    keyboardType="number-pad"
+                    onChangeText={(input) => {
+                        setCashOutForm({ ...cashOutForm, amount: input });
+                        setAmountDisplay(input);
+                    }}
+                    containerStyle={{
+                        marginVertical: 10,
+                        width: (SIZES.WIDTH_MAIN) - 58,
+                    }}
+                    onEndEditing={
+                        (e) => {
+                            setAmountDisplay(CommonHelpers.formatCurrency(e.nativeEvent.text));
+                        }
+                    }
+                    onFocus={() => {
+                        setAmountDisplay(cashOutForm.amount);
+                    }}
+                    inputStyle={{
+                        color: COLORS.ACTIVE,
+                    }}
+                />
+                <View
+                    style={{
+                        marginBottom: 20,
+                        marginTop: 10
+                    }}
+                >
+                    <CustomButton
+                        onPress={() => onSubmitCashOut()}
+                        type="active"
+                        label="Xác nhận"
+                        buttonStyle={{
+                            width: SIZES.WIDTH_MAIN
                         }}
                     />
-                    <View
-                        style={{
-                            marginBottom: 20,
-                            marginTop: 10
-                        }}
-                    >
-                        <CustomButton
-                            onPress={() => onSubmitCashOut()}
-                            type="active"
-                            label="Xác nhận"
-                            buttonStyle={{
-                                width: SIZES.WIDTH_MAIN
-                            }}
-                        />
-                    </View>
+                </View>
 
-                    <View
-                        style={{
-                            marginBottom: 5
+                <View
+                    style={{
+                        marginBottom: 5
+                    }}
+                >
+                    <NoteText
+                        width={SIZES.WIDTH_MAIN}
+                        title="Lưu ý:"
+                        content="Nếu chuyển tiền giữa các ngân hàng mất phí thì chi phí này sẽ do người rút chi trả."
+                        contentStyle={{
+                            fontSize: SIZES.FONT_H4,
+                            color: COLORS.ACTIVE,
+                            fontFamily: TEXT_REGULAR,
                         }}
-                    >
-                        <NoteText
-                            width={SIZES.WIDTH_MAIN}
-                            title="Lưu ý:"
-                            content="Nếu chuyển tiền giữa các ngân hàng mất phí thì chi phí này sẽ do người rút chi trả."
-                            contentStyle={{
-                                fontSize: SIZES.FONT_H4,
-                                color: COLORS.ACTIVE,
-                                fontFamily: TEXT_REGULAR,
-                            }}
-                            iconComponent={(
-                                <IconCustom
-                                    name="info-circle"
-                                    family={IconFamily.FONT_AWESOME}
-                                    size={18}
-                                    color={COLORS.ACTIVE}
-                                />
-                            )}
-                        />
-                    </View>
+                        iconComponent={(
+                            <IconCustom
+                                name="info-circle"
+                                family={IconFamily.FONT_AWESOME}
+                                size={18}
+                                color={COLORS.ACTIVE}
+                            />
+                        )}
+                    />
                 </View>
             </View>
-        );
-    };
+        </View>
+    );
 
     return (
         <>

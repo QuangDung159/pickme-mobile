@@ -1,6 +1,6 @@
 import {
     CustomButton,
-    CustomModal, IconCustom, NoteText
+    CustomModal, IconCustom, NoteText, TouchableText
 } from '@components/uiComponents';
 import { BANK_NUMBER_2SEEYOU } from '@constants/Content';
 import {
@@ -98,9 +98,12 @@ export default function CashIn(props) {
                                 title="Số tài khoản: "
                                 content={BANK_NUMBER_2SEEYOU}
                                 contentStyle={{
-                                    fontSize: SIZES.FONT_H1,
+                                    fontSize: SIZES.FONT_H3,
                                     color: COLORS.ACTIVE,
                                     fontFamily: TEXT_BOLD,
+                                }}
+                                containerStyle={{
+                                    height: 70
                                 }}
                                 iconComponentRight={(
                                     <IconCustom
@@ -123,13 +126,17 @@ export default function CashIn(props) {
                         }}
                     >
                         <NoteText
+                            containerStyle={{
+                                height: 70
+                            }}
                             width={SIZES.WIDTH_MAIN}
                             title="Ngân hàng: "
                             content="TMCP Tiên Phong - TPBank"
                             contentStyle={{
                                 fontSize: SIZES.FONT_H3,
                                 color: COLORS.ACTIVE,
-                                textAlign: 'center'
+                                textAlign: 'center',
+                                fontFamily: TEXT_BOLD,
                             }}
                         />
                     </View>
@@ -149,6 +156,10 @@ export default function CashIn(props) {
                                 contentStyle={{
                                     fontSize: SIZES.FONT_H3,
                                     color: COLORS.ACTIVE,
+                                    fontFamily: TEXT_BOLD,
+                                }}
+                                containerStyle={{
+                                    height: 70
                                 }}
                                 iconComponentRight={(
                                     <IconCustom
@@ -180,6 +191,10 @@ export default function CashIn(props) {
                                 contentStyle={{
                                     fontSize: SIZES.FONT_H3,
                                     color: COLORS.ACTIVE,
+                                    fontFamily: TEXT_BOLD,
+                                }}
+                                containerStyle={{
+                                    height: 70
                                 }}
                                 iconComponentRight={(
                                     <IconCustom
@@ -207,26 +222,33 @@ export default function CashIn(props) {
                             contentStyle={{
                                 fontSize: SIZES.FONT_H3,
                                 color: COLORS.ACTIVE,
+                                fontFamily: TEXT_BOLD,
+                            }}
+                            containerStyle={{
+                                height: 70
                             }}
                         />
                     </View>
-                    {/* <TouchableText
+                    <TouchableText
                         style={{
                             color: COLORS.ACTIVE,
                             fontSize: SIZES.FONT_H3,
                             fontFamily: TEXT_BOLD,
                             marginTop: 10
                         }}
-                        text="Ví dụ"
-                        onPress={() => setModalVisible(true)}
-                    /> */}
+                        text="Mẫu đơn chuyển khoản"
+                        onPress={() => {}}
+                    />
                     <ImageScalable
                         source={Images.BankTransfer}
                         style={{
                             marginTop: 5,
-                            alignSelf: 'center'
+                            alignSelf: 'center',
+                            borderWidth: 0.5,
+                            borderColor: COLORS.ACTIVE,
+                            borderRadius: 20
                         }}
-                        width={SIZES.WIDTH_BASE * 0.6}
+                        width={SIZES.WIDTH_MAIN}
                     />
                 </View>
                 {renderModalGuide()}

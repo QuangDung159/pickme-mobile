@@ -27,7 +27,7 @@ export default class NoteText extends PureComponent {
                         width,
                         alignSelf: 'center',
                         borderRadius: 20,
-                        borderWidth: 1,
+                        borderWidth: 0.5,
                         borderColor: COLORS.ACTIVE
                     }, containerStyle
                 ]}
@@ -66,7 +66,8 @@ export default class NoteText extends PureComponent {
                                 {
                                     fontFamily: TEXT_REGULAR,
                                     alignSelf: 'center',
-                                    color: COLORS.DEFAULT
+                                    color: COLORS.DEFAULT,
+                                    paddingBottom: 5
                                 },
                                 contentStyle
                             ]
