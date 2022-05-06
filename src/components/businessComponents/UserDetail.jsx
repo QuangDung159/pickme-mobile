@@ -342,6 +342,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                 alignSelf: 'center',
                 flex: 1,
                 justifyContent: 'center',
+                marginTop: 10
             }}
         >
             <CustomButton
@@ -349,11 +350,10 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                 labelStyle={{
                     fontSize: SIZES.FONT_H3,
                     color: COLORS.ACTIVE,
-                    marginLeft: 5
                 }}
                 label="Tuỳ chọn"
                 buttonStyle={{
-                    width: 110,
+                    width: 80,
                     alignSelf: 'flex-start'
                 }}
                 leftIcon={{
@@ -543,9 +543,9 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                 </>
             )} */}
 
-                <Line
-                    borderColor={COLORS.ACTIVE}
-                    width={SIZES.WIDTH_MAIN}
+                <Line style={{
+                    marginBottom: 30
+                }}
                 />
 
                 <Albums

@@ -91,7 +91,8 @@ export default function Albums({
             style={{
                 width: SIZES.WIDTH_MAIN,
                 alignSelf: 'center',
-                flex: 1
+                flex: 1,
+                marginTop: -20
             }}
         >
             {isCurrentUser && renderButtonAddPhoto()}

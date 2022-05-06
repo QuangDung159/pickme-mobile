@@ -266,7 +266,7 @@ export default function BookingList({ navigation }) {
                 </View>
                 <View
                     style={{
-                        width: SIZES.WIDTH_BASE * 0.8,
+                        width: SIZES.WIDTH_BASE * 0.85,
                         paddingLeft: 10
                     }}
                 >
