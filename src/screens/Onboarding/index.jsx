@@ -264,7 +264,7 @@ export default function Onboarding({ navigation }) {
                             /> */}
                             <TouchableText
                                 style={{
-                                    fontSize: SIZES.FONT_H5 - 3,
+                                    fontSize: SIZES.FONT_H5,
                                     marginTop: 10,
                                     textAlign: 'center',
                                     width: SIZES.WIDTH_MAIN,
