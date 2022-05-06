@@ -4,7 +4,7 @@ import {
 } from '@components/uiComponents';
 import { HOST_CONTENT } from '@constants/HostContent';
 import { Images, Interests, Theme } from '@constants/index';
-import { ToastHelpers } from '@helpers/index';
+import { CommonHelpers, ToastHelpers } from '@helpers/index';
 import MediaHelpers from '@helpers/MediaHelpers';
 import ValidationHelpers from '@helpers/ValidationHelpers';
 import { setCurrentUser, setPersonTabActiveIndex } from '@redux/Actions';
@@ -30,12 +30,14 @@ export default function UpdateInfoAccount() {
     const [isModalInviteCoffeeVisible, setModalInviteCoffeeVisible] = useState(false);
     const [isAcceptInviteCoffeeVisible, setAcceptInviteCoffeeVisible] = useState(currentUser.isHost);
     const [imagePath, setImagePath] = useState(currentUser.imageUrl);
+    const [amountDisplay, setAmountDisplay] = useState('');
 
     const dispatch = useDispatch();
 
     useEffect(
         () => {
             setNewUser({ ...currentUser, isMale: currentUser.isMale });
+            setAmountDisplay(CommonHelpers.formatCurrency(currentUser.earningExpected));
             handleListInterestFromAPI();
         }, []
     );
@@ -46,6 +48,15 @@ export default function UpdateInfoAccount() {
 
     const onChangeHometown = (hometownInput) => {
         setNewUser({ ...newUser, homeTown: hometownInput });
+    };
+
+    const onChangeMinimumDuration = (durationInput) => {
+        setNewUser({ ...newUser, minimumDuration: durationInput });
+    };
+
+    const onChangeEarningExpected = (input) => {
+        setNewUser({ ...newUser, earningExpected: input });
+        setAmountDisplay(input);
     };
 
     // const onChangeInterests = (interestsInput) => {
@@ -322,6 +333,38 @@ export default function UpdateInfoAccount() {
         />
     );
 
+    const renderEarningExpected = () => (
+        <CustomInput
+            containerStyle={{
+                marginTop: 10,
+                width: SIZES.WIDTH_BASE * 0.9
+            }}
+            onChangeText={(input) => onChangeEarningExpected(input)}
+            value={amountDisplay}
+            label="Thu nhập mong muốn (Xu/phút):"
+            onEndEditing={
+                (e) => {
+                    setAmountDisplay(CommonHelpers.formatCurrency(e.nativeEvent.text));
+                }
+            }
+            onFocus={() => {
+                setAmountDisplay(newUser.earningExpected);
+            }}
+        />
+    );
+
+    const renderInputMinimumDuration = () => (
+        <CustomInput
+            value={newUser.minimumDuration}
+            onChangeText={(minimumDuration) => onChangeMinimumDuration(minimumDuration)}
+            containerStyle={{
+                marginVertical: 10,
+                width: SIZES.WIDTH_BASE * 0.9
+            }}
+            label="Số phút tối thiểu của buổi hẹn:"
+        />
+    );
+
     const renderInputHeightWeight = () => (
         <View
             style={{
@@ -527,7 +570,7 @@ export default function UpdateInfoAccount() {
     );
 
     const validate = () => {
-        const validateArr = [
+        let validateArr = [
             {
                 fieldName: 'Tên hiển thị',
                 input: newUser.fullName,
@@ -622,6 +665,35 @@ export default function UpdateInfoAccount() {
                 }
             },
         ];
+
+        if (isAcceptInviteCoffeeVisible) {
+            validateArr = validateArr.concat([
+                {
+                    fieldName: 'Thu nhập mong muốn',
+                    input: newUser.earningExpected,
+                    validate: {
+                        required: {
+                            value: true,
+                        },
+                        equalGreaterThan: {
+                            value: 600
+                        }
+                    }
+                },
+                {
+                    fieldName: 'Số phút tối thiểu của buổi hẹn',
+                    input: newUser.minimumDuration,
+                    validate: {
+                        required: {
+                            value: true,
+                        },
+                        equalGreaterThan: {
+                            value: 90
+                        }
+                    }
+                }
+            ]);
+        }
 
         if (!validateYearsOld(newUser.dob)) {
             ToastHelpers.renderToast('Bạn phải đủ 16 tuổi!', 'error');
@@ -727,6 +799,20 @@ export default function UpdateInfoAccount() {
         );
     };
 
+    const submitPartnerData = async () => {
+        const result = await UserServices.submitUpdatePartnerInfoAsync({
+            ...newUser,
+            minimumDuration: +newUser.minimumDuration,
+            earningExpected: +newUser.earningExpected,
+        });
+
+        const { data } = result;
+
+        if (!data) {
+            ToastHelpers.renderToast('Cập nhật thông tin thất bại. Vui lòng thử lại sau ít phút.', 'error');
+        }
+    };
+
     const submitUpdateInfo = async (url) => {
         const body = {
             ...newUser,
@@ -734,8 +820,14 @@ export default function UpdateInfoAccount() {
             IsMale: newUser.isMale,
             interests: createInterestStr(),
             isHost: isAcceptInviteCoffeeVisible,
-            imageUrl: url
+            imageUrl: url,
+            minimumDuration: +newUser.minimumDuration,
+            earningExpected: +newUser.earningExpected,
         };
+
+        if (currentUser?.isPartnerVerified) {
+            submitPartnerData();
+        }
 
         const result = await UserServices.submitUpdateInfoAsync(body);
         const { data } = result;
@@ -1252,7 +1344,13 @@ export default function UpdateInfoAccount() {
                                 {/* {renderInputInterests()} */}
                                 {renderOptionInterests()}
                                 {renderInputDescription()}
-                                {checkBoxLetOtherInviteCoffee()}
+                                {currentUser?.isPartnerVerified && (
+                                    <>
+                                        {checkBoxLetOtherInviteCoffee()}
+                                        {renderEarningExpected()}
+                                        {renderInputMinimumDuration()}
+                                    </>
+                                )}
                                 {/* {renderInputZalo()}
                                 {renderInputSkype()}
                                 {renderInputMessenger()} */}
