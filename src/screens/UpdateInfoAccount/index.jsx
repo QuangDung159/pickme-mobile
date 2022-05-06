@@ -1195,16 +1195,16 @@ export default function UpdateInfoAccount() {
                                 {/* {renderInputInterests()} */}
                                 {renderOptionInterests()}
                                 {renderInputDescription()}
-                                {/* {checkBoxLetOtherInviteCoffee()} */}
-                                {renderInputZalo()}
+                                {checkBoxLetOtherInviteCoffee()}
+                                {/* {renderInputZalo()}
                                 {renderInputSkype()}
-                                {renderInputMessenger()}
+                                {renderInputMessenger()} */}
                                 {renderButtonPanel()}
                             </>
                         )}
-                        {renderModalGuideMessenger()}
+                        {/* {renderModalGuideMessenger()}
                         {renderModalGuideSkype()}
-                        {renderModalGuideZalo()}
+                        {renderModalGuideZalo()} */}
                         {renderModalInviteCoffee()}
                     </KeyboardAwareScrollView>
                 )}
