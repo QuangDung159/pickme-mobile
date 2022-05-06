@@ -263,7 +263,7 @@ export default function OtpForm({
                     {/* <CustomInput
                         value={otp}
                         inputStyle={{
-                            width: SIZES.WIDTH_BASE * 0.9,
+                            width: SIZES.WIDTH_MAIN,
                             textAlign: 'center',
                             fontFamily: TEXT_BOLD
                         }}
@@ -271,7 +271,7 @@ export default function OtpForm({
                         keyboardType="number-pad"
                         containerStyle={{
                             marginVertical: 10,
-                            width: SIZES.WIDTH_BASE * 0.9,
+                            width: SIZES.WIDTH_MAIN,
                         }}
                         placeholder="Nhập mã xác thực"
                     /> */}
@@ -306,13 +306,13 @@ export default function OtpForm({
                     <CustomInput
                         value={password}
                         inputStyle={{
-                            width: SIZES.WIDTH_BASE * 0.9,
+                            width: SIZES.WIDTH_MAIN,
                             textAlign: 'center',
                         }}
                         onChangeText={(passwordInput) => setPassword(passwordInput)}
                         containerStyle={{
                             marginVertical: 10,
-                            width: SIZES.WIDTH_BASE * 0.9
+                            width: SIZES.WIDTH_MAIN
                         }}
                         secureTextEntry={!isShowPassword}
                         placeholder="Nhập mật khẩu*"
@@ -329,13 +329,13 @@ export default function OtpForm({
                         <CustomInput
                             value={rePassword}
                             inputStyle={{
-                                width: SIZES.WIDTH_BASE * 0.9,
+                                width: SIZES.WIDTH_MAIN,
                                 textAlign: 'center',
                             }}
                             onChangeText={(input) => setRePassword(input)}
                             containerStyle={{
                                 marginVertical: 10,
-                                width: SIZES.WIDTH_BASE * 0.9
+                                width: SIZES.WIDTH_MAIN
                             }}
                             secureTextEntry={!isShowPassword}
                             placeholder="Xác nhận mật khẩu*"
@@ -394,7 +394,7 @@ export default function OtpForm({
 
 const styles = StyleSheet.create({
     button: {
-        width: SIZES.WIDTH_BASE * 0.9,
+        width: SIZES.WIDTH_MAIN,
         marginVertical: 10
     },
     formContainer: {

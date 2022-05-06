@@ -106,7 +106,7 @@ export default function PhoneForm({
             justifyContent: 'space-around',
             alignItems: 'center',
             alignSelf: 'center',
-            width: SIZES.WIDTH_BASE * 0.9
+            width: SIZES.WIDTH_MAIN
         }}
         >
             <RadioButton
@@ -137,14 +137,14 @@ export default function PhoneForm({
                         <CustomInput
                             value={username}
                             inputStyle={{
-                                width: SIZES.WIDTH_BASE * 0.9,
+                                width: SIZES.WIDTH_MAIN,
                                 textAlign: 'center',
                                 fontFamily: TEXT_BOLD
                             }}
                             onChangeText={(input) => setUsername(input?.trim() || '')}
                             containerStyle={{
                                 marginVertical: 20,
-                                width: SIZES.WIDTH_BASE * 0.9,
+                                width: SIZES.WIDTH_MAIN,
                             }}
                             placeholder="Nhập email*"
                         />
@@ -152,7 +152,7 @@ export default function PhoneForm({
                         <CustomInput
                             value={username}
                             inputStyle={{
-                                width: SIZES.WIDTH_BASE * 0.9,
+                                width: SIZES.WIDTH_MAIN,
                                 textAlign: 'center',
                                 fontFamily: TEXT_BOLD
                             }}
@@ -160,7 +160,7 @@ export default function PhoneForm({
                             keyboardType="number-pad"
                             containerStyle={{
                                 marginVertical: 20,
-                                width: SIZES.WIDTH_BASE * 0.9
+                                width: SIZES.WIDTH_MAIN
                             }}
                             placeholder="Nhập số điện thoại*"
                         />
@@ -206,12 +206,12 @@ export default function PhoneForm({
 const styles = StyleSheet.create({
     registerContainer: {
         marginTop: 55,
-        width: SIZES.WIDTH_BASE * 0.9,
+        width: SIZES.WIDTH_MAIN,
         height: SIZES.HEIGHT_BASE < 812 ? SIZES.HEIGHT_BASE * 0.8 : SIZES.HEIGHT_BASE * 0.8,
         backgroundColor: COLORS.BASE,
     },
     button: {
-        width: SIZES.WIDTH_BASE * 0.9,
+        width: SIZES.WIDTH_MAIN,
         marginVertical: 10
     },
     title: {

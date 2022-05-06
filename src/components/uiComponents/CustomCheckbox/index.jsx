@@ -26,7 +26,7 @@ export default function CustomCheckbox({
                 [
                     {
                         flexDirection: 'row',
-                        width: SIZES.WIDTH_BASE * 0.9,
+                        width: SIZES.WIDTH_MAIN,
                         justifyContent: 'center',
                         alignItems: 'center'
                     },
@@ -67,7 +67,7 @@ export default function CustomCheckbox({
                     if (onPressLabel) onPressLabel();
                 }}
                 style={{
-                    width: SIZES.WIDTH_BASE * 0.9 - 25,
+                    width: SIZES.WIDTH_MAIN - 25,
                 }}
             >
                 <CustomText

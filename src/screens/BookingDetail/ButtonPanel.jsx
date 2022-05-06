@@ -111,8 +111,8 @@ export default function ButtonPanel({
         // if (currentBookingRedux.customerId === currentUser.id && status === BookingStatus.CONFIRMED) {
         //     return (
         //         <>
-        //             {renderCancelBooking(0.44)}
-        //             {renderConfirmPaymentButton(0.44)}
+        //             {renderCancelBooking(0.46)}
+        //             {renderConfirmPaymentButton(0.46)}
         //         </>
         //     );
         // }
@@ -152,8 +152,8 @@ export default function ButtonPanel({
         }
         return (
             <>
-                {renderReportButton(0.44)}
-                {renderRatingButton(0.44)}
+                {renderReportButton(0.46)}
+                {renderRatingButton(0.46)}
             </>
         );
     };
@@ -221,7 +221,7 @@ export default function ButtonPanel({
         >
             <View
                 style={{
-                    width: SIZES.WIDTH_BASE * 0.9,
+                    width: SIZES.WIDTH_MAIN,
                     alignSelf: 'center',
                     flexDirection: 'row',
                     justifyContent: 'space-between',

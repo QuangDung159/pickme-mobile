@@ -257,7 +257,7 @@ export default function BookingProgressFlow() {
             {status !== BookingStatus.CANCELED ? (
                 <View
                     style={{
-                        width: SIZES.WIDTH_BASE * 0.9,
+                        width: SIZES.WIDTH_MAIN,
                         alignSelf: 'center'
                     }}
                 >
@@ -282,7 +282,7 @@ export default function BookingProgressFlow() {
                     style={{
                         alignItems: 'center',
                         paddingVertical: 20,
-                        width: SIZES.WIDTH_BASE * 0.9
+                        width: SIZES.WIDTH_MAIN
                     }}
                 >
                     <Text

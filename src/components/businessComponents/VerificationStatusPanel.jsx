@@ -91,7 +91,7 @@ export default function VerificationStatusPanel() {
             {currentUser?.verifyStatus !== VerificationStatus.ACCEPTED && (
                 <View
                     style={{
-                        width: SIZES.WIDTH_BASE * 0.9,
+                        width: SIZES.WIDTH_MAIN,
                         alignSelf: 'center',
                         borderWidth: 0.5,
                         borderColor: COLORS.ACTIVE,

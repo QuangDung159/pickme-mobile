@@ -162,13 +162,13 @@ export default function UsernamePasswordForm({ navigation }) {
                     <CustomInput
                         value={username}
                         inputStyle={{
-                            width: SIZES.WIDTH_BASE * 0.9,
+                            width: SIZES.WIDTH_MAIN,
                             textAlign: 'center',
                         }}
                         onChangeText={(input) => setUsername(input?.trim() || '')}
                         containerStyle={{
                             marginVertical: 10,
-                            width: SIZES.WIDTH_BASE * 0.9
+                            width: SIZES.WIDTH_MAIN
                         }}
                         placeholder="Tên đăng nhập*"
                     />
@@ -176,13 +176,13 @@ export default function UsernamePasswordForm({ navigation }) {
                     <CustomInput
                         value={password}
                         inputStyle={{
-                            width: SIZES.WIDTH_BASE * 0.9,
+                            width: SIZES.WIDTH_MAIN,
                             textAlign: 'center',
                         }}
                         onChangeText={(passwordInput) => setPassword(passwordInput)}
                         containerStyle={{
                             marginVertical: 10,
-                            width: SIZES.WIDTH_BASE * 0.9
+                            width: SIZES.WIDTH_MAIN
                         }}
                         secureTextEntry={!isShowPassword}
                         placeholder="Mật khẩu*"
@@ -198,13 +198,13 @@ export default function UsernamePasswordForm({ navigation }) {
                     <CustomInput
                         value={rePassword}
                         inputStyle={{
-                            width: SIZES.WIDTH_BASE * 0.9,
+                            width: SIZES.WIDTH_MAIN,
                             textAlign: 'center',
                         }}
                         onChangeText={(input) => setRePassword(input)}
                         containerStyle={{
                             marginVertical: 10,
-                            width: SIZES.WIDTH_BASE * 0.9
+                            width: SIZES.WIDTH_MAIN
                         }}
                         secureTextEntry={!isShowPassword}
                         placeholder="Xác nhận mật khẩu*"
@@ -258,12 +258,12 @@ export default function UsernamePasswordForm({ navigation }) {
 const styles = StyleSheet.create({
     registerContainer: {
         marginTop: 55,
-        width: SIZES.WIDTH_BASE * 0.9,
+        width: SIZES.WIDTH_MAIN,
         height: SIZES.HEIGHT_BASE < 812 ? SIZES.HEIGHT_BASE * 0.8 : SIZES.HEIGHT_BASE * 0.8,
         backgroundColor: COLORS.BASE,
     },
     button: {
-        width: SIZES.WIDTH_BASE * 0.9,
+        width: SIZES.WIDTH_MAIN,
         marginVertical: 10
     },
     title: {

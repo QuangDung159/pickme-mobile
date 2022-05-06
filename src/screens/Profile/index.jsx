@@ -74,7 +74,7 @@ export default function Profile({ route, navigation }) {
                                     flexDirection: 'row',
                                     justifyContent: 'space-between',
                                     alignItems: 'center',
-                                    width: SIZES.WIDTH_BASE * 0.9,
+                                    width: SIZES.WIDTH_MAIN,
                                     alignSelf: 'center',
                                     position: 'absolute',
                                     bottom: 10

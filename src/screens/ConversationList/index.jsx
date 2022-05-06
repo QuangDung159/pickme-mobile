@@ -185,7 +185,7 @@ export default function ConversationList({ navigation }) {
                 style={{
                     alignItems: 'center',
                     flexDirection: 'row',
-                    width: SIZES.WIDTH_BASE * 0.9,
+                    width: SIZES.WIDTH_MAIN,
                 }}
             >
                 <TouchableOpacity

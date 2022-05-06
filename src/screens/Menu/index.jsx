@@ -197,7 +197,7 @@ export default function Menu({ navigation }) {
                         style={{
                             flexDirection: 'row',
                             alignItems: 'center',
-                            width: SIZES.WIDTH_BASE * 0.9,
+                            width: SIZES.WIDTH_MAIN,
                             alignSelf: 'center',
                             height: 30,
                         }}

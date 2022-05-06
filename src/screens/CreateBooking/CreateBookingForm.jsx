@@ -124,7 +124,7 @@ export default function CreateBookingForm({
         <>
             <View
                 style={{
-                    width: SIZES.WIDTH_BASE * 0.9,
+                    width: SIZES.WIDTH_MAIN,
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                     alignItems: 'center',
@@ -439,7 +439,7 @@ export default function CreateBookingForm({
             onChangeText={(input) => onChangeNote(input)}
             containerStyle={{
                 marginVertical: 5,
-                width: SIZES.WIDTH_BASE * 0.9
+                width: SIZES.WIDTH_MAIN
             }}
             inputStyle={{
                 height: 60,
@@ -456,7 +456,7 @@ export default function CreateBookingForm({
                     containerStyle={{
                         marginBottom: 10,
                         marginTop: 5,
-                        width: SIZES.WIDTH_BASE * 0.9
+                        width: SIZES.WIDTH_MAIN
                     }}
                     label="Địa điểm:"
                 />
@@ -524,7 +524,7 @@ export default function CreateBookingForm({
             style={{
                 zIndex: 99,
                 flex: 1,
-                width: SIZES.WIDTH_BASE * 0.9,
+                width: SIZES.WIDTH_MAIN,
                 alignSelf: 'center',
             }}
         >
@@ -546,7 +546,7 @@ export default function CreateBookingForm({
                 {/* {listPartnerPackage && listPartnerPackage.length !== 0 && (
                     <TouchableOpacity
                         containerStyle={{
-                            width: SIZES.WIDTH_BASE * 0.9,
+                            width: SIZES.WIDTH_MAIN,
                             alignSelf: 'center',
                             paddingBottom: 20,
                         }}

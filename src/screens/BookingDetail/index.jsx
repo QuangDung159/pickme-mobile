@@ -170,7 +170,7 @@ export default function BookingDetail({
 
                                         <View
                                             style={{
-                                                width: SIZES.WIDTH_BASE * 0.9,
+                                                width: SIZES.WIDTH_MAIN,
                                                 alignSelf: 'center',
                                                 borderBottomWidth: 0.5,
                                                 borderBottomColor: COLORS.ACTIVE

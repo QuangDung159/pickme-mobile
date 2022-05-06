@@ -228,7 +228,7 @@ export default function BookingList({ navigation }) {
             <View
                 style={{
                     flexDirection: 'row',
-                    width: SIZES.WIDTH_BASE * 0.9,
+                    width: SIZES.WIDTH_MAIN,
                     alignSelf: 'center',
                 }}
             >

@@ -55,7 +55,7 @@ export default function GooglePlacesInput({ onChangeAddress, addressInput, label
                     textInputContainer: {
                         borderRadius: 8,
                         borderColor: COLORS.DEFAULT,
-                        width: SIZES.WIDTH_BASE * 0.9,
+                        width: SIZES.WIDTH_MAIN,
                         marginBottom: 10,
                         borderWidth: 1
                     },

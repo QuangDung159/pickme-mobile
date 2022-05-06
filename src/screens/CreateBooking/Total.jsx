@@ -147,7 +147,7 @@ export default function Total({
             type="active"
             label="Đặt hẹn"
             buttonStyle={{
-                width: SIZES.WIDTH_BASE * 0.9,
+                width: SIZES.WIDTH_MAIN,
                 marginVertical: 15
             }}
         />
@@ -158,7 +158,7 @@ export default function Total({
             <View
                 style={{
                     alignSelf: 'center',
-                    width: SIZES.WIDTH_BASE * 0.9,
+                    width: SIZES.WIDTH_MAIN,
                 }}
             >
                 <CustomText
@@ -179,7 +179,7 @@ export default function Total({
                     }}
                 >
                     <NoteText
-                        width={SIZES.WIDTH_BASE * 0.9}
+                        width={SIZES.WIDTH_MAIN}
                         title="Lưu ý:"
                         content="Tổng phí chỉ là chi phí trên ứng dụng và không bao gồm phụ phí khác như: cafe, vé xem phim... Vui lòng thảo luận trước về chi phí đối với Host."
                         contentStyle={{

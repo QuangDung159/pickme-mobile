@@ -182,7 +182,7 @@ export default function CashOut() {
             >
                 <View
                     style={{
-                        width: SIZES.WIDTH_BASE * 0.9,
+                        width: SIZES.WIDTH_MAIN,
                         alignSelf: 'center',
                         marginTop: Platform.OS === 'ios' ? 0 : 10
                     }}
@@ -192,7 +192,7 @@ export default function CashOut() {
                         onChangeText={(input) => setCashOutForm({ ...cashOutForm, bankName: input })}
                         containerStyle={{
                             marginVertical: 10,
-                            width: SIZES.WIDTH_BASE * 0.9
+                            width: SIZES.WIDTH_MAIN
                         }}
                         label="Ngân hàng"
                     />
@@ -205,7 +205,7 @@ export default function CashOut() {
                             flexDirection: 'row',
                             justifyContent: 'space-between',
                             marginVertical: 10,
-                            width: SIZES.WIDTH_BASE * 0.9
+                            width: SIZES.WIDTH_MAIN
                         }}
                         label="Viết tắt"
                     />
@@ -218,7 +218,7 @@ export default function CashOut() {
                             flexDirection: 'row',
                             justifyContent: 'space-between',
                             marginVertical: 10,
-                            width: SIZES.WIDTH_BASE * 0.9
+                            width: SIZES.WIDTH_MAIN
                         }}
                         label="Chi nhanh"
                     />
@@ -231,7 +231,7 @@ export default function CashOut() {
                             flexDirection: 'row',
                             justifyContent: 'space-between',
                             marginVertical: 10,
-                            width: SIZES.WIDTH_BASE * 0.9
+                            width: SIZES.WIDTH_MAIN
                         }}
                         label="Số tài khoản:"
                         keyboardType="number-pad"
@@ -245,7 +245,7 @@ export default function CashOut() {
                             flexDirection: 'row',
                             justifyContent: 'space-between',
                             marginVertical: 10,
-                            width: SIZES.WIDTH_BASE * 0.9
+                            width: SIZES.WIDTH_MAIN
                         }}
                         label="Chủ tài khoản:"
                     />
@@ -281,7 +281,7 @@ export default function CashOut() {
                         }}
                         containerStyle={{
                             marginVertical: 10,
-                            width: (SIZES.WIDTH_BASE * 0.9) - 58,
+                            width: (SIZES.WIDTH_MAIN) - 58,
                         }}
                         onEndEditing={
                             (e) => {
@@ -306,7 +306,7 @@ export default function CashOut() {
                             type="active"
                             label="Xác nhận"
                             buttonStyle={{
-                                width: SIZES.WIDTH_BASE * 0.9
+                                width: SIZES.WIDTH_MAIN
                             }}
                         />
                     </View>
@@ -317,7 +317,7 @@ export default function CashOut() {
                         }}
                     >
                         <NoteText
-                            width={SIZES.WIDTH_BASE * 0.9}
+                            width={SIZES.WIDTH_MAIN}
                             title="Lưu ý:"
                             content="Nếu chuyển tiền giữa các ngân hàng mất phí thì chi phí này sẽ do người rút chi trả."
                             contentStyle={{

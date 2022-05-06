@@ -54,7 +54,7 @@ export default function PartnerData() {
         <CustomInput
             containerStyle={{
                 marginVertical: 10,
-                width: SIZES.WIDTH_BASE * 0.9
+                width: SIZES.WIDTH_MAIN
             }}
             onChangeText={(input) => onChangeEarningExpected(input)}
             value={amountDisplay}
@@ -76,7 +76,7 @@ export default function PartnerData() {
             onChangeText={(minimumDuration) => onChangeMinimumDuration(minimumDuration)}
             containerStyle={{
                 marginVertical: 10,
-                width: SIZES.WIDTH_BASE * 0.9
+                width: SIZES.WIDTH_MAIN
             }}
             label="Số phút tối thiểu của buổi hẹn:"
         />
@@ -86,7 +86,7 @@ export default function PartnerData() {
         <CustomInput
             containerStyle={{
                 marginVertical: 10,
-                width: SIZES.WIDTH_BASE * 0.9
+                width: SIZES.WIDTH_MAIN
             }}
             onChangeText={(input) => {
                 setNewUser({ ...newUser, onlineEarningExpected: input });
@@ -111,7 +111,7 @@ export default function PartnerData() {
             onChangeText={(input) => setNewUser({ ...newUser, onlineMinimumDuration: input })}
             containerStyle={{
                 marginVertical: 10,
-                width: SIZES.WIDTH_BASE * 0.9
+                width: SIZES.WIDTH_MAIN
             }}
             label="Số phút tối thiểu của buổi hẹn (online):"
         />
@@ -120,7 +120,7 @@ export default function PartnerData() {
     const renderGetBookingType = () => (
         <View
             style={{
-                width: SIZES.WIDTH_BASE * 0.9,
+                width: SIZES.WIDTH_MAIN,
                 marginBottom: 5,
                 marginTop: 15
             }}
@@ -199,7 +199,7 @@ export default function PartnerData() {
                 type="active"
                 label="Xác nhận"
                 buttonStyle={{
-                    width: SIZES.WIDTH_BASE * 0.9
+                    width: SIZES.WIDTH_MAIN
                 }}
             />
         </View>
@@ -382,7 +382,7 @@ export default function PartnerData() {
                 type="active"
                 label={buttonText}
                 buttonStyle={{
-                    width: SIZES.WIDTH_BASE * 0.9,
+                    width: SIZES.WIDTH_MAIN,
                     marginBottom: 10,
                     marginTop: 5
                 }}
@@ -407,7 +407,7 @@ export default function PartnerData() {
                             style={{
                                 zIndex: 99
                             }}
-                            width={SIZES.WIDTH_BASE * 0.9}
+                            width={SIZES.WIDTH_MAIN}
                             source={imageUri}
                         />
                     </View>
@@ -425,7 +425,7 @@ export default function PartnerData() {
                         style={{
                             zIndex: 99
                         }}
-                        width={SIZES.WIDTH_BASE * 0.9}
+                        width={SIZES.WIDTH_MAIN}
                         source={{ uri: currentUser.imageUrl }}
                     />
                 </View>

@@ -33,7 +33,7 @@ export default function ReasonCancelBookingModal({
             onChangeText={(input) => setReason(input)}
             containerStyle={{
                 marginVertical: 20,
-                width: SIZES.WIDTH_BASE * 0.9,
+                width: SIZES.WIDTH_MAIN,
                 alignItems: 'center'
             }}
             autocapitalize

@@ -54,7 +54,7 @@ export default function CashIn(props) {
                         style={{
                             zIndex: 99
                         }}
-                        width={SIZES.WIDTH_BASE * 0.9}
+                        width={SIZES.WIDTH_MAIN}
                     />
 
                     <View>
@@ -74,7 +74,7 @@ export default function CashIn(props) {
         return (
             <ScrollView
                 style={{
-                    width: SIZES.WIDTH_BASE * 0.9,
+                    width: SIZES.WIDTH_MAIN,
                     alignSelf: 'center',
                 }}
                 showsVerticalScrollIndicator={false}
@@ -94,7 +94,7 @@ export default function CashIn(props) {
                             onPress={() => copyToClipboard(BANK_NUMBER_2SEEYOU)}
                         >
                             <NoteText
-                                width={SIZES.WIDTH_BASE * 0.9}
+                                width={SIZES.WIDTH_MAIN}
                                 title="Số tài khoản: "
                                 content={BANK_NUMBER_2SEEYOU}
                                 contentStyle={{
@@ -123,7 +123,7 @@ export default function CashIn(props) {
                         }}
                     >
                         <NoteText
-                            width={SIZES.WIDTH_BASE * 0.9}
+                            width={SIZES.WIDTH_MAIN}
                             title="Ngân hàng: "
                             content="TMCP Tiên Phong - TPBank"
                             contentStyle={{
@@ -143,7 +143,7 @@ export default function CashIn(props) {
                             onPress={() => copyToClipboard('Lư Quảng Dũng')}
                         >
                             <NoteText
-                                width={SIZES.WIDTH_BASE * 0.9}
+                                width={SIZES.WIDTH_MAIN}
                                 title="Người thụ hưởng: "
                                 content="Lư Quảng Dũng"
                                 contentStyle={{
@@ -174,7 +174,7 @@ export default function CashIn(props) {
                             onPress={() => copyToClipboard(moneyTransferContent)}
                         >
                             <NoteText
-                                width={SIZES.WIDTH_BASE * 0.9}
+                                width={SIZES.WIDTH_MAIN}
                                 title="Nội dung chuyển khoản: "
                                 content={moneyTransferContent}
                                 contentStyle={{
@@ -201,7 +201,7 @@ export default function CashIn(props) {
                         }}
                     >
                         <NoteText
-                            width={SIZES.WIDTH_BASE * 0.9}
+                            width={SIZES.WIDTH_MAIN}
                             title="Giá trị quy đổi: "
                             content="1 VND = 1 Xu"
                             contentStyle={{

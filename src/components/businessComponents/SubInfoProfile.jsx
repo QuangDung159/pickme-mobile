@@ -23,7 +23,7 @@ export default function SubInfoProfile({ user }) {
     return (
         <View
             style={{
-                width: SIZES.WIDTH_BASE * 0.9,
+                width: SIZES.WIDTH_MAIN,
                 alignSelf: 'center',
             }}
         >

@@ -108,12 +108,12 @@ export default function ChangePassword() {
             <CustomInput
                 value={currentPassword}
                 inputStyle={{
-                    width: SIZES.WIDTH_BASE * 0.9
+                    width: SIZES.WIDTH_MAIN
                 }}
                 onChangeText={(passwordInput) => setCurrentPassword(passwordInput)}
                 containerStyle={{
                     marginVertical: 10,
-                    width: SIZES.WIDTH_BASE * 0.9
+                    width: SIZES.WIDTH_MAIN
                 }}
                 secureTextEntry={!isShowCurrentPassword}
                 placeholder="Nhập mật khẩu hiện tại"
@@ -130,12 +130,12 @@ export default function ChangePassword() {
             <CustomInput
                 value={newPassword}
                 inputStyle={{
-                    width: SIZES.WIDTH_BASE * 0.9
+                    width: SIZES.WIDTH_MAIN
                 }}
                 onChangeText={(passwordInput) => setNewPassword(passwordInput)}
                 containerStyle={{
                     marginVertical: 10,
-                    width: SIZES.WIDTH_BASE * 0.9
+                    width: SIZES.WIDTH_MAIN
                 }}
                 secureTextEntry={!isShowNewPassword}
                 placeholder="Nhập mật khẩu mới"
@@ -152,12 +152,12 @@ export default function ChangePassword() {
             <CustomInput
                 value={reNewPassword}
                 inputStyle={{
-                    width: SIZES.WIDTH_BASE * 0.9
+                    width: SIZES.WIDTH_MAIN
                 }}
                 onChangeText={(passwordInput) => setReNewPassword(passwordInput)}
                 containerStyle={{
                     marginVertical: 10,
-                    width: SIZES.WIDTH_BASE * 0.9
+                    width: SIZES.WIDTH_MAIN
                 }}
                 secureTextEntry={!isShowReNewPassword}
                 placeholder="Xác nhận mật khẩu mới"
@@ -176,7 +176,7 @@ export default function ChangePassword() {
                 type="active"
                 label="Xác nhận"
                 buttonStyle={{
-                    width: SIZES.WIDTH_BASE * 0.9,
+                    width: SIZES.WIDTH_MAIN,
                     marginTop: 20
                 }}
             />

@@ -13,8 +13,8 @@ const {
     }
 } = Theme;
 
-const thumbMeasure = (SIZES.WIDTH_BASE * 0.85) / 3;
-const marginValue = ((SIZES.WIDTH_BASE * 0.9) - thumbMeasure * 3) / 2;
+const thumbMeasure = (SIZES.WIDTH_BASE * 0.9) / 3;
+const marginValue = ((SIZES.WIDTH_MAIN) - thumbMeasure * 3) / 2;
 
 export default function Albums({
     user,
@@ -89,7 +89,7 @@ export default function Albums({
     const renderAlbums = () => (
         <View
             style={{
-                width: SIZES.WIDTH_BASE * 0.9,
+                width: SIZES.WIDTH_MAIN,
                 alignSelf: 'center',
                 flex: 1
             }}

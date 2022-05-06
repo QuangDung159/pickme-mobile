@@ -219,7 +219,7 @@ export default function CreateAccount(props) {
                     onChangeText={(input) => setNewUser({ ...newUser, fullName: input })}
                     containerStyle={{
                         marginVertical: 10,
-                        width: SIZES.WIDTH_BASE * 0.9
+                        width: SIZES.WIDTH_MAIN
                     }}
                     placeholder="Tên hiển thị"
                 />
@@ -234,7 +234,7 @@ export default function CreateAccount(props) {
                 >
                     <CustomInput
                         inputStyle={{
-                            width: SIZES.WIDTH_BASE * 0.44
+                            width: SIZES.WIDTH_BASE * 0.46
                         }}
                         onChangeText={(input) => setNewUser({ ...newUser, dob: input })}
                         value={newUser.dob}
@@ -264,7 +264,7 @@ export default function CreateAccount(props) {
                 >
                     <CustomInput
                         inputStyle={{
-                            width: SIZES.WIDTH_BASE * 0.44
+                            width: SIZES.WIDTH_BASE * 0.46
                         }}
                         onChangeText={(input) => setNewUser({ ...newUser, height: input })}
                         value={newUser.height}
@@ -274,7 +274,7 @@ export default function CreateAccount(props) {
 
                     <CustomInput
                         inputStyle={{
-                            width: SIZES.WIDTH_BASE * 0.44
+                            width: SIZES.WIDTH_BASE * 0.46
                         }}
                         onChangeText={(input) => setNewUser({ ...newUser, weight: input })}
                         value={newUser.weight}
@@ -286,7 +286,7 @@ export default function CreateAccount(props) {
                 <CustomInput
                     containerStyle={{
                         marginVertical: 10,
-                        width: SIZES.WIDTH_BASE * 0.9
+                        width: SIZES.WIDTH_MAIN
                     }}
                     onChangeText={(input) => setNewUser({ ...newUser, interests: input })}
                     value={newUser.interests}
@@ -298,7 +298,7 @@ export default function CreateAccount(props) {
                     onChangeText={(input) => setNewUser({ ...newUser, hometown: input })}
                     containerStyle={{
                         marginVertical: 10,
-                        width: SIZES.WIDTH_BASE * 0.9
+                        width: SIZES.WIDTH_MAIN
                     }}
                     placeholder="Nơi sinh sống"
                 />
@@ -309,7 +309,7 @@ export default function CreateAccount(props) {
                     onChangeText={(input) => setNewUser({ ...newUser, description: input })}
                     containerStyle={{
                         marginVertical: 10,
-                        width: SIZES.WIDTH_BASE * 0.9
+                        width: SIZES.WIDTH_MAIN
                     }}
                     inputStyle={{
                         height: 80,
@@ -325,7 +325,7 @@ export default function CreateAccount(props) {
                     bottom: 0,
                     flexDirection: 'row',
                     justifyContent: 'space-between',
-                    width: SIZES.WIDTH_BASE * 0.9
+                    width: SIZES.WIDTH_MAIN
                 }}
             >
                 <CustomButton
@@ -405,7 +405,7 @@ export default function CreateAccount(props) {
             >
                 <View
                     style={{
-                        width: SIZES.WIDTH_BASE * 0.9
+                        width: SIZES.WIDTH_MAIN
                     }}
                 >
                     <CustomText
@@ -443,7 +443,7 @@ export default function CreateAccount(props) {
                     }}
                     buttonStyle={[styles.button, {
                         marginTop: 30,
-                        width: SIZES.WIDTH_BASE * 0.9
+                        width: SIZES.WIDTH_MAIN
                     }]}
                     type="active"
                     label="Quay về trang đăng nhập"
@@ -471,8 +471,8 @@ export default function CreateAccount(props) {
                                     borderColor: COLORS.ACTIVE,
                                     borderRadius: 25,
                                     marginBottom: 10,
-                                    width: SIZES.WIDTH_BASE * 0.9,
-                                    height: SIZES.WIDTH_BASE * 0.9,
+                                    width: SIZES.WIDTH_MAIN,
+                                    height: SIZES.WIDTH_MAIN,
                                     alignItems: 'center',
                                     justifyContent: 'center'
                                 }}
@@ -508,7 +508,7 @@ export default function CreateAccount(props) {
                     bottom: 0,
                     flexDirection: 'row',
                     justifyContent: 'space-between',
-                    width: SIZES.WIDTH_BASE * 0.9
+                    width: SIZES.WIDTH_MAIN
                 }}
             >
                 <CustomButton
@@ -592,7 +592,7 @@ const styles = StyleSheet.create({
     },
     registerContainer: {
         marginTop: 55,
-        width: SIZES.WIDTH_BASE * 0.9,
+        width: SIZES.WIDTH_MAIN,
         height: SIZES.HEIGHT_BASE < 812 ? SIZES.HEIGHT_BASE * 0.8 : SIZES.HEIGHT_BASE * 0.8,
         backgroundColor: COLORS.BASE,
     },
@@ -612,7 +612,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     inputWith: {
-        width: SIZES.WIDTH_BASE * 0.9,
+        width: SIZES.WIDTH_MAIN,
         marginTop: 10
     },
     title: {
@@ -623,14 +623,14 @@ const styles = StyleSheet.create({
         height: SIZES.HEIGHT_BASE * 0.3,
         alignSelf: 'center',
         alignItems: 'center',
-        width: SIZES.WIDTH_BASE * 0.9
+        width: SIZES.WIDTH_MAIN
     },
     formContainer: {
         height: SIZES.HEIGHT_BASE * 0.65
     },
     button: {
         marginVertical: 10,
-        width: SIZES.WIDTH_BASE * 0.44
+        width: SIZES.WIDTH_BASE * 0.46
     },
     image: {
         width: SIZES.HEIGHT_BASE * 0.35, height: SIZES.HEIGHT_BASE * 0.35

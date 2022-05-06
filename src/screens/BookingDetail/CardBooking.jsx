@@ -306,7 +306,7 @@ export default function CardBooking({ booking, navigation }) {
                 style={{
                     marginTop: 10,
                     alignSelf: 'center',
-                    width: SIZES.WIDTH_BASE * 0.9,
+                    width: SIZES.WIDTH_MAIN,
                     borderBottomColor: COLORS.ACTIVE,
                     borderBottomWidth: 0.5
                 }}
@@ -314,7 +314,7 @@ export default function CardBooking({ booking, navigation }) {
                 <View
                     style={{
                         flexDirection: 'row',
-                        width: SIZES.WIDTH_BASE * 0.9,
+                        width: SIZES.WIDTH_MAIN,
                         justifyContent: 'space-between',
                         alignItems: 'center',
                     }}

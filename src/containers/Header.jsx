@@ -129,12 +129,12 @@ export default function Header({
         <CustomInput
             value=""
             inputStyle={{
-                width: SIZES.WIDTH_BASE * 0.9
+                width: SIZES.WIDTH_MAIN
             }}
             keyboardType="number-pad"
             containerStyle={{
                 marginVertical: 10,
-                width: SIZES.WIDTH_BASE * 0.9
+                width: SIZES.WIDTH_MAIN
             }}
             placeholder="Bạn muốn tìm gì?"
             rightIcon={{

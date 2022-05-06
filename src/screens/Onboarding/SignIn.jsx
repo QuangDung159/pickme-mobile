@@ -252,7 +252,7 @@ export default function SignIn({
 
             <CustomButton
                 buttonStyle={{
-                    width: SIZES.WIDTH_BASE * 0.9
+                    width: SIZES.WIDTH_MAIN
                 }}
                 type="active"
                 onPress={() => onSubmitLogin()}

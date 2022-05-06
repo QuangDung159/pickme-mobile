@@ -201,7 +201,7 @@ export default function Support({ navigation }) {
                             }}
                         >
                             <NoteText
-                                width={SIZES.WIDTH_BASE * 0.9}
+                                width={SIZES.WIDTH_MAIN}
                                 title={`${item.question}`}
                                 content={item.answer || 'N/A'}
                                 contentStyle={{
@@ -284,7 +284,7 @@ export default function Support({ navigation }) {
             ) : (
                 <View
                     style={{
-                        width: SIZES.WIDTH_BASE * 0.9,
+                        width: SIZES.WIDTH_MAIN,
                         alignSelf: 'center',
                         paddingBottom: 20
                     }}
@@ -310,7 +310,7 @@ export default function Support({ navigation }) {
             }}
             containerStyle={{
                 marginVertical: 10,
-                width: SIZES.WIDTH_BASE * 0.9
+                width: SIZES.WIDTH_MAIN
             }}
             label="Tóm tắt lỗi:"
         />
@@ -327,7 +327,7 @@ export default function Support({ navigation }) {
             }}
             containerStyle={{
                 marginVertical: 10,
-                width: SIZES.WIDTH_BASE * 0.9
+                width: SIZES.WIDTH_MAIN
             }}
             label="Chi tiết lỗi:"
         />
@@ -364,12 +364,12 @@ const styles = StyleSheet.create({
         fontSize: SIZES.FONT_H4
     },
     button: {
-        width: SIZES.WIDTH_BASE * 0.9,
+        width: SIZES.WIDTH_MAIN,
         margin: 0
     },
     input: {
         borderRadius: 8,
-        width: SIZES.WIDTH_BASE * 0.9,
+        width: SIZES.WIDTH_MAIN,
     },
     imageReport: {
         width: SIZES.WIDTH_BASE * 0.25,

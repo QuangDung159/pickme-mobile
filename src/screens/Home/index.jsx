@@ -271,7 +271,7 @@ export default function Home({ navigation }) {
                     <View
                         style={{
                             flexDirection: 'row',
-                            width: SIZES.WIDTH_BASE * 0.95,
+                            width: SIZES.WIDTH_MAIN,
                         }}
                     >
                         <View style={styles.imageContainer}>
@@ -368,7 +368,7 @@ export default function Home({ navigation }) {
                                         fontFamily: TEXT_BOLD,
                                     }}
                                 >
-                                    {`${amountDisplay} Xu`}
+                                    {`${amountDisplay} Xu/phút`}
                                 </Text>
                             </View>
                         </View>

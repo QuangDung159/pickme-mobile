@@ -17,7 +17,7 @@ export default function Guide() {
             <ScrollView
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={{
-                    width: SIZES.WIDTH_BASE * 0.9,
+                    width: SIZES.WIDTH_MAIN,
                     alignItems: 'center',
                     backgroundColor: COLORS.BASE,
                     marginTop: 5,

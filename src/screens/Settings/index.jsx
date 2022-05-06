@@ -103,7 +103,7 @@ export default function Settings() {
 
 const styles = StyleSheet.create({
     settings: {
-        width: SIZES.WIDTH_BASE * 0.9,
+        width: SIZES.WIDTH_MAIN,
         marginTop: 10,
         alignSelf: 'center'
     },

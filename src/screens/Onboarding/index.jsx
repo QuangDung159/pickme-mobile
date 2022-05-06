@@ -213,7 +213,7 @@ export default function Onboarding({ navigation }) {
                                 <Image
                                     source={Images.Logo}
                                     style={{
-                                        width: SIZES.WIDTH_BASE * 0.9,
+                                        width: SIZES.WIDTH_MAIN,
                                         height: 50
                                     }}
                                 />
@@ -267,7 +267,7 @@ export default function Onboarding({ navigation }) {
                                     fontSize: SIZES.FONT_H5 - 3,
                                     marginTop: 10,
                                     textAlign: 'center',
-                                    width: SIZES.WIDTH_BASE * 0.9,
+                                    width: SIZES.WIDTH_MAIN,
                                 }}
                                 text={'Bằng việc đăng nhập vào ứng dụng,\nbạn đã đồng ý với "Điều khoản sử dụng" của ứng dụng'}
                                 onPress={() => navigation.navigate(ScreenName.POLICY)}

@@ -160,7 +160,7 @@ export default function UploadDocSection({ setIsShowSpinner, navigation, route }
                     type="active"
                     label={buttonText}
                     buttonStyle={{
-                        width: SIZES.WIDTH_BASE * 0.9,
+                        width: SIZES.WIDTH_MAIN,
                         marginBottom: 10
                     }}
                     labelStyle={{
@@ -286,7 +286,7 @@ export default function UploadDocSection({ setIsShowSpinner, navigation, route }
                         type="active"
                         label="Xác nhận"
                         buttonStyle={{
-                            width: SIZES.WIDTH_BASE * 0.9
+                            width: SIZES.WIDTH_MAIN
                         }}
                     />
                 </View>
@@ -315,7 +315,7 @@ export default function UploadDocSection({ setIsShowSpinner, navigation, route }
                         type="active"
                         label="Xác nhận trở thành Host"
                         buttonStyle={{
-                            width: SIZES.WIDTH_BASE * 0.9
+                            width: SIZES.WIDTH_MAIN
                         }}
                     />
                 </View>
@@ -349,7 +349,7 @@ export default function UploadDocSection({ setIsShowSpinner, navigation, route }
                     style={{
                         zIndex: 99
                     }}
-                    width={SIZES.WIDTH_BASE * 0.9}
+                    width={SIZES.WIDTH_MAIN}
                     source={{ uri: imageUrl }}
                 />
             </View>
@@ -409,7 +409,7 @@ export default function UploadDocSection({ setIsShowSpinner, navigation, route }
 
                 {navigateFrom === ScreenName.MENU && currentUser.isCustomerVerified && (
                     <NoteText
-                        width={SIZES.WIDTH_BASE * 0.9}
+                        width={SIZES.WIDTH_MAIN}
                         title="Đăng kí trở thành Host:"
                         content="Trở thành Host để gia tăng thu nhập"
                         contentStyle={{

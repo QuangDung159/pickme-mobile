@@ -55,7 +55,7 @@ export default function CustomButton(
                 [
                     styles.baseButtonStyle,
                     {
-                        width: SIZES.WIDTH_BASE * 0.9,
+                        width: SIZES.WIDTH_MAIN,
                     },
                     buttonStyle,
                 ]
@@ -91,7 +91,7 @@ export default function CustomButton(
                         [
                             styles.baseButtonStyle,
                             {
-                                width: SIZES.WIDTH_BASE * 0.44,
+                                width: SIZES.WIDTH_BASE * 0.46,
                                 borderColor: COLORS.ACTIVE,
                                 backgroundColor: colorByType
                             },
@@ -139,7 +139,7 @@ export default function CustomButton(
                             alignSelf: 'center',
                             justifyContent: 'center',
                             backgroundColor: COLORS.TRANSPARENT,
-                            width: SIZES.WIDTH_BASE * 0.9,
+                            width: SIZES.WIDTH_MAIN,
                         },
                         buttonStyle,
                     ]

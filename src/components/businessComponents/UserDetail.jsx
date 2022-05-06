@@ -284,7 +284,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
         return (
             <View
                 style={{
-                    width: SIZES.WIDTH_BASE * 0.9,
+                    width: SIZES.WIDTH_MAIN,
                     marginTop: 5,
                 }}
             >
@@ -318,6 +318,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
             if (currentUser.isHost) {
                 return (
                     <>
+                        <Line />
                         {renderPartnerDataPanel()}
                     </>
                 );
@@ -326,6 +327,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
         if (userInfo.isHost) {
             return (
                 <>
+                    <Line />
                     {renderPartnerDataPanel()}
                 </>
             );
@@ -336,7 +338,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
     const renderButtonOption = () => (
         <View
             style={{
-                width: SIZES.WIDTH_BASE * 0.9,
+                width: SIZES.WIDTH_MAIN,
                 alignSelf: 'center',
                 flex: 1,
                 justifyContent: 'center',
@@ -390,23 +392,21 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
     const renderPartnerPanel = () => (
         <View
             style={{
-                width: '90%'
+                width: '95%'
             }}
         >
             {isCurrentUser && (
-                <View>
-                    <ProfileInfoItem
-                        fontSize={SIZES.FONT_H3}
-                        iconName="treasure-chest"
-                        iconFamily={IconFamily.MATERIAL_COMMUNITY_ICONS}
-                        content={`Xu trong ví: ${CommonHelpers.formatCurrency(userInfo.walletAmount)}`}
-                        iconSize={18}
-                        contentTextStyle={{
-                            fontFamily: TEXT_BOLD,
-                            color: COLORS.ACTIVE
-                        }}
-                    />
-                </View>
+                <ProfileInfoItem
+                    fontSize={SIZES.FONT_H3}
+                    iconName="treasure-chest"
+                    iconFamily={IconFamily.MATERIAL_COMMUNITY_ICONS}
+                    content={`Xu trong ví: ${CommonHelpers.formatCurrency(userInfo.walletAmount)}`}
+                    iconSize={18}
+                    contentTextStyle={{
+                        fontFamily: TEXT_BOLD,
+                        color: COLORS.ACTIVE
+                    }}
+                />
             )}
 
             {handleShowPartnerDataPanel()}
@@ -436,7 +436,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                 {renderImageView()}
                 <View
                     style={{
-                        width: SIZES.WIDTH_BASE * 0.9,
+                        width: SIZES.WIDTH_MAIN,
                         flexDirection: 'row',
                         marginBottom: 10
                     }}
@@ -523,7 +523,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
 
                 <Line
                     borderColor={COLORS.ACTIVE}
-                    width={SIZES.WIDTH_BASE * 0.9}
+                    width={SIZES.WIDTH_MAIN}
                 />
 
                 <SubInfoProfile user={userInfo} />
@@ -545,7 +545,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
 
                 <Line
                     borderColor={COLORS.ACTIVE}
-                    width={SIZES.WIDTH_BASE * 0.9}
+                    width={SIZES.WIDTH_MAIN}
                 />
 
                 <Albums

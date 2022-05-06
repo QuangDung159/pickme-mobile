@@ -37,7 +37,7 @@ export default function Verification({ navigation, route }) {
                     <KeyboardAwareScrollView
                         showsVerticalScrollIndicator={false}
                         contentContainerStyle={{
-                            width: SIZES.WIDTH_BASE * 0.9,
+                            width: SIZES.WIDTH_MAIN,
                             alignSelf: 'center'
                         }}
                     >

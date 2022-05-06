@@ -49,7 +49,7 @@ export default function Wallet({ navigation }) {
                 style={{
                     flexDirection: 'row',
                     height: 55,
-                    width: SIZES.WIDTH_BASE * 0.9,
+                    width: SIZES.WIDTH_MAIN,
                     alignSelf: 'center',
                     alignItems: 'center',
                 }}
@@ -294,7 +294,7 @@ export default function Wallet({ navigation }) {
                             <View
                                 style={{
                                     height: 120,
-                                    width: SIZES.WIDTH_BASE * 0.9,
+                                    width: SIZES.WIDTH_MAIN,
                                     alignSelf: 'center',
                                     borderBottomWidth: 0.5,
                                     borderBottomColor: COLORS.ACTIVE

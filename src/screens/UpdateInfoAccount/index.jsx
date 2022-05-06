@@ -84,10 +84,10 @@ export default function UpdateInfoAccount({ navigation }) {
     const renderInputName = () => (
         <CustomInput
             value={newUser.fullName}
-            inputStyle={{ width: SIZES.WIDTH_BASE * 0.55 }}
+            inputStyle={{ width: SIZES.WIDTH_BASE * 0.62 }}
             onChangeText={(input) => onChangeName(input)}
             containerStyle={{
-                width: SIZES.WIDTH_BASE * 0.9,
+                width: SIZES.WIDTH_MAIN,
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 alignItems: 'center',
@@ -101,10 +101,10 @@ export default function UpdateInfoAccount({ navigation }) {
     const renderInputPhone = () => (
         <CustomInput
             value={newUser.phoneNum}
-            inputStyle={{ width: SIZES.WIDTH_BASE * 0.55 }}
+            inputStyle={{ width: SIZES.WIDTH_BASE * 0.62 }}
             onChangeText={(input) => setNewUser({ ...newUser, phoneNum: input })}
             containerStyle={{
-                width: SIZES.WIDTH_BASE * 0.9,
+                width: SIZES.WIDTH_MAIN,
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 alignItems: 'center',
@@ -121,14 +121,13 @@ export default function UpdateInfoAccount({ navigation }) {
             value={newUser.homeTown}
             onChangeText={(input) => onChangeHometown(input)}
             containerStyle={{
-                width: SIZES.WIDTH_BASE * 0.9,
+                width: SIZES.WIDTH_MAIN,
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 alignItems: 'center',
                 marginTop: 10
             }}
-            inputStyle={{ width: SIZES.WIDTH_BASE * 0.55 }}
-            autoCapitalize
+            inputStyle={{ width: SIZES.WIDTH_BASE * 0.62 }}
             label="Nơi ở hiện tại:"
             maxLength={35}
         />
@@ -145,7 +144,7 @@ export default function UpdateInfoAccount({ navigation }) {
                 onChangeText={(input) => setNewUser({ ...newUser, zalo: input })}
                 inputStyle={{ width: SIZES.WIDTH_BASE * 0.48 }}
                 containerStyle={{
-                    width: SIZES.WIDTH_BASE * 0.9,
+                    width: SIZES.WIDTH_MAIN,
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                     alignItems: 'center'
@@ -168,7 +167,7 @@ export default function UpdateInfoAccount({ navigation }) {
                 inputStyle={{ width: SIZES.WIDTH_BASE * 0.48 }}
                 containerStyle={{
                     marginVertical: 10,
-                    width: SIZES.WIDTH_BASE * 0.9,
+                    width: SIZES.WIDTH_MAIN,
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                     alignItems: 'center'
@@ -190,7 +189,7 @@ export default function UpdateInfoAccount({ navigation }) {
                 onChangeText={(input) => setNewUser({ ...newUser, facebook: input })}
                 inputStyle={{ width: SIZES.WIDTH_BASE * 0.48 }}
                 containerStyle={{
-                    width: SIZES.WIDTH_BASE * 0.9,
+                    width: SIZES.WIDTH_MAIN,
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                     alignItems: 'center'
@@ -244,7 +243,7 @@ export default function UpdateInfoAccount({ navigation }) {
         <View
             style={{
                 alignItems: 'flex-start',
-                width: SIZES.WIDTH_BASE * 0.9,
+                width: SIZES.WIDTH_MAIN,
                 marginTop: 10
             }}
         >
@@ -272,7 +271,7 @@ export default function UpdateInfoAccount({ navigation }) {
                         }}
                         isSelected={item.selected}
                         containerStyle={{
-                            marginBottom: 10
+                            marginBottom: 5
                         }}
                     />
                 ))}
@@ -287,12 +286,11 @@ export default function UpdateInfoAccount({ navigation }) {
             onChangeText={(input) => onChangeDescription(input)}
             containerStyle={{
                 marginVertical: 10,
-                width: SIZES.WIDTH_BASE * 0.9,
+                width: SIZES.WIDTH_MAIN,
             }}
             inputStyle={{
                 height: 60
             }}
-            autoCapitalize
             label="Mô tả ngắn:"
             maxLength={100}
         />
@@ -300,14 +298,14 @@ export default function UpdateInfoAccount({ navigation }) {
 
     const renderInputHeight = () => (
         <CustomInput
-            inputStyle={{ width: SIZES.WIDTH_BASE * 0.55 }}
+            inputStyle={{ width: SIZES.WIDTH_BASE * 0.62 }}
             label="Chiều cao (cm):"
             onChangeText={(input) => setNewUser({ ...newUser, height: input })}
             value={newUser.height}
             keyboardType="number-pad"
             maxLength={3}
             containerStyle={{
-                width: SIZES.WIDTH_BASE * 0.9,
+                width: SIZES.WIDTH_MAIN,
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 alignItems: 'center',
@@ -318,14 +316,14 @@ export default function UpdateInfoAccount({ navigation }) {
 
     const renderInputWeight = () => (
         <CustomInput
-            inputStyle={{ width: SIZES.WIDTH_BASE * 0.55 }}
+            inputStyle={{ width: SIZES.WIDTH_BASE * 0.62 }}
             label="Cân nặng (kg):"
             onChangeText={(input) => setNewUser({ ...newUser, weight: input })}
             value={newUser.weight}
             keyboardType="number-pad"
             maxLength={3}
             containerStyle={{
-                width: SIZES.WIDTH_BASE * 0.9,
+                width: SIZES.WIDTH_MAIN,
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 alignItems: 'center',
@@ -338,11 +336,12 @@ export default function UpdateInfoAccount({ navigation }) {
         <CustomInput
             containerStyle={{
                 marginTop: 10,
-                width: SIZES.WIDTH_BASE * 0.9
+                width: SIZES.WIDTH_MAIN
             }}
             onChangeText={(input) => onChangeEarningExpected(input)}
             value={amountDisplay}
             label="Thu nhập mong muốn (Xu/phút):"
+            keyboardType="number-pad"
             onEndEditing={
                 (e) => {
                     setAmountDisplay(CommonHelpers.formatCurrency(e.nativeEvent.text));
@@ -360,8 +359,9 @@ export default function UpdateInfoAccount({ navigation }) {
             onChangeText={(minimumDuration) => onChangeMinimumDuration(minimumDuration)}
             containerStyle={{
                 marginVertical: 10,
-                width: SIZES.WIDTH_BASE * 0.9
+                width: SIZES.WIDTH_MAIN
             }}
+            keyboardType="number-pad"
             label="Số phút tối thiểu của buổi hẹn:"
         />
     );
@@ -373,7 +373,7 @@ export default function UpdateInfoAccount({ navigation }) {
                 justifyContent: 'space-between',
                 alignItems: 'center',
                 marginVertical: 10,
-                width: '90%'
+                width: '95%'
             }}
         >
             <View>
@@ -386,7 +386,7 @@ export default function UpdateInfoAccount({ navigation }) {
                 />
                 <CustomInput
                     inputStyle={{
-                        width: SIZES.WIDTH_BASE * 0.44
+                        width: SIZES.WIDTH_BASE * 0.46
                     }}
                     onChangeText={(input) => setNewUser({ ...newUser, height: input })}
                     value={newUser.height}
@@ -405,7 +405,7 @@ export default function UpdateInfoAccount({ navigation }) {
                 />
                 <CustomInput
                     inputStyle={{
-                        width: SIZES.WIDTH_BASE * 0.44
+                        width: SIZES.WIDTH_BASE * 0.46
                     }}
                     onChangeText={(input) => setNewUser({ ...newUser, weight: input })}
                     value={newUser.weight}
@@ -418,13 +418,13 @@ export default function UpdateInfoAccount({ navigation }) {
 
     const renderDOB = () => (
         <CustomInput
-            inputStyle={{ width: SIZES.WIDTH_BASE * 0.55 }}
+            inputStyle={{ width: SIZES.WIDTH_BASE * 0.62 }}
             containerStyle={{
-                width: SIZES.WIDTH_BASE * 0.9,
+                width: SIZES.WIDTH_MAIN,
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                marginTop: 10
+                marginVertical: 10
             }}
             onChangeText={(input) => onChangeYear(input)}
             value={newUser?.dob?.substr(0, 4)}
@@ -439,7 +439,7 @@ export default function UpdateInfoAccount({ navigation }) {
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
-            width: SIZES.WIDTH_BASE * 0.9,
+            width: SIZES.WIDTH_MAIN,
             marginTop: 10,
         }}
         >
@@ -451,7 +451,7 @@ export default function UpdateInfoAccount({ navigation }) {
             />
             <View
                 style={{
-                    width: SIZES.WIDTH_BASE * 0.55,
+                    width: SIZES.WIDTH_BASE * 0.62,
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                     alignItems: 'center',
@@ -494,10 +494,10 @@ export default function UpdateInfoAccount({ navigation }) {
     //     <View>
     //         <CustomInput
     //             inputStyle={{
-    //                 width: SIZES.WIDTH_BASE * 0.44
+    //                 width: SIZES.WIDTH_BASE * 0.46
     //             }}
     //             containerStyle={{
-    //                 width: SIZES.WIDTH_BASE * 0.9,
+    //                 width: SIZES.WIDTH_MAIN,
     //                 flexDirection: 'row',
     //                 justifyContent: 'space-between',
     //                 alignItems: 'center'
@@ -512,7 +512,7 @@ export default function UpdateInfoAccount({ navigation }) {
     //             flexDirection: 'row',
     //             justifyContent: 'space-between',
     //             alignItems: 'center',
-    //             width: SIZES.WIDTH_BASE * 0.9,
+    //             width: SIZES.WIDTH_MAIN,
     //             marginTop: 10
     //         }}
     //         >
@@ -523,7 +523,7 @@ export default function UpdateInfoAccount({ navigation }) {
     //                 handlePressItem={() => setNewUser({ ...newUser, isMale: true })}
     //                 isSelected={newUser.isMale}
     //                 containerStyle={{
-    //                     width: SIZES.WIDTH_BASE * 0.44
+    //                     width: SIZES.WIDTH_BASE * 0.46
     //                 }}
     //                 titleStyle={{
     //                     fontFamily: TEXT_BOLD,
@@ -536,7 +536,7 @@ export default function UpdateInfoAccount({ navigation }) {
     //                 handlePressItem={() => setNewUser({ ...newUser, isMale: false })}
     //                 isSelected={!newUser.isMale}
     //                 containerStyle={{
-    //                     width: SIZES.WIDTH_BASE * 0.44,
+    //                     width: SIZES.WIDTH_BASE * 0.46,
     //                     marginRight: 0
     //                 }}
     //                 titleStyle={{
@@ -564,7 +564,7 @@ export default function UpdateInfoAccount({ navigation }) {
                 type="active"
                 label="Xác nhận"
                 buttonStyle={{
-                    width: SIZES.WIDTH_BASE * 0.9
+                    width: SIZES.WIDTH_MAIN
                 }}
             />
         </View>
@@ -761,7 +761,7 @@ export default function UpdateInfoAccount({ navigation }) {
                                 type="active"
                                 label="Chọn ảnh"
                                 buttonStyle={{
-                                    width: SIZES.WIDTH_BASE * 0.9,
+                                    width: SIZES.WIDTH_MAIN,
                                 }}
                             />
                             <View
@@ -775,7 +775,7 @@ export default function UpdateInfoAccount({ navigation }) {
                                         style={{
                                             zIndex: 99
                                         }}
-                                        width={SIZES.WIDTH_BASE * 0.9}
+                                        width={SIZES.WIDTH_MAIN}
                                         source={{ uri: imagePath }}
                                     />
                                 ) : (
@@ -800,7 +800,7 @@ export default function UpdateInfoAccount({ navigation }) {
                                 fontSize: SIZES.FONT_H5,
                                 marginTop: 10,
                                 textAlign: 'center',
-                                width: SIZES.WIDTH_BASE * 0.9,
+                                width: SIZES.WIDTH_MAIN,
                             }}
                             // eslint-disable-next-line max-len
                             text="Tài khoản của bạn chưa được xác thực, vui lòng nhấn vào đây để tiến hành xác thực tài khoản"
@@ -886,7 +886,7 @@ export default function UpdateInfoAccount({ navigation }) {
             renderContent={() => (
                 <View
                     style={{
-                        width: SIZES.WIDTH_BASE * 0.9
+                        width: SIZES.WIDTH_MAIN
                     }}
                 >
                     <CustomText
@@ -906,7 +906,7 @@ export default function UpdateInfoAccount({ navigation }) {
                             zIndex: 99,
                             marginBottom: 10
                         }}
-                        width={SIZES.WIDTH_BASE * 0.9}
+                        width={SIZES.WIDTH_MAIN}
                     />
 
                     <CustomText
@@ -926,7 +926,7 @@ export default function UpdateInfoAccount({ navigation }) {
                             zIndex: 99,
                             marginBottom: 10
                         }}
-                        width={SIZES.WIDTH_BASE * 0.9}
+                        width={SIZES.WIDTH_MAIN}
                     />
 
                     <CustomText
@@ -946,7 +946,7 @@ export default function UpdateInfoAccount({ navigation }) {
                             zIndex: 99,
                             marginBottom: 10
                         }}
-                        width={SIZES.WIDTH_BASE * 0.9}
+                        width={SIZES.WIDTH_MAIN}
                     />
 
                     <CustomText
@@ -966,7 +966,7 @@ export default function UpdateInfoAccount({ navigation }) {
                             zIndex: 99,
                             marginBottom: 10
                         }}
-                        width={SIZES.WIDTH_BASE * 0.9}
+                        width={SIZES.WIDTH_MAIN}
                     />
 
                     <CustomText
@@ -986,7 +986,7 @@ export default function UpdateInfoAccount({ navigation }) {
                             zIndex: 99,
                             marginBottom: 10
                         }}
-                        width={SIZES.WIDTH_BASE * 0.9}
+                        width={SIZES.WIDTH_MAIN}
                     />
 
                     <CustomText
@@ -1006,7 +1006,7 @@ export default function UpdateInfoAccount({ navigation }) {
                             zIndex: 99,
                             marginBottom: 10
                         }}
-                        width={SIZES.WIDTH_BASE * 0.9}
+                        width={SIZES.WIDTH_MAIN}
                     />
 
                     <View>
@@ -1028,7 +1028,7 @@ export default function UpdateInfoAccount({ navigation }) {
             renderContent={() => (
                 <View
                     style={{
-                        width: SIZES.WIDTH_BASE * 0.9
+                        width: SIZES.WIDTH_MAIN
                     }}
                 >
                     <CustomText
@@ -1048,7 +1048,7 @@ export default function UpdateInfoAccount({ navigation }) {
                             zIndex: 99,
                             marginBottom: 10
                         }}
-                        width={SIZES.WIDTH_BASE * 0.9}
+                        width={SIZES.WIDTH_MAIN}
                     />
 
                     <CustomText
@@ -1068,7 +1068,7 @@ export default function UpdateInfoAccount({ navigation }) {
                             zIndex: 99,
                             marginBottom: 10
                         }}
-                        width={SIZES.WIDTH_BASE * 0.9}
+                        width={SIZES.WIDTH_MAIN}
                     />
 
                     <CustomText
@@ -1088,7 +1088,7 @@ export default function UpdateInfoAccount({ navigation }) {
                             zIndex: 99,
                             marginBottom: 10
                         }}
-                        width={SIZES.WIDTH_BASE * 0.9}
+                        width={SIZES.WIDTH_MAIN}
                     />
 
                     <CustomText
@@ -1108,7 +1108,7 @@ export default function UpdateInfoAccount({ navigation }) {
                             zIndex: 99,
                             marginBottom: 10
                         }}
-                        width={SIZES.WIDTH_BASE * 0.9}
+                        width={SIZES.WIDTH_MAIN}
                     />
 
                     <CustomText
@@ -1128,7 +1128,7 @@ export default function UpdateInfoAccount({ navigation }) {
                             zIndex: 99,
                             marginBottom: 10
                         }}
-                        width={SIZES.WIDTH_BASE * 0.9}
+                        width={SIZES.WIDTH_MAIN}
                     />
 
                     <CustomText
@@ -1148,7 +1148,7 @@ export default function UpdateInfoAccount({ navigation }) {
                             zIndex: 99,
                             marginBottom: 10
                         }}
-                        width={SIZES.WIDTH_BASE * 0.9}
+                        width={SIZES.WIDTH_MAIN}
                     />
 
                     <View>
@@ -1170,7 +1170,7 @@ export default function UpdateInfoAccount({ navigation }) {
             renderContent={() => (
                 <View
                     style={{
-                        width: SIZES.WIDTH_BASE * 0.9
+                        width: SIZES.WIDTH_MAIN
                     }}
                 >
                     <CustomText
@@ -1190,7 +1190,7 @@ export default function UpdateInfoAccount({ navigation }) {
                             zIndex: 99,
                             marginBottom: 10
                         }}
-                        width={SIZES.WIDTH_BASE * 0.9}
+                        width={SIZES.WIDTH_MAIN}
                     />
 
                     <CustomText
@@ -1210,7 +1210,7 @@ export default function UpdateInfoAccount({ navigation }) {
                             zIndex: 99,
                             marginBottom: 10
                         }}
-                        width={SIZES.WIDTH_BASE * 0.9}
+                        width={SIZES.WIDTH_MAIN}
                     />
 
                     <CustomText
@@ -1230,7 +1230,7 @@ export default function UpdateInfoAccount({ navigation }) {
                             zIndex: 99,
                             marginBottom: 10
                         }}
-                        width={SIZES.WIDTH_BASE * 0.9}
+                        width={SIZES.WIDTH_MAIN}
                     />
 
                     <CustomText
@@ -1250,7 +1250,7 @@ export default function UpdateInfoAccount({ navigation }) {
                             zIndex: 99,
                             marginBottom: 10
                         }}
-                        width={SIZES.WIDTH_BASE * 0.9}
+                        width={SIZES.WIDTH_MAIN}
                     />
 
                     <CustomText
@@ -1270,7 +1270,7 @@ export default function UpdateInfoAccount({ navigation }) {
                             zIndex: 99,
                             marginBottom: 10
                         }}
-                        width={SIZES.WIDTH_BASE * 0.9}
+                        width={SIZES.WIDTH_MAIN}
                     />
 
                     <CustomText
@@ -1303,7 +1303,7 @@ export default function UpdateInfoAccount({ navigation }) {
             renderContent={() => (
                 <View
                     style={{
-                        width: SIZES.WIDTH_BASE * 0.9
+                        width: SIZES.WIDTH_MAIN
                     }}
                 >
                     <CustomText
