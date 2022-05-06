@@ -39,8 +39,8 @@ export default function Total({
 
     const calculateTotalAmount = (start, end) => {
         if (total !== 0) return total;
-        const { estimatePricing, onlineEstimatePricing } = route.params.partner;
-        const unitPrice = booking.isOnline ? onlineEstimatePricing : estimatePricing;
+        const { estimatePricing } = route.params.partner;
+        const unitPrice = estimatePricing;
 
         const startMinutesNumber = convertStringHoursToMinutes(start) || 0;
         const endMinutesNumber = convertStringHoursToMinutes(end) || 0;
@@ -85,11 +85,9 @@ export default function Total({
     };
 
     const onSubmitBooking = async () => {
-        if (!booking.isOnline) {
-            if (!currentUser.isCustomerVerified) {
-                ToastHelpers.renderToast('Tài khoản của bạn chưa được xác thực');
-                return;
-            }
+        if (!currentUser.isCustomerVerified) {
+            ToastHelpers.renderToast('Tài khoản của bạn chưa được xác thực');
+            return;
         }
 
         if (!validate()) return;
@@ -119,7 +117,7 @@ export default function Total({
             Description: 'Không có mô tả',
             Noted: booking.noted || 'Không có ghi chú',
             totalAmount: total !== 0 ? total : calculateTotalAmount(startTimeStr, endTimeStr),
-            IsOnline: booking.isOnline
+            IsOnline: false
         };
 
         // console.log('bookingToSubmit :>> ', bookingToSubmit);

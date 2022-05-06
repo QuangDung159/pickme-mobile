@@ -1,6 +1,6 @@
 import { CustomButton, CustomText, IconCustom } from '@components/uiComponents';
 import {
-    IconFamily, OutsideApp, ScreenName, Theme
+    BookingStatus, IconFamily, OutsideApp, ScreenName, Theme
 } from '@constants/index';
 import { mappingStatusText } from '@helpers/CommonHelpers';
 import { CommonHelpers, ToastHelpers } from '@helpers/index';
@@ -478,36 +478,28 @@ export default function CardBooking({ booking, navigation }) {
                         }}
                         text={`Xu: ${CommonHelpers.formatCurrency(xuDisplay)}`}
                     />
-                    <CustomButton
-                        onPress={() => {
-                            addBookingToCalendar();
-                            // if (booking.status === BookingStatus.PAID) {
-                            //     addBookingToCalendar();
-                            // } else {
-                            //     Alert.alert('Đơn hẹn không ở trạng thái "Đã được thanh toán"', '', [
-                            //         {
-                            //             text: 'Đã hiểu',
-                            //             style: 'ok'
-                            //         },
-                            //     ], { cancelable: true });
-                            // }
-                        }}
-                        type="active"
-                        label="Thêm vào lịch"
-                        buttonStyle={{
-                            width: 135,
-                        }}
-                        labelStyle={{
-                            fontFamily: TEXT_REGULAR,
-                            fontSize: SIZES.FONT_H4,
-                        }}
-                        leftIcon={{
-                            name: 'calendar',
-                            size: SIZES.FONT_H3,
-                            color: COLORS.ACTIVE,
-                            family: IconFamily.ANT_DESIGN
-                        }}
-                    />
+                    {booking.status === BookingStatus.PAID && (
+                        <CustomButton
+                            onPress={() => {
+                                addBookingToCalendar();
+                            }}
+                            type="active"
+                            label="Thêm vào lịch"
+                            buttonStyle={{
+                                width: 120,
+                            }}
+                            labelStyle={{
+                                fontFamily: TEXT_REGULAR,
+                                fontSize: SIZES.FONT_H4,
+                            }}
+                            leftIcon={{
+                                name: 'calendar',
+                                size: SIZES.FONT_H3,
+                                color: COLORS.ACTIVE,
+                                family: IconFamily.ANT_DESIGN
+                            }}
+                        />
+                    )}
                 </View>
             </View>
         );
