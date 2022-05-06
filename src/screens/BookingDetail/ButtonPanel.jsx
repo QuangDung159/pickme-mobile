@@ -106,7 +106,7 @@ export default function ButtonPanel({
             );
         }
 
-        return renderCancelBooking(0.9);
+        return renderCancelBooking(0.95);
 
         // if (currentBookingRedux.customerId === currentUser.id && status === BookingStatus.CONFIRMED) {
         //     return (
@@ -148,7 +148,7 @@ export default function ButtonPanel({
 
     const renderRatingReportBooking = () => {
         if (currentBookingRedux.isRated) {
-            return renderReportButton(0.9);
+            return renderReportButton(0.95);
         }
         return (
             <>

@@ -353,7 +353,7 @@ export default function CardBooking({ booking, navigation }) {
                         [
                             styles.cardTitle,
                             {
-                                fontSize: SIZES.FONT_H2,
+                                fontSize: SIZES.FONT_H3,
                                 color: COLORS.ACTIVE,
                             }
                         ]
@@ -372,26 +372,26 @@ export default function CardBooking({ booking, navigation }) {
                             [
                                 styles.subInfoCard,
                                 {
-                                    fontSize: SIZES.FONT_H2,
+                                    fontSize: SIZES.FONT_H3,
                                     color: COLORS.ACTIVE,
                                     fontFamily: TEXT_BOLD
                                 }
                             ]
                         }
-                        text={`Ngày: ${moment(date).format('DD-MM-YYYY')}`}
+                        text={`Thời gian: ${startStr} - ${endStr}`}
                     />
                     <CustomText
                         style={
                             [
                                 styles.subInfoCard,
                                 {
-                                    fontSize: SIZES.FONT_H2,
+                                    fontSize: SIZES.FONT_H3,
                                     color: COLORS.ACTIVE,
                                     fontFamily: TEXT_BOLD
                                 }
                             ]
                         }
-                        text={`${startStr} - ${endStr}`}
+                        text={`${moment(date).format('DD/MM/YYYY')}`}
                     />
                 </View>
 
@@ -465,6 +465,7 @@ export default function CardBooking({ booking, navigation }) {
                         justifyContent: 'space-between',
                         alignItems: 'center',
                         marginBottom: 10,
+                        marginTop: -5,
                         flexDirection: 'row',
                         width: '100%',
                     }}
@@ -472,7 +473,7 @@ export default function CardBooking({ booking, navigation }) {
                     <CustomText
                         style={{
                             fontFamily: TEXT_BOLD,
-                            fontSize: SIZES.FONT_H1,
+                            fontSize: SIZES.FONT_H3,
                             color: COLORS.ACTIVE
                         }}
                         text={`Xu: ${CommonHelpers.formatCurrency(xuDisplay)}`}

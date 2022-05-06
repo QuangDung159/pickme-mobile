@@ -55,7 +55,7 @@ export const mappingStatusText = (status) => {
 };
 
 // 2021-12-08T21:26:26.61144
-export const formatTime = (timeString, format = 'HH:mm:ss DD-MM-YYYY') => {
+export const formatTime = (timeString, format = 'HH:mm:ss DD/MM/YYYY') => {
     const timestamp = new Date(timeString);
     return moment(timestamp).format(format);
 };

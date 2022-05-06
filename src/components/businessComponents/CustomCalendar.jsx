@@ -14,7 +14,7 @@ const arrDOW = [
     'T6',
     'T7'
 ];
-const currentDate = moment().format('DD-MM-YYYY');
+const currentDate = moment().format('DD/MM/YYYY');
 const {
     FONT: {
         TEXT_REGULAR,
@@ -25,7 +25,7 @@ const {
 } = Theme;
 
 export default function CustomCalendar({ selectedDate, onChangeDate }) {
-    const [selectedDateState, setSelectedDateState] = useState(moment().format('DD-MM-YYYY'));
+    const [selectedDateState, setSelectedDateState] = useState(moment().format('DD/MM/YYYY'));
 
     useEffect(
         () => {
@@ -38,7 +38,7 @@ export default function CustomCalendar({ selectedDate, onChangeDate }) {
     const createArrDate = (startDate, numberOfDateToGen) => {
         const arrDate = [];
         for (let i = 0; i < numberOfDateToGen; i += 1) {
-            arrDate.push(moment(startDate, 'DD-MM-YYYY').add(i, 'days').format('DD-MM-YYYY'));
+            arrDate.push(moment(startDate, 'DD/MM/YYYY').add(i, 'days').format('DD/MM/YYYY'));
         }
         return arrDate;
     };
@@ -56,15 +56,15 @@ export default function CustomCalendar({ selectedDate, onChangeDate }) {
         return frontArr.concat(backArr);
     };
 
-    const arrDateLine1 = createArrDate(moment().format('DD-MM-YYYY'), 7);
-    // const arrDateLine2 = createArrDate(moment().add(7, 'days').format('DD-MM-YYYY'), 7);
+    const arrDateLine1 = createArrDate(moment().format('DD/MM/YYYY'), 7);
+    // const arrDateLine2 = createArrDate(moment().add(7, 'days').format('DD/MM/YYYY'), 7);
 
     const weekendStyle = {
         color: COLORS.ACTIVE
     };
 
     const arrDowByCurrentDate = createDynamicArrDOW(
-        moment(currentDate, 'DD-MM-YYYY').isoWeekday()
+        moment(currentDate, 'DD/MM/YYYY').isoWeekday()
     );
 
     return (

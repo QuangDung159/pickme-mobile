@@ -35,7 +35,7 @@ export default function CreateBooking({ route, navigation }) {
         longtitude: '',
         latitude: ''
     });
-    const [selectedDate, setSelectedDate] = useState(moment().format('DD-MM-YYYY'));
+    const [selectedDate, setSelectedDate] = useState(moment().format('DD/MM/YYYY'));
     const [isShowSpinner, setIsShowSpinner] = useState(false);
     const [listBusyBySelectedDate, setListBusyBySelectedDate] = useState([]);
     const [busyCalendar, setBusyCalendar] = useState([]);

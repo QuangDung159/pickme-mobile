@@ -64,7 +64,7 @@ export default function CreateBookingForm({
 
     const onChangeDateCalendar = (date) => {
         const result = busyCalendar.find(
-            (item) => date === moment(item.date).format('DD-MM-YYYY')
+            (item) => date === moment(item.date).format('DD/MM/YYYY')
         );
 
         setSelectedDate(date);
