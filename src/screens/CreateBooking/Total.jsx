@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
 import {
     CustomButton, CustomText, IconCustom, NoteText
@@ -85,10 +86,10 @@ export default function Total({
     };
 
     const onSubmitBooking = async () => {
-        if (!currentUser.isCustomerVerified) {
-            ToastHelpers.renderToast('Tài khoản của bạn chưa được xác thực');
-            return;
-        }
+        // if (!currentUser.isCustomerVerified) {
+        //     ToastHelpers.renderToast('Tài khoản của bạn chưa được xác thực');
+        //     return;
+        // }
 
         if (!validate()) return;
 

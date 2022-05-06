@@ -530,18 +530,18 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                 {renderPartnerPanel()}
 
                 {/* {isCurrentUser && (
-                <>
-                    {!userInfo?.isCustomerVerified && (
-                        <TouchableOpacity
-                            onPress={() => {
-                                navigation.navigate(ScreenName.VERIFICATION);
-                            }}
-                        >
-                            <VerificationStatusPanel />
-                        </TouchableOpacity>
-                    )}
-                </>
-            )} */}
+                    <>
+                        {!userInfo?.isCustomerVerified && (
+                            <TouchableOpacity
+                                onPress={() => {
+                                    navigation.navigate(ScreenName.VERIFICATION);
+                                }}
+                            >
+                                <VerificationStatusPanel />
+                            </TouchableOpacity>
+                        )}
+                    </>
+                )} */}
 
                 <Line style={{
                     marginBottom: 30
