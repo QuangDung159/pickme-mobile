@@ -272,7 +272,7 @@ export default function CardBooking({ booking, navigation }) {
                 icon: {
                     name: 'map',
                     family: IconFamily.ENTYPO,
-                    size: 18
+                    size: 12
                 },
             });
         }

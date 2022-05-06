@@ -214,9 +214,6 @@ export default function ButtonPanel({
         <View
             style={{
                 backgroundColor: COLORS.BASE,
-                marginTop: 5,
-                borderTopWidth: 0.5,
-                borderTopColor: COLORS.ACTIVE
             }}
         >
             <View
@@ -225,7 +222,7 @@ export default function ButtonPanel({
                     alignSelf: 'center',
                     flexDirection: 'row',
                     justifyContent: 'space-between',
-                    paddingVertical: 20
+                    paddingVertical: 5
                 }}
             >
                 {handleShowButtonByStatus()}
