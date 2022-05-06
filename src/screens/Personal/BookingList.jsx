@@ -124,7 +124,7 @@ export default function BookingList({ navigation }) {
                 >
                     <View
                         style={{
-                            padding: 10
+                            padding: 10,
                         }}
                     >
                         <View style={{
@@ -153,15 +153,44 @@ export default function BookingList({ navigation }) {
                             </Text>
                         </View>
 
-                        <Text
+                        <View
                             style={{
-                                fontFamily: TEXT_BOLD,
-                                fontSize: SIZES.FONT_H3,
-                                color: colorByStatus,
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
+                                width: '100%'
                             }}
                         >
-                            {customerId === currentUser.id ? partnerName : customerName}
-                        </Text>
+                            <View
+                                style={{
+                                    width: '58%'
+                                }}
+                            >
+                                <Text
+                                    style={{
+                                        fontFamily: TEXT_BOLD,
+                                        fontSize: SIZES.FONT_H3,
+                                        color: colorByStatus,
+                                    }}
+                                >
+                                    {customerId === currentUser.id ? partnerName : customerName}
+                                </Text>
+                            </View>
+                            <View style={{
+                                width: '40%',
+                                alignItems: 'flex-end'
+                            }}
+                            >
+                                <Text
+                                    style={{
+                                        fontFamily: TEXT_BOLD,
+                                        fontSize: SIZES.FONT_H3,
+                                        color: colorByStatus,
+                                    }}
+                                >
+                                    {mappingStatusText(status)}
+                                </Text>
+                            </View>
+                        </View>
 
                         <View
                             style={{
@@ -172,27 +201,11 @@ export default function BookingList({ navigation }) {
                         >
                             <Text style={{
                                 fontFamily: TEXT_REGULAR,
-                                fontSize: SIZES.FONT_H2,
+                                fontSize: SIZES.FONT_H3,
                                 color: colorByStatus
                             }}
                             >
-                                {startStr}
-                            </Text>
-                            <Text style={{
-                                fontFamily: TEXT_REGULAR,
-                                fontSize: SIZES.FONT_H2,
-                                color: colorByStatus
-                            }}
-                            >
-                                đến
-                            </Text>
-                            <Text style={{
-                                fontFamily: TEXT_REGULAR,
-                                fontSize: SIZES.FONT_H2,
-                                color: colorByStatus
-                            }}
-                            >
-                                {endStr}
+                                {`${startStr} - ${endStr}`}
                             </Text>
                         </View>
 
@@ -204,16 +217,6 @@ export default function BookingList({ navigation }) {
                         >
                             {checkPlatformByAddress(address)}
                         </Text>
-
-                        <Text style={{
-                            fontFamily: TEXT_BOLD,
-                            fontSize: SIZES.FONT_H4,
-                            color: colorByStatus
-                        }}
-                        >
-                            {mappingStatusText(status)}
-                        </Text>
-
                     </View>
                 </View>
             </TouchableOpacity>
@@ -316,7 +319,7 @@ export default function BookingList({ navigation }) {
                             marginVertical: 15
                         }}
                     >
-                        Danh sách trống
+                        Chưa có đơn hẹn
                     </Text>
                 </ScrollView>
             );
