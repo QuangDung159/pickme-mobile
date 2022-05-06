@@ -67,7 +67,9 @@ const toastConfig = {
     ),
     error: (internalState) => (
         <View
-            style={styles.toastContainer}
+            style={[styles.toastContainer, {
+                borderColor: COLORS.ERROR
+            }]}
         >
             <Text
                 style={
@@ -207,7 +209,7 @@ const styles = StyleSheet.create({
         width: SIZES.WIDTH_BASE * 0.85,
         backgroundColor: COLORS.BASE,
         borderRadius: 30,
-        borderColor: COLORS.DEFAULT,
+        borderColor: COLORS.ACTIVE,
         borderWidth: 0.5,
         marginTop: 20,
     },

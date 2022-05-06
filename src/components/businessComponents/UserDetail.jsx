@@ -387,6 +387,32 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
         );
     };
 
+    const renderPartnerPanel = () => (
+        <View
+            style={{
+                width: '90%'
+            }}
+        >
+            {isCurrentUser && (
+                <View>
+                    <ProfileInfoItem
+                        fontSize={SIZES.FONT_H3}
+                        iconName="treasure-chest"
+                        iconFamily={IconFamily.MATERIAL_COMMUNITY_ICONS}
+                        content={`Xu: ${CommonHelpers.formatCurrency(userInfo.walletAmount)}`}
+                        iconSize={18}
+                        contentTextStyle={{
+                            fontFamily: TEXT_BOLD,
+                            color: COLORS.ACTIVE
+                        }}
+                    />
+                </View>
+            )}
+
+            {handleShowPartnerDataPanel()}
+        </View>
+    );
+
     return (
         <>
             <ScrollView
@@ -501,30 +527,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                 />
 
                 <SubInfoProfile user={userInfo} />
-
-                <View
-                    style={{
-                        width: '90%'
-                    }}
-                >
-                    {isCurrentUser && (
-                        <View>
-                            <ProfileInfoItem
-                                fontSize={SIZES.FONT_H3}
-                                iconName="treasure-chest"
-                                iconFamily={IconFamily.MATERIAL_COMMUNITY_ICONS}
-                                content={`Xu: ${CommonHelpers.formatCurrency(userInfo.walletAmount)}`}
-                                iconSize={18}
-                                contentTextStyle={{
-                                    fontFamily: TEXT_BOLD,
-                                    color: COLORS.ACTIVE
-                                }}
-                            />
-                        </View>
-                    )}
-
-                    {handleShowPartnerDataPanel()}
-                </View>
+                {renderPartnerPanel()}
 
                 {/* {isCurrentUser && (
                 <>
