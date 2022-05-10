@@ -34,8 +34,7 @@ export default function FilterModal({ modalFilterVisible, setModalFilterVisible 
 
     useEffect(
         () => {
-            handleListInterestFromLocal();
-            handleListGenderFromLocal();
+            initFilterFromLocal();
         }, [modalFilterVisible]
     );
 
@@ -51,14 +50,27 @@ export default function FilterModal({ modalFilterVisible, setModalFilterVisible 
         setListGenderSelected(list);
     };
 
-    const handleListInterestFromLocal = async () => {
+    const initFilterFromLocal = () => {
+        getListInterestFromLocal();
+        getListGenderFromLocal();
+        getFilterFromLocal();
+    };
+
+    const getFilterFromLocal = async () => {
+        const filterObjLocal = await SecureStore.getItemAsync('FILTER');
+        if (filterObjLocal) {
+            setFilterObj(JSON.parse(filterObjLocal));
+        }
+    };
+
+    const getListInterestFromLocal = async () => {
         const listInterestFromLocal = await SecureStore.getItemAsync('LIST_INTEREST_FILTER');
         if (listInterestFromLocal) {
             setListInterestSelected(JSON.parse(listInterestFromLocal));
         }
     };
 
-    const handleListGenderFromLocal = async () => {
+    const getListGenderFromLocal = async () => {
         const listGenderFromLocal = await SecureStore.getItemAsync('LIST_GENDER_FILTER');
         if (listGenderFromLocal) {
             setListGenderSelected(JSON.parse(listGenderFromLocal));
