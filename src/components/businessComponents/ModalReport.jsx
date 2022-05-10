@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { CustomButton, CustomInput, CustomModal } from '@components/uiComponents';
 import Theme from '@constants/Theme';
 import ToastHelpers from '@helpers/ToastHelpers';
@@ -30,6 +31,7 @@ export default function ModalReport({
             ToastHelpers.renderToast(data.message, 'success');
         }
 
+        ToastHelpers.renderToast('Chúng tôi sẽ xem xét báo cáo và phản hồi trong vòng 48h.\nChúng tôi xin lỗi về những trải nghiệm không thoải mái của bạn.');
         setIsShowSpinner(false);
     };
 

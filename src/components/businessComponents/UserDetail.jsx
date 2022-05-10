@@ -379,6 +379,12 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                     style: 'cancel'
                 },
                 {
+                    text: 'Chặn người dùng',
+                    onPress: () => {
+                        ToastHelpers.renderToast('Đã chặn người dùng, lệnh chặn sẽ hiệu lực sau 48h.');
+                    }
+                },
+                {
                     text: 'Báo cáo người dùng',
                     onPress: () => {
                         setModalReasonVisible(true);

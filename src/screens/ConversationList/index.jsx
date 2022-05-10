@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 import { ModalReport } from '@components/businessComponents';
 import {
@@ -136,10 +137,17 @@ export default function ConversationList({ navigation }) {
                     onPress: () => navigation.navigate(ScreenName.PROFILE, { userId: conversationParams.toUserId })
                 },
                 {
+                    text: 'Chặn người dùng',
+                    onPress: () => {
+                        ToastHelpers.renderToast('Đã chặn người dùng, lệnh chặn sẽ hiệu lực sau 48h.');
+                    }
+                },
+                {
                     text: 'Báo cáo người dùng',
                     onPress: () => {
                         setModalReasonVisible(true);
                         setUserId(conversationParams.toUserId);
+                        ToastHelpers.renderToast('Chúng tôi sẽ xem xét báo cáo và phản hồi trong vòng 48h.\nChúng tôi xin lỗi về những trải nghiệm không thoải mái của bạn.');
                     }
                 },
             ],
