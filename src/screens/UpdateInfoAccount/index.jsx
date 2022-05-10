@@ -32,7 +32,7 @@ export default function UpdateInfoAccount({ navigation }) {
     const [imagePath, setImagePath] = useState(currentUser.imageUrl);
     const [amountDisplay, setAmountDisplay] = useState('');
     const [modalLocationVisible, setModalLocationVisible] = useState(false);
-    const [hometownSelectedIndex, setHometownSelectedIndex] = useState(1);
+    const [hometownSelectedIndex, setHometownSelectedIndex] = useState(0);
 
     const dispatch = useDispatch();
 
@@ -162,7 +162,7 @@ export default function UpdateInfoAccount({ navigation }) {
                     setModalLocationVisible(true);
                 }}
                 type="active"
-                label={LOCATION[hometownSelectedIndex].value}
+                label={LOCATION[hometownSelectedIndex]?.value}
                 buttonStyle={{
                     backgroundColor: COLORS.BASE,
                     borderColor: COLORS.ACTIVE,

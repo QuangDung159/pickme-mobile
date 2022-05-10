@@ -18,7 +18,7 @@ export default function LocationModal({
     modalLocationVisible, setModalLocationVisible, hometownSelectedIndex,
     setHometownSelectedIndex
 }) {
-    const onChangeHourLocation = (data) => {
+    const onChangeLocation = (data) => {
         const location = getLocationByName(data);
         if (!location) {
             return;
@@ -50,7 +50,7 @@ export default function LocationModal({
                 dataSource={handleGetListLocationName()}
                 selectedIndex={hometownSelectedIndex}
                 onValueChange={(data) => {
-                    onChangeHourLocation(data);
+                    onChangeLocation(data);
                 }}
                 wrapperHeight={120}
                 wrapperWidth={150}
