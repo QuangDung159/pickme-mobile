@@ -133,8 +133,6 @@ export default function Header({
     ];
 
     const renderRight = () => {
-        console.log('showRight :>> ', showRight);
-        console.log('screenNameProp :>> ', screenNameProp);
         if (showRight) {
             return (
                 <>

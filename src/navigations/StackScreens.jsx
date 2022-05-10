@@ -4,9 +4,7 @@ import Header from '@containers/Header';
 import { createStackNavigator } from '@react-navigation/stack';
 import CashOut from '@screens/CashOut';
 import ChangePassword from '@screens/ChangePassword';
-import Policy from '@screens/Policy';
 import Guide from '@screens/Guide';
-// screens
 import {
     BookingDetail,
     CashIn,
@@ -19,6 +17,7 @@ import {
     Support, UpdateInfoAccount,
     Verification
 } from '@screens/index';
+import Policy from '@screens/Policy';
 import React from 'react';
 
 const Stack = createStackNavigator();
