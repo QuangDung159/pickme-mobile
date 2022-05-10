@@ -31,7 +31,8 @@ const SIZES = {
 
     WIDTH_BASE: width,
     HEIGHT_BASE: height,
-    WIDTH_MAIN: width * 0.95
+    WIDTH_MAIN: width * 0.95,
+    WIDTH_90: width * 0.9
 };
 
 const FONT = {

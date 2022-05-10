@@ -134,7 +134,7 @@ export default function UpdateInfoAccount({ navigation }) {
     //         onChangeText={(input) => onChangeInterests(input)}
     //         containerStyle={{
     //             marginVertical: 10,
-    //             width: SIZES.WIDTH_BASE * 0.9
+    //             width: SIZES.WIDTH_90
     //         }}
     //         label="Sở thích:"
     //     />

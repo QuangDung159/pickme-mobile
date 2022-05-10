@@ -13,7 +13,7 @@ const {
     }
 } = Theme;
 
-const thumbMeasure = (SIZES.WIDTH_BASE * 0.9) / 3;
+const thumbMeasure = (SIZES.WIDTH_90) / 3;
 const marginValue = ((SIZES.WIDTH_MAIN) - thumbMeasure * 3) / 2;
 
 export default function Albums({

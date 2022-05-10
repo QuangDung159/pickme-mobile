@@ -393,6 +393,9 @@ export default function Home({ navigation }) {
                 alignItems: 'center',
                 backgroundColor: COLORS.ACTIVE
             }}
+            onPress={() => {
+                setModalFilterVisible(true);
+            }}
         >
             <IconCustom
                 name="filter"

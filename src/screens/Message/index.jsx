@@ -339,7 +339,7 @@ export default function Message({ navigation, route }) {
                 onChangeText={(input) => onChangeMessageInput(input)}
                 containerStyle={{
                     marginVertical: 10,
-                    width: SIZES.WIDTH_BASE * 0.9
+                    width: SIZES.WIDTH_90
                 }}
                 inputStyle={{
                     borderWidth: 0,

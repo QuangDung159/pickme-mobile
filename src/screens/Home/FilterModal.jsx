@@ -1,12 +1,14 @@
-import { CustomButton, CustomInput, CustomModal } from '@components/uiComponents';
-import Gender from '@constants/Gender';
+import {
+    CustomButton, CustomInput, CustomModal, CustomText, OptionItem
+} from '@components/uiComponents';
 import Theme from '@constants/Theme';
+import CommonHelpers from '@helpers/CommonHelpers';
 import React, { useState } from 'react';
 import { Text, View } from 'react-native';
 
 const {
     FONT: {
-        TEXT_REGULAR,
+        TEXT_BOLD
     },
     SIZES,
     COLORS
@@ -20,8 +22,171 @@ export default function FilterModal({ modalFilterVisible, setModalFilterVisible 
         feeTo: 2000,
         rating: 4.5,
         from: 'Hồ Chí Minh',
-        gender: Gender.FEMALE
+        isMale: true
     });
+    // const [amountDisplay, setAmountDisplay] = useState('');
+    const [feeFromDisplay, setFeeFromDisplay] = useState(CommonHelpers.formatCurrency(filterObj.feeFrom));
+    const [feeToDisplay, setFeeToDisplay] = useState(CommonHelpers.formatCurrency(filterObj.feeTo));
+
+    const renderInputAge = () => (
+        <View>
+            <CustomText
+                style={{
+                    color: COLORS.ACTIVE,
+                    marginBottom: 5
+                }}
+                text="Độ tuổi:"
+            />
+            <View
+                style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    width: SIZES.WIDTH_90,
+                    alignItems: 'center'
+                }}
+            >
+                <CustomInput
+                    inputStyle={{ width: SIZES.WIDTH_BASE * 0.39 }}
+                    label=""
+                    onChangeText={(input) => setFilterObj({ ...filterObj, ageFrom: input })}
+                    value={filterObj.ageFrom}
+                    keyboardType="number-pad"
+                    maxLength={2}
+                />
+                <CustomText
+                    style={{
+                        color: COLORS.ACTIVE,
+                    }}
+                    text="đến"
+                />
+                <CustomInput
+                    inputStyle={{ width: SIZES.WIDTH_BASE * 0.39 }}
+                    label=""
+                    onChangeText={(input) => setFilterObj({ ...filterObj, ageTo: input })}
+                    value={filterObj.ageTo}
+                    keyboardType="number-pad"
+                    maxLength={2}
+                />
+            </View>
+        </View>
+    );
+
+    const renderGender = () => (
+        <View style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            width: '100%',
+            marginTop: 10,
+        }}
+        >
+            <CustomText
+                style={{
+                    color: COLORS.ACTIVE,
+                }}
+                text="Giới tính:"
+            />
+            <View
+                style={{
+                    width: SIZES.WIDTH_BASE * 0.55,
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                }}
+            >
+                <OptionItem
+                    item={{ value: 'Nam' }}
+                    index={0}
+                    handlePressItem={() => setFilterObj({ ...filterObj, isMale: true })}
+                    isSelected={filterObj.isMale}
+                    containerStyle={{
+                        width: '49%',
+                        marginBottom: 0
+                    }}
+                    titleStyle={{
+                        fontFamily: TEXT_BOLD,
+                        textAlign: 'center'
+                    }}
+                />
+                <OptionItem
+                    item={{ value: 'Nữ' }}
+                    index={1}
+                    handlePressItem={() => setFilterObj({ ...filterObj, isMale: false })}
+                    isSelected={!filterObj.isMale}
+                    containerStyle={{
+                        width: '49%',
+                        marginRight: 0,
+                        marginBottom: 0
+                    }}
+                    titleStyle={{
+                        fontFamily: TEXT_BOLD,
+                        textAlign: 'center'
+                    }}
+                />
+            </View>
+        </View>
+    );
+
+    const renderFee = () => (
+        <View
+            style={{
+                marginTop: 10
+            }}
+        >
+            <CustomText
+                style={{
+                    color: COLORS.ACTIVE,
+                    marginBottom: 5,
+                }}
+                text="Phí mời hẹn (xu/phút):"
+            />
+            <View
+                style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    width: SIZES.WIDTH_90,
+                    alignItems: 'center'
+                }}
+            >
+                <CustomInput
+                    inputStyle={{ width: SIZES.WIDTH_BASE * 0.39 }}
+                    label=""
+                    onChangeText={(input) => setFilterObj({ ...filterObj, feeFrom: +input })}
+                    value={feeFromDisplay}
+                    keyboardType="number-pad"
+                    onEndEditing={
+                        (e) => {
+                            setFeeFromDisplay(CommonHelpers.formatCurrency(e.nativeEvent.text));
+                        }
+                    }
+                    onFocus={() => {
+                        setFeeFromDisplay(filterObj.feeFrom);
+                    }}
+                />
+                <CustomText
+                    style={{
+                        color: COLORS.ACTIVE,
+                    }}
+                    text="đến"
+                />
+                <CustomInput
+                    inputStyle={{ width: SIZES.WIDTH_BASE * 0.39 }}
+                    label=""
+                    onChangeText={(input) => setFilterObj({ ...filterObj, feeTo: +input })}
+                    value={feeToDisplay}
+                    keyboardType="number-pad"
+                    onEndEditing={
+                        (e) => {
+                            setFeeToDisplay(CommonHelpers.formatCurrency(e.nativeEvent.text));
+                        }
+                    }
+                    onFocus={() => {
+                        setFeeToDisplay(filterObj.feeTo);
+                    }}
+                />
+            </View>
+        </View>
+    );
 
     const renderFilterModal = () => (
         <CustomModal
@@ -30,8 +195,8 @@ export default function FilterModal({ modalFilterVisible, setModalFilterVisible 
                 <>
                     <Text
                         style={{
-                            fontFamily: TEXT_REGULAR,
-                            marginVertical: 10,
+                            fontFamily: TEXT_BOLD,
+                            marginBottom: 15,
                             fontSize: SIZES.FONT_H2,
                             color: COLORS.DEFAULT
                         }}
@@ -40,32 +205,20 @@ export default function FilterModal({ modalFilterVisible, setModalFilterVisible 
                     </Text>
                     <View
                         style={{
-                            width: SIZES.WIDTH_BASE * 0.8,
+                            width: SIZES.WIDTH_90,
                             marginBottom: 10,
                             alignSelf: 'center',
                             alignItems: 'center',
-                            flexDirection: 'row',
-                            justifyContent: 'space-between'
                         }}
                     >
-                        <CustomInput
-                            multiline
-                            placeholder="Độ tuổi:"
-                            value={filterObj.ageFrom}
-                            onChangeText={(input) => setFilterObj({ ...filterObj, ageFrom: +input })}
-                            inputStyle={{
-                                height: 60,
-                                width: SIZES.WIDTH_BASE * 0.8,
-                            }}
-                            containerStyle={{
-                                marginVertical: 10,
-                            }}
-                        />
+                        {renderGender()}
+                        {renderInputAge()}
+                        {renderFee()}
                     </View>
 
                     <View
                         style={{
-                            width: SIZES.WIDTH_BASE * 0.8,
+                            width: SIZES.WIDTH_90,
                             marginBottom: 10,
                             alignSelf: 'center',
                             alignItems: 'center',
@@ -80,7 +233,7 @@ export default function FilterModal({ modalFilterVisible, setModalFilterVisible 
                             type="default"
                             label="Huỷ"
                             buttonStyle={{
-                                width: SIZES.WIDTH_BASE * 0.39
+                                width: SIZES.WIDTH_BASE * 0.44
                             }}
                         />
                         <CustomButton
@@ -90,7 +243,7 @@ export default function FilterModal({ modalFilterVisible, setModalFilterVisible 
                             type="active"
                             label="Xác nhận"
                             buttonStyle={{
-                                width: SIZES.WIDTH_BASE * 0.39
+                                width: SIZES.WIDTH_BASE * 0.44
                             }}
                         />
                     </View>
