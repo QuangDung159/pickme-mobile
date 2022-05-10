@@ -277,7 +277,10 @@ export default function FilterModal({ modalFilterVisible, setModalFilterVisible 
                 <CustomInput
                     inputStyle={{ width: SIZES.WIDTH_BASE * 0.39 }}
                     label=""
-                    onChangeText={(input) => setFilterObj({ ...filterObj, feeFrom: +input })}
+                    onChangeText={(input) => {
+                        setFilterObj({ ...filterObj, feeFrom: input });
+                        setFeeFromDisplay(input);
+                    }}
                     value={feeFromDisplay}
                     keyboardType="number-pad"
                     onEndEditing={
@@ -298,7 +301,10 @@ export default function FilterModal({ modalFilterVisible, setModalFilterVisible 
                 <CustomInput
                     inputStyle={{ width: SIZES.WIDTH_BASE * 0.39 }}
                     label=""
-                    onChangeText={(input) => setFilterObj({ ...filterObj, feeTo: +input })}
+                    onChangeText={(input) => {
+                        setFilterObj({ ...filterObj, feeTo: +input });
+                        setFeeToDisplay(input);
+                    }}
                     value={feeToDisplay}
                     keyboardType="number-pad"
                     onEndEditing={
@@ -372,7 +378,7 @@ export default function FilterModal({ modalFilterVisible, setModalFilterVisible 
                                 SecureStore.setItemAsync('LIST_INTEREST_FILTER', JSON.stringify(listInterestSelected));
                             }}
                             type="active"
-                            label="Xác nhận"
+                            label="Lọc"
                             buttonStyle={{
                                 width: SIZES.WIDTH_BASE * 0.44
                             }}
