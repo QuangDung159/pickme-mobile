@@ -1,6 +1,7 @@
 import {
     CustomButton, CustomInput, CustomModal, CustomText, OptionItem
 } from '@components/uiComponents';
+import Interests from '@constants/Interests';
 import Theme from '@constants/Theme';
 import CommonHelpers from '@helpers/CommonHelpers';
 import React, { useState } from 'react';
@@ -24,16 +25,95 @@ export default function FilterModal({ modalFilterVisible, setModalFilterVisible 
         from: 'Hồ Chí Minh',
         isMale: true
     });
-    // const [amountDisplay, setAmountDisplay] = useState('');
     const [feeFromDisplay, setFeeFromDisplay] = useState(CommonHelpers.formatCurrency(filterObj.feeFrom));
     const [feeToDisplay, setFeeToDisplay] = useState(CommonHelpers.formatCurrency(filterObj.feeTo));
+    const [listInterestSelected, setListInterestSelected] = useState(Interests);
+
+    const handlePressInterest = (index) => {
+        const list = [...listInterestSelected];
+        list[index].selected = !list[index].selected;
+        setListInterestSelected(list);
+    };
+
+    const renderInputHometown = () => (
+        <View
+            style={{
+                marginBottom: 10
+            }}
+        >
+            <CustomText
+                text="Nơi sinh sống:"
+                style={{
+                    color: COLORS.ACTIVE,
+                    fontSize: SIZES.FONT_H3,
+                }}
+            />
+            <CustomInput
+                value={filterObj.from}
+                onChangeText={(input) => setFilterObj({ ...filterObj, from: input })}
+                containerStyle={{
+                    width: SIZES.WIDTH_90,
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                }}
+                inputStyle={{ width: SIZES.WIDTH_90 }}
+                label=""
+                maxLength={35}
+            />
+        </View>
+    );
+
+    const renderOptionInterests = () => (
+        <View
+            style={{
+                alignItems: 'flex-start',
+                width: SIZES.WIDTH_90,
+                marginBottom: 10
+            }}
+        >
+            <CustomText
+                text="Sở thích:"
+                style={{
+                    color: COLORS.ACTIVE,
+                    fontSize: SIZES.FONT_H3,
+                }}
+            />
+            <View
+                style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    width: '100%',
+                    flexWrap: 'wrap'
+                }}
+            >
+                {listInterestSelected.map((item, index) => (
+                    <OptionItem
+                        key={item.value}
+                        item={item}
+                        index={index}
+                        handlePressItem={() => {
+                            handlePressInterest(index);
+                        }}
+                        isSelected={item.selected}
+                        containerStyle={{
+                            marginBottom: 5
+                        }}
+                    />
+                ))}
+            </View>
+        </View>
+    );
 
     const renderInputAge = () => (
-        <View>
+        <View
+            style={{
+                marginBottom: 10
+            }}
+        >
             <CustomText
                 style={{
                     color: COLORS.ACTIVE,
-                    marginBottom: 5
                 }}
                 text="Độ tuổi:"
             />
@@ -88,7 +168,7 @@ export default function FilterModal({ modalFilterVisible, setModalFilterVisible 
             />
             <View
                 style={{
-                    width: SIZES.WIDTH_BASE * 0.55,
+                    width: SIZES.WIDTH_BASE * 0.6,
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                     alignItems: 'center',
@@ -130,13 +210,12 @@ export default function FilterModal({ modalFilterVisible, setModalFilterVisible 
     const renderFee = () => (
         <View
             style={{
-                marginTop: 10
+                marginBottom: 10
             }}
         >
             <CustomText
                 style={{
                     color: COLORS.ACTIVE,
-                    marginBottom: 5,
                 }}
                 text="Phí mời hẹn (xu/phút):"
             />
@@ -212,8 +291,10 @@ export default function FilterModal({ modalFilterVisible, setModalFilterVisible 
                         }}
                     >
                         {renderGender()}
+                        {renderInputHometown()}
                         {renderInputAge()}
                         {renderFee()}
+                        {renderOptionInterests()}
                     </View>
 
                     <View
