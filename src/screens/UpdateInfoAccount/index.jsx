@@ -5,6 +5,7 @@ import {
 import { LOCATION } from '@constants/Common';
 import { HOST_CONTENT } from '@constants/HostContent';
 import { Interests, ScreenName, Theme } from '@constants/index';
+import { getLocationByName } from '@helpers/CommonHelpers';
 import { CommonHelpers, ToastHelpers } from '@helpers/index';
 import MediaHelpers from '@helpers/MediaHelpers';
 import ValidationHelpers from '@helpers/ValidationHelpers';
@@ -40,6 +41,13 @@ export default function UpdateInfoAccount({ navigation }) {
             setNewUser({ ...currentUser, isMale: currentUser.isMale });
             setAmountDisplay(CommonHelpers.formatCurrency(currentUser.earningExpected));
             handleListInterestFromAPI();
+
+            const location = getLocationByName(currentUser.homeTown);
+            if (location) {
+                setHometownSelectedIndex(location?.key);
+            } else {
+                setHometownSelectedIndex(1);
+            }
         }, []
     );
 
@@ -825,6 +833,7 @@ export default function UpdateInfoAccount({ navigation }) {
             imageUrl: url,
             minimumDuration: +newUser.minimumDuration,
             earningExpected: +newUser.earningExpected,
+            homeTown: LOCATION[hometownSelectedIndex].value
         };
 
         if (currentUser?.isPartnerVerified) {

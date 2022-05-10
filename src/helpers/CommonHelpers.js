@@ -1,5 +1,6 @@
 import App from '@constants/App';
 import BookingStatus from '@constants/BookingStatus';
+import { LOCATION } from '@constants/Common';
 import { dev, prd, stg } from '@constants/Config';
 import moment from 'moment';
 
@@ -78,6 +79,11 @@ export const correctFullNameDisplay = (fullName) => {
         return `${nameArr[0]} ${nameArr[1]}\n${nameArr[2]} ${nameArr[3]}`;
     }
     return fullName?.trim().toUpperCase();
+};
+
+export const getLocationByName = (locationName) => {
+    const location = LOCATION.find((item) => item.value.toLowerCase() === locationName.toLowerCase());
+    return location;
 };
 
 export default {

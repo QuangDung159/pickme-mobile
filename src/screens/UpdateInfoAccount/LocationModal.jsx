@@ -1,6 +1,7 @@
 import { CustomButton, CustomModal } from '@components/uiComponents';
 import { LOCATION } from '@constants/Common';
 import Theme from '@constants/Theme';
+import { getLocationByName } from '@helpers/CommonHelpers';
 import React from 'react';
 import { View } from 'react-native';
 import ScrollPicker from 'react-native-wheel-scroll-picker';
@@ -23,11 +24,6 @@ export default function LocationModal({
             return;
         }
         setHometownSelectedIndex(location.key);
-    };
-
-    const getLocationByName = (locationName) => {
-        const location = LOCATION.find((item) => item.value.toLowerCase() === locationName.toLowerCase());
-        return location;
     };
 
     const handleGetListLocationName = () => {
