@@ -1,11 +1,12 @@
 import {
     CustomButton, CustomInput, CustomModal, CustomText, OptionItem
 } from '@components/uiComponents';
-import Gender from '@constants/Gender';
+import { GENDER_ARRAY } from '@constants/Gender';
 import Interests from '@constants/Interests';
 import Theme from '@constants/Theme';
 import CommonHelpers from '@helpers/CommonHelpers';
-import React, { useState } from 'react';
+import * as SecureStore from 'expo-secure-store';
+import React, { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
 
 const {
@@ -29,7 +30,14 @@ export default function FilterModal({ modalFilterVisible, setModalFilterVisible 
     const [feeFromDisplay, setFeeFromDisplay] = useState(CommonHelpers.formatCurrency(filterObj.feeFrom));
     const [feeToDisplay, setFeeToDisplay] = useState(CommonHelpers.formatCurrency(filterObj.feeTo));
     const [listInterestSelected, setListInterestSelected] = useState(Interests);
-    const [listGenderSelected, setListGenderSelected] = useState(Gender.GENDER_ARRAY);
+    const [listGenderSelected, setListGenderSelected] = useState(GENDER_ARRAY);
+
+    useEffect(
+        () => {
+            handleListInterestFromLocal();
+            handleListGenderFromLocal();
+        }, [modalFilterVisible]
+    );
 
     const handlePressInterest = (index) => {
         const list = [...listInterestSelected];
@@ -41,6 +49,20 @@ export default function FilterModal({ modalFilterVisible, setModalFilterVisible 
         const list = [...listGenderSelected];
         list[index].selected = !list[index].selected;
         setListGenderSelected(list);
+    };
+
+    const handleListInterestFromLocal = async () => {
+        const listInterestFromLocal = await SecureStore.getItemAsync('LIST_INTEREST_FILTER');
+        if (listInterestFromLocal) {
+            setListInterestSelected(JSON.parse(listInterestFromLocal));
+        }
+    };
+
+    const handleListGenderFromLocal = async () => {
+        const listGenderFromLocal = await SecureStore.getItemAsync('LIST_GENDER_FILTER');
+        if (listGenderFromLocal) {
+            setListGenderSelected(JSON.parse(listGenderFromLocal));
+        }
     };
 
     const renderInputHometown = () => (
@@ -183,13 +205,13 @@ export default function FilterModal({ modalFilterVisible, setModalFilterVisible 
                 }}
             >
                 <OptionItem
-                    key={Gender.GENDER_ARRAY[0].value}
-                    item={Gender.GENDER_ARRAY[0]}
+                    key={listGenderSelected[0].value}
+                    item={listGenderSelected[0]}
                     index={0}
                     handlePressItem={() => {
                         handlePressGender(0);
                     }}
-                    isSelected={Gender.GENDER_ARRAY[0].selected}
+                    isSelected={listGenderSelected[0].selected}
                     containerStyle={{
                         width: '49%',
                         marginBottom: 0
@@ -200,13 +222,13 @@ export default function FilterModal({ modalFilterVisible, setModalFilterVisible 
                     }}
                 />
                 <OptionItem
-                    key={Gender.GENDER_ARRAY[1].value}
-                    item={Gender.GENDER_ARRAY[1]}
+                    key={listGenderSelected[1].value}
+                    item={listGenderSelected[1]}
                     index={1}
                     handlePressItem={() => {
                         handlePressGender(1);
                     }}
-                    isSelected={Gender.GENDER_ARRAY[1].selected}
+                    isSelected={listGenderSelected[1].selected}
                     containerStyle={{
                         width: '49%',
                         marginBottom: 0
@@ -333,6 +355,9 @@ export default function FilterModal({ modalFilterVisible, setModalFilterVisible 
                         <CustomButton
                             onPress={() => {
                                 setModalFilterVisible(false);
+                                SecureStore.setItemAsync('FILTER', JSON.stringify(filterObj));
+                                SecureStore.setItemAsync('LIST_GENDER_FILTER', JSON.stringify(listGenderSelected));
+                                SecureStore.setItemAsync('LIST_INTEREST_FILTER', JSON.stringify(listInterestSelected));
                             }}
                             type="active"
                             label="Xác nhận"

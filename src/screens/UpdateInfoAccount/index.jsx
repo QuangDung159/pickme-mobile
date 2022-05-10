@@ -153,7 +153,7 @@ export default function UpdateInfoAccount({ navigation }) {
             return;
         }
 
-        list.splice(list.length - 1, 1);
+        // list.splice(list.length - 1, 1);
         const listResult = [...listInterestSelected];
 
         list.forEach((itemFromAPI) => {
