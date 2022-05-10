@@ -264,7 +264,7 @@ export default function FilterModal({ modalFilterVisible, setModalFilterVisible 
                 style={{
                     color: COLORS.ACTIVE,
                 }}
-                text="Phí mời hẹn (xu/phút):"
+                text="Phí mời (xu/phút):"
             />
             <View
                 style={{

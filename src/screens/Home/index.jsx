@@ -4,7 +4,7 @@ import { CenterLoader, IconCustom } from '@components/uiComponents';
 import {
     GraphQueryString, IconFamily, Images, ScreenName, Theme
 } from '@constants/index';
-import { ToastHelpers } from '@helpers/index';
+import { CommonHelpers, ToastHelpers } from '@helpers/index';
 import {
     setListBookingStore,
     setListConversation,
@@ -230,6 +230,15 @@ export default function Home({ navigation }) {
         getListPartner(pageIndex);
     };
 
+    const handleDisplayName = (name) => {
+        if (name.length > 21) {
+            let nameArr = name.split(' ');
+            nameArr = nameArr.slice(nameArr.length - 2, nameArr.length);
+            return nameArr.join(' ');
+        }
+        return name;
+    };
+
     const renderArticles = () => (
         <FlatList
             showsVerticalScrollIndicator={false}
@@ -244,7 +253,7 @@ export default function Home({ navigation }) {
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
                 <>
-                    {renderImage(item)}
+                    {renderUserCard(item)}
                 </>
             )}
             onEndReached={() => {
@@ -257,8 +266,9 @@ export default function Home({ navigation }) {
         />
     );
 
-    const renderImage = (item) => {
-        const amountDisplay = item.id === currentUser.id ? item.earningExpected : item.estimatePricing;
+    const renderUserCard = (item) => {
+        let amountDisplay = item.id === currentUser.id ? item.earningExpected : item.estimatePricing;
+        amountDisplay = CommonHelpers.formatCurrency(amountDisplay);
 
         return (
             <TouchableNativeFeedback
@@ -299,7 +309,7 @@ export default function Home({ navigation }) {
                                     marginBottom: 5
                                 }}
                             >
-                                {item.fullName}
+                                {handleDisplayName(item.fullName)}
                             </Text>
                             <ProfileInfoItem
                                 fontSize={SIZES.FONT_H3}
@@ -311,7 +321,7 @@ export default function Home({ navigation }) {
                             <View
                                 style={{
                                     flexDirection: 'row',
-                                    alignItems: 'center'
+                                    alignItems: 'center',
                                 }}
                             >
                                 <View
@@ -344,12 +354,13 @@ export default function Home({ navigation }) {
                             <View
                                 style={{
                                     flexDirection: 'row',
-                                    alignItems: 'center'
+                                    alignItems: 'center',
+                                    marginBottom: 5
                                 }}
                             >
                                 <View
                                     style={{
-                                        width: '50%'
+                                        width: '100%'
                                     }}
                                 >
                                     <Text
@@ -359,19 +370,32 @@ export default function Home({ navigation }) {
                                             fontFamily: TEXT_BOLD,
                                         }}
                                     >
-                                        Phí mời:
+                                        {`Đánh giá: ${item.ratingAvg}/5 sao`}
                                     </Text>
                                 </View>
+                            </View>
 
-                                <Text
+                            <View
+                                style={{
+                                    flexDirection: 'row',
+                                    alignItems: 'center'
+                                }}
+                            >
+                                <View
                                     style={{
-                                        fontSize: SIZES.FONT_H3,
-                                        color: COLORS.ACTIVE,
-                                        fontFamily: TEXT_BOLD,
+                                        width: '100%'
                                     }}
                                 >
-                                    {`${amountDisplay} Xu/phút`}
-                                </Text>
+                                    <Text
+                                        style={{
+                                            fontSize: SIZES.FONT_H3,
+                                            color: COLORS.ACTIVE,
+                                            fontFamily: TEXT_BOLD,
+                                        }}
+                                    >
+                                        {`Phí mời: ${amountDisplay} Xu/phút`}
+                                    </Text>
+                                </View>
                             </View>
                         </View>
                     </View>
