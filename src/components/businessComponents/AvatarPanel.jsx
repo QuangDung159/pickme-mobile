@@ -25,7 +25,11 @@ export default function AvatarPanel({
             );
         }
         return (
-            <>
+            <View
+                style={[styles.avatar, {
+                    alignItems: 'center'
+                }]}
+            >
                 <Image
                     style={styles.avatar}
                     source={user.url ? { uri: user.url } : Images.defaultImage}
@@ -35,20 +39,18 @@ export default function AvatarPanel({
                         style={{
                             zIndex: 99,
                             position: 'absolute',
-                            top: SIZES.HEIGHT_BASE * 0.001,
-                            right: 20,
+                            bottom: -14,
                         }}
                     >
                         <IconCustom
-                            name="check-circle-o"
-                            family={IconFamily.FONT_AWESOME}
+                            name="verified-user"
+                            family={IconFamily.MATERIAL_ICONS}
                             size={22}
                             color={COLORS.ACTIVE}
                         />
                     </View>
                 )}
-
-            </>
+            </View>
         );
     };
 
