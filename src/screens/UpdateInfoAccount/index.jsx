@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+import { LocationModal } from '@components/businessComponents';
 import {
     CenterLoader, CustomButton, CustomCheckbox, CustomInput, CustomModal, CustomText, Line, OptionItem, TouchableText
 } from '@components/uiComponents';
@@ -17,7 +18,6 @@ import { Text, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import ImageScalable from 'react-native-scalable-image';
 import { useDispatch, useSelector } from 'react-redux';
-import LocationModal from './LocationModal';
 
 const { SIZES, COLORS, FONT: { TEXT_BOLD, TEXT_REGULAR } } = Theme;
 

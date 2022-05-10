@@ -7,10 +7,11 @@ import CustomCalendar from './CustomCalendar';
 import DeepLinkHandler from './DeepLinkHandler';
 import ExpoNotification from './ExpoNotification';
 import Listener from './Listener';
+import LocationModal from './LocationModal';
+import ModalReport from './ModalReport';
 import OtpForm from './OtpForm';
 import UploadDocSection from './UploadDocSection';
 import UsernameForm from './UsernameForm';
-import ModalReport from './ModalReport';
 
 export {
     Listener,
@@ -24,5 +25,6 @@ export {
     OtpForm,
     UsernameForm,
     DeepLinkHandler,
-    ModalReport
+    ModalReport,
+    LocationModal
 };
