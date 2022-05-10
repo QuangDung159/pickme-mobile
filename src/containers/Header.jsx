@@ -102,28 +102,6 @@ export default function Header({
         </View>
     );
 
-    const renderFilterButton = () => (
-        <View
-            style={{
-                position: 'absolute',
-                bottom: 6,
-                right: 10,
-                zIndex: 99,
-            }}
-        >
-            <TouchableOpacity
-                onPress={() => triggerReadAllNotification()}
-            >
-                <IconCustom
-                    name="filter"
-                    family={IconFamily.FEATHER}
-                    size={24}
-                    color={COLORS.ACTIVE}
-                />
-            </TouchableOpacity>
-        </View>
-    );
-
     const navbarStyles = [
         styles.navbar,
         {
@@ -139,11 +117,6 @@ export default function Header({
                     {screenNameProp === ScreenName.NOTIFICATION && (
                         <>
                             {renderReadAllButton()}
-                        </>
-                    )}
-                    {screenNameProp === ScreenName.HOME && (
-                        <>
-                            {renderFilterButton()}
                         </>
                     )}
                 </>

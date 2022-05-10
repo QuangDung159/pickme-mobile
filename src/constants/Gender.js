@@ -1,7 +1,7 @@
 export default {
-    MALE: 1,
-    FEMALE: 2,
-    OTHER: 3,
+    MALE: 'male',
+    FEMALE: 'female',
+    OTHER: 'other',
     GENDER_ARRAY: [
         {
             value: 1,

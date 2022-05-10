@@ -1,6 +1,6 @@
 /* eslint no-underscore-dangle: ["error", { "allow": ["_isMounted", "_id"] }] */
 import ProfileInfoItem from '@components/businessComponents/ProfileInfoItem';
-import { CenterLoader } from '@components/uiComponents';
+import { CenterLoader, IconCustom } from '@components/uiComponents';
 import {
     GraphQueryString, IconFamily, Images, ScreenName, Theme
 } from '@constants/index';
@@ -19,10 +19,11 @@ import { socketRequestUtil } from '@utils/index';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import {
-    FlatList, RefreshControl, StyleSheet, Text, TouchableNativeFeedback, View
+    FlatList, RefreshControl, StyleSheet, Text, TouchableNativeFeedback, TouchableOpacity, View
 } from 'react-native';
 import ImageScalable from 'react-native-scalable-image';
 import { useDispatch, useSelector } from 'react-redux';
+import FilterModal from './FilterModal';
 
 const {
     FONT: {
@@ -45,6 +46,7 @@ export default function Home({ navigation }) {
     const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
     const listPartnerHomeRedux = useSelector((state) => state.bookingReducer.listPartnerHomeRedux);
     const [pageIndex, setPageIndex] = useState(1);
+    const [modalFilterVisible, setModalFilterVisible] = useState(false);
 
     const dispatch = useDispatch();
 
@@ -378,6 +380,29 @@ export default function Home({ navigation }) {
         );
     };
 
+    const renderFilterButton = () => (
+        <TouchableOpacity
+            style={{
+                position: 'absolute',
+                bottom: 10,
+                right: 0,
+                width: 50,
+                height: 50,
+                borderRadius: 25,
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: COLORS.ACTIVE
+            }}
+        >
+            <IconCustom
+                name="filter"
+                family={IconFamily.FEATHER}
+                size={24}
+                color={COLORS.BASE}
+            />
+        </TouchableOpacity>
+    );
+
     try {
         return (
             <>
@@ -391,6 +416,11 @@ export default function Home({ navigation }) {
                         }}
                     >
                         {renderArticles()}
+                        {renderFilterButton()}
+                        <FilterModal
+                            setModalFilterVisible={setModalFilterVisible}
+                            modalFilterVisible={modalFilterVisible}
+                        />
                     </View>
                 )}
             </>

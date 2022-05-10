@@ -108,8 +108,6 @@ export const HomeScreen = () => (
                     options
                     navigation={navigation}
                     scene={scene}
-                    showRight
-                    screenNameProp={ScreenName.HOME}
                 />
             ),
             cardStyle: { backgroundColor: COLORS.BASE }
