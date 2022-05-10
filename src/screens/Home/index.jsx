@@ -386,8 +386,8 @@ export default function Home({ navigation }) {
                 position: 'absolute',
                 bottom: 10,
                 right: 0,
-                width: 50,
-                height: 50,
+                width: 45,
+                height: 45,
                 borderRadius: 25,
                 justifyContent: 'center',
                 alignItems: 'center',
@@ -400,7 +400,7 @@ export default function Home({ navigation }) {
             <IconCustom
                 name="filter"
                 family={IconFamily.FEATHER}
-                size={24}
+                size={22}
                 color={COLORS.BASE}
             />
         </TouchableOpacity>
