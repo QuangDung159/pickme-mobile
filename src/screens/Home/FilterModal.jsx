@@ -199,7 +199,7 @@ export default function FilterModal({ modalFilterVisible, setModalFilterVisible 
             justifyContent: 'space-between',
             alignItems: 'center',
             width: '100%',
-            marginTop: 10,
+            marginVertical: 10,
         }}
         >
             <CustomText
