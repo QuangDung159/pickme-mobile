@@ -14,10 +14,20 @@ const {
 } = Theme;
 
 export default function LocationModal({
-    modalLocationVisible, setModalLocationVisible
+    modalLocationVisible, setModalLocationVisible, hometownSelectedIndex,
+    setHometownSelectedIndex
 }) {
     const onChangeHourLocation = (data) => {
-        console.log('data :>> ', data);
+        const location = getLocationByName(data);
+        if (!location) {
+            return;
+        }
+        setHometownSelectedIndex(location.key);
+    };
+
+    const getLocationByName = (locationName) => {
+        const location = LOCATION.find((item) => item.value.toLowerCase() === locationName.toLowerCase());
+        return location;
     };
 
     const handleGetListLocationName = () => {
@@ -42,9 +52,7 @@ export default function LocationModal({
         >
             <ScrollPicker
                 dataSource={handleGetListLocationName()}
-                selectedIndex={
-                    1
-                }
+                selectedIndex={hometownSelectedIndex}
                 onValueChange={(data) => {
                     onChangeHourLocation(data);
                 }}

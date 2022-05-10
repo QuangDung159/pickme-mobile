@@ -2,6 +2,7 @@
 import {
     CenterLoader, CustomButton, CustomCheckbox, CustomInput, CustomModal, CustomText, Line, OptionItem, TouchableText
 } from '@components/uiComponents';
+import { LOCATION } from '@constants/Common';
 import { HOST_CONTENT } from '@constants/HostContent';
 import { Interests, ScreenName, Theme } from '@constants/index';
 import { CommonHelpers, ToastHelpers } from '@helpers/index';
@@ -132,16 +133,38 @@ export default function UpdateInfoAccount({ navigation }) {
     );
 
     const renderHometownButton = () => (
-        <CustomButton
-            onPress={() => {
-                setModalLocationVisible(true);
+        <View
+            style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                width: SIZES.WIDTH_MAIN,
+                marginTop: 10
             }}
-            type="active"
-            label="Xác nhận"
-            buttonStyle={{
-                width: SIZES.WIDTH_MAIN
-            }}
-        />
+        >
+            <CustomText
+                text="Nơi ở hiện tại:"
+                style={{
+                    color: COLORS.ACTIVE,
+                    fontSize: SIZES.FONT_H3,
+                }}
+            />
+            <CustomButton
+                onPress={() => {
+                    setModalLocationVisible(true);
+                }}
+                type="active"
+                label={LOCATION[hometownSelectedIndex].value}
+                buttonStyle={{
+                    backgroundColor: COLORS.BASE,
+                    borderColor: COLORS.ACTIVE,
+                    width: SIZES.WIDTH_BASE * 0.62
+                }}
+                labelStyle={{
+                    color: COLORS.DEFAULT
+                }}
+            />
+        </View>
     );
 
     // const renderInputInterests = () => (
@@ -896,7 +919,7 @@ export default function UpdateInfoAccount({ navigation }) {
                             <>
                                 {renderInputName()}
                                 {renderInputPhone()}
-                                {renderInputHometown()}
+                                {/* {renderInputHometown()} */}
                                 {renderHometownButton()}
                                 {renderInputHeight()}
                                 {renderInputWeight()}
@@ -916,6 +939,8 @@ export default function UpdateInfoAccount({ navigation }) {
                         <LocationModal
                             modalLocationVisible={modalLocationVisible}
                             setModalLocationVisible={setModalLocationVisible}
+                            hometownSelectedIndex={hometownSelectedIndex}
+                            setHometownSelectedIndex={setHometownSelectedIndex}
                         />
                     </KeyboardAwareScrollView>
                 )}
