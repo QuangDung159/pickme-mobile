@@ -15,6 +15,7 @@ import { Text, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import ImageScalable from 'react-native-scalable-image';
 import { useDispatch, useSelector } from 'react-redux';
+import LocationModal from './LocationModal';
 
 const { SIZES, COLORS, FONT: { TEXT_BOLD, TEXT_REGULAR } } = Theme;
 
@@ -28,6 +29,8 @@ export default function UpdateInfoAccount({ navigation }) {
     const [isAcceptInviteCoffeeVisible, setAcceptInviteCoffeeVisible] = useState(currentUser.isHost);
     const [imagePath, setImagePath] = useState(currentUser.imageUrl);
     const [amountDisplay, setAmountDisplay] = useState('');
+    const [modalLocationVisible, setModalLocationVisible] = useState(false);
+    const [hometownSelectedIndex, setHometownSelectedIndex] = useState(1);
 
     const dispatch = useDispatch();
 
@@ -128,6 +131,19 @@ export default function UpdateInfoAccount({ navigation }) {
         />
     );
 
+    const renderHometownButton = () => (
+        <CustomButton
+            onPress={() => {
+                setModalLocationVisible(true);
+            }}
+            type="active"
+            label="Xác nhận"
+            buttonStyle={{
+                width: SIZES.WIDTH_MAIN
+            }}
+        />
+    );
+
     // const renderInputInterests = () => (
     //     <CustomInput
     //         value={newUser.interests}
@@ -192,6 +208,7 @@ export default function UpdateInfoAccount({ navigation }) {
             >
                 {listInterestSelected.map((item, index) => (
                     <OptionItem
+                        key={item.value}
                         item={item}
                         index={index}
                         handlePressItem={() => {
@@ -483,7 +500,6 @@ export default function UpdateInfoAccount({ navigation }) {
     const renderButtonPanel = () => (
         <View
             style={{
-                paddingTop: 10,
                 paddingBottom: 20,
             }}
         >
@@ -881,6 +897,7 @@ export default function UpdateInfoAccount({ navigation }) {
                                 {renderInputName()}
                                 {renderInputPhone()}
                                 {renderInputHometown()}
+                                {renderHometownButton()}
                                 {renderInputHeight()}
                                 {renderInputWeight()}
                                 {/* {renderInputHeightWeight()} */}
@@ -896,6 +913,10 @@ export default function UpdateInfoAccount({ navigation }) {
                             </>
                         )}
                         {renderModalInviteCoffee()}
+                        <LocationModal
+                            modalLocationVisible={modalLocationVisible}
+                            setModalLocationVisible={setModalLocationVisible}
+                        />
                     </KeyboardAwareScrollView>
                 )}
             </>

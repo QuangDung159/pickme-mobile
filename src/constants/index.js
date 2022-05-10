@@ -1,6 +1,7 @@
 import BookingNoteOptions from './BookingNoteOptions';
 import BookingStatus from './BookingStatus';
 import BookingTypes from './BookingTypes';
+import Common from './Common';
 import DateTimeConst from './DateTimeConst';
 import DocumentType from './DocumentType';
 import Gender from './Gender';
@@ -8,8 +9,8 @@ import GraphQueryString from './GraphQueryString';
 import IconFamily from './IconFamily';
 import Images from './Images';
 import Interests from './Interests';
-import PickMeInfo from './PickMeInfo';
 import OutsideApp from './OutsideApp';
+import PickMeInfo from './PickMeInfo';
 import Rx from './Rx';
 import ScreenName from './ScreenName';
 import ScreenTitle from './ScreenTitle';
@@ -38,4 +39,5 @@ export {
     BookingNoteOptions,
     BookingTypes,
     OutsideApp,
+    Common
 };
