@@ -4,16 +4,16 @@ export default {
     OTHER: 'other',
     GENDER_ARRAY: [
         {
-            value: 1,
-            label: 'Nam',
+            value: 'Nam',
+            selected: false
         },
         {
-            value: 2,
-            label: 'Nữ',
+            value: 'Nữ',
+            selected: false
         },
-        {
-            value: 3,
-            label: 'Không tiết lộ',
-        },
+        // {
+        //     value: 'Khác',
+        //     selected: false
+        // },
     ]
 };

@@ -1,6 +1,7 @@
 import {
     CustomButton, CustomInput, CustomModal, CustomText, OptionItem
 } from '@components/uiComponents';
+import Gender from '@constants/Gender';
 import Interests from '@constants/Interests';
 import Theme from '@constants/Theme';
 import CommonHelpers from '@helpers/CommonHelpers';
@@ -23,16 +24,23 @@ export default function FilterModal({ modalFilterVisible, setModalFilterVisible 
         feeTo: 2000,
         rating: 4.5,
         from: 'Hồ Chí Minh',
-        isMale: true
+        isMale: true,
     });
     const [feeFromDisplay, setFeeFromDisplay] = useState(CommonHelpers.formatCurrency(filterObj.feeFrom));
     const [feeToDisplay, setFeeToDisplay] = useState(CommonHelpers.formatCurrency(filterObj.feeTo));
     const [listInterestSelected, setListInterestSelected] = useState(Interests);
+    const [listGenderSelected, setListGenderSelected] = useState(Gender.GENDER_ARRAY);
 
     const handlePressInterest = (index) => {
         const list = [...listInterestSelected];
         list[index].selected = !list[index].selected;
         setListInterestSelected(list);
+    };
+
+    const handlePressGender = (index) => {
+        const list = [...listGenderSelected];
+        list[index].selected = !list[index].selected;
+        setListGenderSelected(list);
     };
 
     const renderInputHometown = () => (
@@ -175,10 +183,13 @@ export default function FilterModal({ modalFilterVisible, setModalFilterVisible 
                 }}
             >
                 <OptionItem
-                    item={{ value: 'Nam' }}
+                    key={Gender.GENDER_ARRAY[0].value}
+                    item={Gender.GENDER_ARRAY[0]}
                     index={0}
-                    handlePressItem={() => setFilterObj({ ...filterObj, isMale: true })}
-                    isSelected={filterObj.isMale}
+                    handlePressItem={() => {
+                        handlePressGender(0);
+                    }}
+                    isSelected={Gender.GENDER_ARRAY[0].selected}
                     containerStyle={{
                         width: '49%',
                         marginBottom: 0
@@ -189,13 +200,15 @@ export default function FilterModal({ modalFilterVisible, setModalFilterVisible 
                     }}
                 />
                 <OptionItem
-                    item={{ value: 'Nữ' }}
+                    key={Gender.GENDER_ARRAY[1].value}
+                    item={Gender.GENDER_ARRAY[1]}
                     index={1}
-                    handlePressItem={() => setFilterObj({ ...filterObj, isMale: false })}
-                    isSelected={!filterObj.isMale}
+                    handlePressItem={() => {
+                        handlePressGender(1);
+                    }}
+                    isSelected={Gender.GENDER_ARRAY[1].selected}
                     containerStyle={{
                         width: '49%',
-                        marginRight: 0,
                         marginBottom: 0
                     }}
                     titleStyle={{
