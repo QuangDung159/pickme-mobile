@@ -644,7 +644,7 @@ export default function UpdateInfoAccount({ navigation }) {
     };
 
     // eslint-disable-next-line no-unused-vars
-    const checkBoxLetOtherInviteCoffee = () => (
+    const hostRegisterSection = () => (
         <View
             style={{
                 paddingBottom: 10,
@@ -667,58 +667,63 @@ export default function UpdateInfoAccount({ navigation }) {
                     }
                     setAcceptInviteCoffeeVisible(!isAcceptInviteCoffeeVisible);
                 }}
+                containerStyle={{
+                }}
             />
 
-            {renderImageUrl()}
+            {renderHostInfoForm()}
         </View>
     );
 
-    const renderImageUrl = () => (
+    const renderImagePicker = () => (
+        <>
+            <CustomButton
+                onPress={() => onChooseImage()}
+                type="active"
+                label="Chọn ảnh"
+                buttonStyle={{
+                    width: SIZES.WIDTH_MAIN,
+                }}
+            />
+            <View
+                style={{
+                    marginTop: 10,
+                    alignSelf: 'center'
+                }}
+            >
+                {imagePath ? (
+                    <ImageScalable
+                        style={{
+                            zIndex: 99
+                        }}
+                        width={SIZES.WIDTH_MAIN}
+                        source={{ uri: imagePath }}
+                    />
+                ) : (
+                    <View
+                        style={{
+                            alignItems: 'center',
+                            marginVertical: 5
+                        }}
+                    >
+                        <CustomText text="Chưa có ảnh" />
+                    </View>
+                )}
+            </View>
+        </>
+    );
+
+    const renderHostInfoForm = () => (
         isAcceptInviteCoffeeVisible
             && (
                 <>
                     {currentUser?.isPartnerVerified ? (
                         <View
                             style={{
-                                marginTop: 10,
                                 alignSelf: 'center'
                             }}
                         >
-                            <CustomButton
-                                onPress={() => onChooseImage()}
-                                type="active"
-                                label="Chọn ảnh"
-                                buttonStyle={{
-                                    width: SIZES.WIDTH_MAIN,
-                                }}
-                            />
-                            <View
-                                style={{
-                                    marginTop: 10,
-                                    alignSelf: 'center'
-                                }}
-                            >
-                                {imagePath ? (
-                                    <ImageScalable
-                                        style={{
-                                            zIndex: 99
-                                        }}
-                                        width={SIZES.WIDTH_MAIN}
-                                        source={{ uri: imagePath }}
-                                    />
-                                ) : (
-                                    <View
-                                        style={{
-                                            alignItems: 'center',
-                                            marginVertical: 5
-                                        }}
-                                    >
-                                        <CustomText text="Chưa có ảnh" />
-                                    </View>
-                                )}
-
-                            </View>
-
+                            {/* {renderImagePicker()} */}
                             {renderEarningExpected()}
                             {renderInputMinimumDuration()}
                         </View>
@@ -886,7 +891,7 @@ export default function UpdateInfoAccount({ navigation }) {
                                 {renderOptionInterests()}
                                 {renderInputDescription()}
                                 <Line />
-                                {checkBoxLetOtherInviteCoffee()}
+                                {hostRegisterSection()}
                                 {renderButtonPanel()}
                             </>
                         )}
