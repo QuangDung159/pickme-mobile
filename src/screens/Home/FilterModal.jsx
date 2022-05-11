@@ -39,7 +39,7 @@ export default function FilterModal({
     useEffect(
         () => {
             initFilterFromLocal();
-        }, [modalFilterVisible]
+        }, []
     );
 
     const handlePressInterest = (index) => {
@@ -64,6 +64,7 @@ export default function FilterModal({
         let filterObjLocal = await SecureStore.getItemAsync('FILTER');
         if (filterObjLocal) {
             filterObjLocal = JSON.parse(filterObjLocal);
+            setHometownSelectedIndex(filterObjLocal.from);
             setFilterObj(filterObjLocal);
         }
     };
