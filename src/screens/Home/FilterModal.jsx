@@ -1,6 +1,7 @@
 import {
     CustomButton, CustomInput, CustomModal, CustomText, OptionItem
 } from '@components/uiComponents';
+import { LOCATION } from '@constants/Common';
 import { GENDER_ARRAY } from '@constants/Gender';
 import Interests from '@constants/Interests';
 import Theme from '@constants/Theme';
@@ -17,7 +18,9 @@ const {
     COLORS
 } = Theme;
 
-export default function FilterModal({ modalFilterVisible, setModalFilterVisible }) {
+export default function FilterModal({
+    modalFilterVisible, setModalFilterVisible, setModalLocationVisible, hometownSelectedIndex
+}) {
     const [filterObj, setFilterObj] = useState({
         ageFrom: 20,
         ageTo: 25,
@@ -77,21 +80,38 @@ export default function FilterModal({ modalFilterVisible, setModalFilterVisible 
         }
     };
 
-    const renderInputHometown = () => (
+    const renderHometownButton = () => (
         <View
             style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                width: SIZES.WIDTH_90,
                 marginBottom: 10
             }}
         >
-            <CustomInput
-                value={filterObj.from}
-                onChangeText={(input) => setFilterObj({ ...filterObj, from: input })}
-                containerStyle={{
-                    width: SIZES.WIDTH_90,
+            <CustomText
+                text="Nơi ở hiện tại:"
+                style={{
+                    color: COLORS.ACTIVE,
+                    fontSize: SIZES.FONT_H3,
                 }}
-                inputStyle={{ width: SIZES.WIDTH_90 }}
-                label="Nơi sinh sống:"
-                maxLength={35}
+            />
+            <CustomButton
+                onPress={() => {
+                    setModalFilterVisible(false);
+                    setModalLocationVisible(true);
+                }}
+                type="active"
+                label={LOCATION[hometownSelectedIndex]?.value}
+                buttonStyle={{
+                    backgroundColor: COLORS.BASE,
+                    borderColor: COLORS.ACTIVE,
+                    width: SIZES.WIDTH_BASE * 0.6
+                }}
+                labelStyle={{
+                    color: COLORS.DEFAULT
+                }}
             />
         </View>
     );
@@ -334,7 +354,7 @@ export default function FilterModal({ modalFilterVisible, setModalFilterVisible 
                         }}
                     >
                         {renderGender()}
-                        {renderInputHometown()}
+                        {renderHometownButton()}
                         {renderInputAge()}
                         {renderFee()}
                         {renderOptionInterests()}
@@ -380,6 +400,8 @@ export default function FilterModal({ modalFilterVisible, setModalFilterVisible 
     );
 
     return (
-        <>{renderFilterModal()}</>
+        <>
+            {renderFilterModal()}
+        </>
     );
 }

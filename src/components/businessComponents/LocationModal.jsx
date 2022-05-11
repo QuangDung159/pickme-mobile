@@ -16,7 +16,7 @@ const {
 
 export default function LocationModal({
     modalLocationVisible, setModalLocationVisible, hometownSelectedIndex,
-    setHometownSelectedIndex
+    setHometownSelectedIndex, setModalFilterVisible = null
 }) {
     const onChangeLocation = (data) => {
         const location = getLocationByName(data);
@@ -84,7 +84,10 @@ export default function LocationModal({
                         }}
                     >
                         <CustomButton
-                            onPress={() => setModalLocationVisible(false)}
+                            onPress={() => {
+                                setModalLocationVisible(false);
+                                setModalFilterVisible && setModalFilterVisible(true);
+                            }}
                             buttonStyle={{
                                 width: SIZES.WIDTH_BASE * 0.8,
                                 marginVertical: 10

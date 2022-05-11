@@ -1,4 +1,5 @@
 /* eslint no-underscore-dangle: ["error", { "allow": ["_isMounted", "_id"] }] */
+import { LocationModal } from '@components/businessComponents';
 import ProfileInfoItem from '@components/businessComponents/ProfileInfoItem';
 import { CenterLoader, IconCustom } from '@components/uiComponents';
 import {
@@ -47,6 +48,8 @@ export default function Home({ navigation }) {
     const listPartnerHomeRedux = useSelector((state) => state.bookingReducer.listPartnerHomeRedux);
     const [pageIndex, setPageIndex] = useState(1);
     const [modalFilterVisible, setModalFilterVisible] = useState(false);
+    const [modalLocationVisible, setModalLocationVisible] = useState(false);
+    const [hometownSelectedIndex, setHometownSelectedIndex] = useState(0);
 
     const dispatch = useDispatch();
 
@@ -447,6 +450,16 @@ export default function Home({ navigation }) {
                         <FilterModal
                             setModalFilterVisible={setModalFilterVisible}
                             modalFilterVisible={modalFilterVisible}
+                            setModalLocationVisible={setModalLocationVisible}
+                            hometownSelectedIndex={hometownSelectedIndex}
+                        />
+
+                        <LocationModal
+                            modalLocationVisible={modalLocationVisible}
+                            setModalLocationVisible={setModalLocationVisible}
+                            hometownSelectedIndex={hometownSelectedIndex}
+                            setHometownSelectedIndex={setHometownSelectedIndex}
+                            setModalFilterVisible={setModalFilterVisible}
                         />
                     </View>
                 )}
