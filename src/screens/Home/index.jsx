@@ -1,7 +1,8 @@
 /* eslint no-underscore-dangle: ["error", { "allow": ["_isMounted", "_id"] }] */
 import { LocationModal } from '@components/businessComponents';
 import ProfileInfoItem from '@components/businessComponents/ProfileInfoItem';
-import { CenterLoader, IconCustom } from '@components/uiComponents';
+import { CenterLoader, CustomText, IconCustom } from '@components/uiComponents';
+import { LOCATION } from '@constants/Common';
 import { GENDER } from '@constants/Gender';
 import {
     GraphQueryString, IconFamily, Images, ScreenName, Theme
@@ -227,10 +228,19 @@ export default function Home({ navigation }) {
         return result;
     };
 
+    const filterByLocation = (listUser, filterObj) => {
+        let result = listUser;
+        const locationByIndex = LOCATION[filterObj.from];
+
+        result = result.filter((userItem) => userItem.homeTown.toLowerCase() === locationByIndex.value.toLowerCase());
+        return result;
+    };
+
     const handelHomepageByFilter = (listUser, filterObj) => {
         let result = listUser;
 
         result = filterByGender(result, filterObj);
+        result = filterByLocation(result, filterObj);
         result = filterByAge(result, filterObj);
         result = filterByEstimatePricing(result, filterObj);
         result = filterByInterest(result, filterObj);
@@ -394,6 +404,16 @@ export default function Home({ navigation }) {
             contentContainerStyle={{
                 paddingTop: 10,
             }}
+            ListEmptyComponent={() => (
+                <View
+                    style={{
+                        alignItems: 'center',
+                        width: SIZES.WIDTH_MAIN
+                    }}
+                >
+                    <CustomText text="Không có kết quả phù hợp" />
+                </View>
+            )}
         />
     );
 
