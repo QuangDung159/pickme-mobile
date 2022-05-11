@@ -291,7 +291,7 @@ export default function FilterModal({
                     inputStyle={{ width: SIZES.WIDTH_BASE * 0.39 }}
                     label=""
                     onChangeText={(input) => {
-                        setFilterObj({ ...filterObj, feeFrom: input });
+                        setFilterObj({ ...filterObj, feeFrom: +input });
                         setFeeFromDisplay(input);
                     }}
                     value={feeFromDisplay}

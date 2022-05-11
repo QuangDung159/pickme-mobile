@@ -126,15 +126,18 @@ export default function Home({ navigation }) {
             if (!modalFilterVisible) {
                 getFilterFromLocal();
             }
-        }, [modalFilterVisible]
+        }, [modalFilterVisible, listPartnerHomeRedux]
     );
 
     const getFilterFromLocal = async () => {
         let filterObjLocal = await SecureStore.getItemAsync('FILTER');
-        const listGenderFilter = await SecureStore.getItemAsync('LIST_GENDER_FILTER');
-        if (filterObjLocal && listGenderFilter) {
+        const listGender = await SecureStore.getItemAsync('LIST_GENDER_FILTER');
+        const listInterest = await SecureStore.getItemAsync('LIST_INTEREST_FILTER');
+
+        if (filterObjLocal && listGender && listInterest) {
             filterObjLocal = JSON.parse(filterObjLocal);
-            filterObjLocal.listGender = JSON.parse(listGenderFilter);
+            filterObjLocal.listGender = JSON.parse(listGender);
+            filterObjLocal.listInterest = JSON.parse(listInterest);
         }
 
         console.log('filterObjLocal :>> ', filterObjLocal);
@@ -192,8 +195,31 @@ export default function Home({ navigation }) {
             (userItem) => userItem.estimatePricing >= +filterObj.feeFrom && userItem.estimatePricing <= +filterObj.feeTo
         );
 
+        let haveInterestSelected = false;
+
+        const list = [];
+        result.forEach((userItem) => {
+            filterObj.listInterest.forEach((interest) => {
+                if (interest.selected) {
+                    haveInterestSelected = true;
+                    if (userItem.interests.toLowerCase().includes(interest.value.toLowerCase())) {
+                        if (!getUserById(list, userItem.id)) {
+                            list.push(userItem);
+                        }
+                    }
+                }
+            });
+        });
+
+        if (haveInterestSelected) {
+            result = list;
+        }
+
+        console.log('result :>> ', result);
         setListPartnerFilter(result);
     };
+
+    const getUserById = (listUser, userId) => listUser.find((user) => user.id === userId);
 
     const calculateAge = (dob) => {
         const currentYear = new Date().getFullYear();

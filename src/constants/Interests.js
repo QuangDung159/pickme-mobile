@@ -39,4 +39,8 @@ export default [
         value: 'Diễn xuất',
         selected: false
     },
+    {
+        value: 'Ăn uống',
+        selected: false
+    },
 ];
