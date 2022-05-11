@@ -83,24 +83,14 @@ export default function FilterModal({ modalFilterVisible, setModalFilterVisible 
                 marginBottom: 10
             }}
         >
-            <CustomText
-                text="Nơi sinh sống:"
-                style={{
-                    color: COLORS.ACTIVE,
-                    fontSize: SIZES.FONT_H3,
-                }}
-            />
             <CustomInput
                 value={filterObj.from}
                 onChangeText={(input) => setFilterObj({ ...filterObj, from: input })}
                 containerStyle={{
                     width: SIZES.WIDTH_90,
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
                 }}
                 inputStyle={{ width: SIZES.WIDTH_90 }}
-                label=""
+                label="Nơi sinh sống:"
                 maxLength={35}
             />
         </View>
@@ -119,6 +109,7 @@ export default function FilterModal({ modalFilterVisible, setModalFilterVisible 
                 style={{
                     color: COLORS.ACTIVE,
                     fontSize: SIZES.FONT_H3,
+                    marginBottom: 3
                 }}
             />
             <View
@@ -138,9 +129,6 @@ export default function FilterModal({ modalFilterVisible, setModalFilterVisible 
                             handlePressInterest(index);
                         }}
                         isSelected={item.selected}
-                        containerStyle={{
-                            marginBottom: 5
-                        }}
                     />
                 ))}
             </View>
@@ -156,6 +144,7 @@ export default function FilterModal({ modalFilterVisible, setModalFilterVisible 
             <CustomText
                 style={{
                     color: COLORS.ACTIVE,
+                    marginBottom: 3
                 }}
                 text="Độ tuổi:"
             />
@@ -263,6 +252,7 @@ export default function FilterModal({ modalFilterVisible, setModalFilterVisible 
             <CustomText
                 style={{
                     color: COLORS.ACTIVE,
+                    marginBottom: 3
                 }}
                 text="Phí mời (xu/phút):"
             />

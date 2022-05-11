@@ -3,7 +3,11 @@ import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import CustomText from './CustomText';
 
-const { COLORS, SIZES } = Theme;
+const {
+    COLORS, SIZES, FONT: {
+        TEXT_BOLD
+    }
+} = Theme;
 
 export default function OptionItem({
     item, index, handlePressItem, isSelected, containerStyle, titleStyle
@@ -19,7 +23,9 @@ export default function OptionItem({
                 marginRight: 5,
                 marginBottom: 5,
                 height: 36,
-                backgroundColor: isSelected ? COLORS.ACTIVE : COLORS.BASE
+                backgroundColor: isSelected ? COLORS.ACTIVE : COLORS.BASE,
+                alignItems: 'center',
+                justifyContent: 'center'
             }, containerStyle]}
         >
             <CustomText
@@ -27,7 +33,8 @@ export default function OptionItem({
                     paddingHorizontal: 10,
                     paddingVertical: 5,
                     color: isSelected ? COLORS.BASE : COLORS.DEFAULT,
-                    fontSize: SIZES.FONT_H4
+                    fontSize: SIZES.FONT_H3,
+                    fontFamily: TEXT_BOLD
                 }, titleStyle]}
                 text={item.value}
             />

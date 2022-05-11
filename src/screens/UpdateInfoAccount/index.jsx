@@ -227,6 +227,7 @@ export default function UpdateInfoAccount({ navigation }) {
                 style={{
                     color: COLORS.ACTIVE,
                     fontSize: SIZES.FONT_H3,
+                    marginBottom: 3,
                 }}
             />
             <View
