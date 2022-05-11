@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import {
     CustomButton, CustomInput, CustomModal, CustomText, OptionItem
 } from '@components/uiComponents';
@@ -19,7 +20,7 @@ const {
 } = Theme;
 
 export default function FilterModal({
-    modalFilterVisible, setModalFilterVisible, setModalLocationVisible, hometownSelectedIndex
+    modalFilterVisible, setModalFilterVisible, setModalLocationVisible, hometownSelectedIndex, setHometownSelectedIndex
 }) {
     const [filterObj, setFilterObj] = useState({
         ageFrom: 20,
@@ -27,7 +28,7 @@ export default function FilterModal({
         feeFrom: 1250,
         feeTo: 2000,
         rating: 4.5,
-        from: 'Hồ Chí Minh',
+        from: 2,
         isMale: true,
     });
     const [feeFromDisplay, setFeeFromDisplay] = useState(CommonHelpers.formatCurrency(filterObj.feeFrom));
@@ -60,9 +61,10 @@ export default function FilterModal({
     };
 
     const getFilterFromLocal = async () => {
-        const filterObjLocal = await SecureStore.getItemAsync('FILTER');
+        let filterObjLocal = await SecureStore.getItemAsync('FILTER');
         if (filterObjLocal) {
-            setFilterObj(JSON.parse(filterObjLocal));
+            filterObjLocal = JSON.parse(filterObjLocal);
+            setFilterObj(filterObjLocal);
         }
     };
 
@@ -383,7 +385,8 @@ export default function FilterModal({
                         <CustomButton
                             onPress={() => {
                                 setModalFilterVisible(false);
-                                SecureStore.setItemAsync('FILTER', JSON.stringify(filterObj));
+                                SecureStore.setItemAsync('FILTER',
+                                    JSON.stringify({ ...filterObj, from: hometownSelectedIndex }));
                                 SecureStore.setItemAsync('LIST_GENDER_FILTER', JSON.stringify(listGenderSelected));
                                 SecureStore.setItemAsync('LIST_INTEREST_FILTER', JSON.stringify(listInterestSelected));
                             }}

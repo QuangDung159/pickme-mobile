@@ -452,6 +452,7 @@ export default function Home({ navigation }) {
                             modalFilterVisible={modalFilterVisible}
                             setModalLocationVisible={setModalLocationVisible}
                             hometownSelectedIndex={hometownSelectedIndex}
+                            setHometownSelectedIndex={setHometownSelectedIndex}
                         />
 
                         <LocationModal
