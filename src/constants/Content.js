@@ -1,10 +1,10 @@
 /* eslint-disable import/prefer-default-export */
 /* eslint-disable max-len */
-export const BANK_NUMBER_2SEEYOU = '01860415201';
+export const BANK_NUMBER_2SEEYOU = '19037197607019';
 
 export const MOBILE_CONTACT = '0352221769';
 
-export const EMAIL_CONTACT = 'huyxvd@gmail.com';
+export const EMAIL_CONTACT = 'dragon.c92.team@gmail.com';
 
 export const DISCLAIMER_CONTENT = `\n\nChính sách bảo mật - Điều khoản sử dụng
 

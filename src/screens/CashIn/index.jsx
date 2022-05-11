@@ -31,7 +31,7 @@ export default function CashIn(props) {
         ToastHelpers.renderToast('Đã lưu vào khay nhớ tạm.', 'success');
     };
 
-    const moneyTransferContent = `${currentUser.userName} - 2SeeYou`;
+    const moneyTransferContent = `${currentUser.userName} - 2seeyou`;
 
     useEffect(
         () => {
@@ -131,7 +131,7 @@ export default function CashIn(props) {
                             }}
                             width={SIZES.WIDTH_MAIN}
                             title="Ngân hàng: "
-                            content="TMCP Tiên Phong - TPBank"
+                            content="TMCP Kỹ Thương VN - Techcombank"
                             contentStyle={{
                                 fontSize: SIZES.FONT_H3,
                                 color: COLORS.ACTIVE,
