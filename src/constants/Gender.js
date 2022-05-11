@@ -1,7 +1,15 @@
 export default {
-    MALE: 'male',
-    FEMALE: 'female',
-    OTHER: 'other'
+    MALE: 'Nam',
+    FEMALE: 'Nữ',
+    OTHER: 'other',
+    ALL: 'Tất cả'
+};
+
+export const GENDER = {
+    male: 'Nam',
+    female: 'Nữ',
+    other: 'other',
+    all: 'Tất cả'
 };
 
 export const GENDER_ARRAY = [
@@ -15,6 +23,10 @@ export const GENDER_ARRAY = [
     },
     // {
     //     value: 'Khác',
+    //     selected: false
+    // },
+    // {
+    //     value: 'Tất cả',
     //     selected: false
     // },
 ];

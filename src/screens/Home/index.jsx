@@ -2,6 +2,7 @@
 import { LocationModal } from '@components/businessComponents';
 import ProfileInfoItem from '@components/businessComponents/ProfileInfoItem';
 import { CenterLoader, IconCustom } from '@components/uiComponents';
+import { GENDER } from '@constants/Gender';
 import {
     GraphQueryString, IconFamily, Images, ScreenName, Theme
 } from '@constants/index';
@@ -130,22 +131,67 @@ export default function Home({ navigation }) {
 
     const getFilterFromLocal = async () => {
         let filterObjLocal = await SecureStore.getItemAsync('FILTER');
-        if (filterObjLocal) {
+        const listGenderFilter = await SecureStore.getItemAsync('LIST_GENDER_FILTER');
+        if (filterObjLocal && listGenderFilter) {
             filterObjLocal = JSON.parse(filterObjLocal);
+            filterObjLocal.listGender = JSON.parse(listGenderFilter);
         }
+
+        console.log('filterObjLocal :>> ', filterObjLocal);
 
         handelHomepageByFilter(listPartnerHomeRedux, filterObjLocal);
     };
 
     const handelHomepageByFilter = (listUser, filterObj) => {
         let result = listUser;
-        result = listUser.filter((userItem) => {
+
+        let isMale = false;
+        let isFemale = false;
+        let isAll = false;
+
+        const genderList = filterObj.listGender;
+        genderList.forEach((gender) => {
+            if (gender.value === GENDER.male && gender.selected) {
+                isMale = true;
+            }
+
+            if (gender.value === GENDER.female && gender.selected) {
+                isFemale = true;
+            }
+
+            if (isMale && isFemale) {
+                isAll = true;
+            }
+        });
+
+        result = result.filter(
+            (userItem) => {
+                if (isAll) {
+                    return userItem;
+                }
+
+                if (isMale) {
+                    return userItem.isMale;
+                }
+
+                if (isFemale) {
+                    return !userItem.isMale;
+                }
+
+                return userItem;
+            }
+        );
+
+        result = result.filter((userItem) => {
             const dob = userItem.dob.slice(0, 4);
             const age = calculateAge(+dob);
             return age >= +filterObj.ageFrom && age <= +filterObj.ageTo;
         });
 
-        console.log('result :>> ', result);
+        result = result.filter(
+            (userItem) => userItem.estimatePricing >= +filterObj.feeFrom && userItem.estimatePricing <= +filterObj.feeTo
+        );
+
         setListPartnerFilter(result);
     };
 
