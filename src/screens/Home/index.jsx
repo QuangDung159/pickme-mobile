@@ -145,14 +145,13 @@ export default function Home({ navigation }) {
         handelHomepageByFilter(listPartnerHomeRedux, filterObjLocal);
     };
 
-    const handelHomepageByFilter = (listUser, filterObj) => {
+    const filterByGender = (listUser, filterObj) => {
         let result = listUser;
-
         let isMale = false;
         let isFemale = false;
         let isAll = false;
-
         const genderList = filterObj.listGender;
+
         genderList.forEach((gender) => {
             if (gender.value === GENDER.male && gender.selected) {
                 isMale = true;
@@ -185,19 +184,29 @@ export default function Home({ navigation }) {
             }
         );
 
+        return result;
+    };
+
+    const filterByAge = (listUser, filterObj) => {
+        let result = listUser;
         result = result.filter((userItem) => {
             const dob = userItem.dob.slice(0, 4);
             const age = calculateAge(+dob);
             return age >= +filterObj.ageFrom && age <= +filterObj.ageTo;
         });
 
-        result = result.filter(
-            (userItem) => userItem.estimatePricing >= +filterObj.feeFrom && userItem.estimatePricing <= +filterObj.feeTo
-        );
+        return result;
+    };
 
+    const filterByEstimatePricing = (listUser, filterObj) => listUser.filter(
+        (userItem) => userItem.estimatePricing >= +filterObj.feeFrom && userItem.estimatePricing <= +filterObj.feeTo
+    );
+
+    const filterByInterest = (listUser, filterObj) => {
         let haveInterestSelected = false;
-
+        let result = listUser;
         const list = [];
+
         result.forEach((userItem) => {
             filterObj.listInterest.forEach((interest) => {
                 if (interest.selected) {
@@ -214,6 +223,17 @@ export default function Home({ navigation }) {
         if (haveInterestSelected) {
             result = list;
         }
+
+        return result;
+    };
+
+    const handelHomepageByFilter = (listUser, filterObj) => {
+        let result = listUser;
+
+        result = filterByGender(result, filterObj);
+        result = filterByAge(result, filterObj);
+        result = filterByEstimatePricing(result, filterObj);
+        result = filterByInterest(result, filterObj);
 
         console.log('result :>> ', result);
         setListPartnerFilter(result);
