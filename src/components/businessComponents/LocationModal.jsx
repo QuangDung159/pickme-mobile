@@ -53,7 +53,7 @@ export default function LocationModal({
                 onValueChange={(data) => {
                     onChangeLocation(data);
                 }}
-                wrapperHeight={120}
+                wrapperHeight={200}
                 wrapperWidth={150}
                 wrapperBackground={COLORS.BASE}
                 itemHeight={40}

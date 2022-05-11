@@ -256,7 +256,7 @@ export default function Home({ navigation }) {
     };
 
     const filterByLocation = (listUser, filterObj) => {
-        if (filterObj.from === 0) {
+        if (filterObj.from === 0 || filterObj.from === 1 || filterObj.from === 65) {
             return listUser;
         }
 
