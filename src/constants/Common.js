@@ -5,259 +5,263 @@ export const LOCATION = [
         key: 0
     },
     {
-        value: 'An Giang',
+        value: 'Tất cả',
         key: 1
     },
     {
-        value: 'Bà Rịa - Vũng Tàu',
+        value: 'An Giang',
         key: 2
     },
     {
-        value: 'Bắc Giang',
+        value: 'Bà Rịa - Vũng Tàu',
         key: 3
     },
     {
-        value: 'Bắc Kạn',
+        value: 'Bắc Giang',
         key: 4
     },
     {
-        value: 'Bạc Liêu',
+        value: 'Bắc Kạn',
         key: 5
     },
     {
-        value: 'Bắc Ninh',
+        value: 'Bạc Liêu',
         key: 6
     },
     {
-        value: 'Bến Tre',
+        value: 'Bắc Ninh',
         key: 7
     },
     {
-        value: 'Bình Định',
+        value: 'Bến Tre',
         key: 8
     },
     {
-        value: 'Bình Dương',
+        value: 'Bình Định',
         key: 9
     },
     {
-        value: 'Bình Phước',
+        value: 'Bình Dương',
         key: 10
     },
     {
-        value: 'Bình Thuận',
+        value: 'Bình Phước',
         key: 11
     },
     {
-        value: 'Cà Mau',
+        value: 'Bình Thuận',
         key: 12
     },
     {
-        value: 'Cần Thơ',
+        value: 'Cà Mau',
         key: 13
     },
     {
-        value: 'Cao Bằng',
+        value: 'Cần Thơ',
         key: 14
     },
     {
-        value: 'Đà Nẵng',
+        value: 'Cao Bằng',
         key: 15
     },
     {
-        value: 'Đắk Lắk',
+        value: 'Đà Nẵng',
         key: 16
     },
     {
-        value: 'Đắk Nông',
+        value: 'Đắk Lắk',
         key: 17
     },
     {
-        value: 'Điện Biên',
+        value: 'Đắk Nông',
         key: 18
     },
     {
-        value: 'Đồng Nai',
+        value: 'Điện Biên',
         key: 19
     },
     {
-        value: 'Đồng Tháp',
+        value: 'Đồng Nai',
         key: 20
     },
     {
-        value: 'Gia Lai',
+        value: 'Đồng Tháp',
         key: 21
     },
     {
-        value: 'Hà Giang',
+        value: 'Gia Lai',
         key: 22
     },
     {
-        value: 'Hà Nam',
+        value: 'Hà Giang',
         key: 23
     },
     {
-        value: 'Hà Nội',
+        value: 'Hà Nam',
         key: 24
     },
     {
-        value: 'Hà Tĩnh',
+        value: 'Hà Nội',
         key: 25
     },
     {
-        value: 'Hải Dương',
+        value: 'Hà Tĩnh',
         key: 26
     },
     {
-        value: 'Hải Phòng',
+        value: 'Hải Dương',
         key: 27
     },
     {
-        value: 'Hậu Giang',
+        value: 'Hải Phòng',
         key: 28
     },
     {
-        value: 'Hoà Bình',
+        value: 'Hậu Giang',
         key: 29
     },
     {
-        value: 'Hưng Yên',
+        value: 'Hoà Bình',
         key: 30
     },
     {
-        value: 'Khánh Hoà',
+        value: 'Hưng Yên',
         key: 31
     },
     {
-        value: 'Kiên Giang',
+        value: 'Khánh Hoà',
         key: 32
     },
     {
-        value: 'Kon Tum',
+        value: 'Kiên Giang',
         key: 33
     },
     {
-        value: 'Lai Châu',
+        value: 'Kon Tum',
         key: 34
     },
     {
-        value: 'Lâm Đồng',
+        value: 'Lai Châu',
         key: 35
     },
     {
-        value: 'Lạng Sơn',
+        value: 'Lâm Đồng',
         key: 36
     },
     {
-        value: 'Lào Cai',
+        value: 'Lạng Sơn',
         key: 37
     },
     {
-        value: 'Long An',
+        value: 'Lào Cai',
         key: 38
     },
     {
-        value: 'Nam Định',
+        value: 'Long An',
         key: 39
     },
     {
-        value: 'Nghệ An',
+        value: 'Nam Định',
         key: 40
     },
     {
-        value: 'Ninh Bình',
+        value: 'Nghệ An',
         key: 41
     },
     {
-        value: 'Ninh Thuận',
+        value: 'Ninh Bình',
         key: 42
     },
     {
-        value: 'Phú Thọ',
+        value: 'Ninh Thuận',
         key: 43
     },
     {
-        value: 'Phú Yên',
+        value: 'Phú Thọ',
         key: 44
     },
     {
-        value: 'Quảng Bình',
+        value: 'Phú Yên',
         key: 45
     },
     {
-        value: 'Quảng Nam',
+        value: 'Quảng Bình',
         key: 46
     },
     {
-        value: 'Quảng Ngãi',
+        value: 'Quảng Nam',
         key: 47
     },
     {
-        value: 'Quảng Ninh',
+        value: 'Quảng Ngãi',
         key: 48
     },
     {
-        value: 'Quảng Trị',
+        value: 'Quảng Ninh',
         key: 49
     },
     {
-        value: 'Sóc Trăng',
+        value: 'Quảng Trị',
         key: 50
     },
     {
-        value: 'Sơn La',
+        value: 'Sóc Trăng',
         key: 51
     },
     {
-        value: 'Tây Ninh',
+        value: 'Sơn La',
         key: 52
     },
     {
-        value: 'Thái Bình',
+        value: 'Tây Ninh',
         key: 53
     },
     {
-        value: 'Thái Nguyên',
+        value: 'Thái Bình',
         key: 54
     },
     {
-        value: 'Thanh Hoá',
+        value: 'Thái Nguyên',
         key: 55
     },
     {
-        value: 'Thừa Thiên Huế',
+        value: 'Thanh Hoá',
         key: 56
     },
     {
-        value: 'Tiền Giang',
+        value: 'Thừa Thiên Huế',
         key: 57
     },
     {
-        value: 'TP.Hồ Chí Minh',
+        value: 'Tiền Giang',
         key: 58
     },
     {
-        value: 'Trà Vinh',
+        value: 'TP.Hồ Chí Minh',
         key: 59
     },
     {
-        value: 'Tuyên Quang',
+        value: 'Trà Vinh',
         key: 60
     },
     {
-        value: 'Vĩnh Long',
+        value: 'Tuyên Quang',
         key: 61
     },
     {
-        value: 'Vĩnh Phúc',
+        value: 'Vĩnh Long',
         key: 62
     },
     {
-        value: 'Yên Bái',
+        value: 'Vĩnh Phúc',
         key: 63
     },
     {
-        value: '',
+        value: 'Yên Bái',
         key: 64
+    },
+    {
+        value: '',
+        key: 65
     },
 ];

@@ -256,6 +256,10 @@ export default function Home({ navigation }) {
     };
 
     const filterByLocation = (listUser, filterObj) => {
+        if (filterObj.from === 0) {
+            return listUser;
+        }
+
         let result = listUser;
         const locationByIndex = LOCATION[filterObj.from];
 

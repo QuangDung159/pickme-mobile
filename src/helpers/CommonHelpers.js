@@ -87,6 +87,11 @@ export const getLocationByName = (locationName) => {
     return location;
 };
 
+export const getLocationIndexByName = (locationName) => {
+    const locationIndex = LOCATION.findIndex((item) => item.value.toLowerCase() === locationName.toLowerCase());
+    return locationIndex;
+};
+
 export const arrayUnique = (array, prop) => {
     const a = array.concat();
     for (let i = 0; i < a.length; ++i) {
