@@ -196,7 +196,7 @@ export default function FilterModal({
                 <CustomInput
                     inputStyle={{ width: SIZES.WIDTH_BASE * 0.39 }}
                     label=""
-                    onChangeText={(input) => setFilterObj({ ...filterObj, ageTo: input })}
+                    onChangeText={(input) => setFilterObj({ ...filterObj, ageTo: +input })}
                     value={filterObj.ageTo}
                     keyboardType="number-pad"
                     maxLength={2}

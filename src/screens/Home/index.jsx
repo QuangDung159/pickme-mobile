@@ -17,6 +17,7 @@ import {
 } from '@redux/Actions';
 import { BookingServices, NotificationServices, UserServices } from '@services/index';
 import { socketRequestUtil } from '@utils/index';
+import * as SecureStore from 'expo-secure-store';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import {
@@ -50,6 +51,7 @@ export default function Home({ navigation }) {
     const [modalFilterVisible, setModalFilterVisible] = useState(false);
     const [modalLocationVisible, setModalLocationVisible] = useState(false);
     const [hometownSelectedIndex, setHometownSelectedIndex] = useState(0);
+    const [listPartnerFilter, setListPartnerFilter] = useState(listPartnerHomeRedux);
 
     const dispatch = useDispatch();
 
@@ -117,6 +119,40 @@ export default function Home({ navigation }) {
             }
         }, [isSignInOtherDeviceStore]
     );
+
+    useEffect(
+        () => {
+            if (!modalFilterVisible) {
+                getFilterFromLocal();
+            }
+        }, [modalFilterVisible]
+    );
+
+    const getFilterFromLocal = async () => {
+        let filterObjLocal = await SecureStore.getItemAsync('FILTER');
+        if (filterObjLocal) {
+            filterObjLocal = JSON.parse(filterObjLocal);
+        }
+
+        handelHomepageByFilter(listPartnerHomeRedux, filterObjLocal);
+    };
+
+    const handelHomepageByFilter = (listUser, filterObj) => {
+        let result = listUser;
+        result = listUser.filter((userItem) => {
+            const dob = userItem.dob.slice(0, 4);
+            const age = calculateAge(+dob);
+            return age >= +filterObj.ageFrom && age <= +filterObj.ageTo;
+        });
+
+        console.log('result :>> ', result);
+        setListPartnerFilter(result);
+    };
+
+    const calculateAge = (dob) => {
+        const currentYear = new Date().getFullYear();
+        return currentYear - dob;
+    };
 
     const fetchListBooking = async () => {
         const res = await BookingServices.fetchListBookingAsync();
@@ -245,7 +281,7 @@ export default function Home({ navigation }) {
     const renderArticles = () => (
         <FlatList
             showsVerticalScrollIndicator={false}
-            data={listPartnerHomeRedux}
+            data={listPartnerFilter}
             refreshControl={(
                 <RefreshControl
                     refreshing={refreshing}
