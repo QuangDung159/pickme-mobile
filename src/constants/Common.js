@@ -25,7 +25,7 @@ export const LOCATION = [
         key: 5
     },
     {
-        value: 'Bạc Ninh',
+        value: 'Bắc Ninh',
         key: 6
     },
     {
