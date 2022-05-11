@@ -6,7 +6,7 @@ import { LOCATION } from '@constants/Common';
 import { GENDER_ARRAY } from '@constants/Gender';
 import Interests from '@constants/Interests';
 import Theme from '@constants/Theme';
-import CommonHelpers from '@helpers/CommonHelpers';
+import CommonHelpers, { arrayUnique } from '@helpers/CommonHelpers';
 import * as SecureStore from 'expo-secure-store';
 import React, { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
@@ -70,9 +70,11 @@ export default function FilterModal({
     };
 
     const getListInterestFromLocal = async () => {
-        const listInterestFromLocal = await SecureStore.getItemAsync('LIST_INTEREST_FILTER');
+        let listInterestFromLocal = await SecureStore.getItemAsync('LIST_INTEREST_FILTER');
         if (listInterestFromLocal) {
-            setListInterestSelected(JSON.parse(listInterestFromLocal));
+            listInterestFromLocal = JSON.parse(listInterestFromLocal);
+            listInterestFromLocal = [...listInterestFromLocal, ...Interests];
+            setListInterestSelected(arrayUnique(listInterestFromLocal, 'value'));
         }
     };
 

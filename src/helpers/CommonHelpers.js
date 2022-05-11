@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus */
 import App from '@constants/App';
 import BookingStatus from '@constants/BookingStatus';
 import { LOCATION } from '@constants/Common';
@@ -84,6 +85,19 @@ export const correctFullNameDisplay = (fullName) => {
 export const getLocationByName = (locationName) => {
     const location = LOCATION.find((item) => item.value.toLowerCase() === locationName.toLowerCase());
     return location;
+};
+
+export const arrayUnique = (array, prop) => {
+    const a = array.concat();
+    for (let i = 0; i < a.length; ++i) {
+        for (let j = i + 1; j < a.length; ++j) {
+            if (prop) {
+                if (JSON.stringify(a[i][prop]) === JSON.stringify(a[j][prop])) { a.splice(j--, 1); }
+            } else if (JSON.stringify(a[i]) === JSON.stringify(a[j])) { a.splice(j--, 1); }
+        }
+    }
+
+    return a;
 };
 
 export default {
