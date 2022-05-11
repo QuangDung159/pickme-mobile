@@ -263,7 +263,7 @@ export default function Menu({ navigation }) {
                     style={{
                         fontSize: SIZES.FONT_H5,
                         textAlign: 'center',
-                        marginBottom: 10
+                        marginBottom: 5
                     }}
                     text={`${ENV} - ${Constants.manifest.version} (${App.APP_VERSION_OTA})`}
                 />

@@ -8,7 +8,7 @@ import Interests from '@constants/Interests';
 import Theme from '@constants/Theme';
 import CommonHelpers, { arrayUnique } from '@helpers/CommonHelpers';
 import * as SecureStore from 'expo-secure-store';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
 
 const {
@@ -19,18 +19,40 @@ const {
     COLORS
 } = Theme;
 
+const genderArrayDefault = [
+    {
+        value: 'Nam',
+        selected: false
+    },
+    {
+        value: 'Nữ',
+        selected: false
+    },
+    // {
+    //     value: 'Khác',
+    //     selected: false
+    // },
+    // {
+    //     value: 'Tất cả',
+    //     selected: false
+    // },
+];
+console.log('genderArrayDefault :>> ', genderArrayDefault);
+
 export default function FilterModal({
     modalFilterVisible, setModalFilterVisible, setModalLocationVisible, hometownSelectedIndex, setHometownSelectedIndex
 }) {
-    const [filterObj, setFilterObj] = useState({
-        ageFrom: 20,
-        ageTo: 25,
+    const defaultFilter = {
+        ageFrom: 18,
+        ageTo: 30,
         feeFrom: 1250,
-        feeTo: 2000,
-        rating: 4.5,
-        from: 2,
-        isMale: true,
-    });
+        feeTo: 10000,
+        rating: 0,
+        from: 1,
+        isMale: false,
+    };
+
+    const [filterObj, setFilterObj] = useState(defaultFilter);
     const [feeFromDisplay, setFeeFromDisplay] = useState(CommonHelpers.formatCurrency(filterObj.feeFrom));
     const [feeToDisplay, setFeeToDisplay] = useState(CommonHelpers.formatCurrency(filterObj.feeTo));
     const [listInterestSelected, setListInterestSelected] = useState(Interests);
@@ -335,74 +357,91 @@ export default function FilterModal({
         </View>
     );
 
-    const renderFilterModal = () => (
-        <CustomModal
-            modalVisible={modalFilterVisible}
-            renderContent={() => (
-                <>
-                    <Text
-                        style={{
-                            fontFamily: TEXT_BOLD,
-                            marginBottom: 15,
-                            fontSize: SIZES.FONT_H2,
-                            color: COLORS.DEFAULT
-                        }}
-                    >
-                        Bộ lọc
-                    </Text>
-                    <View
-                        style={{
-                            width: SIZES.WIDTH_90,
-                            marginBottom: 10,
-                            alignSelf: 'center',
-                            alignItems: 'center',
-                        }}
-                    >
-                        {renderGender()}
-                        {renderHometownButton()}
-                        {renderInputAge()}
-                        {renderFee()}
-                        {renderOptionInterests()}
-                    </View>
+    const renderFilterModal = useCallback(
+        () => (
+            <CustomModal
+                modalVisible={modalFilterVisible}
+                renderContent={() => (
+                    <>
+                        <Text
+                            style={{
+                                fontFamily: TEXT_BOLD,
+                                marginBottom: 15,
+                                fontSize: SIZES.FONT_H2,
+                                color: COLORS.DEFAULT
+                            }}
+                        >
+                            Bộ lọc
+                        </Text>
+                        <View
+                            style={{
+                                width: SIZES.WIDTH_90,
+                                marginBottom: 10,
+                                alignSelf: 'center',
+                                alignItems: 'center',
+                            }}
+                        >
+                            {renderGender()}
+                            {renderHometownButton()}
+                            {renderInputAge()}
+                            {renderFee()}
+                            {renderOptionInterests()}
+                        </View>
 
-                    <View
-                        style={{
-                            width: SIZES.WIDTH_90,
-                            marginBottom: 10,
-                            alignSelf: 'center',
-                            alignItems: 'center',
-                            flexDirection: 'row',
-                            justifyContent: 'space-between'
-                        }}
-                    >
-                        <CustomButton
-                            onPress={() => {
-                                setModalFilterVisible(false);
+                        <View
+                            style={{
+                                width: SIZES.WIDTH_90,
+                                marginBottom: 10,
+                                alignSelf: 'center',
+                                alignItems: 'center',
+                                flexDirection: 'row',
+                                justifyContent: 'space-between'
                             }}
-                            type="default"
-                            label="Huỷ"
-                            buttonStyle={{
-                                width: SIZES.WIDTH_BASE * 0.44
-                            }}
-                        />
-                        <CustomButton
-                            onPress={() => {
-                                setModalFilterVisible(false);
-                                SecureStore.setItemAsync('FILTER',
-                                    JSON.stringify({ ...filterObj, from: hometownSelectedIndex }));
-                                SecureStore.setItemAsync('LIST_GENDER_FILTER', JSON.stringify(listGenderSelected));
-                                SecureStore.setItemAsync('LIST_INTEREST_FILTER', JSON.stringify(listInterestSelected));
-                            }}
-                            type="active"
-                            label="Lọc"
-                            buttonStyle={{
-                                width: SIZES.WIDTH_BASE * 0.44
-                            }}
-                        />
-                    </View>
-                </>
-            )}
-        />
+                        >
+                            <CustomButton
+                                onPress={() => {
+                                    setModalFilterVisible(false);
+                                }}
+                                type="default"
+                                label="Huỷ"
+                                buttonStyle={{
+                                    width: SIZES.WIDTH_BASE * 0.44
+                                }}
+                            />
+                            {/* <CustomButton
+                                onPress={() => {
+                                    console.log('genderArrayDefault :>> ', genderArrayDefault);
+                                    setFilterObj(defaultFilter);
+                                    setHometownSelectedIndex(defaultFilter.from);
+                                    setListInterestSelected(Interests);
+                                    setListGenderSelected(genderArrayDefault);
+                                }}
+                                type="default"
+                                label="Mặc định"
+                                buttonStyle={{
+                                    width: SIZES.WIDTH_BASE * 0.44
+                                }}
+                            /> */}
+                            <CustomButton
+                                onPress={() => {
+                                    setModalFilterVisible(false);
+                                    SecureStore.setItemAsync('FILTER',
+                                        JSON.stringify({ ...filterObj, from: hometownSelectedIndex }));
+                                    SecureStore.setItemAsync('LIST_GENDER_FILTER', JSON.stringify(listGenderSelected));
+                                    SecureStore.setItemAsync('LIST_INTEREST_FILTER',
+                                        JSON.stringify(listInterestSelected));
+                                }}
+                                type="active"
+                                label="Lọc"
+                                buttonStyle={{
+                                    width: SIZES.WIDTH_BASE * 0.44
+                                }}
+                            />
+                        </View>
+                    </>
+                )}
+            />
+        ), [filterObj, listGenderSelected, listInterestSelected, modalFilterVisible]
     );
 
     return (

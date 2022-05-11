@@ -270,6 +270,10 @@ export default function Home({ navigation }) {
     const handelHomepageByFilter = (listUser, filterObj) => {
         let result = listUser;
 
+        if (!listUser) {
+            return;
+        }
+
         result = filterByGender(result, filterObj);
         result = filterByLocation(result, filterObj);
         result = filterByAge(result, filterObj);
@@ -442,7 +446,7 @@ export default function Home({ navigation }) {
                         width: SIZES.WIDTH_MAIN
                     }}
                 >
-                    <CustomText text="Không có kết quả phù hợp" />
+                    <CustomText text="Không có kết quả phù hợp với bộ lọc" />
                 </View>
             )}
         />
