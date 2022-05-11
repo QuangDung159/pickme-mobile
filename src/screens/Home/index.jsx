@@ -23,7 +23,7 @@ import * as SecureStore from 'expo-secure-store';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import {
-    FlatList, RefreshControl, StyleSheet, Text, TouchableNativeFeedback, TouchableOpacity, View
+    Alert, FlatList, RefreshControl, StyleSheet, Text, TouchableNativeFeedback, TouchableOpacity, View
 } from 'react-native';
 import ImageScalable from 'react-native-scalable-image';
 import { useDispatch, useSelector } from 'react-redux';
@@ -63,6 +63,7 @@ export default function Home({ navigation }) {
             fetchListBooking();
             getListConversationFromSocket();
             fetchVerification();
+            showAlertLocation();
             if (!listPartnerHomeRedux || listPartnerHomeRedux.length === 0) {
                 setIsShowSpinner(true);
                 getListPartner(pageIndex);
@@ -129,6 +130,32 @@ export default function Home({ navigation }) {
             }
         }, [modalFilterVisible, listPartnerHomeRedux]
     );
+
+    const showAlertLocation = () => {
+        let isValidLocation = false;
+        LOCATION.forEach((item) => {
+            if (item.value.toLowerCase() === currentUser.homeTown.toLowerCase()) {
+                isValidLocation = true;
+            }
+        });
+
+        if (!isValidLocation) {
+            Alert.alert('Thông tin cá nhân',
+                'Nơi ở hiện tại không hợp lệ, vui lòng cập nhật thông tin.',
+                [
+                    {
+                        text: 'Đóng',
+                        style: 'cancel'
+                    },
+                    {
+                        text: 'Cập nhật',
+                        onPress: () => {
+                            navigation.navigate(ScreenName.UPDATE_INFO_ACCOUNT);
+                        },
+                    }
+                ]);
+        }
+    };
 
     const getFilterFromLocal = async () => {
         let filterObjLocal = await SecureStore.getItemAsync('FILTER');
