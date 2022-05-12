@@ -5,8 +5,9 @@ import { CenterLoader, CustomText, IconCustom } from '@components/uiComponents';
 import { LOCATION } from '@constants/Common';
 import { GENDER } from '@constants/Gender';
 import {
-    GraphQueryString, IconFamily, Images, ScreenName, Theme
+    GraphQueryString, IconFamily, Images, OutsideApp, ScreenName, Theme
 } from '@constants/index';
+import { checkVersion } from '@helpers/CommonHelpers';
 import { CommonHelpers, ToastHelpers } from '@helpers/index';
 import {
     setListBookingStore,
@@ -19,6 +20,7 @@ import {
 } from '@redux/Actions';
 import { BookingServices, NotificationServices, UserServices } from '@services/index';
 import { socketRequestUtil } from '@utils/index';
+import * as Linking from 'expo-linking';
 import * as SecureStore from 'expo-secure-store';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
@@ -56,6 +58,16 @@ export default function Home({ navigation }) {
     const [listPartnerFilter, setListPartnerFilter] = useState(listPartnerHomeRedux);
 
     const dispatch = useDispatch();
+
+    useEffect(
+        () => {
+            const onFocus = navigation.addListener('focus', () => {
+                checkForUpdate();
+            });
+
+            return onFocus;
+        }, []
+    );
 
     useEffect(
         () => {
@@ -130,6 +142,21 @@ export default function Home({ navigation }) {
             }
         }, [modalFilterVisible, listPartnerHomeRedux]
     );
+
+    const checkForUpdate = async () => {
+        if (await checkVersion()) {
+            Alert.alert('Đã có bản cập nhật mới',
+                'Vui lòng cập nhật ứng dụng để có trải nghiệm tốt nhất với 2SeeYou',
+                [
+                    {
+                        text: 'Cập nhật',
+                        onPress: () => {
+                            Linking.openURL(OutsideApp.GOOGLE_PLAY_STORE.deepLink);
+                        },
+                    }
+                ]);
+        }
+    };
 
     const showAlertLocation = () => {
         let isValidLocation = false;

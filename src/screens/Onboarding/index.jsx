@@ -5,10 +5,9 @@ import {
 } from '@components/uiComponents';
 import App from '@constants/App';
 import {
-    Images, ScreenName, Theme
+    Images, OutsideApp, ScreenName, Theme
 } from '@constants/index';
-import OutsideApp from '@constants/OutsideApp';
-import { getConfigByEnv } from '@helpers/CommonHelpers';
+import { checkVersion, getConfigByEnv } from '@helpers/CommonHelpers';
 import {
     setCurrentUser, setIsSignInOtherDeviceStore, setListPartnerHomeRedux, setNavigation
 } from '@redux/Actions';
@@ -42,13 +41,12 @@ export default function Onboarding({ navigation }) {
     // const [isRegisterPartner, setIsRegisterPartner] = useState(false);
 
     const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
-    const storeVer = '1.0.7';
 
     const dispatch = useDispatch();
 
     useEffect(
         () => {
-            checkVersion();
+            checkForUpdate();
             getListPartner();
             dispatch(setNavigation(navigation));
             onLogin();
@@ -70,20 +68,8 @@ export default function Onboarding({ navigation }) {
         }, [isSignInOtherDeviceStore]
     );
 
-    const getLocalVer = async () => {
-        const localVer = await SecureStore.getItemAsync('lOCAL_VER');
-
-        if (!localVer) {
-            await SecureStore.setItemAsync('lOCAL_VER', storeVer);
-            // return storeVer;
-        }
-
-        return localVer;
-    };
-
-    const checkVersion = async () => {
-        const localVer = await getLocalVer();
-        if (localVer !== storeVer) {
+    const checkForUpdate = async () => {
+        if (await checkVersion()) {
             Alert.alert('Đã có bản cập nhật mới',
                 'Vui lòng cập nhật ứng dụng để có trải nghiệm tốt nhất với 2SeeYou',
                 [

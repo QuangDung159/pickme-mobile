@@ -3,6 +3,7 @@ import App from '@constants/App';
 import BookingStatus from '@constants/BookingStatus';
 import { LOCATION } from '@constants/Common';
 import { dev, prd, stg } from '@constants/Config';
+import * as SecureStore from 'expo-secure-store';
 import moment from 'moment';
 
 const generateMoneyStr = (moneyText) => `${formatNumberWithSeparator(moneyText.toString().trim())}`;
@@ -103,6 +104,24 @@ export const arrayUnique = (array, prop) => {
     }
 
     return a;
+};
+
+export const storeVer = '1.0.7';
+
+export const getLocalVer = async () => {
+    const localVer = await SecureStore.getItemAsync('lOCAL_VER');
+
+    if (!localVer) {
+        await SecureStore.setItemAsync('lOCAL_VER', storeVer);
+        // return storeVer;
+    }
+
+    return localVer;
+};
+
+export const checkVersion = async () => {
+    const localVer = await getLocalVer();
+    return localVer !== storeVer;
 };
 
 export default {
