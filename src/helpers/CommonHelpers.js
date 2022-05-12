@@ -4,7 +4,6 @@ import App from '@constants/App';
 import BookingStatus from '@constants/BookingStatus';
 import { LOCATION } from '@constants/Common';
 import { dev, prd, stg } from '@constants/Config';
-import { APP_VERSION } from '@env';
 import Constants from 'expo-constants';
 import moment from 'moment';
 
@@ -103,7 +102,7 @@ export const arrayUnique = (array, prop) => {
     return a;
 };
 
-export const checkVersion = () => APP_VERSION !== Constants.manifest.version;
+export const checkVersion = () => Constants.manifest.version !== '1.0.9';
 
 export default {
     generateMoneyStr,
