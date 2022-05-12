@@ -42,7 +42,7 @@ export default function Onboarding({ navigation }) {
     // const [isRegisterPartner, setIsRegisterPartner] = useState(false);
 
     const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
-    const storeVer = `${Constants.manifest.version}`;
+    const storeVer = '1.0.7';
 
     const dispatch = useDispatch();
 
