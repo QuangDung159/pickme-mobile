@@ -2,7 +2,6 @@
 
 # for f in assets/images/*.jpeg; do
 for f in assets/images/guideImages/*.jpg; do
-# for f in assets/images/*.jpeg; do
   echo "Converting $f"
   ff=${f%????}  
   echo "no ext ${ff}"

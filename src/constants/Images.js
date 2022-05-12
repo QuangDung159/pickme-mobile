@@ -4,7 +4,7 @@
 const defaultImage = require('@assets/images/icon.png');
 const Onboarding = require('../../assets/images/splash.png');
 const RegisterBackground = require('../../assets/images/splash.png');
-const Logo = require('../../assets/images/logo.webp');
+const Logo = require('../../assets/images/logo-horizontal.png');
 const BankTransfer = require('../../assets/images/bank-transfer-sample.webp');
 
 const Mess1 = require('../../assets/images/guideImages/mess-1.webp');
