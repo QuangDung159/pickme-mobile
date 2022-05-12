@@ -1,7 +1,7 @@
 import { CustomButton, CustomModal } from '@components/uiComponents';
 import { LOCATION } from '@constants/Common';
 import Theme from '@constants/Theme';
-import { getLocationByName, getLocationIndexByName } from '@helpers/CommonHelpers';
+import { getLocationIndexByName } from '@helpers/CommonHelpers';
 import React from 'react';
 import { View } from 'react-native';
 import ScrollPicker from 'react-native-wheel-scroll-picker';
@@ -19,12 +19,12 @@ export default function LocationModal({
     setHometownSelectedIndex, setModalFilterVisible = null
 }) {
     const onChangeLocation = (data) => {
-        const location = getLocationByName(data);
+        const locationIndex = getLocationIndexByName(data);
 
-        if (!location) {
+        if (locationIndex === -1) {
             return;
         }
-        setHometownSelectedIndex(getLocationIndexByName(location.value));
+        setHometownSelectedIndex(locationIndex);
     };
 
     const handleGetListLocationName = () => {

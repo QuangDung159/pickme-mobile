@@ -83,11 +83,6 @@ export const correctFullNameDisplay = (fullName) => {
     return fullName?.trim().toUpperCase();
 };
 
-export const getLocationByName = (locationName) => {
-    const location = LOCATION.find((item) => item.value.toLowerCase() === locationName.toLowerCase());
-    return location;
-};
-
 export const getLocationIndexByName = (locationName) => {
     const locationIndex = LOCATION.findIndex((item) => item.value.toLowerCase() === locationName.toLowerCase());
     return locationIndex;
