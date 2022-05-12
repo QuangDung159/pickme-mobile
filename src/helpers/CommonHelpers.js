@@ -101,7 +101,7 @@ export const arrayUnique = (array, prop) => {
     return a;
 };
 
-export const storeVer = '1.0.7';
+export const storeVer = '1.0.8';
 
 export const getLocalVer = async () => {
     const localVer = await SecureStore.getItemAsync('lOCAL_VER');
