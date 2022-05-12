@@ -69,7 +69,7 @@ export default function Onboarding({ navigation }) {
     );
 
     const checkForUpdate = async () => {
-        if (await checkVersion()) {
+        if (checkVersion()) {
             Alert.alert('Đã có bản cập nhật mới',
                 'Vui lòng cập nhật ứng dụng để có trải nghiệm tốt nhất với 2SeeYou',
                 [

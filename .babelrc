@@ -15,6 +15,7 @@
                 "@middlewares": "./src/middlewares"
             }
         }
-      ]
+      ],
+      ["module:react-native-dotenv"]
   ]
 }

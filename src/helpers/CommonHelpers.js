@@ -1,9 +1,11 @@
+/* eslint-disable import/no-unresolved */
 /* eslint-disable no-plusplus */
 import App from '@constants/App';
 import BookingStatus from '@constants/BookingStatus';
 import { LOCATION } from '@constants/Common';
 import { dev, prd, stg } from '@constants/Config';
-import * as SecureStore from 'expo-secure-store';
+import { APP_VERSION } from '@env';
+import Constants from 'expo-constants';
 import moment from 'moment';
 
 const generateMoneyStr = (moneyText) => `${formatNumberWithSeparator(moneyText.toString().trim())}`;
@@ -101,16 +103,7 @@ export const arrayUnique = (array, prop) => {
     return a;
 };
 
-export const storeVer = '1.0.8';
-
-export const checkVersion = async () => {
-    const localVer = await SecureStore.getItemAsync('lOCAL_VER');
-
-    if (localVer !== storeVer) {
-        await SecureStore.setItemAsync('lOCAL_VER', storeVer);
-    }
-    return localVer !== storeVer;
-};
+export const checkVersion = () => APP_VERSION !== Constants.manifest.version;
 
 export default {
     generateMoneyStr,
