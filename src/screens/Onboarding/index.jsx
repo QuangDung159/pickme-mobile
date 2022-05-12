@@ -42,7 +42,7 @@ export default function Onboarding({ navigation }) {
     // const [isRegisterPartner, setIsRegisterPartner] = useState(false);
 
     const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
-    const storeVer = `${Constants.manifest.version}`;
+    const storeVer = '1.0.7';
 
     const dispatch = useDispatch();
 
@@ -83,7 +83,7 @@ export default function Onboarding({ navigation }) {
 
     const checkVersion = async () => {
         const localVer = await getLocalVer();
-        if (localVer !== '1.0.7') {
+        if (localVer !== storeVer) {
             Alert.alert('Đã có bản cập nhật mới',
                 'Vui lòng cập nhật ứng dụng để có trải nghiệm tốt nhất với 2SeeYou',
                 [
