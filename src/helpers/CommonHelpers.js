@@ -4,7 +4,6 @@ import App from '@constants/App';
 import BookingStatus from '@constants/BookingStatus';
 import { LOCATION } from '@constants/Common';
 import { dev, prd, stg } from '@constants/Config';
-import Constants from 'expo-constants';
 import moment from 'moment';
 
 const generateMoneyStr = (moneyText) => `${formatNumberWithSeparator(moneyText.toString().trim())}`;
@@ -102,7 +101,7 @@ export const arrayUnique = (array, prop) => {
     return a;
 };
 
-export const checkVersion = () => Constants.manifest.version !== '1.0.9';
+export const checkVersion = () => false;
 
 export default {
     generateMoneyStr,
