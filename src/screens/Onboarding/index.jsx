@@ -83,7 +83,7 @@ export default function Onboarding({ navigation }) {
 
     const checkVersion = async () => {
         const localVer = await getLocalVer();
-        if (localVer !== storeVer) {
+        if (localVer !== '1.0.7') {
             Alert.alert('Đã có bản cập nhật mới',
                 'Vui lòng cập nhật ứng dụng để có trải nghiệm tốt nhất với 2SeeYou',
                 [
