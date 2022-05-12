@@ -7,16 +7,18 @@ import App from '@constants/App';
 import {
     Images, ScreenName, Theme
 } from '@constants/index';
+import OutsideApp from '@constants/OutsideApp';
 import { getConfigByEnv } from '@helpers/CommonHelpers';
 import {
     setCurrentUser, setIsSignInOtherDeviceStore, setListPartnerHomeRedux, setNavigation
 } from '@redux/Actions';
 import { BookingServices, UserServices } from '@services/index';
 import Constants from 'expo-constants';
+import * as Linking from 'expo-linking';
 import * as SecureStore from 'expo-secure-store';
 import React, { useEffect, useState } from 'react';
 import {
-    Image, StyleSheet, Text, View
+    Alert, Image, StyleSheet, Text, View
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useDispatch, useSelector } from 'react-redux';
@@ -40,11 +42,13 @@ export default function Onboarding({ navigation }) {
     // const [isRegisterPartner, setIsRegisterPartner] = useState(false);
 
     const isSignInOtherDeviceStore = useSelector((state) => state.userReducer.isSignInOtherDeviceStore);
+    const storeVer = `${Constants.manifest.version}`;
 
     const dispatch = useDispatch();
 
     useEffect(
         () => {
+            checkVersion();
             getListPartner();
             dispatch(setNavigation(navigation));
             onLogin();
@@ -65,6 +69,33 @@ export default function Onboarding({ navigation }) {
             }
         }, [isSignInOtherDeviceStore]
     );
+
+    const getLocalVer = async () => {
+        const localVer = await SecureStore.getItemAsync('lOCAL_VER');
+
+        if (!localVer) {
+            await SecureStore.setItemAsync('lOCAL_VER', storeVer);
+            // return storeVer;
+        }
+
+        return localVer;
+    };
+
+    const checkVersion = async () => {
+        const localVer = await getLocalVer();
+        if (localVer !== storeVer) {
+            Alert.alert('Đã có bản cập nhật mới',
+                'Vui lòng cập nhật ứng dụng để có trải nghiệm tốt nhất với 2SeeYou',
+                [
+                    {
+                        text: 'Cập nhật',
+                        onPress: () => {
+                            Linking.openURL(OutsideApp.GOOGLE_PLAY_STORE.deepLink);
+                        },
+                    }
+                ]);
+        }
+    };
 
     const getListPartner = async () => {
         const result = await BookingServices.fetchListPartnerAsync({ pageIndex: 1 });
