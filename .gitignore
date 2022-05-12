@@ -69,7 +69,7 @@ npm-debug.*
 *.p12
 *.mobileprovision
 *.orig.*
-.env
+# .env
 node_modules
 
 # Google Service
