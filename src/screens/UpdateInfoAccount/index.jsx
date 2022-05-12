@@ -617,18 +617,18 @@ export default function UpdateInfoAccount({ navigation }) {
                     },
                 }
             },
-            {
-                fieldName: 'Nơi ở',
-                input: newUser.homeTown,
-                validate: {
-                    required: {
-                        value: true,
-                    },
-                    maxLength: {
-                        value: 255,
-                    },
-                }
-            },
+            // {
+            //     fieldName: 'Nơi ở',
+            //     input: newUser.homeTown,
+            //     validate: {
+            //         required: {
+            //             value: true,
+            //         },
+            //         maxLength: {
+            //             value: 255,
+            //         },
+            //     }
+            // },
             {
                 fieldName: 'Mô tả bản thân\n',
                 input: newUser.description,
