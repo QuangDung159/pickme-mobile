@@ -109,7 +109,7 @@ export const checkVersion = async () => {
     if (!localVersion) {
         return false;
     }
-    return localVersion !== App.STORE_VERSION;
+    return false;
 };
 
 export default {

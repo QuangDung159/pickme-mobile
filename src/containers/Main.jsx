@@ -5,16 +5,18 @@ import {
 import { WebSocketLink } from '@apollo/client/link/ws';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { Listener } from '@components/businessComponents';
+import OutsideApp from '@constants/OutsideApp';
 import ScreenName from '@constants/ScreenName';
-import { getConfigByEnv } from '@helpers/CommonHelpers';
+import { checkVersion, getConfigByEnv } from '@helpers/CommonHelpers';
 import Stacks from '@navigations/Stacks';
 import { NavigationContainer } from '@react-navigation/native';
 import {
     setDeviceTimezone, setMessageListened, setNotificationReceivedRedux, setPersonTabActiveIndex
 } from '@redux/Actions';
+import * as Linking from 'expo-linking';
 import * as SecureStore from 'expo-secure-store';
 import React, { useEffect } from 'react';
-import { View } from 'react-native';
+import { Alert, View } from 'react-native';
 import uuid from 'react-native-uuid';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -30,6 +32,7 @@ export default function Main() {
         () => {
             dispatch(setDeviceTimezone());
             generateNewDeviceId();
+            checkForUpdate();
         }, []
     );
 
@@ -40,6 +43,21 @@ export default function Main() {
             }
         }, [notificationReceivedRedux]
     );
+
+    const checkForUpdate = async () => {
+        if (await checkVersion()) {
+            Alert.alert('Đã có bản cập nhật mới',
+                'Vui lòng cập nhật ứng dụng để có trải nghiệm tốt nhất với 2SeeYou',
+                [
+                    {
+                        text: 'Cập nhật',
+                        onPress: () => {
+                            Linking.openURL(OutsideApp.GOOGLE_PLAY_STORE.deepLink);
+                        },
+                    }
+                ]);
+        }
+    };
 
     // apollo
     // Instantiate required constructor fields
