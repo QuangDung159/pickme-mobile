@@ -5,6 +5,7 @@ import {
 import { WebSocketLink } from '@apollo/client/link/ws';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { Listener } from '@components/businessComponents';
+import App from '@constants/App';
 import ScreenName from '@constants/ScreenName';
 import { getConfigByEnv } from '@helpers/CommonHelpers';
 import Stacks from '@navigations/Stacks';
@@ -79,6 +80,7 @@ export default function Main() {
         link: splitLink,
     });
 
+    // check new installation
     const generateNewDeviceId = async () => {
         const deviceId = await SecureStore.getItemAsync('deviceId');
 
@@ -86,7 +88,8 @@ export default function Main() {
             const myuuid = uuid.v4();
 
             // store deviceId to device storage
-            await SecureStore.setItemAsync('deviceId', myuuid);
+            SecureStore.setItemAsync('LOCAL_VERSION', App.STORE_VERSION);
+            SecureStore.setItemAsync('deviceId', myuuid);
         }
     };
 
