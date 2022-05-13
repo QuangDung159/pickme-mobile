@@ -105,6 +105,10 @@ export const arrayUnique = (array, prop) => {
 export const checkVersion = async () => {
     const localVersion = await SecureStore.getItemAsync('LOCAL_VERSION');
     SecureStore.setItemAsync('LOCAL_VERSION', App.STORE_VERSION);
+
+    if (!localVersion) {
+        return false;
+    }
     return localVersion !== App.STORE_VERSION;
 };
 

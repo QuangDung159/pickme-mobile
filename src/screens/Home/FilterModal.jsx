@@ -37,7 +37,6 @@ const genderArrayDefault = [
     //     selected: false
     // },
 ];
-console.log('genderArrayDefault :>> ', genderArrayDefault);
 
 export default function FilterModal({
     modalFilterVisible, setModalFilterVisible, setModalLocationVisible, hometownSelectedIndex, setHometownSelectedIndex
