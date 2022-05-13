@@ -19,25 +19,6 @@ const {
     COLORS
 } = Theme;
 
-const genderArrayDefault = [
-    {
-        value: 'Nam',
-        selected: false
-    },
-    {
-        value: 'Nữ',
-        selected: false
-    },
-    // {
-    //     value: 'Khác',
-    //     selected: false
-    // },
-    // {
-    //     value: 'Tất cả',
-    //     selected: false
-    // },
-];
-
 export default function FilterModal({
     modalFilterVisible, setModalFilterVisible, setModalLocationVisible, hometownSelectedIndex, setHometownSelectedIndex
 }) {
@@ -440,7 +421,13 @@ export default function FilterModal({
                     </>
                 )}
             />
-        ), [filterObj, listGenderSelected, listInterestSelected, modalFilterVisible]
+        ), [filterObj,
+            listGenderSelected,
+            listInterestSelected,
+            modalFilterVisible,
+            feeToDisplay,
+            feeFromDisplay
+        ]
     );
 
     return (
