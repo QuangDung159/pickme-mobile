@@ -12,7 +12,6 @@ import {
     setCurrentUser, setIsSignInOtherDeviceStore, setListPartnerHomeRedux, setNavigation
 } from '@redux/Actions';
 import { BookingServices, UserServices } from '@services/index';
-import Constants from 'expo-constants';
 import * as Linking from 'expo-linking';
 import * as SecureStore from 'expo-secure-store';
 import React, { useEffect, useState } from 'react';
@@ -303,7 +302,7 @@ export default function Onboarding({ navigation }) {
                                     textAlign: 'center',
                                     marginBottom: 5
                                 }}
-                                text={`${ENV} - ${Constants.manifest.version} (${App.APP_VERSION_OTA})`}
+                                text={`${ENV} - ${App.STORE_VERSION} (${App.APP_VERSION_OTA})`}
                             />
                             <Text
                                 style={{

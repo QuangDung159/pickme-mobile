@@ -11,7 +11,6 @@ import Theme from '@constants/Theme';
 import { getConfigByEnv } from '@helpers/CommonHelpers';
 import ToastHelpers from '@helpers/ToastHelpers';
 import { resetStoreSignOut } from '@redux/Actions';
-import Constants from 'expo-constants';
 import * as Linking from 'expo-linking';
 import * as SecureStore from 'expo-secure-store';
 import React from 'react';
@@ -265,7 +264,7 @@ export default function Menu({ navigation }) {
                         textAlign: 'center',
                         marginBottom: 5
                     }}
-                    text={`${ENV} - ${Constants.manifest.version} (${App.APP_VERSION_OTA})`}
+                    text={`${ENV} - ${App.STORE_VERSION} (${App.APP_VERSION_OTA})`}
                 />
             </>
         );
