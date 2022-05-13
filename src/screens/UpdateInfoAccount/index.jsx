@@ -845,7 +845,13 @@ export default function UpdateInfoAccount({ navigation }) {
         const { data } = result;
 
         if (data) {
-            dispatch(setCurrentUser(data.data));
+            dispatch(
+                setCurrentUser({
+                    ...data.data,
+                    earningExpected: +newUser.earningExpected,
+                    minimumDuration: +newUser.minimumDuration
+                })
+            );
             dispatch(setPersonTabActiveIndex(0));
             setNewUser(data.data);
             ToastHelpers.renderToast(data.message, 'success');
