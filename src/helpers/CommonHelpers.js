@@ -107,8 +107,6 @@ export const checkVersion = async () => {
     const localVersion = await SecureStore.getItemAsync('LOCAL_VERSION');
     SecureStore.setItemAsync('LOCAL_VERSION', App.STORE_VERSION);
 
-    console.log('localVersion :>> ', localVersion);
-
     if (!localVersion) {
         return false;
     }

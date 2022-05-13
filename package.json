@@ -84,7 +84,8 @@
     "publish-play-store": "sh publish-android-latest.sh",
     "play-store": "yarn publish-play-store",
     "android-upload-api-key": "sh android-upload-api-key.sh",
-    "compress-images": "sh webp.sh"
+    "compress-images": "sh webp.sh",
+    "android --no-dev": "expo start --android --no-dev --minify"
   },
   "private": true
 }

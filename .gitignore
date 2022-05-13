@@ -69,8 +69,9 @@ npm-debug.*
 *.p12
 *.mobileprovision
 *.orig.*
-# .env
+.env
 node_modules
+.expo
 
 # Google Service
 # google-services.json
