@@ -144,7 +144,7 @@ export default function Home({ navigation }) {
     );
 
     const checkForUpdate = async () => {
-        if (checkVersion()) {
+        if (await checkVersion()) {
             Alert.alert('Đã có bản cập nhật mới',
                 'Vui lòng cập nhật ứng dụng để có trải nghiệm tốt nhất với 2SeeYou',
                 [
