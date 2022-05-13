@@ -2,9 +2,9 @@ import { CustomInput, IconCustom } from '@components/uiComponents';
 import {
     IconFamily, ScreenName, Theme
 } from '@constants/index';
+import { clearAllLocalStorage } from '@helpers/CommonHelpers';
 import { resetStoreSignOut, setListNotification, setNumberNotificationUnread } from '@redux/Actions';
 import { NotificationServices } from '@services/index';
-import * as SecureStore from 'expo-secure-store';
 import {
     NavBar
 } from 'galio-framework';
@@ -169,17 +169,7 @@ export default function Header({
             routes: [{ name: ScreenName.ONBOARDING }],
         });
         dispatch(resetStoreSignOut());
-        SecureStore.deleteItemAsync('api_token')
-            .then(console.log('api_token was cleaned!'));
-
-        SecureStore.deleteItemAsync('username')
-            .then(console.log('phoneNumber was cleaned!'));
-
-        SecureStore.deleteItemAsync('password')
-            .then(console.log('password was cleaned!'));
-
-        SecureStore.deleteItemAsync('deviceId')
-            .then(console.log('deviceId was cleaned!'));
+        clearAllLocalStorage();
     };
 
     return (

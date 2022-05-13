@@ -373,7 +373,7 @@ export default function UploadDocSection({ setIsShowSpinner, navigation, route }
                             width: SIZES.WIDTH_BASE * 0.8,
                             color: COLORS.DEFAULT,
                         }}
-                        text='Nếu bạn chọn "Đăng kí Host", bạn sẽ có đầy đủ các tính năng khách hàng của 2SeeYou như nhắn tin, đặt hẹn,..., và các chức năng của Host như nhận đơn hẹn, thêm thu nhập,...'
+                        text='Nếu bạn chọn "Đăng ký Host", bạn sẽ có đầy đủ các tính năng khách hàng của 2SeeYou như nhắn tin, đặt hẹn,..., và các chức năng của Host như nhận đơn hẹn, thêm thu nhập,...'
                     />
 
                     <View
@@ -410,7 +410,7 @@ export default function UploadDocSection({ setIsShowSpinner, navigation, route }
                 {navigateFrom === ScreenName.MENU && currentUser.isCustomerVerified && (
                     <NoteText
                         width={SIZES.WIDTH_MAIN}
-                        title="Đăng kí trở thành Host:"
+                        title="Đăng ký trở thành Host:"
                         content="Trở thành Host để gia tăng thu nhập"
                         contentStyle={{
                             fontSize: SIZES.FONT_H4,
@@ -463,7 +463,7 @@ export default function UploadDocSection({ setIsShowSpinner, navigation, route }
                                         onPress={() => setIsForPartnerVerify(false)}
                                     />
                                     <RadioButton
-                                        label="Đăng kí Host"
+                                        label="Đăng ký Host"
                                         selected={isForPartnerVerify}
                                         onPress={() => setIsForPartnerVerify(true)}
                                     />

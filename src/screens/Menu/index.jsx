@@ -79,7 +79,7 @@ export default function Menu({ navigation }) {
         //     },
         // },
         !currentUser.isPartnerVerified && {
-            title: 'Đăng kí Host',
+            title: 'Đăng ký Host',
             icon: {
                 name: 'star',
                 family: IconFamily.FONT_AWESOME,

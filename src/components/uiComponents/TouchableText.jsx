@@ -11,11 +11,12 @@ const {
 } = Theme;
 
 export default function TouchableText({
-    onPress, style, text, disabled = false
+    onPress, style, text, disabled = false, onLongPress = false
 }) {
     return (
         <TouchableOpacity
             onPress={() => { onPress && onPress(); }}
+            onLongPress={() => onLongPress && onLongPress()}
             disabled={disabled}
         >
             <CustomText

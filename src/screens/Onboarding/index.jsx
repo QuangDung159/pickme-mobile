@@ -7,7 +7,7 @@ import App from '@constants/App';
 import {
     Images, ScreenName, Theme
 } from '@constants/index';
-import { getConfigByEnv } from '@helpers/CommonHelpers';
+import { clearAllLocalStorage, getConfigByEnv } from '@helpers/CommonHelpers';
 import {
     setCurrentUser, setIsSignInOtherDeviceStore, setListPartnerHomeRedux, setNavigation
 } from '@redux/Actions';
@@ -260,6 +260,7 @@ export default function Onboarding({ navigation }) {
                                     fontSize: SIZES.FONT_H3,
                                     fontFamily: TEXT_BOLD
                                 }}
+                                onLongPress={() => clearAllLocalStorage()}
                                 text="Đăng ký"
                                 onPress={() => navigation.navigate(ScreenName.SIGN_UP)}
                             />

@@ -6,6 +6,7 @@ import { LOCATION } from '@constants/Common';
 import { dev, prd, stg } from '@constants/Config';
 import * as SecureStore from 'expo-secure-store';
 import moment from 'moment';
+import ToastHelpers from './ToastHelpers';
 
 const generateMoneyStr = (moneyText) => `${formatNumberWithSeparator(moneyText.toString().trim())}`;
 
@@ -106,10 +107,30 @@ export const checkVersion = async () => {
     const localVersion = await SecureStore.getItemAsync('LOCAL_VERSION');
     SecureStore.setItemAsync('LOCAL_VERSION', App.STORE_VERSION);
 
+    console.log('localVersion :>> ', localVersion);
+
     if (!localVersion) {
         return false;
     }
-    return false;
+    return localVersion !== App.STORE_VERSION;
+};
+
+export const clearAllLocalStorage = () => {
+    SecureStore.deleteItemAsync('api_token')
+        .then(console.log('api_token was cleaned!'));
+
+    SecureStore.deleteItemAsync('username')
+        .then(console.log('phoneNumber was cleaned!'));
+
+    SecureStore.deleteItemAsync('password')
+        .then(console.log('password was cleaned!'));
+
+    SecureStore.deleteItemAsync('deviceId')
+        .then(console.log('deviceId was cleaned!'));
+
+    SecureStore.deleteItemAsync('LOCAL_VERSION').then(console.log('LOCAL_VERSION was cleaned!'));
+
+    ToastHelpers.renderToast('All caches cleaned!', 'success');
 };
 
 export default {
