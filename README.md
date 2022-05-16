@@ -27,3 +27,6 @@
 - On iOS, using phone camera and scan barcode.
 - On Android, open Expo Go and scan barcode.
 - Have fun!
+
+## Links
+- https://stackoverflow.com/questions/59911554/expo-android-app-pushnotifications-doesnt-work-in-standalone-apk
