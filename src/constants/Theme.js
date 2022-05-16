@@ -5,16 +5,17 @@ import App from './App';
 const { width, height } = Dimensions.get('window');
 
 const COLORS = {
-    DEFAULT: '#303133',
+    DEFAULT: '#ffffff',
     ERROR: '#FF3636',
-    SUCCESS: '#34a853',
+    SUCCESS: '#5bcbf0',
     INPUT: '#DCDCDC',
-    ACTIVE: '#34a853',
+    ACTIVE: '#DCDCDC',
+    TAB_BAR_ACTIVE: '#5bcbf0',
     LIST_ITEM_BACKGROUND_1: '#ffeee3',
     LIST_ITEM_BACKGROUND_2: '#cdf6ff',
     TRANSPARENT: 'transparent',
     SELECTED_DATE: '#b3f1ff',
-    BASE: '#ffffff',
+    BASE: '#303133',
     PLACE_HOLDER: '#c4c4c4',
 };
 

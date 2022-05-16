@@ -141,7 +141,7 @@ const BottomTabMenuStack = () => {
                 ),
             })}
             tabBarOptions={{
-                activeTintColor: COLORS.ACTIVE,
+                activeTintColor: COLORS.TAB_BAR_ACTIVE,
                 inactiveTintColor: COLORS.DEFAULT,
                 showLabel: false,
                 activeBackgroundColor: COLORS.BASE,
