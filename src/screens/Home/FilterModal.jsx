@@ -20,7 +20,12 @@ const {
 } = Theme;
 
 export default function FilterModal({
-    modalFilterVisible, setModalFilterVisible, setModalLocationVisible, hometownSelectedIndex, setHometownSelectedIndex
+    modalFilterVisible,
+    setModalFilterVisible,
+    setModalLocationVisible,
+    hometownSelectedIndex,
+    setHometownSelectedIndex,
+    listInterestFilter = []
 }) {
     const defaultFilter = {
         ageFrom: 18,
@@ -78,8 +83,8 @@ export default function FilterModal({
         if (listInterestFromLocal) {
             listInterestFromLocal = JSON.parse(listInterestFromLocal);
             listInterestFromLocal = [...listInterestFromLocal, ...Interests];
-            console.log('listInterestFromLocal :>> ', listInterestFromLocal);
-            setListInterestSelected(arrayUnique(listInterestFromLocal, 'value'));
+            listInterestFromLocal = arrayUnique(listInterestFromLocal, 'value');
+            setListInterestSelected(listInterestFilter !== [] ? listInterestFilter : listInterestFromLocal);
         }
     };
 
@@ -412,7 +417,8 @@ export default function FilterModal({
             listInterestSelected,
             modalFilterVisible,
             feeToDisplay,
-            feeFromDisplay
+            feeFromDisplay,
+            listInterestFilter
         ]
     );
 

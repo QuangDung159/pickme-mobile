@@ -25,7 +25,7 @@ import { BookingServices, NotificationServices, UserServices } from '@services/i
 import { socketRequestUtil } from '@utils/index';
 import * as SecureStore from 'expo-secure-store';
 import moment from 'moment';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
     Alert, FlatList, RefreshControl, StyleSheet, Text, TouchableNativeFeedback, TouchableOpacity, View
 } from 'react-native';
@@ -58,6 +58,7 @@ export default function Home({ navigation }) {
     const [modalLocationVisible, setModalLocationVisible] = useState(false);
     const [hometownSelectedIndex, setHometownSelectedIndex] = useState(0);
     const [listPartnerFilter, setListPartnerFilter] = useState(listPartnerHomeRedux);
+    const [listInterestFilter, setListInterestFilter] = useState([]);
 
     const dispatch = useDispatch();
 
@@ -207,7 +208,7 @@ export default function Home({ navigation }) {
         let isMale = false;
         let isFemale = false;
         let isAll = false;
-        const genderList = filterObj.listGender;
+        const genderList = filterObj?.listGender || [];
 
         genderList.forEach((gender) => {
             if (gender.value === GENDER.male && gender.selected) {
@@ -299,7 +300,7 @@ export default function Home({ navigation }) {
     const handelHomepageByFilter = (listUser, filterObj) => {
         let result = listUser;
 
-        if (!listUser) {
+        if (!listUser || !filterObj) {
             return;
         }
 
@@ -619,9 +620,11 @@ export default function Home({ navigation }) {
                                 onPressServiceItem={async (value) => {
                                     setModalFilterVisible(true);
                                     let listInterest = await SecureStore.getItemAsync('LIST_INTEREST_FILTER');
+                                    if (!listInterest) {
+                                        return;
+                                    }
 
                                     listInterest = JSON.parse(listInterest);
-                                    console.log('value :>> ', value);
 
                                     listInterest.forEach((interestItem, interestIndex) => {
                                         if (interestItem.value.toLowerCase() === value.toLowerCase()) {
@@ -630,9 +633,7 @@ export default function Home({ navigation }) {
                                     });
 
                                     console.log('listInterest :>> ', listInterest);
-                                    await SecureStore.setItemAsync(
-                                        'LIST_INTEREST_FILTER', JSON.stringify(listInterest)
-                                    );
+                                    setListInterestFilter(listInterest);
                                 }}
                             />
 
@@ -692,6 +693,24 @@ export default function Home({ navigation }) {
         </TouchableOpacity>
     );
 
+    const renderFilterModal = useCallback(
+        () => (
+            <FilterModal
+                setModalFilterVisible={setModalFilterVisible}
+                modalFilterVisible={modalFilterVisible}
+                setModalLocationVisible={setModalLocationVisible}
+                hometownSelectedIndex={hometownSelectedIndex}
+                setHometownSelectedIndex={setHometownSelectedIndex}
+                listInterestFilter={listInterestFilter}
+            />
+        ), [listInterestFilter,
+            setModalFilterVisible,
+            modalFilterVisible,
+            setModalLocationVisible,
+            hometownSelectedIndex,
+            setHometownSelectedIndex]
+    );
+
     try {
         return (
             <>
@@ -706,13 +725,7 @@ export default function Home({ navigation }) {
                     >
                         {renderArticles()}
                         {renderFilterButton()}
-                        <FilterModal
-                            setModalFilterVisible={setModalFilterVisible}
-                            modalFilterVisible={modalFilterVisible}
-                            setModalLocationVisible={setModalLocationVisible}
-                            hometownSelectedIndex={hometownSelectedIndex}
-                            setHometownSelectedIndex={setHometownSelectedIndex}
-                        />
+                        {renderFilterModal()}
 
                         <LocationModal
                             modalLocationVisible={modalLocationVisible}
