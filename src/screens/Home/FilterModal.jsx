@@ -281,7 +281,7 @@ export default function FilterModal({
                     color: COLORS.ACTIVE,
                     marginBottom: 3
                 }}
-                text="Phí mời (xu/phút):"
+                text="Phí thuê (xu/phút):"
             />
             <View
                 style={{

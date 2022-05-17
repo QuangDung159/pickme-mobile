@@ -144,7 +144,7 @@ export default function Total({
         <CustomButton
             onPress={() => onSubmitBooking()}
             type="active"
-            label="Đặt hẹn"
+            label="Gửi yêu cầu"
             buttonStyle={{
                 width: SIZES.WIDTH_MAIN,
                 marginVertical: 15

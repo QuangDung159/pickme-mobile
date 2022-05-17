@@ -4,14 +4,14 @@ export const GUIDE_CONTENT = `I. Lên lịch hẹn
 
 1 / Trang chủ (Icon ⌂)
 2 / Chọn đối tượng muốn hẹn (Nhắn tin trao đổi trước khi hẹn)
-3 / Điền thông tin cuộc hẹn và ĐẶT HẸN.
+3 / Điền thông tin yêu cầu thuê và gửi yêu cầu.
 4 / Chờ Host ĐỒNG Ý.
 5 / Thanh toán.
 6 / Hoàn tất và Đánh giá.
 
-**Trường hợp sau khoảng thời gian nếu Host KHÔNG PHẢN HỒI hệ thống sẽ tự động hủy cuộc hẹn. ~60p trước thời điểm bắt đầu đối với offline và ~20p đối với online
+**Trường hợp sau khoảng thời gian nếu Host KHÔNG PHẢN HỒI hệ thống sẽ tự động hủy yêu cầu thuê. ~60p trước thời điểm bắt đầu đối với offline và ~20p đối với online
 
-**Trường hợp sau khoảng thời gian nếu KHÔNG THANH TOÁN hệ thống sẽ tự động hủy cuộc hẹn. ~30p trước thời điểm bắt đầu đối với offline và ~10p đối với online
+**Trường hợp sau khoảng thời gian nếu KHÔNG THANH TOÁN hệ thống sẽ tự động hủy yêu cầu thuê. ~30p trước thời điểm bắt đầu đối với offline và ~10p đối với online
 
 II. Nạp/Rút Xu
 1 / Vào trang cá nhân

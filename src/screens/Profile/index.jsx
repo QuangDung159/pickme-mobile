@@ -103,7 +103,7 @@ export default function Profile({ route, navigation }) {
                                         });
                                     }}
                                     type="active"
-                                    label="Đặt hẹn"
+                                    label="Gửi yêu cầu"
                                 />
                             </View>
                         )}

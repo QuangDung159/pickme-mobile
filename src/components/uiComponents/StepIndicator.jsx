@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         justifyContent: 'center',
         marginHorizontal: 5,
-        backgroundColor: COLORS.INPUT,
+        backgroundColor: COLORS.DEFAULT,
         borderWidth: 0,
     },
     stepIndicatorPrev: {

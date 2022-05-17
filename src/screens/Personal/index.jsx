@@ -23,7 +23,7 @@ export default function Personal({ navigation }) {
     const [routes] = React.useState([
         { key: 'userInformation', title: 'Cá nhân' },
         { key: 'wallet', title: 'Ví' },
-        { key: 'bookingList', title: 'Đơn hẹn' },
+        { key: 'bookingList', title: 'Yêu cầu thuê' },
     ]);
 
     const personTabActiveIndex = useSelector((state) => state.appConfigReducer.personTabActiveIndex);

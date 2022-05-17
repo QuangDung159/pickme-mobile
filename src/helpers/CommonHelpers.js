@@ -51,6 +51,8 @@ export const mappingStatusText = (status) => {
     switch (status) {
         case BookingStatus.SCHEDULED:
             return 'Chờ xác nhận';
+        case BookingStatus.SCHEDULING:
+            return 'Chờ xác nhận';
         case BookingStatus.PAID: return 'Đã được thanh toán';
         case BookingStatus.CONFIRMED: return 'Đã được xác nhận';
         case BookingStatus.COMPLETED: return 'Buổi hẹn hoàn tất';

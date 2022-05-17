@@ -6,16 +6,16 @@ const { width, height } = Dimensions.get('window');
 
 const COLORS = {
     DEFAULT: '#ffffff',
-    ERROR: '#FF3636',
-    SUCCESS: '#5bcbf0',
-    INPUT: '#DCDCDC',
-    ACTIVE: '#DCDCDC',
-    TAB_BAR_ACTIVE: '#5bcbf0',
+    ERROR: '#ff7857',
+    SUCCESS: '#74f7e2',
+    INPUT: '#ffffff',
+    ACTIVE: '#74f7e2',
+    TAB_BAR_ACTIVE: '#74f7e2',
     LIST_ITEM_BACKGROUND_1: '#ffeee3',
     LIST_ITEM_BACKGROUND_2: '#cdf6ff',
     TRANSPARENT: 'transparent',
     SELECTED_DATE: '#b3f1ff',
-    BASE: '#303133',
+    BASE: '#201e24',
     PLACE_HOLDER: '#c4c4c4',
 };
 

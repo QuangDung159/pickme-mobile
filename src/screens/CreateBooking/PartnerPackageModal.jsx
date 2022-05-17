@@ -157,7 +157,7 @@ export default function PartnerPackageModal({
                             color: COLORS.DEFAULT
                         }}
                     >
-                        Chọn gói đơn hẹn
+                        Chọn gói Yêu cầu thuê
                     </Text>
                     {renderPartnerPackage()}
                     <View

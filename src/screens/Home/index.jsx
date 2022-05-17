@@ -604,7 +604,7 @@ export default function Home({ navigation }) {
                                             fontFamily: TEXT_BOLD,
                                         }}
                                     >
-                                        {`Phí mời: ${amountDisplay} Xu/phút`}
+                                        {`Phí thuê: ${amountDisplay} Xu/phút`}
                                     </Text>
                                 </View>
                             </View>

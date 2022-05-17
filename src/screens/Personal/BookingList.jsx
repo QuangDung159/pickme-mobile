@@ -292,7 +292,7 @@ export default function BookingList({ navigation }) {
                             marginVertical: 15
                         }}
                     >
-                        Chưa có đơn hẹn
+                        Chưa có Yêu cầu thuê
                     </Text>
                 </ScrollView>
             );

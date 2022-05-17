@@ -13,7 +13,7 @@ const {
 } = Theme;
 
 const tabArr = [
-    { key: 'booking', title: 'Đơn hẹn' },
+    { key: 'booking', title: 'Yêu cầu thuê' },
     { key: 'earningExpected', title: 'Xu' },
 ];
 

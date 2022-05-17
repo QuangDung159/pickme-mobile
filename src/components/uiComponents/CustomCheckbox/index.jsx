@@ -42,7 +42,7 @@ export default function CustomCheckbox({
                             width: 20,
                             height: 20,
                             borderRadius: 2,
-                            borderColor: isChecked ? COLORS.ACTIVE : COLORS.INPUT,
+                            borderColor: COLORS.ACTIVE,
                             backgroundColor: background,
                             marginRight: 5,
                         },

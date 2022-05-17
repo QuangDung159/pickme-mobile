@@ -16,7 +16,7 @@ export default function IndicatorVerticalLine({
                 style={{
                     height: 6,
                     borderLeftWidth: 3,
-                    borderColor: active ? COLORS.ACTIVE : COLORS.INPUT,
+                    borderColor: active ? COLORS.ACTIVE : COLORS.DEFAULT,
                     justifyContent: 'center'
                 }}
             />

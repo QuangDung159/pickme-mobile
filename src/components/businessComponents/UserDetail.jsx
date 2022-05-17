@@ -294,12 +294,12 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                             {
                                 value: amountDisplay && `${CommonHelpers.formatCurrency(amountDisplay)}Xu/Phút`,
                                 type: 'earningExpected',
-                                label: 'Phí mời',
+                                label: 'Phí thuê',
                             },
                             {
                                 value: `${bookingCompletedCount} lần`,
                                 type: 'booking',
-                                label: 'Được mời',
+                                label: 'Được thuê',
                             },
                             {
                                 value: `${ratingAvg}/5 sao`,

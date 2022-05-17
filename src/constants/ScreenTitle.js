@@ -1,7 +1,7 @@
 export default {
     HOME: 'Trang chủ',
-    BOOKING_LIST: 'Danh sách cuộc hẹn',
-    BOOKING_DETAIL: 'Chi tiết cuộc hẹn',
+    BOOKING_LIST: 'Danh sách yêu cầu thuê',
+    BOOKING_DETAIL: 'Chi tiết yêu cầu thuê',
     CALENDAR: 'Lịch',
     ONBOARDING: 'Onboarding',
     PROFILE: 'Trang cá nhân',
@@ -11,7 +11,7 @@ export default {
     WALLET: 'Ví',
     NOTIFICATION: 'Thông báo',
     MENU: 'Menu',
-    CREATE_BOOKING: 'Tạo đơn hẹn',
+    CREATE_BOOKING: 'Tạo Yêu cầu thuê',
     PAYMENT: 'Thanh toán',
     MESSAGE: 'Trò chuyện',
     PERSONAL: 'Trang cá nhân',

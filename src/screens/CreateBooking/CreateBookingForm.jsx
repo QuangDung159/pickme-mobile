@@ -348,7 +348,7 @@ export default function CreateBookingForm({
                                 color: COLORS.ACTIVE
                             }}
                         >
-                            Chọn gói đơn hẹn
+                            Chọn gói Yêu cầu thuê
                         </Text>
                     </TouchableOpacity>
                 )} */}

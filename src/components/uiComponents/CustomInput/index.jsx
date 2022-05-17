@@ -63,7 +63,7 @@ export default function CustomInput({
                         color: COLORS.DEFAULT,
                         width: SIZES.WIDTH_MAIN,
                         textAlign: 'center',
-                        backgroundColor: editable || COLORS.INPUT
+                        backgroundColor: editable || COLORS.ACTIVE
                     },
                     inputStyle,
                 ]

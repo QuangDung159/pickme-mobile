@@ -35,7 +35,7 @@ export default function Menu({ navigation }) {
 
     const listMenu = [
         // {
-        //     title: 'Đơn hẹn',
+        //     title: 'Yêu cầu thuê',
         //     icon: {
         //         name: 'list-alt',
         //         family: IconFamily.FONT_AWESOME,

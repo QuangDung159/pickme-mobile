@@ -32,7 +32,7 @@ export default function BookingProgressFlow() {
     // const [stepArr, setStepArr] = useState([
     //     {
     //         type: 'prev',
-    //         content: 'Đơn hẹn được tạo',
+    //         content: 'Yêu cầu thuê được tạo',
     //         buttonText: '1'
     //     },
     //     {
@@ -47,7 +47,7 @@ export default function BookingProgressFlow() {
     //     },
     //     {
     //         type: 'next',
-    //         content: 'Cuộc hẹn bắt đầu',
+    //         content: 'Bắt đầu làm việc',
     //         buttonText: '4'
     //     },
     //     {
@@ -64,7 +64,7 @@ export default function BookingProgressFlow() {
     //                 [
     //                     {
     //                         type: 'prev',
-    //                         content: 'Đơn hẹn được tạo',
+    //                         content: 'Yêu cầu thuê được tạo',
     //                         buttonText: '1'
     //                     },
     //                     {
@@ -79,7 +79,7 @@ export default function BookingProgressFlow() {
     //                     },
     //                     {
     //                         type: 'current',
-    //                         content: 'Cuộc hẹn bắt đầu',
+    //                         content: 'Bắt đầu làm việc',
     //                         buttonText: '4'
     //                     },
     //                     {
@@ -96,7 +96,7 @@ export default function BookingProgressFlow() {
     //                 [
     //                     {
     //                         type: 'prev',
-    //                         content: 'Đơn hẹn được tạo',
+    //                         content: 'Yêu cầu thuê được tạo',
     //                         buttonText: '1'
     //                     },
     //                     {
@@ -111,7 +111,7 @@ export default function BookingProgressFlow() {
     //                     },
     //                     {
     //                         type: 'prev',
-    //                         content: 'Cuộc hẹn bắt đầu',
+    //                         content: 'Bắt đầu làm việc',
     //                         buttonText: '4'
     //                     },
     //                     {
@@ -128,7 +128,7 @@ export default function BookingProgressFlow() {
     //                 [
     //                     {
     //                         type: 'prev',
-    //                         content: 'Đơn hẹn được tạo',
+    //                         content: 'Yêu cầu thuê được tạo',
     //                         buttonText: '1'
     //                     },
     //                     {
@@ -143,7 +143,7 @@ export default function BookingProgressFlow() {
     //                     },
     //                     {
     //                         type: 'next',
-    //                         content: 'Cuộc hẹn bắt đầu',
+    //                         content: 'Bắt đầu làm việc',
     //                         buttonText: '4'
     //                     },
     //                     {
@@ -167,7 +167,7 @@ export default function BookingProgressFlow() {
                 setStepArr([
                     {
                         type: 'prev',
-                        content: 'Đơn hẹn được tạo',
+                        content: 'Yêu cầu thuê được tạo',
                         buttonText: '1'
                     },
                     {
@@ -177,7 +177,7 @@ export default function BookingProgressFlow() {
                     },
                     {
                         type: 'next',
-                        content: 'Cuộc hẹn bắt đầu',
+                        content: 'Bắt đầu làm việc',
                         buttonText: '3'
                     },
                     {
@@ -193,7 +193,7 @@ export default function BookingProgressFlow() {
                     [
                         {
                             type: 'prev',
-                            content: 'Đơn hẹn được tạo',
+                            content: 'Yêu cầu thuê được tạo',
                             buttonText: '1'
                         },
                         {
@@ -203,7 +203,7 @@ export default function BookingProgressFlow() {
                         },
                         {
                             type: 'current',
-                            content: 'Cuộc hẹn bắt đầu',
+                            content: 'Bắt đầu làm việc',
                             buttonText: '3'
                         },
                         {
@@ -220,7 +220,7 @@ export default function BookingProgressFlow() {
                     [
                         {
                             type: 'prev',
-                            content: 'Đơn hẹn được tạo',
+                            content: 'Yêu cầu thuê được tạo',
                             buttonText: '1'
                         },
                         {
@@ -230,7 +230,7 @@ export default function BookingProgressFlow() {
                         },
                         {
                             type: 'prev',
-                            content: 'Cuộc hẹn bắt đầu',
+                            content: 'Bắt đầu làm việc',
                             buttonText: '3'
                         },
                         {
@@ -290,7 +290,7 @@ export default function BookingProgressFlow() {
                             fontSize: SIZES.FONT_H3
                         }}
                     >
-                        {`Đơn hẹn đã bị huỷ bởi ${canceledBy === partnerId
+                        {`Yêu cầu thuê đã bị huỷ bởi ${canceledBy === partnerId
                             ? 'Host'
                             : canceledBy === customerId
                                 ? 'khách'

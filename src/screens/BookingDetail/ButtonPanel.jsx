@@ -93,7 +93,7 @@ export default function ButtonPanel({
                             setModalReasonVisible(true);
                         }}
                         type="default"
-                        label="Huỷ hẹn"
+                        label="Huỷ yêu cầu"
                     />
                     <CustomButton
                         onPress={() => {
@@ -167,7 +167,7 @@ export default function ButtonPanel({
                 width: SIZES.WIDTH_BASE * (+width)
             }}
             type="default"
-            label="Huỷ buổi hẹn"
+            label="Huỷ yêu cầu"
         />
     );
 
