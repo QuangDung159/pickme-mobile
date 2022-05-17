@@ -62,7 +62,7 @@ export default function SubInfoProfile({ user }) {
                     />
                 </View>
             </View>
-            <ListServiceDisplay userServices={user?.interests || []} />
+            <ListServiceDisplay userServices={user?.interests} />
         </View>
     );
 }

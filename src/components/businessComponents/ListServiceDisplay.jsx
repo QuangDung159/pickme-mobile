@@ -2,7 +2,7 @@ import { OptionItem } from '@components/uiComponents';
 import React from 'react';
 import { View } from 'react-native';
 
-export default function ListServiceDisplay({ userServices }) {
+export default function ListServiceDisplay({ userServices, onPressServiceItem }) {
     const handleList = () => {
         if (!userServices) {
             return [];
@@ -31,6 +31,7 @@ export default function ListServiceDisplay({ userServices }) {
                     containerStyle={{
                         marginBottom: 5
                     }}
+                    handlePressItem={() => onPressServiceItem && onPressServiceItem()}
                 />
             ))}
         </View>

@@ -614,7 +614,12 @@ export default function Home({ navigation }) {
                                 </View>
                             </View> */}
 
-                            <ListServiceDisplay userServices={item?.interests || []} />
+                            <ListServiceDisplay
+                                userServices={item?.interests}
+                                onPressServiceItem={() => {
+                                    setModalFilterVisible(true);
+                                }}
+                            />
 
                             <View
                                 style={{
