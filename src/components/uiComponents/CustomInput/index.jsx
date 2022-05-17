@@ -142,7 +142,7 @@ export default function CustomInput({
                             {
                                 fontFamily: TEXT_REGULAR,
                                 fontSize: SIZES.FONT_H3,
-                                color: COLORS.ACTIVE,
+                                color: COLORS.DEFAULT,
                                 marginBottom: 3
                             },
                             labelStyle

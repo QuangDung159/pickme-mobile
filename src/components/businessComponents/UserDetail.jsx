@@ -349,7 +349,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                 onPress={() => onClickMore()}
                 labelStyle={{
                     fontSize: SIZES.FONT_H3,
-                    color: COLORS.ACTIVE,
+                    color: COLORS.DEFAULT,
                 }}
                 label="Tuỳ chọn"
                 buttonStyle={{
@@ -359,7 +359,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                 leftIcon={{
                     name: 'menu',
                     size: 23,
-                    color: COLORS.ACTIVE,
+                    color: COLORS.DEFAULT,
                     family: IconFamily.ENTYPO
                 }}
                 leftIconStyle={{
@@ -486,7 +486,7 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                             >
                                 <Text
                                     style={{
-                                        color: COLORS.ACTIVE,
+                                        color: COLORS.DEFAULT,
                                         fontSize: SIZES.FONT_H3,
                                         fontFamily: TEXT_BOLD,
                                         textAlign: 'center',

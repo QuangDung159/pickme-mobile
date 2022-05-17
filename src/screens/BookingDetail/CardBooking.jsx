@@ -239,8 +239,6 @@ export default function CardBooking({ booking }) {
             customerId
         } = booking;
 
-        console.log('status :>> ', status);
-
         if (!booking) {
             return null;
         }
@@ -274,7 +272,6 @@ export default function CardBooking({ booking }) {
                                 styles.cardTitle,
                                 {
                                     fontSize: SIZES.FONT_H5,
-                                    color: COLORS.DEFAULT,
                                     fontFamily: TEXT_REGULAR,
                                     marginBottom: 0
                                 }
@@ -288,7 +285,6 @@ export default function CardBooking({ booking }) {
                                 styles.subInfoCard,
                                 {
                                     fontSize: SIZES.FONT_H5,
-                                    color: COLORS.DEFAULT,
                                     marginBottom: 0,
                                 }
                             ]
@@ -301,10 +297,6 @@ export default function CardBooking({ booking }) {
                     style={
                         [
                             styles.cardTitle,
-                            {
-                                fontSize: SIZES.FONT_H3,
-                                color: COLORS.ACTIVE,
-                            }
                         ]
                     }
                     text={`${customerId === currentUser?.id ? partnerName : customerName}`}
@@ -320,11 +312,6 @@ export default function CardBooking({ booking }) {
                         style={
                             [
                                 styles.subInfoCard,
-                                {
-                                    fontSize: SIZES.FONT_H3,
-                                    color: COLORS.ACTIVE,
-                                    fontFamily: TEXT_BOLD
-                                }
                             ]
                         }
                         text={`Thời gian: ${startStr} - ${endStr}`}
@@ -333,11 +320,6 @@ export default function CardBooking({ booking }) {
                         style={
                             [
                                 styles.subInfoCard,
-                                {
-                                    fontSize: SIZES.FONT_H3,
-                                    color: COLORS.ACTIVE,
-                                    fontFamily: TEXT_BOLD
-                                }
                             ]
                         }
                         text={`${moment(date).format('DD/MM/YYYY')}`}
@@ -369,10 +351,6 @@ export default function CardBooking({ booking }) {
                             style={
                                 [
                                     styles.subInfoCard,
-                                    {
-                                        fontSize: SIZES.FONT_H3,
-                                        color: COLORS.DEFAULT,
-                                    }
                                 ]
                             }
                             text={`Tại: ${booking.address}`}
@@ -381,7 +359,7 @@ export default function CardBooking({ booking }) {
                             name={openAppText?.icon.name}
                             family={openAppText?.icon.family}
                             size={openAppText?.icon.size}
-                            color={COLORS.ACTIVE}
+                            color={COLORS.DEFAULT}
                             style={{
                                 marginBottom: 5,
                                 marginLeft: 5
@@ -400,10 +378,6 @@ export default function CardBooking({ booking }) {
                         style={
                             [
                                 styles.subInfoCard,
-                                {
-                                    fontSize: SIZES.FONT_H3,
-                                    color: COLORS.DEFAULT,
-                                }
                             ]
                         }
                         text={`Trạng thái: ${mappingStatusText(status)}`}
@@ -420,11 +394,6 @@ export default function CardBooking({ booking }) {
                     }}
                 >
                     <CustomText
-                        style={{
-                            fontFamily: TEXT_BOLD,
-                            fontSize: SIZES.FONT_H3,
-                            color: COLORS.ACTIVE
-                        }}
                         text={`Xu: ${CommonHelpers.formatCurrency(xuDisplay)}`}
                     />
                     {booking.status === BookingStatus.PAID && (

@@ -260,7 +260,6 @@ export default function CashOut() {
                     <CustomText
                         style={{
                             fontFamily: TEXT_BOLD,
-                            fontSize: SIZES.FONT_H3,
                             color: COLORS.ACTIVE,
                             textAlign: 'center'
                         }}

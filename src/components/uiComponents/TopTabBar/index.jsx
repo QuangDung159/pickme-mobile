@@ -21,7 +21,7 @@ export default function TopTabBar({
             indicatorStyle={
                 [
                     {
-                        backgroundColor: COLORS.DEFAULT,
+                        backgroundColor: COLORS.ACTIVE,
                     },
                     indicatorStyle
                 ]
@@ -46,7 +46,7 @@ export default function TopTabBar({
                 <Text style={
                     [
                         {
-                            color: COLORS.ACTIVE,
+                            color: COLORS.DEFAULT,
                             fontFamily: TEXT_BOLD,
                             fontSize: SIZES.FONT_H4,
                             textAlign: 'center',

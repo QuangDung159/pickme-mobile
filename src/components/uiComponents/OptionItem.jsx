@@ -33,7 +33,6 @@ export default function OptionItem({
                     paddingHorizontal: 10,
                     paddingVertical: 5,
                     color: isSelected ? COLORS.BASE : COLORS.DEFAULT,
-                    fontSize: SIZES.FONT_H3,
                     fontFamily: TEXT_BOLD
                 }, titleStyle]}
                 text={item.value}

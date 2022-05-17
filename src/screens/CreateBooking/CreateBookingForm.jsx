@@ -295,7 +295,6 @@ export default function CreateBookingForm({
                 text="Ghi chú:"
                 style={{
                     color: COLORS.ACTIVE,
-                    fontSize: SIZES.FONT_H3,
                     marginTop: 5
                 }}
             />

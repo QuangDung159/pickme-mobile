@@ -364,14 +364,12 @@ export default function UploadDocSection({ setIsShowSpinner, navigation, route }
                     <CustomText
                         style={{
                             width: SIZES.WIDTH_BASE * 0.8,
-                            color: COLORS.DEFAULT,
                         }}
                         text='Nếu bạn chọn "Xác thực khách hàng", bạn sẽ có đầy đủ các tính năng khách hàng của 2SeeYou như nhắn tin, đặt hẹn,...'
                     />
                     <CustomText
                         style={{
                             width: SIZES.WIDTH_BASE * 0.8,
-                            color: COLORS.DEFAULT,
                         }}
                         text='Nếu bạn chọn "Đăng ký Host", bạn sẽ có đầy đủ các tính năng khách hàng của 2SeeYou như nhắn tin, đặt hẹn,..., và các chức năng của Host như nhận Yêu cầu thuê, thêm thu nhập,...'
                     />

@@ -153,7 +153,6 @@ export default function UpdateInfoAccount({ navigation }) {
             <CustomText
                 text="Nơi ở hiện tại:"
                 style={{
-                    color: COLORS.ACTIVE,
                     fontSize: SIZES.FONT_H3,
                 }}
             />
@@ -225,7 +224,6 @@ export default function UpdateInfoAccount({ navigation }) {
             <CustomText
                 text="Sở thích:"
                 style={{
-                    color: COLORS.ACTIVE,
                     fontSize: SIZES.FONT_H3,
                     marginBottom: 3,
                 }}
@@ -343,56 +341,6 @@ export default function UpdateInfoAccount({ navigation }) {
         />
     );
 
-    const renderInputHeightWeight = () => (
-        <View
-            style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                marginVertical: 10,
-                width: '95%'
-            }}
-        >
-            <View>
-                <CustomText
-                    style={{
-                        color: COLORS.ACTIVE,
-                        marginBottom: 5
-                    }}
-                    text="Chiều cao:"
-                />
-                <CustomInput
-                    inputStyle={{
-                        width: SIZES.WIDTH_BASE * 0.46
-                    }}
-                    onChangeText={(input) => setNewUser({ ...newUser, height: input })}
-                    value={newUser.height}
-                    keyboardType="number-pad"
-                    maxLength={3}
-                />
-            </View>
-
-            <View>
-                <CustomText
-                    style={{
-                        color: COLORS.ACTIVE,
-                        marginBottom: 5
-                    }}
-                    text="Cân nặng:"
-                />
-                <CustomInput
-                    inputStyle={{
-                        width: SIZES.WIDTH_BASE * 0.46
-                    }}
-                    onChangeText={(input) => setNewUser({ ...newUser, weight: input })}
-                    value={newUser.weight}
-                    keyboardType="number-pad"
-                    maxLength={3}
-                />
-            </View>
-        </View>
-    );
-
     const renderDOB = () => (
         <CustomInput
             inputStyle={{ width: SIZES.WIDTH_BASE * 0.62 }}
@@ -421,9 +369,6 @@ export default function UpdateInfoAccount({ navigation }) {
         }}
         >
             <CustomText
-                style={{
-                    color: COLORS.ACTIVE,
-                }}
                 text="Giới tính:"
             />
             <View

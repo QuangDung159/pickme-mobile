@@ -222,7 +222,6 @@ export default function Menu({ navigation }) {
                             <CustomText
                                 text={menuItem.title}
                                 style={{
-                                    fontSize: SIZES.FONT_H3,
                                     fontFamily: TEXT_BOLD
                                 }}
                             />

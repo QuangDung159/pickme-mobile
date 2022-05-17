@@ -7,7 +7,6 @@ const {
     FONT: {
         TEXT_BOLD,
     },
-    SIZES,
 } = Theme;
 
 export default function PartnerDataItem({
@@ -34,14 +33,12 @@ export default function PartnerDataItem({
                 <CustomText
                     style={{
                         fontFamily: TEXT_BOLD,
-                        fontSize: SIZES.FONT_H3,
                     }}
                     text={dataRow.label}
                 />
                 <CustomText
                     style={{
                         fontFamily: TEXT_BOLD,
-                        fontSize: SIZES.FONT_H3,
                     }}
                     text={handleValue}
                 />
