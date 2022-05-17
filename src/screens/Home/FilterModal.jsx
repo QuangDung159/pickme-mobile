@@ -128,7 +128,7 @@ export default function FilterModal({
             }}
         >
             <CustomText
-                text="Sở thích:"
+                text="Dịch vụ cung cấp:"
                 style={{
                     marginBottom: 3
                 }}

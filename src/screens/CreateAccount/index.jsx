@@ -159,7 +159,7 @@ export default function CreateAccount(props) {
                 }
             },
             {
-                fieldName: 'Sở thích',
+                fieldName: 'Dịch vụ cung cấp',
                 input: newUser.interests,
                 validate: {
                     required: {
@@ -290,7 +290,7 @@ export default function CreateAccount(props) {
                     }}
                     onChangeText={(input) => setNewUser({ ...newUser, interests: input })}
                     value={newUser.interests}
-                    placeholder="Sở thích"
+                    placeholder="Dịch vụ cung cấp"
                 />
 
                 <CustomInput

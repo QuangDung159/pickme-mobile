@@ -55,7 +55,7 @@ export const mappingStatusText = (status) => {
             return 'Chờ xác nhận';
         case BookingStatus.PAID: return 'Đã được thanh toán';
         case BookingStatus.CONFIRMED: return 'Đã được xác nhận';
-        case BookingStatus.COMPLETED: return 'Buổi hẹn hoàn tất';
+        case BookingStatus.COMPLETED: return 'Công việc hoàn tất';
         default:
             return 'Đã huỷ';
     }

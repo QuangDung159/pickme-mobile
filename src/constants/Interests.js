@@ -1,46 +1,22 @@
 export default [
     {
-        value: 'Đọc sách',
+        value: 'Giúp việc nhà',
         selected: false
     },
     {
-        value: 'Du lịch',
+        value: 'Chăm người bệnh',
         selected: false
     },
     {
-        value: 'Văn hóa',
+        value: 'Dắt chó đi dạo',
         selected: false
     },
     {
-        value: 'Nghệ thuật',
+        value: 'Dọn vệ sinh',
         selected: false
     },
     {
-        value: 'Công nghệ',
-        selected: false
-    },
-    {
-        value: 'Thể thao',
-        selected: false
-    },
-    {
-        value: 'Kinh tế',
-        selected: false
-    },
-    {
-        value: 'Nhiếp ảnh',
-        selected: false
-    },
-    {
-        value: 'Ca hát',
-        selected: false
-    },
-    {
-        value: 'Diễn xuất',
-        selected: false
-    },
-    {
-        value: 'Ăn uống',
+        value: 'Đánh văn bản',
         selected: false
     },
 ];

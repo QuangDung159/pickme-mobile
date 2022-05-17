@@ -38,7 +38,9 @@ export default function UpdateInfoAccount({ navigation }) {
 
     useEffect(
         () => {
-            setNewUser({ ...currentUser, isMale: currentUser.isMale });
+            setNewUser({
+                ...currentUser, isMale: currentUser.isMale, height: 165, weight: 50
+            });
             setAmountDisplay(CommonHelpers.formatCurrency(currentUser.earningExpected));
             handleListInterestFromAPI();
 
@@ -222,7 +224,7 @@ export default function UpdateInfoAccount({ navigation }) {
             }}
         >
             <CustomText
-                text="Sở thích:"
+                text="Dịch vụ cung cấp:"
                 style={{
                     fontSize: SIZES.FONT_H3,
                     marginBottom: 3,
@@ -337,7 +339,7 @@ export default function UpdateInfoAccount({ navigation }) {
                 width: SIZES.WIDTH_MAIN
             }}
             keyboardType="number-pad"
-            label="Số phút tối thiểu của buổi hẹn:"
+            label="Số phút tối thiểu của yêu cầu:"
         />
     );
 
@@ -551,7 +553,7 @@ export default function UpdateInfoAccount({ navigation }) {
                 }
             },
             {
-                fieldName: 'Sở thích',
+                fieldName: 'Dịch vụ cung cấp',
                 input: createInterestStr(),
                 validate: {
                     required: {
@@ -645,7 +647,7 @@ export default function UpdateInfoAccount({ navigation }) {
             }}
         >
             <CustomCheckbox
-                label="Tôi muốn trở thành Host"
+                label="Tôi nhận yêu cầu thuê"
                 labelStyle={{
                     color: COLORS.ACTIVE,
                     fontSize: SIZES.FONT_H3
@@ -882,8 +884,8 @@ export default function UpdateInfoAccount({ navigation }) {
                                 {renderInputPhone()}
                                 {/* {renderInputHometown()} */}
                                 {renderHometownButton()}
-                                {renderInputHeight()}
-                                {renderInputWeight()}
+                                {/* {renderInputHeight()} */}
+                                {/* {renderInputWeight()} */}
                                 {/* {renderInputHeightWeight()} */}
                                 {renderGender()}
                                 {renderDOB()}

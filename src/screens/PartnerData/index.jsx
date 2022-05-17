@@ -78,7 +78,7 @@ export default function PartnerData() {
                 marginVertical: 10,
                 width: SIZES.WIDTH_MAIN
             }}
-            label="Số phút tối thiểu của buổi hẹn:"
+            label="Số phút tối thiểu của yêu cầu:"
         />
     );
 
@@ -223,7 +223,7 @@ export default function PartnerData() {
                     }
                 },
                 {
-                    fieldName: 'Số phút tối thiểu của buổi hẹn',
+                    fieldName: 'Số phút tối thiểu của yêu cầu',
                     input: newUser.minimumDuration,
                     validate: {
                         required: {
