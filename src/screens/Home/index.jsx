@@ -1,5 +1,7 @@
+/* eslint-disable no-unused-vars */
 /* eslint no-underscore-dangle: ["error", { "allow": ["_isMounted", "_id"] }] */
 import { LocationModal } from '@components/businessComponents';
+import ListServiceDisplay from '@components/businessComponents/ListServiceDisplay';
 import ProfileInfoItem from '@components/businessComponents/ProfileInfoItem';
 import {
     CenterLoader, CustomText, IconCustom, Separator
@@ -589,7 +591,7 @@ export default function Home({ navigation }) {
                                 />
                             </View>
 
-                            <View
+                            {/* <View
                                 style={{
                                     flexDirection: 'row',
                                     alignItems: 'center',
@@ -610,7 +612,9 @@ export default function Home({ navigation }) {
                                         {handleInterestFromAPI(item)}
                                     </Text>
                                 </View>
-                            </View>
+                            </View> */}
+
+                            <ListServiceDisplay userServices={item?.interests || []} />
 
                             <View
                                 style={{

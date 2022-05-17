@@ -3,6 +3,7 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
+import ListServiceDisplay from './ListServiceDisplay';
 import ProfileInfoItem from './ProfileInfoItem';
 
 const {
@@ -10,16 +11,6 @@ const {
 } = Theme;
 
 export default function SubInfoProfile({ user }) {
-    const handleInterestFromAPI = () => {
-        if (!user?.interests) {
-            return 'N/a';
-        }
-
-        const result = user.interests.split(', ');
-        result.splice(result.length - 1, 1);
-        return result.join(', ');
-    };
-
     return (
         <View
             style={{
@@ -71,18 +62,7 @@ export default function SubInfoProfile({ user }) {
                     />
                 </View>
             </View>
-            <ProfileInfoItem
-                fontSize={SIZES.FONT_H3}
-                iconName="badminton"
-                iconFamily={IconFamily.MATERIAL_COMMUNITY_ICONS}
-                content={`${handleInterestFromAPI()}`}
-                iconSize={16}
-                containerStyle={{ alignItems: 'flex-start' }}
-                iconContainerStyle={{
-                    marginTop: 6
-                }}
-                contentTextStyle={{ width: SIZES.WIDTH_90 - 25 }}
-            />
+            <ListServiceDisplay userServices={user?.interests || []} />
         </View>
     );
 }

@@ -4,7 +4,7 @@ import { TouchableOpacity } from 'react-native';
 import CustomText from './CustomText';
 
 const {
-    COLORS, SIZES, FONT: {
+    COLORS, FONT: {
         TEXT_BOLD
     }
 } = Theme;
@@ -22,7 +22,7 @@ export default function OptionItem({
                 borderRadius: 20,
                 marginRight: 5,
                 marginBottom: 5,
-                height: 36,
+                height: 30,
                 backgroundColor: isSelected ? COLORS.ACTIVE : COLORS.BASE,
                 alignItems: 'center',
                 justifyContent: 'center'
@@ -31,7 +31,6 @@ export default function OptionItem({
             <CustomText
                 style={[{
                     paddingHorizontal: 10,
-                    paddingVertical: 5,
                     color: isSelected ? COLORS.BASE : COLORS.DEFAULT,
                     fontFamily: TEXT_BOLD
                 }, titleStyle]}
