@@ -85,7 +85,6 @@ export default function FilterModal({
             listInterestFromLocal = JSON.parse(listInterestFromLocal);
             listInterestFromLocal = [...listInterestFromLocal, ...Interests];
             listInterestFromLocal = arrayUnique(listInterestFromLocal, 'value');
-            console.log('listInterestFilter :>> ', listInterestFilter);
             setListInterestSelected(listInterestFilter?.length !== 0 ? listInterestFilter : listInterestFromLocal);
         }
     };
