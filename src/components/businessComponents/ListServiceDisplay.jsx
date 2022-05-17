@@ -4,6 +4,10 @@ import { View } from 'react-native';
 
 export default function ListServiceDisplay({ userServices }) {
     const handleList = () => {
+        if (!userServices) {
+            return [];
+        }
+
         const result = userServices.split(', ');
         result.splice(result.length - 1, 1);
         return result;
