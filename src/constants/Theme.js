@@ -5,7 +5,7 @@ import App from './App';
 const { width, height } = Dimensions.get('window');
 
 const COLORS = {
-    DEFAULT: '#ffffff',
+    DEFAULT: '#fcfdff',
     ERROR: '#ff7857',
     ACTIVE: '#74f7e2',
     LIST_ITEM_BACKGROUND_1: '#ffeee3',

@@ -410,7 +410,6 @@ export default function UserDetail({ navigation, userInfo, setIsShowSpinner }) {
                     iconSize={18}
                     contentTextStyle={{
                         fontFamily: TEXT_BOLD,
-                        color: COLORS.ACTIVE
                     }}
                 />
             )}

@@ -68,7 +68,7 @@ export default function Albums({
             onPress={() => onClickUploadProfileImage && onClickUploadProfileImage()}
             labelStyle={{
                 fontSize: SIZES.FONT_H3,
-                color: COLORS.ACTIVE,
+                color: COLORS.DEFAULT,
                 marginLeft: 5
             }}
             label="Thêm ảnh"
@@ -80,7 +80,7 @@ export default function Albums({
             leftIcon={{
                 name: 'add-a-photo',
                 size: SIZES.FONT_H3,
-                color: COLORS.ACTIVE,
+                color: COLORS.DEFAULT,
                 family: IconFamily.MATERIAL_ICONS
             }}
         />

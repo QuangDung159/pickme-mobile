@@ -64,7 +64,7 @@ ProfileInfoItem.defaultProps = {
     iconName: 'home',
     iconSize: 24,
     iconFamily: IconFamily.FONT_AWESOME,
-    iconColor: COLORS.ACTIVE,
+    iconColor: COLORS.DEFAULT,
     fontSize: 24
 };
 

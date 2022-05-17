@@ -1,13 +1,13 @@
+import { CustomText } from '@components/uiComponents';
 import { Theme } from '@constants/index';
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 
 const {
     FONT: {
         TEXT_BOLD,
     },
     SIZES,
-    COLORS
 } = Theme;
 
 export default function PartnerDataItem({
@@ -31,24 +31,20 @@ export default function PartnerDataItem({
                     alignItems: 'center'
                 }}
             >
-                <Text
+                <CustomText
                     style={{
                         fontFamily: TEXT_BOLD,
                         fontSize: SIZES.FONT_H3,
-                        color: COLORS.ACTIVE,
                     }}
-                >
-                    {dataRow.label}
-                </Text>
-                <Text
+                    text={dataRow.label}
+                />
+                <CustomText
                     style={{
                         fontFamily: TEXT_BOLD,
                         fontSize: SIZES.FONT_H3,
-                        color: COLORS.ACTIVE,
                     }}
-                >
-                    {handleValue}
-                </Text>
+                    text={handleValue}
+                />
             </View>
         </View>
     );

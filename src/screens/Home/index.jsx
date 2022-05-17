@@ -577,7 +577,7 @@ export default function Home({ navigation }) {
                                     <Text
                                         style={{
                                             fontSize: SIZES.FONT_H3,
-                                            color: COLORS.ACTIVE,
+                                            color: COLORS.DEFAULT,
                                             fontFamily: TEXT_BOLD,
                                         }}
                                     >
@@ -600,7 +600,7 @@ export default function Home({ navigation }) {
                                     <Text
                                         style={{
                                             fontSize: SIZES.FONT_H3,
-                                            color: COLORS.ACTIVE,
+                                            color: COLORS.DEFAULT,
                                             fontFamily: TEXT_BOLD,
                                         }}
                                     >
