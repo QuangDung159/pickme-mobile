@@ -452,9 +452,9 @@ export default function Home({ navigation }) {
                 />
             )}
             keyExtractor={(item) => item.id}
-            renderItem={({ item }) => (
+            renderItem={({ item, index }) => (
                 <>
-                    {renderUserCard(item)}
+                    {renderUserCard(item, index)}
                 </>
             )}
             onEndReached={() => {
@@ -477,7 +477,7 @@ export default function Home({ navigation }) {
         />
     );
 
-    const renderUserCard = (item) => {
+    const renderUserCard = (item, index) => {
         let amountDisplay = item.id === currentUser.id ? item.earningExpected : item.estimatePricing;
         amountDisplay = CommonHelpers.formatCurrency(amountDisplay);
 
@@ -488,7 +488,8 @@ export default function Home({ navigation }) {
                 <View
                     style={{
                         backgroundColor: COLORS.BASE,
-                        marginBottom: 10
+                        marginBottom: 5,
+                        alignItems: 'center'
                     }}
                 >
                     <View
@@ -515,7 +516,7 @@ export default function Home({ navigation }) {
                             <Text
                                 style={{
                                     fontSize: SIZES.FONT_H2,
-                                    color: COLORS.ACTIVE,
+                                    color: COLORS.DEFAULT,
                                     fontFamily: TEXT_BOLD,
                                     marginBottom: 5
                                 }}
@@ -610,6 +611,16 @@ export default function Home({ navigation }) {
                             </View>
                         </View>
                     </View>
+                    {index !== listPartnerFilter.length - 1 && (
+                        <View
+                            style={{
+                                marginTop: 5,
+                                width: SIZES.WIDTH_BASE,
+                                backgroundColor: COLORS.SEPARATE,
+                                height: 5
+                            }}
+                        />
+                    )}
                 </View>
             </TouchableNativeFeedback>
         );
