@@ -55,7 +55,7 @@ const toastConfig = {
                     [
                         styles.toastContent,
                         {
-                            color: COLORS.SUCCESS,
+                            color: COLORS.ACTIVE,
                             fontSize: SIZES.FONT_H5
                         }
                     ]

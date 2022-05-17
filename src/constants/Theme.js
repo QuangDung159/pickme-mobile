@@ -7,10 +7,7 @@ const { width, height } = Dimensions.get('window');
 const COLORS = {
     DEFAULT: '#ffffff',
     ERROR: '#ff7857',
-    SUCCESS: '#74f7e2',
-    INPUT: '#ffffff',
     ACTIVE: '#74f7e2',
-    TAB_BAR_ACTIVE: '#74f7e2',
     LIST_ITEM_BACKGROUND_1: '#ffeee3',
     LIST_ITEM_BACKGROUND_2: '#cdf6ff',
     TRANSPARENT: 'transparent',

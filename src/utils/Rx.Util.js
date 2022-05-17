@@ -20,7 +20,7 @@ const generateLogData = (endpoint, body, headers, res) => {
 };
 
 const logMessage = (res, endpoint, headers, body, method, apiTokenLocal) => {
-    const textColor = res.status === 200 || res.status === 201 ? `color: ${COLORS.SUCCESS}` : `color: ${COLORS.ERROR}`;
+    const textColor = res.status === 200 || res.status === 201 ? `color: ${COLORS.ACTIVE}` : `color: ${COLORS.ERROR}`;
     console.log(`%c${method.toUpperCase()} ${res.status} ${endpoint}`, textColor, {
         headers,
         body,

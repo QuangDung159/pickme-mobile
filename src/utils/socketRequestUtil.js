@@ -37,7 +37,7 @@ export default (
                 if (failCallBack) failCallBack(response);
                 console.log('%c Fail error :>> ', `color: ${COLORS.ERROR}`, response);
             }
-            console.log(`%c ${response.status} socket ${infoString}`, `color: ${COLORS.SUCCESS}`, config);
+            console.log(`%c ${response.status} socket ${infoString}`, `color: ${COLORS.ACTIVE}`, config);
         })
         .catch((error) => {
             const { response } = error;
