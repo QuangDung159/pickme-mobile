@@ -1,5 +1,5 @@
 export default {
-    APP_VERSION_OTA: '2205171',
+    APP_VERSION_OTA: '2205172',
     STORE_VERSION: '1.0.0',
     FONT: {
         montserratRegular: 'montserrat-regular',
@@ -11,5 +11,5 @@ export default {
         robotoBold: 'roboto-bold',
     },
     FACEBOOK_PAGE_ID: '100537822495995',
-    ENV: 'dev' // prd, stg, dev
+    ENV: 'prd' // prd, stg, dev
 };
