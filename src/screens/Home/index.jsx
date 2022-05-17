@@ -719,7 +719,7 @@ export default function Home({ navigation }) {
                 ) : (
                     <View
                         style={{
-                            backgroundColor: COLORS.BASE,
+                            backgroundColor: COLORS.SEPARATE,
                             alignSelf: 'center',
                         }}
                     >
