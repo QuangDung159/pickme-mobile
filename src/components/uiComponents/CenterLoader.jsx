@@ -16,7 +16,7 @@ export default function ImageLoader({ size, containerStyle }) {
                 bottom: 0,
                 justifyContent: 'center',
                 alignItems: 'center',
-                backgroundColor: COLORS.TRANSPARENT,
+                backgroundColor: COLORS.BASE,
             }, containerStyle]}
         >
             <ActivityIndicator

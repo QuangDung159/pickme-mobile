@@ -500,13 +500,12 @@ export default function Home({ navigation }) {
                 <View
                     style={{
                         backgroundColor: COLORS.BASE,
-                        marginBottom: 10,
                         alignItems: 'center'
                     }}
                 >
-                    {index !== 0 && (
+                    {index === 0 && (
                         <Separator style={{
-                            marginBottom: 10,
+                            marginTop: -10
                         }}
                         />
                     )}
@@ -514,6 +513,7 @@ export default function Home({ navigation }) {
                         style={{
                             flexDirection: 'row',
                             width: SIZES.WIDTH_MAIN,
+                            marginVertical: 10
                         }}
                     >
                         <View style={styles.imageContainer}>
@@ -636,6 +636,7 @@ export default function Home({ navigation }) {
                             </View>
                         </View>
                     </View>
+                    <Separator />
                 </View>
             </TouchableNativeFeedback>
         );
