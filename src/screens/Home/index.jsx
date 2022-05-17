@@ -524,7 +524,7 @@ export default function Home({ navigation }) {
                                     zIndex: 99,
                                     borderRadius: 10
                                 }}
-                                width={SIZES.WIDTH_BASE * 0.4 - 5}
+                                width={SIZES.WIDTH_BASE * 0.4 - 10}
                                 source={item.url ? { uri: item.url } : Images.defaultImage}
                             />
                         </View>
@@ -719,7 +719,7 @@ const styles = StyleSheet.create({
     imageContainer: {
         elevation: 1,
         overflow: 'hidden',
-        flex: 1
+        flex: 1,
     },
     subInfoCard: {
         fontFamily: TEXT_REGULAR,
