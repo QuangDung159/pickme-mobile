@@ -722,6 +722,8 @@ export default function Home({ navigation }) {
                         style={{
                             backgroundColor: COLORS.SEPARATE,
                             alignSelf: 'center',
+                            width: SIZES.WIDTH_BASE,
+                            flex: 1
                         }}
                     >
                         {renderArticles()}

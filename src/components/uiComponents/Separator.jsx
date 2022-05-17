@@ -12,7 +12,7 @@ export default function Separator({
             style={[{
                 width: SIZES.WIDTH_BASE,
                 backgroundColor: COLORS.SEPARATE,
-                height: 10,
+                height: 7,
                 alignSelf: 'center'
             }, style]}
         />
