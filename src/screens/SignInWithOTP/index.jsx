@@ -287,13 +287,13 @@ const styles = StyleSheet.create({
         width: SIZES.WIDTH_MAIN
     },
     openButton: {
-        backgroundColor: '#F194FF',
+        backgroundColor: COLORS.ACTIVE,
         borderRadius: 20,
         padding: 10,
         elevation: 2
     },
     textStyle: {
-        color: 'white',
+        color: COLORS.DEFAULT,
         fontWeight: 'bold',
         textAlign: 'center'
     },

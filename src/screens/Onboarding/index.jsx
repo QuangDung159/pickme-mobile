@@ -220,7 +220,7 @@ export default function Onboarding({ navigation }) {
                         >
                             <View
                                 style={{
-                                    paddingBottom: 90,
+                                    paddingBottom: 20,
                                     alignSelf: 'center',
                                     alignItems: 'center'
                                 }}
@@ -228,16 +228,9 @@ export default function Onboarding({ navigation }) {
                                 <Image
                                     source={Images.Logo}
                                     style={{
-                                        width: SIZES.WIDTH_MAIN,
-                                        height: 50
+                                        width: SIZES.WIDTH_MAIN - 120,
+                                        height: 120
                                     }}
-                                />
-                                <CustomText
-                                    style={{
-                                        color: COLORS.ACTIVE,
-                                        fontSize: SIZES.FONT_H2
-                                    }}
-                                    text="Cà phê nhé!"
                                 />
                             </View>
                         </View>

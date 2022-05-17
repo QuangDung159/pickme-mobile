@@ -11,5 +11,5 @@ export default {
         robotoBold: 'roboto-bold',
     },
     FACEBOOK_PAGE_ID: '100537822495995',
-    ENV: 'prd' // prd, stg, dev
+    ENV: 'dev' // prd, stg, dev
 };

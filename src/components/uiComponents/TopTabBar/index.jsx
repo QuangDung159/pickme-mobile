@@ -73,7 +73,7 @@ export default function TopTabBar({
                 if (setTabActiveIndex) setTabActiveIndex(index);
             }}
             initialLayout={{ width: SIZES.WIDTH_BASE }}
-            indicatorStyle={{ backgroundColor: 'white' }}
+            indicatorStyle={{ backgroundColor: COLORS.DEFAULT }}
             renderTabBar={renderTabBar}
         />
     );
