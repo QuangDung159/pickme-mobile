@@ -23,6 +23,7 @@ export default function NotificationItem({
     navigation,
 }) {
     const dispatch = useDispatch();
+    const { isRead } = notiItem;
 
     const onClickRead = async (isReadAll, notiId = null) => {
         let result;
@@ -141,12 +142,11 @@ export default function NotificationItem({
         );
     };
 
-    const { isRead } = notiItem;
-
     return (
         <View
             style={{
                 height: 73,
+                backgroundColor: isRead ? COLORS.SEPARATE : COLORS.BASE
             }}
         >
             <View

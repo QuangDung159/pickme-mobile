@@ -211,7 +211,7 @@ export default function Menu({ navigation }) {
                                 name={icon.name}
                                 family={icon.family}
                                 size={icon.size}
-                                color={COLORS.ACTIVE}
+                                color={COLORS.DEFAULT}
                             />
                         </View>
                         <View

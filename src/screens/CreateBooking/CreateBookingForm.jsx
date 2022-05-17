@@ -107,7 +107,6 @@ export default function CreateBookingForm({
                 >
                     <CustomText
                         style={{
-                            color: COLORS.ACTIVE,
                             marginRight: 5
                         }}
                         text="Bắt đầu:"
@@ -135,7 +134,6 @@ export default function CreateBookingForm({
                 >
                     <CustomText
                         style={{
-                            color: COLORS.ACTIVE,
                             marginRight: 5
                         }}
                         text="Kết thúc:"
@@ -294,7 +292,6 @@ export default function CreateBookingForm({
             <CustomText
                 text="Ghi chú:"
                 style={{
-                    color: COLORS.ACTIVE,
                     marginTop: 5
                 }}
             />

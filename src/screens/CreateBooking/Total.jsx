@@ -169,33 +169,7 @@ export default function Total({
                     }}
                     text={`Tổng chi phí: ${CommonHelpers.formatCurrency(calculateTotalAmount(startTimeStr, endTimeStr))}`}
                 />
-
                 {renderButtonPanel()}
-
-                <View
-                    style={{
-                        marginBottom: 5
-                    }}
-                >
-                    <NoteText
-                        width={SIZES.WIDTH_MAIN}
-                        title="Lưu ý:"
-                        content="Tổng phí chỉ là chi phí trên ứng dụng và không bao gồm phụ phí khác như: cafe, vé xem phim... Vui lòng thảo luận trước về chi phí đối với Host."
-                        contentStyle={{
-                            fontSize: SIZES.FONT_H4,
-                            color: COLORS.ACTIVE,
-                            fontFamily: TEXT_REGULAR,
-                        }}
-                        iconComponent={(
-                            <IconCustom
-                                name="info-circle"
-                                family={IconFamily.FONT_AWESOME}
-                                size={18}
-                                color={COLORS.ACTIVE}
-                            />
-                        )}
-                    />
-                </View>
             </View>
 
         </View>

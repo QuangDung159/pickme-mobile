@@ -70,7 +70,7 @@ ProfileInfoItem.defaultProps = {
 
 const styles = StyleSheet.create({
     container: {
-        marginBottom: 5,
+        marginBottom: 3,
         flexDirection: 'row',
         alignItems: 'center'
     },

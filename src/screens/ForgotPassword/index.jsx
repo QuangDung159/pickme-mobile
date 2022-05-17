@@ -100,7 +100,7 @@ export default function ForgotPassword({ navigation }) {
                                         content="Bạn vui lòng nhập username đã đăng ký để nhận mã xác thực."
                                         contentStyle={{
                                             fontSize: SIZES.FONT_H4,
-                                            color: COLORS.ACTIVE,
+                                            color: COLORS.DEFAULT,
                                             fontFamily: TEXT_REGULAR,
                                             marginTop: 5
                                         }}

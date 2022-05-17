@@ -96,7 +96,7 @@ export default function Header({
                     name="notification-clear-all"
                     family={IconFamily.MATERIAL_COMMUNITY_ICONS}
                     size={30}
-                    color={COLORS.ACTIVE}
+                    color={COLORS.DEFAULT}
                 />
             </TouchableOpacity>
         </View>

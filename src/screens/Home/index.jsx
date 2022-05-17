@@ -1,7 +1,9 @@
 /* eslint no-underscore-dangle: ["error", { "allow": ["_isMounted", "_id"] }] */
 import { LocationModal } from '@components/businessComponents';
 import ProfileInfoItem from '@components/businessComponents/ProfileInfoItem';
-import { CenterLoader, CustomText, IconCustom } from '@components/uiComponents';
+import {
+    CenterLoader, CustomText, IconCustom, Separator
+} from '@components/uiComponents';
 import { LOCATION } from '@constants/Common';
 import { GENDER } from '@constants/Gender';
 import {
@@ -477,6 +479,16 @@ export default function Home({ navigation }) {
         />
     );
 
+    const handleInterestFromAPI = (user) => {
+        if (!user?.interests) {
+            return 'N/a';
+        }
+
+        const result = user.interests.split(', ');
+        result.splice(result.length - 1, 1);
+        return result.join(', ');
+    };
+
     const renderUserCard = (item, index) => {
         let amountDisplay = item.id === currentUser.id ? item.earningExpected : item.estimatePricing;
         amountDisplay = CommonHelpers.formatCurrency(amountDisplay);
@@ -488,10 +500,16 @@ export default function Home({ navigation }) {
                 <View
                     style={{
                         backgroundColor: COLORS.BASE,
-                        marginBottom: 5,
+                        marginBottom: 10,
                         alignItems: 'center'
                     }}
                 >
+                    {index !== 0 && (
+                        <Separator style={{
+                            marginBottom: 10,
+                        }}
+                        />
+                    )}
                     <View
                         style={{
                             flexDirection: 'row',
@@ -518,47 +536,55 @@ export default function Home({ navigation }) {
                                     fontSize: SIZES.FONT_H2,
                                     color: COLORS.DEFAULT,
                                     fontFamily: TEXT_BOLD,
-                                    marginBottom: 5
                                 }}
                             >
                                 {handleDisplayName(item.fullName)}
                             </Text>
-                            <ProfileInfoItem
+                            {/* <ProfileInfoItem
                                 fontSize={SIZES.FONT_H3}
                                 iconName="home"
                                 iconFamily={IconFamily.FONT_AWESOME_5}
                                 content={`${item.homeTown || 'N/a'}`}
                                 iconSize={16}
-                            />
+                            /> */}
+                            <Text
+                                style={{
+                                    fontSize: SIZES.FONT_H3,
+                                    color: COLORS.DEFAULT,
+                                }}
+                            >
+                                {`${item.homeTown || 'N/a'}`}
+                            </Text>
                             <View
                                 style={{
                                     flexDirection: 'row',
                                     alignItems: 'center',
+                                    justifyContent: 'space-between'
                                 }}
                             >
-                                <View
-                                    style={{
-                                        width: '50%'
-                                    }}
-                                >
-                                    <ProfileInfoItem
-                                        fontSize={SIZES.FONT_H3}
-                                        iconName="birthday-cake"
-                                        iconFamily={IconFamily.FONT_AWESOME}
-                                        content={
-                                            moment(item.dob).format('YYYY').toString().toLowerCase() !== 'invalid date'
-                                                ? moment(item.dob).format('YYYY').toString()
-                                                : '1990'
-                                        }
-                                        iconSize={16}
-                                    />
-                                </View>
-
+                                <ProfileInfoItem
+                                    fontSize={SIZES.FONT_H3}
+                                    iconName="birthday-cake"
+                                    iconFamily={IconFamily.FONT_AWESOME}
+                                    content={
+                                        moment(item.dob).format('YYYY').toString().toLowerCase() !== 'invalid date'
+                                            ? moment(item.dob).format('YYYY').toString()
+                                            : '1990'
+                                    }
+                                    iconSize={16}
+                                />
                                 <ProfileInfoItem
                                     fontSize={SIZES.FONT_H3}
                                     iconName={item.isMale ? 'male' : 'female'}
                                     iconFamily={IconFamily.FONTISTO}
                                     content={`${item.isMale ? 'Nam' : 'Nữ'}`}
+                                    iconSize={16}
+                                />
+                                <ProfileInfoItem
+                                    fontSize={SIZES.FONT_H3}
+                                    iconName="star"
+                                    iconFamily={IconFamily.FONT_AWESOME}
+                                    content={`${item.ratingAvg}/5`}
                                     iconSize={16}
                                 />
                             </View>
@@ -567,7 +593,7 @@ export default function Home({ navigation }) {
                                 style={{
                                     flexDirection: 'row',
                                     alignItems: 'center',
-                                    marginBottom: 5
+                                    marginTop: -3
                                 }}
                             >
                                 <View
@@ -579,10 +605,9 @@ export default function Home({ navigation }) {
                                         style={{
                                             fontSize: SIZES.FONT_H3,
                                             color: COLORS.DEFAULT,
-                                            fontFamily: TEXT_BOLD,
                                         }}
                                     >
-                                        {`Đánh giá: ${item.ratingAvg}/5 sao`}
+                                        {handleInterestFromAPI(item)}
                                     </Text>
                                 </View>
                             </View>
@@ -611,16 +636,6 @@ export default function Home({ navigation }) {
                             </View>
                         </View>
                     </View>
-                    {index !== listPartnerFilter.length - 1 && (
-                        <View
-                            style={{
-                                marginTop: 5,
-                                width: SIZES.WIDTH_BASE,
-                                backgroundColor: COLORS.SEPARATE,
-                                height: 5
-                            }}
-                        />
-                    )}
                 </View>
             </TouchableNativeFeedback>
         );

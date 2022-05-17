@@ -166,7 +166,7 @@ export default function SignInWithOTP({ navigation }) {
                                         content="Bạn vui lòng đăng nhập lại để xác thực thiết bị này."
                                         contentStyle={{
                                             fontSize: SIZES.FONT_H4,
-                                            color: COLORS.ACTIVE,
+                                            color: COLORS.DEFAULT,
                                             fontFamily: TEXT_REGULAR,
                                             marginTop: 5
                                         }}
