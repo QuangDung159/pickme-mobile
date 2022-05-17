@@ -616,8 +616,23 @@ export default function Home({ navigation }) {
 
                             <ListServiceDisplay
                                 userServices={item?.interests}
-                                onPressServiceItem={() => {
+                                onPressServiceItem={async (value) => {
                                     setModalFilterVisible(true);
+                                    let listInterest = await SecureStore.getItemAsync('LIST_INTEREST_FILTER');
+
+                                    listInterest = JSON.parse(listInterest);
+                                    console.log('value :>> ', value);
+
+                                    listInterest.forEach((interestItem, interestIndex) => {
+                                        if (interestItem.value.toLowerCase() === value.toLowerCase()) {
+                                            listInterest[interestIndex].selected = true;
+                                        }
+                                    });
+
+                                    console.log('listInterest :>> ', listInterest);
+                                    await SecureStore.setItemAsync(
+                                        'LIST_INTEREST_FILTER', JSON.stringify(listInterest)
+                                    );
                                 }}
                             />
 

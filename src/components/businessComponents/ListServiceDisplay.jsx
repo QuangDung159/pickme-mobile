@@ -31,7 +31,7 @@ export default function ListServiceDisplay({ userServices, onPressServiceItem })
                     containerStyle={{
                         marginBottom: 5
                     }}
-                    handlePressItem={() => onPressServiceItem && onPressServiceItem()}
+                    handlePressItem={() => onPressServiceItem && onPressServiceItem(item)}
                 />
             ))}
         </View>

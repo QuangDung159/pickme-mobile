@@ -40,8 +40,10 @@ export default function FilterModal({
 
     useEffect(
         () => {
-            initFilterFromLocal();
-        }, []
+            if (modalFilterVisible) {
+                initFilterFromLocal();
+            }
+        }, [modalFilterVisible]
     );
 
     const handlePressInterest = (index) => {
@@ -76,6 +78,7 @@ export default function FilterModal({
         if (listInterestFromLocal) {
             listInterestFromLocal = JSON.parse(listInterestFromLocal);
             listInterestFromLocal = [...listInterestFromLocal, ...Interests];
+            console.log('listInterestFromLocal :>> ', listInterestFromLocal);
             setListInterestSelected(arrayUnique(listInterestFromLocal, 'value'));
         }
     };
