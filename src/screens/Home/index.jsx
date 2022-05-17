@@ -647,7 +647,7 @@ export default function Home({ navigation }) {
             style={{
                 position: 'absolute',
                 bottom: 10,
-                right: 0,
+                right: 10,
                 width: 45,
                 height: 45,
                 borderRadius: 25,
