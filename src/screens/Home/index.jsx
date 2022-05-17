@@ -702,8 +702,10 @@ export default function Home({ navigation }) {
                 hometownSelectedIndex={hometownSelectedIndex}
                 setHometownSelectedIndex={setHometownSelectedIndex}
                 listInterestFilter={listInterestFilter}
+                setListInterestFilter={setListInterestFilter}
             />
         ), [listInterestFilter,
+            setListInterestFilter,
             setModalFilterVisible,
             modalFilterVisible,
             setModalLocationVisible,

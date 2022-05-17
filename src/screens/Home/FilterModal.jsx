@@ -25,7 +25,8 @@ export default function FilterModal({
     setModalLocationVisible,
     hometownSelectedIndex,
     setHometownSelectedIndex,
-    listInterestFilter = []
+    listInterestFilter = [],
+    setListInterestFilter
 }) {
     const defaultFilter = {
         ageFrom: 18,
@@ -372,6 +373,7 @@ export default function FilterModal({
                             <CustomButton
                                 onPress={() => {
                                     setModalFilterVisible(false);
+                                    setListInterestFilter([]);
                                 }}
                                 type="default"
                                 label="Huỷ"
