@@ -49,7 +49,7 @@ export default function FilterModal({
             if (modalFilterVisible) {
                 initFilterFromLocal();
             }
-        }, [modalFilterVisible]
+        }, [modalFilterVisible, listInterestFilter]
     );
 
     const handlePressInterest = (index) => {
@@ -85,6 +85,7 @@ export default function FilterModal({
             listInterestFromLocal = JSON.parse(listInterestFromLocal);
             listInterestFromLocal = [...listInterestFromLocal, ...Interests];
             listInterestFromLocal = arrayUnique(listInterestFromLocal, 'value');
+            console.log('listInterestFilter :>> ', listInterestFilter);
             setListInterestSelected(listInterestFilter?.length !== 0 ? listInterestFilter : listInterestFromLocal);
         }
     };
@@ -420,7 +421,8 @@ export default function FilterModal({
             modalFilterVisible,
             feeToDisplay,
             feeFromDisplay,
-            listInterestFilter
+            listInterestFilter,
+            setListInterestFilter
         ]
     );
 

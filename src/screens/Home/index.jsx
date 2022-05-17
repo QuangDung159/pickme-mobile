@@ -310,7 +310,6 @@ export default function Home({ navigation }) {
         result = filterByEstimatePricing(result, filterObj);
         result = filterByInterest(result, filterObj);
 
-        console.log('result :>> ', result);
         setListPartnerFilter(result);
     };
 
