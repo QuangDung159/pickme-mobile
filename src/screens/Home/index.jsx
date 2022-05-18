@@ -208,7 +208,7 @@ export default function Home({ navigation }) {
         let isMale = false;
         let isFemale = false;
         let isAll = false;
-        const genderList = filterObj?.listGender || [];
+        const genderList = filterObj.listGender || [];
 
         genderList.forEach((gender) => {
             if (gender.value === GENDER.male && gender.selected) {
