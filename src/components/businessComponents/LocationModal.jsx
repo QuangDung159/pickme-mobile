@@ -47,13 +47,26 @@ export default function LocationModal({
                 backgroundColor: COLORS.BASE
             }}
         >
+            <View
+                style={{
+                    position: 'absolute',
+                    right: 0,
+                    bottom: 119,
+                    height: 40,
+                    width: '100%',
+                    borderColor: COLORS.ACTIVE,
+                    borderWidth: 0.5,
+                    borderRadius: 20,
+                    zIndex: 2
+                }}
+            />
             <ScrollPicker
                 dataSource={handleGetListLocationName()}
                 selectedIndex={hometownSelectedIndex}
                 onValueChange={(data) => {
                     onChangeLocation(data);
                 }}
-                wrapperHeight={200}
+                wrapperHeight={280}
                 wrapperWidth={150}
                 wrapperBackground={COLORS.BASE}
                 itemHeight={40}
