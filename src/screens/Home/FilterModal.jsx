@@ -46,10 +46,8 @@ export default function FilterModal({
 
     useEffect(
         () => {
-            if (modalFilterVisible) {
-                initFilterFromLocal();
-            }
-        }, [modalFilterVisible, listInterestFilter]
+            initFilterFromLocal();
+        }, [listInterestFilter]
     );
 
     const handlePressInterest = (index) => {
