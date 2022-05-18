@@ -1,5 +1,5 @@
 export default {
-    APP_VERSION_OTA: '2205184',
+    APP_VERSION_OTA: '2205185',
     STORE_VERSION: '1.0.5',
     FONT: {
         montserratRegular: 'montserrat-regular',
