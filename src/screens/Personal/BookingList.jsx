@@ -334,7 +334,7 @@ export default function BookingList({ navigation }) {
                 ) : (
                     <View
                         style={{
-                            backgroundColor: COLORS.BASE,
+                            backgroundColor: COLORS.SEPARATE,
                             flex: 1
                         }}
                     >
@@ -342,7 +342,6 @@ export default function BookingList({ navigation }) {
                     </View>
                 )}
             </>
-
         );
     } catch (exception) {
         console.log('exception :>> ', exception);

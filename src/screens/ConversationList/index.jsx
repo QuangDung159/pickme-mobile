@@ -286,7 +286,12 @@ export default function ConversationList({ navigation }) {
 
     try {
         return (
-            <>
+            <View
+                style={{
+                    backgroundColor: COLORS.SEPARATE,
+                    flex: 1
+                }}
+            >
                 {isShowSpinner ? (
                     <CenterLoader />
                 ) : (
@@ -340,7 +345,7 @@ export default function ConversationList({ navigation }) {
                         )}
                     </>
                 )}
-            </>
+            </View>
         );
     } catch (exception) {
         console.log('exception :>> ', exception);
