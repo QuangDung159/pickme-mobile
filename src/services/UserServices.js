@@ -36,18 +36,20 @@ const rxSubmitLoginAsync = async (body, domain = null) => {
 };
 
 const submitLoginAsync = async (body) => {
-    let result = await rxSubmitLoginAsync(body);
+    const bodyToSubmit = { ...body, username: `pickme-${body.username}` };
+
+    let result = await rxSubmitLoginAsync(bodyToSubmit);
 
     const handledResult = await Middlewares.handleResponseStatusMiddleware(result);
     if (handledResult) {
-        result = await rxSubmitLoginAsync(body, handledResult.backupDomain);
+        result = await rxSubmitLoginAsync(bodyToSubmit, handledResult.backupDomain);
 
         const { data } = result;
 
         if (data.data) {
             await SecureStore.setItemAsync('api_token', result.data.data.token);
-            await SecureStore.setItemAsync('username', body.username);
-            await SecureStore.setItemAsync('password', body.password);
+            await SecureStore.setItemAsync('username', bodyToSubmit.username);
+            await SecureStore.setItemAsync('password', bodyToSubmit.password);
         } else {
             await SecureStore.deleteItemAsync('api_token');
             await SecureStore.deleteItemAsync('username');

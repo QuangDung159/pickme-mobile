@@ -215,12 +215,12 @@ export default function Onboarding({ navigation }) {
                         {renderModalRegisterPartner()}
                         <View
                             style={{
-                                marginTop: 130
+                                marginTop: 70
                             }}
                         >
                             <View
                                 style={{
-                                    paddingBottom: 20,
+                                    paddingBottom: 10,
                                     alignSelf: 'center',
                                     alignItems: 'center'
                                 }}

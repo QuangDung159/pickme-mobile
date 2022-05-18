@@ -31,7 +31,7 @@ export default function CashIn(props) {
         ToastHelpers.renderToast('Đã lưu vào khay nhớ tạm.', 'success');
     };
 
-    const moneyTransferContent = `${currentUser.userName} - 2seeyou`;
+    const moneyTransferContent = `${currentUser.userName}`;
 
     useEffect(
         () => {
